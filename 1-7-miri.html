@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Test 7B - Recreated</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .page {
+            background-color: white;
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.8in;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            position: relative;
+        }
+        h1, h2 {
+            text-align: center;
+            font-weight: normal;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header-item span {
+            border-bottom: 1px solid black;
+            display: inline-block;
+            min-width: 150px;
+            padding-left: 10px;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Handwritten look */
+            color: blue;
+        }
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .col {
+            flex: 1;
+            min-width: 300px;
+        }
+        .question {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        .question-num {
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+        }
+        .ref-num {
+            font-size: 0.8em;
+            color: #666;
+            float: right;
+        }
+        .canvas-container {
+            margin: 10px 0;
+            border: 1px dashed #ccc;
+            display: inline-block;
+        }
+        /* The Handwritten Answer Style */
+        .answer {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            color: #0044cc;
+            font-size: 1.1em;
+            visibility: hidden; /* Hidden by default */
+        }
+        .answer.visible {
+            visibility: visible;
+        }
+        .btn-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .vertical-math {
+            display: inline-table;
+            vertical-align: top;
+            text-align: right;
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+        .vertical-math div {
+            padding-right: 5px;
+        }
+        .border-bottom {
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="btn-container">
+    <button onclick="toggleAnswers()">Reveal Answers</button>
+</div>
+
+<div class="page">
+    <div class="header">
+        <div class="header-item">Name: <span class="answer">Miriam</span></div>
+        <div class="header-item">Score: <span class="answer">Jan 4, 2016</span></div>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 20px; font-weight: bold;">Cumulative Test 7B</div>
+
+    <div class="columns">
+        <div class="col">
+            
+            <div class="question">
+                <span class="ref-num">(11)</span>
+                <div class="question-num">1.</div>
+                <div>There are three hundred fifteen pages in the book. Tomás has read sixty-four pages. How many pages are left for Tomás to read?</div>
+                <div class="answer">
+                    <br>
+                    \( 315 - 64 = 251 \) pages
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">2.</div>
+                <div>Use the digits 7, 8, and 9 once each to make an even number greater than 800.</div>
+                <div class="answer"><br>978</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">3.</div>
+                <div>Draw a pattern of Xs to show the multiplication of 2 and 6.</div>
+                <canvas id="canvasQ3" width="200" height="60" class="canvas-container"></canvas>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(5)</span>
+                <div class="question-num">4.</div>
+                <div>Dara wrote her birth date as 5/14/99.</div>
+                <ol type="a">
+                    <li>In what month was Dara born? <span class="answer">May</span></li>
+                    <li>In what year was Dara born? <span class="answer">1999</span></li>
+                </ol>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(23)</span>
+                <div class="question-num">5.</div>
+                <div>Draw two parallel lines.</div>
+                <canvas id="canvasQ5" width="200" height="60" class="canvas-container"></canvas>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">6.</div>
+                <div>This rectangle is 3 units long and 2 units wide. What is the area of the rectangle?</div>
+                <canvas id="canvasQ6" width="150" height="80" class="canvas-container"></canvas>
+                <div class="answer">Area = \( 3 \times 2 = 6 \) square units</div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            
+            <div class="question">
+                <span class="ref-num">(22)</span>
+                <div class="question-num">7.</div>
+                <div>What fraction of this rectangle is shaded?</div>
+                <canvas id="canvasQ7" width="160" height="80" class="canvas-container"></canvas>
+                <div class="answer">Answer: \( \frac{5}{8} \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(27)</span>
+                <div class="question-num">8.</div>
+                <div>Change this addition problem to a multiplication problem:<br> 
+                \( 9 + 9 + 9 + 9 + 9 + 9 \)</div>
+                <div class="answer"><br>\( 9 \times 6 \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(20)</span>
+                <div class="question-num">9.</div>
+                <div>Round 46 to the nearest ten. Round 53 to the nearest ten. Then add the rounded numbers.</div>
+                <div class="answer">
+                    <br>46 \(\rightarrow\) 50<br>
+                    53 \(\rightarrow\) 50<br>
+                    50 + 50 = 100
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(10, 35)</span>
+                <div class="question-num">10.</div>
+                <div>Is the value of 4 nickels and 3 dimes an even number of cents or an odd number of cents?</div>
+                <div class="answer">
+                    <br>\( 4 \times 5 = 20 \)<br>
+                    \( 3 \times 10 = 30 \)<br>
+                    Total = 50 cents (Even)
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 1)</span>
+                <div class="question-num">11.</div>
+                <div>The arrow is pointing to what number on this number line?</div>
+                <canvas id="canvasQ11" width="300" height="60" class="canvas-container"></canvas>
+                <div class="answer" style="text-align:center;">175</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">12.</div>
+                <div>Find the answers:</div>
+                <div style="display:flex; justify-content: space-between;">
+                    <div>a. \( 4 \times 4 \) = <span class="answer">16</span></div>
+                    <div>b. \( 6 \times 6 \) = <span class="answer">36</span></div>
+                    <div>c. \( 8 \times 8 \) = <span class="answer">64</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin: 20px 0; border-top: 1px dashed #aaa;"></div>
+    
+    <div class="columns">
+        <div class="col">
+            <div class="question">
+                <span class="ref-num">(31)</span>
+                <div class="question-num">13.</div>
+                <div>Sixty-seven is how much less than seventy-six?</div>
+                <div class="answer"><br>\( 76 - 67 = 9 \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">14.</div>
+                <div>Find the square root: \( \sqrt{64} \)</div>
+                <div class="answer"><br>8 (because \( 8 \times 8 = 64 \))</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 1)</span>
+                <div class="question-num">15.</div>
+                <div>Compare: \( 43 + 56 \) <span style="display:inline-block; width:30px; border-bottom:1px solid black; text-align:center;" class="answer">=</span> \( 53 + 46 \)</div>
+                <div class="answer" style="font-size: 0.8em;">(Both equal 99)</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-num">16.</div>
+                <div>Find missing number: \( 12 + w = 77 \)</div>
+                <div class="answer"><br>\( w = 65 \)</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="question">
+                <span class="ref-num">(1)</span>
+                <div class="question-num">17.</div>
+                <div>Find missing number:</div>
+                <div class="vertical-math">
+                    <div>747</div>
+                    <div class="border-bottom">- x</div>
+                    <div>414</div>
+                </div>
+                <span class="answer" style="margin-left: 20px;"> \( x = 333 \)</span>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(35)</span>
+                <div class="question-num">18.</div>
+                <div>Use words to write \( 2 \frac{3}{4} \).</div>
+                <div class="answer"><br>Two and three fourths</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(34)</span>
+                <div class="question-num">19.</div>
+                <div>Use digits to write five million.</div>
+                <div class="answer"><br>5,000,000</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(30)</span>
+                <div class="question-num">20.</div>
+                <div class="vertical-math">
+                    <div>846</div>
+                    <div class="border-bottom">- 598</div>
+                    <div class="answer">248</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Reveal Button Logic
+    function toggleAnswers() {
+        const answers = document.querySelectorAll('.answer');
+        const canvasQ3 = document.getElementById('canvasQ3');
+        const canvasQ5 = document.getElementById('canvasQ5');
+        const btn = document.querySelector('button');
+        
+        let isVisible = false;
+
+        answers.forEach(el => {
+            if (el.classList.contains('visible')) {
+                el.classList.remove('visible');
+                isVisible = false;
+            } else {
+                el.classList.add('visible');
+                isVisible = true;
+            }
+        });
+
+        // Toggle Drawing Answers
+        drawQ3(isVisible);
+        drawQ5(isVisible);
+        
+        btn.textContent = isVisible ? "Hide Answers" : "Reveal Answers";
+    }
+
+    // Canvas Drawing Logic
+    window.onload = function() {
+        drawQ3(false); // Initial state
+        drawQ5(false); // Initial state
+        drawQ6();
+        drawQ7();
+        drawQ11();
+    };
+
+    function drawQ3(showAnswer) {
+        const c = document.getElementById("canvasQ3");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
+        
+        if(showAnswer) {
+            ctx.font = "20px Comic Sans MS";
+            ctx.fillStyle = "blue";
+            // Draw 2 rows of 6 Xs
+            for(let row=0; row<2; row++) {
+                for(let col=0; col<6; col++) {
+                    ctx.fillText("X", 20 + col*25, 25 + row*25);
+                }
+            }
+        } else {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "#aaa";
+            ctx.fillText("(Draw Xs here)", 50, 35);
+        }
+    }
+
+    function drawQ5(showAnswer) {
+        const c = document.getElementById("canvasQ5");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
+
+        if(showAnswer) {
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2;
+            // Line 1
+            ctx.beginPath();
+            ctx.moveTo(20, 15);
+            ctx.lineTo(180, 15);
+            ctx.stroke();
+            // Line 2
+            ctx.beginPath();
+            ctx.moveTo(20, 45);
+            ctx.lineTo(180, 45);
+            ctx.stroke();
+            // Arrowheads
+            drawArrow(ctx, 180, 15);
+            drawArrow(ctx, 20, 15, true);
+            drawArrow(ctx, 180, 45);
+            drawArrow(ctx, 20, 45, true);
+        } else {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "#aaa";
+            ctx.fillText("(Draw lines here)", 50, 35);
+        }
+    }
+
+    function drawArrow(ctx, x, y, left=false) {
+        ctx.beginPath();
+        if(left) {
+            ctx.moveTo(x, y); ctx.lineTo(x+5, y-3);
+            ctx.moveTo(x, y); ctx.lineTo(x+5, y+3);
+        } else {
+            ctx.moveTo(x, y); ctx.lineTo(x-5, y-3);
+            ctx.moveTo(x, y); ctx.lineTo(x-5, y+3);
+        }
+        ctx.stroke();
+    }
+
+    function drawQ6() {
+        const c = document.getElementById("canvasQ6");
+        const ctx = c.getContext("2d");
+        
+        ctx.strokeRect(20, 20, 90, 40); // 3:2 aspectish
+        
+        ctx.font = "12px Times New Roman";
+        ctx.fillStyle = "black";
+        ctx.fillText("3 cm", 50, 15);
+        ctx.fillText("2 cm", 115, 45);
+    }
+
+    function drawQ7() {
+        const c = document.getElementById("canvasQ7");
+        const ctx = c.getContext("2d");
+        
+        // Draw 8 segments (4x2 grid)
+        let w = 30;
+        let h = 30;
+        let startX = 10;
+        let startY = 10;
+
+        for(let r=0; r<2; r++) {
+            for(let col=0; col<4; col++) {
+                ctx.beginPath();
+                ctx.rect(startX + col*w, startY + r*h, w, h);
+                ctx.stroke();
+                
+                // Shade 5 blocks (first row full, second row 1)
+                let blockIndex = r*4 + col;
+                if(blockIndex < 5) {
+                    ctx.fillStyle = "#ccc";
+                    ctx.fill();
+                    ctx.stroke(); // redraw border
+                }
+            }
+        }
+    }
+
+    function drawQ11() {
+        const c = document.getElementById("canvasQ11");
+        const ctx = c.getContext("2d");
+        
+        let y = 30;
+        // Line
+        ctx.beginPath();
+        ctx.moveTo(20, y);
+        ctx.lineTo(280, y);
+        ctx.stroke();
+
+        // Ticks
+        function drawTick(x, label) {
+            ctx.beginPath();
+            ctx.moveTo(x, y-5);
+            ctx.lineTo(x, y+5);
+            ctx.stroke();
+            ctx.font = "12px Times New Roman";
+            ctx.fillStyle = "black";
+            ctx.fillText(label, x-10, y+20);
+        }
+
+        drawTick(20, "0");
+        drawTick(150, "100");
+        drawTick(280, "200");
+
+        // Arrow at 175 (approx 3/4 way between 100 and 200)
+        // Distance 100 to 200 is 130px. 75/100 * 130 = 97.5px. 150 + 97.5 = 247.5
+        let arrowX = 247;
+        ctx.beginPath();
+        ctx.moveTo(arrowX, y-15);
+        ctx.lineTo(arrowX, y);
+        ctx.stroke();
+        
+        // Arrowhead
+        ctx.beginPath();
+        ctx.moveTo(arrowX, y);
+        ctx.lineTo(arrowX-4, y-8);
+        ctx.lineTo(arrowX+4, y-8);
+        ctx.fill();
+    }
+</script>
+
+</body>
+</html>
