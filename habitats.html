@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitats and Change Study Guide</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Grid Layout for Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: transparent;
+            width: 100%;
+            height: 250px;
+            perspective: 1000px; /* Essential for 3D flip effect */
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        /* Flip Action */
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Front Style */
+        .card-front {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px solid #e0e0e0;
+        }
+
+        /* Back Style */
+        .card-back {
+            background-color: var(--primary-color);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-category {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* List styling for back of cards */
+        .card-back ul, .card-back ol {
+            text-align: left;
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        /* Footer instructions */
+        .instructions {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Habitats and Change</h1>
+        <p class="subtitle">Study Guide & Key Vocabulary</p>
+    </header>
+
+    <div class="card-container" id="cardDeck">
+        </div>
+
+    <div class="instructions">Click on a card to flip it to reveal the answer.</div>
+
+    <script>
+        // Data derived from the uploaded images
+        const studyData = [
+            // --- KEY VOCABULARY ---
+            { category: "Vocabulary", term: "Habitat", def: "The natural place where an organism lives." },
+            { category: "Vocabulary", term: "Survive", def: "To stay alive." },
+            { category: "Vocabulary", term: "Adaptation", def: "A body part or behavior that helps a living thing survive." },
+            { category: "Vocabulary", term: "Advantage", def: "A condition that is helpful; makes it easier for an organism to survive." },
+            { category: "Vocabulary", term: "Behavioral Trait", def: "A way an organism behaves, or acts." },
+            { category: "Vocabulary", term: "Ecosystem", def: "All the living and nonliving things in a place and their interactions." },
+            { category: "Vocabulary", term: "Natural Hazard", def: "A natural event that causes negative changes to a habitat or ecosystem." },
+            { category: "Vocabulary", term: "Invasive Species", def: "An organism that causes harm in a place where it does not normally live." },
+            { category: "Vocabulary", term: "Overpopulation", def: "When there are too many of one kind of species in an ecosystem." },
+            { category: "Vocabulary", term: "Migrate", def: "To move from one place to another in different seasons." },
+            { category: "Vocabulary", term: "Climate", def: "The pattern of weather over a long period of time." },
+            { category: "Vocabulary", term: "Respond", def: "To react to a change by doing something." },
+            { category: "Vocabulary", term: "Conserve", def: "To protect from harm. The act of protecting living things and their habitats is called conservation." },
+            { category: "Vocabulary", term: "Conservationist", def: "A person who works to protect plants, animals, habitats, and ecosystems." },
+            { category: "Vocabulary", term: "Restore", def: "To bring back something. When people restore a habitat or population, they repair damage that was done by nature or people." },
+            { category: "Vocabulary", term: "Fossil", def: "The remains of a living thing from long ago, usually formed in layers of rock." },
+            { category: "Vocabulary", term: "Evidence", def: "Information that supports an argument." },
+            { category: "Vocabulary", term: "Decompose", def: "To break down and become part of the environment." },
+            { category: "Vocabulary", term: "Preserve", def: "To keep something in its original form." },
+            { category: "Vocabulary", term: "Extinct", def: "Having no surviving members." },
+            { category: "Vocabulary", term: "Endangered Species", def: "A species that is at risk of becoming extinct within a few years." },
+
+            // --- EXAMPLES OF ADAPTATIONS ---
+            { category: "Adaptations", term: "Adaptation: Fish", def: "Breathe through their gills." },
+            { category: "Adaptations", term: "Adaptation: Ducks", def: "Have oil on their feathers that make the feathers waterproof." },
+            { category: "Adaptations", term: "Adaptation: Giraffes", def: "Have long necks to reach the tops of trees for food." },
+            { category: "Adaptations", term: "Adaptation: Owls", def: "Have large eyes that help them see at night." },
+            { category: "Adaptations", term: "Adaptation: Walruses", def: "Have blubber that helps them keep warm in cold temperatures." },
+
+            // --- NAMES OF ANIMAL GROUPS ---
+            { category: "Animal Groups", term: "Group Name: Lions", def: "Pride<br><br><small>(Female lions hunt, while the male lion stays behind)</small>" },
+            { category: "Animal Groups", term: "Group Name: Dolphins", def: "Pod" },
+            { category: "Animal Groups", term: "Group Name: Fish", def: "School" },
+            { category: "Animal Groups", term: "Group Name: Wildebeests & Elephants", def: "Herd" },
+            { category: "Animal Groups", term: "Group Name: Meerkats", def: "Mob<br><br><small>(Meerkats have different jobs: one watches for predators, others dig)</small>" },
+
+            // --- HUMAN IMPACTS ---
+            { category: "Human Impact", term: "Cutting down trees", def: "Removes food and shelter sources for certain organisms." },
+            { category: "Human Impact", term: "Building and road construction", def: "Removes rainforests and animals may be killed trying to cross the road." },
+            { category: "Human Impact", term: "Building Dams", def: "These can block rivers that salmon depend on for migration." },
+            { category: "Human Impact", term: "Collecting fresh water", def: "Removing water from rivers/lakes can dry them up, affecting organisms that need them for survival." },
+            { category: "Human Impact", term: "Burning materials", def: "Gas gets trapped in Earth's atmosphere causing it to warm up (Global Warming). This can cause Arctic ice to melt." },
+
+            // --- FOSSILS ---
+            { category: "Fossils", term: "Order of Fossil Formation", def: "<ol><li>Plant/animal dies</li><li>Covered in mud</li><li>Soft parts decompose</li><li>Minerals replace hard parts</li><li>Fossil is formed</li></ol>" },
+            { category: "Fossils", term: "Materials that become fossils", def: "<ul><li>Bones</li><li>Shells</li><li>Plants</li></ul>" },
+            { category: "Fossils", term: "Permafrost & Amber", def: "<strong>Permafrost:</strong> Preserves Woolly Mammoths.<br><strong>Amber:</strong> Preserves insects (ants, mosquitoes)." }
+        ];
+
+        const container = document.getElementById('cardDeck');
+
+        studyData.forEach(item => {
+            // Create Card Element
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Create Inner Container
+            const inner = document.createElement('div');
+            inner.className = 'card-inner';
+
+            // Create Front
+            const front = document.createElement('div');
+            front.className = 'card-front';
+            front.innerHTML = `<span class="card-category">${item.category}</span>${item.term}`;
+
+            // Create Back
+            const back = document.createElement('div');
+            back.className = 'card-back';
+            back.innerHTML = item.def;
+
+            // Assemble
+            inner.appendChild(front);
+            inner.appendChild(back);
+            card.appendChild(inner);
+            container.appendChild(card);
+
+            // Add Click Event
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+        });
+    </script>
+</body>
+</html>
