@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test 7B - Concepts Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .page {
+            background-color: white;
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.8in;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            position: relative;
+        }
+        h1, h2 {
+            text-align: center;
+            font-weight: normal;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header-item span {
+            border-bottom: 1px solid black;
+            display: inline-block;
+            min-width: 150px;
+            padding-left: 10px;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            color: blue;
+        }
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .col {
+            flex: 1;
+            min-width: 300px;
+        }
+        .question {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        .question-num {
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+        }
+        .ref-num {
+            font-size: 0.8em;
+            color: #666;
+            float: right;
+        }
+        .canvas-container {
+            margin: 10px 0;
+            border: 1px dashed #ccc;
+            display: inline-block;
+        }
+        /* Handwritten Answer Style */
+        .answer {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            color: #d32f2f; /* Red pen look */
+            font-size: 1.1em;
+            visibility: hidden;
+        }
+        .answer.visible {
+            visibility: visible;
+        }
+        .btn-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+        .vertical-math {
+            display: inline-table;
+            vertical-align: top;
+            text-align: right;
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+        .vertical-math div {
+            padding-right: 5px;
+        }
+        .border-bottom {
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="btn-container">
+    <button onclick="toggleAnswers()">Reveal Practice Answers</button>
+</div>
+
+<div class="page">
+    <div class="header">
+        <div class="header-item">Name: <span class="answer">Student</span></div>
+        <div class="header-item">Date: <span class="answer">Today</span></div>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 20px; font-weight: bold;">Practice Test 7B (Concepts Review)</div>
+
+    <div class="columns">
+        <div class="col">
+            
+            <div class="question">
+                <span class="ref-num">(11)</span>
+                <div class="question-num">1.</div>
+                <div>The library has four hundred twenty books. The students borrowed eighty-five books. How many books are left in the library?</div>
+                <div class="answer">
+                    <br>
+                    \( 420 - 85 = 335 \) books
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">2.</div>
+                <div>Use the digits 3, 4, and 5 once each to make an <strong>odd</strong> number greater than 400.</div>
+                <div class="answer"><br>435 or 453 or 543</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">3.</div>
+                <div>Draw a pattern of circles to show the multiplication of 3 and 5.</div>
+                <canvas id="canvasQ3" width="200" height="80" class="canvas-container"></canvas>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(5)</span>
+                <div class="question-num">4.</div>
+                <div>Jason wrote the date as 10/21/05.</div>
+                <ol type="a">
+                    <li>In what month is the date? <span class="answer">October</span></li>
+                    <li>In what year is the date? <span class="answer">2005</span></li>
+                </ol>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(23)</span>
+                <div class="question-num">5.</div>
+                <div>Draw two perpendicular lines.</div>
+                <canvas id="canvasQ5" width="200" height="80" class="canvas-container"></canvas>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">6.</div>
+                <div>This rectangle is 4 units long and 3 units wide. What is the area of the rectangle?</div>
+                <canvas id="canvasQ6" width="160" height="100" class="canvas-container"></canvas>
+                <div class="answer">Area = \( 4 \times 3 = 12 \) square units</div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            
+            <div class="question">
+                <span class="ref-num">(22)</span>
+                <div class="question-num">7.</div>
+                <div>What fraction of this square is shaded?</div>
+                <canvas id="canvasQ7" width="100" height="100" class="canvas-container"></canvas>
+                <div class="answer">Answer: \( \frac{3}{4} \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(27)</span>
+                <div class="question-num">8.</div>
+                <div>Change this addition problem to a multiplication problem:<br> 
+                \( 7 + 7 + 7 + 7 + 7 \)</div>
+                <div class="answer"><br>\( 7 \times 5 \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(20)</span>
+                <div class="question-num">9.</div>
+                <div>Round 38 to the nearest ten. Round 62 to the nearest ten. Then add the rounded numbers.</div>
+                <div class="answer">
+                    <br>38 \(\rightarrow\) 40<br>
+                    62 \(\rightarrow\) 60<br>
+                    40 + 60 = 100
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(10, 35)</span>
+                <div class="question-num">10.</div>
+                <div>Is the value of 3 quarters and 2 pennies an even number of cents or an odd number of cents?</div>
+                <div class="answer">
+                    <br>\( 75 + 2 = 77 \) cents<br>
+                    Answer: Odd
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 1)</span>
+                <div class="question-num">11.</div>
+                <div>The arrow is pointing to what number on this number line?</div>
+                <canvas id="canvasQ11" width="300" height="60" class="canvas-container"></canvas>
+                <div class="answer" style="text-align:center;">350</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">12.</div>
+                <div>Find the answers:</div>
+                <div style="display:flex; justify-content: space-between;">
+                    <div>a. \( 5 \times 5 \) = <span class="answer">25</span></div>
+                    <div>b. \( 7 \times 7 \) = <span class="answer">49</span></div>
+                    <div>c. \( 9 \times 9 \) = <span class="answer">81</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin: 20px 0; border-top: 1px dashed #aaa;"></div>
+    
+    <div class="columns">
+        <div class="col">
+            <div class="question">
+                <span class="ref-num">(31)</span>
+                <div class="question-num">13.</div>
+                <div>Forty-five is how much less than fifty-four?</div>
+                <div class="answer"><br>\( 54 - 45 = 9 \)</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 3)</span>
+                <div class="question-num">14.</div>
+                <div>Find the square root: \( \sqrt{81} \)</div>
+                <div class="answer"><br>9 (because \( 9 \times 9 = 81 \))</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(Inv. 1)</span>
+                <div class="question-num">15.</div>
+                <div>Compare: \( 25 + 64 \) <span style="display:inline-block; width:30px; border-bottom:1px solid black; text-align:center;" class="answer">=</span> \( 34 + 55 \)</div>
+                <div class="answer" style="font-size: 0.8em;">(Both equal 89)</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-num">16.</div>
+                <div>Find missing number: \( 15 + m = 82 \)</div>
+                <div class="answer"><br>\( m = 67 \)</div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="question">
+                <span class="ref-num">(1)</span>
+                <div class="question-num">17.</div>
+                <div>Find missing number:</div>
+                <div class="vertical-math">
+                    <div>858</div>
+                    <div class="border-bottom">- y</div>
+                    <div>525</div>
+                </div>
+                <span class="answer" style="margin-left: 20px;"> \( y = 333 \)</span>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(35)</span>
+                <div class="question-num">18.</div>
+                <div>Use words to write \( 3 \frac{1}{2} \).</div>
+                <div class="answer"><br>Three and one half</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(34)</span>
+                <div class="question-num">19.</div>
+                <div>Use digits to write two million.</div>
+                <div class="answer"><br>2,000,000</div>
+            </div>
+
+            <div class="question">
+                <span class="ref-num">(30)</span>
+                <div class="question-num">20.</div>
+                <div class="vertical-math">
+                    <div>725</div>
+                    <div class="border-bottom">- 468</div>
+                    <div class="answer">257</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Reveal Button Logic
+    function toggleAnswers() {
+        const answers = document.querySelectorAll('.answer');
+        const btn = document.querySelector('button');
+        
+        let isVisible = false;
+
+        answers.forEach(el => {
+            if (el.classList.contains('visible')) {
+                el.classList.remove('visible');
+                isVisible = false;
+            } else {
+                el.classList.add('visible');
+                isVisible = true;
+            }
+        });
+
+        // Toggle Drawing Answers
+        drawQ3(isVisible);
+        drawQ5(isVisible);
+        
+        btn.textContent = isVisible ? "Hide Practice Answers" : "Reveal Practice Answers";
+    }
+
+    // Canvas Drawing Logic
+    window.onload = function() {
+        drawQ3(false);
+        drawQ5(false);
+        drawQ6();
+        drawQ7();
+        drawQ11();
+    };
+
+    function drawQ3(showAnswer) {
+        const c = document.getElementById("canvasQ3");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
+        
+        if(showAnswer) {
+            ctx.fillStyle = "#d32f2f"; // Red answer color
+            // Draw 3 rows of 5 circles
+            for(let row=0; row<3; row++) {
+                for(let col=0; col<5; col++) {
+                    ctx.beginPath();
+                    ctx.arc(20 + col*25, 20 + row*20, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            }
+        } else {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "#aaa";
+            ctx.fillText("(Draw circles here)", 40, 45);
+        }
+    }
+
+    function drawQ5(showAnswer) {
+        const c = document.getElementById("canvasQ5");
+        const ctx = c.getContext("2d");
+        ctx.clearRect(0,0, c.width, c.height);
+
+        if(showAnswer) {
+            ctx.strokeStyle = "#d32f2f";
+            ctx.lineWidth = 2;
+            // Vertical Line
+            ctx.beginPath();
+            ctx.moveTo(100, 10);
+            ctx.lineTo(100, 70);
+            ctx.stroke();
+            // Horizontal Line
+            ctx.beginPath();
+            ctx.moveTo(70, 40);
+            ctx.lineTo(130, 40);
+            ctx.stroke();
+            
+            // Right angle symbol
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(100, 40, 10, -10);
+        } else {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "#aaa";
+            ctx.fillText("(Draw lines here)", 50, 45);
+        }
+    }
+
+    function drawQ6() {
+        const c = document.getElementById("canvasQ6");
+        const ctx = c.getContext("2d");
+        
+        // 4:3 aspect ratio
+        ctx.strokeRect(20, 20, 120, 60); 
+        
+        ctx.font = "12px Times New Roman";
+        ctx.fillStyle = "black";
+        ctx.fillText("4 cm", 70, 15);
+        ctx.fillText("3 cm", 145, 55);
+    }
+
+    function drawQ7() {
+        const c = document.getElementById("canvasQ7");
+        const ctx = c.getContext("2d");
+        
+        // Draw a square divided into 4 quadrants
+        let size = 60;
+        let startX = 20;
+        let startY = 20;
+        
+        // Shade 3 quadrants
+        ctx.fillStyle = "#ccc";
+        ctx.fillRect(startX, startY, size/2, size/2); // Top left
+        ctx.fillRect(startX + size/2, startY, size/2, size/2); // Top right
+        ctx.fillRect(startX, startY + size/2, size/2, size/2); // Bottom left
+
+        // Draw grid
+        ctx.beginPath();
+        ctx.rect(startX, startY, size, size); // Outer border
+        ctx.moveTo(startX + size/2, startY);
+        ctx.lineTo(startX + size/2, startY + size); // Vertical divider
+        ctx.moveTo(startX, startY + size/2);
+        ctx.lineTo(startX + size, startY + size/2); // Horizontal divider
+        ctx.stroke();
+    }
+
+    function drawQ11() {
+        const c = document.getElementById("canvasQ11");
+        const ctx = c.getContext("2d");
+        
+        let y = 30;
+        // Line
+        ctx.beginPath();
+        ctx.moveTo(20, y);
+        ctx.lineTo(280, y);
+        ctx.stroke();
+
+        // Ticks
+        function drawTick(x, label) {
+            ctx.beginPath();
+            ctx.moveTo(x, y-5);
+            ctx.lineTo(x, y+5);
+            ctx.stroke();
+            ctx.font = "12px Times New Roman";
+            ctx.fillStyle = "black";
+            ctx.fillText(label, x-10, y+20);
+        }
+
+        drawTick(20, "300");
+        drawTick(150, "350"); // Exact Middle
+        drawTick(280, "400");
+
+        // Arrow at 350
+        let arrowX = 150;
+        ctx.strokeStyle = "blue";
+        ctx.beginPath();
+        ctx.moveTo(arrowX, y-15);
+        ctx.lineTo(arrowX, y);
+        ctx.stroke();
+        
+        // Arrowhead
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.moveTo(arrowX, y);
+        ctx.lineTo(arrowX-4, y-8);
+        ctx.lineTo(arrowX+4, y-8);
+        ctx.fill();
+    }
+</script>
+
+</body>
+</html>
