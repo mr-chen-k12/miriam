@@ -3,231 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habitats and Change Study Guide</title>
+    <title>Habitat Heroes Study Quiz</title>
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333;
+            --primary: #4A90E2;
+            --secondary: #50E3C2;
+            --accent: #FFD166;
+            --wrong: #EF476F;
+            --text: #2D3748;
+            --bg: #F7FAFC;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'Verdana', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        header {
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             text-align: center;
-            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
         }
 
         h1 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 10px;
+            font-size: 2rem;
         }
 
-        p.subtitle {
-            color: #666;
-            font-style: italic;
-        }
-
-        /* Grid Layout for Cards */
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        .progress-bar {
             width: 100%;
-            max-width: 1200px;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
-        /* Card Styles */
-        .card {
-            background-color: transparent;
-            width: 100%;
-            height: 250px;
-            perspective: 1000px; /* Essential for 3D flip effect */
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
+        .progress-fill {
             height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 10px;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
-        /* Flip Action */
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
+        /* Question Card Style */
+        .question-box {
+            background-color: #ebf8ff;
+            border: 2px solid var(--primary);
+            color: #2b6cb0;
             padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* Front Style */
-        .card-front {
-            background-color: var(--card-bg);
-            color: var(--primary-color);
-            font-weight: bold;
+            border-radius: 15px;
             font-size: 1.2rem;
-            border: 2px solid #e0e0e0;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        /* Back Style */
-        .card-back {
-            background-color: var(--primary-color);
-            color: white;
-            transform: rotateY(180deg);
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        button {
+            background: white;
+            border: 2px solid #cbd5e0;
+            padding: 15px;
+            border-radius: 12px;
             font-size: 1rem;
-            line-height: 1.5;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Verdana', sans-serif;
+            font-weight: 600;
+            color: var(--text);
         }
 
-        .card-category {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
 
-        /* List styling for back of cards */
-        .card-back ul, .card-back ol {
-            text-align: left;
-            padding-left: 20px;
-            margin: 0;
+        button.correct {
+            background-color: var(--secondary);
+            border-color: #38b2ac;
+            color: white;
         }
 
-        /* Footer instructions */
-        .instructions {
-            margin-top: 30px;
+        button.wrong {
+            background-color: var(--wrong);
+            border-color: #c53030;
+            color: white;
+        }
+
+        .idk-btn {
+            margin-top: 20px;
+            background-color: #EDF2F7;
+            border: none;
+            color: #718096;
             font-size: 0.9rem;
-            color: #777;
+            width: 100%;
         }
+
+        .feedback-area {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        /* Screens */
+        .hidden { display: none; }
+        
+        .start-screen, .end-screen {
+            padding: 20px;
+        }
+
+        .big-btn {
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+            padding: 20px 40px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .big-btn:hover {
+            background-color: #3182ce;
+        }
+
+        .review-btn {
+            background-color: var(--accent);
+            color: #744210;
+        }
+
+        .stat-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Habitats and Change</h1>
-        <p class="subtitle">Study Guide & Key Vocabulary</p>
-    </header>
-
-    <div class="card-container" id="cardDeck">
+    <div class="container">
+        <div id="start-screen" class="start-screen">
+            <h1>🦁 Habitat Heroes!</h1>
+            <p>Master your vocabulary, animal groups, and fossils!</p>
+            <div style="font-size: 3rem; margin: 20px;">🌍🌱🦕</div>
+            <button class="big-btn" onclick="startQuiz(fullDataSet)">Start Quiz</button>
         </div>
 
-    <div class="instructions">Click on a card to flip it to reveal the answer.</div>
-
-    <script>
-        // Data derived from the uploaded images
-        const studyData = [
-            // --- KEY VOCABULARY ---
-            { category: "Vocabulary", term: "Habitat", def: "The natural place where an organism lives." },
-            { category: "Vocabulary", term: "Survive", def: "To stay alive." },
-            { category: "Vocabulary", term: "Adaptation", def: "A body part or behavior that helps a living thing survive." },
-            { category: "Vocabulary", term: "Advantage", def: "A condition that is helpful; makes it easier for an organism to survive." },
-            { category: "Vocabulary", term: "Behavioral Trait", def: "A way an organism behaves, or acts." },
-            { category: "Vocabulary", term: "Ecosystem", def: "All the living and nonliving things in a place and their interactions." },
-            { category: "Vocabulary", term: "Natural Hazard", def: "A natural event that causes negative changes to a habitat or ecosystem." },
-            { category: "Vocabulary", term: "Invasive Species", def: "An organism that causes harm in a place where it does not normally live." },
-            { category: "Vocabulary", term: "Overpopulation", def: "When there are too many of one kind of species in an ecosystem." },
-            { category: "Vocabulary", term: "Migrate", def: "To move from one place to another in different seasons." },
-            { category: "Vocabulary", term: "Climate", def: "The pattern of weather over a long period of time." },
-            { category: "Vocabulary", term: "Respond", def: "To react to a change by doing something." },
-            { category: "Vocabulary", term: "Conserve", def: "To protect from harm. The act of protecting living things and their habitats is called conservation." },
-            { category: "Vocabulary", term: "Conservationist", def: "A person who works to protect plants, animals, habitats, and ecosystems." },
-            { category: "Vocabulary", term: "Restore", def: "To bring back something. When people restore a habitat or population, they repair damage that was done by nature or people." },
-            { category: "Vocabulary", term: "Fossil", def: "The remains of a living thing from long ago, usually formed in layers of rock." },
-            { category: "Vocabulary", term: "Evidence", def: "Information that supports an argument." },
-            { category: "Vocabulary", term: "Decompose", def: "To break down and become part of the environment." },
-            { category: "Vocabulary", term: "Preserve", def: "To keep something in its original form." },
-            { category: "Vocabulary", term: "Extinct", def: "Having no surviving members." },
-            { category: "Vocabulary", term: "Endangered Species", def: "A species that is at risk of becoming extinct within a few years." },
-
-            // --- EXAMPLES OF ADAPTATIONS ---
-            { category: "Adaptations", term: "Adaptation: Fish", def: "Breathe through their gills." },
-            { category: "Adaptations", term: "Adaptation: Ducks", def: "Have oil on their feathers that make the feathers waterproof." },
-            { category: "Adaptations", term: "Adaptation: Giraffes", def: "Have long necks to reach the tops of trees for food." },
-            { category: "Adaptations", term: "Adaptation: Owls", def: "Have large eyes that help them see at night." },
-            { category: "Adaptations", term: "Adaptation: Walruses", def: "Have blubber that helps them keep warm in cold temperatures." },
-
-            // --- NAMES OF ANIMAL GROUPS ---
-            { category: "Animal Groups", term: "Group Name: Lions", def: "Pride<br><br><small>(Female lions hunt, while the male lion stays behind)</small>" },
-            { category: "Animal Groups", term: "Group Name: Dolphins", def: "Pod" },
-            { category: "Animal Groups", term: "Group Name: Fish", def: "School" },
-            { category: "Animal Groups", term: "Group Name: Wildebeests & Elephants", def: "Herd" },
-            { category: "Animal Groups", term: "Group Name: Meerkats", def: "Mob<br><br><small>(Meerkats have different jobs: one watches for predators, others dig)</small>" },
-
-            // --- HUMAN IMPACTS ---
-            { category: "Human Impact", term: "Cutting down trees", def: "Removes food and shelter sources for certain organisms." },
-            { category: "Human Impact", term: "Building and road construction", def: "Removes rainforests and animals may be killed trying to cross the road." },
-            { category: "Human Impact", term: "Building Dams", def: "These can block rivers that salmon depend on for migration." },
-            { category: "Human Impact", term: "Collecting fresh water", def: "Removing water from rivers/lakes can dry them up, affecting organisms that need them for survival." },
-            { category: "Human Impact", term: "Burning materials", def: "Gas gets trapped in Earth's atmosphere causing it to warm up (Global Warming). This can cause Arctic ice to melt." },
-
-            // --- FOSSILS ---
-            { category: "Fossils", term: "Order of Fossil Formation", def: "<ol><li>Plant/animal dies</li><li>Covered in mud</li><li>Soft parts decompose</li><li>Minerals replace hard parts</li><li>Fossil is formed</li></ol>" },
-            { category: "Fossils", term: "Materials that become fossils", def: "<ul><li>Bones</li><li>Shells</li><li>Plants</li></ul>" },
-            { category: "Fossils", term: "Permafrost & Amber", def: "<strong>Permafrost:</strong> Preserves Woolly Mammoths.<br><strong>Amber:</strong> Preserves insects (ants, mosquitoes)." }
-        ];
-
-        const container = document.getElementById('cardDeck');
-
-        studyData.forEach(item => {
-            // Create Card Element
-            const card = document.createElement('div');
-            card.className = 'card';
+        <div id="quiz-screen" class="hidden">
+            <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
             
-            // Create Inner Container
-            const inner = document.createElement('div');
-            inner.className = 'card-inner';
+            <div id="question-text" class="question-box">Loading...</div>
+            
+            <div id="options-container" class="options-grid">
+                </div>
 
-            // Create Front
-            const front = document.createElement('div');
-            front.className = 'card-front';
-            front.innerHTML = `<span class="card-category">${item.category}</span>${item.term}`;
+            <button id="idk-btn" class="idk-btn" onclick="handleIdk()">I don't know this one 🤔</button>
+            
+            <div id="feedback" class="feedback-area"></div>
+            
+            <button id="next-btn" class="big-btn hidden" onclick="nextQuestion()">Next ➡️</button>
+        </div>
 
-            // Create Back
-            const back = document.createElement('div');
-            back.className = 'card-back';
-            back.innerHTML = item.def;
+        <div id="end-screen" class="hidden end-screen">
+            <h1>Quiz Complete! 🎉</h1>
+            <div class="stat-box">
+                <p>✅ Correct: <span id="score-correct">0</span></p>
+                <p>❌ Needs Practice: <span id="score-wrong">0</span></p>
+            </div>
+            
+            <div id="review-section">
+                <p>You missed a few!</p>
+                <button class="big-btn review-btn" onclick="startReviewRound()">🧠 Review the ones I missed</button>
+            </div>
+            
+            <button class="big-btn" onclick="location.reload()" style="margin-top: 15px; background-color: #718096;">Start Over Completely</button>
+        </div>
+    </div>
 
-            // Assemble
-            inner.appendChild(front);
-            inner.appendChild(back);
-            card.appendChild(inner);
-            container.appendChild(card);
+<script>
+    // --- DATA FROM IMAGES ---
+    // Types: 'vocab', 'animal', 'impact', 'fossil' (used for generating smart distractors)
+    const rawData = [
+        // VOCABULARY
+        { type: 'vocab', answer: "Habitat", question: "The natural place where an organism lives." },
+        { type: 'vocab', answer: "Survive", question: "To stay alive." },
+        { type: 'vocab', answer: "Adaptation", question: "A body part or behavior that helps a living thing survive." },
+        { type: 'vocab', answer: "Advantage", question: "A condition that is helpful; makes it easier for an organism to survive." },
+        { type: 'vocab', answer: "Behavioral Trait", question: "A way an organism behaves, or acts." },
+        { type: 'vocab', answer: "Ecosystem", question: "All the living and nonliving things in a place and their interactions." },
+        { type: 'vocab', answer: "Natural Hazard", question: "A natural event that causes negative changes to a habitat or ecosystem." },
+        { type: 'vocab', answer: "Invasive Species", question: "An organism that causes harm in a place where it does not normally live." },
+        { type: 'vocab', answer: "Overpopulation", question: "When there are too many of one kind of species in an ecosystem." },
+        { type: 'vocab', answer: "Migrate", question: "To move from one place to another in different seasons." },
+        { type: 'vocab', answer: "Climate", question: "The pattern of weather over a long period of time." },
+        { type: 'vocab', answer: "Respond", question: "To react to a change by doing something." },
+        { type: 'vocab', answer: "Conserve", question: "To protect from harm (Conservation)." },
+        { type: 'vocab', answer: "Conservationist", question: "A person who works to protect plants, animals, habitats, and ecosystems." },
+        { type: 'vocab', answer: "Restore", question: "To bring back something; repairing damage done by nature or people." },
+        { type: 'vocab', answer: "Fossil", question: "The remains of a living thing from long ago, usually formed in layers of rock." },
+        { type: 'vocab', answer: "Evidence", question: "Information that supports an argument." },
+        { type: 'vocab', answer: "Decompose", question: "To break down and become part of the environment." },
+        { type: 'vocab', answer: "Preserve", question: "To keep something in its original form." },
+        { type: 'vocab', answer: "Extinct", question: "Having no surviving members." },
+        { type: 'vocab', answer: "Endangered Species", question: "A species that is at risk of becoming extinct within a few years." },
+        
+        // ADAPTATION EXAMPLES
+        { type: 'adapt', answer: "Gills", question: "Adaptation: How fish breathe." },
+        { type: 'adapt', answer: "Oily Feathers", question: "Adaptation: Makes ducks waterproof." },
+        { type: 'adapt', answer: "Long Necks", question: "Adaptation: Helps giraffes reach tops of trees for food." },
+        { type: 'adapt', answer: "Large Eyes", question: "Adaptation: Helps owls see at night." },
+        { type: 'adapt', answer: "Blubber", question: "Adaptation: Helps walruses keep warm in cold temperatures." },
 
-            // Add Click Event
-            card.addEventListener('click', function() {
-                this.classList.toggle('flipped');
-            });
+        // ANIMAL GROUPS
+        { type: 'group', answer: "Pride", question: "A group of Lions is called a..." },
+        { type: 'group', answer: "Pod", question: "A group of Dolphins is called a..." },
+        { type: 'group', answer: "School", question: "A group of Fish is called a..." },
+        { type: 'group', answer: "Herd", question: "A group of Wildebeests and Elephants is called a..." },
+        { type: 'group', answer: "Mob", question: "A group of Meerkats is called a..." },
+
+        // HUMAN IMPACTS
+        { type: 'impact', answer: "Cutting down trees", question: "This removes food and shelter sources for certain organisms." },
+        { type: 'impact', answer: "Road construction", question: "Removes rainforests and animals may be killed trying to cross." },
+        { type: 'impact', answer: "Building Dams", question: "These can block rivers that salmon depend on for migration." },
+        { type: 'impact', answer: "Collecting fresh water", question: "Removing this from rivers/lakes can dry them up, hurting organisms." },
+        { type: 'impact', answer: "Global Warming", question: "Caused by burning materials; traps gas in atmosphere and melts Arctic ice." },
+
+        // FOSSILS
+        { type: 'fossil', answer: "Mud", question: "After a plant/animal dies, it must be covered in this to become a fossil." },
+        { type: 'fossil', answer: "Minerals", question: "These replace the hard parts of an animal to form a fossil." },
+        { type: 'fossil', answer: "Permafrost", question: "Woolly Mammoths are often preserved in this frozen ground." },
+        { type: 'fossil', answer: "Amber", question: "Insects like ants and mosquitoes are often preserved in this." }
+    ];
+
+    // --- GAME STATE ---
+    let currentQueue = [];
+    let missedQueue = [];
+    let currentIndex = 0;
+    let fullDataSet = [...rawData]; // Copy of original
+
+    // --- DOM ELEMENTS ---
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const endScreen = document.getElementById('end-screen');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const feedbackText = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+    const idkBtn = document.getElementById('idk-btn');
+    const progressBar = document.getElementById('progress-fill');
+    
+    // --- UTILS ---
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Generate random wrong answers based on category
+    function getDistractors(correctItem) {
+        // Filter items of the same type (or similar)
+        let pool = fullDataSet.filter(item => item.type === correctItem.type && item.answer !== correctItem.answer);
+        
+        // If pool is too small (e.g. groups), borrow from others
+        if (pool.length < 3) {
+            pool = fullDataSet.filter(item => item.answer !== correctItem.answer);
+        }
+
+        shuffleArray(pool);
+        return pool.slice(0, 3).map(i => i.answer);
+    }
+
+    // --- CORE LOGIC ---
+
+    function startQuiz(dataset) {
+        currentQueue = shuffleArray([...dataset]); // Shuffle questions
+        missedQueue = [];
+        currentIndex = 0;
+
+        startScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+
+        loadQuestion();
+    }
+
+    function startReviewRound() {
+        if (missedQueue.length === 0) return;
+        startQuiz(missedQueue);
+    }
+
+    function loadQuestion() {
+        // Reset UI
+        feedbackText.textContent = "";
+        nextBtn.classList.add('hidden');
+        idkBtn.classList.remove('hidden');
+        optionsContainer.innerHTML = "";
+        
+        // Progress Bar
+        const pct = (currentIndex / currentQueue.length) * 100;
+        progressBar.style.width = `${pct}%`;
+
+        if (currentIndex >= currentQueue.length) {
+            endGame();
+            return;
+        }
+
+        const currentItem = currentQueue[currentIndex];
+        questionText.textContent = currentItem.question;
+
+        // Create Options (1 correct + 3 wrong)
+        const wrongAnswers = getDistractors(currentItem);
+        let options = [...wrongAnswers, currentItem.answer];
+        shuffleArray(options);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.textContent = opt;
+            btn.onclick = () => handleAnswer(btn, opt, currentItem);
+            optionsContainer.appendChild(btn);
         });
-    </script>
+    }
+
+    function handleAnswer(btnElement, selectedText, currentItem) {
+        // Disable all buttons
+        const allBtns = optionsContainer.querySelectorAll('button');
+        allBtns.forEach(b => b.disabled = true);
+        idkBtn.classList.add('hidden');
+
+        if (selectedText === currentItem.answer) {
+            // Correct
+            btnElement.classList.add('correct');
+            feedbackText.style.color = "green";
+            feedbackText.textContent = "Correct! Great job! 🎉";
+        } else {
+            // Wrong
+            btnElement.classList.add('wrong');
+            feedbackText.style.color = "#d9534f";
+            feedbackText.textContent = `Not quite! The correct answer was: ${currentItem.answer}`;
+            missedQueue.push(currentItem);
+            
+            // Highlight the correct one
+            allBtns.forEach(b => {
+                if (b.textContent === currentItem.answer) b.classList.add('correct');
+            });
+        }
+
+        nextBtn.classList.remove('hidden');
+    }
+
+    function handleIdk() {
+        const currentItem = currentQueue[currentIndex];
+        const allBtns = optionsContainer.querySelectorAll('button');
+        
+        allBtns.forEach(b => {
+            b.disabled = true;
+            if (b.textContent === currentItem.answer) {
+                b.classList.add('correct');
+            }
+        });
+
+        feedbackText.style.color = "orange";
+        feedbackText.textContent = `No worries! Learn this one: ${currentItem.answer}`;
+        missedQueue.push(currentItem);
+        
+        idkBtn.classList.add('hidden');
+        nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentIndex++;
+        loadQuestion();
+    }
+
+    function endGame() {
+        quizScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+
+        const total = currentQueue.length;
+        const missed = missedQueue.length;
+        const correct = total - missed;
+
+        document.getElementById('score-correct').textContent = correct;
+        document.getElementById('score-wrong').textContent = missed;
+
+        const reviewSection = document.getElementById('review-section');
+        if (missed > 0) {
+            reviewSection.style.display = 'block';
+        } else {
+            reviewSection.style.display = 'none';
+            // Celebration if 100%
+            if(total > 0) document.querySelector('#end-screen h1').textContent = "PERFECT SCORE! 🌟🏆";
+        }
+    }
+
+</script>
 </body>
 </html>
