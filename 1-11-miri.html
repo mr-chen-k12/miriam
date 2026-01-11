@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitat Heroes: Level Select</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #50E3C2;
+            --accent: #FFD166;
+            --wrong: #EF476F;
+            --text: #2D3748;
+            --bg: #F0F4F8;
+            
+            --set1-color: #4299E1; /* Blue for Vocab */
+            --set2-color: #48BB78; /* Green for Animals */
+            --set3-color: #ED8936; /* Orange for Earth/Fossils */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 { margin-bottom: 10px; font-size: 2rem; color: var(--text); }
+        h2 { font-size: 1.5rem; margin-bottom: 20px; color: #718096; }
+
+        /* --- MENU STYLES --- */
+        .menu-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .level-card {
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: left;
+            position: relative;
+            border: none;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .level-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        .set-1 { background: linear-gradient(135deg, #4299E1, #63B3ED); }
+        .set-2 { background: linear-gradient(135deg, #48BB78, #68D391); }
+        .set-3 { background: linear-gradient(135deg, #ED8936, #F6AD55); }
+
+        .level-title { font-size: 1.4rem; font-weight: bold; display: block; }
+        .level-desc { font-size: 0.9rem; opacity: 0.9; }
+        .level-icon { font-size: 2.5rem; }
+
+        /* --- QUIZ STYLES --- */
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background-color: #eee;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-box {
+            background-color: #ebf8ff;
+            border: 3px solid var(--primary);
+            color: #2b6cb0;
+            padding: 25px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        button.option-btn {
+            background: white;
+            border: 2px solid #cbd5e0;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--text);
+            width: 100%;
+        }
+
+        button.option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            background-color: #f7fafc;
+        }
+
+        button.correct { background-color: var(--secondary); border-color: #38b2ac; color: white; }
+        button.wrong { background-color: var(--wrong); border-color: #c53030; color: white; }
+
+        .idk-btn {
+            margin-top: 20px;
+            background-color: #EDF2F7;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            color: #718096;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .feedback-area {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* --- UTILITY --- */
+        .hidden { display: none !important; }
+        
+        .big-btn {
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.3rem;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-top: 15px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .big-btn:hover { opacity: 0.9; }
+
+        .review-btn { background-color: var(--accent); color: #744210; }
+        .home-btn { background-color: #718096; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="menu-screen">
+            <h1>🦁 Habitat Heroes</h1>
+            <p style="color: #718096; margin-bottom: 30px;">Choose a study set to begin!</p>
+            
+            <div class="menu-grid">
+                <button class="level-card set-1" onclick="startLevel(1)">
+                    <div>
+                        <span class="level-title">Set 1: Key Words</span>
+                        <span class="level-desc">Habitat, Ecosystem, Survive...</span>
+                    </div>
+                    <div class="level-icon">📚</div>
+                </button>
+
+                <button class="level-card set-2" onclick="startLevel(2)">
+                    <div>
+                        <span class="level-title">Set 2: Animals</span>
+                        <span class="level-desc">Adaptations & Group Names</span>
+                    </div>
+                    <div class="level-icon">🐘</div>
+                </button>
+
+                <button class="level-card set-3" onclick="startLevel(3)">
+                    <div>
+                        <span class="level-title">Set 3: Earth & History</span>
+                        <span class="level-desc">Fossils & Human Impact</span>
+                    </div>
+                    <div class="level-icon">🌍</div>
+                </button>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span id="level-indicator" style="font-weight:bold; color: #aaa;">Set 1</span>
+                <span id="score-indicator" style="font-weight:bold; color: var(--primary);">0/0</span>
+            </div>
+            
+            <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+            
+            <div id="question-text" class="question-box">Loading...</div>
+            
+            <div id="options-container" class="options-grid">
+                </div>
+
+            <button id="idk-btn" class="idk-btn" onclick="handleIdk()">I don't know this one 🤔</button>
+            
+            <div id="feedback" class="feedback-area"></div>
+            
+            <button id="next-btn" class="big-btn hidden" onclick="nextQuestion()">Next ➡️</button>
+        </div>
+
+        <div id="end-screen" class="hidden">
+            <h1 id="end-title">Set Complete! 🎉</h1>
+            
+            <div style="background: #f7fafc; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                <p style="font-size: 1.2rem;">Correct: <strong id="score-correct" style="color: green;">0</strong></p>
+                <p style="font-size: 1.2rem;">To Review: <strong id="score-wrong" style="color: #EF476F;">0</strong></p>
+            </div>
+            
+            <div id="review-section" class="hidden">
+                <p>You have a few tricky ones to practice!</p>
+                <button class="big-btn review-btn" onclick="startReviewRound()">🧠 Review Mistakes Now</button>
+            </div>
+            
+            <button id="home-btn" class="big-btn home-btn" onclick="goToMenu()">🏠 Back to Main Menu</button>
+        </div>
+
+    </div>
+
+<script>
+    // --- DATA SETS ---
+    const quizSets = {
+        1: [ // VOCABULARY
+            { type: 'vocab', answer: "Habitat", question: "The natural place where an organism lives." },
+            { type: 'vocab', answer: "Survive", question: "To stay alive." },
+            { type: 'vocab', answer: "Ecosystem", question: "All the living and nonliving things in a place and their interactions." },
+            { type: 'vocab', answer: "Natural Hazard", question: "A natural event that causes negative changes to a habitat or ecosystem." },
+            { type: 'vocab', answer: "Invasive Species", question: "An organism that causes harm in a place where it does not normally live." },
+            { type: 'vocab', answer: "Overpopulation", question: "When there are too many of one kind of species in an ecosystem." },
+            { type: 'vocab', answer: "Migrate", question: "To move from one place to another in different seasons." },
+            { type: 'vocab', answer: "Climate", question: "The pattern of weather over a long period of time." },
+            { type: 'vocab', answer: "Respond", question: "To react to a change by doing something." },
+            { type: 'vocab', answer: "Conserve", question: "To protect from harm (Conservation)." },
+            { type: 'vocab', answer: "Restoration", question: "To bring back something; repairing damage done by nature or people." },
+            { type: 'vocab', answer: "Evidence", question: "Information that supports an argument." },
+            { type: 'vocab', answer: "Preserve", question: "To keep something in its original form." },
+            { type: 'vocab', answer: "Extinct", question: "Having no surviving members." },
+            { type: 'vocab', answer: "Endangered Species", question: "A species that is at risk of becoming extinct within a few years." }
+        ],
+        2: [ // ANIMALS & ADAPTATIONS
+            { type: 'group', answer: "Pride", question: "A group of Lions is called a..." },
+            { type: 'group', answer: "Pod", question: "A group of Dolphins is called a..." },
+            { type: 'group', answer: "School", question: "A group of Fish is called a..." },
+            { type: 'group', answer: "Herd", question: "A group of Wildebeests and Elephants is called a..." },
+            { type: 'group', answer: "Mob", question: "A group of Meerkats is called a..." },
+            { type: 'adapt', answer: "Gills", question: "Adaptation: How fish breathe." },
+            { type: 'adapt', answer: "Oily Feathers", question: "Adaptation: Makes ducks waterproof." },
+            { type: 'adapt', answer: "Long Necks", question: "Adaptation: Helps giraffes reach tops of trees for food." },
+            { type: 'adapt', answer: "Large Eyes", question: "Adaptation: Helps owls see at night." },
+            { type: 'adapt', answer: "Blubber", question: "Adaptation: Helps walruses keep warm in cold temperatures." },
+            { type: 'vocab', answer: "Adaptation", question: "A body part or behavior that helps a living thing survive." },
+            { type: 'vocab', answer: "Behavioral Trait", question: "A way an organism behaves, or acts." }
+        ],
+        3: [ // EARTH & HISTORY
+            { type: 'impact', answer: "Cutting down trees", question: "Human Impact: Removes food and shelter sources for certain organisms." },
+            { type: 'impact', answer: "Road construction", question: "Human Impact: Removes rainforests and animals may be killed trying to cross." },
+            { type: 'impact', answer: "Building Dams", question: "Human Impact: These can block rivers that salmon depend on for migration." },
+            { type: 'impact', answer: "Collecting fresh water", question: "Human Impact: Removing this from rivers/lakes can dry them up, hurting organisms." },
+            { type: 'impact', answer: "Global Warming", question: "Caused by burning materials; traps gas in atmosphere and melts Arctic ice." },
+            { type: 'fossil', answer: "Fossil", question: "The remains of a living thing from long ago, usually formed in layers of rock." },
+            { type: 'fossil', answer: "Mud", question: "Step 2 of Fossils: After a plant/animal dies, it must be covered in this." },
+            { type: 'fossil', answer: "Minerals", question: "These replace the hard parts of an animal to form a fossil." },
+            { type: 'fossil', answer: "Permafrost", question: "Woolly Mammoths are often preserved in this frozen ground." },
+            { type: 'fossil', answer: "Amber", question: "Insects like ants and mosquitoes are often preserved in this." },
+            { type: 'vocab', answer: "Decompose", question: "To break down and become part of the environment." }
+        ]
+    };
+
+    // Flatten all data just for finding distractors globally if needed
+    const allData = [...quizSets[1], ...quizSets[2], ...quizSets[3]];
+
+    // --- STATE VARIABLES ---
+    let currentQueue = [];
+    let missedQueue = [];
+    let currentIndex = 0;
+    let currentSetNumber = 1;
+    let isReviewMode = false;
+
+    // --- DOM ELEMENTS ---
+    const menuScreen = document.getElementById('menu-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const endScreen = document.getElementById('end-screen');
+    
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const feedbackText = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+    const idkBtn = document.getElementById('idk-btn');
+    const progressBar = document.getElementById('progress-fill');
+    
+    const levelIndicator = document.getElementById('level-indicator');
+    const scoreIndicator = document.getElementById('score-indicator');
+
+    // --- FUNCTIONS ---
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function goToMenu() {
+        quizScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        menuScreen.classList.remove('hidden');
+    }
+
+    function startLevel(setNum) {
+        currentSetNumber = setNum;
+        isReviewMode = false;
+        
+        // Deep copy the specific set
+        currentQueue = shuffleArray([...quizSets[setNum]]);
+        missedQueue = [];
+        currentIndex = 0;
+
+        // Visual Setup
+        menuScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+        
+        // Update Header Colors based on set
+        let colorVar = `var(--set${setNum}-color)`;
+        document.querySelector('.question-box').style.borderColor = `var(--set${setNum}-color)`;
+        document.querySelector('.question-box').style.color = "#2D3748";
+        levelIndicator.textContent = `Set ${setNum}`;
+        
+        loadQuestion();
+    }
+
+    function startReviewRound() {
+        isReviewMode = true;
+        currentQueue = shuffleArray([...missedQueue]);
+        missedQueue = [];
+        currentIndex = 0;
+        
+        endScreen.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+        levelIndicator.textContent = "Review Mode";
+        
+        loadQuestion();
+    }
+
+    function getDistractors(correctItem) {
+        // Look through ALL data to find wrong answers of similar type
+        let pool = allData.filter(item => item.type === correctItem.type && item.answer !== correctItem.answer);
+        
+        // Fallback if not enough similar types
+        if (pool.length < 3) {
+            pool = allData.filter(item => item.answer !== correctItem.answer);
+        }
+
+        shuffleArray(pool);
+        // Return 3 distinct wrong answers
+        const uniqueOptions = [...new Set(pool.map(i => i.answer))];
+        return uniqueOptions.slice(0, 3);
+    }
+
+    function loadQuestion() {
+        feedbackText.textContent = "";
+        nextBtn.classList.add('hidden');
+        idkBtn.classList.remove('hidden');
+        optionsContainer.innerHTML = "";
+        
+        // Progress
+        const pct = (currentIndex / currentQueue.length) * 100;
+        progressBar.style.width = `${pct}%`;
+        scoreIndicator.textContent = `${currentIndex + 1}/${currentQueue.length}`;
+
+        if (currentIndex >= currentQueue.length) {
+            endGame();
+            return;
+        }
+
+        const currentItem = currentQueue[currentIndex];
+        questionText.textContent = currentItem.question;
+
+        // Options
+        const wrongAnswers = getDistractors(currentItem);
+        let options = [...wrongAnswers, currentItem.answer];
+        shuffleArray(options);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => handleAnswer(btn, opt, currentItem);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function handleAnswer(btnElement, selectedText, currentItem) {
+        const allBtns = optionsContainer.querySelectorAll('button');
+        allBtns.forEach(b => b.disabled = true);
+        idkBtn.classList.add('hidden');
+
+        if (selectedText === currentItem.answer) {
+            btnElement.classList.add('correct');
+            feedbackText.style.color = "green";
+            feedbackText.textContent = "Correct! 🌟";
+        } else {
+            btnElement.classList.add('wrong');
+            feedbackText.style.color = "#EF476F";
+            feedbackText.textContent = `Oops! The answer was: ${currentItem.answer}`;
+            missedQueue.push(currentItem);
+            
+            // Show correct
+            allBtns.forEach(b => {
+                if (b.textContent === currentItem.answer) b.classList.add('correct');
+            });
+        }
+        nextBtn.classList.remove('hidden');
+    }
+
+    function handleIdk() {
+        const currentItem = currentQueue[currentIndex];
+        const allBtns = optionsContainer.querySelectorAll('button');
+        
+        allBtns.forEach(b => {
+            b.disabled = true;
+            if (b.textContent === currentItem.answer) b.classList.add('correct');
+        });
+
+        feedbackText.style.color = "#d69e2e";
+        feedbackText.textContent = `It's okay! The answer is: ${currentItem.answer}`;
+        missedQueue.push(currentItem);
+        
+        idkBtn.classList.add('hidden');
+        nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentIndex++;
+        loadQuestion();
+    }
+
+    function endGame() {
+        quizScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+
+        const total = currentQueue.length;
+        const missed = missedQueue.length;
+        const correct = total - missed;
+
+        document.getElementById('score-correct').textContent = correct;
+        document.getElementById('score-wrong').textContent = missed;
+
+        const reviewSection = document.getElementById('review-section');
+        const homeBtn = document.getElementById('home-btn');
+        const endTitle = document.getElementById('end-title');
+
+        if (missed > 0) {
+            // Must review
+            reviewSection.classList.remove('hidden');
+            homeBtn.classList.add('hidden'); // Force review before going home? Or allow both? 
+            // Let's allow home button but prioritize review visually
+            homeBtn.classList.remove('hidden');
+            homeBtn.style.backgroundColor = "#CBD5E0"; // Make it look secondary
+            endTitle.textContent = "Good Practice! 📚";
+        } else {
+            // Perfect score
+            reviewSection.classList.add('hidden');
+            homeBtn.classList.remove('hidden');
+            homeBtn.style.backgroundColor = "#4A90E2"; // Primary color
+            endTitle.textContent = isReviewMode ? "Review Complete! 🌟" : "Set Aced! 🏆";
+        }
+    }
+
+</script>
+</body>
+</html>
