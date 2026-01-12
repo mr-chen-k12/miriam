@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Homework Solutions</title>
+    <title>Math Homework with Visuals</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -12,14 +12,11 @@
             line-height: 1.6;
             background-color: #f4f4f9;
             color: #333;
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
+        h1 { text-align: center; color: #2c3e50; }
         .page-section {
             background: #fff;
             padding: 20px;
@@ -36,13 +33,19 @@
         .problem-card {
             background: #fafafa;
             border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             border-radius: 6px;
         }
-        .problem-text {
-            font-weight: 500;
-            margin-bottom: 10px;
+        .problem-text { font-weight: 500; margin-bottom: 15px; }
+        .canvas-container {
+            margin: 10px 0;
+            text-align: center; /* Center the canvas */
+        }
+        canvas {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         .answer-btn {
             background-color: #007bff;
@@ -54,41 +57,36 @@
             font-size: 14px;
             transition: background-color 0.3s;
         }
-        .answer-btn:hover {
-            background-color: #0056b3;
-        }
+        .answer-btn:hover { background-color: #0056b3; }
         .answer-panel {
             display: none;
-            margin-top: 10px;
-            padding: 10px;
+            margin-top: 15px;
+            padding: 15px;
             background-color: #e8f5e9;
             border-left: 4px solid #4caf50;
             border-radius: 4px;
-        }
-        .image-placeholder {
-            font-style: italic;
-            color: #666;
-            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
-    <h1>Homework Solutions</h1>
+    <h1>Interactive Homework Solutions</h1>
 
     <div class="page-section">
-        <h2 class="section-title">Set 1 (Questions 1-8)</h2>
+        <h2 class="section-title">Set 1: Fractions, Decimals, & Time</h2>
 
         <div class="problem-card">
             <div class="problem-text">
                 1. The large square represents 1. Write the shaded part of the square:<br>
-                a. as a fraction<br>
-                b. as a decimal number<br>
-                c. using words
+                a. as a fraction &nbsp; b. as a decimal &nbsp; c. using words
+            </div>
+            <div class="canvas-container">
+                <canvas id="canvasQ1" width="200" height="200"></canvas>
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
             <div id="ans1" class="answer-panel">
-                <p><strong>a.</strong> \(\frac{42}{100}\) (or \(\frac{21}{50}\))</p>
+                <p><strong>Visual:</strong> 4 full columns (40) + 2 squares are shaded.</p>
+                <p><strong>a.</strong> \(\frac{42}{100}\) or \(\frac{21}{50}\)</p>
                 <p><strong>b.</strong> \(0.42\)</p>
                 <p><strong>c.</strong> Forty-two hundredths</p>
             </div>
@@ -96,18 +94,18 @@
 
         <div class="problem-card">
             <div class="problem-text">
-                2. Takeshi had a dime, a quarter, and a penny. Write this amount using a dollar sign and a decimal point.
+                2. Takeshi had a dime, a quarter, and a penny. Write this amount using a dollar sign.
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
             <div id="ans2" class="answer-panel">
-                \(10 + 25 + 1 = 36\) cents.<br>
+                \(10\cent + 25\cent + 1\cent = 36\cent\)<br>
                 <strong>Answer:</strong> \(\$0.36\)
             </div>
         </div>
 
         <div class="problem-card">
             <div class="problem-text">
-                3. Donna opened a 1-gallon container of milk and poured 1 quart of milk into a pitcher. How many quarts of milk were left in the 1-gallon container?
+                3. Donna opened a 1-gallon container of milk and poured 1 quart out. How many quarts left?
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans3')">Show Answer</button>
             <div id="ans3" class="answer-panel">
@@ -119,93 +117,60 @@
 
         <div class="problem-card">
             <div class="problem-text">
-                4. Describe the rule for this sequence and find the next three numbers:<br>
-                ..., 4200, 4300, 4400, ___, ___, ___ ...
+                4. Find the next three numbers: ..., 4200, 4300, 4400, ___, ___, ___
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans4')">Show Answer</button>
             <div id="ans4" class="answer-panel">
-                <strong>Rule:</strong> Count up by 100s.<br>
-                <strong>Next numbers:</strong> 4500, 4600, 4700
+                <strong>Answer:</strong> 4500, 4600, 4700
             </div>
         </div>
 
         <div class="problem-card">
             <div class="problem-text">
-                5. Use digits and a comparison symbol to show that the decimal number five tenths equals the fraction one half.
+                6. Ananado fell asleep at the time shown (10:10). His alarm rings 8 hours later. What time is the alarm?
             </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans5')">Show Answer</button>
-            <div id="ans5" class="answer-panel">
-                <strong>Answer:</strong> \(0.5 = \frac{1}{2}\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                6. Ananado fell asleep last night at the time shown on the clock (10:10). His alarm clock was set to ring eight hours later. What time was Ananado's alarm clock set to ring?
+            <div class="canvas-container">
+                <canvas id="canvasQ6" width="200" height="200"></canvas>
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans6')">Show Answer</button>
             <div id="ans6" class="answer-panel">
-                The clock shows 10:10.<br>
-                \(10:10 + 8 \text{ hours} = 18:10\).<br>
-                In 12-hour time, 18:10 is <strong>6:10</strong>.
+                Clock shows 10:10.<br>
+                \(10:10 + 8 \text{ hours} = 18:10\) (military) or <strong>6:10</strong>.
             </div>
         </div>
-
+        
         <div class="problem-card">
-            <div class="problem-text">
-                7. Find the missing factor: \(5w = 45\)
-            </div>
+            <div class="problem-text">7. Find the missing factor: \(5w = 45\)</div>
             <button class="answer-btn" onclick="toggleAnswer('ans7')">Show Answer</button>
-            <div id="ans7" class="answer-panel">
-                \(w = 45 \div 5\)<br>
-                <strong>Answer:</strong> \(w = 9\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                8. The following was marked on the label of a juice container: 2 qt (1.89 L). Use words to write 1.89 L.
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans8')">Show Answer</button>
-            <div id="ans8" class="answer-panel">
-                <strong>Answer:</strong> One and eighty-nine hundredths liters.
-            </div>
+            <div id="ans7" class="answer-panel"><strong>Answer:</strong> \(w = 9\)</div>
         </div>
     </div>
 
     <div class="page-section">
-        <h2 class="section-title">Set 2 (Questions 9-16)</h2>
+        <h2 class="section-title">Set 2: Geometry & Measurement</h2>
 
         <div class="problem-card">
             <div class="problem-text">
                 9. What mixed number is illustrated by these shaded triangles?
             </div>
+            <div class="canvas-container">
+                <canvas id="canvasQ9" width="300" height="150"></canvas>
+            </div>
             <button class="answer-btn" onclick="toggleAnswer('ans9')">Show Answer</button>
             <div id="ans9" class="answer-panel">
-                One whole triangle is shaded, and 3 out of 4 parts of the second triangle are shaded.<br>
+                One full triangle is shaded (1).<br>
+                The second triangle is divided into 4 parts, with 3 shaded (\(\frac{3}{4}\)).<br>
                 <strong>Answer:</strong> \(1 \frac{3}{4}\)
             </div>
         </div>
 
         <div class="problem-card">
             <div class="problem-text">
-                10. Which letter below has no right angles?<br>
-                F &nbsp; E &nbsp; Z &nbsp; L
+                10. Which letter below has no right angles? <strong>F  E  Z  L</strong>
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans10')">Show Answer</button>
             <div id="ans10" class="answer-panel">
-                <strong>Answer:</strong> Z
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                11. Rewrite this addition problem as a multiplication problem:<br>
-                \(\$1.25 + \$1.25 + \$1.25 + \$1.25\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans11')">Show Answer</button>
-            <div id="ans11" class="answer-panel">
-                <strong>Answer:</strong> \(4 \times \$1.25\)
+                <strong>Answer:</strong> Z (It has acute angles, whereas F, E, and L are built on 90° corners).
             </div>
         </div>
 
@@ -213,236 +178,309 @@
             <div class="problem-text">
                 12. How long is the line segment to the nearest quarter inch?
             </div>
+            <div class="canvas-container">
+                <canvas id="canvasQ12" width="400" height="100"></canvas>
+            </div>
             <button class="answer-btn" onclick="toggleAnswer('ans12')">Show Answer</button>
             <div id="ans12" class="answer-panel">
-                The line goes past 1 inch and ends at the third tick mark (3/4).<br>
+                The line extends past the 1-inch mark to the third quarter mark.<br>
                 <strong>Answer:</strong> \(1 \frac{3}{4}\) inches
             </div>
         </div>
 
         <div class="problem-card">
             <div class="problem-text">
-                13. A meter equals how many centimeters?
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans13')">Show Answer</button>
-            <div id="ans13" class="answer-panel">
-                <strong>Answer:</strong> 100
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                14. a. Five dimes are what fraction of a dollar?<br>
-                b. Write the value of five dimes using a dollar sign and a decimal point.
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans14')">Show Answer</button>
-            <div id="ans14" class="answer-panel">
-                <p><strong>a.</strong> \(\frac{50}{100}\) or \(\frac{1}{2}\)</p>
-                <p><strong>b.</strong> \(\$0.50\)</p>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                15. Compare:<br>
-                a. \(0.5\) ___ \(0.50\)<br>
-                b. \(\frac{1}{2}\) ___ \(\frac{1}{4}\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans15')">Show Answer</button>
-            <div id="ans15" class="answer-panel">
-                <p><strong>a.</strong> \(0.5 = 0.50\)</p>
-                <p><strong>b.</strong> \(\frac{1}{2} > \frac{1}{4}\)</p>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                16. Calculate:<br>
-                a. \(3 \times 8\) &nbsp;&nbsp; b. \(3 \times 7\) &nbsp;&nbsp; c. \(3 \times 6\) &nbsp;&nbsp; d. \(3 \times 12\)
+                16. Calculate: a. \(3 \times 8\) b. \(3 \times 7\) c. \(3 \times 6\) d. \(3 \times 12\)
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans16')">Show Answer</button>
             <div id="ans16" class="answer-panel">
-                <p><strong>a.</strong> 24</p>
-                <p><strong>b.</strong> 21</p>
-                <p><strong>c.</strong> 18</p>
-                <p><strong>d.</strong> 36</p>
+                a. 24 &nbsp; b. 21 &nbsp; c. 18 &nbsp; d. 36
             </div>
         </div>
     </div>
 
     <div class="page-section">
-        <h2 class="section-title">Set 3 (Questions 17-24)</h2>
+        <h2 class="section-title">Set 3: Arithmetic</h2>
 
         <div class="problem-card">
-            <div class="problem-text">
-                17. Calculate:<br>
-                a. \(4 \times 8\) &nbsp;&nbsp; b. \(4 \times 7\) &nbsp;&nbsp; c. \(4 \times 6\) &nbsp;&nbsp; d. \(4 \times 12\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans17')">Show Answer</button>
-            <div id="ans17" class="answer-panel">
-                <p><strong>a.</strong> 32</p>
-                <p><strong>b.</strong> 28</p>
-                <p><strong>c.</strong> 24 (Note: Student wrote 28 incorrectly)</p>
-                <p><strong>d.</strong> 48</p>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                18. \(m \times 8 = 64\)
-            </div>
+            <div class="problem-text">18. \(m \times 8 = 64\)</div>
             <button class="answer-btn" onclick="toggleAnswer('ans18')">Show Answer</button>
-            <div id="ans18" class="answer-panel">
-                <strong>Answer:</strong> \(m = 8\)
-            </div>
+            <div id="ans18" class="answer-panel"><strong>Answer:</strong> \(m = 8\)</div>
         </div>
 
         <div class="problem-card">
-            <div class="problem-text">
-                19. \(9 \times n = 54\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans19')">Show Answer</button>
-            <div id="ans19" class="answer-panel">
-                <strong>Answer:</strong> \(n = 6\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                20. \(z + 179 = 496\)
-            </div>
+            <div class="problem-text">20. \(z + 179 = 496\)</div>
             <button class="answer-btn" onclick="toggleAnswer('ans20')">Show Answer</button>
             <div id="ans20" class="answer-panel">
-                \(z = 496 - 179\)<br>
+                Subtract 179 from 496.<br>
                 <strong>Answer:</strong> \(z = 317\)
             </div>
         </div>
-
+        
         <div class="problem-card">
-            <div class="problem-text">
-                21. \(\$3.00 - \$1.84 =\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans21')">Show Answer</button>
-            <div id="ans21" class="answer-panel">
-                <strong>Answer:</strong> \(\$1.16\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                22. \(\$500 - \$167 =\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans22')">Show Answer</button>
-            <div id="ans22" class="answer-panel">
-                <strong>Answer:</strong> \(\$333\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                23. \(w - 297 = 486\)
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans23')">Show Answer</button>
-            <div id="ans23" class="answer-panel">
-                \(w = 486 + 297\)<br>
-                <strong>Answer:</strong> \(w = 783\)
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                24. What are the next four numbers in this counting sequence?<br>
-                ..., 28, 21, 14, ___, ___, ___, ___ ...
-            </div>
+            <div class="problem-text">24. Sequence: 28, 21, 14, ... Find next 4 numbers.</div>
             <button class="answer-btn" onclick="toggleAnswer('ans24')">Show Answer</button>
             <div id="ans24" class="answer-panel">
-                <strong>Rule:</strong> Subtract 7.<br>
-                <strong>Next numbers:</strong> 7, 0, -7, -14 (or stopping at 0 if negative numbers haven't been taught)
+                Subtracting 7 each time.<br>
+                <strong>Answer:</strong> 7, 0, -7, -14
             </div>
         </div>
     </div>
 
     <div class="page-section">
-        <h2 class="section-title">Set 4 (Questions 25-30)</h2>
+        <h2 class="section-title">Set 4: Word Problems</h2>
 
         <div class="problem-card">
-            <div class="problem-text">
-                25. Use digits to write one million, fifty thousand.
-            </div>
+            <div class="problem-text">25. Use digits to write one million, fifty thousand.</div>
             <button class="answer-btn" onclick="toggleAnswer('ans25')">Show Answer</button>
-            <div id="ans25" class="answer-panel">
-                <strong>Answer:</strong> 1,050,000
-            </div>
+            <div id="ans25" class="answer-panel"><strong>Answer:</strong> 1,050,000</div>
         </div>
 
         <div class="problem-card">
             <div class="problem-text">
-                26. If the area of a square is 36 square inches, then how long is each side of the square?
+                26. If the area of a square is 36 square inches, how long is each side?
+            </div>
+            <div class="canvas-container">
+                <canvas id="canvasQ26" width="150" height="150"></canvas>
             </div>
             <button class="answer-btn" onclick="toggleAnswer('ans26')">Show Answer</button>
             <div id="ans26" class="answer-panel">
-                \(s \times s = 36 \implies s = 6\)<br>
-                <strong>Answer:</strong> A (6 in.)
+                Area = Side \(\times\) Side.<br>
+                \(6 \times 6 = 36\).<br>
+                <strong>Answer:</strong> 6 inches.
             </div>
         </div>
 
         <div class="problem-card">
-            <div class="problem-text">
-                27. The distance from Riley's house to school is 1.4 miles. Write 1.4 with words.
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans27')">Show Answer</button>
-            <div id="ans27" class="answer-panel">
-                <strong>Answer:</strong> One and four tenths
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                28. Nieve quickly started and stopped a stopwatch four times. Write these times in order from fastest to slowest:<br>
-                0.27 second, 0.21 second, 0.24 second, 0.20 second.
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans28')">Show Answer</button>
-            <div id="ans28" class="answer-panel">
-                Fastest (smallest number) to slowest:<br>
-                <strong>Answer:</strong> 0.20, 0.21, 0.24, 0.27
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                29. The Washington Monument is 153 feet taller than the City Center building in Nashville, Tennessee, which is 402 feet tall. How tall is the Washington Monument?
-            </div>
+            <div class="problem-text">29. Washington Monument (555ft?) is 153ft taller than City Center (402ft).</div>
             <button class="answer-btn" onclick="toggleAnswer('ans29')">Show Answer</button>
             <div id="ans29" class="answer-panel">
                 \(402 + 153 = 555\)<br>
                 <strong>Answer:</strong> 555 feet
             </div>
         </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                30. The Panther waterfall in Alberta is 600 feet tall. The Fall Creek waterfall in Tennessee is 256 feet tall. How many feet taller is the Panther waterfall? Explain how you found your answer.
-            </div>
-            <button class="answer-btn" onclick="toggleAnswer('ans30')">Show Answer</button>
-            <div id="ans30" class="answer-panel">
-                Subtract the height of Fall Creek from Panther.<br>
-                \(600 - 256 = 344\)<br>
-                <strong>Answer:</strong> 344 feet
-            </div>
-        </div>
     </div>
 
     <script>
+        // Toggle Logic
         function toggleAnswer(id) {
             var answerDiv = document.getElementById(id);
             var btn = answerDiv.previousElementSibling;
             if (answerDiv.style.display === "block") {
                 answerDiv.style.display = "none";
-                btn.innerHTML = "Show Answer";
+                if(btn.tagName === "BUTTON") btn.innerHTML = "Show Answer";
             } else {
                 answerDiv.style.display = "block";
-                btn.innerHTML = "Hide Answer";
+                if(btn.tagName === "BUTTON") btn.innerHTML = "Hide Answer";
             }
+        }
+
+        // DRAWING LOGIC
+        window.onload = function() {
+            drawGridQ1();
+            drawClockQ6();
+            drawTrianglesQ9();
+            drawRulerQ12();
+            drawSquareQ26();
+        };
+
+        function drawGridQ1() {
+            const canvas = document.getElementById('canvasQ1');
+            const ctx = canvas.getContext('2d');
+            const size = 18; // size of small square
+            const offset = 10;
+            
+            // Draw 10x10 Grid
+            for(let x = 0; x < 10; x++) {
+                for(let y = 0; y < 10; y++) {
+                    ctx.beginPath();
+                    ctx.rect(offset + x*size, offset + y*size, size, size);
+                    ctx.strokeStyle = "#333";
+                    ctx.stroke();
+
+                    // Shading Logic: 42 squares
+                    // 4 columns (40) + 2 squares in 5th column
+                    let squareIndex = x * 10 + y; 
+                    // Note: The problem usually fills columns left to right
+                    // Column 0-3 are full (0-9, 10-19, 20-29, 30-39) -> 40 squares
+                    // Column 4 has 2 squares (40, 41)
+                    if (x < 4 || (x === 4 && y < 2)) {
+                        ctx.fillStyle = "#888";
+                        ctx.fill();
+                        ctx.stroke(); // re-stroke border
+                    }
+                }
+            }
+        }
+
+        function drawClockQ6() {
+            const canvas = document.getElementById('canvasQ6');
+            const ctx = canvas.getContext('2d');
+            const centerX = 100;
+            const centerY = 100;
+            const radius = 80;
+
+            // Face
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Ticks
+            for(let i = 0; i < 12; i++) {
+                let angle = (i - 3) * (Math.PI * 2) / 12;
+                let x1 = centerX + Math.cos(angle) * (radius - 10);
+                let y1 = centerY + Math.sin(angle) * (radius - 10);
+                let x2 = centerX + Math.cos(angle) * (radius - 2);
+                let y2 = centerY + Math.sin(angle) * (radius - 2);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+
+            // Time: 10:10
+            // Hour hand (at 10, slightly past)
+            // 10 o'clock is 300 degrees. plus 10/60 * 30 degrees = 5 degrees.
+            // In radians: 300 deg = 5.23 rad.
+            drawHand(ctx, centerX, centerY, 305 * Math.PI/180 - Math.PI/2, radius * 0.5, 5);
+
+            // Minute hand (at 2)
+            // 2 o'clock = 60 degrees.
+            drawHand(ctx, centerX, centerY, 60 * Math.PI/180 - Math.PI/2, radius * 0.8, 3);
+        }
+
+        function drawHand(ctx, cx, cy, angle, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * length, cy + Math.sin(angle) * length);
+            ctx.stroke();
+        }
+
+        function drawTrianglesQ9() {
+            const canvas = document.getElementById('canvasQ9');
+            const ctx = canvas.getContext('2d');
+            
+            // Helper to draw triangle
+            function drawTri(x, y, s, filled) {
+                ctx.beginPath();
+                // Equilateral triangle math
+                const h = s * (Math.sqrt(3)/2);
+                ctx.moveTo(x, y + h); // bottom left
+                ctx.lineTo(x + s, y + h); // bottom right
+                ctx.lineTo(x + s/2, y); // top
+                ctx.closePath();
+                
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#333";
+                ctx.stroke();
+                
+                if(filled) {
+                    ctx.fillStyle = "#999";
+                    ctx.fill();
+                }
+            }
+
+            // Triangle 1 (Full)
+            drawTri(20, 20, 100, true);
+
+            // Triangle 2 (Mixed)
+            // Draw large outline
+            drawTri(150, 20, 100, false);
+            
+            // To simulate the 3 shaded small triangles inside:
+            // Top small
+            // We can actually just draw 3 small filled triangles to form the shape
+            let s = 100; // full size
+            let h = s * (Math.sqrt(3)/2);
+            let halfS = s/2;
+            let halfH = h/2;
+            
+            // Offset for second triangle group
+            let offX = 150; 
+            let offY = 20;
+
+            // Draw 3 small filled triangles
+            // Top
+            drawTri(offX + s/4, offY, halfS, true);
+            // Bottom Left
+            drawTri(offX, offY + halfH, halfS, true);
+            // Bottom Right
+            drawTri(offX + halfS, offY + halfH, halfS, true);
+        }
+
+        function drawRulerQ12() {
+            const canvas = document.getElementById('canvasQ12');
+            const ctx = canvas.getContext('2d');
+            
+            const startX = 20;
+            const startY = 60;
+            const ppi = 80; // pixels per inch
+            const rulerHeight = 30;
+
+            // Draw Ruler Box
+            ctx.beginPath();
+            ctx.rect(startX, startY, ppi * 3, rulerHeight); // Draw 3 inches worth
+            ctx.fillStyle = "#f0f0f0";
+            ctx.fill();
+            ctx.stroke();
+
+            // Ticks
+            for(let i = 0; i <= 3 * 4; i++) { // quarter inches
+                let x = startX + i * (ppi/4);
+                let tickH = 10;
+                if(i % 4 === 0) tickH = 20; // Inch mark
+                else if(i % 2 === 0) tickH = 15; // Half inch
+                
+                ctx.beginPath();
+                ctx.moveTo(x, startY);
+                ctx.lineTo(x, startY + tickH);
+                ctx.stroke();
+                
+                // Numbers
+                if(i % 4 === 0 && i/4 > 0 && i/4 < 3) {
+                   ctx.fillStyle = "black";
+                   ctx.font = "12px Arial";
+                   ctx.fillText(i/4, x - 3, startY + 25);
+                }
+            }
+            
+            // Draw the Line Segment being measured
+            ctx.beginPath();
+            ctx.moveTo(startX, startY - 10);
+            // 1.75 inches
+            ctx.lineTo(startX + 1.75 * ppi, startY - 10); 
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#d32f2f"; // Red line
+            ctx.lineCap = "round";
+            ctx.stroke();
+        }
+
+        function drawSquareQ26() {
+            const canvas = document.getElementById('canvasQ26');
+            const ctx = canvas.getContext('2d');
+            
+            const side = 80;
+            const x = 35;
+            const y = 35;
+
+            ctx.beginPath();
+            ctx.rect(x, y, side, side);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#333";
+            ctx.fillStyle = "#e3f2fd";
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = "#333";
+            ctx.font = "14px Arial";
+            ctx.fillText("Area = 36", x + 10, y + 45);
+            ctx.fillText("?", x - 15, y + 45);
+            ctx.fillText("?", x + 35, y + side + 20);
         }
     </script>
 </body>
