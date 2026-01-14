@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f5f6fa;
+            --text: #2c3e50;
+            --accent: #27ae60;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #eef2f7;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .section-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            padding: 5px 0;
+        }
+        .canvas-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            background: white;
+        }
+        .reveal-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .reveal-btn:hover {
+            background-color: #357abd;
+        }
+        .answer-panel {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            border: 1px solid #c8e6c9;
+        }
+        .answer-panel.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        .correct-answer {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1>Math Worksheet Review</h1>
+        <p>Interactive solutions with explanations. Click "Show Answer" to review.</p>
+    </div>
+
+    <div class="section-header">
+        <h2>Section 1: Measurement & Data</h2>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">
+                25. Which of these metric units would probably be used to describe the height of a tree?
+            </div>
+            <ul class="options">
+                <li><strong>A</strong> millimeters</li>
+                <li><strong>B</strong> centimeters</li>
+                <li><strong>C</strong> meters</li>
+                <li><strong>D</strong> kilometers</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer('a25')">Show Answer</button>
+            <div id="a25" class="answer-panel">
+                <p><span class="correct-answer">Answer: C (meters)</span></p>
+                <p><strong>Explanation:</strong> Trees are typically large objects, often ranging from 5 to 50 meters tall. Millimeters and centimeters are too small (used for bugs or paper), and kilometers are too large (used for driving distances).</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="question-text">
+                26. Emily has a 2-liter bottle full of water and an empty half-gallon carton. She knows 1 liter is a little more than 1 quart. If she pours water from the bottle into the carton, what will happen?
+            </div>
+            <ul class="options">
+                <li><strong>A</strong> The bottle will be empty before the carton is full.</li>
+                <li><strong>B</strong> The carton will be full before the bottle is empty.</li>
+                <li><strong>C</strong> When the carton is full, the bottle will be empty.</li>
+                <li><strong>D</strong> The carton will be empty, and the bottle will be full.</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer('a26')">Show Answer</button>
+            <div id="a26" class="answer-panel">
+                <p><span class="correct-answer">Answer: B</span></p>
+                <p><strong>Explanation:</strong> 
+                <br>1 half-gallon = 2 quarts.
+                <br>We know 1 liter > 1 quart.
+                <br>Therefore, 2 liters > 2 quarts.
+                <br>Since the bottle holds more than the carton, the carton will fill up and there will still be water left in the bottle.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            27. Here is a list of selling prices for five houses. Arrange the prices in order from highest selling price to lowest selling price.
+            <br><br>
+            $179,500<br>
+            $248,000<br>
+            $219,000<br>
+            $315,000<br>
+            $232,000
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a27')">Show Answer</button>
+        <div id="a27" class="answer-panel">
+            <p><span class="correct-answer">Answer: $315,000, $248,000, $232,000, $219,000, $179,500</span></p>
+            <p><strong>Explanation:</strong> Look at the hundred-thousands place first, then the ten-thousands place to compare values.</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">
+                28. Which group of decimal numbers is arranged in order from least to greatest?
+            </div>
+            <ul class="options">
+                <li><strong>A</strong> 0.23, 0.21, 0.25</li>
+                <li><strong>B</strong> 0.25, 0.23, 0.21</li>
+                <li><strong>C</strong> 0.21, 0.23, 0.25</li>
+                <li><strong>D</strong> 0.21, 0.25, 0.23</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer('a28')">Show Answer</button>
+            <div id="a28" class="answer-panel">
+                <p><span class="correct-answer">Answer: C</span></p>
+                <p><strong>Explanation:</strong> Compare the digits in the hundredths place: 1 < 3 < 5. Thus, 0.21 < 0.23 < 0.25.</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="question-text">
+                29. Three broken spaghetti pieces are \(1\frac{1}{2}\) inches, \(2\) inches, and \(2\frac{1}{4}\) inches long. If two of the three pieces are lined up end to end, what are all the possible combined lengths?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('a29')">Show Answer</button>
+            <div id="a29" class="answer-panel">
+                <p><span class="correct-answer">Answers: \(3\frac{1}{2}\) inches, \(3\frac{3}{4}\) inches, \(4\frac{1}{4}\) inches</span></p>
+                <p><strong>Explanation:</strong> Calculate all pairs:
+                <br>1. \(1\frac{1}{2} + 2 = 3\frac{1}{2}\)
+                <br>2. \(1\frac{1}{2} + 2\frac{1}{4} = 1\frac{2}{4} + 2\frac{1}{4} = 3\frac{3}{4}\)
+                <br>3. \(2 + 2\frac{1}{4} = 4\frac{1}{4}\)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            30. Ra'Shawn ran a 100-meter dash in 16.5 seconds. Sabrina ran 0.4 seconds faster. What was Sabrina's time? Explain why your answer is reasonable.
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a30')">Show Answer</button>
+        <div id="a30" class="answer-panel">
+            <p><span class="correct-answer">Answer: 16.1 seconds</span></p>
+            <p><strong>Explanation:</strong> "Faster" means a smaller amount of time. 
+            \[16.5 - 0.4 = 16.1\]
+            <strong>Reasonableness:</strong> Since she was faster, her time should be less than Ra'Shawn's. 16.1 is slightly less than 16.5, so it makes sense.</p>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Section 2: Operations & Algebra</h2>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">17. \( \$5.00 - \$3.79 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a17')">Show Answer</button>
+            <div id="a17" class="answer-panel">
+                <p><span class="correct-answer">$1.21</span></p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">18. \( 6 \times 80 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a18')">Show Answer</button>
+            <div id="a18" class="answer-panel">
+                <p><span class="correct-answer">480</span></p>
+                <p>Basic fact: \(6 \times 8 = 48\), add a zero.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">19. \( 4 \times 300 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a19')">Show Answer</button>
+            <div id="a19" class="answer-panel">
+                <p><span class="correct-answer">1200</span></p>
+                <p>Basic fact: \(4 \times 3 = 12\), add two zeros.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">20. \( 7 \times 90 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a20')">Show Answer</button>
+            <div id="a20" class="answer-panel">
+                <p><span class="correct-answer">630</span></p>
+                <p>Basic fact: \(7 \times 9 = 63\), add a zero.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">21. Solve for n: \( 8n = 32 \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a21')">Show Answer</button>
+            <div id="a21" class="answer-panel">
+                <p><span class="correct-answer">n = 4</span></p>
+                <p>Divide both sides by 8: \(32 \div 8 = 4\).</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">22. \( \sqrt{100} \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a22')">Show Answer</button>
+            <div id="a22" class="answer-panel">
+                <p><span class="correct-answer">10</span></p>
+                <p>Because \(10 \times 10 = 100\).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            23. Draw a line segment that is 2 inches long. Measure it with a centimeter ruler. Two inches is about how many centimeters?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a23')">Show Answer</button>
+        <div id="a23" class="answer-panel">
+            <p><span class="correct-answer">About 5 cm (specifically ~5.1 cm)</span></p>
+            <p>Note: 1 inch is approximately 2.54 cm. \(2 \times 2.54 = 5.08\).</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            24. The population of the city was about 1,080,000. Use words to write that number.
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a24')">Show Answer</button>
+        <div id="a24" class="answer-panel">
+            <p><span class="correct-answer">One million, eighty thousand.</span></p>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Section 3: Time & Number Sense</h2>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            9. The clock shows the time Santo arrived at school. He woke up at 6:05 a.m. How long after waking up did Santo arrive?
+        </div>
+        <div class="canvas-container">
+            <canvas id="clockCanvas" width="200" height="200"></canvas>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a9')">Show Answer</button>
+        <div id="a9" class="answer-panel">
+            <p><span class="correct-answer">2 hours and 5 minutes</span></p>
+            <p><strong>Explanation:</strong> The clock shows 8:10.
+            <br>6:05 to 8:05 is 2 hours.
+            <br>8:05 to 8:10 is 5 minutes.
+            <br>Total: 2 hours 5 min.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            10. To what number is the arrow pointing?
+        </div>
+        <div class="canvas-container">
+            <canvas id="lineCanvas" width="500" height="100"></canvas>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('a10')">Show Answer</button>
+        <div id="a10" class="answer-panel">
+            <p><span class="correct-answer">153</span></p>
+            <p>The scale starts at 150. Each tick mark represents 1 unit. The arrow is on the 3rd tick mark after 150.</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">11. \( 2.45 + 4.50 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a11')">Show Answer</button>
+            <div id="a11" class="answer-panel"><span class="correct-answer">6.95</span></div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">12. \( \$3.25 - \$2.47 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a12')">Show Answer</button>
+            <div id="a12" class="answer-panel"><span class="correct-answer">$0.78</span></div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">13. \( \$2.15 + \$3 + \$0.70 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a13')">Show Answer</button>
+            <div id="a13" class="answer-panel"><span class="correct-answer">$5.85</span></div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">14. \( 3.75 - 2.50 = \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a14')">Show Answer</button>
+            <div id="a14" class="answer-panel"><span class="correct-answer">1.25</span></div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">15. \( 507 - n = 456 \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a15')">Show Answer</button>
+            <div id="a15" class="answer-panel">
+                <p><span class="correct-answer">n = 51</span></p>
+                <p>\(507 - 456 = 51\)</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">16. \( n - 207 = 423 \)</div>
+            <button class="reveal-btn" onclick="toggleAnswer('a16')">Show Answer</button>
+            <div id="a16" class="answer-panel">
+                <p><span class="correct-answer">n = 630</span></p>
+                <p>Add 207 to 423 to find n.
+                <br>\(423 + 207 = 630\).
+                <br><em>(Note: The student work in the image was incorrect on this problem).</em></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Section 4: Word Problems & Geometry</h2>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">1. 100 pennies are separated into two piles. One pile has 35 pennies. How many in the other?</div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q1')">Show Answer</button>
+            <div id="s4q1" class="answer-panel">
+                <p><span class="correct-answer">65 pennies</span></p>
+                <p>\(100 - 35 = 65\)</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">2. Juan opened a 3.78 liter bottle of milk. He poured out 1.50 liters. How many liters left?</div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q2')">Show Answer</button>
+            <div id="s4q2" class="answer-panel">
+                <p><span class="correct-answer">2.28 liters</span></p>
+                <p>\(3.78 - 1.50 = 2.28\)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            3. San Francisco is 400 miles north of LA. Santa Barbara is 110 miles north of LA. Stephen drove from LA to Santa Barbara. How many miles does he still have to drive to reach San Francisco?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('s4q3')">Show Answer</button>
+        <div id="s4q3" class="answer-panel">
+            <p><span class="correct-answer">290 miles</span></p>
+            <p>Total distance (400) minus distance already traveled (110). \(400 - 110 = 290\).</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">
+                4. Draw a rectangle that is 3 cm long and 3 cm wide.<br>
+                a. What is the perimeter?<br>
+                b. What is the area?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q4')">Show Answer</button>
+            <div id="s4q4" class="answer-panel">
+                <p><strong>a. Perimeter:</strong> <span class="correct-answer">12 cm</span> (\(3+3+3+3\))</p>
+                <p><strong>b. Area:</strong> <span class="correct-answer">9 sq cm</span> (\(3 \times 3\))</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">
+                5. Round 572 to:<br>
+                a. The nearest hundred.<br>
+                b. The nearest ten.
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q5')">Show Answer</button>
+            <div id="s4q5" class="answer-panel">
+                <p><strong>a. Nearest Hundred:</strong> <span class="correct-answer">600</span> (7 is \(\ge 5\))</p>
+                <p><strong>b. Nearest Ten:</strong> <span class="correct-answer">570</span> (2 is \(< 5\))</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">
+            6. Write the shaded part of this square (10x10 grid with 30 squares shaded) as:<br>
+            a. a fraction<br>
+            b. a decimal number<br>
+            c. using words
+        </div>
+        <div class="canvas-container">
+            <canvas id="grid100" width="150" height="150"></canvas>
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('s4q6')">Show Answer</button>
+        <div id="s4q6" class="answer-panel">
+            <p><strong>a. Fraction:</strong> 30/100 or 3/10</p>
+            <p><strong>b. Decimal:</strong> 0.30 or 0.3</p>
+            <p><strong>c. Words:</strong> Thirty hundredths or Three tenths</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="question-text">
+                7. Are the rails of a railroad track parallel or perpendicular?
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q7')">Show Answer</button>
+            <div id="s4q7" class="answer-panel">
+                <p><span class="correct-answer">Parallel</span></p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <div class="question-text">
+                8. Draw a square to show \(3 \times 3\). Then shade two ninths of the square.
+            </div>
+            <div class="canvas-container">
+                <canvas id="grid3" width="100" height="100"></canvas>
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('s4q8')">Show Answer</button>
+            <div id="s4q8" class="answer-panel">
+                <p><span class="correct-answer">See diagram above (2 of 9 squares shaded).</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('visible')) {
+                el.classList.remove('visible');
+                // Optional: Change button text back if needed
+            } else {
+                el.classList.add('visible');
+            }
+        }
+
+        // --- DRAWING FUNCTIONS ---
+
+        // 1. Clock (Problem 9)
+        function drawClock() {
+            const canvas = document.getElementById('clockCanvas');
+            const ctx = canvas.getContext('2d');
+            const radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            const r = radius * 0.90;
+
+            // Face
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+
+            // Numbers
+            ctx.font = r * 0.2 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            ctx.fillStyle = '#333';
+            for(let num = 1; num <= 12; num++){
+                let ang = num * Math.PI / 6;
+                ctx.rotate(ang);
+                ctx.translate(0, -r * 0.85);
+                ctx.rotate(-ang);
+                ctx.fillText(num.toString(), 0, 0);
+                ctx.rotate(ang);
+                ctx.translate(0, r * 0.85);
+                ctx.rotate(-ang);
+            }
+
+            // Time: 8:10
+            let hour = 8;
+            let minute = 10;
+            
+            // Hour hand
+            let hourAng = (hour*Math.PI/6) + (minute*Math.PI/(6*60));
+            drawHand(ctx, hourAng, r*0.5, 4);
+
+            // Minute hand
+            let minuteAng = (minute*Math.PI/30);
+            drawHand(ctx, minuteAng, r*0.8, 3);
+        }
+
+        function drawHand(ctx, pos, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0,0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        // 2. Number Line (Problem 10)
+        function drawLine() {
+            const canvas = document.getElementById('lineCanvas');
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const y = h/2;
+
+            // Main line
+            ctx.beginPath();
+            ctx.moveTo(20, y);
+            ctx.lineTo(w-20, y);
+            ctx.stroke();
+
+            // Arrows at ends
+            ctx.fillText("◄", 10, y+4);
+            ctx.fillText("►", w-15, y+4);
+
+            // Ticks (150 to 170) -> 20 units
+            // Let's divide the width into 20 segments
+            const startX = 40;
+            const endX = w - 40;
+            const step = (endX - startX) / 20;
+
+            for (let i = 0; i <= 20; i++) {
+                let x = startX + (i * step);
+                let val = 150 + i;
+                
+                // Tick height
+                let tickH = (val % 10 === 0) ? 15 : 8;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y - tickH/2);
+                ctx.lineTo(x, y + tickH/2);
+                ctx.stroke();
+
+                // Labels
+                if (val % 10 === 0) {
+                    ctx.fillStyle = "black";
+                    ctx.font = "12px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText(val, x, y + 25);
+                }
+
+                // Arrow at 153 (Problem asks for 153)
+                if (val === 153) {
+                    ctx.fillStyle = "red";
+                    ctx.font = "20px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("↓", x, y - 10);
+                }
+            }
+        }
+
+        // 3. 10x10 Grid (Problem 6)
+        function drawGrid100() {
+            const canvas = document.getElementById('grid100');
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width / 10;
+
+            for (let row = 0; row < 10; row++) {
+                for (let col = 0; col < 10; col++) {
+                    ctx.beginPath();
+                    ctx.rect(col * size, row * size, size, size);
+                    ctx.strokeStyle = "#999";
+                    ctx.stroke();
+
+                    // Shade bottom 3 rows (indices 7, 8, 9)
+                    if (row >= 7) {
+                        ctx.fillStyle = "#aaa";
+                        ctx.fill();
+                        ctx.stroke(); // stroke again to keep grid lines visible
+                    }
+                }
+            }
+        }
+
+        // 4. 3x3 Grid (Problem 8)
+        function drawGrid3() {
+            const canvas = document.getElementById('grid3');
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width / 3;
+
+            let count = 0;
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    ctx.beginPath();
+                    ctx.rect(col * size, row * size, size, size);
+                    ctx.strokeStyle = "#333";
+                    ctx.stroke();
+
+                    // Shade 2 squares (e.g., first 2)
+                    if (count < 2) {
+                        ctx.fillStyle = "#aaa";
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+                    count++;
+                }
+            }
+        }
+
+        // Init
+        window.onload = function() {
+            drawClock();
+            drawLine();
+            drawGrid100();
+            drawGrid3();
+        };
+    </script>
+</body>
+</html>
