@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decimal & Fraction Grid Practice</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    :root {
+        --primary: #4a90e2;
+        --correct: #27ae60;
+        --wrong: #c0392b;
+        --bg: #f9fbfd;
+    }
+    body {
+        font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, sans-serif; /* Kid-friendly font */
+        background-color: var(--bg);
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+    p.instructions {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.1em;
+    }
+    .problem-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        border: 2px solid #e1e8ed;
+    }
+    .question-text {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .canvas-container {
+        display: flex;
+        justify-content: center;
+        margin: 15px 0;
+    }
+    canvas {
+        border: 2px solid #333;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    .option-btn {
+        background: #f0f4f8;
+        border: 2px solid #d1d9e6;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+    .option-btn:hover {
+        background: #e1e8ed;
+        border-color: var(--primary);
+    }
+    .option-btn.selected {
+        background: #d4ebf9;
+        border-color: var(--primary);
+        font-weight: bold;
+    }
+    .option-btn input {
+        margin-right: 10px;
+        transform: scale(1.3);
+    }
+    .check-btn {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .check-btn:hover {
+        background-color: #357abd;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        display: none;
+        text-align: center;
+    }
+    .feedback.correct {
+        background-color: #d5f5e3;
+        color: var(--correct);
+        border: 1px solid var(--correct);
+        display: block;
+    }
+    .feedback.wrong {
+        background-color: #fadbd8;
+        color: var(--wrong);
+        border: 1px solid var(--wrong);
+        display: block;
+    }
+</style>
+</head>
+<body>
+
+    <h1>Hundreds Grid Challenge!</h1>
+    <p class="instructions">Look at the 10x10 grids below. Each large square represents 1 whole (100 blocks). <br>Select the correct fraction, decimal, or word form.</p>
+
+    <div class="problem-card" id="p1">
+        <div class="question-text">1. What decimal number is shown by the shaded part?</div>
+        <div class="canvas-container">
+            <canvas id="c1" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q1" value="A"> A) 0.04</label>
+            <label class="option-btn"><input type="radio" name="q1" value="B"> B) 0.40</label>
+            <label class="option-btn"><input type="radio" name="q1" value="C"> C) 4.0</label>
+            <label class="option-btn"><input type="radio" name="q1" value="D"> D) 0.14</label>
+        </div>
+        <button class="check-btn" onclick="check(1, 'B')">Check Answer</button>
+        <div id="f1" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p2">
+        <div class="question-text">2. Which fraction represents the shaded area?</div>
+        <div class="canvas-container">
+            <canvas id="c2" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q2" value="A"> A) \( \frac{75}{10} \)</label>
+            <label class="option-btn"><input type="radio" name="q2" value="B"> B) \( \frac{7}{100} \)</label>
+            <label class="option-btn"><input type="radio" name="q2" value="C"> C) \( \frac{75}{100} \)</label>
+            <label class="option-btn"><input type="radio" name="q2" value="D"> D) \( \frac{25}{100} \)</label>
+        </div>
+        <button class="check-btn" onclick="check(2, 'C')">Check Answer</button>
+        <div id="f2" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p3">
+        <div class="question-text">3. How do you write this amount in words?</div>
+        <div class="canvas-container">
+            <canvas id="c3" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q3" value="A"> A) Nine tenths</label>
+            <label class="option-btn"><input type="radio" name="q3" value="B"> B) Nine hundredths</label>
+            <label class="option-btn"><input type="radio" name="q3" value="C"> C) Ninety hundredths</label>
+            <label class="option-btn"><input type="radio" name="q3" value="D"> D) Nine thousandths</label>
+        </div>
+        <button class="check-btn" onclick="check(3, 'B')">Check Answer</button>
+        <div id="f3" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p4">
+        <div class="question-text">4. Which decimal matches the shaded picture?</div>
+        <div class="canvas-container">
+            <canvas id="c4" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q4" value="A"> A) 0.5</label>
+            <label class="option-btn"><input type="radio" name="q4" value="B"> B) 0.05</label>
+            <label class="option-btn"><input type="radio" name="q4" value="C"> C) 0.55</label>
+            <label class="option-btn"><input type="radio" name="q4" value="D"> D) 5.0</label>
+        </div>
+        <button class="check-btn" onclick="check(4, 'B')">Check Answer</button>
+        <div id="f4" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p5">
+        <div class="question-text">5. Identify the correct fraction.</div>
+        <div class="canvas-container">
+            <canvas id="c5" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q5" value="A"> A) \( \frac{10}{100} \)</label>
+            <label class="option-btn"><input type="radio" name="q5" value="B"> B) \( \frac{100}{100} \)</label>
+            <label class="option-btn"><input type="radio" name="q5" value="C"> C) \( \frac{1}{100} \)</label>
+            <label class="option-btn"><input type="radio" name="q5" value="D"> D) \( \frac{10}{10} \)</label>
+        </div>
+        <button class="check-btn" onclick="check(5, 'A')">Check Answer</button>
+        <div id="f5" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p6">
+        <div class="question-text">6. What decimal is equivalent to the shaded part?</div>
+        <div class="canvas-container">
+            <canvas id="c6" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q6" value="A"> A) 0.23</label>
+            <label class="option-btn"><input type="radio" name="q6" value="B"> B) 0.32</label>
+            <label class="option-btn"><input type="radio" name="q6" value="C"> C) 2.3</label>
+            <label class="option-btn"><input type="radio" name="q6" value="D"> D) 0.023</label>
+        </div>
+        <button class="check-btn" onclick="check(6, 'A')">Check Answer</button>
+        <div id="f6" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p7">
+        <div class="question-text">7. Select the correct word form.</div>
+        <div class="canvas-container">
+            <canvas id="c7" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q7" value="A"> A) Sixty-two tenths</label>
+            <label class="option-btn"><input type="radio" name="q7" value="B"> B) Sixty-two hundredths</label>
+            <label class="option-btn"><input type="radio" name="q7" value="C"> C) Six and two tenths</label>
+            <label class="option-btn"><input type="radio" name="q7" value="D"> D) Two hundredths</label>
+        </div>
+        <button class="check-btn" onclick="check(7, 'B')">Check Answer</button>
+        <div id="f7" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p8">
+        <div class="question-text">8. What is the value of the shaded area?</div>
+        <div class="canvas-container">
+            <canvas id="c8" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q8" value="A"> A) 0.99</label>
+            <label class="option-btn"><input type="radio" name="q8" value="B"> B) 0.90</label>
+            <label class="option-btn"><input type="radio" name="q8" value="C"> C) 0.09</label>
+            <label class="option-btn"><input type="radio" name="q8" value="D"> D) 0.19</label>
+        </div>
+        <button class="check-btn" onclick="check(8, 'A')">Check Answer</button>
+        <div id="f8" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p9">
+        <div class="question-text">9. Which two forms correctly represent this picture?</div>
+        <div class="canvas-container">
+            <canvas id="c9" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q9" value="A"> A) \( \frac{50}{100} \) and 0.05</label>
+            <label class="option-btn"><input type="radio" name="q9" value="B"> B) \( \frac{5}{10} \) and 0.50</label>
+            <label class="option-btn"><input type="radio" name="q9" value="C"> C) \( \frac{5}{100} \) and 0.5</label>
+            <label class="option-btn"><input type="radio" name="q9" value="D"> D) \( \frac{1}{2} \) and 0.05</label>
+        </div>
+        <button class="check-btn" onclick="check(9, 'B')">Check Answer</button>
+        <div id="f9" class="feedback"></div>
+    </div>
+
+    <div class="problem-card" id="p10">
+        <div class="question-text">10. What decimal is shown?</div>
+        <div class="canvas-container">
+            <canvas id="c10" width="150" height="150"></canvas>
+        </div>
+        <div class="options-grid">
+            <label class="option-btn"><input type="radio" name="q10" value="A"> A) 0.13</label>
+            <label class="option-btn"><input type="radio" name="q10" value="B"> B) 0.30</label>
+            <label class="option-btn"><input type="radio" name="q10" value="C"> C) 1.3</label>
+            <label class="option-btn"><input type="radio" name="q10" value="D"> D) 0.03</label>
+        </div>
+        <button class="check-btn" onclick="check(10, 'A')">Check Answer</button>
+        <div id="f10" class="feedback"></div>
+    </div>
+
+<script>
+    // --- Drawing Function ---
+    function drawGrid(canvasId, shadedCount) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext('2d');
+        const size = canvas.width / 10; // each cell size (15px)
+
+        ctx.strokeStyle = '#999';
+        ctx.lineWidth = 1;
+
+        let count = 0;
+        // Draw 100 squares
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 10; col++) {
+                ctx.beginPath();
+                ctx.rect(col * size, row * size, size, size);
+                
+                // Shade if within count (fill column by column or row by row? 
+                // Usually math worksheets fill columns or rows. I'll fill columns for vertical bars, or rows for horizontal.)
+                // Let's do simple row-filling (like reading a book) for clarity, 
+                // but usually decimals are represented as full vertical bars (tenths).
+                
+                // Let's optimize: Fill full rows first (tenths), then leftovers.
+                // Actually, let's fill vertically (columns) because that makes it easier to see "Tenths" bars.
+                // 40 => 4 full columns.
+                
+                // Logic: We want to shade `shadedCount` cells.
+                // We will shade column by column to represent tenths easily.
+                let cellIndex = (col * 10) + row; // Vertical filling order
+                
+                // If we want horizontal filling (like the worksheet usually does rows):
+                // Let's stick to Horizontal filling (Row 0 filled, then Row 1...) based on user's image #6 which looked like bottom rows filled.
+                // User image #6 had bottom 3 rows filled. Let's replicate that "fill" style.
+                
+                // Wait, simply counting 0 to 99 is easiest.
+                // Let's fill index 0 to shadedCount-1.
+                let linearIndex = (row * 10) + col;
+
+                if (linearIndex < shadedCount) {
+                   ctx.fillStyle = '#4a90e2'; // Nice blue
+                   ctx.fill();
+                } else {
+                   ctx.fillStyle = 'white';
+                   ctx.fill();
+                }
+                
+                ctx.stroke();
+            }
+        }
+    }
+
+    // --- Answer Checking Logic ---
+    function check(qNum, correctVal) {
+        // Get all radio buttons for this question
+        const radios = document.getElementsByName('q' + qNum);
+        let selected = null;
+        
+        // Find selected
+        for (let r of radios) {
+            if (r.checked) selected = r.value;
+            // UI Polish: Highlight the selected parent label
+            r.parentElement.classList.remove('selected');
+            if(r.checked) r.parentElement.classList.add('selected');
+        }
+
+        const feedback = document.getElementById('f' + qNum);
+        
+        if (!selected) {
+            feedback.textContent = "Please select an answer first! 🤔";
+            feedback.className = "feedback wrong";
+            feedback.style.display = "block";
+            return;
+        }
+
+        if (selected === correctVal) {
+            feedback.innerHTML = "Correct! 🎉 Great job!";
+            feedback.className = "feedback correct";
+        } else {
+            feedback.innerHTML = "Not quite. Try again! 💪";
+            feedback.className = "feedback wrong";
+        }
+        feedback.style.display = "block";
+    }
+
+    // --- Initialize Logic ---
+    window.onload = function() {
+        // Q1: 40 shaded (0.40) - 4 full rows
+        drawGrid('c1', 40);
+        
+        // Q2: 75 shaded (75/100)
+        drawGrid('c2', 75);
+        
+        // Q3: 9 shaded (Nine hundredths)
+        drawGrid('c3', 9);
+        
+        // Q4: 5 shaded (0.05) - Tricky, distractors often 0.5
+        drawGrid('c4', 5);
+        
+        // Q5: 10 shaded (10/100 or 1/10) - 1 full row
+        drawGrid('c5', 10);
+        
+        // Q6: 23 shaded (0.23)
+        drawGrid('c6', 23);
+        
+        // Q7: 62 shaded (Sixty-two hundredths)
+        drawGrid('c7', 62);
+        
+        // Q8: 99 shaded (0.99)
+        drawGrid('c8', 99);
+        
+        // Q9: 50 shaded (Half)
+        drawGrid('c9', 50);
+        
+        // Q10: 13 shaded (0.13)
+        drawGrid('c10', 13);
+        
+        // Add click listeners to labels to add "selected" class for CSS styling
+        const allRadios = document.querySelectorAll('input[type="radio"]');
+        allRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Clear sibling styling
+                const name = this.name;
+                document.getElementsByName(name).forEach(r => {
+                    r.parentElement.classList.remove('selected');
+                });
+                this.parentElement.classList.add('selected');
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
