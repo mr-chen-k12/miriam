@@ -257,7 +257,7 @@
         </div>
         <div class="options-grid">
             <label class="option-btn"><input type="radio" name="q9" value="A"> A) \( \frac{50}{100} \) and 0.05</label>
-            <label class="option-btn"><input type="radio" name="q9" value="B"> B) \( \frac{5}{10} \) and 0.50</label>
+            <label class="option-btn"><input type="radio" name="q9" value="B"> B) \( \frac{50}{100} \) and 0.5</label>
             <label class="option-btn"><input type="radio" name="q9" value="C"> C) \( \frac{5}{100} \) and 0.5</label>
             <label class="option-btn"><input type="radio" name="q9" value="D"> D) \( \frac{1}{2} \) and 0.05</label>
         </div>
@@ -290,32 +290,13 @@
         ctx.strokeStyle = '#999';
         ctx.lineWidth = 1;
 
-        let count = 0;
         // Draw 100 squares
         for (let row = 0; row < 10; row++) {
             for (let col = 0; col < 10; col++) {
                 ctx.beginPath();
                 ctx.rect(col * size, row * size, size, size);
                 
-                // Shade if within count (fill column by column or row by row? 
-                // Usually math worksheets fill columns or rows. I'll fill columns for vertical bars, or rows for horizontal.)
-                // Let's do simple row-filling (like reading a book) for clarity, 
-                // but usually decimals are represented as full vertical bars (tenths).
-                
-                // Let's optimize: Fill full rows first (tenths), then leftovers.
-                // Actually, let's fill vertically (columns) because that makes it easier to see "Tenths" bars.
-                // 40 => 4 full columns.
-                
-                // Logic: We want to shade `shadedCount` cells.
-                // We will shade column by column to represent tenths easily.
-                let cellIndex = (col * 10) + row; // Vertical filling order
-                
-                // If we want horizontal filling (like the worksheet usually does rows):
-                // Let's stick to Horizontal filling (Row 0 filled, then Row 1...) based on user's image #6 which looked like bottom rows filled.
-                // User image #6 had bottom 3 rows filled. Let's replicate that "fill" style.
-                
-                // Wait, simply counting 0 to 99 is easiest.
-                // Let's fill index 0 to shadedCount-1.
+                // Shade row by row (like reading a book)
                 let linearIndex = (row * 10) + col;
 
                 if (linearIndex < shadedCount) {
@@ -366,7 +347,7 @@
 
     // --- Initialize Logic ---
     window.onload = function() {
-        // Q1: 40 shaded (0.40) - 4 full rows
+        // Q1: 40 shaded (0.40)
         drawGrid('c1', 40);
         
         // Q2: 75 shaded (75/100)
@@ -375,10 +356,10 @@
         // Q3: 9 shaded (Nine hundredths)
         drawGrid('c3', 9);
         
-        // Q4: 5 shaded (0.05) - Tricky, distractors often 0.5
+        // Q4: 5 shaded (0.05)
         drawGrid('c4', 5);
         
-        // Q5: 10 shaded (10/100 or 1/10) - 1 full row
+        // Q5: 10 shaded (10/100)
         drawGrid('c5', 10);
         
         // Q6: 23 shaded (0.23)
@@ -390,7 +371,7 @@
         // Q8: 99 shaded (0.99)
         drawGrid('c8', 99);
         
-        // Q9: 50 shaded (Half)
+        // Q9: 50 shaded (50/100 and 0.5)
         drawGrid('c9', 50);
         
         // Q10: 13 shaded (0.13)
