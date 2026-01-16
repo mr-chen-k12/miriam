@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixed Fractions on Number Lines - Practice</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  .question-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 80%;
+    max-width: 700px;
+  }
+  canvas {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+    background-color: #fafafa;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  label {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  label:hover {
+    background-color: #f0f0f0;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  .feedback {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  .correct {
+    color: #28a745;
+  }
+  .incorrect {
+    color: #dc3545;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Mixed Fractions on a Number Line</h1>
+  <p>Identify the mixed fraction indicated by the red arrow on each number line.</p>
+
+  <div class="question-container">
+    <h3>Problem 1</h3>
+    <canvas id="canvas1" width="650" height="100"></canvas>
+    <div class="options">
+      <label><input type="radio" name="q1" value="a"> a) \(1\)</label>
+      <label><input type="radio" name="q1" value="b"> b) \(1\frac{1}{2}\)</label>
+      <label><input type="radio" name="q1" value="c"> c) \(2\)</label>
+      <label><input type="radio" name="q1" value="d"> d) \(\frac{1}{2}\)</label>
+    </div>
+    <button onclick="checkAnswer(1, 'b')">Check Answer</button>
+    <div id="feedback1" class="feedback"></div>
+  </div>
+
+  <div class="question-container">
+    <h3>Problem 2</h3>
+    <canvas id="canvas2" width="650" height="100"></canvas>
+    <div class="options">
+      <label><input type="radio" name="q2" value="a"> a) \(3\frac{1}{3}\)</label>
+      <label><input type="radio" name="q2" value="b"> b) \(4\)</label>
+      <label><input type="radio" name="q2" value="c"> c) \(2\frac{2}{3}\)</label>
+      <label><input type="radio" name="q2" value="d"> d) \(3\frac{2}{3}\)</label>
+    </div>
+    <button onclick="checkAnswer(2, 'd')">Check Answer</button>
+    <div id="feedback2" class="feedback"></div>
+  </div>
+
+  <div class="question-container">
+    <h3>Problem 3</h3>
+    <canvas id="canvas3" width="650" height="100"></canvas>
+    <div class="options">
+      <label><input type="radio" name="q3" value="a"> a) \(1\frac{3}{4}\)</label>
+      <label><input type="radio" name="q3" value="b"> b) \(1\frac{1}{4}\)</label>
+      <label><input type="radio" name="q3" value="c"> c) \(1\frac{2}{4}\)</label>
+      <label><input type="radio" name="q3" value="d"> d) \(2\)</label>
+    </div>
+    <button onclick="checkAnswer(3, 'a')">Check Answer</button>
+    <div id="feedback3" class="feedback"></div>
+  </div>
+
+  <div class="question-container">
+    <h3>Problem 4</h3>
+    <canvas id="canvas4" width="650" height="100"></canvas>
+    <div class="options">
+      <label><input type="radio" name="q4" value="a"> a) \(2\frac{2}{5}\)</label>
+      <label><input type="radio" name="q4" value="b"> b) \(1\frac{4}{5}\)</label>
+      <label><input type="radio" name="q4" value="c"> c) \(2\frac{1}{5}\)</label>
+      <label><input type="radio" name="q4" value="d"> d) \(3\frac{1}{5}\)</label>
+    </div>
+    <button onclick="checkAnswer(4, 'c')">Check Answer</button>
+    <div id="feedback4" class="feedback"></div>
+  </div>
+
+  <div class="question-container">
+    <h3>Problem 5</h3>
+    <canvas id="canvas5" width="650" height="100"></canvas>
+    <div class="options">
+      <label><input type="radio" name="q5" value="a"> a) \(2\frac{1}{6}\)</label>
+      <label><input type="radio" name="q5" value="b"> b) \(2\frac{5}{6}\)</label>
+      <label><input type="radio" name="q5" value="c"> c) \(2\frac{3}{6}\)</label>
+      <label><input type="radio" name="q5" value="d"> d) \(3\)</label>
+    </div>
+    <button onclick="checkAnswer(5, 'b')">Check Answer</button>
+    <div id="feedback5" class="feedback"></div>
+  </div>
+
+<script>
+  function drawNumberLine(canvasId, start, end, subdivisions, markValue) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    const margin = 40;
+    const lineY = height / 2;
+    const unitWidth = (width - 2 * margin) / (end - start);
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#333';
+    ctx.fillStyle = '#333';
+    ctx.font = '16px Arial';
+    ctx.textAlign = 'center';
+
+    // Draw main line
+    ctx.beginPath();
+    ctx.moveTo(margin, lineY);
+    ctx.lineTo(width - margin, lineY);
+    ctx.stroke();
+
+    // Draw ticks and labels
+    for (let i = start; i <= end; i++) {
+      const x = margin + (i - start) * unitWidth;
+      
+      // Major tick
+      ctx.beginPath();
+      ctx.moveTo(x, lineY - 10);
+      ctx.lineTo(x, lineY + 10);
+      ctx.stroke();
+      
+      // Label
+      ctx.fillText(i, x, lineY + 30);
+
+      // Minor ticks
+      if (i < end) {
+        for (let j = 1; j < subdivisions; j++) {
+          const minorX = x + j * (unitWidth / subdivisions);
+          ctx.beginPath();
+          ctx.moveTo(minorX, lineY - 5);
+          ctx.lineTo(minorX, lineY + 5);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw marker
+    const markX = margin + (markValue - start) * unitWidth;
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'red';
+    ctx.beginPath();
+    ctx.moveTo(markX, lineY - 20);
+    ctx.lineTo(markX - 8, lineY - 35);
+    ctx.lineTo(markX + 8, lineY - 35);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(markX, lineY - 20);
+    ctx.lineTo(markX, lineY);
+    ctx.stroke();
+  }
+
+  function checkAnswer(questionNum, correctValue) {
+    const options = document.getElementsByName('q' + questionNum);
+    let selectedValue = null;
+    for (const option of options) {
+      if (option.checked) {
+        selectedValue = option.value;
+        break;
+      }
+    }
+
+    const feedbackDiv = document.getElementById('feedback' + questionNum);
+    if (selectedValue === correctValue) {
+      feedbackDiv.textContent = "Correct!";
+      feedbackDiv.className = "feedback correct";
+    } else if (selectedValue === null) {
+      feedbackDiv.textContent = "Please select an answer.";
+      feedbackDiv.className = "feedback";
+    } else {
+      feedbackDiv.textContent = "Incorrect. Try again.";
+      feedbackDiv.className = "feedback incorrect";
+    }
+  }
+
+  // Draw all number lines on load
+  window.onload = function() {
+    drawNumberLine('canvas1', 0, 3, 2, 1.5); // 0 to 3, halves, mark at 1.5
+    drawNumberLine('canvas2', 2, 5, 3, 3 + 2/3); // 2 to 5, thirds, mark at 3 2/3
+    drawNumberLine('canvas3', 0, 3, 4, 1 + 3/4); // 0 to 3, quarters, mark at 1 3/4
+    drawNumberLine('canvas4', 1, 4, 5, 2 + 1/5); // 1 to 4, fifths, mark at 2 1/5
+    drawNumberLine('canvas5', 0, 3, 6, 2 + 5/6); // 0 to 3, sixths, mark at 2 5/6
+  };
+</script>
+
+</body>
+</html>
