@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Practice Test (Similar to Q1-30)</title>
+    <title>Math Practice Test (Corrected)</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
-            --primary: #8e44ad; /* Purple theme for practice */
+            --primary: #8e44ad;
             --secondary: #f4ecf7;
             --text: #2c3e50;
             --correct: #27ae60;
@@ -53,6 +53,8 @@
             font-size: 0.9em;
         }
         .question { font-size: 1.15em; font-weight: 500; margin-bottom: 15px; }
+        
+        /* Canvas is visible by default for questions where you read the graph */
         .canvas-container {
             display: flex;
             justify-content: center;
@@ -63,7 +65,6 @@
             border: 1px dashed #ccc;
         }
         canvas { background: white; border: 1px solid #ddd; }
-        .options li { margin: 5px 0; padding: 8px; background: #f8f9fa; border-radius: 4px; list-style: none; }
         
         button.reveal {
             background-color: var(--primary);
@@ -87,7 +88,8 @@
         }
         .answer.visible { display: block; animation: fadeIn 0.4s; }
         .answer-title { color: var(--correct); font-weight: bold; display: block; margin-bottom: 5px; }
-        
+        .options li { list-style: none; background: #f8f9fa; padding: 5px 10px; margin: 5px 0; border-radius: 4px; }
+
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -95,7 +97,7 @@
 
 <div class="header">
     <h1>Math Practice Test</h1>
-    <p>30 New Problems • Similar Skills • Interactive Answers</p>
+    <p>30 Questions • Visual Answers Hidden Until Revealed</p>
 </div>
 
 <div class="problem-card">
@@ -127,12 +129,12 @@
 <div class="problem-card">
     <div class="badge">3</div>
     <div class="question">
-        New York is 2,900 miles from Los Angeles. Chicago is 2,000 miles from Los Angeles (in roughly the same direction). If a plane flies from LA to Chicago, how many more miles must it fly to reach New York?
+        New York is 2,900 miles from Los Angeles. Chicago is 2,000 miles from Los Angeles. If a plane flies from LA to Chicago, how many more miles must it fly to reach New York?
     </div>
     <button class="reveal" onclick="toggle('a3')">Check Answer</button>
     <div id="a3" class="answer">
         <span class="answer-title">Answer: 900 miles</span>
-        <p>Subtract the distance already traveled from the total: \( 2900 - 2000 = 900 \).</p>
+        <p>\( 2900 - 2000 = 900 \)</p>
     </div>
 </div>
 
@@ -143,9 +145,6 @@
         <br><strong>a.</strong> What is the perimeter?
         <br><strong>b.</strong> What is the area?
     </div>
-    <div class="canvas-container">
-        <canvas id="c4" width="150" height="100"></canvas>
-    </div>
     <button class="reveal" onclick="toggle('a4')">Check Answer</button>
     <div id="a4" class="answer">
         <span class="answer-title">a. Perimeter: 12 cm</span>
@@ -153,6 +152,11 @@
         <hr>
         <span class="answer-title">b. Area: 8 sq cm</span>
         <p>\( 4 \times 2 = 8 \)</p>
+        <br>
+        <strong>Correct Drawing:</strong>
+        <div class="canvas-container">
+            <canvas id="c4" width="150" height="100"></canvas>
+        </div>
     </div>
 </div>
 
@@ -165,8 +169,8 @@
     </div>
     <button class="reveal" onclick="toggle('a5')">Check Answer</button>
     <div id="a5" class="answer">
-        <p><strong>a. Nearest Hundred:</strong> 800 (4 is less than 5)</p>
-        <p><strong>b. Nearest Ten:</strong> 850 (7 is 5 or greater, round up)</p>
+        <p><strong>a. Nearest Hundred:</strong> 800</p>
+        <p><strong>b. Nearest Ten:</strong> 850</p>
     </div>
 </div>
 
@@ -197,7 +201,7 @@
     <button class="reveal" onclick="toggle('a7')">Check Answer</button>
     <div id="a7" class="answer">
         <span class="answer-title">Answer: Perpendicular</span>
-        <p>They meet at a right angle (90 degrees), like an 'L' shape.</p>
+        <p>They form a right angle (90°).</p>
     </div>
 </div>
 
@@ -206,13 +210,13 @@
     <div class="question">
         Draw a square grid showing \( 3 \times 3 \). Shade five ninths of the square.
     </div>
-    <div class="canvas-container">
-        <canvas id="c8" width="100" height="100"></canvas>
-    </div>
     <button class="reveal" onclick="toggle('a8')">Check Answer</button>
     <div id="a8" class="answer">
-        <span class="answer-title">See Diagram Above</span>
-        <p>5 of the 9 small squares should be shaded.</p>
+        <span class="answer-title">Correct Drawing:</span>
+        <p>5 squares should be shaded.</p>
+        <div class="canvas-container">
+            <canvas id="c8" width="100" height="100"></canvas>
+        </div>
     </div>
 </div>
 
@@ -227,7 +231,6 @@
     <button class="reveal" onclick="toggle('a9')">Check Answer</button>
     <div id="a9" class="answer">
         <span class="answer-title">Answer: 2 hours and 15 minutes</span>
-        <p>3:00 to 5:00 is 2 hours. Add the extra 15 minutes.</p>
     </div>
 </div>
 
@@ -242,7 +245,7 @@
     <button class="reveal" onclick="toggle('a10')">Check Answer</button>
     <div id="a10" class="answer">
         <span class="answer-title">Answer: 218</span>
-        <p>The line starts at 210. The arrow is at the 8th mark.</p>
+        <p>The scale starts at 210. The arrow is 8 marks past 210.</p>
     </div>
 </div>
 
@@ -280,7 +283,6 @@
     <button class="reveal" onclick="toggle('a15')">Check Answer</button>
     <div id="a15" class="answer">
         <span class="answer-title">n = 50</span>
-        <p>\( 200 - 150 = 50 \)</p>
     </div>
 </div>
 
@@ -290,7 +292,6 @@
     <button class="reveal" onclick="toggle('a16')">Check Answer</button>
     <div id="a16" class="answer">
         <span class="answer-title">n = 350</span>
-        <p>Add 50 to 300 to find the total: \( 300 + 50 = 350 \)</p>
     </div>
 </div>
 
@@ -305,61 +306,45 @@
     <div class="badge">18</div>
     <div class="question">\( 5 \times 60 = \)</div>
     <button class="reveal" onclick="toggle('a18')">Check Answer</button>
-    <div id="a18" class="answer">
-        <span class="answer-title">300</span>
-        <p>\( 5 \times 6 = 30 \), add a zero.</p>
-    </div>
+    <div id="a18" class="answer"><span class="answer-title">300</span></div>
 </div>
 
 <div class="problem-card">
     <div class="badge">19</div>
     <div class="question">\( 3 \times 400 = \)</div>
     <button class="reveal" onclick="toggle('a19')">Check Answer</button>
-    <div id="a19" class="answer">
-        <span class="answer-title">1,200</span>
-        <p>\( 3 \times 4 = 12 \), add two zeros.</p>
-    </div>
+    <div id="a19" class="answer"><span class="answer-title">1,200</span></div>
 </div>
 
 <div class="problem-card">
     <div class="badge">20</div>
     <div class="question">\( 9 \times 90 = \)</div>
     <button class="reveal" onclick="toggle('a20')">Check Answer</button>
-    <div id="a20" class="answer">
-        <span class="answer-title">810</span>
-        <p>\( 9 \times 9 = 81 \), add a zero.</p>
-    </div>
+    <div id="a20" class="answer"><span class="answer-title">810</span></div>
 </div>
 
 <div class="problem-card">
     <div class="badge">21</div>
     <div class="question">\( 7n = 42 \). Solve for n.</div>
     <button class="reveal" onclick="toggle('a21')">Check Answer</button>
-    <div id="a21" class="answer">
-        <span class="answer-title">n = 6</span>
-        <p>\( 42 \div 7 = 6 \)</p>
-    </div>
+    <div id="a21" class="answer"><span class="answer-title">n = 6</span></div>
 </div>
 
 <div class="problem-card">
     <div class="badge">22</div>
     <div class="question">\( \sqrt{81} = \)</div>
     <button class="reveal" onclick="toggle('a22')">Check Answer</button>
-    <div id="a22" class="answer">
-        <span class="answer-title">9</span>
-        <p>Because \( 9 \times 9 = 81 \)</p>
-    </div>
+    <div id="a22" class="answer"><span class="answer-title">9</span></div>
 </div>
 
 <div class="problem-card">
     <div class="badge">23</div>
     <div class="question">
-        A string is 4 inches long. If you measure it with a centimeter ruler, about how many centimeters is it? (Remember: 1 inch \(\approx\) 2.54 cm)
+        A string is 4 inches long. If you measure it with a centimeter ruler, about how many centimeters is it? (1 inch \(\approx\) 2.5 cm)
     </div>
     <button class="reveal" onclick="toggle('a23')">Check Answer</button>
     <div id="a23" class="answer">
         <span class="answer-title">About 10 cm</span>
-        <p>Precisely \( 4 \times 2.54 = 10.16 \) cm.</p>
     </div>
 </div>
 
@@ -388,30 +373,25 @@
     <button class="reveal" onclick="toggle('a25')">Check Answer</button>
     <div id="a25" class="answer">
         <span class="answer-title">Answer: B (Centimeter)</span>
-        <p>Pencils are small objects, usually 15-20 cm long.</p>
     </div>
 </div>
 
 <div class="problem-card">
     <div class="badge">26</div>
     <div class="question">
-        A bucket holds 1 gallon. A jug holds 3 liters. If 1 gallon is approximately 3.78 liters, which container holds more?
+        A bucket holds 1 gallon. A jug holds 3 liters. If 1 gallon is approx 3.78 liters, which holds more?
     </div>
     <button class="reveal" onclick="toggle('a26')">Check Answer</button>
     <div id="a26" class="answer">
         <span class="answer-title">The Bucket (1 gallon)</span>
-        <p>3.78 liters (bucket) > 3.0 liters (jug).</p>
     </div>
 </div>
 
 <div class="problem-card">
     <div class="badge">27</div>
     <div class="question">
-        Order these car prices from <strong>highest to lowest</strong>:
-        <br>$25,000
-        <br>$19,900
-        <br>$32,500
-        <br>$24,500
+        Order from <strong>highest to lowest</strong>:
+        <br>$25,000, $19,900, $32,500, $24,500
     </div>
     <button class="reveal" onclick="toggle('a27')">Check Answer</button>
     <div id="a27" class="answer">
@@ -437,31 +417,29 @@
     <button class="reveal" onclick="toggle('a28')">Check Answer</button>
     <div id="a28" class="answer">
         <span class="answer-title">Answer: B</span>
-        <p>0.41 is smallest, 0.49 is largest.</p>
     </div>
 </div>
 
 <div class="problem-card">
     <div class="badge">29</div>
     <div class="question">
-        A carpenter joins a board that is \(1\frac{1}{2}\) feet long with a board that is \(2\frac{1}{2}\) feet long. What is the total length?
+        A carpenter joins a board that is \(1\frac{1}{2}\) feet long with a board that is \(2\frac{1}{2}\) feet long. Total length?
     </div>
     <button class="reveal" onclick="toggle('a29')">Check Answer</button>
     <div id="a29" class="answer">
         <span class="answer-title">Answer: 4 feet</span>
-        <p>\( 1 + 2 = 3 \) and \( \frac{1}{2} + \frac{1}{2} = 1 \).<br>Total: \( 3 + 1 = 4 \).</p>
     </div>
 </div>
 
 <div class="problem-card">
     <div class="badge">30</div>
     <div class="question">
-        Swimmer A finished in 50.2 seconds. Swimmer B was 1.5 seconds slower. What was Swimmer B's time?
+        Swimmer A: 50.2s. Swimmer B: 1.5s slower. What is Swimmer B's time?
     </div>
     <button class="reveal" onclick="toggle('a30')">Check Answer</button>
     <div id="a30" class="answer">
         <span class="answer-title">Answer: 51.7 seconds</span>
-        <p>"Slower" means more time.<br>\( 50.2 + 1.5 = 51.7 \).</p>
+        <p>\( 50.2 + 1.5 = 51.7 \)</p>
     </div>
 </div>
 
@@ -476,26 +454,24 @@
     }
 
     window.onload = function() {
-        // --- Q4 Rectangle ---
+        // --- Q4 Rectangle (Visual Answer) ---
         const c4 = document.getElementById('c4');
         const ctx4 = c4.getContext('2d');
         ctx4.fillStyle = "#fff"; 
         ctx4.fillRect(0,0,150,100);
         ctx4.strokeStyle = "#8e44ad";
         ctx4.lineWidth = 2;
-        // Draw 4x2 representation (80px by 40px)
         ctx4.strokeRect(35, 30, 80, 40);
         ctx4.fillStyle = "#333";
         ctx4.font = "12px Arial";
         ctx4.fillText("4 cm", 65, 25);
         ctx4.fillText("2 cm", 120, 55);
 
-        // --- Q6 10x10 Grid ---
+        // --- Q6 10x10 Grid (Question Interpretation) ---
         const c6 = document.getElementById('c6');
         const ctx6 = c6.getContext('2d');
         const s6 = c6.width/10;
         ctx6.strokeStyle = "#ccc";
-        
         for(let r=0; r<10; r++){
             for(let c=0; c<10; c++){
                 ctx6.beginPath();
@@ -510,7 +486,7 @@
             }
         }
 
-        // --- Q8 3x3 Grid ---
+        // --- Q8 3x3 Grid (Visual Answer) ---
         const c8 = document.getElementById('c8');
         const ctx8 = c8.getContext('2d');
         const s8 = c8.width/3;
@@ -531,14 +507,13 @@
             }
         }
 
-        // --- Q9 Clock (5:15) ---
+        // --- Q9 Clock (Question Interpretation) ---
         const c9 = document.getElementById('c9');
         const ctx9 = c9.getContext('2d');
         const cx = c9.width/2;
         const cy = c9.height/2;
         const rad = cx * 0.9;
         
-        // Face
         ctx9.beginPath();
         ctx9.arc(cx, cy, rad, 0, Math.PI*2);
         ctx9.fillStyle = "white"; 
@@ -547,7 +522,6 @@
         ctx9.lineWidth = 3;
         ctx9.stroke();
         
-        // Numbers
         ctx9.fillStyle = "#333";
         ctx9.font = "14px Arial";
         ctx9.textAlign = "center";
@@ -556,22 +530,15 @@
             let ang = n * Math.PI / 6;
             ctx9.fillText(n, cx + Math.sin(ang)*(rad-15), cy - Math.cos(ang)*(rad-15));
         }
-
-        // Hands for 5:15
-        // Hour Hand: 5 + 15/60
         let hAng = (5 + 15/60) * (Math.PI/6);
         drawHand(ctx9, hAng, rad*0.5, 4, cx, cy);
-        
-        // Minute Hand: 15
         let mAng = (15/60) * (Math.PI*2);
         drawHand(ctx9, mAng, rad*0.8, 3, cx, cy);
 
-        // --- Q10 Number Line ---
+        // --- Q10 Number Line (Question Interpretation) ---
         const c10 = document.getElementById('c10');
         const ctx10 = c10.getContext('2d');
         const midY = c10.height/2;
-        
-        // Line
         ctx10.beginPath();
         ctx10.moveTo(20, midY);
         ctx10.lineTo(380, midY);
@@ -579,7 +546,6 @@
         ctx10.lineWidth = 2;
         ctx10.stroke();
         
-        // Ticks 210 to 225
         let startX = 30;
         for(let i=0; i<=15; i++){
             let x = startX + i*22;
@@ -596,8 +562,6 @@
                 ctx10.textAlign = "center";
                 ctx10.fillText(val, x, midY+25);
             }
-            
-            // Arrow at 218 (index 8)
             if(val === 218){
                 ctx10.fillStyle = "#e74c3c";
                 ctx10.font = "bold 24px Arial";
