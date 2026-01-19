@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Test (Similar to Q1-30)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #8e44ad; /* Purple theme for practice */
+            --secondary: #f4ecf7;
+            --text: #2c3e50;
+            --correct: #27ae60;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--primary);
+        }
+        h1 { margin: 0; color: var(--primary); }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary);
+            position: relative;
+        }
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-bottom-left-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .question { font-size: 1.15em; font-weight: 500; margin-bottom: 15px; }
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+        canvas { background: white; border: 1px solid #ddd; }
+        .options li { margin: 5px 0; padding: 8px; background: #f8f9fa; border-radius: 4px; list-style: none; }
+        
+        button.reveal {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        button.reveal:hover { background-color: #732d91; }
+        
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--secondary);
+            border-left: 4px solid var(--correct);
+            border-radius: 4px;
+        }
+        .answer.visible { display: block; animation: fadeIn 0.4s; }
+        .answer-title { color: var(--correct); font-weight: bold; display: block; margin-bottom: 5px; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Math Practice Test</h1>
+    <p>30 New Problems • Similar Skills • Interactive Answers</p>
+</div>
+
+<div class="problem-card">
+    <div class="badge">1</div>
+    <div class="question">
+        There are 120 marbles in a jar. They are separated into two bags. One bag has 45 marbles. How many marbles are in the other bag? 
+        <br><em>(Write and solve an equation)</em>
+    </div>
+    <button class="reveal" onclick="toggle('a1')">Check Answer</button>
+    <div id="a1" class="answer">
+        <span class="answer-title">Answer: 75 marbles</span>
+        <p><strong>Equation:</strong> \( 120 - 45 = n \) or \( 45 + n = 120 \)</p>
+        <p><strong>Solution:</strong> \( 120 - 45 = 75 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">2</div>
+    <div class="question">
+        A pitcher held 2.5 liters of lemonade. Sarah poured out 1.2 liters. How many liters were left in the pitcher?
+    </div>
+    <button class="reveal" onclick="toggle('a2')">Check Answer</button>
+    <div id="a2" class="answer">
+        <span class="answer-title">Answer: 1.3 liters</span>
+        <p>\( 2.5 - 1.2 = 1.3 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">3</div>
+    <div class="question">
+        New York is 2,900 miles from Los Angeles. Chicago is 2,000 miles from Los Angeles (in roughly the same direction). If a plane flies from LA to Chicago, how many more miles must it fly to reach New York?
+    </div>
+    <button class="reveal" onclick="toggle('a3')">Check Answer</button>
+    <div id="a3" class="answer">
+        <span class="answer-title">Answer: 900 miles</span>
+        <p>Subtract the distance already traveled from the total: \( 2900 - 2000 = 900 \).</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">4</div>
+    <div class="question">
+        Draw a rectangle that is 4 cm long and 2 cm wide.
+        <br><strong>a.</strong> What is the perimeter?
+        <br><strong>b.</strong> What is the area?
+    </div>
+    <div class="canvas-container">
+        <canvas id="c4" width="150" height="100"></canvas>
+    </div>
+    <button class="reveal" onclick="toggle('a4')">Check Answer</button>
+    <div id="a4" class="answer">
+        <span class="answer-title">a. Perimeter: 12 cm</span>
+        <p>\( 4 + 2 + 4 + 2 = 12 \)</p>
+        <hr>
+        <span class="answer-title">b. Area: 8 sq cm</span>
+        <p>\( 4 \times 2 = 8 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">5</div>
+    <div class="question">
+        Round 847 to:
+        <br><strong>a.</strong> The nearest hundred.
+        <br><strong>b.</strong> The nearest ten.
+    </div>
+    <button class="reveal" onclick="toggle('a5')">Check Answer</button>
+    <div id="a5" class="answer">
+        <p><strong>a. Nearest Hundred:</strong> 800 (4 is less than 5)</p>
+        <p><strong>b. Nearest Ten:</strong> 850 (7 is 5 or greater, round up)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">6</div>
+    <div class="question">
+        Look at the 10x10 grid below (4 full columns are shaded). Write the shaded amount as:
+        <br><strong>a.</strong> A fraction
+        <br><strong>b.</strong> A decimal
+        <br><strong>c.</strong> In words
+    </div>
+    <div class="canvas-container">
+        <canvas id="c6" width="120" height="120"></canvas>
+    </div>
+    <button class="reveal" onclick="toggle('a6')">Check Answer</button>
+    <div id="a6" class="answer">
+        <p><strong>a. Fraction:</strong> \( \frac{40}{100} \) or \( \frac{4}{10} \)</p>
+        <p><strong>b. Decimal:</strong> 0.40 or 0.4</p>
+        <p><strong>c. Words:</strong> Forty hundredths or Four tenths</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">7</div>
+    <div class="question">
+        Do the sides of a tall building and the ground usually form parallel or perpendicular lines?
+    </div>
+    <button class="reveal" onclick="toggle('a7')">Check Answer</button>
+    <div id="a7" class="answer">
+        <span class="answer-title">Answer: Perpendicular</span>
+        <p>They meet at a right angle (90 degrees), like an 'L' shape.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">8</div>
+    <div class="question">
+        Draw a square grid showing \( 3 \times 3 \). Shade five ninths of the square.
+    </div>
+    <div class="canvas-container">
+        <canvas id="c8" width="100" height="100"></canvas>
+    </div>
+    <button class="reveal" onclick="toggle('a8')">Check Answer</button>
+    <div id="a8" class="answer">
+        <span class="answer-title">See Diagram Above</span>
+        <p>5 of the 9 small squares should be shaded.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">9</div>
+    <div class="question">
+        The clock shows the time Maria finished her homework (5:15). She started at 3:00. How long did it take her?
+    </div>
+    <div class="canvas-container">
+        <canvas id="c9" width="150" height="150"></canvas>
+    </div>
+    <button class="reveal" onclick="toggle('a9')">Check Answer</button>
+    <div id="a9" class="answer">
+        <span class="answer-title">Answer: 2 hours and 15 minutes</span>
+        <p>3:00 to 5:00 is 2 hours. Add the extra 15 minutes.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">10</div>
+    <div class="question">
+        What number is the arrow pointing to on the number line?
+    </div>
+    <div class="canvas-container">
+        <canvas id="c10" width="400" height="80"></canvas>
+    </div>
+    <button class="reveal" onclick="toggle('a10')">Check Answer</button>
+    <div id="a10" class="answer">
+        <span class="answer-title">Answer: 218</span>
+        <p>The line starts at 210. The arrow is at the 8th mark.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">11</div>
+    <div class="question">\( 5.50 + 2.25 = \)</div>
+    <button class="reveal" onclick="toggle('a11')">Check Answer</button>
+    <div id="a11" class="answer"><span class="answer-title">7.75</span></div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">12</div>
+    <div class="question">\( \$10.00 - \$4.50 = \)</div>
+    <button class="reveal" onclick="toggle('a12')">Check Answer</button>
+    <div id="a12" class="answer"><span class="answer-title">$5.50</span></div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">13</div>
+    <div class="question">\( \$1.25 + \$5.00 + \$0.50 = \)</div>
+    <button class="reveal" onclick="toggle('a13')">Check Answer</button>
+    <div id="a13" class="answer"><span class="answer-title">$6.75</span></div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">14</div>
+    <div class="question">\( 6.80 - 3.40 = \)</div>
+    <button class="reveal" onclick="toggle('a14')">Check Answer</button>
+    <div id="a14" class="answer"><span class="answer-title">3.40</span></div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">15</div>
+    <div class="question">\( 200 - n = 150 \). Solve for n.</div>
+    <button class="reveal" onclick="toggle('a15')">Check Answer</button>
+    <div id="a15" class="answer">
+        <span class="answer-title">n = 50</span>
+        <p>\( 200 - 150 = 50 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">16</div>
+    <div class="question">\( n - 50 = 300 \). Solve for n.</div>
+    <button class="reveal" onclick="toggle('a16')">Check Answer</button>
+    <div id="a16" class="answer">
+        <span class="answer-title">n = 350</span>
+        <p>Add 50 to 300 to find the total: \( 300 + 50 = 350 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">17</div>
+    <div class="question">\( \$8.00 - \$2.15 = \)</div>
+    <button class="reveal" onclick="toggle('a17')">Check Answer</button>
+    <div id="a17" class="answer"><span class="answer-title">$5.85</span></div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">18</div>
+    <div class="question">\( 5 \times 60 = \)</div>
+    <button class="reveal" onclick="toggle('a18')">Check Answer</button>
+    <div id="a18" class="answer">
+        <span class="answer-title">300</span>
+        <p>\( 5 \times 6 = 30 \), add a zero.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">19</div>
+    <div class="question">\( 3 \times 400 = \)</div>
+    <button class="reveal" onclick="toggle('a19')">Check Answer</button>
+    <div id="a19" class="answer">
+        <span class="answer-title">1,200</span>
+        <p>\( 3 \times 4 = 12 \), add two zeros.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">20</div>
+    <div class="question">\( 9 \times 90 = \)</div>
+    <button class="reveal" onclick="toggle('a20')">Check Answer</button>
+    <div id="a20" class="answer">
+        <span class="answer-title">810</span>
+        <p>\( 9 \times 9 = 81 \), add a zero.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">21</div>
+    <div class="question">\( 7n = 42 \). Solve for n.</div>
+    <button class="reveal" onclick="toggle('a21')">Check Answer</button>
+    <div id="a21" class="answer">
+        <span class="answer-title">n = 6</span>
+        <p>\( 42 \div 7 = 6 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">22</div>
+    <div class="question">\( \sqrt{81} = \)</div>
+    <button class="reveal" onclick="toggle('a22')">Check Answer</button>
+    <div id="a22" class="answer">
+        <span class="answer-title">9</span>
+        <p>Because \( 9 \times 9 = 81 \)</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">23</div>
+    <div class="question">
+        A string is 4 inches long. If you measure it with a centimeter ruler, about how many centimeters is it? (Remember: 1 inch \(\approx\) 2.54 cm)
+    </div>
+    <button class="reveal" onclick="toggle('a23')">Check Answer</button>
+    <div id="a23" class="answer">
+        <span class="answer-title">About 10 cm</span>
+        <p>Precisely \( 4 \times 2.54 = 10.16 \) cm.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">24</div>
+    <div class="question">
+        Write the number 2,500,000 using words.
+    </div>
+    <button class="reveal" onclick="toggle('a24')">Check Answer</button>
+    <div id="a24" class="answer">
+        <span class="answer-title">Two million, five hundred thousand</span>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">25</div>
+    <div class="question">
+        Which metric unit is best to measure the length of a pencil?
+        <ul class="options">
+            <li>A. Millimeter</li>
+            <li>B. Centimeter</li>
+            <li>C. Meter</li>
+            <li>D. Kilometer</li>
+        </ul>
+    </div>
+    <button class="reveal" onclick="toggle('a25')">Check Answer</button>
+    <div id="a25" class="answer">
+        <span class="answer-title">Answer: B (Centimeter)</span>
+        <p>Pencils are small objects, usually 15-20 cm long.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">26</div>
+    <div class="question">
+        A bucket holds 1 gallon. A jug holds 3 liters. If 1 gallon is approximately 3.78 liters, which container holds more?
+    </div>
+    <button class="reveal" onclick="toggle('a26')">Check Answer</button>
+    <div id="a26" class="answer">
+        <span class="answer-title">The Bucket (1 gallon)</span>
+        <p>3.78 liters (bucket) > 3.0 liters (jug).</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">27</div>
+    <div class="question">
+        Order these car prices from <strong>highest to lowest</strong>:
+        <br>$25,000
+        <br>$19,900
+        <br>$32,500
+        <br>$24,500
+    </div>
+    <button class="reveal" onclick="toggle('a27')">Check Answer</button>
+    <div id="a27" class="answer">
+        <ol>
+            <li>$32,500</li>
+            <li>$25,000</li>
+            <li>$24,500</li>
+            <li>$19,900</li>
+        </ol>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">28</div>
+    <div class="question">
+        Which list is ordered from <strong>least to greatest</strong>?
+        <ul class="options">
+            <li>A. 0.45, 0.41, 0.49</li>
+            <li>B. 0.41, 0.45, 0.49</li>
+            <li>C. 0.49, 0.45, 0.41</li>
+        </ul>
+    </div>
+    <button class="reveal" onclick="toggle('a28')">Check Answer</button>
+    <div id="a28" class="answer">
+        <span class="answer-title">Answer: B</span>
+        <p>0.41 is smallest, 0.49 is largest.</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">29</div>
+    <div class="question">
+        A carpenter joins a board that is \(1\frac{1}{2}\) feet long with a board that is \(2\frac{1}{2}\) feet long. What is the total length?
+    </div>
+    <button class="reveal" onclick="toggle('a29')">Check Answer</button>
+    <div id="a29" class="answer">
+        <span class="answer-title">Answer: 4 feet</span>
+        <p>\( 1 + 2 = 3 \) and \( \frac{1}{2} + \frac{1}{2} = 1 \).<br>Total: \( 3 + 1 = 4 \).</p>
+    </div>
+</div>
+
+<div class="problem-card">
+    <div class="badge">30</div>
+    <div class="question">
+        Swimmer A finished in 50.2 seconds. Swimmer B was 1.5 seconds slower. What was Swimmer B's time?
+    </div>
+    <button class="reveal" onclick="toggle('a30')">Check Answer</button>
+    <div id="a30" class="answer">
+        <span class="answer-title">Answer: 51.7 seconds</span>
+        <p>"Slower" means more time.<br>\( 50.2 + 1.5 = 51.7 \).</p>
+    </div>
+</div>
+
+<script>
+    function toggle(id) {
+        const el = document.getElementById(id);
+        if(el.classList.contains('visible')) {
+            el.classList.remove('visible');
+        } else {
+            el.classList.add('visible');
+        }
+    }
+
+    window.onload = function() {
+        // --- Q4 Rectangle ---
+        const c4 = document.getElementById('c4');
+        const ctx4 = c4.getContext('2d');
+        ctx4.fillStyle = "#fff"; 
+        ctx4.fillRect(0,0,150,100);
+        ctx4.strokeStyle = "#8e44ad";
+        ctx4.lineWidth = 2;
+        // Draw 4x2 representation (80px by 40px)
+        ctx4.strokeRect(35, 30, 80, 40);
+        ctx4.fillStyle = "#333";
+        ctx4.font = "12px Arial";
+        ctx4.fillText("4 cm", 65, 25);
+        ctx4.fillText("2 cm", 120, 55);
+
+        // --- Q6 10x10 Grid ---
+        const c6 = document.getElementById('c6');
+        const ctx6 = c6.getContext('2d');
+        const s6 = c6.width/10;
+        ctx6.strokeStyle = "#ccc";
+        
+        for(let r=0; r<10; r++){
+            for(let c=0; c<10; c++){
+                ctx6.beginPath();
+                ctx6.rect(c*s6, r*s6, s6, s6);
+                ctx6.stroke();
+                // Shade first 4 columns
+                if(c < 4) {
+                    ctx6.fillStyle="#8e44ad";
+                    ctx6.fill();
+                    ctx6.stroke();
+                }
+            }
+        }
+
+        // --- Q8 3x3 Grid ---
+        const c8 = document.getElementById('c8');
+        const ctx8 = c8.getContext('2d');
+        const s8 = c8.width/3;
+        ctx8.strokeStyle = "#333";
+        let count = 0;
+        for(let r=0; r<3; r++){
+            for(let c=0; c<3; c++){
+                ctx8.beginPath();
+                ctx8.rect(c*s8, r*s8, s8, s8);
+                ctx8.stroke();
+                // Shade 5 squares
+                if(count < 5){
+                    ctx8.fillStyle="#8e44ad";
+                    ctx8.fill();
+                    ctx8.stroke();
+                }
+                count++;
+            }
+        }
+
+        // --- Q9 Clock (5:15) ---
+        const c9 = document.getElementById('c9');
+        const ctx9 = c9.getContext('2d');
+        const cx = c9.width/2;
+        const cy = c9.height/2;
+        const rad = cx * 0.9;
+        
+        // Face
+        ctx9.beginPath();
+        ctx9.arc(cx, cy, rad, 0, Math.PI*2);
+        ctx9.fillStyle = "white"; 
+        ctx9.fill();
+        ctx9.strokeStyle = "#333";
+        ctx9.lineWidth = 3;
+        ctx9.stroke();
+        
+        // Numbers
+        ctx9.fillStyle = "#333";
+        ctx9.font = "14px Arial";
+        ctx9.textAlign = "center";
+        ctx9.textBaseline = "middle";
+        for(let n=1; n<=12; n++){
+            let ang = n * Math.PI / 6;
+            ctx9.fillText(n, cx + Math.sin(ang)*(rad-15), cy - Math.cos(ang)*(rad-15));
+        }
+
+        // Hands for 5:15
+        // Hour Hand: 5 + 15/60
+        let hAng = (5 + 15/60) * (Math.PI/6);
+        drawHand(ctx9, hAng, rad*0.5, 4, cx, cy);
+        
+        // Minute Hand: 15
+        let mAng = (15/60) * (Math.PI*2);
+        drawHand(ctx9, mAng, rad*0.8, 3, cx, cy);
+
+        // --- Q10 Number Line ---
+        const c10 = document.getElementById('c10');
+        const ctx10 = c10.getContext('2d');
+        const midY = c10.height/2;
+        
+        // Line
+        ctx10.beginPath();
+        ctx10.moveTo(20, midY);
+        ctx10.lineTo(380, midY);
+        ctx10.strokeStyle = "#333";
+        ctx10.lineWidth = 2;
+        ctx10.stroke();
+        
+        // Ticks 210 to 225
+        let startX = 30;
+        for(let i=0; i<=15; i++){
+            let x = startX + i*22;
+            let val = 210 + i;
+            let h = (val%5===0) ? 10 : 5;
+            
+            ctx10.beginPath();
+            ctx10.moveTo(x, midY-h);
+            ctx10.lineTo(x, midY+h);
+            ctx10.stroke();
+            
+            if(val%5===0){
+                ctx10.font = "12px Arial";
+                ctx10.textAlign = "center";
+                ctx10.fillText(val, x, midY+25);
+            }
+            
+            // Arrow at 218 (index 8)
+            if(val === 218){
+                ctx10.fillStyle = "#e74c3c";
+                ctx10.font = "bold 24px Arial";
+                ctx10.textAlign = "center";
+                ctx10.fillText("↓", x, midY-15);
+            }
+        }
+    };
+
+    function drawHand(ctx, ang, len, width, cx, cy){
+        ctx.beginPath();
+        ctx.lineWidth = width;
+        ctx.lineCap = "round";
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.sin(ang)*len, cy - Math.cos(ang)*len);
+        ctx.stroke();
+    }
+</script>
+
+</body>
+</html>
