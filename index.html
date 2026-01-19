@@ -3,69 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miriam - Homework Index</title>
+    <title>File Index</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            max-width: 800px; margin: 0 auto; padding: 40px 20px;
-            background-color: #f6f8fa; color: #24292f;
-        }
-        h1 { border-bottom: 1px solid #d0d7de; padding-bottom: 10px; margin-bottom: 20px; }
-        ul {
-            list-style-type: none; padding: 0; background: white;
-            border: 1px solid #d0d7de; border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #f6f8fa; color: #24292f; }
+        h1 { border-bottom: 1px solid #d0d7de; padding-bottom: 10px; margin-bottom: 20px; text-transform: capitalize; }
+        ul { list-style-type: none; padding: 0; background: white; border: 1px solid #d0d7de; border-radius: 6px; }
         li { border-bottom: 1px solid #d0d7de; }
         li:last-child { border-bottom: none; }
-        a {
-            display: block; padding: 16px; text-decoration: none;
-            color: #0969da; font-size: 16px; font-weight: 500;
-            transition: background-color 0.2s;
-        }
+        a { display: block; padding: 16px; text-decoration: none; color: #0969da; font-weight: 500; }
         a:hover { background-color: #f3f4f6; text-decoration: underline; }
         .file-icon { margin-right: 10px; color: #57606a; }
-        .empty-msg { padding: 20px; color: #666; font-style: italic; }
     </style>
 </head>
 <body>
-
-    <h1>Miriam's Directory</h1>
-    <ul id="file-list">
-        </ul>
+    <h1 id="repo-title">Directory Index</h1>
+    <ul id="file-list"><li>Loading...</li></ul>
 
     <script>
-        // Fetch the JSON file created by your Python script
+        // Update the title based on the URL (e.g., ".../miriam/" becomes "Miriam")
+        const folderName = window.location.pathname.split('/').filter(Boolean).pop();
+        if(folderName) document.getElementById('repo-title').innerText = folderName + " Directory";
+
         fetch('files.json')
-            .then(response => {
-                if (!response.ok) throw new Error("files.json not found");
-                return response.json();
-            })
+            .then(response => response.json())
             .then(files => {
                 const list = document.getElementById('file-list');
-                
-                if (files.length === 0) {
-                    list.innerHTML = '<div class="empty-msg">No files found in list.</div>';
-                    return;
-                }
-
-                // Loop through the list and create links
+                list.innerHTML = ''; // Clear loading text
                 files.forEach(filename => {
                     const li = document.createElement('li');
-                    li.innerHTML = `
-                        <a href="${filename}">
-                            <span class="file-icon">📄</span> ${filename}
-                        </a>
-                    `;
+                    li.innerHTML = `<a href="${filename}"><span class="file-icon">📄</span> ${filename}</a>`;
                     list.appendChild(li);
                 });
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('file-list').innerHTML = 
-                    '<div class="empty-msg" style="color:red;">Error loading file list. Make sure "files.json" exists.</div>';
-            });
+            .catch(e => document.getElementById('file-list').innerHTML = '<li style="padding:20px; color:red">Error: files.json not found.</li>');
     </script>
-
 </body>
 </html>
