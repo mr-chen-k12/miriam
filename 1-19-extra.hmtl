@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Skills Mastery: Multiple Choice</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --correct: #27ae60;
+            --wrong: #e74c3c;
+            --bg: #f3f4f6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent);
+        }
+        h1 { margin: 0; color: var(--primary); }
+        h2 { 
+            background: var(--primary); 
+            color: white; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+            margin-top: 40px; 
+            font-size: 1.2em;
+        }
+        .question-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .q-text { font-weight: 600; font-size: 1.05em; margin-bottom: 15px; }
+        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .btn-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 1em;
+        }
+        .btn-option:hover { background: #e2e6ea; border-color: #ced4da; }
+        
+        .btn-option.correct {
+            background-color: #d4edda;
+            border-color: var(--correct);
+            color: var(--correct);
+            font-weight: bold;
+        }
+        .btn-option.wrong {
+            background-color: #f8d7da;
+            border-color: var(--wrong);
+            color: var(--wrong);
+            opacity: 0.7;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            color: #856404;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Math Skills Mastery</h1>
+    <p>Practice specific skills. Click an answer to check your work!</p>
+</header>
+
+<h2>Topic 4: Perimeter & Area</h2>
+
+<div class="question-card" id="q4_1">
+    <div class="q-text">1. A rectangle is 5 cm long and 3 cm wide. What is its perimeter?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q4_1', 'Formula for Perimeter is 2×(Length + Width). 2×(5+3) = 16.')">A) 15 cm</button>
+        <button class="btn-option" onclick="check(this, true, 'q4_1', '')">B) 16 cm</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_1', 'You just added length + width. You need to double it!')">C) 8 cm</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_1', 'Check your addition.')">D) 20 cm</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q4_2">
+    <div class="q-text">2. A square has a side length of 4 inches. What is its area?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q4_2', 'That is the perimeter (4+4+4+4). Area is Length × Width.')">A) 16 inches</button>
+        <button class="btn-option" onclick="check(this, true, 'q4_2', '')">B) 16 sq inches</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_2', 'Area is side × side. 4 × 4 is not 12.')">C) 12 sq inches</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_2', 'Too small. Area = 4 × 4.')">D) 8 sq inches</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q4_3">
+    <div class="q-text">3. What is the area of a rectangle with length 10m and width 2m?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q4_3', '')">A) 20 sq m</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_3', 'That is the perimeter (10+2+10+2).')">B) 24 sq m</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_3', 'Area = Length × Width.')">C) 12 sq m</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_3', 'Multiply 10 × 2.')">D) 100 sq m</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q4_4">
+    <div class="q-text">4. A square has a perimeter of 20 cm. How long is one side?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q4_4', 'If one side was 10, the perimeter would be 40.')">A) 10 cm</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_4', '4 × 4 = 16 perimeter.')">B) 4 cm</button>
+        <button class="btn-option" onclick="check(this, true, 'q4_4', '')">C) 5 cm</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_4', 'Too small.')">D) 2 cm</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q4_5">
+    <div class="q-text">5. Which shape has a larger area? <br>Shape A: 3x4 rectangle <br>Shape B: 2x5 rectangle</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q4_5', '')">A) Shape A</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_5', 'Check the math: 3×4=12, 2×5=10.')">B) Shape B</button>
+        <button class="btn-option" onclick="check(this, false, 'q4_5', '12 is not equal to 10.')">C) They are equal</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 5: Rounding</h2>
+
+<div class="question-card" id="q5_1">
+    <div class="q-text">1. Round 458 to the nearest hundred.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q5_1', 'Look at the tens digit (5). It is 5 or higher, so round UP.')">A) 400</button>
+        <button class="btn-option" onclick="check(this, true, 'q5_1', '')">B) 500</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_1', 'Rounding to nearest hundred usually ends in 00.')">C) 460</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_1', 'Way too high!')">D) 600</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q5_2">
+    <div class="q-text">2. Round 623 to the nearest ten.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q5_2', 'Look at the ones digit (3). It is less than 5, so round DOWN.')">A) 630</button>
+        <button class="btn-option" onclick="check(this, true, 'q5_2', '')">B) 620</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_2', 'This is rounding to the nearest hundred.')">C) 600</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_2', 'Too low.')">D) 610</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q5_3">
+    <div class="q-text">3. Round 8,491 to the nearest thousand.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q5_3', '')">A) 8,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_3', 'Look at the hundreds place (4). It is less than 5.')">B) 9,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_3', 'This is rounded to the nearest hundred.')">C) 8,500</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_3', 'Check the thousands place.')">D) 8,400</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q5_4">
+    <div class="q-text">4. Which number rounds to 40 when rounded to the nearest ten?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q5_4', '34 rounds down to 30.')">A) 34</button>
+        <button class="btn-option" onclick="check(this, true, 'q5_4', '')">B) 35</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_4', '45 rounds up to 50.')">C) 45</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_4', '28 rounds to 30.')">D) 28</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q5_5">
+    <div class="q-text">5. Round 1,995 to the nearest ten.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q5_5', 'This is rounding to the nearest hundred.')">A) 1,900</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_5', 'When you round the 9 up, it carries over to the next place.')">B) 1,990</button>
+        <button class="btn-option" onclick="check(this, true, 'q5_5', '')">C) 2,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q5_5', 'Just simply rounding down is incorrect here.')">D) 1,980</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 7: Parallel & Perpendicular Lines</h2>
+
+<div class="question-card" id="q7_1">
+    <div class="q-text">1. Which pair of lines are parallel?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q7_1', '')">A) Railroad tracks</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_1', 'The letter T forms perpendicular lines (90 degrees).')">B) The letter T</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_1', 'A corner forms perpendicular lines.')">C) A corner of a room</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_1', 'These cross each other (intersect).')">D) An X shape</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q7_2">
+    <div class="q-text">2. What kind of lines meet at a right angle (90°)?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q7_2', 'Parallel lines never meet.')">A) Parallel</button>
+        <button class="btn-option" onclick="check(this, true, 'q7_2', '')">B) Perpendicular</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_2', 'Wavy lines are curved, not straight.')">C) Wavy</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_2', 'Zigzag lines change direction constantly.')">D) Zigzag</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q7_3">
+    <div class="q-text">3. Look at the letter "L". The two lines are:</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q7_3', 'They touch, so they cannot be parallel.')">A) Parallel</button>
+        <button class="btn-option" onclick="check(this, true, 'q7_3', '')">B) Perpendicular</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_3', 'Curved means not straight.')">C) Curved</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q7_4">
+    <div class="q-text">4. Which object has parallel sides?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q7_4', 'A triangle usually has intersecting sides.')">A) A triangle</button>
+        <button class="btn-option" onclick="check(this, true, 'q7_4', '')">B) A ruler</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_4', 'A circle has no straight sides.')">C) A circle</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_4', 'A slice of pizza is triangular.')">D) A slice of pizza</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q7_5">
+    <div class="q-text">5. Parallel lines will:</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q7_5', 'Perpendicular lines cross.')">A) Cross at 90 degrees</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_5', 'Intersecting lines meet.')">B) Meet eventually</button>
+        <button class="btn-option" onclick="check(this, true, 'q7_5', '')">C) Never meet</button>
+        <button class="btn-option" onclick="check(this, false, 'q7_5', 'They are straight, not curved.')">D) Curve around</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 12: Simple Decimals</h2>
+
+<div class="question-card" id="q12_1">
+    <div class="q-text">1. \( 5.50 - 2.25 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q12_1', '50 - 25 is 25, not 35.')">A) 3.35</button>
+        <button class="btn-option" onclick="check(this, true, 'q12_1', '')">B) 3.25</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_1', 'Check your subtraction.')">C) 3.75</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_1', '5 - 2 is 3, not 2.')">D) 2.25</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q12_2">
+    <div class="q-text">2. \( 10.75 - 5.50 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q12_2', '')">A) 5.25</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_2', '75 - 50 is 25, not 50.')">B) 5.50</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_2', '10 - 5 is 5, not 4.')">C) 4.25</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_2', 'Check the decimal part.')">D) 5.75</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q12_3">
+    <div class="q-text">3. \( 8.90 - 4.10 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q12_3', '90 - 10 is 80.')">A) 4.00</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_3', '90 - 10 is 80, not 90.')">B) 4.90</button>
+        <button class="btn-option" onclick="check(this, true, 'q12_3', '')">C) 4.80</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_3', '8 - 4 is 4.')">D) 3.80</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q12_4">
+    <div class="q-text">4. \( 15.25 - 10.00 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q12_4', '15 - 10 = 5.')">A) 10.25</button>
+        <button class="btn-option" onclick="check(this, true, 'q12_4', '')">B) 5.25</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_4', 'Don\'t lose the decimal part (.25).')">C) 5.00</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_4', 'Check your math.')">D) 5.50</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q12_5">
+    <div class="q-text">5. \( 6.60 - 3.30 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q12_5', '60 - 30 is 30.')">A) 3.00</button>
+        <button class="btn-option" onclick="check(this, true, 'q12_5', '')">B) 3.30</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_5', '6 - 3 is 3.')">C) 2.30</button>
+        <button class="btn-option" onclick="check(this, false, 'q12_5', '60 - 30 is 30, not 90.')">D) 3.90</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 15: Missing Numbers</h2>
+
+<div class="question-card" id="q15_1">
+    <div class="q-text">1. \( 100 - n = 25 \). What is n?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q15_1', '100 - 85 = 15.')">A) 85</button>
+        <button class="btn-option" onclick="check(this, true, 'q15_1', '')">B) 75</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_1', '100 - 25 is not 125. That would be addition.')">C) 125</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_1', 'Too low.')">D) 65</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q15_2">
+    <div class="q-text">2. \( 50 - n = 35 \). What is n?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q15_2', '')">A) 15</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_2', '50 - 25 = 25.')">B) 25</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_2', 'You added 50 + 35. You need to subtract.')">C) 85</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_2', '50 - 10 = 40.')">D) 10</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q15_3">
+    <div class="q-text">3. \( 200 - n = 150 \). What is n?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q15_3', '200 - 100 = 100.')">A) 100</button>
+        <button class="btn-option" onclick="check(this, true, 'q15_3', '')">B) 50</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_3', 'You added.')">C) 350</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_3', '200 - 200 = 0.')">D) 200</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q15_4">
+    <div class="q-text">4. \( 80 - n = 40 \). What is n?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q15_4', '80 - 20 = 60.')">A) 20</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_4', '80 - 80 = 0.')">B) 80</button>
+        <button class="btn-option" onclick="check(this, true, 'q15_4', '')">C) 40</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_4', 'You added.')">D) 120</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q15_5">
+    <div class="q-text">5. \( n - 10 = 90 \). What is n?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q15_5', '80 - 10 = 70. You need a bigger number.')">A) 80</button>
+        <button class="btn-option" onclick="check(this, true, 'q15_5', '')">B) 100</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_5', '90 - 10 = 80.')">C) 90</button>
+        <button class="btn-option" onclick="check(this, false, 'q15_5', '110 - 10 = 100.')">D) 110</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 17: Money Subtraction</h2>
+
+<div class="question-card" id="q17_1">
+    <div class="q-text">1. \( \$10.00 - \$4.55 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q17_1', 'Close! But you need to borrow correctly.')">A) $6.45</button>
+        <button class="btn-option" onclick="check(this, true, 'q17_1', '')">B) $5.45</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_1', '10.00 - 4.55 is not 5.55.')">C) $5.55</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_1', 'Check your borrowing.')">D) $6.55</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q17_2">
+    <div class="q-text">2. \( \$5.00 - \$1.25 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q17_2', '')">A) $3.75</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_2', '100 - 25 is 75, so it ends in .75.')">B) $3.25</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_2', '5 - 1 = 4, but you borrowed.')">C) $4.75</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_2', 'Too low.')">D) $2.75</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q17_3">
+    <div class="q-text">3. \( \$20.00 - \$15.80 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q17_3', 'Check the cents. 100 - 80 = 20.')">A) $5.20</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_3', '20 - 15 is 5, but we borrowed.')">B) $4.80</button>
+        <button class="btn-option" onclick="check(this, true, 'q17_3', '')">C) $4.20</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_3', 'Too high.')">D) $5.00</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q17_4">
+    <div class="q-text">4. \( \$8.00 - \$3.99 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q17_4', 'You borrowed, so 8 became 7.')">A) $5.01</button>
+        <button class="btn-option" onclick="check(this, true, 'q17_4', '')">B) $4.01</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_4', 'Almost! But 100 - 99 is 1.')">C) $4.99</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_4', 'Too low.')">D) $3.01</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q17_5">
+    <div class="q-text">5. \( \$6.00 - \$2.45 = \)</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q17_5', '5 - 2 is 3.')">A) $4.55</button>
+        <button class="btn-option" onclick="check(this, true, 'q17_5', '')">B) $3.55</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_5', 'Check the cents.')">C) $3.45</button>
+        <button class="btn-option" onclick="check(this, false, 'q17_5', 'Too low.')">D) $2.55</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 24: Writing Numbers</h2>
+
+<div class="question-card" id="q24_1">
+    <div class="q-text">1. Write 2,500,000 in words.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q24_1', 'That would be 25,000.')">A) Twenty-five thousand</button>
+        <button class="btn-option" onclick="check(this, true, 'q24_1', '')">B) Two million, five hundred thousand</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_1', 'That would be 200,500,000.')">C) Two hundred million</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_1', 'That would be 2,050,000.')">D) Two million and fifty thousand</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q24_2">
+    <div class="q-text">2. How do you write "One hundred five thousand"?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q24_2', '')">A) 105,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_2', 'That is ten thousand five hundred.')">B) 10,500</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_2', 'That is one hundred fifty thousand.')">C) 150,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_2', 'That is one million.')">D) 1,005,000</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q24_3">
+    <div class="q-text">3. How do you write "Four million, two hundred"?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q24_3', 'That is four hundred thousand.')">A) 400,200</button>
+        <button class="btn-option" onclick="check(this, true, 'q24_3', '')">B) 4,000,200</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_3', 'That is four million two hundred thousand.')">C) 4,200,000</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_3', 'That is forty-two thousand.')">D) 42,000</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q24_4">
+    <div class="q-text">4. Write 350,000 in words.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q24_4', 'That is 3,500,000.')">A) Three million five hundred thousand</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_4', 'That is 35,000.')">B) Thirty-five thousand</button>
+        <button class="btn-option" onclick="check(this, true, 'q24_4', '')">C) Three hundred fifty thousand</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_4', 'That is 305,000.')">D) Three hundred five thousand</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q24_5">
+    <div class="q-text">5. Write 1,000,010 in words.</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q24_5', 'That is 1,000,001.')">A) One million and one</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_5', 'That is 1,000,100.')">B) One million one hundred</button>
+        <button class="btn-option" onclick="check(this, true, 'q24_5', '')">C) One million and ten</button>
+        <button class="btn-option" onclick="check(this, false, 'q24_5', 'That is 10,000,010.')">D) Ten million and ten</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<h2>Topic 25: Metric Units</h2>
+
+<div class="question-card" id="q25_1">
+    <div class="q-text">1. Which unit is best for measuring the length of a pencil?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q25_1', 'Meters are too big (like a guitar).')">A) Meters</button>
+        <button class="btn-option" onclick="check(this, true, 'q25_1', '')">B) Centimeters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_1', 'Kilometers are for driving distances.')">C) Kilometers</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_1', 'Milliliters measure liquid, not length.')">D) Milliliters</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q25_2">
+    <div class="q-text">2. Which unit is best for the distance between two cities?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q25_2', 'Meters are too small for city distances.')">A) Meters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_2', 'Millimeters are tiny.')">B) Millimeters</button>
+        <button class="btn-option" onclick="check(this, true, 'q25_2', '')">C) Kilometers</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_2', 'Grams measure weight.')">D) Grams</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q25_3">
+    <div class="q-text">3. Which unit is best for the thickness of a dime?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, true, 'q25_3', '')">A) Millimeters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_3', 'Centimeters are about the width of a pinky finger.')">B) Centimeters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_3', 'Meters are huge compared to a dime.')">C) Meters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_3', 'Kilograms measure weight.')">D) Kilograms</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q25_4">
+    <div class="q-text">4. Which unit is best for the height of a door?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q25_4', 'Millimeters are too tiny.')">A) Millimeters</button>
+        <button class="btn-option" onclick="check(this, true, 'q25_4', '')">B) Meters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_4', 'Kilometers are for roads.')">C) Kilometers</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_4', 'Centimeters could work, but Meters is the standard unit for door height.')">D) Grams</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<div class="question-card" id="q25_5">
+    <div class="q-text">5. Which unit measures the length of an ant?</div>
+    <div class="options">
+        <button class="btn-option" onclick="check(this, false, 'q25_5', 'Meters are way too big.')">A) Meters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_5', 'Kilometers are huge.')">B) Kilometers</button>
+        <button class="btn-option" onclick="check(this, true, 'q25_5', '')">C) Millimeters</button>
+        <button class="btn-option" onclick="check(this, false, 'q25_5', 'Liters measure liquid.')">D) Liters</button>
+    </div>
+    <div class="explanation"></div>
+</div>
+
+<script>
+    function check(btn, isCorrect, id, explanationText) {
+        // Reset buttons in this group
+        const parent = btn.parentElement;
+        const buttons = parent.getElementsByClassName('btn-option');
+        for (let b of buttons) {
+            b.classList.remove('correct', 'wrong');
+        }
+
+        // Apply style
+        if (isCorrect) {
+            btn.classList.add('correct');
+            // Hide explanation if correct
+            const expl = document.querySelector(`#${id} .explanation`);
+            expl.style.display = 'block';
+            expl.style.backgroundColor = '#d4edda';
+            expl.style.borderColor = '#c3e6cb';
+            expl.style.color = '#155724';
+            expl.innerHTML = "<strong>Correct!</strong> Great job.";
+        } else {
+            btn.classList.add('wrong');
+            // Show explanation
+            const expl = document.querySelector(`#${id} .explanation`);
+            expl.style.display = 'block';
+            expl.style.backgroundColor = '#fff3cd';
+            expl.style.borderColor = '#ffeeba';
+            expl.style.color = '#856404';
+            expl.innerHTML = "<strong>Not quite.</strong> " + explanationText;
+        }
+    }
+</script>
+
+</body>
+</html>
