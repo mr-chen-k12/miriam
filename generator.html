@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Generator</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; background: #f4f4f9; }
+        h2 { margin-top: 0; color: #333; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        select, button { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
+        button { cursor: pointer; font-weight: bold; transition: 0.2s; }
+        
+        /* Green Generate Button */
+        #btn-generate { background-color: #2da44e; color: white; border: none; }
+        #btn-generate:hover { background-color: #2c974b; }
+
+        /* Blue Copy Button */
+        #btn-copy { background-color: #0969da; color: white; border: none; display: none; }
+        #btn-copy:hover { background-color: #0860ca; }
+
+        textarea { width: 100%; height: 150px; font-family: monospace; padding: 10px; border-radius: 6px; border: 1px solid #ccc; resize: vertical; margin-bottom: 10px; }
+        .status { font-size: 14px; color: #666; margin-bottom: 10px; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>🛠️ Update Helper</h2>
+
+    <label>1. Choose Repository</label>
+    <select id="repoSelect">
+        <option value="miriam">Miriam</option>
+        <option value="alex">Alex</option>
+        <option value="math">Math</option>
+        <option value="books">Books</option>
+        <option value="posters">Posters</option>
+        <option value="piano">Piano</option>
+    </select>
+
+    <button id="btn-generate" onclick="generateJson()">Generate File List</button>
+
+    <div class="status" id="statusMsg">Ready...</div>
+
+    <label>2. Result (JSON)</label>
+    <textarea id="output" readonly placeholder='Click generate to see data here...'></textarea>
+
+    <button id="btn-copy" onclick="copyToClipboard()">Copy JSON to Clipboard</button>
+
+    <script>
+        const USERNAME = "mr-chen-k12";
+
+        function generateJson() {
+            const repo = document.getElementById('repoSelect').value;
+            const output = document.getElementById('output');
+            const status = document.getElementById('statusMsg');
+            const copyBtn = document.getElementById('btn-copy');
+
+            status.innerText = `Scanning ${repo}...`;
+            status.style.color = "#666";
+            copyBtn.style.display = "none";
+            output.value = "";
+
+            fetch(`https://api.github.com/repos/${USERNAME}/${repo}/contents/`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Could not find repository.");
+                    return res.json();
+                })
+                .then(data => {
+                    // Filter: HTML files only, exclude index.html
+                    const files = data
+                        .filter(f => f.name.endsWith('.html') && f.name !== 'index.html')
+                        .map(f => f.name)
+                        .sort();
+
+                    // Format as JSON string
+                    const jsonString = JSON.stringify(files, null, 4); // Indented for readability
+                    output.value = jsonString;
+
+                    status.innerText = `✅ Found ${files.length} files!`;
+                    status.style.color = "green";
+                    copyBtn.style.display = "block";
+                })
+                .catch(err => {
+                    status.innerText = "❌ Error: " + err.message;
+                    status.style.color = "red";
+                });
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            output.select();
+            document.execCommand('copy');
+            alert("Copied! Now paste this into your index.html file.");
+        }
+    </script>
+</body>
+</html>
