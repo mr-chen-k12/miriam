@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet: Lesson 45</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.1em;
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .problem-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.2s;
+        }
+        .problem-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .problem-number {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-panel {
+            display: none;
+            background-color: #f8f9fa;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .answer-panel p {
+            margin: 0 0 10px;
+        }
+        .final-answer {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        canvas {
+            border: 1px dashed #ccc;
+            margin-top: 10px;
+            background-color: #fff;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Math Worksheet</h1>
+    <h2>Lesson Number: 45 Parentheses and the Associative Property Naming Lines and Segments</h2>
+
+    <div class="problem-card">
+        <span class="problem-number">1.</span>
+        <div class="question-text">
+            Use the numbers 0.5, 0.6, and 1.1 to write two addition facts and two subtraction facts.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans1')">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-panel">
+            <p><strong>Explanation:</strong> This is a "fact family" problem. We combine the smaller parts to make the whole, and subtract a part from the whole to find the other part.</p>
+            <p>Addition:</p>
+            <ul>
+                <li>$$0.5 + 0.6 = 1.1$$</li>
+                <li>$$0.6 + 0.5 = 1.1$$</li>
+            </ul>
+            <p>Subtraction:</p>
+            <ul>
+                <li>$$1.1 - 0.5 = 0.6$$</li>
+                <li>$$1.1 - 0.6 = 0.5$$</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">2.</span>
+        <div class="question-text">
+            A whole hour is 60 minutes. How many minutes is half of an hour?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans2')">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-panel">
+            <p>We need to divide the total minutes by 2.</p>
+            <p>$$60 \div 2 = 30$$</p>
+            <p class="final-answer">Answer: 30 minutes</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">3.</span>
+        <div class="question-text">
+            The space shuttle orbited 155 miles above the earth. The weather balloon floated 15 miles above the Earth. The space shuttle was much higher than the weather balloon? Explain why your answer is reasonable.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans3')">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-panel">
+            <p>To find the difference, we subtract the balloon's height from the shuttle's height.</p>
+            <p>$$155 - 15 = 140$$</p>
+            <p class="final-answer">Answer: 140 miles</p>
+            <p><strong>Reasoning:</strong> The answer is reasonable because 155 is much larger than 15. The space shuttle operates in space (Low Earth Orbit), while weather balloons stay within the atmosphere.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">4.</span>
+        <div class="question-text">
+            How much change should you get back if you give the clerk $5.00 for a box of cereal that costs $3.85? How can you check your answer?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans4')">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-panel">
+            <p>Subtract the cost from the amount paid:</p>
+            <p>$$5.00 - 3.85 = 1.15$$</p>
+            <p class="final-answer">Answer: $1.15</p>
+            <p><strong>Check:</strong> Add the change back to the cost to see if it equals $5.00.</p>
+            <p>$$1.15 + 3.85 = 5.00$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">5.</span>
+        <div class="question-text">
+            Write 12.5 using words.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans5')">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-panel">
+            <p>The decimal point is read as "and" and the first decimal place is "tenths".</p>
+            <p class="final-answer">Answer: Twelve and five tenths</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">6.</span>
+        <div class="question-text">
+            Use digits and symbols to show that negative sixteen is less than negative six.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans6')">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-panel">
+            <p>Negative sixteen is $$-16$$. Negative six is $$-6$$.</p>
+            <p>On a number line, -16 is to the left of -6, so it is smaller.</p>
+            <p class="final-answer">Answer: $$-16 < -6$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">7.</span>
+        <div class="question-text">
+            The clock shows the time Joe left for work this morning. He ate breakfast 35 minutes before that time. What time did Joe eat breakfast?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans7')">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-panel">
+            <p><strong>Step 1: Read the clock.</strong><br>The hour hand is past 7. The minute hand is on the 2. The time is <strong>7:10</strong>.</p>
+            <p><strong>Step 2: Subtract 35 minutes.</strong><br>
+            Count back 10 minutes to reach 7:00.<br>
+            Count back the remaining 25 minutes from 7:00.</p>
+            <p>$$60 - 25 = 35$$</p>
+            <p class="final-answer">Answer: 6:35</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">8.</span>
+        <div class="question-text">
+            Write 4060 in expanded form. Then use words to write the number.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans8')">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-panel">
+            <p><strong>Expanded Form:</strong> Break it down by place value.</p>
+            <p class="final-answer">$$4000 + 60$$</p>
+            <p><strong>Word Form:</strong></p>
+            <p class="final-answer">Four thousand sixty</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">9.</span>
+        <div class="question-text">
+            How many circles are shaded?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans9')">Show Answer & Explanation</button>
+        <div id="ans9" class="answer-panel">
+            <p>The image shows two completely full circles and one circle that is divided into 4 parts with 3 shaded.</p>
+            <p>$$2 + \frac{3}{4} = 2\frac{3}{4}$$</p>
+            <p class="final-answer">Answer: $$2\frac{3}{4}$$ (or 2.75)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">10.</span>
+        <div class="question-text">
+            Compare: <br>
+            a. 2 quarters ___ half dollar<br>
+            b. 2,100,000 ___ one million, two hundred thousand
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans10')">Show Answer & Explanation</button>
+        <div id="ans10" class="answer-panel">
+            <p><strong>Part A:</strong> 2 quarters is 50 cents ($0.50). A half dollar is 50 cents ($0.50).<br>
+            Answer: <strong>=</strong> (Equal)</p>
+            <p><strong>Part B:</strong> Write "one million, two hundred thousand" as digits: 1,200,000.<br>
+            Compare 2,100,000 and 1,200,000.<br>
+            Answer: <strong>&gt;</strong> (Greater than)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">11.</span>
+        <div class="question-text">
+            Find the missing factor: $$6w = 42$$
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans11')">Show Answer & Explanation</button>
+        <div id="ans11" class="answer-panel">
+            <p>This asks "6 times what equals 42?"</p>
+            <p>$$w = 42 \div 6$$</p>
+            <p class="final-answer">Answer: w = 7</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">12.</span>
+        <div class="question-text">
+            a. Use an inch ruler to measure this line segment to the nearest inch.<br>
+            b. Use a centimeter ruler to measure this line segment to the nearest centimeter.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans12')">Show Answer & Explanation</button>
+        <div id="ans12" class="answer-panel">
+            <p><em>Note: Because this is a digital image, the physical size depends on your screen. However, based on standard worksheet scales:</em></p>
+            <p>Typically, lines on these worksheets are about 3 inches long.</p>
+            <p><strong>Instructions:</strong> Place the "0" mark of your ruler at the start of the line. Read the number closest to the end of the line.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">13.</span>
+        <div class="question-text">
+            Compare: $$12 - (6 - 3)$$ ___ $$(12 - 6) - 3$$
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans13')">Show Answer & Explanation</button>
+        <div id="ans13" class="answer-panel">
+            <p><strong>Left Side:</strong> Solve inside parentheses first.<br>
+            $$12 - (3) = 9$$</p>
+            <p><strong>Right Side:</strong> Solve inside parentheses first.<br>
+            $$(6) - 3 = 3$$</p>
+            <p>Compare 9 and 3.</p>
+            <p class="final-answer">Answer: $$ > $$ (Greater than)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">14.</span>
+        <div class="question-text">
+            Look at problem 13 and your answer to the problem. Does the Associative Property apply to subtraction? Why or why not?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans14')">Show Answer & Explanation</button>
+        <div id="ans14" class="answer-panel">
+            <p class="final-answer">Answer: No.</p>
+            <p><strong>Explanation:</strong> The Associative Property allows you to regroup numbers without changing the result (like in addition: $$(a+b)+c = a+(b+c)$$). In problem 13, moving the parentheses changed the answer from 9 to 3. Since the results are different, the property does not work for subtraction.</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <span class="problem-number">15.</span>
+            <div class="question-text">$$4.07 - 2.26 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans15')">Show Answer</button>
+            <div id="ans15" class="answer-panel">
+                <p>$$4.07 - 2.26 = 1.81$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">16.</span>
+            <div class="question-text">$$5.02 - 2.47 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans16')">Show Answer</button>
+            <div id="ans16" class="answer-panel">
+                <p>$$5.02 - 2.47 = 2.55$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">17.</span>
+            <div class="question-text">$$5.83 - 2.97 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans17')">Show Answer</button>
+            <div id="ans17" class="answer-panel">
+                <p>$$5.83 - 2.97 = 2.86$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">18.</span>
+            <div class="question-text">$$3.92 + 5.14 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans18')">Show Answer</button>
+            <div id="ans18" class="answer-panel">
+                <p>$$3.92 + 5.14 = 9.06$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">19.</span>
+            <div class="question-text">$$42 \times 3 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans19')">Show Answer</button>
+            <div id="ans19" class="answer-panel">
+                <p>$$42 \times 3 = 126$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">20.</span>
+            <div class="question-text">$$83 \times 2 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans20')">Show Answer</button>
+            <div id="ans20" class="answer-panel">
+                <p>$$83 \times 2 = 166$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">21.</span>
+            <div class="question-text">$$40 \times 4 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans21')">Show Answer</button>
+            <div id="ans21" class="answer-panel">
+                <p>$$40 \times 4 = 160$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">22.</span>
+            <div class="question-text">$$41 \times 6 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans22')">Show Answer</button>
+            <div id="ans22" class="answer-panel">
+                <p>$$41 \times 6 = 246$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">23.</span>
+            <div class="question-text">$$2.75 + 0.50 + 3 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans23')">Show Answer</button>
+            <div id="ans23" class="answer-panel">
+                <p>Note: $3 is written as 3.00.</p>
+                <p>$$2.75 + 0.50 + 3.00 = 6.25$$</p>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <span class="problem-number">24.</span>
+            <div class="question-text">$$3.50 + 1.75 =$$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans24')">Show Answer</button>
+            <div id="ans24" class="answer-panel">
+                <p>$$3.50 + 1.75 = 5.25$$</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">25.</span>
+        <div class="question-text">
+            Draw a rectangle that is 2 in. by 1 in.<br>
+            a. The perimeter of a rectangle is how many inches?<br>
+            b. The area of the rectangle is how many square inches?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans25'); drawRectangle();">Show Answer & Drawing</button>
+        <div id="ans25" class="answer-panel">
+            <p><strong>a. Perimeter:</strong> Add all sides ($$2 + 2 + 1 + 1$$)</p>
+            <p class="final-answer">Answer: 6 inches</p>
+            <p><strong>b. Area:</strong> Multiply length times width ($$2 \times 1$$)</p>
+            <p class="final-answer">Answer: 2 square inches</p>
+            <canvas id="rectCanvas" width="300" height="150"></canvas>
+            <p><em>(Scale drawing generated above: 200px represents 2in, 100px represents 1in)</em></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">26.</span>
+        <div class="question-text">
+            Which of the following segments is not a radius of a circle?<br>
+            A. $$\overline{RS}$$<br>
+            B. $$\overline{RM}$$<br>
+            C. $$\overline{MT}$$<br>
+            D. $$\overline{MS}$$
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans26')">Show Answer & Explanation</button>
+        <div id="ans26" class="answer-panel">
+            <p><strong>Definition:</strong> A radius is a line segment connecting the center (Point M) to any point on the edge of the circle.</p>
+            <ul>
+                <li><strong>RM:</strong> Connects center M to edge R. (Radius)</li>
+                <li><strong>MT:</strong> Connects center M to edge T. (Radius)</li>
+                <li><strong>MS:</strong> Connects center M to edge S. (Radius)</li>
+                <li><strong>RS:</strong> Connects edge R to edge S, but does not start at the center. This is a chord.</li>
+            </ul>
+            <p class="final-answer">Answer: A ($$\overline{RS}$$)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">27.</span>
+        <div class="question-text">
+            Estrella finished the first problem in 34 seconds. She finished the second problem in 28 seconds. The first problem took how much longer to finish than the second problem? Write an equation to solve the problem.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans27')">Show Answer & Explanation</button>
+        <div id="ans27" class="answer-panel">
+            <p>We need to find the difference between the two times.</p>
+            <p><strong>Equation:</strong> $$34 - 28 = x$$</p>
+            <p><strong>Calculation:</strong> $$34 - 28 = 6$$</p>
+            <p class="final-answer">Answer: 6 seconds</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">28.</span>
+        <div class="question-text">
+            Describe the order of operations in each expression. Then find the number each expression equals.<br>
+            a. $$12 - (4 - 2)$$<br>
+            b. $$(12 - 4) - 2$$
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans28')">Show Answer & Explanation</button>
+        <div id="ans28" class="answer-panel">
+            <p><strong>Rule:</strong> Always calculate what is inside the parentheses first.</p>
+            <p><strong>a.</strong> First do $$4 - 2 = 2$$. Then $$12 - 2 = 10$$.<br>
+            <span class="final-answer">Answer: 10</span></p>
+            <p><strong>b.</strong> First do $$12 - 4 = 8$$. Then $$8 - 2 = 6$$.<br>
+            <span class="final-answer">Answer: 6</span></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">29.</span>
+        <div class="question-text">
+            In Dodge City, Kansas, the average maximum temperature in July is 93 degrees Fahrenheit. The average minimum temperature is 67 degrees Fahrenheit. How many degrees warmer is a temperature of 93 degrees Fahrenheit than a temperature of 67 degrees Fahrenheit?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans29')">Show Answer & Explanation</button>
+        <div id="ans29" class="answer-panel">
+            <p>Subtract the minimum from the maximum.</p>
+            <p>$$93 - 67 = 26$$</p>
+            <p class="final-answer">Answer: 26 degrees</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">30.</span>
+        <div class="question-text">
+            The population density of Connecticut is 702.9 people per square mile. The population density of Kentucky is 101.7 people per square mile. Round to the nearest hundred to estimate how many more people per square mile live in Connecticut than live in Kentucky.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans30')">Show Answer & Explanation</button>
+        <div id="ans30" class="answer-panel">
+            <p><strong>Step 1: Round to the nearest hundred.</strong><br>
+            702.9 rounds to <strong>700</strong>.<br>
+            101.7 rounds to <strong>100</strong>.</p>
+            <p><strong>Step 2: Estimate the difference.</strong><br>
+            $$700 - 100 = 600$$</p>
+            <p class="final-answer">Answer: Approximately 600 people per square mile</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAnswer(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+
+    function drawRectangle() {
+        var canvas = document.getElementById("rectCanvas");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw rectangle (Scale: 100px = 1 inch)
+            // 2 inches wide = 200px
+            // 1 inch tall = 100px
+            // Offset by 50px for centering
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "black";
+            ctx.rect(50, 25, 200, 100);
+            ctx.stroke();
+
+            // Label sides
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("2 in", 140, 20);
+            ctx.fillText("1 in", 15, 80);
+        }
+    }
+</script>
+
+</body>
+</html>
