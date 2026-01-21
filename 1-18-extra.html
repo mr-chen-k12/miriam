@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet: Enhanced Learning</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f4f8; padding: 20px; line-height: 1.6; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #2c3e50; }
+        h2 { font-size: 1.2em; color: #7f8c8d; margin-bottom: 40px; }
+        
+        .problem-card { 
+            background: #fff; border: 1px solid #e1e8ed; border-left: 5px solid #3498db; 
+            border-radius: 8px; padding: 20px; margin-bottom: 25px; 
+        }
+        .problem-number { font-weight: bold; font-size: 1.2em; color: #3498db; margin-right: 10px; }
+        .question-text { font-size: 1.1em; margin-bottom: 15px; display: inline; }
+        
+        .btn-group { margin-top: 15px; }
+        button {
+            padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.95em; transition: 0.2s; margin-right: 10px;
+        }
+        .btn-solve { background-color: #2ecc71; color: white; }
+        .btn-solve:hover { background-color: #27ae60; }
+        .btn-guide { background-color: #f39c12; color: white; }
+        .btn-guide:hover { background-color: #d35400; }
+
+        .answer-panel, .guide-panel { 
+            display: none; margin-top: 15px; padding: 15px; border-radius: 6px; 
+        }
+        .answer-panel { background-color: #e8f8f5; border: 1px solid #d1f2eb; }
+        .guide-panel { background-color: #fef9e7; border: 1px solid #f9e79f; }
+
+        .borrow-visual {
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            padding: 10px;
+            border: 1px dashed #bbb;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .cross-out { text-decoration: line-through; color: #e74c3c; }
+        .new-val { color: #27ae60; position: relative; top: -10px; font-size: 0.8em; }
+        
+        canvas { background: #fff; border: 1px solid #ccc; margin-top: 10px; display: block; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Interactive Math Solution Key</h1>
+    <h2>Lesson 45: Parentheses, Associative Property, and Geometry</h2>
+
+    <div class="problem-card">
+        <span class="problem-number">1.</span>
+        <div class="question-text">Use the numbers 0.5, 0.6, and 1.1 to write two addition facts and two subtraction facts.</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans1')">Show Answer</button>
+        </div>
+        <div id="ans1" class="answer-panel">
+            <p><strong>Addition Facts:</strong></p>
+            <ul>
+                <li>$$0.5 + 0.6 = 1.1$$</li>
+                <li>$$0.6 + 0.5 = 1.1$$ (Commutative Property)</li>
+            </ul>
+            <p><strong>Subtraction Facts:</strong></p>
+            <ul>
+                <li>$$1.1 - 0.5 = 0.6$$</li>
+                <li>$$1.1 - 0.6 = 0.5$$</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">4.</span>
+        <div class="question-text">How much change should you get back if you give the clerk $5.00 for a box of cereal that costs $3.85?</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans4')">Show Answer & Borrowing Steps</button>
+        </div>
+        <div id="ans4" class="answer-panel">
+            <p>We need to calculate $$5.00 - 3.85$$.</p>
+            <p><strong>Step-by-Step Double Borrowing:</strong></p>
+            <div class="borrow-visual">
+                &nbsp;&nbsp;<span class="new-val">4</span><span class="new-val">9</span><span class="new-val">10</span><br>
+                &nbsp;&nbsp;<span class="cross-out">5</span>.<span class="cross-out">0</span><span class="cross-out">0</span><br>
+                - 3.8 5<br>
+                -------<br>
+                &nbsp;&nbsp;1.1 5
+            </div>
+            <p>1. <strong>Start at the right (hundredths):</strong> $$0 - 5$$? We can't do it.<br>
+            2. <strong>Look at the neighbor (tenths):</strong> It's also 0! We can't borrow from 0.<br>
+            3. <strong>Go to the Ones place:</strong> Borrow from 5. <br>
+               &rarr; The 5 becomes <strong>4</strong>.<br>
+               &rarr; The neighbor 0 becomes 10... but we need to pass 1 on.<br>
+               &rarr; So that 10 becomes <strong>9</strong>.<br>
+               &rarr; Finally, the last 0 becomes <strong>10</strong>.<br>
+            4. <strong>Subtract:</strong><br>
+               $$10 - 5 = 5$$<br>
+               $$9 - 8 = 1$$<br>
+               $$4 - 3 = 1$$
+            </p>
+            <p><strong>Answer:</strong> $1.15</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">6.</span>
+        <div class="question-text">Use digits and symbols to show that negative sixteen is less than negative six.</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans6')">Show Answer</button>
+        </div>
+        <div id="ans6" class="answer-panel">
+            <p>Negative numbers get smaller the farther left they are on the number line.</p>
+            <p><strong>Answer:</strong> $$-16 < -6$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">7.</span>
+        <div class="question-text">The clock shows the time Joe left for work (7:10). He ate breakfast 35 minutes before that. What time did he eat?</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans7')">Show Answer with Regrouping</button>
+        </div>
+        <div id="ans7" class="answer-panel">
+            <p><strong>Current Time:</strong> 7:10<br>
+            <strong>Subtract:</strong> 35 minutes</p>
+            <p>You cannot subtract 35 from 10. We must "borrow" 1 hour from the 7.</p>
+            <div class="borrow-visual">
+                &nbsp;&nbsp;<span class="new-val">6</span> &nbsp;<span class="new-val">70</span> (10 + 60)<br>
+                &nbsp;&nbsp;<span class="cross-out">7</span> : <span class="cross-out">10</span><br>
+                - 0 : 35<br>
+                --------<br>
+                &nbsp;&nbsp;6 : 35
+            </div>
+            <p>1. Take 1 hour from 7, so it becomes <strong>6</strong>.<br>
+            2. Convert that hour to 60 minutes and add it to the 10 minutes.<br>
+            3. $$60 + 10 = 70$$ minutes.<br>
+            4. Now subtract: $$70 - 35 = 35$$.</p>
+            <p><strong>Answer:</strong> 6:35</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">9.</span>
+        <div class="question-text">How many circles are shaded? (Two full circles, one 3/4 full)</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans9')">Show Answer</button>
+        </div>
+        <div id="ans9" class="answer-panel">
+            <p>We count the wholes first, then the fraction.</p>
+            <p>$$1 + 1 + \frac{3}{4} = 2\frac{3}{4}$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">10.</span>
+        <div class="question-text">Compare: <br>a. 2 quarters ___ half dollar<br>b. 2,100,000 ___ one million, two hundred thousand</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans10')">Show Answer</button>
+        </div>
+        <div id="ans10" class="answer-panel">
+            <p><strong>a.</strong> 2 quarters = 50¢. Half dollar = 50¢.<br>
+            Answer: <strong>=</strong></p>
+            <p><strong>b.</strong> 2,100,000 vs 1,200,000.<br>
+            Look at the millions place: 2 is greater than 1.<br>
+            Answer: <strong>&gt;</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">13 & 14.</span>
+        <div class="question-text">Compare $$12 - (6 - 3)$$ and $$(12 - 6) - 3$$. Does the Associative Property apply to subtraction?</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans13')">Show Answer</button>
+        </div>
+        <div id="ans13" class="answer-panel">
+            <p><strong>Left side:</strong> $$12 - (3) = 9$$</p>
+            <p><strong>Right side:</strong> $$(6) - 3 = 3$$</p>
+            <p><strong>Comparison:</strong> $$9 > 3$$</p>
+            <p><strong>Question 14:</strong> No, the Associative Property does <strong>not</strong> apply to subtraction. As you can see, moving the parentheses changed the answer from 9 to 3.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">15.</span>
+        <div class="question-text">$$4.07 - 2.26 =$$</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans15')">Show Answer with Steps</button>
+        </div>
+        <div id="ans15" class="answer-panel">
+            <div class="borrow-visual">
+                &nbsp;&nbsp;<span class="new-val">3</span><span class="new-val">10</span><br>
+                &nbsp;&nbsp;<span class="cross-out">4</span>.<span class="cross-out">0</span> 7<br>
+                - 2.2 6<br>
+                -------<br>
+                &nbsp;&nbsp;1.8 1
+            </div>
+            <p>1. $$7 - 6 = 1$$ (No borrow needed here).<br>
+            2. $$0 - 2$$? Can't do it. Borrow from 4.<br>
+            3. The 4 becomes <strong>3</strong>. The 0 becomes <strong>10</strong>.<br>
+            4. $$10 - 2 = 8$$.<br>
+            5. $$3 - 2 = 1$$.</p>
+            <p><strong>Answer:</strong> 1.81</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">16.</span>
+        <div class="question-text">$$5.02 - 2.47 =$$</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans16')">Show Answer with Double Borrowing</button>
+        </div>
+        <div id="ans16" class="answer-panel">
+            <p>This requires borrowing across a zero (Double Borrowing).</p>
+            <div class="borrow-visual">
+                &nbsp;&nbsp;<span class="new-val">4</span><span class="new-val">9</span><span class="new-val">12</span><br>
+                &nbsp;&nbsp;<span class="cross-out">5</span>.<span class="cross-out">0</span><span class="cross-out">2</span><br>
+                - 2.4 7<br>
+                -------<br>
+                &nbsp;&nbsp;2.5 5
+            </div>
+            <p>1. <strong>Hundredths:</strong> $$2 - 7$$? Cannot do it.<br>
+            2. <strong>Tenths:</strong> Neighbor is 0. Cannot borrow.<br>
+            3. <strong>Ones:</strong> Borrow from 5. <br>
+               &rarr; 5 becomes <strong>4</strong>.<br>
+               &rarr; 0 becomes 10, then we borrow 1 from it immediately, so it becomes <strong>9</strong>.<br>
+               &rarr; The 2 becomes <strong>12</strong>.<br>
+            4. <strong>Subtract:</strong><br>
+               $$12 - 7 = 5$$<br>
+               $$9 - 4 = 5$$<br>
+               $$4 - 2 = 2$$</p>
+            <p><strong>Answer:</strong> 2.55</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">25.</span>
+        <div class="question-text">Draw a rectangle that is 2 in. by 1 in. Find Perimeter and Area.</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans25'); drawRect();">Show Drawing & Answer</button>
+        </div>
+        <div id="ans25" class="answer-panel">
+            <p><strong>Perimeter:</strong> $$2 + 2 + 1 + 1 = 6 \text{ inches}$$</p>
+            <p><strong>Area:</strong> $$2 \times 1 = 2 \text{ sq inches}$$</p>
+            <canvas id="canvasRect" width="250" height="150"></canvas>
+            <small>Drawing Scale: 50px = 1 inch</small>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">26.</span>
+        <div class="question-text">Which segment is not a radius? ($$\overline{RS}$$, $$\overline{RM}$$, $$\overline{MT}$$, or $$\overline{MS}$$?)</div>
+        <div class="btn-group">
+            <button class="btn-solve" onclick="toggle('ans26'); drawCircle();">Show Diagram & Answer</button>
+        </div>
+        <div id="ans26" class="answer-panel">
+            <p>A <strong>radius</strong> must connect the Center (M) to the edge.</p>
+            <ul>
+                <li>RM, MT, and MS all touch the center.</li>
+                <li>RS connects two points on the edge without touching the center. It is a <strong>chord</strong>.</li>
+            </ul>
+            <p><strong>Answer:</strong> A ($$\overline{RS}$$)</p>
+            <canvas id="canvasCircle" width="250" height="250"></canvas>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">28.</span>
+        <div class="question-text">Describe the order of operations: a. $$12 - (4 - 2)$$ b. $$(12 - 4) - 2$$</div>
+        <div class="btn-group">
+            <button class="btn-guide" onclick="toggle('guide28')">Help Me Think (Scaffolding)</button>
+            <button class="btn-solve" onclick="toggle('ans28')">Show Final Answer</button>
+        </div>
+        <div id="guide28" class="guide-panel">
+            <p><strong>Guiding Questions:</strong></p>
+            <ul>
+                <li>What is the rule about Parentheses? Do we do them first or last?</li>
+                <li>In problem (a), what is inside the parentheses? Solve that small part first.</li>
+                <li>In problem (b), the parentheses moved. How does that change what you subtract first?</li>
+            </ul>
+        </div>
+        <div id="ans28" class="answer-panel">
+            <p><strong>a.</strong> $$12 - (2) = 10$$</p>
+            <p><strong>b.</strong> $$(8) - 2 = 6$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">29.</span>
+        <div class="question-text">Temperature difference: Max 93°F, Min 67°F. How many degrees warmer is 93 than 67?</div>
+        <div class="btn-group">
+            <button class="btn-guide" onclick="toggle('guide29')">Help Me Think (Scaffolding)</button>
+            <button class="btn-solve" onclick="toggle('ans29')">Show Final Answer</button>
+        </div>
+        <div id="guide29" class="guide-panel">
+            <p><strong>Guiding Questions:</strong></p>
+            <ul>
+                <li>When the question asks "How many more" or "How much warmer", what math operation should we use? (Addition or Subtraction?)</li>
+                <li>Set up the vertical math problem: 93 on top, 67 on bottom.</li>
+                <li>Look at the ones column: Can you do $$3 - 7$$? If not, what must you borrow from the 9?</li>
+            </ul>
+        </div>
+        <div id="ans29" class="answer-panel">
+            <p>$$93 - 67 = 26$$</p>
+            <p><strong>Answer:</strong> 26 degrees</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <span class="problem-number">30.</span>
+        <div class="question-text">Density: CT is 702.9, KY is 101.7. Round to nearest hundred and estimate the difference.</div>
+        <div class="btn-group">
+            <button class="btn-guide" onclick="toggle('guide30')">Help Me Think (Scaffolding)</button>
+            <button class="btn-solve" onclick="toggle('ans30')">Show Final Answer</button>
+        </div>
+        <div id="guide30" class="guide-panel">
+            <p><strong>Guiding Questions:</strong></p>
+            <ul>
+                <li><strong>Rounding 702.9:</strong> Look at the hundreds place (7). Look at the neighbor (0). Do we stay at 700 or go up to 800?</li>
+                <li><strong>Rounding 101.7:</strong> Look at the hundreds place (1). Look at the neighbor (0). Do we stay at 100 or go up to 200?</li>
+                <li>Once you have your two rounded numbers, subtract them to find the "estimate".</li>
+            </ul>
+        </div>
+        <div id="ans30" class="answer-panel">
+            <p>1. 702.9 rounds to <strong>700</strong>.</p>
+            <p>2. 101.7 rounds to <strong>100</strong>.</p>
+            <p>3. $$700 - 100 = 600$$.</p>
+            <p><strong>Answer:</strong> 600 people per square mile.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggle(id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function drawRect() {
+        var c = document.getElementById("canvasRect");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,250,150);
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#2c3e50";
+        // Scale: 50px = 1 inch. 2in = 100px. 1in = 50px.
+        ctx.rect(75, 50, 100, 50); 
+        ctx.stroke();
+        ctx.fillStyle = "#333";
+        ctx.font = "14px Arial";
+        ctx.fillText("2 in", 115, 45);
+        ctx.fillText("1 in", 35, 80);
+    }
+
+    function drawCircle() {
+        var c = document.getElementById("canvasCircle");
+        var ctx = c.getContext("2d");
+        var cx = 125, cy = 125, r = 80;
+
+        ctx.clearRect(0,0,250,250);
+        
+        // Circle
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Center M
+        drawDot(ctx, cx, cy, "M", "right");
+
+        // Points approx based on image (clock analogy)
+        // M is center.
+        // T is roughly 8 o'clock
+        var tx = cx + r * Math.cos(Math.PI * 0.85); 
+        var ty = cy + r * Math.sin(Math.PI * 0.85);
+        
+        // R is roughly 1 o'clock
+        var rx = cx + r * Math.cos(Math.PI * -0.2); 
+        var ry = cy + r * Math.sin(Math.PI * -0.2);
+
+        // S is roughly 4 o'clock
+        var sx = cx + r * Math.cos(Math.PI * 0.2); 
+        var sy = cy + r * Math.sin(Math.PI * 0.2);
+
+        // Draw Lines
+        drawLine(ctx, cx, cy, tx, ty); // MT
+        drawLine(ctx, cx, cy, rx, ry); // MR
+        drawLine(ctx, cx, cy, sx, sy); // MS
+        drawLine(ctx, rx, ry, sx, sy); // RS (Chord)
+
+        // Draw Dots and Labels
+        drawDot(ctx, tx, ty, "T", "left");
+        drawDot(ctx, rx, ry, "R", "right");
+        drawDot(ctx, sx, sy, "S", "right");
+    }
+
+    function drawDot(ctx, x, y, label, align) {
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2*Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.font = "bold 16px Arial";
+        ctx.textAlign = (align === "left") ? "right" : "left";
+        ctx.fillText(label, x + (align==="left"?-8:8), y + 5);
+    }
+
+    function drawLine(ctx, x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+</script>
+
+</body>
+</html>
