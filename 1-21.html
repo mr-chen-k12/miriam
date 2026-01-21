@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Homework Solutions (Lesson 46)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .problem-content {
+            margin-bottom: 15px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution-area {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-radius: 4px;
+            border: 1px solid #d1f2eb;
+        }
+        .canvas-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .table-custom th, .table-custom td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .table-custom th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Homework Solutions</h1>
+    <p style="text-align: center;">Lesson Number: 46 Relating Multiplication and Division</p>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 1</div>
+        <div class="problem-content">
+            Write and solve equations for problems 1 and 2.<br>
+            Four hundred ninety-five oil drums were on the first train. Seven hundred sixty-two oil drums were on the first two trains combined. How many oil drums were on the second train?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans1')">Show Answer & Explanation</button>
+        <div id="ans1" class="solution-area">
+            <p><strong>Equation:</strong> \( 495 + x = 762 \) or \( 762 - 495 = x \)</p>
+            <p>To find the number of drums on the second train, we subtract the first train's amount from the total.</p>
+            <p>\( 762 - 495 = 267 \)</p>
+            <p><strong>Answer:</strong> 267 oil drums</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 2</div>
+        <div class="problem-content">
+            Workers on a Montana ranch baled 82 bales of hay on the first day. They baled 92 bales of hay on the second day and 78 bales of hay on the third day. How many bales of hay did the workers bale in all three days?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans2')">Show Answer & Explanation</button>
+        <div id="ans2" class="solution-area">
+            <p><strong>Equation:</strong> \( 82 + 92 + 78 = x \)</p>
+            <p>Sum the bales from all three days:</p>
+            <ul>
+                <li>\( 82 + 92 = 174 \)</li>
+                <li>\( 174 + 78 = 252 \)</li>
+            </ul>
+            <p><strong>Answer:</strong> 252 bales of hay</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 3</div>
+        <div class="problem-content">
+            The decimal number three and seventy-eight hundredths is how much more than two and twelve hundredths?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans3')">Show Answer & Explanation</button>
+        <div id="ans3" class="solution-area">
+            <p>Convert the words to numbers:</p>
+            <ul>
+                <li>Three and seventy-eight hundredths = \( 3.78 \)</li>
+                <li>Two and twelve hundredths = \( 2.12 \)</li>
+            </ul>
+            <p>Subtract to find the difference:</p>
+            <p>\( 3.78 - 2.12 = 1.66 \)</p>
+            <p><strong>Answer:</strong> 1.66 (one and sixty-six hundredths)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 4</div>
+        <div class="problem-content">
+            a. Round 786 to the nearest hundred.<br>
+            b. Round 786 to the nearest ten.
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans4')">Show Answer & Explanation</button>
+        <div id="ans4" class="solution-area">
+            <p><strong>a. Nearest Hundred:</strong><br>
+            Look at the tens digit (8). Since 8 is 5 or greater, round up.<br>
+            Answer: <strong>800</strong></p>
+            <p><strong>b. Nearest Ten:</strong><br>
+            Look at the ones digit (6). Since 6 is 5 or greater, round up the tens digit (8 becomes 9).<br>
+            Answer: <strong>790</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 5</div>
+        <div class="problem-content">
+            Draw and shade rectangles to show the number \( 2 \frac{1}{3} \).
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans5')">Show Answer & Explanation</button>
+        <div id="ans5" class="solution-area">
+            <p>You need to draw 3 identical rectangles. Shade the first two completely (representing the whole number 2). Divide the third rectangle into 3 equal parts and shade 1 of them (representing \( \frac{1}{3} \)).</p>
+            <div class="canvas-container">
+                <canvas id="canvasQ5" width="300" height="100"></canvas>
+            </div>
+            <script>
+                const c5 = document.getElementById('canvasQ5');
+                const ctx5 = c5.getContext('2d');
+                
+                // Draw 3 rectangles
+                for(let i=0; i<3; i++) {
+                    ctx5.strokeRect(10 + i*90, 20, 80, 60);
+                }
+                
+                // Shade first 2 completely
+                ctx5.fillStyle = '#3498db';
+                ctx5.fillRect(10, 20, 80, 60);
+                ctx5.fillRect(100, 20, 80, 60);
+                
+                // Shade 1/3 of the last one
+                ctx5.fillRect(190, 20, 80/3, 60);
+                
+                // Draw lines to show thirds on the last one
+                ctx5.beginPath();
+                ctx5.moveTo(190 + 80/3, 20);
+                ctx5.lineTo(190 + 80/3, 80);
+                ctx5.moveTo(190 + (80/3)*2, 20);
+                ctx5.lineTo(190 + (80/3)*2, 80);
+                ctx5.stroke();
+            </script>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 6</div>
+        <div class="problem-content">
+            The first five odd numbers are 1, 3, 5, 7, and 9.<br>
+            a. What is their sum?<br>
+            b. What is the square root of their sum?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans6')">Show Answer & Explanation</button>
+        <div id="ans6" class="solution-area">
+            <p><strong>a. Sum:</strong><br>
+            \( 1 + 3 + 5 + 7 + 9 = 25 \)</p>
+            <p><strong>b. Square Root:</strong><br>
+            The square root of 25 is the number that times itself equals 25.<br>
+            \( \sqrt{25} = 5 \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 7</div>
+        <div class="problem-content">
+            The clock shows a morning time. What time was it 12 hours before that time?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans7')">Show Answer & Explanation</button>
+        <div id="ans7" class="solution-area">
+            <p>The clock shows <strong>10:10</strong>.</p>
+            <p>Since it is a "morning time", it is <strong>10:10 AM</strong>.</p>
+            <p>12 hours before any AM time is the same numerical time in PM of the previous day.</p>
+            <p><strong>Answer:</strong> 10:10 PM</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 8</div>
+        <div class="problem-content">
+            What type of angle is formed by the hands of the clock?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans8')">Show Answer & Explanation</button>
+        <div id="ans8" class="solution-area">
+            <p>The minute hand is at 12. The hour hand is at 4.</p>
+            <p>This covers 4 "hour" sections of the clock. Each section is \( 30^\circ \) (360 / 12).<br>
+            \( 4 \times 30^\circ = 120^\circ \).</p>
+            <p>An angle greater than \( 90^\circ \) and less than \( 180^\circ \) is <strong>Obtuse</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 9</div>
+        <div class="problem-content">
+            a. Use an inch ruler to find the length of this rectangle to the nearest quarter inch.<br>
+            b. Which segment is parallel to AB?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans9')">Show Answer & Explanation</button>
+        <div id="ans9" class="solution-area">
+            <p><strong>a. Measurement:</strong><br>
+            <em>Note: This requires the physical paper to measure exactly.</em><br>
+            However, this usually refers to measuring the box enclosing the problem. If measuring the printed page, the answer depends on the print size.</p>
+            <p><strong>b. Parallel Segment:</strong><br>
+            In a rectangle labeled ABCD (starting top-left and going clockwise), AB is the top side. The side parallel to the top side is the bottom side.</p>
+            <p><strong>Answer:</strong> Segment DC (or CD)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 10</div>
+        <div class="problem-content">
+            Kita took two dozen BIG steps. About how many meters did she walk?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans10')">Show Answer & Explanation</button>
+        <div id="ans10" class="solution-area">
+            <p>1. "Two dozen" means \( 2 \times 12 = 24 \) steps.</p>
+            <p>2. A "BIG step" is commonly used to estimate <strong>1 meter</strong>.</p>
+            <p>3. \( 24 \text{ steps} \times 1 \text{ meter/step} = 24 \text{ meters} \).</p>
+            <p><strong>Answer:</strong> About 24 meters.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 11</div>
+        <div class="problem-content">
+            To what mixed number is the arrow pointing?
+            <br>[Image: Number line from 10 to 11 with tick marks]
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans11')">Show Answer & Explanation</button>
+        <div id="ans11" class="solution-area">
+            <p>Count the spaces between 10 and 11. There are <strong>8 spaces</strong>, so each tick represents \( \frac{1}{8} \).</p>
+            <p>Count the ticks up to the arrow: The arrow is on the <strong>5th</strong> tick mark past 10.</p>
+            <p><strong>Answer:</strong> \( 10 \frac{5}{8} \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 12</div>
+        <div class="problem-content">
+            \( 64 + (9 \times 40) \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans12')">Show Answer & Explanation</button>
+        <div id="ans12" class="solution-area">
+            <p>Follow Order of Operations (PEMDAS). Do parentheses first.</p>
+            <p>1. \( 9 \times 40 = 360 \)</p>
+            <p>2. \( 64 + 360 = 424 \)</p>
+            <p><strong>Answer:</strong> 424</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 13</div>
+        <div class="problem-content">
+            \( \$6.25 + \$0.39 + \$3 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans13')">Show Answer & Explanation</button>
+        <div id="ans13" class="solution-area">
+            <p>Align the decimal points:</p>
+            <pre>
+  6.25
+  0.39
++ 3.00
+------
+  9.64
+            </pre>
+            <p><strong>Answer:</strong> $9.64</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 14</div>
+        <div class="problem-content">
+            \( \$4.02 - \$2.47 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans14')">Show Answer & Explanation</button>
+        <div id="ans14" class="solution-area">
+            <p>Subtract with borrowing:</p>
+            <pre>
+  3 9 12  (Borrowing)
+  4.02
+- 2.47
+------
+  1.55
+            </pre>
+            <p><strong>Answer:</strong> $1.55</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 15</div>
+        <div class="problem-content">
+            \( \$5.00 - \$2.48 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans15')">Show Answer & Explanation</button>
+        <div id="ans15" class="solution-area">
+            <pre>
+  4 9 10
+  5.00
+- 2.48
+------
+  2.52
+            </pre>
+            <p><strong>Answer:</strong> $2.52</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 16</div>
+        <div class="problem-content">
+            \( n + 2.5 = 3.7 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans16')">Show Answer & Explanation</button>
+        <div id="ans16" class="solution-area">
+            <p>To solve for \( n \), subtract 2.5 from both sides.</p>
+            <p>\( n = 3.7 - 2.5 \)</p>
+            <p>\( n = 1.2 \)</p>
+            <p><strong>Answer:</strong> 1.2</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 17</div>
+        <div class="problem-content">
+            \( 4.3 - c = 3.2 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans17')">Show Answer & Explanation</button>
+        <div id="ans17" class="solution-area">
+            <p>To find \( c \), think: 4.3 minus what equals 3.2?</p>
+            <p>\( c = 4.3 - 3.2 \)</p>
+            <p>\( c = 1.1 \)</p>
+            <p><strong>Answer:</strong> 1.1</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 18</div>
+        <div class="problem-content">
+            \( 42 \times 3 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans18')">Show Answer & Explanation</button>
+        <div id="ans18" class="solution-area">
+            <p>\( 3 \times 2 = 6 \)<br>
+            \( 3 \times 40 = 120 \)<br>
+            \( 120 + 6 = 126 \)</p>
+            <p><strong>Answer:</strong> 126</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 19</div>
+        <div class="problem-content">
+            \( 81 \times 5 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans19')">Show Answer & Explanation</button>
+        <div id="ans19" class="solution-area">
+            <p>\( 5 \times 1 = 5 \)<br>
+            \( 5 \times 80 = 400 \)<br>
+            \( 400 + 5 = 405 \)</p>
+            <p><strong>Answer:</strong> 405</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 20</div>
+        <div class="problem-content">
+            \( 6 \overline{)30} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans20')">Show Answer & Explanation</button>
+        <div id="ans20" class="solution-area">
+            <p>\( 30 \div 6 = 5 \)</p>
+            <p><strong>Answer:</strong> 5</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 21</div>
+        <div class="problem-content">
+            \( 7 \overline{)21} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans21')">Show Answer & Explanation</button>
+        <div id="ans21" class="solution-area">
+            <p>\( 21 \div 7 = 3 \)</p>
+            <p><strong>Answer:</strong> 3</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 22</div>
+        <div class="problem-content">
+            \( 8 \overline{)56} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans22')">Show Answer & Explanation</button>
+        <div id="ans22" class="solution-area">
+            <p>\( 56 \div 8 = 7 \)</p>
+            <p><strong>Answer:</strong> 7</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 23</div>
+        <div class="problem-content">
+            \( 9 \overline{)81} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans23')">Show Answer & Explanation</button>
+        <div id="ans23" class="solution-area">
+            <p>\( 81 \div 9 = 9 \)</p>
+            <p><strong>Answer:</strong> 9</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 24</div>
+        <div class="problem-content">
+            \( 7 \overline{)28} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans24')">Show Answer & Explanation</button>
+        <div id="ans24" class="solution-area">
+            <p>\( 28 \div 7 = 4 \)</p>
+            <p><strong>Answer:</strong> 4</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 25</div>
+        <div class="problem-content">
+            \( 3 \overline{)15} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans25')">Show Answer & Explanation</button>
+        <div id="ans25" class="solution-area">
+            <p>\( 15 \div 3 = 5 \)</p>
+            <p><strong>Answer:</strong> 5</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 26</div>
+        <div class="problem-content">
+            Draw a rectangle 3 in. long and 1 in. wide.<br>
+            a. What is its perimeter?<br>
+            b. What is its area?
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans26')">Show Answer & Explanation</button>
+        <div id="ans26" class="solution-area">
+            <p><strong>a. Perimeter:</strong><br>
+            Perimeter = \( 2 \times (\text{length} + \text{width}) \)<br>
+            \( 2 \times (3 + 1) = 2 \times 4 = 8 \text{ in.} \)</p>
+            <p><strong>b. Area:</strong><br>
+            Area = \( \text{length} \times \text{width} \)<br>
+            \( 3 \times 1 = 3 \text{ sq. in.} \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 27</div>
+        <div class="problem-content">
+            Rosario noticed that the distance from the pole in the center of the tetherball circle to the painted circle was about six feet. What was the approximate radius of the tetherball circle?<br>
+            A 12 &nbsp;&nbsp; B 4 yd &nbsp;&nbsp; C 3 ft &nbsp;&nbsp; D 2 yd
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans27')">Show Answer & Explanation</button>
+        <div id="ans27" class="solution-area">
+            <p>The "distance from the center pole to the painted circle" <strong>is</strong> the definition of the radius.</p>
+            <p>Radius = 6 feet.</p>
+            <p>Convert 6 feet to yards (since 3 feet = 1 yard):<br>
+            \( 6 \text{ ft} \div 3 = 2 \text{ yards} \).</p>
+            <p><strong>Answer:</strong> D (2 yd)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 28</div>
+        <div class="problem-content">
+            Tyrique, Dominic, and Tamsha checked their pockets for change.
+            <ul>
+                <li>Tyrique had two dimes and a penny.</li>
+                <li>Dominic had three nickels and two pennies.</li>
+                <li>Tamsha had a nickel, a dime, and a penny.</li>
+            </ul>
+            Using dollar signs and decimal points list the three amounts in order from least to greatest.
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans28')">Show Answer & Explanation</button>
+        <div id="ans28" class="solution-area">
+            <p><strong>Calculate Totals:</strong></p>
+            <ul>
+                <li><strong>Tyrique:</strong> 2 dimes ($0.20) + 1 penny ($0.01) = <strong>$0.21</strong></li>
+                <li><strong>Dominic:</strong> 3 nickels ($0.15) + 2 pennies ($0.02) = <strong>$0.17</strong></li>
+                <li><strong>Tamsha:</strong> 1 nickel ($0.05) + 1 dime ($0.10) + 1 penny ($0.01) = <strong>$0.16</strong></li>
+            </ul>
+            <p><strong>Order (Least to Greatest):</strong></p>
+            <p>$0.16, $0.17, $0.21</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 29</div>
+        <div class="problem-content">
+            What is the twelfth term of the sequence below?<br>
+            12, 24, 36, 48, 60, ...
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans29')">Show Answer & Explanation</button>
+        <div id="ans29" class="solution-area">
+            <p>This sequence consists of the multiples of 12.</p>
+            <p>1st term: \( 12 \times 1 = 12 \)<br>
+            2nd term: \( 12 \times 2 = 24 \)</p>
+            <p>The 12th term will be: \( 12 \times 12 \)</p>
+            <p><strong>Answer:</strong> 144</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Problem 30</div>
+        <div class="problem-content">
+            Write a rule that describes the relationship of the data in the table.
+            <table class="table-custom">
+                <tr><th>Number of Teachers</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                <tr><th>Number of Students</th><td>7</td><td>14</td><td>21</td><td>28</td><td>35</td></tr>
+            </table>
+        </div>
+        <button class="btn-toggle" onclick="toggleAnswer('ans30')">Show Answer & Explanation</button>
+        <div id="ans30" class="solution-area">
+            <p>Look at the relationship between the top row (Teachers) and the bottom row (Students).</p>
+            <ul>
+                <li>\( 1 \times 7 = 7 \)</li>
+                <li>\( 2 \times 7 = 14 \)</li>
+                <li>\( 3 \times 7 = 21 \)</li>
+            </ul>
+            <p>The number of students is always 7 times the number of teachers.</p>
+            <p><strong>Rule:</strong> Multiply by 7 (or \( y = 7x \))</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
