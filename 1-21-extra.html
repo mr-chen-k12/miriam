@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Math Practice (Similar Questions)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fdfaf6;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #d35400;
+        }
+        .section-title {
+            background-color: #e67e22;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #d35400;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #e67e22;
+        }
+        .btn-toggle {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .btn-toggle:hover {
+            background-color: #34495e;
+        }
+        .solution-area {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fcece4;
+            border-radius: 4px;
+            border: 1px solid #fadbd8;
+        }
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 50%; /* Makes clocks round visually */
+        }
+        .rect-canvas {
+            border-radius: 0; /* Keep number lines rectangular */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th { background-color: #eee; }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Review</h1>
+    <p style="text-align: center;">Similar questions generated for extra review.</p>
+
+    <h2 class="section-title">Practice for Question 1 (Word Equations)</h2>
+    
+    <div class="problem-card">
+        <div class="problem-header">1-A</div>
+        <div class="problem-content">
+            A warehouse had 350 boxes of apples. A second shipment arrived, and now the warehouse has 820 boxes total. Write an equation and solve to find how many boxes were in the second shipment.
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans1a')">Review Answer</button>
+        <div id="ans1a" class="solution-area">
+            <p><strong>Equation:</strong> \( 350 + x = 820 \) or \( 820 - 350 = x \)</p>
+            <p><strong>Solution:</strong> \( 820 - 350 = 470 \)</p>
+            <p><strong>Answer:</strong> 470 boxes</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">1-B</div>
+        <div class="problem-content">
+            Julie read 145 pages on Monday. By Tuesday night, she had read a total of 315 pages. How many pages did she read on Tuesday?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans1b')">Review Answer</button>
+        <div id="ans1b" class="solution-area">
+            <p><strong>Equation:</strong> \( 145 + p = 315 \)</p>
+            <p><strong>Solution:</strong> \( 315 - 145 = 170 \)</p>
+            <p><strong>Answer:</strong> 170 pages</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 7 (Time & 12 Hours)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">7-A</div>
+        <div class="problem-content">
+            The clock below shows an afternoon time. What time was it 12 hours before this time?
+            <div class="canvas-container">
+                <canvas id="clock7a" width="150" height="150"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans7a')">Review Answer</button>
+        <div id="ans7a" class="solution-area">
+            <p>The clock shows <strong>4:00</strong>.</p>
+            <p>Since it is afternoon, it is <strong>4:00 PM</strong>.</p>
+            <p>12 hours prior to a PM time is the same time in AM.</p>
+            <p><strong>Answer:</strong> 4:00 AM</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">7-B</div>
+        <div class="problem-content">
+            The clock below shows a time in the morning. What time will it be 12 hours *after* this time?
+            <div class="canvas-container">
+                <canvas id="clock7b" width="150" height="150"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans7b')">Review Answer</button>
+        <div id="ans7b" class="solution-area">
+            <p>The clock shows <strong>9:30</strong>.</p>
+            <p>Since it is morning, it is <strong>9:30 AM</strong>.</p>
+            <p>12 hours after AM is PM.</p>
+            <p><strong>Answer:</strong> 9:30 PM</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 8 (Clock Angles)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">8-A</div>
+        <div class="problem-content">
+            What type of angle is formed by the hands of this clock? (Acute, Right, or Obtuse?)
+            <div class="canvas-container">
+                <canvas id="clock8a" width="150" height="150"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans8a')">Review Answer</button>
+        <div id="ans8a" class="solution-area">
+            <p>The time shown is 3:00.</p>
+            <p>The angle covers exactly 3 numbers (12 to 3), which is 90 degrees.</p>
+            <p><strong>Answer:</strong> Right Angle</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">8-B</div>
+        <div class="problem-content">
+            What type of angle is formed by the hands of this clock?
+            <div class="canvas-container">
+                <canvas id="clock8b" width="150" height="150"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans8b')">Review Answer</button>
+        <div id="ans8b" class="solution-area">
+            <p>The time shown is 1:00.</p>
+            <p>The angle is small (only 30 degrees). It is less than 90 degrees.</p>
+            <p><strong>Answer:</strong> Acute Angle</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 6 (Sums & Roots)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">6-A</div>
+        <div class="problem-content">
+            The first four odd numbers are 1, 3, 5, and 7.<br>
+            a. What is their sum?<br>
+            b. What is the square root of their sum?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans6a')">Review Answer</button>
+        <div id="ans6a" class="solution-area">
+            <p>a. \( 1 + 3 + 5 + 7 = 16 \)</p>
+            <p>b. The square root of 16 is the number that multiplied by itself equals 16.</p>
+            <p>\( 4 \times 4 = 16 \)</p>
+            <p><strong>Answer:</strong> 4</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">6-B</div>
+        <div class="problem-content">
+            Find the sum of 13, 11, and 12. Then find the square root of that sum.
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans6b')">Review Answer</button>
+        <div id="ans6b" class="solution-area">
+            <p>Sum: \( 13 + 11 + 12 = 36 \)</p>
+            <p>Square root: \( \sqrt{36} = 6 \)</p>
+            <p><strong>Answer:</strong> 6</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 12 (Order of Operations)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">12-A</div>
+        <div class="problem-content">
+            Solve: \( 50 + (6 \times 30) \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans12a')">Review Answer</button>
+        <div id="ans12a" class="solution-area">
+            <p>1. Do parenthesis first: \( 6 \times 30 = 180 \)</p>
+            <p>2. Add: \( 50 + 180 = 230 \)</p>
+            <p><strong>Answer:</strong> 230</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">12-B</div>
+        <div class="problem-content">
+            Solve: \( 100 - (200 \div 5) \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans12b')">Review Answer</button>
+        <div id="ans12b" class="solution-area">
+            <p>1. Do parenthesis first: \( 200 \div 5 = 40 \)</p>
+            <p>2. Subtract: \( 100 - 40 = 60 \)</p>
+            <p><strong>Answer:</strong> 60</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 11 (Number Lines)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">11-A</div>
+        <div class="problem-content">
+            To what mixed number is the arrow pointing?
+            <div class="canvas-container">
+                <canvas id="line11a" width="300" height="60" class="rect-canvas"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans11a')">Review Answer</button>
+        <div id="ans11a" class="solution-area">
+            <p>There are 4 spaces between the whole numbers. Each mark is \( \frac{1}{4} \).</p>
+            <p>The arrow is on the 3rd mark after 5.</p>
+            <p><strong>Answer:</strong> \( 5 \frac{3}{4} \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">11-B</div>
+        <div class="problem-content">
+            To what mixed number is the arrow pointing?
+            <div class="canvas-container">
+                <canvas id="line11b" width="300" height="60" class="rect-canvas"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans11b')">Review Answer</button>
+        <div id="ans11b" class="solution-area">
+            <p>There are 3 spaces between the whole numbers. Each mark is \( \frac{1}{3} \).</p>
+            <p>The arrow is on the 2nd mark after 2.</p>
+            <p><strong>Answer:</strong> \( 2 \frac{2}{3} \)</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 10 (Estimation)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">10-A</div>
+        <div class="problem-content">
+            Tom took 5 dozen big steps. If one big step is about 1 meter, about how many meters did he walk?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans10a')">Review Answer</button>
+        <div id="ans10a" class="solution-area">
+            <p>5 dozen = \( 5 \times 12 = 60 \) steps.</p>
+            <p>\( 60 \text{ steps} \times 1 \text{ meter} = 60 \text{ meters} \).</p>
+            <p><strong>Answer:</strong> 60 meters</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">10-B</div>
+        <div class="problem-content">
+            A car is about 4 meters long. If you line up 8 cars, about how many meters long is the line?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans10b')">Review Answer</button>
+        <div id="ans10b" class="solution-area">
+            <p>\( 8 \text{ cars} \times 4 \text{ meters} = 32 \text{ meters} \).</p>
+            <p><strong>Answer:</strong> 32 meters</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 27 (Circle Dimensions)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">27-A</div>
+        <div class="problem-content">
+            The distance from the center of a round pool to the edge is 9 feet. What is this distance called, and how many yards is it?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans27a')">Review Answer</button>
+        <div id="ans27a" class="solution-area">
+            <p>The distance from center to edge is the <strong>radius</strong>.</p>
+            <p>To convert feet to yards, divide by 3: \( 9 \div 3 = 3 \).</p>
+            <p><strong>Answer:</strong> Radius; 3 yards.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">27-B</div>
+        <div class="problem-content">
+            The diameter (distance all the way across) of a circle is 10 meters. What is the radius?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans27b')">Review Answer</button>
+        <div id="ans27b" class="solution-area">
+            <p>The radius is exactly half of the diameter.</p>
+            <p>\( 10 \div 2 = 5 \).</p>
+            <p><strong>Answer:</strong> 5 meters</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 28 (Counting Money)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">28-A</div>
+        <div class="problem-content">
+            List these amounts in order from least to greatest:
+            <ul>
+                <li>Amount A: 3 dimes and 4 pennies</li>
+                <li>Amount B: 1 quarter and 1 nickel</li>
+                <li>Amount C: 35 pennies</li>
+            </ul>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans28a')">Review Answer</button>
+        <div id="ans28a" class="solution-area">
+            <p>A: \( .30 + .04 = \$0.34 \)</p>
+            <p>B: \( .25 + .05 = \$0.30 \)</p>
+            <p>C: \( \$0.35 \)</p>
+            <p>Order: B, A, C</p>
+            <p><strong>Answer:</strong> $0.30, $0.34, $0.35</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">28-B</div>
+        <div class="problem-content">
+            Sarah has 2 quarters and 1 dime. John has 5 dimes and 1 nickel. Who has more money?
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans28b')">Review Answer</button>
+        <div id="ans28b" class="solution-area">
+            <p>Sarah: \( .50 + .10 = \$0.60 \)</p>
+            <p>John: \( .50 + .05 = \$0.55 \)</p>
+            <p><strong>Answer:</strong> Sarah has more ($0.60 > $0.55)</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Practice for Question 30 (Input/Output Rules)</h2>
+
+    <div class="problem-card">
+        <div class="problem-header">30-A</div>
+        <div class="problem-content">
+            Write the rule for this table:
+            <table>
+                <tr><th>Input</th><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                <tr><th>Output</th><td>10</td><td>15</td><td>20</td><td>25</td></tr>
+            </table>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans30a')">Review Answer</button>
+        <div id="ans30a" class="solution-area">
+            <p>Look at the relationship: \( 2 \times 5 = 10 \), \( 3 \times 5 = 15 \).</p>
+            <p><strong>Answer:</strong> Multiply by 5</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">30-B</div>
+        <div class="problem-content">
+            Write the rule for this table:
+            <table>
+                <tr><th>Input</th><td>12</td><td>14</td><td>16</td><td>18</td></tr>
+                <tr><th>Output</th><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+            </table>
+        </div>
+        <button class="btn-toggle" onclick="toggle('ans30b')">Review Answer</button>
+        <div id="ans30b" class="solution-area">
+            <p>Look at the relationship: \( 12 \div 2 = 6 \), \( 14 \div 2 = 7 \).</p>
+            <p><strong>Answer:</strong> Divide by 2</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Extra Practice: 2-Digit Multiplication</h2>
+    
+    <div class="problem-card">
+        <div class="problem-header">Mult-1</div>
+        <div class="problem-content">
+            \( 23 \times 12 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ansM1')">Review Answer</button>
+        <div id="ansM1" class="solution-area">
+            <p>
+            \( 23 \times 10 = 230 \)<br>
+            \( 23 \times 2 = 46 \)<br>
+            \( 230 + 46 = 276 \)
+            </p>
+            <p><strong>Answer:</strong> 276</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Mult-2</div>
+        <div class="problem-content">
+            \( 45 \times 15 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ansM2')">Review Answer</button>
+        <div id="ansM2" class="solution-area">
+            <p>\( 45 \times 10 = 450 \)<br>
+            \( 45 \times 5 = 225 \)<br>
+            \( 450 + 225 = 675 \)</p>
+            <p><strong>Answer:</strong> 675</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Mult-3</div>
+        <div class="problem-content">
+            \( 34 \times 21 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ansM3')">Review Answer</button>
+        <div id="ansM3" class="solution-area">
+            <p>\( 34 \times 20 = 680 \)<br>
+            \( 34 \times 1 = 34 \)<br>
+            \( 680 + 34 = 714 \)</p>
+            <p><strong>Answer:</strong> 714</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Mult-4</div>
+        <div class="problem-content">
+            \( 56 \times 11 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ansM4')">Review Answer</button>
+        <div id="ansM4" class="solution-area">
+            <p>\( 56 \times 10 = 560 \)<br>
+            \( 56 \times 1 = 56 \)<br>
+            \( 560 + 56 = 616 \)</p>
+            <p><strong>Answer:</strong> 616</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Mult-5</div>
+        <div class="problem-content">
+            \( 18 \times 24 = \)
+        </div>
+        <button class="btn-toggle" onclick="toggle('ansM5')">Review Answer</button>
+        <div id="ansM5" class="solution-area">
+            <p>\( 18 \times 20 = 360 \)<br>
+            \( 18 \times 4 = 72 \)<br>
+            \( 360 + 72 = 432 \)</p>
+            <p><strong>Answer:</strong> 432</p>
+        </div>
+    </div>
+
+
+    <script>
+        function toggle(id) {
+            var el = document.getElementById(id);
+            if (el.style.display === "block") el.style.display = "none";
+            else el.style.display = "block";
+        }
+
+        // Draw Clock Function
+        function drawClock(canvasId, hours, minutes) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            const radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            const r = radius * 0.90;
+
+            // Draw Face
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Draw Center
+            ctx.beginPath();
+            ctx.arc(0, 0, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+
+            // Draw Ticks
+            for(let num = 1; num <= 12; num++){
+                let ang = num * Math.PI / 6;
+                ctx.rotate(ang);
+                ctx.translate(0, -r * 0.85);
+                ctx.rotate(-ang);
+                ctx.fillText(num.toString(), -3, 3); // Simple text numbers, usually needs rotation logic for perfect alignment, keeping simple
+                ctx.rotate(ang);
+                ctx.translate(0, r * 0.85);
+                ctx.rotate(-ang);
+                
+                // Drawing tick marks instead of numbers for simplicity in canvas
+                ctx.beginPath();
+                ctx.rotate(ang);
+                ctx.moveTo(0, -r);
+                ctx.lineTo(0, -r + 10);
+                ctx.stroke();
+                ctx.rotate(-ang);
+            }
+
+            // Draw Hour Hand
+            let hourAng = (hours % 12) * Math.PI / 6 + (minutes*Math.PI/(6*60));
+            drawHand(ctx, hourAng, r*0.5, 6);
+
+            // Draw Minute Hand
+            let minAng = (minutes * Math.PI / 30);
+            drawHand(ctx, minAng, r*0.8, 4);
+        }
+
+        function drawHand(ctx, pos, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0,0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        // Draw Number Line Function
+        function drawLine(canvasId, startNum, endNum, segments, arrowIndex) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            const w = canvas.width;
+            const h = canvas.height;
+            const y = h/2;
+
+            // Main line
+            ctx.beginPath();
+            ctx.moveTo(20, y);
+            ctx.lineTo(w-20, y);
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Arrows at ends
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(startNum, 10, y + 25);
+            ctx.fillText(endNum, w-20, y + 25);
+
+            const totalWidth = w - 40;
+            const step = totalWidth / segments;
+
+            // Ticks
+            for(let i = 0; i <= segments; i++) {
+                let x = 20 + (i * step);
+                ctx.beginPath();
+                ctx.moveTo(x, y - 5);
+                ctx.lineTo(x, y + 5);
+                ctx.stroke();
+            }
+
+            // Draw Arrow Pointer
+            if(arrowIndex > 0) {
+                let ax = 20 + (arrowIndex * step);
+                ctx.beginPath();
+                ctx.moveTo(ax, y - 10);
+                ctx.lineTo(ax - 5, y - 25);
+                ctx.lineTo(ax + 5, y - 25);
+                ctx.closePath();
+                ctx.fillStyle = "red";
+                ctx.fill();
+                
+                // Line down
+                ctx.beginPath();
+                ctx.moveTo(ax, y-10);
+                ctx.lineTo(ax, y-25);
+                ctx.strokeStyle = "red";
+                ctx.stroke();
+            }
+        }
+
+        // Initialize Drawings
+        window.onload = function() {
+            // Clocks
+            drawClock("clock7a", 4, 0);   // 4:00
+            drawClock("clock7b", 9, 30);  // 9:30
+            drawClock("clock8a", 3, 0);   // 3:00 (Right Angle)
+            drawClock("clock8b", 1, 0);   // 1:00 (Acute Angle)
+
+            // Number Lines
+            drawLine("line11a", 5, 6, 4, 3); // 5 to 6, 4 segments, arrow at 3rd
+            drawLine("line11b", 2, 3, 3, 2); // 2 to 3, 3 segments, arrow at 2nd
+        };
+    </script>
+</body>
+</html>
