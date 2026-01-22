@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .problem-text {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            background-color: #fcfcfc;
+        }
+        .answer-header {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .explanation {
+            margin-top: 5px;
+            color: #555;
+        }
+        .canvas-container {
+            margin-top: 10px;
+            border: 1px dashed #ccc;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Solutions</h1>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <div class="problem-text">
+            Brand A costs two dollars and forty-three cents. Brand B costs five dollars and seven cents. Brand B costs how much more than Brand A? Write an equation and solve this problem.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer & Explanation</button>
+        <div id="q1" class="answer-section">
+            <div class="answer-header">Answer: $2.64</div>
+            <div class="explanation">
+                <p><strong>Equation:</strong> \( 5.07 - 2.43 = x \)</p>
+                <p>To find the difference, we subtract the cost of Brand A from Brand B:</p>
+                $$ \begin{array}{r} 5.07 \\ - 2.43 \\ \hline 2.64 \end{array} $$
+                <p>Brand B costs <strong>$2.64</strong> more than Brand A.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <div class="problem-text">
+            The numbers 3, 4, and 12 form a multiplication and division fact family. Write four multiplication/division facts using the numbers 4, 5, and 20.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q2')">Show Answer & Explanation</button>
+        <div id="q2" class="answer-section">
+            <div class="answer-header">Answer:</div>
+            <div class="explanation">
+                <p>A fact family uses the same three numbers to create two multiplication and two division equations.</p>
+                <ol>
+                    <li>\( 4 \times 5 = 20 \)</li>
+                    <li>\( 5 \times 4 = 20 \)</li>
+                    <li>\( 20 \div 4 = 5 \)</li>
+                    <li>\( 20 \div 5 = 4 \)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <div class="problem-text">
+            What is the sum of the decimal numbers two and three tenths and eight and nine tenths?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q3')">Show Answer & Explanation</button>
+        <div id="q3" class="answer-section">
+            <div class="answer-header">Answer: 11.2</div>
+            <div class="explanation">
+                <p>First, convert the words to numbers:</p>
+                <ul>
+                    <li>"Two and three tenths" = \( 2.3 \)</li>
+                    <li>"Eight and nine tenths" = \( 8.9 \)</li>
+                </ul>
+                <p>Now, add them together:</p>
+                $$ \begin{array}{r} 2.3 \\ + 8.9 \\ \hline 11.2 \end{array} $$
+                <p>(Note: \(3 + 9 = 12\), so you write down 2 and carry over the 1).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <div class="problem-text">
+            Use digits 1, 5, 6, and 8 to write an even number greater than 8420. Each digit may be used only once.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q4')">Show Answer & Explanation</button>
+        <div id="q4" class="answer-section">
+            <div class="answer-header">Answer: 8516</div>
+            <div class="explanation">
+                <p>To be greater than 8420, the first digit must be 8.</p>
+                <p>To be an <strong>even</strong> number, the last digit must be even (6 or 8). Since we already used 8 for the first digit, the last digit <strong>must be 6</strong>.</p>
+                <p>We have the digits 1 and 5 remaining for the middle spots.</p>
+                <p>Our structure is: \( 8 \_ \_ 6 \)</p>
+                <p>We need the number to be greater than 8420.
+                <br>If we write 8156, it is less than 8420.
+                <br>If we write 8516, it is greater than 8420.</p>
+                <p>Therefore, the number is <strong>8516</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <div class="problem-text">
+            <strong>A.</strong> Compare: \( 1 \frac{1}{2} \) and 1.75.<br>
+            <strong>B.</strong> Use words to write the greater of the two numbers you compared in part a.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q5')">Show Answer & Explanation</button>
+        <div id="q5" class="answer-section">
+            <div class="answer-header">Answer: A) <, B) One and seventy-five hundredths</div>
+            <div class="explanation">
+                <p><strong>Part A:</strong> Convert fractions to decimals to compare.</p>
+                <p>\( 1 \frac{1}{2} = 1.50 \)</p>
+                <p>Comparing 1.50 and 1.75:</p>
+                <p>\( 1.50 < 1.75 \), so \( 1 \frac{1}{2} < 1.75 \).</p>
+                <p><strong>Part B:</strong> The greater number is 1.75. In words, this is written as <strong>"One and seventy-five hundredths"</strong> (or simply "one point seven five").</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <div class="problem-text">
+            Carlos will use square floor tiles that measure one foot on each side to cover a hallway that is eight feet long and four feet wide. How many floor tiles will Carlos need?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q6')">Show Answer & Explanation</button>
+        <div id="q6" class="answer-section">
+            <div class="answer-header">Answer: 32 tiles</div>
+            <div class="explanation">
+                <p>To find the number of tiles, we need to find the area of the hallway.</p>
+                <p>\( \text{Area} = \text{Length} \times \text{Width} \)</p>
+                <p>\( \text{Area} = 8 \text{ ft} \times 4 \text{ ft} = 32 \text{ sq ft} \)</p>
+                <p>Since each tile is 1 square foot (\(1 \times 1\)), he will need <strong>32 tiles</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <div class="problem-text">
+            To what number is the arrow pointing on the number line?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q7')">Show Answer & Explanation</button>
+        <div id="q7" class="answer-section">
+            <div class="answer-header">Answer: -2</div>
+            <div class="explanation">
+                <p>The number line shows increments of 2 between marked numbers (0 to 10 has 5 tick marks, so each mark is worth 2 units). Let's verify: 0, 2, 4, 6, 8, 10.</p>
+                <p>Going left from 0 (negative direction), the first tick mark is <strong>-2</strong>.</p>
+                <p>The arrow is pointing exactly to the first mark to the left of zero.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <div class="problem-text">
+            a. Five dimes are what fraction of a dollar?<br>
+            b. Write the value of five dimes using a dollar sign and decimal point.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q8')">Show Answer & Explanation</button>
+        <div id="q8" class="answer-section">
+            <div class="answer-header">Answer: a) \( \frac{1}{2} \) or \( \frac{50}{100} \), b) $0.50</div>
+            <div class="explanation">
+                <p><strong>Part A:</strong> A dime is 10 cents. 5 dimes = 50 cents.</p>
+                <p>A dollar is 100 cents.</p>
+                <p>Fraction = \( \frac{50}{100} \). This simplifies to \( \frac{1}{2} \).</p>
+                <p><strong>Part B:</strong> 50 cents written as a dollar amount is <strong>$0.50</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <div class="problem-text">
+            The length of segment PQ is 2 cm. The length of segment PR is 11 cm. How long is segment QR?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q9')">Show Answer & Explanation</button>
+        <div id="q9" class="answer-section">
+            <div class="answer-header">Answer: 9 cm</div>
+            <div class="explanation">
+                <p>Based on the diagram, points P, Q, and R are on a line.</p>
+                <p>The total length PR is 11 cm.</p>
+                <p>The segment PQ is 2 cm.</p>
+                <p>To find QR, we subtract PQ from the total length PR:</p>
+                <p>\( QR = PR - PQ \)</p>
+                <p>\( QR = 11 - 2 = 9 \text{ cm} \)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <div class="problem-text">
+            Which segment in this triangle appears to be perpendicular to segment AC?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q10')">Show Answer & Explanation</button>
+        <div id="q10" class="answer-section">
+            <div class="answer-header">Answer: Segment CB (or BC)</div>
+            <div class="explanation">
+                <p>Perpendicular lines meet at a 90-degree angle (a right angle).</p>
+                <p>In the diagram, segment AC is vertical and segment CB is horizontal.</p>
+                <p>They meet at point C to form a right angle. Therefore, <strong>Segment CB</strong> is perpendicular to AC.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <div class="problem-text">
+            Round 3296 to the nearest hundred.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q11')">Show Answer & Explanation</button>
+        <div id="q11" class="answer-section">
+            <div class="answer-header">Answer: 3300</div>
+            <div class="explanation">
+                <p>1. Identify the hundreds digit: It is 2 (in 3<strong>2</strong>96).</p>
+                <p>2. Look at the digit to the right (the tens place): It is 9.</p>
+                <p>3. Since 9 is 5 or greater, we round up the hundreds digit.</p>
+                <p>4. The 2 becomes a 3, and the following digits become zeros.</p>
+                <p>Result: <strong>3300</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <div class="problem-text">
+            Use words to write 15,000,000.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q12')">Show Answer & Explanation</button>
+        <div id="q12" class="answer-section">
+            <div class="answer-header">Answer: Fifteen million</div>
+            <div class="explanation">
+                <p>The number has 15 in the millions period, followed by zeros.</p>
+                <p>It is written as <strong>Fifteen million</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <div class="problem-text">
+            Solve: \( 95 - (7 \times \sqrt{64}) \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q13')">Show Answer & Explanation</button>
+        <div id="q13" class="answer-section">
+            <div class="answer-header">Answer: 39</div>
+            <div class="explanation">
+                <p>Follow the Order of Operations (PEMDAS):</p>
+                <ol>
+                    <li><strong>Roots/Parentheses:</strong> Solve \( \sqrt{64} \). Since \( 8 \times 8 = 64 \), \( \sqrt{64} = 8 \).</li>
+                    <li><strong>Multiplication:</strong> Now calculate \( 7 \times 8 = 56 \).</li>
+                    <li><strong>Subtraction:</strong> Finally, solve \( 95 - 56 \).</li>
+                </ol>
+                $$ 95 - 56 = 39 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 14</div>
+        <div class="problem-text">
+            Solve: \( \$2.53 + \$0.45 + 3 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q14')">Show Answer & Explanation</button>
+        <div id="q14" class="answer-section">
+            <div class="answer-header">Answer: $5.98</div>
+            <div class="explanation">
+                <p>Assuming the "3" represents 3 dollars ($3.00), line up the decimal points to add:</p>
+                $$ \begin{array}{r} 2.53 \\ 0.45 \\ + 3.00 \\ \hline 5.98 \end{array} $$
+                <p>The sum is <strong>$5.98</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 15</div>
+        <div class="problem-text">
+            Solve for n: \( n - 5.1 = 2.3 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q15')">Show Answer & Explanation</button>
+        <div id="q15" class="answer-section">
+            <div class="answer-header">Answer: n = 7.4</div>
+            <div class="explanation">
+                <p>To isolate n, add 5.1 to both sides of the equation:</p>
+                <p>\( n = 2.3 + 5.1 \)</p>
+                $$ \begin{array}{r} 2.3 \\ + 5.1 \\ \hline 7.4 \end{array} $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 16</div>
+        <div class="problem-text">
+            Solve: \( 40 \times 3 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q16')">Show Answer & Explanation</button>
+        <div id="q16" class="answer-section">
+            <div class="answer-header">Answer: 120</div>
+            <div class="explanation">
+                <p>Multiply 4 by 3 to get 12, then append the zero.</p>
+                <p>\( 40 \times 3 = 120 \)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 17</div>
+        <div class="problem-text">
+            Solve: \( 51 \times 5 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q17')">Show Answer & Explanation</button>
+        <div id="q17" class="answer-section">
+            <div class="answer-header">Answer: 255</div>
+            <div class="explanation">
+                $$ \begin{array}{r} 51 \\ \times 5 \\ \hline 255 \end{array} $$
+                <p>\( 1 \times 5 = 5 \)<br>\( 50 \times 5 = 250 \)<br>\( 250 + 5 = 255 \)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 18</div>
+        <div class="problem-text">
+            Solve: \( 28 \div 7 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q18')">Show Answer & Explanation</button>
+        <div id="q18" class="answer-section">
+            <div class="answer-header">Answer: 4</div>
+            <div class="explanation">
+                <p>\( 7 \times 4 = 28 \), therefore \( 28 \div 7 = 4 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 19</div>
+        <div class="problem-text">
+            Solve: \( 81 \div 9 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q19')">Show Answer & Explanation</button>
+        <div id="q19" class="answer-section">
+            <div class="answer-header">Answer: 9</div>
+            <div class="explanation">
+                <p>\( 9 \times 9 = 81 \), therefore \( 81 \div 9 = 9 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 20</div>
+        <div class="problem-text">
+            Solve: \( 35 \div 7 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q20')">Show Answer & Explanation</button>
+        <div id="q20" class="answer-section">
+            <div class="answer-header">Answer: 5</div>
+            <div class="explanation">
+                <p>\( 7 \times 5 = 35 \), therefore \( 35 \div 7 = 5 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 21</div>
+        <div class="problem-text">
+            Solve: \( 16 \div 4 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q21')">Show Answer & Explanation</button>
+        <div id="q21" class="answer-section">
+            <div class="answer-header">Answer: 4</div>
+            <div class="explanation">
+                <p>\( 4 \times 4 = 16 \), therefore \( 16 \div 4 = 4 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 22</div>
+        <div class="problem-text">
+            Solve: \( \frac{28}{4} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q22')">Show Answer & Explanation</button>
+        <div id="q22" class="answer-section">
+            <div class="answer-header">Answer: 7</div>
+            <div class="explanation">
+                <p>The fraction bar indicates division.</p>
+                <p>\( 28 \div 4 = 7 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 23</div>
+        <div class="problem-text">
+            Solve: \( \frac{42}{7} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q23')">Show Answer & Explanation</button>
+        <div id="q23" class="answer-section">
+            <div class="answer-header">Answer: 6</div>
+            <div class="explanation">
+                <p>The fraction bar indicates division.</p>
+                <p>\( 42 \div 7 = 6 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 24</div>
+        <div class="problem-text">
+            Solve: \( \frac{48}{8} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q24')">Show Answer & Explanation</button>
+        <div id="q24" class="answer-section">
+            <div class="answer-header">Answer: 6</div>
+            <div class="explanation">
+                <p>The fraction bar indicates division.</p>
+                <p>\( 48 \div 8 = 6 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 25</div>
+        <div class="problem-text">
+            Solve the division problem shown (0 divided by 5).
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q25')">Show Answer & Explanation</button>
+        <div id="q25" class="answer-section">
+            <div class="answer-header">Answer: 0</div>
+            <div class="explanation">
+                <p>Zero divided by any non-zero number is always 0.</p>
+                <p>\( 0 \div 5 = 0 \).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 26</div>
+        <div class="problem-text">
+            Which of these does not show 24 divided by 4?<br>
+            A. \( 24 \overline{)4} \)<br>
+            B. \( \frac{24}{4} \)<br>
+            C. \( 24 \div 4 \)<br>
+            D. \( 4 \overline{)24} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q26')">Show Answer & Explanation</button>
+        <div id="q26" class="answer-section">
+            <div class="answer-header">Answer: A</div>
+            <div class="explanation">
+                <p>Let's interpret each option:</p>
+                <ul>
+                    <li>B is \( 24 \div 4 \) (Fraction notation). Correct.</li>
+                    <li>C is \( 24 \div 4 \) (Standard division sign). Correct.</li>
+                    <li>D is long division notation where 4 is the divisor and 24 is the dividend (\( 24 \div 4 \)). Correct.</li>
+                    <li>A is long division notation where 24 is the divisor and 4 is the dividend (\( 4 \div 24 \)). <strong>This is incorrect.</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 27</div>
+        <div class="problem-text">
+            a. Is $12.90 closer to $12 or $13?<br>
+            b. Is 12.9 closer to 12 or 13?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q27')">Show Answer & Explanation</button>
+        <div id="q27" class="answer-section">
+            <div class="answer-header">Answer: a) $13, b) 13</div>
+            <div class="explanation">
+                <p><strong>Part A:</strong> $12.90 is only 10 cents away from $13.00, but 90 cents away from $12.00. It is closer to $13.</p>
+                <p><strong>Part B:</strong> Similarly, on a number line, 12.9 is 0.1 unit away from 13 and 0.9 units away from 12. It is closer to 13.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 28</div>
+        <div class="problem-text">
+            Describe the order of operations in these expressions, and find the number each expression equals.<br>
+            a. \( 12 \div (6 \div 2) \)<br>
+            b. \( (12 \div 6) \div 2 \)<br>
+            C. Does the Associative property apply to division?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q28')">Show Answer & Explanation</button>
+        <div id="q28" class="answer-section">
+            <div class="answer-header">Answer: a) 4, b) 1, c) No</div>
+            <div class="explanation">
+                <p><strong>Part A:</strong> Parentheses first. \( 6 \div 2 = 3 \). Then \( 12 \div 3 = 4 \).</p>
+                <p><strong>Part B:</strong> Parentheses first. \( 12 \div 6 = 2 \). Then \( 2 \div 2 = 1 \).</p>
+                <p><strong>Part C:</strong> Since the answers are different (4 vs 1), the grouping matters. Therefore, the Associative property <strong>does not</strong> apply to division.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 29</div>
+        <div class="problem-text">
+            In the year 2003, each visitor to the country of Mexico spent an average of $540. Each visitor to the country of Canada spent an average of $557. How many more dollars did each visitor to Canada spend in 2003?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q29')">Show Answer & Explanation</button>
+        <div id="q29" class="answer-section">
+            <div class="answer-header">Answer: $17</div>
+            <div class="explanation">
+                <p>Subtract the average spending in Mexico from the average spending in Canada.</p>
+                <p>\( 557 - 540 = 17 \)</p>
+                <p>Visitors spent <strong>$17</strong> more in Canada.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 30</div>
+        <div class="problem-text">
+            One of the largest hammerhead sharks ever caught weighed 991 pounds. One of the largest porbeagle sharks ever caught weighed 507 pounds. Round to the nearest hundred pounds to estimate the weight difference of those two sharks.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('q30')">Show Answer & Explanation</button>
+        <div id="q30" class="answer-section">
+            <div class="answer-header">Answer: 500 pounds</div>
+            <div class="explanation">
+                <p>1. Round the weights to the nearest hundred:</p>
+                <ul>
+                    <li>991 rounds to <strong>1000</strong>.</li>
+                    <li>507 rounds to <strong>500</strong>.</li>
+                </ul>
+                <p>2. Calculate the difference of the estimated weights:</p>
+                <p>\( 1000 - 500 = 500 \)</p>
+                <p>The estimated difference is <strong>500 pounds</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
