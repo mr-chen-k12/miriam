@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scaffolded Decimal Practice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .instruction-box {
+            background-color: #e8f4fc;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .question-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f9f9f9;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .check-btn {
+            margin-top: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .check-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Decimal Word Translation Practice</h1>
+
+    <div class="instruction-box">
+        <strong>How to read decimals:</strong> <br>
+        When you see the word <em>"and"</em> inside a number phrase, it represents the decimal point (.). <br>
+        Example: "Two <strong>and</strong> three tenths" becomes <strong>2.3</strong>.
+    </div>
+
+    <div class="question-card" id="q1-card">
+        <div class="question-title">Practice 1</div>
+        <div class="question-text">Select the decimal number that matches: <br><strong>"Four and five tenths"</strong></div>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q1" value="wrong1"> 45</label>
+            <label class="option-label"><input type="radio" name="q1" value="correct"> 4.5</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong2"> 0.45</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong3"> 5.4</label>
+        </div>
+        <button class="check-btn" onclick="checkAnswer('q1', 'correct')">Check Answer</button>
+        <div id="q1-feedback" class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q2-card">
+        <div class="question-title">Practice 2</div>
+        <div class="question-text">Select the decimal number that matches: <br><strong>"Seven and two tenths"</strong></div>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q2" value="wrong1"> 7.02</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong2"> 72.0</label>
+            <label class="option-label"><input type="radio" name="q2" value="correct"> 7.2</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong3"> 2.7</label>
+        </div>
+        <button class="check-btn" onclick="checkAnswer('q2', 'correct')">Check Answer</button>
+        <div id="q2-feedback" class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q3-card">
+        <div class="question-title">Practice 3</div>
+        <div class="question-text">Select the decimal number that matches: <br><strong>"Nine and one tenth"</strong></div>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q3" value="correct"> 9.1</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong1"> 9.01</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong2"> 0.91</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong3"> 1.9</label>
+        </div>
+        <button class="check-btn" onclick="checkAnswer('q3', 'correct')">Check Answer</button>
+        <div id="q3-feedback" class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q4-card">
+        <div class="question-title">Practice 4 (Slightly larger number)</div>
+        <div class="question-text">Select the decimal number that matches: <br><strong>"Twelve and eight tenths"</strong></div>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q4" value="wrong1"> 1.28</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong2"> 128</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong3"> 12.08</label>
+            <label class="option-label"><input type="radio" name="q4" value="correct"> 12.8</label>
+        </div>
+        <button class="check-btn" onclick="checkAnswer('q4', 'correct')">Check Answer</button>
+        <div id="q4-feedback" class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q5-card">
+        <div class="question-title">Practice 5 (Application)</div>
+        <div class="question-text">
+            If you need to add <strong>"Two and three tenths"</strong> and <strong>"Eight and nine tenths"</strong>, which math problem matches?
+        </div>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q5" value="wrong1"> 23 + 89</label>
+            <label class="option-label"><input type="radio" name="q5" value="correct"> 2.3 + 8.9</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong2"> 2.03 + 8.09</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong3"> 0.23 + 0.89</label>
+        </div>
+        <button class="check-btn" onclick="checkAnswer('q5', 'correct')">Check Answer</button>
+        <div id="q5-feedback" class="feedback"></div>
+    </div>
+
+    <script>
+        function checkAnswer(questionName, correctValue) {
+            const options = document.getElementsByName(questionName);
+            let selectedValue = null;
+            
+            for (const option of options) {
+                if (option.checked) {
+                    selectedValue = option.value;
+                    break;
+                }
+            }
+
+            const feedbackDiv = document.getElementById(questionName + '-feedback');
+            
+            if (selectedValue === null) {
+                feedbackDiv.textContent = "Please select an answer.";
+                feedbackDiv.className = "feedback incorrect";
+                feedbackDiv.style.display = "block";
+                return;
+            }
+
+            if (selectedValue === correctValue) {
+                feedbackDiv.textContent = "Correct! Great job converting the words to a decimal.";
+                feedbackDiv.className = "feedback correct";
+            } else {
+                feedbackDiv.textContent = "Not quite. Remember: the word 'and' represents the decimal point.";
+                feedbackDiv.className = "feedback incorrect";
+            }
+            feedbackDiv.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
