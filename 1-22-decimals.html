@@ -3,70 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scaffolded Decimal Practice</title>
+    <title>Advanced Decimal Practice</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f7f6;
             color: #333;
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
         h1 {
             text-align: center;
             color: #2c3e50;
-        }
-        .instruction-box {
-            background-color: #e8f4fc;
-            border-left: 5px solid #3498db;
-            padding: 15px;
             margin-bottom: 30px;
-            border-radius: 4px;
+        }
+        .learning-key {
+            background-color: #ffffff;
+            border: 2px solid #2980b9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .key-title {
+            color: #2980b9;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+        .place-value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            text-align: center;
+        }
+        .pv-box {
+            background-color: #eaf2f8;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .pv-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e74c3c;
         }
         .question-card {
             background: white;
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 6px solid #27ae60;
         }
         .question-title {
             font-weight: bold;
             font-size: 1.1em;
-            margin-bottom: 10px;
-            color: #2980b9;
+            margin-bottom: 15px;
+            color: #27ae60;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .question-text {
-            margin-bottom: 15px;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
         }
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         .option-label {
             display: flex;
             align-items: center;
             cursor: pointer;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: background-color 0.2s;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 1.1em;
         }
         .option-label:hover {
-            background-color: #f9f9f9;
+            border-color: #27ae60;
+            background-color: #f9fffb;
         }
         input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: #27ae60;
+        }
+        .check-btn {
+            margin-top: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .check-btn:hover {
+            background-color: #34495e;
         }
         .feedback {
             margin-top: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
             display: none;
         }
         .correct {
@@ -79,93 +130,103 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        .check-btn {
-            margin-top: 15px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .check-btn:hover {
-            background-color: #2980b9;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Decimal Word Translation Practice</h1>
+    <h1>Decimal Translation: Tenths, Hundredths & Thousandths</h1>
 
-    <div class="instruction-box">
-        <strong>How to read decimals:</strong> <br>
-        When you see the word <em>"and"</em> inside a number phrase, it represents the decimal point (.). <br>
-        Example: "Two <strong>and</strong> three tenths" becomes <strong>2.3</strong>.
+    <div class="learning-key">
+        <div class="key-title">💡 The Secret to Decimal Places</div>
+        <div class="place-value-grid">
+            <div class="pv-box">
+                <div>Tenths</div>
+                <div class="pv-number">0.1</div>
+                <small>1 Decimal Place</small>
+            </div>
+            <div class="pv-box">
+                <div>Hundredths</div>
+                <div class="pv-number">0.01</div>
+                <small>2 Decimal Places</small>
+            </div>
+            <div class="pv-box">
+                <div>Thousandths</div>
+                <div class="pv-number">0.001</div>
+                <small>3 Decimal Places</small>
+            </div>
+        </div>
+        <p style="margin-top:15px; text-align:center;">
+            <em>Tip: Look at how many zeros are in the bottom number of the fraction to know how many decimal places you need! (10 = 1 place, 100 = 2 places, 1000 = 3 places)</em>
+        </p>
     </div>
 
     <div class="question-card" id="q1-card">
-        <div class="question-title">Practice 1</div>
-        <div class="question-text">Select the decimal number that matches: <br><strong>"Four and five tenths"</strong></div>
+        <div class="question-title">Level 1: Tenths (Review)</div>
+        <div class="question-text">
+            Select the number for: <strong>"Six and four tenths"</strong>
+        </div>
         <div class="options-container">
-            <label class="option-label"><input type="radio" name="q1" value="wrong1"> 45</label>
-            <label class="option-label"><input type="radio" name="q1" value="correct"> 4.5</label>
-            <label class="option-label"><input type="radio" name="q1" value="wrong2"> 0.45</label>
-            <label class="option-label"><input type="radio" name="q1" value="wrong3"> 5.4</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong1"> 6.04</label>
+            <label class="option-label"><input type="radio" name="q1" value="correct"> 6.4</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong2"> 0.64</label>
         </div>
         <button class="check-btn" onclick="checkAnswer('q1', 'correct')">Check Answer</button>
         <div id="q1-feedback" class="feedback"></div>
     </div>
 
     <div class="question-card" id="q2-card">
-        <div class="question-title">Practice 2</div>
-        <div class="question-text">Select the decimal number that matches: <br><strong>"Seven and two tenths"</strong></div>
+        <div class="question-title">Level 2: Hundredths</div>
+        <div class="question-text">
+            Select the number for: <strong>"Two and thirty-five hundredths"</strong>
+        </div>
         <div class="options-container">
-            <label class="option-label"><input type="radio" name="q2" value="wrong1"> 7.02</label>
-            <label class="option-label"><input type="radio" name="q2" value="wrong2"> 72.0</label>
-            <label class="option-label"><input type="radio" name="q2" value="correct"> 7.2</label>
-            <label class="option-label"><input type="radio" name="q2" value="wrong3"> 2.7</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong1"> 2.350</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong2"> 23.5</label>
+            <label class="option-label"><input type="radio" name="q2" value="correct"> 2.35</label>
         </div>
         <button class="check-btn" onclick="checkAnswer('q2', 'correct')">Check Answer</button>
         <div id="q2-feedback" class="feedback"></div>
     </div>
 
     <div class="question-card" id="q3-card">
-        <div class="question-title">Practice 3</div>
-        <div class="question-text">Select the decimal number that matches: <br><strong>"Nine and one tenth"</strong></div>
+        <div class="question-title">Level 3: Tricky Hundredths</div>
+        <div class="question-text">
+            Select the number for: <strong>"Five and six hundredths"</strong>
+            <br><span style="font-size:0.8em; color:#666;">(Watch out! Hundredths needs two decimal places.)</span>
+        </div>
         <div class="options-container">
-            <label class="option-label"><input type="radio" name="q3" value="correct"> 9.1</label>
-            <label class="option-label"><input type="radio" name="q3" value="wrong1"> 9.01</label>
-            <label class="option-label"><input type="radio" name="q3" value="wrong2"> 0.91</label>
-            <label class="option-label"><input type="radio" name="q3" value="wrong3"> 1.9</label>
+            <label class="option-label"><input type="radio" name="q3" value="correct"> 5.06</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong1"> 5.6</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong2"> 5.600</label>
         </div>
         <button class="check-btn" onclick="checkAnswer('q3', 'correct')">Check Answer</button>
         <div id="q3-feedback" class="feedback"></div>
     </div>
 
     <div class="question-card" id="q4-card">
-        <div class="question-title">Practice 4 (Slightly larger number)</div>
-        <div class="question-text">Select the decimal number that matches: <br><strong>"Twelve and eight tenths"</strong></div>
+        <div class="question-title">Level 4: Thousandths</div>
+        <div class="question-text">
+            Select the number for: <strong>"One and one hundred twenty-five thousandths"</strong>
+        </div>
         <div class="options-container">
-            <label class="option-label"><input type="radio" name="q4" value="wrong1"> 1.28</label>
-            <label class="option-label"><input type="radio" name="q4" value="wrong2"> 128</label>
-            <label class="option-label"><input type="radio" name="q4" value="wrong3"> 12.08</label>
-            <label class="option-label"><input type="radio" name="q4" value="correct"> 12.8</label>
+            <label class="option-label"><input type="radio" name="q4" value="correct"> 1.125</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong1"> 1.25</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong2"> 112.5</label>
         </div>
         <button class="check-btn" onclick="checkAnswer('q4', 'correct')">Check Answer</button>
         <div id="q4-feedback" class="feedback"></div>
     </div>
 
     <div class="question-card" id="q5-card">
-        <div class="question-title">Practice 5 (Application)</div>
+        <div class="question-title">Level 5: Master Challenge</div>
         <div class="question-text">
-            If you need to add <strong>"Two and three tenths"</strong> and <strong>"Eight and nine tenths"</strong>, which math problem matches?
+            Select the number for: <strong>"Nine and forty-two thousandths"</strong>
+            <br><span style="font-size:0.8em; color:#666;">(Remember: Thousandths needs THREE decimal places)</span>
         </div>
         <div class="options-container">
-            <label class="option-label"><input type="radio" name="q5" value="wrong1"> 23 + 89</label>
-            <label class="option-label"><input type="radio" name="q5" value="correct"> 2.3 + 8.9</label>
-            <label class="option-label"><input type="radio" name="q5" value="wrong2"> 2.03 + 8.09</label>
-            <label class="option-label"><input type="radio" name="q5" value="wrong3"> 0.23 + 0.89</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong1"> 9.42</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong2"> 9.420</label>
+            <label class="option-label"><input type="radio" name="q5" value="correct"> 9.042</label>
         </div>
         <button class="check-btn" onclick="checkAnswer('q5', 'correct')">Check Answer</button>
         <div id="q5-feedback" class="feedback"></div>
@@ -176,6 +237,7 @@
             const options = document.getElementsByName(questionName);
             let selectedValue = null;
             
+            // Find which option was checked
             for (const option of options) {
                 if (option.checked) {
                     selectedValue = option.value;
@@ -185,18 +247,25 @@
 
             const feedbackDiv = document.getElementById(questionName + '-feedback');
             
+            // Handle no selection
             if (selectedValue === null) {
-                feedbackDiv.textContent = "Please select an answer.";
+                feedbackDiv.innerHTML = "Please select an answer first.";
                 feedbackDiv.className = "feedback incorrect";
                 feedbackDiv.style.display = "block";
                 return;
             }
 
+            // Handle correct/incorrect
             if (selectedValue === correctValue) {
-                feedbackDiv.textContent = "Correct! Great job converting the words to a decimal.";
+                feedbackDiv.innerHTML = "<strong>✅ Correct!</strong> You matched the decimal places perfectly.";
                 feedbackDiv.className = "feedback correct";
             } else {
-                feedbackDiv.textContent = "Not quite. Remember: the word 'and' represents the decimal point.";
+                let hint = "";
+                // Specific hints for common mistakes
+                if (questionName === 'q3') hint = "Hint: 'Six hundredths' means the 6 must be in the second spot. If you write 5.6, that is five and six tenths.";
+                if (questionName === 'q5') hint = "Hint: Thousandths requires 3 slots (. _ _ _). 42 only takes up two slots, so you need a zero in the front!";
+                
+                feedbackDiv.innerHTML = "<strong>❌ Not quite.</strong> " + hint;
                 feedbackDiv.className = "feedback incorrect";
             }
             feedbackDiv.style.display = "block";
