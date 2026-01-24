@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Set 2</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f3f5;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #8e44ad;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #9b59b6;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid #9b59b6; /* Purple accent */
+        }
+
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #6c3483;
+        }
+
+        .problem-content {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .btn-reveal {
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .btn-reveal:hover {
+            background-color: #732d91;
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f4ecf7;
+            border-radius: 4px;
+            border: 1px solid #e8daef;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .explanation {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .final-answer {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            background: #fff;
+            margin: 10px 0;
+            display: block;
+        }
+
+        /* Rectangles for Fraction Visuals */
+        .fraction-visual {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .circle-viz {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        .circle-viz.full {
+            background-color: #8e44ad;
+        }
+        /* Custom gradient for 3/4 filled circle */
+        .circle-viz.three-quarters {
+            background: conic-gradient(#8e44ad 0% 270%, white 270% 360%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice - Set 2</h1>
+    <p class="intro-text">Solve the problems below, then click "Show Answer" to check your work!</p>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <div class="problem-content">
+            Write and solve an equation:<br>
+            A large bakery baked 583 loaves of bread in the morning and 649 loaves in the afternoon. How many loaves did they bake in total?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(1)">Show Answer</button>
+        <div id="ans-1" class="answer-section">
+            <div class="explanation">
+                Add the morning amount to the afternoon amount:
+                $$ 583 + 649 = 1232 $$
+            </div>
+            <div class="final-answer">Answer: 1,232 loaves</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <div class="problem-content">
+            Sarah read 45 pages on Monday, 38 pages on Tuesday, and 52 pages on Wednesday. How many pages did she read in all three days?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(2)">Show Answer</button>
+        <div id="ans-2" class="answer-section">
+            <div class="explanation">
+                Sum the pages from all days:
+                $$ 45 + 38 = 83 $$
+                $$ 83 + 52 = 135 $$
+            </div>
+            <div class="final-answer">Answer: 135 pages</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <div class="problem-content">
+            The decimal number four and sixty-five hundredths is how much more than one and twenty-five hundredths?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(3)">Show Answer</button>
+        <div id="ans-3" class="answer-section">
+            <div class="explanation">
+                Translate to numbers:
+                \(4.65\) and \(1.25\).<br>
+                Subtract to find the difference:
+                $$ 4.65 - 1.25 = 3.40 $$
+            </div>
+            <div class="final-answer">Answer: 3.40 (or 3.4)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <div class="problem-content">
+            a. Round 432 to the nearest hundred.<br>
+            b. Round 432 to the nearest ten.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(4)">Show Answer</button>
+        <div id="ans-4" class="answer-section">
+            <div class="explanation">
+                <strong>Part a:</strong> The tens digit is 3 (less than 5), so round down to 400.<br>
+                <strong>Part b:</strong> The ones digit is 2 (less than 5), so round down to 430.
+            </div>
+            <div class="final-answer">a. 400 <br> b. 430</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <div class="problem-content">
+            Draw and shade circles to show the number \(1 \frac{3}{4}\).
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(5)">Show Answer</button>
+        <div id="ans-5" class="answer-section">
+            <div class="explanation">
+                Draw 2 circles. Shade the first one completely (representing 1). Divide the second into 4 parts and shade 3 of them.
+            </div>
+            <div class="fraction-visual">
+                <div class="circle-viz full"></div>
+                <div class="circle-viz three-quarters"></div>
+            </div>
+            <div class="final-answer">Visual Answer: One full circle and one circle 3/4 shaded.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <div class="problem-content">
+            The first four even numbers are 2, 4, 6, and 8.<br>
+            a. What is their sum?<br>
+            b. What is the square root of 36?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(6)">Show Answer</button>
+        <div id="ans-6" class="answer-section">
+            <div class="explanation">
+                <strong>Part a:</strong> \(2 + 4 + 6 + 8 = 20\)<br>
+                <strong>Part b:</strong> \(6 \times 6 = 36\), so \(\sqrt{36} = 6\).
+            </div>
+            <div class="final-answer">a. 20 <br> b. 6</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <div class="problem-content">
+            The clock shows the time right now. What time will it be in 3 hours?
+            <canvas id="clock7" width="150" height="150"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(7)">Show Answer</button>
+        <div id="ans-7" class="answer-section">
+            <div class="explanation">
+                The clock shows <strong>8:20</strong>. <br>
+                Add 3 hours: \(8 + 3 = 11\). The minutes stay the same.
+            </div>
+            <div class="final-answer">Answer: 11:20</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <div class="problem-content">
+            What type of angle is formed by the hands of this clock?
+            <canvas id="clock8" width="150" height="150"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(8)">Show Answer</button>
+        <div id="ans-8" class="answer-section">
+            <div class="explanation">
+                The clock shows 3:00. The angle between the 12 and the 3 is exactly 90 degrees.
+            </div>
+            <div class="final-answer">Answer: Right angle</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <div class="problem-content">
+            a. Draw a segment labeled XY. Draw a segment labeled ZW that intersects XY.<br>
+            b. Which segment is perpendicular to a vertical line?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(9)">Show Answer</button>
+        <div id="ans-9" class="answer-section">
+            <div class="explanation">
+                <strong>Part a:</strong> Any two lines that cross each other (like an X or a +).<br>
+                <strong>Part b:</strong> A horizontal line is perpendicular to a vertical line.
+            </div>
+            <div class="final-answer">b. A horizontal segment</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <div class="problem-content">
+            Liam needs to cover a floor that is 10 yards long. About how many "BIG steps" will he take to walk the length?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(10)">Show Answer</button>
+        <div id="ans-10" class="answer-section">
+            <div class="explanation">
+                A "BIG step" is approximately 1 yard (or 1 meter).<br>
+                If the floor is 10 yards, he will take about 10 steps.
+            </div>
+            <div class="final-answer">Answer: 10 steps</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <div class="problem-content">
+            To what mixed number is the arrow pointing?
+            <canvas id="numberline11" width="400" height="60"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(11)">Show Answer</button>
+        <div id="ans-11" class="answer-section">
+            <div class="explanation">
+                The line is between 5 and 6. It is divided into 4 sections (quarters).<br>
+                The arrow points to the 3rd mark.
+            </div>
+            <div class="final-answer">Answer: \(5 \frac{3}{4}\)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <div class="problem-content">
+            $$ 50 + (6 \times 30) $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(12)">Show Answer</button>
+        <div id="ans-12" class="answer-section">
+            <div class="explanation">
+                Parentheses first: \(6 \times 30 = 180\).<br>
+                Then add: \(50 + 180 = 230\).
+            </div>
+            <div class="final-answer">Answer: 230</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <div class="problem-content">
+            $$ \$8.50 + \$1.25 + \$0.75 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(13)">Show Answer</button>
+        <div id="ans-13" class="answer-section">
+            <div class="explanation">
+                Notice that $1.25 + $0.75 equals exactly $2.00.<br>
+                $8.50 + $2.00 = $10.50.
+            </div>
+            <div class="final-answer">Answer: $10.50</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 14</div>
+        <div class="problem-content">
+            $$ \$10.00 - \$6.45 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(14)">Show Answer</button>
+        <div id="ans-14" class="answer-section">
+            <div class="explanation">
+                Regroup/borrow:<br>
+                10.00 becomes 9.9(10).<br>
+                10 - 5 = 5<br>
+                9 - 4 = 5<br>
+                9 - 6 = 3
+            </div>
+            <div class="final-answer">Answer: $3.55</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 15</div>
+        <div class="problem-content">
+            $$ 7.5 - 2.8 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(15)">Show Answer</button>
+        <div id="ans-15" class="answer-section">
+            <div class="explanation">
+                Align decimals. Borrow from the 7.<br>
+                15 - 8 = 7<br>
+                6 - 2 = 4
+            </div>
+            <div class="final-answer">Answer: 4.7</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 16</div>
+        <div class="problem-content">
+            $$ x + 1.5 = 4.2 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(16)">Show Answer</button>
+        <div id="ans-16" class="answer-section">
+            <div class="explanation">
+                Subtract 1.5 from 4.2.<br>
+                \(4.2 - 1.5 = 2.7\)
+            </div>
+            <div class="final-answer">Answer: x = 2.7</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 17</div>
+        <div class="problem-content">
+            $$ m - 250 = 400 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(17)">Show Answer</button>
+        <div id="ans-17" class="answer-section">
+            <div class="explanation">
+                Add 250 to both sides to isolate m.<br>
+                \(400 + 250 = 650\)
+            </div>
+            <div class="final-answer">Answer: m = 650</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 18</div>
+        <div class="problem-content">
+            $$ 34 \times 4 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(18)">Show Answer</button>
+        <div id="ans-18" class="answer-section">
+            <div class="explanation">
+                \(4 \times 4 = 16\) (carry 1)<br>
+                \(30 \times 4 = 120\)<br>
+                \(120 + 16 = 136\)
+            </div>
+            <div class="final-answer">Answer: 136</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 19</div>
+        <div class="problem-content">
+            $$ 62 \times 5 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(19)">Show Answer</button>
+        <div id="ans-19" class="answer-section">
+            <div class="explanation">
+                \(2 \times 5 = 10\)<br>
+                \(60 \times 5 = 300\)<br>
+                \(300 + 10 = 310\)
+            </div>
+            <div class="final-answer">Answer: 310</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 20</div>
+        <div class="problem-content">
+            $$ 5 \overline{)45} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(20)">Show Answer</button>
+        <div id="ans-20" class="answer-section">
+            <div class="explanation">
+                45 divided by 5 is 9.
+            </div>
+            <div class="final-answer">Answer: 9</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 21</div>
+        <div class="problem-content">
+            $$ 4 \overline{)32} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(21)">Show Answer</button>
+        <div id="ans-21" class="answer-section">
+            <div class="explanation">
+                32 divided by 4 is 8.
+            </div>
+            <div class="final-answer">Answer: 8</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 22</div>
+        <div class="problem-content">
+            $$ 9 \overline{)63} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(22)">Show Answer</button>
+        <div id="ans-22" class="answer-section">
+            <div class="explanation">
+                63 divided by 9 is 7.
+            </div>
+            <div class="final-answer">Answer: 7</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 23</div>
+        <div class="problem-content">
+            $$ 8 \overline{)72} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(23)">Show Answer</button>
+        <div id="ans-23" class="answer-section">
+            <div class="explanation">
+                72 divided by 8 is 9.
+            </div>
+            <div class="final-answer">Answer: 9</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 24</div>
+        <div class="problem-content">
+            $$ 6 \overline{)42} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(24)">Show Answer</button>
+        <div id="ans-24" class="answer-section">
+            <div class="explanation">
+                42 divided by 6 is 7.
+            </div>
+            <div class="final-answer">Answer: 7</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 25</div>
+        <div class="problem-content">
+            $$ 7 \overline{)49} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(25)">Show Answer</button>
+        <div id="ans-25" class="answer-section">
+            <div class="explanation">
+                49 divided by 7 is 7.
+            </div>
+            <div class="final-answer">Answer: 7</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 26</div>
+        <div class="problem-content">
+            Consider a rectangle 5 cm long and 2 cm wide.<br>
+            a. What is its perimeter?<br>
+            b. What is its area?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(26)">Show Answer</button>
+        <div id="ans-26" class="answer-section">
+            <div class="explanation">
+                <strong>Perimeter:</strong> \(5 + 2 + 5 + 2 = 14\) cm.<br>
+                <strong>Area:</strong> \(5 \times 2 = 10\) sq cm.
+            </div>
+            <div class="final-answer">a. 14 cm <br> b. 10 sq cm</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 27</div>
+        <div class="problem-content">
+            The diameter of a small circular rug is 4 feet. What is the radius?<br>
+            A. 1 ft &nbsp; B. 2 ft &nbsp; C. 8 ft &nbsp; D. 12 in
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(27)">Show Answer</button>
+        <div id="ans-27" class="answer-section">
+            <div class="explanation">
+                The radius is exactly half of the diameter.<br>
+                \(4 \div 2 = 2\) feet.
+            </div>
+            <div class="final-answer">Answer: B (2 ft)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 28</div>
+        <div class="problem-content">
+            Put these money amounts in order from greatest to least:<br>
+            3 quarters, 8 dimes, 15 nickels.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(28)">Show Answer</button>
+        <div id="ans-28" class="answer-section">
+            <div class="explanation">
+                <strong>3 quarters:</strong> \(3 \times 0.25 = \$0.75\)<br>
+                <strong>8 dimes:</strong> \(8 \times 0.10 = \$0.80\)<br>
+                <strong>15 nickels:</strong> \(15 \times 0.05 = \$0.75\)<br>
+                Order: 8 dimes is greatest. The others are equal.
+            </div>
+            <div class="final-answer">Answer: 8 dimes, 3 quarters = 15 nickels</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 29</div>
+        <div class="problem-content">
+            What is the eighth term of the sequence?<br>
+            7, 14, 21, 28, ...
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(29)">Show Answer</button>
+        <div id="ans-29" class="answer-section">
+            <div class="explanation">
+                These are multiples of 7.<br>
+                8th term = \(7 \times 8\).
+            </div>
+            <div class="final-answer">Answer: 56</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 30</div>
+        <div class="problem-content">
+            Find the rule for this table:<br>
+            Input: 2, 4, 6, 8<br>
+            Output: 10, 20, 30, 40
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(30)">Show Answer</button>
+        <div id="ans-30" class="answer-section">
+            <div class="explanation">
+                Look at the pairs: \(2 \to 10\), \(4 \to 20\).<br>
+                \(2 \times 5 = 10\)<br>
+                \(4 \times 5 = 20\)<br>
+                The rule is multiply by 5.
+            </div>
+            <div class="final-answer">Answer: Multiply Input by 5</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById('ans-' + id);
+            var btn = document.querySelector(`button[onclick="toggleAnswer(${id})"]`);
+            
+            if (answerDiv.classList.contains('visible')) {
+                answerDiv.classList.remove('visible');
+                setTimeout(() => { answerDiv.style.display = 'none'; }, 500); 
+                btn.textContent = "Show Answer";
+            } else {
+                answerDiv.style.display = 'block';
+                setTimeout(() => { answerDiv.classList.add('visible'); }, 10);
+                btn.textContent = "Hide Answer";
+            }
+        }
+
+        function drawClock(canvasId, hour, minute) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            const r = radius * 0.90;
+
+            // Face
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Numbers
+            ctx.font = radius * 0.15 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let num = 1; num <= 12; num++) {
+                let ang = num * Math.PI / 6;
+                let x = radius * 0.75 * Math.sin(ang);
+                let y = -radius * 0.75 * Math.cos(ang);
+                ctx.fillStyle = "#333";
+                ctx.fillText(num.toString(), x, y);
+            }
+
+            // Hour Hand
+            let hPos = (hour % 12 + minute / 60) * Math.PI / 6;
+            drawHand(ctx, hPos, radius * 0.5, 6);
+
+            // Minute Hand
+            let mPos = (minute * Math.PI / 30);
+            drawHand(ctx, mPos, radius * 0.75, 4);
+        }
+
+        function drawHand(ctx, pos, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        function drawNumberLine(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const w = canvas.width;
+            const h = canvas.height;
+            const y = h/2;
+            const margin = 30;
+            const lineLen = w - 2 * margin;
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(margin, y);
+            ctx.lineTo(w - margin, y);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Arrows
+            ctx.fillStyle = "#333";
+            ctx.beginPath(); ctx.moveTo(margin, y); ctx.lineTo(margin+5, y-5); ctx.lineTo(margin+5, y+5); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(w-margin, y); ctx.lineTo(w-margin-5, y-5); ctx.lineTo(w-margin-5, y+5); ctx.fill();
+
+            // Ticks for 5 and 6
+            ctx.font = "16px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("5", margin, y + 25);
+            ctx.fillText("6", w - margin, y + 25);
+
+            // Subdivisions (4ths)
+            const step = lineLen / 4;
+            for(let i=1; i<4; i++) {
+                let x = margin + i * step;
+                ctx.beginPath();
+                ctx.moveTo(x, y - 5);
+                ctx.lineTo(x, y + 5);
+                ctx.stroke();
+            }
+
+            // Arrow at 3/4
+            let arrowX = margin + 3 * step;
+            ctx.beginPath();
+            ctx.moveTo(arrowX, y - 20);
+            ctx.lineTo(arrowX, y - 5);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            // Arrow head
+            ctx.beginPath();
+            ctx.moveTo(arrowX, y - 5);
+            ctx.lineTo(arrowX - 4, y - 10);
+            ctx.lineTo(arrowX + 4, y - 10);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        window.onload = function() {
+            // Q7: 8:20
+            drawClock("clock7", 8, 20);
+            // Q8: 3:00
+            drawClock("clock8", 3, 0);
+            // Q11: Number Line (5 to 6)
+            drawNumberLine("numberline11");
+        };
+
+    </script>
+</body>
+</html>
