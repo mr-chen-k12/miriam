@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radius vs Diameter Quiz</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf2e9; /* Light Orange Background */
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d35400; /* Dark Orange */
+            margin-bottom: 30px;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 10px;
+        }
+
+        .concept-box {
+            background-color: #fff;
+            border: 2px solid #e67e22;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-left: 6px solid #d35400;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            margin: 8px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .options li:hover {
+            background-color: #fadbd8;
+        }
+
+        .btn-check {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .btn-check:hover {
+            background-color: #d35400;
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border: 1px solid #a2d9ce;
+            border-radius: 5px;
+        }
+
+        .feedback.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            background: #fff;
+            display: block;
+            margin: 15px auto;
+            border-radius: 50%; /* Makes the canvas border circular for aesthetic */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Radius vs. Diameter</h1>
+
+    <div class="concept-box">
+        <strong>Key Concept:</strong><br>
+        The <em>Radius</em> ($r$) is the distance from the center to the edge.<br>
+        The <em>Diameter</em> ($d$) is the distance across the circle, passing through the center.<br>
+        $$ d = 2 \times r $$
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">1. Look at the circle below. The red line represents the:</div>
+        <canvas id="canvas1" width="200" height="200"></canvas>
+        <ul class="options">
+            <li>A. Diameter</li>
+            <li>B. Radius</li>
+            <li>C. Circumference</li>
+            <li>D. Chord</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(1)">Check Answer</button>
+        <div id="ans-1" class="feedback">
+            <strong>Correct Answer: B (Radius)</strong><br>
+            The line starts at the center and goes to the edge. That is the definition of a radius.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">2. Look at the circle below. The blue line represents the:</div>
+        <canvas id="canvas2" width="200" height="200"></canvas>
+        <ul class="options">
+            <li>A. Radius</li>
+            <li>B. Center</li>
+            <li>C. Diameter</li>
+            <li>D. Arc</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(2)">Check Answer</button>
+        <div id="ans-2" class="feedback">
+            <strong>Correct Answer: C (Diameter)</strong><br>
+            The line goes from one edge to the other and passes exactly through the center.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">3. If the radius of a circle is 5 inches, what is the diameter?</div>
+        <ul class="options">
+            <li>A. 2.5 inches</li>
+            <li>B. 5 inches</li>
+            <li>C. 10 inches</li>
+            <li>D. 25 inches</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(3)">Check Answer</button>
+        <div id="ans-3" class="feedback">
+            <strong>Correct Answer: C (10 inches)</strong><br>
+            The diameter is twice the radius. $$ 5 \times 2 = 10 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">4. A swimming pool has a diameter of 18 meters. What is the radius?</div>
+        <ul class="options">
+            <li>A. 9 meters</li>
+            <li>B. 36 meters</li>
+            <li>C. 18 meters</li>
+            <li>D. 6 meters</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(4)">Check Answer</button>
+        <div id="ans-4" class="feedback">
+            <strong>Correct Answer: A (9 meters)</strong><br>
+            The radius is half of the diameter. $$ 18 \div 2 = 9 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">5. Which formula correctly shows the relationship between diameter ($d$) and radius ($r$)?</div>
+        <ul class="options">
+            <li>A. \( r = 2 \times d \)</li>
+            <li>B. \( d = r \div 2 \)</li>
+            <li>C. \( d = 2 \times r \)</li>
+            <li>D. \( d = r + 2 \)</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(5)">Check Answer</button>
+        <div id="ans-5" class="feedback">
+            <strong>Correct Answer: C</strong><br>
+            The diameter is equal to two times the radius.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">6. Which line segment below is NOT a diameter?</div>
+        <canvas id="canvas6" width="200" height="200"></canvas>
+        <ul class="options">
+            <li>A. The Green Line</li>
+            <li>B. The Purple Line</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(6)">Check Answer</button>
+        <div id="ans-6" class="feedback">
+            <strong>Correct Answer: A (The Green Line)</strong><br>
+            The Green line does not pass through the center. It is a chord, but not a diameter. The Purple line passes through the center, so it is a diameter.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">7. A bike wheel has a spoke connecting the axle (center) to the rim (edge). This spoke represents the:</div>
+        <ul class="options">
+            <li>A. Circumference</li>
+            <li>B. Radius</li>
+            <li>C. Diameter</li>
+            <li>D. Area</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(7)">Check Answer</button>
+        <div id="ans-7" class="feedback">
+            <strong>Correct Answer: B (Radius)</strong><br>
+            Distance from center to edge is the radius.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">8. If the radius is 3.5 cm, what is the diameter?</div>
+        <ul class="options">
+            <li>A. 6 cm</li>
+            <li>B. 7.5 cm</li>
+            <li>C. 3.5 cm</li>
+            <li>D. 7.0 cm</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(8)">Check Answer</button>
+        <div id="ans-8" class="feedback">
+            <strong>Correct Answer: D (7.0 cm)</strong><br>
+            $$ 3.5 + 3.5 = 7.0 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">9. Circle A has a radius of 4 inches. Circle B has a diameter of 6 inches. Which circle is bigger?</div>
+        <ul class="options">
+            <li>A. Circle A</li>
+            <li>B. Circle B</li>
+            <li>C. They are the same size</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(9)">Check Answer</button>
+        <div id="ans-9" class="feedback">
+            <strong>Correct Answer: A (Circle A)</strong><br>
+            To compare, find the diameter of Circle A. $$ 4 \times 2 = 8 $$ inches. <br>
+            Since 8 inches > 6 inches, Circle A is bigger.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">10. Imagine a circle fits perfectly inside a square box. If the box is 10 inches wide, what is the radius of the circle?</div>
+        <canvas id="canvas10" width="200" height="200"></canvas>
+        <ul class="options">
+            <li>A. 10 inches</li>
+            <li>B. 5 inches</li>
+            <li>C. 20 inches</li>
+            <li>D. 2.5 inches</li>
+        </ul>
+        <button class="btn-check" onclick="showAnswer(10)">Check Answer</button>
+        <div id="ans-10" class="feedback">
+            <strong>Correct Answer: B (5 inches)</strong><br>
+            If the square is 10 inches wide, the diameter of the circle is 10 inches. The radius is half of that: 5 inches.
+        </div>
+    </div>
+
+    <script>
+        function showAnswer(id) {
+            var el = document.getElementById('ans-' + id);
+            if(el.classList.contains('visible')) {
+                el.classList.remove('visible');
+            } else {
+                el.classList.add('visible');
+            }
+        }
+
+        // --- Canvas Drawing Logic ---
+
+        function drawCircleBase(ctx, width, height) {
+            const cx = width / 2;
+            const cy = height / 2;
+            const r = width / 2 - 10;
+            
+            // Draw Circle Outline
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+
+            // Draw Center Point
+            ctx.beginPath();
+            ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+
+            return {cx, cy, r};
+        }
+
+        function drawQ1() {
+            const c = document.getElementById("canvas1");
+            const ctx = c.getContext("2d");
+            const {cx, cy, r} = drawCircleBase(ctx, c.width, c.height);
+
+            // Draw Radius (Red)
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + r, cy);
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+        }
+
+        function drawQ2() {
+            const c = document.getElementById("canvas2");
+            const ctx = c.getContext("2d");
+            const {cx, cy, r} = drawCircleBase(ctx, c.width, c.height);
+
+            // Draw Diameter (Blue)
+            ctx.beginPath();
+            ctx.moveTo(cx - r, cy); // Start left edge
+            ctx.lineTo(cx + r, cy); // End right edge
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+        }
+
+        function drawQ6() {
+            const c = document.getElementById("canvas6");
+            const ctx = c.getContext("2d");
+            const {cx, cy, r} = drawCircleBase(ctx, c.width, c.height);
+
+            // Draw Diameter (Purple)
+            ctx.beginPath();
+            ctx.moveTo(cx + r * Math.cos(Math.PI/4), cy + r * Math.sin(Math.PI/4)); 
+            ctx.lineTo(cx - r * Math.cos(Math.PI/4), cy - r * Math.sin(Math.PI/4));
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = 'purple';
+            ctx.stroke();
+
+            // Draw Chord not through center (Green)
+            ctx.beginPath();
+            ctx.moveTo(cx - r * 0.5, cy - r * 0.866);
+            ctx.lineTo(cx + r * 0.8, cy - r * 0.6);
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = 'green';
+            ctx.stroke();
+        }
+
+        function drawQ10() {
+            const c = document.getElementById("canvas10");
+            const ctx = c.getContext("2d");
+            const w = c.width;
+            
+            // Draw Square
+            ctx.beginPath();
+            ctx.rect(10, 10, w-20, w-20);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#555';
+            ctx.stroke();
+
+            // Draw Circle Inside
+            ctx.beginPath();
+            ctx.arc(w/2, w/2, (w-20)/2, 0, 2*Math.PI);
+            ctx.strokeStyle = 'orange';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Label
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#333";
+            ctx.fillText("10 inches", w/2 - 30, w - 5);
+        }
+
+        window.onload = function() {
+            drawQ1();
+            drawQ2();
+            drawQ6();
+            drawQ10();
+        };
+
+    </script>
+</body>
+</html>
