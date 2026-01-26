@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Set 3</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef7f2;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #16a085;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1abc9c;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #555;
+            font-style: italic;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid #16a085; /* Emerald Green accent */
+        }
+
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #0e6655;
+        }
+
+        .problem-content {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .btn-reveal {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .btn-reveal:hover {
+            background-color: #117a65;
+        }
+
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f8f5;
+            border-radius: 4px;
+            border: 1px solid #d1f2eb;
+        }
+
+        .answer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .explanation {
+            font-style: italic;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .final-answer {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            background: #fff;
+            margin: 10px 0;
+            display: block;
+        }
+
+        /* Squares for Q5 */
+        .fraction-visual {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .sq-viz {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            background-color: white;
+        }
+        .sq-viz.full {
+            background-color: #16a085;
+        }
+        /* Half filled square */
+        .sq-viz.half {
+            background: linear-gradient(to right, #16a085 50%, white 50%);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice - Set 3</h1>
+    <p class="intro-text">Sequential review questions. Click to check your answers!</p>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <div class="problem-content">
+            Write and solve an equation:<br>
+            A local library has 2,415 fiction books and 1,890 non-fiction books. What is the total number of books?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(1)">Show Answer</button>
+        <div id="ans-1" class="answer-section">
+            <div class="explanation">
+                Combine the two amounts:
+                $$ 2415 + 1890 = 4305 $$
+            </div>
+            <div class="final-answer">Answer: 4,305 books</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <div class="problem-content">
+            A driver traveled 120 miles on Friday, 95 miles on Saturday, and 140 miles on Sunday. How many miles did the driver travel in total?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(2)">Show Answer</button>
+        <div id="ans-2" class="answer-section">
+            <div class="explanation">
+                Sum the three distances:
+                $$ 120 + 95 + 140 $$
+                $$ 120 + 140 = 260 $$
+                $$ 260 + 95 = 355 $$
+            </div>
+            <div class="final-answer">Answer: 355 miles</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <div class="problem-content">
+            The decimal number five and forty-two hundredths is how much more than two and eighteen hundredths?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(3)">Show Answer</button>
+        <div id="ans-3" class="answer-section">
+            <div class="explanation">
+                Write as decimals: \(5.42\) and \(2.18\).<br>
+                Subtract:
+                $$ 5.42 - 2.18 = 3.24 $$
+            </div>
+            <div class="final-answer">Answer: 3.24</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <div class="problem-content">
+            a. Round 659 to the nearest hundred.<br>
+            b. Round 659 to the nearest ten.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(4)">Show Answer</button>
+        <div id="ans-4" class="answer-section">
+            <div class="explanation">
+                <strong>Part a:</strong> The tens digit is 5. Round up the hundreds. 600 becomes 700.<br>
+                <strong>Part b:</strong> The ones digit is 9. Round up the tens. 50 becomes 60.
+            </div>
+            <div class="final-answer">a. 700 <br> b. 660</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <div class="problem-content">
+            Draw and shade squares to show the number \(3 \frac{1}{2}\).
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(5)">Show Answer</button>
+        <div id="ans-5" class="answer-section">
+            <div class="explanation">
+                Draw 4 squares. Shade 3 of them completely. Shade half of the fourth square.
+            </div>
+            <div class="fraction-visual">
+                <div class="sq-viz full"></div>
+                <div class="sq-viz full"></div>
+                <div class="sq-viz full"></div>
+                <div class="sq-viz half"></div>
+            </div>
+            <div class="final-answer">Visual Answer: Three full squares and one half-shaded square.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <div class="problem-content">
+            Consider the first three odd numbers: 1, 3, 5.<br>
+            a. What is their sum?<br>
+            b. What is the square root of that sum?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(6)">Show Answer</button>
+        <div id="ans-6" class="answer-section">
+            <div class="explanation">
+                <strong>Part a:</strong> \(1 + 3 + 5 = 9\)<br>
+                <strong>Part b:</strong> The square root of 9 is 3 (because \(3 \times 3 = 9\)).
+            </div>
+            <div class="final-answer">a. 9 <br> b. 3</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <div class="problem-content">
+            The clock shows the time in the afternoon. What time was it 4 hours ago?
+            <canvas id="clock7" width="150" height="150"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(7)">Show Answer</button>
+        <div id="ans-7" class="answer-section">
+            <div class="explanation">
+                The clock shows <strong>2:15</strong>.<br>
+                If it is 2:15 PM, 4 hours ago would be:<br>
+                2:00 PM -> 1:00 PM -> 12:00 PM -> 11:00 AM -> 10:00 AM.<br>
+                Add the 15 minutes back: 10:15 AM.
+            </div>
+            <div class="final-answer">Answer: 10:15 AM</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <div class="problem-content">
+            What type of angle is formed by the hands of this clock?
+            <canvas id="clock8" width="150" height="150"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(8)">Show Answer</button>
+        <div id="ans-8" class="answer-section">
+            <div class="explanation">
+                The clock shows 5:00. The angle spans 5 hour marks ($5 \times 30^\circ = 150^\circ$).<br>
+                This is greater than 90 but less than 180.
+            </div>
+            <div class="final-answer">Answer: Obtuse angle</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <div class="problem-content">
+            a. Draw two parallel lines.<br>
+            b. Draw two perpendicular lines.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(9)">Show Answer</button>
+        <div id="ans-9" class="answer-section">
+            <div class="explanation">
+                <strong>Parallel:</strong> Like train tracks, never touching (||).<br>
+                <strong>Perpendicular:</strong> Crossing at a perfect 'L' or '+' shape (90 degrees).
+            </div>
+            <div class="final-answer">Answer: (Check your drawing)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <div class="problem-content">
+            The height of a standard door is about 2 meters. About how many feet is that?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(10)">Show Answer</button>
+        <div id="ans-10" class="answer-section">
+            <div class="explanation">
+                1 meter is a little more than 3 feet (approx 3.3 ft).<br>
+                2 meters is roughly \(2 \times 3 = 6\) feet (actually closer to 6.6 or 7 ft).
+            </div>
+            <div class="final-answer">Answer: About 6 or 7 feet</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <div class="problem-content">
+            To what mixed number is the arrow pointing?
+            <canvas id="numberline11" width="400" height="60"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(11)">Show Answer</button>
+        <div id="ans-11" class="answer-section">
+            <div class="explanation">
+                The space between 7 and 8 is divided into 3 equal parts (thirds).<br>
+                The arrow points to the 2nd mark.
+            </div>
+            <div class="final-answer">Answer: \(7 \frac{2}{3}\)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <div class="problem-content">
+            $$ 100 - (5 \times 10) $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(12)">Show Answer</button>
+        <div id="ans-12" class="answer-section">
+            <div class="explanation">
+                Do parentheses first: \(5 \times 10 = 50\).<br>
+                Then subtract: \(100 - 50 = 50\).
+            </div>
+            <div class="final-answer">Answer: 50</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <div class="problem-content">
+            $$ \$12.50 + \$3.75 + \$1.25 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(13)">Show Answer</button>
+        <div id="ans-13" class="answer-section">
+            <div class="explanation">
+                Group numbers to make it easier: \(3.75 + 1.25 = 5.00\).<br>
+                \(12.50 + 5.00 = 17.50\).
+            </div>
+            <div class="final-answer">Answer: $17.50</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 14</div>
+        <div class="problem-content">
+            $$ \$20.00 - \$12.85 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(14)">Show Answer</button>
+        <div id="ans-14" class="answer-section">
+            <div class="explanation">
+                Borrow across zeros.<br>
+                10 - 5 = 5<br>
+                9 - 8 = 1<br>
+                9 - 2 = 7<br>
+                1 - 1 = 0
+            </div>
+            <div class="final-answer">Answer: $7.15</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 15</div>
+        <div class="problem-content">
+            $$ 9.2 - 4.6 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(15)">Show Answer</button>
+        <div id="ans-15" class="answer-section">
+            <div class="explanation">
+                Borrow from the 9.<br>
+                12 - 6 = 6<br>
+                8 - 4 = 4
+            </div>
+            <div class="final-answer">Answer: 4.6</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 16</div>
+        <div class="problem-content">
+            $$ y + 4.2 = 9.5 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(16)">Show Answer</button>
+        <div id="ans-16" class="answer-section">
+            <div class="explanation">
+                Subtract 4.2 from both sides.<br>
+                \(9.5 - 4.2 = 5.3\)
+            </div>
+            <div class="final-answer">Answer: y = 5.3</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 17</div>
+        <div class="problem-content">
+            $$ x - 120 = 80 $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(17)">Show Answer</button>
+        <div id="ans-17" class="answer-section">
+            <div class="explanation">
+                Add 120 to both sides.<br>
+                \(80 + 120 = 200\)
+            </div>
+            <div class="final-answer">Answer: x = 200</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 18</div>
+        <div class="problem-content">
+            $$ 53 \times 6 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(18)">Show Answer</button>
+        <div id="ans-18" class="answer-section">
+            <div class="explanation">
+                \(3 \times 6 = 18\) (Write 8, carry 1)<br>
+                \(5 \times 6 = 30\). Add the 1 = 31.<br>
+                Total: 318
+            </div>
+            <div class="final-answer">Answer: 318</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 19</div>
+        <div class="problem-content">
+            $$ 74 \times 3 = $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(19)">Show Answer</button>
+        <div id="ans-19" class="answer-section">
+            <div class="explanation">
+                \(4 \times 3 = 12\) (Carry 1)<br>
+                \(7 \times 3 = 21\). Add 1 = 22.
+            </div>
+            <div class="final-answer">Answer: 222</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 20</div>
+        <div class="problem-content">
+            $$ 6 \overline{)48} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(20)">Show Answer</button>
+        <div id="ans-20" class="answer-section">
+            <div class="explanation">
+                48 divided by 6 is 8.
+            </div>
+            <div class="final-answer">Answer: 8</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 21</div>
+        <div class="problem-content">
+            $$ 4 \overline{)36} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(21)">Show Answer</button>
+        <div id="ans-21" class="answer-section">
+            <div class="explanation">
+                36 divided by 4 is 9.
+            </div>
+            <div class="final-answer">Answer: 9</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 22</div>
+        <div class="problem-content">
+            $$ 9 \overline{)54} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(22)">Show Answer</button>
+        <div id="ans-22" class="answer-section">
+            <div class="explanation">
+                54 divided by 9 is 6.
+            </div>
+            <div class="final-answer">Answer: 6</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 23</div>
+        <div class="problem-content">
+            $$ 8 \overline{)64} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(23)">Show Answer</button>
+        <div id="ans-23" class="answer-section">
+            <div class="explanation">
+                64 divided by 8 is 8.
+            </div>
+            <div class="final-answer">Answer: 8</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 24</div>
+        <div class="problem-content">
+            $$ 7 \overline{)35} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(24)">Show Answer</button>
+        <div id="ans-24" class="answer-section">
+            <div class="explanation">
+                35 divided by 7 is 5.
+            </div>
+            <div class="final-answer">Answer: 5</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 25</div>
+        <div class="problem-content">
+            $$ 3 \overline{)27} $$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(25)">Show Answer</button>
+        <div id="ans-25" class="answer-section">
+            <div class="explanation">
+                27 divided by 3 is 9.
+            </div>
+            <div class="final-answer">Answer: 9</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 26</div>
+        <div class="problem-content">
+            A rectangle is 6 cm long and 4 cm wide.<br>
+            a. What is its perimeter?<br>
+            b. What is its area?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(26)">Show Answer</button>
+        <div id="ans-26" class="answer-section">
+            <div class="explanation">
+                <strong>Perimeter:</strong> \(6 + 4 + 6 + 4 = 20\) cm.<br>
+                <strong>Area:</strong> \(6 \times 4 = 24\) sq cm.
+            </div>
+            <div class="final-answer">a. 20 cm <br> b. 24 sq cm</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 27</div>
+        <div class="problem-content">
+            The radius of a circle is 10 inches. What is the diameter?<br>
+            A. 5 in &nbsp; B. 100 in &nbsp; C. 20 in &nbsp; D. 12 in
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(27)">Show Answer</button>
+        <div id="ans-27" class="answer-section">
+            <div class="explanation">
+                The diameter is always double the radius.<br>
+                \(10 \times 2 = 20\) inches.
+            </div>
+            <div class="final-answer">Answer: C (20 in)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 28</div>
+        <div class="problem-content">
+            Which amount is greater?<br>
+            A. 3 quarters and 2 dimes<br>
+            B. 10 dimes
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(28)">Show Answer</button>
+        <div id="ans-28" class="answer-section">
+            <div class="explanation">
+                <strong>A:</strong> \(0.75 + 0.20 = \$0.95\)<br>
+                <strong>B:</strong> \(10 \times 0.10 = \$1.00\)<br>
+                $1.00 is greater than $0.95.
+            </div>
+            <div class="final-answer">Answer: B</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 29</div>
+        <div class="problem-content">
+            Find the 6th term of this sequence:<br>
+            5, 10, 15, 20, ...
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(29)">Show Answer</button>
+        <div id="ans-29" class="answer-section">
+            <div class="explanation">
+                These are multiples of 5.<br>
+                Term 1 = 5, Term 2 = 10... Term 6 = \(5 \times 6\).
+            </div>
+            <div class="final-answer">Answer: 30</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 30</div>
+        <div class="problem-content">
+            Find the rule for this table:<br>
+            Input: 3, 5, 10<br>
+            Output: 9, 15, 30
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer(30)">Show Answer</button>
+        <div id="ans-30" class="answer-section">
+            <div class="explanation">
+                \(3 \times 3 = 9\)<br>
+                \(5 \times 3 = 15\)<br>
+                The rule is multiplication.
+            </div>
+            <div class="final-answer">Answer: Multiply Input by 3</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById('ans-' + id);
+            var btn = document.querySelector(`button[onclick="toggleAnswer(${id})"]`);
+            
+            if (answerDiv.classList.contains('visible')) {
+                answerDiv.classList.remove('visible');
+                setTimeout(() => { answerDiv.style.display = 'none'; }, 500); 
+                btn.textContent = "Show Answer";
+            } else {
+                answerDiv.style.display = 'block';
+                setTimeout(() => { answerDiv.classList.add('visible'); }, 10);
+                btn.textContent = "Hide Answer";
+            }
+        }
+
+        function drawClock(canvasId, hour, minute) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            const r = radius * 0.90;
+
+            // Face
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Numbers
+            ctx.font = radius * 0.15 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let num = 1; num <= 12; num++) {
+                let ang = num * Math.PI / 6;
+                let x = radius * 0.75 * Math.sin(ang);
+                let y = -radius * 0.75 * Math.cos(ang);
+                ctx.fillStyle = "#333";
+                ctx.fillText(num.toString(), x, y);
+            }
+
+            // Hour Hand
+            let hPos = (hour % 12 + minute / 60) * Math.PI / 6;
+            drawHand(ctx, hPos, radius * 0.5, 6);
+
+            // Minute Hand
+            let mPos = (minute * Math.PI / 30);
+            drawHand(ctx, mPos, radius * 0.75, 4);
+        }
+
+        function drawHand(ctx, pos, length, width) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        function drawNumberLine(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if(!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const w = canvas.width;
+            const h = canvas.height;
+            const y = h/2;
+            const margin = 30;
+            const lineLen = w - 2 * margin;
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(margin, y);
+            ctx.lineTo(w - margin, y);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Arrows
+            ctx.fillStyle = "#333";
+            ctx.beginPath(); ctx.moveTo(margin, y); ctx.lineTo(margin+5, y-5); ctx.lineTo(margin+5, y+5); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(w-margin, y); ctx.lineTo(w-margin-5, y-5); ctx.lineTo(w-margin-5, y+5); ctx.fill();
+
+            // Ticks for 7 and 8
+            ctx.font = "16px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("7", margin, y + 25);
+            ctx.fillText("8", w - margin, y + 25);
+
+            // Subdivisions (3rds)
+            const step = lineLen / 3;
+            for(let i=1; i<3; i++) {
+                let x = margin + i * step;
+                ctx.beginPath();
+                ctx.moveTo(x, y - 5);
+                ctx.lineTo(x, y + 5);
+                ctx.stroke();
+            }
+
+            // Arrow at 2/3
+            let arrowX = margin + 2 * step;
+            ctx.beginPath();
+            ctx.moveTo(arrowX, y - 20);
+            ctx.lineTo(arrowX, y - 5);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            // Arrow head
+            ctx.beginPath();
+            ctx.moveTo(arrowX, y - 5);
+            ctx.lineTo(arrowX - 4, y - 10);
+            ctx.lineTo(arrowX + 4, y - 10);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        window.onload = function() {
+            // Q7: 2:15
+            drawClock("clock7", 2, 15);
+            // Q8: 5:00
+            drawClock("clock8", 5, 0);
+            // Q11: Number Line (7 to 8 in thirds)
+            drawNumberLine("numberline11");
+        };
+
+    </script>
+</body>
+</html>
