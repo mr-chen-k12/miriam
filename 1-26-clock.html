@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Telling Practice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #006064;
+            margin-bottom: 10px;
+        }
+
+        .game-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        canvas {
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            display: block;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            background: #f5f5f5;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button.option-btn {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button.option-btn:hover {
+            background-color: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        button.option-btn:active {
+            transform: translateY(0);
+        }
+
+        button.option-btn.correct {
+            background-color: #2ecc71 !important;
+            border: 2px solid #27ae60;
+        }
+
+        button.option-btn.wrong {
+            background-color: #e74c3c !important;
+            opacity: 0.6;
+        }
+
+        button.option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        #next-btn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: none; /* Hidden by default */
+            margin-top: 10px;
+            animation: popIn 0.3s ease;
+        }
+
+        #next-btn:hover {
+            background-color: #d35400;
+        }
+
+        #feedback-msg {
+            height: 30px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>What time is it?</h1>
+
+    <div class="game-container">
+        
+        <div class="score-board">
+            <span id="score-text">Score: 0</span>
+            <span id="streak-text">Streak: 0</span>
+        </div>
+
+        <canvas id="clockCanvas" width="300" height="300"></canvas>
+
+        <p class="question-text">Select the correct time:</p>
+
+        <div class="options-grid" id="options-container">
+            </div>
+
+        <div id="feedback-msg"></div>
+
+        <button id="next-btn" onclick="initGame()">Next Clock ➜</button>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById("clockCanvas");
+        const ctx = canvas.getContext("2d");
+        const radius = canvas.height / 2;
+        
+        // Move coordinate 0,0 to the center of the canvas
+        ctx.translate(radius, radius);
+        const clockRadius = radius * 0.90;
+
+        let currentHour = 0;
+        let currentMinute = 0;
+        let score = 0;
+        let streak = 0;
+        let isGameActive = true;
+
+        // Start the first game
+        initGame();
+
+        function initGame() {
+            // Reset UI
+            isGameActive = true;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback-msg').textContent = '';
+            document.getElementById('feedback-msg').style.color = '#333';
+            
+            // Generate Random Time (5 minute intervals for better readability, but logic supports any)
+            // Intervals of 5 make it standard for learning (0, 5, 10... 55)
+            currentHour = Math.floor(Math.random() * 12) + 1; // 1 to 12
+            currentMinute = Math.floor(Math.random() * 12) * 5; // 0, 5, 10... 55
+
+            drawClock(currentHour, currentMinute);
+            generateOptions(currentHour, currentMinute);
+        }
+
+        function drawClock(hour, minute) {
+            // Clear canvas (accounting for the translation)
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+
+            drawFace(ctx, clockRadius);
+            drawNumbers(ctx, clockRadius);
+            drawTime(ctx, clockRadius, hour, minute);
+            
+            // Draw center pivot
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+        }
+
+        function drawFace(ctx, radius) {
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+
+            // Outer rim
+            let grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+            grad.addColorStop(0, '#333');
+            grad.addColorStop(0.5, '#white');
+            grad.addColorStop(1, '#333');
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = radius * 0.05; // Thick rim
+            ctx.stroke();
+        }
+
+        function drawNumbers(ctx, radius) {
+            ctx.font = radius * 0.15 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let num = 1; num <= 12; num++) {
+                let ang = num * Math.PI / 6;
+                let x = radius * 0.85 * Math.sin(ang);
+                let y = -radius * 0.85 * Math.cos(ang);
+                ctx.fillStyle = "#333";
+                ctx.fillText(num.toString(), x, y);
+            }
+            
+            // Draw Ticks
+            for (let i = 0; i < 60; i++) {
+                let ang = i * Math.PI / 30;
+                let isHour = i % 5 === 0;
+                let len = isHour ? radius * 0.1 : radius * 0.05;
+                let width = isHour ? 3 : 1;
+                
+                let x1 = (radius * 0.95) * Math.sin(ang);
+                let y1 = -(radius * 0.95) * Math.cos(ang);
+                let x2 = (radius * 0.95 - len) * Math.sin(ang);
+                let y2 = -(radius * 0.95 - len) * Math.cos(ang);
+                
+                ctx.beginPath();
+                ctx.lineWidth = width;
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+        }
+
+        function drawTime(ctx, radius, hour, minute) {
+            // Hour
+            // The hour hand moves based on the minute too!
+            // (hour % 12) handles 12:00 being position 0
+            // (minute/60) adds the fraction of the hour
+            let hourPos = ((hour % 12) + minute / 60) * Math.PI / 6;
+            drawHand(ctx, hourPos, radius * 0.5, 7, "#333");
+
+            // Minute
+            let minutePos = (minute * Math.PI / 30);
+            drawHand(ctx, minutePos, radius * 0.8, 4, "#333");
+            
+            // Second Hand (Optional - static or random, but let's leave it off to not confuse students)
+        }
+
+        function drawHand(ctx, pos, length, width, color) {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = color;
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        function formatTime(h, m) {
+            let mStr = m < 10 ? "0" + m : m;
+            return `${h}:${mStr}`;
+        }
+
+        function generateOptions(correctH, correctM) {
+            let correctString = formatTime(correctH, correctM);
+            let options = new Set();
+            options.add(correctString);
+
+            // Create plausible distractors
+            while (options.size < 4) {
+                let h = Math.floor(Math.random() * 12) + 1;
+                let m = Math.floor(Math.random() * 12) * 5;
+                
+                // Logic to make distractors "tricky" (optional but good for learning)
+                // 1. Same minute, different hour (+/- 1 hour)
+                if (options.size === 1) {
+                    h = (correctH === 12) ? 1 : correctH + 1;
+                    m = correctM;
+                }
+                // 2. Swapped hands (if plausible) - e.g. 3:00 vs 12:15
+                // Complicated to calculate perfectly, so we stick to random + offsets
+                
+                let timeStr = formatTime(h, m);
+                
+                // Ensure unique
+                if (!options.has(timeStr)) {
+                    options.add(timeStr);
+                }
+            }
+
+            // Convert set to array and shuffle
+            let optionsArray = Array.from(options);
+            shuffleArray(optionsArray);
+
+            // Render Buttons
+            const container = document.getElementById('options-container');
+            container.innerHTML = ''; // clear old buttons
+
+            optionsArray.forEach(timeLabel => {
+                let btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = timeLabel;
+                btn.onclick = () => checkAnswer(btn, timeLabel, correctString);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(btn, selected, correct) {
+            if (!isGameActive) return; // Prevent multiple clicks
+            
+            isGameActive = false;
+            let feedback = document.getElementById('feedback-msg');
+            let allBtns = document.querySelectorAll('.option-btn');
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                feedback.textContent = "Correct! Great job.";
+                feedback.style.color = "#27ae60";
+                score++;
+                streak++;
+            } else {
+                btn.classList.add('wrong');
+                feedback.textContent = `Oops! The correct time was ${correct}.`;
+                feedback.style.color = "#c0392b";
+                streak = 0;
+                
+                // Highlight the correct one
+                allBtns.forEach(b => {
+                    if (b.textContent === correct) {
+                        b.classList.add('correct');
+                    }
+                });
+            }
+
+            // Disable all buttons
+            allBtns.forEach(b => b.disabled = true);
+
+            // Update Scoreboard
+            document.getElementById('score-text').textContent = `Score: ${score}`;
+            document.getElementById('streak-text').textContent = `Streak: ${streak}`;
+
+            // Show Next Button
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        // Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+    </script>
+</body>
+</html>
