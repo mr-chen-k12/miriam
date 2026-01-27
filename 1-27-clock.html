@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Telling Quiz: 30 Clock Problems</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --error: #c0392b;
+            --bg: #ecf0f1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-intro {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        /* Grid layout for the questions */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Styles for each question card */
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 5px solid var(--secondary);
+        }
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* SVG Clock Styling */
+        .clock-svg {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 200px;
+            height: auto;
+        }
+        .clock-face { stroke: #333; stroke-width: 3; fill: white; }
+        .center-dot { fill: #333; }
+        .hour-mark { stroke: #555; stroke-width: 2; }
+        /* Important: transform-box tells SVG to rotate around its own center */
+        .hand { stroke-linecap: round; transform-box: fill-box; transform-origin: center; }
+        .hour-hand { stroke: var(--primary); stroke-width: 5; }
+        .minute-hand { stroke: var(--secondary); stroke-width: 3; }
+
+        /* Multiple Choice Options Styling */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+            display: inline-block; /* centers the block within the text-center parent */
+            margin-top: 10px;
+        }
+        .option-label {
+            display: block;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .option-label:hover {
+            background-color: #f0f8ff;
+            border-color: var(--secondary);
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        /* Feedback styling */
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            display: none; /* Hidden by default */
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .feedback.correct { display: block; background-color: #d4edda; color: var(--success); }
+        .feedback.incorrect { display: block; background-color: #f8d7da; color: var(--error); }
+        .correct-answer-text { display: none; margin-top: 5px; font-size: 0.9em; color: var(--primary);}
+
+        /* Disable interaction after answering */
+        .question-card.answered .option-label { pointer-events: none; opacity: 0.7; }
+
+        #score-display {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>It's About Time!</h1>
+    <p class="quiz-intro">Look at the 30 clocks below and select the correct time for each one.</p>
+
+    <div class="quiz-container" id="quiz-container">
+        </div>
+    
+    <div id="score-display">Score: 0 / 30</div>
+
+<script>
+    let score = 0;
+    const totalQuestions = 30;
+
+    // --- Helper Functions ---
+
+    // Formats hours and minutes into a string like "3:05"
+    function formatTime(h, m) {
+        // Adjust 0 hours to 12 for display
+        let displayHour = h === 0 ? 12 : h;
+        // Pad minute with a leading zero if needed (e.g., 5 becomes "05")
+        let displayMinute = m < 10 ? '0' + m : m;
+        return `${displayHour}:${displayMinute}`;
+    }
+
+    // Generates the SVG HTML for a clock given hour and minute
+    function generateClockSVG(hour, minute) {
+        // Calculate rotation angles
+        // Minute hand moves 6 degrees per minute (360 / 60)
+        const minuteDeg = minute * 6;
+        // Hour hand moves 30 degrees per hour (360 / 12), plus 0.5 degrees per minute elapsed
+        const hourDeg = (hour * 30) + (minute * 0.5);
+
+        // SVG markup
+        return `
+        <svg class="clock-svg" viewBox="0 0 100 100" width="200" height="200">
+            <circle class="clock-face" cx="50" cy="50" r="45" />
+            
+            ${[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(deg => 
+                `<line class="hour-mark" x1="50" y1="5" x2="50" y2="10" transform="rotate(${deg} 50 50)" />`
+            ).join('')}
+            
+            <line class="hand minute-hand" x1="50" y1="15" x2="50" y2="50" transform="rotate(${minuteDeg})" />
+
+            <line class="hand hour-hand" x1="50" y1="25" x2="50" y2="50" transform="rotate(${hourDeg})" />
+            
+            <circle class="center-dot" cx="50" cy="50" r="3" />
+        </svg>
+        `;
+    }
+
+    // Shuffles an array (Fisher-Yates sorting algorithm) to randomize options
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // --- Main Logic ---
+
+    // 1. Generate the 30 questions data
+    function generateQuestionsData() {
+        let questions = [];
+        for (let i = 0; i < totalQuestions; i++) {
+            // Generate random hour (1-12) and minute (0-55, in 5-minute increments for cleaner typical clock problems)
+            // Using 5-minute increments makes reading easier for typical elementary level. 
+            // To make it harder, change `Math.floor(Math.random() * 12) * 5` to `Math.floor(Math.random() * 60)`
+            let h = Math.floor(Math.random() * 12) + 1; 
+            let m = Math.floor(Math.random() * 12) * 5; 
+
+            let correctTimeStr = formatTime(h, m);
+            let options = [correctTimeStr];
+
+            // Creating Distractors (wrong answers)
+            
+            // Distractor 1: Offset by 1 hour
+            let d1H = h + 1 > 12 ? 1 : h + 1;
+            options.push(formatTime(d1H, m));
+
+            // Distractor 2: Offset by 5 or 10 minutes back
+            let d2M = (m - 10 + 60) % 60;
+            options.push(formatTime(h, d2M));
+
+            // Distractor 3: The "Hand Swap" trick (very common mistake)
+            // Only works well if minute is a multiple of 5 (e.g., 3:10 looks like 2:15)
+            if (m % 5 === 0) {
+                 // If time is 3:10. The hour hand is near 3. The minute hand is at 2. Distractor: 2:15
+                 let fakeHour = m / 5 === 0 ? 12 : m / 5;
+                 let fakeMinute = h * 5 === 60 ? 0 : h * 5;
+                 options.push(formatTime(fakeHour, fakeMinute));
+            } else {
+                 // Fallback if not a multiple of 5: just offset hour backwards
+                 let d3H = h - 1 < 1 ? 12 : h - 1;
+                 options.push(formatTime(d3H, m));
+            }
+
+            // Ensure unique options and exactly 4 items (sometimes distractors might overlap)
+            options = [...new Set(options)].slice(0, 4);
+            while (options.length < 4) {
+                 // Add simple random fillers if we got duplicates
+                 options.push(formatTime(Math.floor(Math.random()*12)+1, Math.floor(Math.random()*12)*5));
+                 options = [...new Set(options)];
+            }
+
+            shuffleArray(options); // Randomize order of A, B, C, D
+
+            questions.push({
+                id: i + 1,
+                hour: h,
+                minute: m,
+                correctAnswer: correctTimeStr,
+                options: options
+            });
+        }
+        return questions;
+    }
+
+    // 2. Render the questions into the HTML
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        const questionsData = generateQuestionsData();
+
+        questionsData.forEach(qData => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${qData.id}`;
+
+            const svgHTML = generateClockSVG(qData.hour, qData.minute);
+
+            let optionsHTML = '';
+            qData.options.forEach((opt, index) => {
+                // Unique ID for each radio button (e.g., q1-opt0)
+                const radioId = `q${qData.id}-opt${index}`;
+                optionsHTML += `
+                    <label class="option-label" for="${radioId}">
+                        <input type="radio" id="${radioId}" name="question${qData.id}" value="${opt}" 
+                               onclick="checkAnswer(this, '${qData.correctAnswer}', ${qData.id})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-number">Problem ${qData.id}</span>
+                ${svgHTML}
+                <div class="options-container">
+                    ${optionsHTML}
+                </div>
+                <div class="feedback" id="feedback-${qData.id}"></div>
+                <div class="correct-answer-text" id="correct-text-${qData.id}">Correct answer: ${qData.correctAnswer}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 3. Handle checking the answer when a radio button is clicked
+    function checkAnswer(radioButton, correctAnswer, questionId) {
+        const selectedValue = radioButton.value;
+        const card = document.getElementById(`q-card-${questionId}`);
+        const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+        const correctTextDiv = document.getElementById(`correct-text-${questionId}`);
+        const scoreDisplay = document.getElementById('score-display');
+
+        // Disable further interaction with this question card
+        card.classList.add('answered');
+        const radios = card.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => r.disabled = true);
+
+        if (selectedValue === correctAnswer) {
+            score++;
+            feedbackDiv.textContent = "Correct! \u2713"; // checkmark symbol
+            feedbackDiv.className = "feedback correct";
+            // Highlight selected label green
+            radioButton.parentElement.style.backgroundColor = "#d4edda";
+            radioButton.parentElement.style.borderColor = "#28a745";
+        } else {
+            feedbackDiv.textContent = "Incorrect \u2718"; // X symbol
+            feedbackDiv.className = "feedback incorrect";
+             // Highlight selected label red
+            radioButton.parentElement.style.backgroundColor = "#f8d7da";
+            radioButton.parentElement.style.borderColor = "#dc3545";
+            // Show correct answer text
+            correctTextDiv.style.display = "block";
+        }
+
+        scoreDisplay.textContent = `Score: ${score} / ${totalQuestions}`;
+    }
+
+    // Initialize quiz on load
+    renderQuiz();
+
+</script>
+</body>
+</html>
