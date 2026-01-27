@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f6f7;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .answer-panel {
+            display: none; /* Hidden by default */
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-radius: 4px;
+            border: 1px solid #d1f2eb;
+        }
+
+        .answer-panel.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .step {
+            margin-bottom: 8px;
+        }
+
+        .final-answer {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+
+        /* SVG Styles */
+        svg {
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .image-note {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Assignment Solutions</h1>
+    <p style="text-align: center; margin-bottom: 30px;">Click "Review Answer" on any question to see the step-by-step solution.</p>
+
+    <div class="question-card">
+        <div class="question-header">Question 1</div>
+        <div class="question-text">
+            Write and solve equations for problems 1 and 2.<br>
+            There were 8 boys in each row. There were 4 rows. How many boys were in all 4 rows?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans1')">Review Answer</button>
+        <div id="ans1" class="answer-panel">
+            <div class="step"><strong>Strategy:</strong> Equal groups usually implies multiplication.</div>
+            <div class="step">We have 4 rows (groups) with 8 boys in each row.</div>
+            <div class="step">Equation: \( 8 \times 4 = b \)</div>
+            <div class="final-answer">Answer: 32 boys</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 2</div>
+        <div class="question-text">
+            There were 7 girls in each row. There were 9 rows. How many girls were in all 9 rows?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans2')">Review Answer</button>
+        <div id="ans2" class="answer-panel">
+            <div class="step"><strong>Strategy:</strong> Multiplication (groups of).</div>
+            <div class="step">We have 9 rows with 7 girls in each row.</div>
+            <div class="step">Equation: \( 7 \times 9 = g \)</div>
+            <div class="final-answer">Answer: 63 girls</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 3</div>
+        <div class="question-text">
+            A llama weighs about 375 pounds. A coyote weighs about 75 pounds. A llama weighs about how many pounds more than a coyote?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans3')">Review Answer</button>
+        <div id="ans3" class="answer-panel">
+            <div class="step"><strong>Strategy:</strong> "How many more" indicates subtraction (finding the difference).</div>
+            <div class="step">\( 375 - 75 \)</div>
+            <div class="step">
+                \( \begin{array}{r} 375 \\ - \phantom{0}75 \\ \hline 300 \end{array} \)
+            </div>
+            <div class="final-answer">Answer: 300 pounds</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 4</div>
+        <div class="question-text">
+            Write four multiplication/division facts using 5, 6, and 30.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans4')">Review Answer</button>
+        <div id="ans4" class="answer-panel">
+            <div class="step">A "Fact Family" uses the same three numbers to show inverse operations.</div>
+            <div class="step">1. Multiplication: \( 5 \times 6 = 30 \)</div>
+            <div class="step">2. Multiplication: \( 6 \times 5 = 30 \)</div>
+            <div class="step">3. Division: \( 30 \div 5 = 6 \)</div>
+            <div class="step">4. Division: \( 30 \div 6 = 5 \)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 5</div>
+        <div class="question-text">
+            Draw and shade circles to show the number \( 2 \frac{3}{4} \).
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans5')">Review Answer</button>
+        <div id="ans5" class="answer-panel">
+            <div class="step">You need 2 full circles shaded, and one circle with 3 out of 4 parts shaded.</div>
+            <svg width="200" height="60">
+                <circle cx="30" cy="30" r="25" fill="#3498db" stroke="black" stroke-width="2" />
+                <circle cx="90" cy="30" r="25" fill="#3498db" stroke="black" stroke-width="2" />
+                <path d="M150,30 L150,5 A25,25 0 1,1 175,30 Z" fill="#3498db" stroke="black" stroke-width="2" />
+                <circle cx="150" cy="30" r="25" fill="none" stroke="black" stroke-width="2" />
+                <line x1="150" y1="5" x2="150" y2="55" stroke="black" />
+                <line x1="125" y1="30" x2="175" y2="30" stroke="black" />
+            </svg>
+            <div class="final-answer">Answer: Two fully shaded circles and one circle with 3 quadrants shaded.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 6</div>
+        <div class="question-text">
+            To what mixed number and decimal number is the arrow pointing?
+            <div class="image-note">(Note: Image was slightly blurry, interpretation assumes a standard number line between integers)</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans6')">Review Answer</button>
+        <div id="ans6" class="answer-panel">
+            <div class="step"><strong>Observation:</strong> On standard number line rulers for this grade level, ticks are usually tenths (0.1).</div>
+            <div class="step">If the arrow is, for example, on the 3rd tick mark past the number 4:</div>
+            <div class="step">The <strong>Mixed Number</strong> would be \( 4 \frac{3}{10} \).</div>
+            <div class="step">The <strong>Decimal</strong> would be \( 4.3 \).</div>
+            <div class="final-answer">Answer depends on exact visual, but format is \( X \frac{y}{10} \) and \( X.y \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 7</div>
+        <div class="question-text">
+            Tika is a college student. She began her homework last night at the time shown on the clock. She finished two and one half hours later. What time did Tika finish her homework?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans7')">Review Answer</button>
+        <div id="ans7" class="answer-panel">
+            <div class="step">1. <strong>Read the clock:</strong> The hour hand is just past 7. The minute hand is on the 2. The time is <strong>7:10</strong>.</div>
+            <div class="step">2. <strong>Add Duration:</strong> "Two and one half hours" = 2 hours and 30 minutes.</div>
+            <div class="step">\( 7:10 + 2 \text{ hours} = 9:10 \)</div>
+            <div class="step">\( 9:10 + 30 \text{ minutes} = 9:40 \)</div>
+            <div class="final-answer">Answer: 9:40</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 8</div>
+        <div class="question-text">
+            Draw a rectangle that is 4 cm by 2 cm. Shade \( \frac{3}{8} \) of it.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans8')">Review Answer</button>
+        <div id="ans8" class="answer-panel">
+            <div class="step">To shade \( \frac{3}{8} \), divide the rectangle into 8 equal parts (e.g., 4 columns and 2 rows) and shade 3 of them.</div>
+            <svg width="200" height="100">
+                <rect x="0" y="0" width="200" height="100" fill="white" stroke="black" stroke-width="2" />
+                <line x1="50" y1="0" x2="50" y2="100" stroke="black" />
+                <line x1="100" y1="0" x2="100" y2="100" stroke="black" />
+                <line x1="150" y1="0" x2="150" y2="100" stroke="black" />
+                <line x1="0" y1="50" x2="200" y2="50" stroke="black" />
+                
+                <rect x="0" y="0" width="50" height="50" fill="#3498db" />
+                <rect x="50" y="0" width="50" height="50" fill="#3498db" />
+                <rect x="100" y="0" width="50" height="50" fill="#3498db" />
+            </svg>
+            <div class="final-answer">Answer: Rectangle drawn with 3 out of 8 subsections shaded.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 9</div>
+        <div class="question-text">
+            Use digits to write three million, seven hundred fifty thousand. Which digit is in the hundred-thousands place?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans9')">Review Answer</button>
+        <div id="ans9" class="answer-panel">
+            <div class="step">1. Write as digits: <strong>3,750,000</strong></div>
+            <div class="step">2. Identify the Hundred-Thousands place:</div>
+            <div class="step">Look at the thousands period (750). The digit in the hundreds spot of that period is 7.</div>
+            <div class="final-answer">Answer: 7</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 10</div>
+        <div class="question-text">
+            Use the decimal numbers 1.4, 0.7, and 2.1 to write two addition facts and two subtraction facts.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans10')">Review Answer</button>
+        <div id="ans10" class="answer-panel">
+            <div class="step"><strong>Addition:</strong></div>
+            <div class="step">\( 1.4 + 0.7 = 2.1 \)</div>
+            <div class="step">\( 0.7 + 1.4 = 2.1 \)</div>
+            <div class="step"><strong>Subtraction:</strong></div>
+            <div class="step">\( 2.1 - 1.4 = 0.7 \)</div>
+            <div class="step">\( 2.1 - 0.7 = 1.4 \)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 11</div>
+        <div class="question-text">
+            \( 56 \div 7 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans11')">Review Answer</button>
+        <div id="ans11" class="answer-panel">
+            <div class="final-answer">Answer: 8</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 12</div>
+        <div class="question-text">
+            \( 64 \div 8 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans12')">Review Answer</button>
+        <div id="ans12" class="answer-panel">
+            <div class="final-answer">Answer: 8</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 13</div>
+        <div class="question-text">
+            \( \frac{45}{9} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans13')">Review Answer</button>
+        <div id="ans13" class="answer-panel">
+            <div class="step">This fraction bar means division: \( 45 \div 9 \)</div>
+            <div class="final-answer">Answer: 5</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 14</div>
+        <div class="question-text">
+            The length of segment RT is 9 cm. The length of segment ST is 5 cm. What is the length of segment RS?
+            <br><em>(Diagram shows points R, S, T on a line)</em>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans14')">Review Answer</button>
+        <div id="ans14" class="answer-panel">
+            <div class="step"><strong>Segment Addition Postulate:</strong> \( RS + ST = RT \)</div>
+            <div class="step">Substitute known values: \( RS + 5 = 9 \)</div>
+            <div class="step">Subtract 5 from both sides: \( RS = 9 - 5 \)</div>
+            <div class="final-answer">Answer: 4 cm</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 15</div>
+        <div class="question-text">
+            \( \$3.07 - \$2.28 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans15')">Review Answer</button>
+        <div id="ans15" class="answer-panel">
+            <div class="step">
+                \( \begin{array}{r} \phantom{\$}2\phantom{.}\overset{9}{0}\phantom{.}{}^17 \\ - \$2.28 \\ \hline \$0.79 \end{array} \)
+            </div>
+            <div class="step">Steps: Borrow from the 3 (becomes 2) and the 0 (becomes 9) to make the 7 a 17. \( 17 - 8 = 9 \). \( 9 - 2 = 7 \). \( 2 - 2 = 0 \).</div>
+            <div class="final-answer">Answer: $0.79</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 16</div>
+        <div class="question-text">
+            \( 4.78 - 3.90 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans16')">Review Answer</button>
+        <div id="ans16" class="answer-panel">
+            <div class="step">
+                \( \begin{array}{r} \overset{3}{4}.\overset{1}{7}8 \\ - 3.90 \\ \hline 0.88 \end{array} \)
+            </div>
+            <div class="step">Steps: \( 8 - 0 = 8 \). Borrow from 4 to make 7 into 17. \( 17 - 9 = 8 \). \( 3 - 3 = 0 \).</div>
+            <div class="final-answer">Answer: 0.88</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 17</div>
+        <div class="question-text">
+            \( (4 + 3) \times \sqrt{64} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans17')">Review Answer</button>
+        <div id="ans17" class="answer-panel">
+            <div class="step">1. Parentheses first: \( 4 + 3 = 7 \)</div>
+            <div class="step">2. Square Root: \( \sqrt{64} = 8 \)</div>
+            <div class="step">3. Multiply: \( 7 \times 8 \)</div>
+            <div class="final-answer">Answer: 56</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 18</div>
+        <div class="question-text">
+            \( 7.07 - n = 4.85 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans18')">Review Answer</button>
+        <div id="ans18" class="answer-panel">
+            <div class="step">To find \( n \), swap it with the answer: \( 7.07 - 4.85 = n \)</div>
+            <div class="step">
+                \( \begin{array}{r} \overset{6}{7}.\overset{10}{0}7 \\ - 4.85 \\ \hline 2.22 \end{array} \)
+            </div>
+            <div class="final-answer">Answer: n = 2.22</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 19</div>
+        <div class="question-text">
+            \( c - 2.3 = 4.8 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans19')">Review Answer</button>
+        <div id="ans19" class="answer-panel">
+            <div class="step">Add 2.3 to both sides to isolate \( c \).</div>
+            <div class="step">\( c = 4.8 + 2.3 \)</div>
+            <div class="step">\( 4.8 + 2.3 = 7.1 \)</div>
+            <div class="final-answer">Answer: c = 7.1</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 20</div>
+        <div class="question-text">
+            \( 403 - (5 \times 80) \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans20')">Review Answer</button>
+        <div id="ans20" class="answer-panel">
+            <div class="step">1. Parentheses first: \( 5 \times 80 = 400 \)</div>
+            <div class="step">2. Subtract: \( 403 - 400 \)</div>
+            <div class="final-answer">Answer: 3</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 21</div>
+        <div class="question-text">
+            \( 6n = 30 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans21')">Review Answer</button>
+        <div id="ans21" class="answer-panel">
+            <div class="step">Divide both sides by 6.</div>
+            <div class="step">\( n = 30 \div 6 \)</div>
+            <div class="final-answer">Answer: n = 5</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 22</div>
+        <div class="question-text">
+            \( (587 - 238) + 415 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans22')">Review Answer</button>
+        <div id="ans22" class="answer-panel">
+            <div class="step">1. Parentheses: \( 587 - 238 = 349 \)</div>
+            <div class="step">2. Add: \( 349 + 415 \)</div>
+            <div class="step">
+                \( \begin{array}{r} 349 \\ + 415 \\ \hline 764 \end{array} \)
+            </div>
+            <div class="final-answer">Answer: 764</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 23</div>
+        <div class="question-text">
+            \( 45 \times 6 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans23')">Review Answer</button>
+        <div id="ans23" class="answer-panel">
+            <div class="step">\( 6 \times 5 = 30 \) (write 0, carry 3)</div>
+            <div class="step">\( 6 \times 4 = 24 \)</div>
+            <div class="step">\( 24 + 3 = 27 \)</div>
+            <div class="final-answer">Answer: 270</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 24</div>
+        <div class="question-text">
+            \( 23 \times 7 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans24')">Review Answer</button>
+        <div id="ans24" class="answer-panel">
+            <div class="step">\( 7 \times 3 = 21 \) (write 1, carry 2)</div>
+            <div class="step">\( 7 \times 2 = 14 \)</div>
+            <div class="step">\( 14 + 2 = 16 \)</div>
+            <div class="final-answer">Answer: 161</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 25</div>
+        <div class="question-text">
+            \( \$34 \times 8 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans25')">Review Answer</button>
+        <div id="ans25" class="answer-panel">
+            <div class="step">\( 8 \times 4 = 32 \) (carry 3)</div>
+            <div class="step">\( 8 \times 3 = 24 \)</div>
+            <div class="step">\( 24 + 3 = 27 \)</div>
+            <div class="final-answer">Answer: $272</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 26</div>
+        <div class="question-text">
+            The radius of a circle is 3 ft. Which of the following is <strong>not</strong> the diameter of the circle?<br>
+            A. 36 in.<br>
+            B. 6 ft<br>
+            C. 2 yd<br>
+            D. 72 in.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans26')">Review Answer</button>
+        <div id="ans26" class="answer-panel">
+            <div class="step"><strong>Fact:</strong> Diameter = 2 × Radius.</div>
+            <div class="step">Diameter = \( 2 \times 3 \text{ ft} = 6 \text{ ft} \).</div>
+            <div class="step">Let's check the options:</div>
+            <div class="step">A. 36 in = 3 ft (This is the radius, not the diameter).</div>
+            <div class="step">B. 6 ft (This IS the diameter).</div>
+            <div class="step">C. 2 yd = 6 ft (This IS the diameter).</div>
+            <div class="step">D. 72 in = 6 ft (This IS the diameter).</div>
+            <div class="final-answer">Answer: A</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 27</div>
+        <div class="question-text">
+            Which of these angles is acute? (Select from images A, B, C, D)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans27')">Review Answer</button>
+        <div id="ans27" class="answer-panel">
+            <div class="step"><strong>Definitions:</strong></div>
+            <div class="step">Acute: Less than 90° (Sharp corner)</div>
+            <div class="step">Right: Exactly 90° (Square corner, C)</div>
+            <div class="step">Obtuse: More than 90° (Wide opening, A)</div>
+            <div class="step">Looking at the options:</div>
+            <ul style="list-style-type: none;">
+                <li>A is Obtuse.</li>
+                <li><strong>B is Acute.</strong></li>
+                <li>C is Right.</li>
+                <li>D is a Straight angle (180°).</li>
+            </ul>
+            <div class="final-answer">Answer: B</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 28</div>
+        <div class="question-text">
+            Solve:<br>
+            a. \( \frac{5}{5} \)<br>
+            b. \( 9 \div 1 \)<br>
+            c. \( 6 \overline{)0} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans28')">Review Answer</button>
+        <div id="ans28" class="answer-panel">
+            <div class="step">a. Any number divided by itself is 1. \( \frac{5}{5} = 1 \)</div>
+            <div class="step">b. Any number divided by 1 is itself. \( 9 \div 1 = 9 \)</div>
+            <div class="step">c. Zero divided by any number is 0. \( 0 \div 6 = 0 \)</div>
+            <div class="final-answer">Answers: a) 1, b) 9, c) 0</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 29</div>
+        <div class="question-text">
+            One human hand has 27 bones. One human foot has 26 bones. About how many bones are in two hands plus two feet? Explain why your estimate is reasonable.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans29')">Review Answer</button>
+        <div id="ans29" class="answer-panel">
+            <div class="step"><strong>Estimation Strategy:</strong> Round to the nearest ten.</div>
+            <div class="step">27 rounds up to 30.</div>
+            <div class="step">26 rounds up to 30.</div>
+            <div class="step">Two hands + Two feet = \( 30 + 30 + 30 + 30 \)</div>
+            <div class="step">Calculation: \( 4 \times 30 = 120 \)</div>
+            <div class="step">Exact math for checking: \( 27+27+26+26 = 106 \). 120 is a reasonable high-end estimate, or you could estimate 25+25+25+25 = 100 for a closer low-end estimate. Given standard rounding rules, 120 is the standard answer.</div>
+            <div class="final-answer">Estimate: About 120 bones (or 110/100 depending on rounding method).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 30</div>
+        <div class="question-text">
+            The land area of Booker T. Washington National Monument in Virginia is 239 acres. The land area of Cabrillo National Monument is 160 acres. What is a reasonable estimate of the total acreage of these two national monuments? Explain why your estimate is reasonable.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans30')">Review Answer</button>
+        <div id="ans30" class="answer-panel">
+            <div class="step"><strong>Estimation Strategy:</strong> Round to the nearest ten or compatible numbers.</div>
+            <div class="step">239 rounds to 240.</div>
+            <div class="step">160 stays 160.</div>
+            <div class="step">Calculation: \( 240 + 160 = 400 \)</div>
+            <div class="final-answer">Answer: 400 acres. This is reasonable because we rounded 239 up by 1, making the mental math 24+16=40 extremely simple.</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            var btn = answerDiv.previousElementSibling;
+            
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                setTimeout(() => { answerDiv.style.display = 'none'; }, 300); // Wait for animation
+                btn.textContent = "Review Answer";
+            } else {
+                answerDiv.style.display = 'block';
+                // Small delay to allow display:block to apply before adding opacity class for animation
+                setTimeout(() => { answerDiv.classList.add('show'); }, 10);
+                btn.textContent = "Hide Answer";
+            }
+        }
+    </script>
+</body>
+</html>
