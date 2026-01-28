@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Solutions (1-30)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .problem-content {
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            background-color: #fafafa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-radius: 5px;
+            border: 1px solid #d4efdf;
+        }
+        .solution.visible {
+            display: block;
+        }
+        .answer-text {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Assignment Solutions</h1>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 1</div>
+        <div class="problem-content">
+            Write and solve equations for problems 1-3.<br>
+            Each of the 3 boats carried 12 people. In all, how many people were in 3 boats?
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-1')">Show Answer & Explanation</button>
+        <div id="sol-1" class="solution">
+            <p>To find the total number of people, multiply the number of boats by the people per boat.</p>
+            <p>Equation: \( 3 \times 12 = p \)</p>
+            <p>Calculation: \( 3 \times 12 = 36 \)</p>
+            <p class="answer-text">Answer: 36 people</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 2</div>
+        <div class="problem-content">
+            The book cost $6.98. The tax was $0.42. What was the total price?
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-2')">Show Answer & Explanation</button>
+        <div id="sol-2" class="solution">
+            <p>Add the cost of the book and the tax together.</p>
+            <p>Equation: \( 6.98 + 0.42 = t \)</p>
+            <p>Align the decimals:</p>
+            <pre>
+  6.98
++ 0.42
+------
+  7.40
+            </pre>
+            <p class="answer-text">Answer: $7.40</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 3</div>
+        <div class="problem-content">
+            Claire read six hundred twenty minutes for an afterschool reading program. Ashanti read four hundred seventeen minutes. Claire read how many more minutes than Ashanti?
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-3')">Show Answer & Explanation</button>
+        <div id="sol-3" class="solution">
+            <p>Subtract Ashanti's minutes from Claire's minutes to find the difference.</p>
+            <p>Claire: 620 minutes<br>Ashanti: 417 minutes</p>
+            <p>Equation: \( 620 - 417 = d \)</p>
+            <pre>
+  620
+- 417
+-----
+  203
+            </pre>
+            <p class="answer-text">Answer: 203 minutes</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 4</div>
+        <div class="problem-content">
+            Use the numbers 4, 12, and 48 to write two multiplication facts and two division facts.
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-4')">Show Answer & Explanation</button>
+        <div id="sol-4" class="solution">
+            <p>These numbers form a "Fact Family".</p>
+            <p><strong>Multiplication:</strong></p>
+            <ul>
+                <li>\( 4 \times 12 = 48 \)</li>
+                <li>\( 12 \times 4 = 48 \)</li>
+            </ul>
+            <p><strong>Division:</strong></p>
+            <ul>
+                <li>\( 48 \div 4 = 12 \)</li>
+                <li>\( 48 \div 12 = 4 \)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 5</div>
+        <div class="problem-content">
+            Justin ran the perimeter of the block. How far did Justin run? The measurements of the block are shown on the figure below (100 yd by 50 yd).
+        </div>
+        <div class="diagram-container">
+            <canvas id="rectCanvas" width="250" height="150"></canvas>
+            <script>
+                const c = document.getElementById("rectCanvas");
+                const ctx = c.getContext("2d");
+                // Draw rectangle
+                ctx.beginPath();
+                ctx.rect(50, 40, 150, 75); 
+                ctx.stroke();
+                // Labels
+                ctx.font = "14px Arial";
+                ctx.fillText("100 yd", 100, 30);
+                ctx.fillText("100 yd", 100, 135);
+                ctx.fillText("50 yd", 5, 85);
+                ctx.fillText("50 yd", 205, 85);
+            </script>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-5')">Show Answer & Explanation</button>
+        <div id="sol-5" class="solution">
+            <p>Perimeter is the total distance around the shape. Add all four sides.</p>
+            <p>\( P = 100 + 50 + 100 + 50 \)</p>
+            <p>\( P = 150 + 150 = 300 \)</p>
+            <p class="answer-text">Answer: 300 yards</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 6</div>
+        <div class="problem-content">
+            Justin ran around the block in 58.7 seconds. Write "58.7" with words.
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-6')">Show Answer & Explanation</button>
+        <div id="sol-6" class="solution">
+            <p>The decimal point is read as "and". The 7 is in the tenths place.</p>
+            <p class="answer-text">Answer: Fifty-eight and seven tenths</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 7</div>
+        <div class="problem-content">
+            Use digits to write twelve million, seven hundred fifty thousand. Which digit is in the hundred-thousands place?
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-7')">Show Answer & Explanation</button>
+        <div id="sol-7" class="solution">
+            <p>Number in digits: <strong>12,750,000</strong></p>
+            <p>Place value breakdown:</p>
+            <ul>
+                <li>1 (Ten-Millions)</li>
+                <li>2 (Millions)</li>
+                <li><strong>7 (Hundred-Thousands)</strong></li>
+                <li>5 (Ten-Thousands)</li>
+                <li>0 (Thousands)</li>
+            </ul>
+            <p class="answer-text">Answer: 7</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 8</div>
+        <div class="problem-content">
+            Round 783 and 217 to the nearest hundred. Then subtract the smaller rounded number from the larger rounded number.
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-8')">Show Answer & Explanation</button>
+        <div id="sol-8" class="solution">
+            <p><strong>Step 1: Rounding</strong></p>
+            <ul>
+                <li>783 rounded to the nearest hundred is <strong>800</strong> (since 83 > 50).</li>
+                <li>217 rounded to the nearest hundred is <strong>200</strong> (since 17 < 50).</li>
+            </ul>
+            <p><strong>Step 2: Subtraction</strong></p>
+            <p>\( 800 - 200 = 600 \)</p>
+            <p class="answer-text">Answer: 600</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 9</div>
+        <div class="problem-content">
+            The time shown on the clock is an evening time (10:10). Alyssa’s school day begins 9 hours 30 minutes later than that time. What time does Alyssa’s school begin?
+        </div>
+        <div class="diagram-container">
+             <svg width="100" height="100">
+                <circle cx="50" cy="50" r="45" stroke="black" stroke-width="2" fill="white" />
+                <line x1="50" y1="50" x2="65" y2="25" stroke="black" stroke-width="3" /> <line x1="50" y1="50" x2="80" y2="60" stroke="black" stroke-width="2" transform="rotate(150 50 50)" /> <text x="45" y="15" font-size="10">12</text>
+                <text x="85" y="55" font-size="10">3</text>
+                <text x="45" y="95" font-size="10">6</text>
+                <text x="5" y="55" font-size="10">9</text>
+             </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-9')">Show Answer & Explanation</button>
+        <div id="sol-9" class="solution">
+            <p><strong>Current time:</strong> 10:10 PM (Evening)</p>
+            <p><strong>Add 9 hours:</strong> 10:10 PM + 9 hours = 7:10 AM (Next morning)</p>
+            <p><strong>Add 30 minutes:</strong> 7:10 AM + 30 minutes = 7:40 AM</p>
+            <p class="answer-text">Answer: 7:40 AM</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 10</div>
+        <div class="problem-content">
+            Write this addition problem as a multiplication problem:<br>
+            \( \$3.75 + \$3.75 + \$3.75 + \$3.75 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-10')">Show Answer & Explanation</button>
+        <div id="sol-10" class="solution">
+            <p>The amount $3.75 is repeated 4 times.</p>
+            <p class="answer-text">Answer: \( 4 \times \$3.75 \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 11</div>
+        <div class="problem-content">
+            \( (4 \times 50) - \sqrt{36} \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-11')">Show Answer & Explanation</button>
+        <div id="sol-11" class="solution">
+            <p>Follow the order of operations (PEMDAS).</p>
+            <p>1. Parentheses: \( 4 \times 50 = 200 \)</p>
+            <p>2. Root: \( \sqrt{36} = 6 \)</p>
+            <p>3. Subtract: \( 200 - 6 = 194 \)</p>
+            <p class="answer-text">Answer: 194</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 12</div>
+        <div class="problem-content">
+            \( 3.6 + 4.35 + 4.2 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-12')">Show Answer & Explanation</button>
+        <div id="sol-12" class="solution">
+            <p>Align the decimal points:</p>
+            <pre>
+  3.60
+  4.35
++ 4.20
+------
+ 12.15
+            </pre>
+            <p class="answer-text">Answer: 12.15</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 13</div>
+        <div class="problem-content">
+            \( \$4.63 + \$2 + \$0.47 + \$0.65 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-13')">Show Answer & Explanation</button>
+        <div id="sol-13" class="solution">
+            <p>Align the decimals ($2 is 2.00):</p>
+            <pre>
+  4.63
+  2.00
+  0.47
++ 0.65
+------
+  7.75
+            </pre>
+            <p class="answer-text">Answer: $7.75</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 14</div>
+        <div class="problem-content">
+            \( 43 \times 6 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-14')">Show Answer & Explanation</button>
+        <div id="sol-14" class="solution">
+            <p>\( 6 \times 3 = 18 \) (write 8, carry 1)</p>
+            <p>\( 6 \times 4 = 24 \) + 1 = 25</p>
+            <p class="answer-text">Answer: 258</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 15</div>
+        <div class="problem-content">
+            \( 54 \times 8 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-15')">Show Answer & Explanation</button>
+        <div id="sol-15" class="solution">
+            <p>\( 8 \times 4 = 32 \) (write 2, carry 3)</p>
+            <p>\( 8 \times 5 = 40 \) + 3 = 43</p>
+            <p class="answer-text">Answer: 432</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 16</div>
+        <div class="problem-content">
+            \( 37 \times 3 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-16')">Show Answer & Explanation</button>
+        <div id="sol-16" class="solution">
+            <p>\( 3 \times 7 = 21 \) (write 1, carry 2)</p>
+            <p>\( 3 \times 3 = 9 \) + 2 = 11</p>
+            <p class="answer-text">Answer: 111</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 17</div>
+        <div class="problem-content">
+            \( \$40 \times 4 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-17')">Show Answer & Explanation</button>
+        <div id="sol-17" class="solution">
+            <p>\( 4 \times 0 = 0 \)</p>
+            <p>\( 4 \times 4 = 16 \)</p>
+            <p class="answer-text">Answer: $160</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 18</div>
+        <div class="problem-content">
+            \( 4.7 + 5.5 + 8.4 + 6.3 + 2.4 + 2.7 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-18')">Show Answer & Explanation</button>
+        <div id="sol-18" class="solution">
+            <p>Group numbers to make addition easier:</p>
+            <p>\( 4.7 + 6.3 = 11.0 \)</p>
+            <p>\( 2.4 + 2.7 = 5.1 \)</p>
+            <p>Remaining: \( 5.5 + 8.4 = 13.9 \)</p>
+            <p>Total: \( 11.0 + 5.1 + 13.9 = 30.0 \)</p>
+            <p class="answer-text">Answer: 30.0</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 19</div>
+        <div class="problem-content">
+            \( \$5.00 - \$4.29 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-19')">Show Answer & Explanation</button>
+        <div id="sol-19" class="solution">
+            <pre>
+  4 9 10 (borrowing)
+  5.0 0
+- 4.2 9
+-------
+  0.7 1
+            </pre>
+            <p class="answer-text">Answer: $0.71</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 20</div>
+        <div class="problem-content">
+            \( 7.03 - 4.2 = \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-20')">Show Answer & Explanation</button>
+        <div id="sol-20" class="solution">
+            <p>Add a placeholder zero to 4.2 to make it 4.20.</p>
+            <pre>
+  6 10
+  7.03
+- 4.20
+------
+  2.83
+            </pre>
+            <p class="answer-text">Answer: 2.83</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 21</div>
+        <div class="problem-content">
+            \( n - 27.9 = 48.4 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-21')">Show Answer & Explanation</button>
+        <div id="sol-21" class="solution">
+            <p>To isolate n, add 27.9 to both sides.</p>
+            <p>\( n = 48.4 + 27.9 \)</p>
+            <pre>
+  48.4
++ 27.9
+------
+  76.3
+            </pre>
+            <p class="answer-text">Answer: n = 76.3</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 22</div>
+        <div class="problem-content">
+            \( 46.2 + c = 52.9 \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-22')">Show Answer & Explanation</button>
+        <div id="sol-22" class="solution">
+            <p>To isolate c, subtract 46.2 from 52.9.</p>
+            <p>\( c = 52.9 - 46.2 \)</p>
+            <pre>
+  52.9
+- 46.2
+------
+   6.7
+            </pre>
+            <p class="answer-text">Answer: c = 6.7</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 23</div>
+        <div class="problem-content">
+            \( \frac{24}{3} \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-23')">Show Answer & Explanation</button>
+        <div id="sol-23" class="solution">
+            <p>This is a division problem: 24 divided by 3.</p>
+            <p class="answer-text">Answer: 8</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 24</div>
+        <div class="problem-content">
+            \( \frac{36}{9} \)
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-24')">Show Answer & Explanation</button>
+        <div id="sol-24" class="solution">
+            <p>This is a division problem: 36 divided by 9.</p>
+            <p class="answer-text">Answer: 4</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 25</div>
+        <div class="problem-content">
+            The length of segment AB is 5cm. The length of segment BC is 4cm. What is the length of segment AC?
+        </div>
+        <div class="diagram-container">
+            <svg width="300" height="50">
+                <line x1="20" y1="25" x2="280" y2="25" stroke="black" stroke-width="2" />
+                <circle cx="20" cy="25" r="3" fill="black" />
+                <text x="20" y="15" font-family="Arial" font-size="12" text-anchor="middle">A</text>
+                
+                <circle cx="160" cy="25" r="3" fill="black" />
+                <text x="160" y="15" font-family="Arial" font-size="12" text-anchor="middle">B</text>
+                
+                <circle cx="280" cy="25" r="3" fill="black" />
+                <text x="280" y="15" font-family="Arial" font-size="12" text-anchor="middle">C</text>
+                
+                <text x="90" y="45" font-family="Arial" font-size="12">5 cm</text>
+                <text x="220" y="45" font-family="Arial" font-size="12">4 cm</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-25')">Show Answer & Explanation</button>
+        <div id="sol-25" class="solution">
+            <p>Segment AC is the sum of segment AB and segment BC.</p>
+            <p>\( AC = AB + BC \)</p>
+            <p>\( AC = 5 + 4 \)</p>
+            <p class="answer-text">Answer: 9 cm</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 26</div>
+        <div class="problem-content">
+            Draw and shade circles to show the number \( 3 \frac{3}{8} \).
+        </div>
+        <div class="diagram-container">
+             <svg width="220" height="60">
+                 <circle cx="30" cy="30" r="25" fill="#3498db" stroke="black" />
+                 <circle cx="85" cy="30" r="25" fill="#3498db" stroke="black" />
+                 <circle cx="140" cy="30" r="25" fill="#3498db" stroke="black" />
+                 
+                 <circle cx="195" cy="30" r="25" fill="white" stroke="black" />
+                 <path d="M195,30 L195,5 A25,25 0 0,1 217,46 Z" fill="#3498db" />
+                 <line x1="195" y1="5" x2="195" y2="55" stroke="#ccc" />
+                 <line x1="170" y1="30" x2="220" y2="30" stroke="#ccc" />
+                 <line x1="177" y1="12" x2="213" y2="48" stroke="#ccc" />
+                 <line x1="213" y1="12" x2="177" y2="48" stroke="#ccc" />
+             </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-26')">Show Answer & Explanation</button>
+        <div id="sol-26" class="solution">
+            <p>You need 3 completely shaded circles to represent the whole number 3.</p>
+            <p>For the fraction \( \frac{3}{8} \), you take a fourth circle, divide it into 8 equal slices, and shade 3 of them.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 27</div>
+        <div class="problem-content">
+            Compare: 1 minute _____ 58.7 seconds
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-27')">Show Answer & Explanation</button>
+        <div id="sol-27" class="solution">
+            <p>Convert units to be the same. 1 minute = 60 seconds.</p>
+            <p>Now compare: 60 seconds vs 58.7 seconds.</p>
+            <p>60 is greater than 58.7.</p>
+            <p class="answer-text">Answer: 1 minute > 58.7 seconds</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 28</div>
+        <div class="problem-content">
+            Which of the following is more than one second but less than two seconds?<br>
+            A. 0.15 sec<br>
+            B. 1.5 sec<br>
+            C. 2.1 sec<br>
+            D. 2.15 sec
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-28')">Show Answer & Explanation</button>
+        <div id="sol-28" class="solution">
+            <p>We are looking for a number \( x \) where \( 1 < x < 2 \).</p>
+            <ul>
+                <li>0.15 is less than 1.</li>
+                <li><strong>1.5 is between 1 and 2.</strong></li>
+                <li>2.1 is greater than 2.</li>
+                <li>2.15 is greater than 2.</li>
+            </ul>
+            <p class="answer-text">Answer: B. 1.5 sec</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 29</div>
+        <div class="problem-content">
+            Write these numbers in order from least to greatest:<br>
+            250,000 &nbsp; 47,000 &nbsp; 9000 &nbsp; 3,100,000 &nbsp; 600
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-29')">Show Answer & Explanation</button>
+        <div id="sol-29" class="solution">
+            <p>Compare the magnitudes (number of digits first):</p>
+            <ol>
+                <li>600 (3 digits) - Least</li>
+                <li>9,000 (4 digits)</li>
+                <li>47,000 (5 digits)</li>
+                <li>250,000 (6 digits)</li>
+                <li>3,100,000 (7 digits) - Greatest</li>
+            </ol>
+            <p class="answer-text">Answer: 600, 9000, 47000, 250000, 3100000</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 30</div>
+        <div class="problem-content">
+            The thermometers show the average daily minimum and maximum temperatures in New York City's Central Park during July. What is the difference in degrees between the two temperatures?
+        </div>
+        <div class="diagram-container">
+            <svg width="150" height="150">
+                <rect x="30" y="20" width="10" height="80" rx="5" stroke="black" fill="white"/>
+                <rect x="30" y="48" width="10" height="52" rx="2" fill="#555"/>
+                <text x="10" y="50" font-size="10">72°</text>
+
+                <rect x="90" y="20" width="10" height="80" rx="5" stroke="black" fill="white"/>
+                <rect x="90" y="36" width="10" height="64" rx="2" fill="#555"/>
+                <text x="110" y="38" font-size="10">84°</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol-30')">Show Answer & Explanation</button>
+        <div id="sol-30" class="solution">
+            <p><strong>Reading the thermometers:</strong></p>
+            <p>Minimum (Left): The level is 1 tick mark above 70. Assuming 2-degree increments, that is 72°.</p>
+            <p>Maximum (Right): The level is 2 tick marks above 80. That is 84°.</p>
+            <p><strong>Difference:</strong></p>
+            <p>\( 84 - 72 = 12 \)</p>
+            <p class="answer-text">Answer: 12 degrees</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var sol = document.getElementById(id);
+            if (sol.classList.contains('visible')) {
+                sol.classList.remove('visible');
+            } else {
+                sol.classList.add('visible');
+            }
+        }
+    </script>
+</body>
+</html>
