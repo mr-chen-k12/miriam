@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice Test - Saxon Math 4 Style</title>
+    <title>Practice Test - Saxon Math 4 Style (Fixed Diagrams)</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -66,6 +66,8 @@
         .canvas-container {
             margin: 10px 0;
             text-align: center;
+            display: flex;
+            justify-content: center;
         }
         canvas {
             border: 1px solid #ddd;
@@ -151,14 +153,14 @@
     <div class="problem-card">
         <div class="problem-title">Problem 6</div>
         <div class="problem-text">
-            It is afternoon. What time was it 3 hours and 30 minutes ago according to this clock? (Clock shows 4:15).
-        </div>
-        <button class="btn-toggle" onclick="toggleSolution('sol-6'); drawQ6();">Show Answer</button>
-        <div id="sol-6" class="solution-area">
+            It is afternoon. What time was it 3 hours and 30 minutes ago according to this clock?
             <div class="canvas-container">
                 <canvas id="canvasQ6" width="150" height="150"></canvas>
             </div>
-            <p>Clock shows 4:15 PM.</p>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-6')">Show Answer</button>
+        <div id="sol-6" class="solution-area">
+            <p>The clock shows 4:15 PM.</p>
             <ol>
                 <li>Subtract 3 hours: $4:15 \rightarrow 1:15$ PM.</li>
                 <li>Subtract 30 minutes: $1:15 - 15 \text{ mins} = 1:00$. Then back 15 more minutes = $12:45$.</li>
@@ -171,12 +173,12 @@
         <div class="problem-title">Problem 7</div>
         <div class="problem-text">
             To the nearest quarter inch, how long is the red line segment?
-        </div>
-        <button class="btn-toggle" onclick="toggleSolution('sol-7'); drawQ7();">Show Answer</button>
-        <div id="sol-7" class="solution-area">
             <div class="canvas-container">
                 <canvas id="canvasQ7" width="300" height="80"></canvas>
             </div>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-7')">Show Answer</button>
+        <div id="sol-7" class="solution-area">
             <p>The line goes past 2 inches and lands exactly on the middle mark (the half inch mark).</p>
             <div class="final-answer">Answer: \( 2\frac{1}{2} \) inches</div>
         </div>
@@ -186,12 +188,12 @@
         <div class="problem-title">Problem 8</div>
         <div class="problem-text">
             To what mixed number is the arrow pointing?
-        </div>
-        <button class="btn-toggle" onclick="toggleSolution('sol-8'); drawQ8();">Show Answer</button>
-        <div id="sol-8" class="solution-area">
             <div class="canvas-container">
                 <canvas id="canvasQ8" width="300" height="80"></canvas>
             </div>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-8')">Show Answer</button>
+        <div id="sol-8" class="solution-area">
             <p>The scale is between 4 and 5. It is divided into 8 sections. The arrow is on the 5th mark.</p>
             <div class="final-answer">Answer: \( 4\frac{5}{8} \)</div>
         </div>
@@ -364,7 +366,7 @@
             }
         }
 
-        // --- DRAWING FUNCTIONS FOR NEW NUMBERS ---
+        // --- DRAWING FUNCTIONS ---
 
         function drawQ4() {
             var c = document.getElementById("canvasQ4");
@@ -422,7 +424,6 @@
             // Hour hand: at 4 + 15/60 of the way to 5
             // 4 is 30*4=120 deg. + 15mins is 1/4 of an hour = 30/4 = 7.5 deg. Total 127.5 deg.
             // Canvas 0 is 3 o'clock. 4 is 30 deg, 5 is 60 deg... 
-            // In standard trig, 0 is 3pm. 4pm is 30 deg down.
             var hourAngle = (30 + 7.5) * (Math.PI / 180); 
             var hourLen = 35;
             ctx.beginPath();
@@ -549,6 +550,13 @@
             ctx.lineWidth = 2;
             ctx.stroke();
         }
+
+        // Initialize Drawings immediately when page loads
+        window.onload = function() {
+            drawQ6();
+            drawQ7();
+            drawQ8();
+        };
     </script>
 
 </body>
