@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test Set 3 - Saxon Math 4 Style</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .problem-text {
+            margin-bottom: 15px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution-area {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 0 4px 4px 0;
+        }
+        .canvas-container {
+            margin: 15px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            background: white;
+        }
+        .final-answer {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Practice Test (Set 3)</h1>
+    <div class="subtitle">New Numbers &ndash; Same Concepts</div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 1</div>
+        <div class="problem-text">
+            Three hundred twenty pages were read in the first week. Altogether eight hundred fifty pages were read over two weeks. How many pages were read in the second week?
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-1')">Show Answer</button>
+        <div id="sol-1" class="solution-area">
+            <p>Subtract the first week's pages from the total.</p>
+            $$ 850 - 320 $$
+            <p>Calculation: $0-0=0$, $5-2=3$, $8-3=5$.</p>
+            <div class="final-answer">Answer: 530 pages</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 2</div>
+        <div class="problem-text">
+            Jason paid $10.00 for a toy that cost $6.28. How much money should Jason get back?
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-2')">Show Answer</button>
+        <div id="sol-2" class="solution-area">
+            <p>Subtract cost from payment.</p>
+            $$ \$10.00 - \$6.28 $$
+            <p>Regrouping required across zeros:</p>
+            <ul>
+                <li>$10 - 8 = 2$</li>
+                <li>$9 - 2 = 7$</li>
+                <li>$9 - 6 = 3$</li>
+            </ul>
+            <div class="final-answer">Answer: $3.72</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 3</div>
+        <div class="problem-text">
+            Round 375 to the nearest hundred.
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-3')">Show Answer</button>
+        <div id="sol-3" class="solution-area">
+            <p>Look at the tens digit (7). Since 7 is 5 or greater, we round up.</p>
+            <div class="final-answer">Answer: 400</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 4</div>
+        <div class="problem-text">
+            Draw and shade rectangles to show the mixed number \( 2\frac{2}{3} \).
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-4'); drawQ4();">Show Answer</button>
+        <div id="sol-4" class="solution-area">
+            <p>Draw 3 rectangles. Shade 2 completely. Split the third one into 3 parts and shade 2 of them.</p>
+            <div class="canvas-container">
+                <canvas id="canvasQ4" width="300" height="100"></canvas>
+            </div>
+            <div class="final-answer">Answer: See drawing above.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 5</div>
+        <div class="problem-text">
+            Use words to write 7.3.
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-5')">Show Answer</button>
+        <div id="sol-5" class="solution-area">
+            <div class="final-answer">Answer: Seven and three tenths</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 6</div>
+        <div class="problem-text">
+            It is evening. What time was it 4 hours and 15 minutes ago according to this clock?
+            <div class="canvas-container">
+                <canvas id="canvasQ6" width="150" height="150"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-6')">Show Answer</button>
+        <div id="sol-6" class="solution-area">
+            <p>The clock shows 2:45 PM (Evening implies PM range, though typically afternoon/evening transition).</p>
+            <ol>
+                <li>Subtract 4 hours: $2:45 \rightarrow 1:45 \rightarrow 12:45 \rightarrow 11:45 \rightarrow 10:45$. (10:45 AM).</li>
+                <li>Subtract 15 minutes: $10:45 - 15 = 10:30$.</li>
+            </ol>
+            <div class="final-answer">Answer: 10:30 AM</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 7</div>
+        <div class="problem-text">
+            To the nearest quarter inch, how long is the red line segment?
+            <div class="canvas-container">
+                <canvas id="canvasQ7" width="300" height="80"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-7')">Show Answer</button>
+        <div id="sol-7" class="solution-area">
+            <p>The line goes past 1 inch. It lands on the first quarter mark after the 1.</p>
+            <div class="final-answer">Answer: \( 1\frac{1}{4} \) inches</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 8</div>
+        <div class="problem-text">
+            To what mixed number is the arrow pointing?
+            <div class="canvas-container">
+                <canvas id="canvasQ8" width="300" height="80"></canvas>
+            </div>
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-8')">Show Answer</button>
+        <div id="sol-8" class="solution-area">
+            <p>The scale is between 3 and 4. There are 8 spaces. The arrow points to the 7th mark.</p>
+            <div class="final-answer">Answer: \( 3\frac{7}{8} \)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 9</div>
+        <div class="problem-text">
+            Store A sold 450 items. Store B sold 920 items. How many fewer items did Store A sell?
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-9')">Show Answer</button>
+        <div id="sol-9" class="solution-area">
+            <p>Find the difference: $920 - 450$.</p>
+            <p>$0-0=0$. Borrow for tens: $12-5=7$. $8-4=4$.</p>
+            <div class="final-answer">Answer: 470 items</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 10</div>
+        <div class="problem-text">
+            Find the missing number: 
+            $$ \begin{aligned} n \\ - \underline{125} \\ 475 \end{aligned} $$
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-10')">Show Answer</button>
+        <div id="sol-10" class="solution-area">
+            <p>Add the bottom two numbers to find the top number (minuend).</p>
+            $$ 475 + 125 = 600 $$
+            <div class="final-answer">Answer: 600</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 11</div>
+        <div class="problem-text">
+            Find the missing number:
+            $$ \begin{aligned} 600 \\ - \underline{\;\;s\;\;} \\ 240 \end{aligned} $$
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-11')">Show Answer</button>
+        <div id="sol-11" class="solution-area">
+            <p>Subtract the answer from the top number.</p>
+            $$ 600 - 240 = 360 $$
+            <div class="final-answer">Answer: 360</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 12</div>
+        <div class="problem-text">
+            Solve for n: \( 8n = 72 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-12')">Show Answer</button>
+        <div id="sol-12" class="solution-area">
+            <p>This asks: 8 times what equals 72?</p>
+            $$ n = 72 \div 8 $$
+            <div class="final-answer">Answer: 9</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 13</div>
+        <div class="problem-text">
+            Calculate: \( \$9.15 - \$4.28 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-13')">Show Answer</button>
+        <div id="sol-13" class="solution-area">
+            <p>Borrowing needed.</p>
+            $$ \begin{aligned} 9.15 \\ - \underline{4.28} \\ 4.87 \end{aligned} $$
+            <div class="final-answer">Answer: $4.87</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 14</div>
+        <div class="problem-text">
+            Calculate: \( 70 \times 6 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-14')">Show Answer</button>
+        <div id="sol-14" class="solution-area">
+            <p>Multiply $7 \times 6 = 42$, then add the zero.</p>
+            <div class="final-answer">Answer: 420</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 15</div>
+        <div class="problem-text">
+            Calculate: \( 45 \times 3 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-15')">Show Answer</button>
+        <div id="sol-15" class="solution-area">
+            <ol>
+                <li>$3 \times 5 = 15$ (carry 1)</li>
+                <li>$3 \times 4 = 12$. Add 1 = 13.</li>
+            </ol>
+            <div class="final-answer">Answer: 135</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 16</div>
+        <div class="problem-text">
+            Calculate: \( 30 + (7 \times 5) \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-16')">Show Answer</button>
+        <div id="sol-16" class="solution-area">
+            <p>Parentheses first: $7 \times 5 = 35$.</p>
+            $$ 30 + 35 = 65 $$
+            <div class="final-answer">Answer: 65</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 17</div>
+        <div class="problem-text">
+            Calculate: \( 4 \times (6 + 4) \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-17')">Show Answer</button>
+        <div id="sol-17" class="solution-area">
+            <p>Parentheses first: $6 + 4 = 10$.</p>
+            $$ 4 \times 10 = 40 $$
+            <div class="final-answer">Answer: 40</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 18</div>
+        <div class="problem-text">
+            Calculate: \( \$2.50 + 35\text{¢} + \$6 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-18')">Show Answer</button>
+        <div id="sol-18" class="solution-area">
+            <p>Convert cents to dollars: $0.35$.</p>
+            $$ 2.50 + 0.35 + 6.00 $$
+            $$ 2.85 + 6.00 = 8.85 $$
+            <div class="final-answer">Answer: $8.85</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 19</div>
+        <div class="problem-text">
+            Calculate: \( 0.90 - 0.45 \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-19')">Show Answer</button>
+        <div id="sol-19" class="solution-area">
+            <p>Subtract decimals.</p>
+            $$ \begin{aligned} 0.90 \\ - \underline{0.45} \\ 0.45 \end{aligned} $$
+            <div class="final-answer">Answer: 0.45</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 20</div>
+        <div class="problem-text">
+            Calculate: \( \sqrt{81} + \sqrt{25} \)
+        </div>
+        <button class="btn-toggle" onclick="toggleSolution('sol-20')">Show Answer</button>
+        <div id="sol-20" class="solution-area">
+            <p>$\sqrt{81} = 9$ (because $9 \times 9 = 81$)<br>
+            $\sqrt{25} = 5$ (because $5 \times 5 = 25$)</p>
+            $$ 9 + 5 = 14 $$
+            <div class="final-answer">Answer: 14</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+
+        // --- DRAWING FUNCTIONS FOR SET 3 ---
+
+        function drawQ4() {
+            var c = document.getElementById("canvasQ4");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, c.width, c.height);
+            
+            // Draw 3 rectangles for 2 2/3
+            var width = 60;
+            var height = 40;
+            var gap = 20;
+            var startX = 20;
+            var startY = 30;
+
+            // Box 1 (Full)
+            ctx.fillStyle = "#3498db";
+            ctx.fillRect(startX, startY, width, height);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(startX, startY, width, height);
+
+            // Box 2 (Full)
+            ctx.fillRect(startX + width + gap, startY, width, height);
+            ctx.strokeRect(startX + width + gap, startY, width, height);
+
+            // Box 3 (2/3rds)
+            var b3x = startX + (width + gap) * 2;
+            ctx.strokeRect(b3x, startY, width, height);
+            
+            // Grid for box 3 (3 parts)
+            var cellW = width / 3;
+            for(var i=1; i<3; i++){
+                ctx.beginPath();
+                ctx.moveTo(b3x + i*cellW, startY);
+                ctx.lineTo(b3x + i*cellW, startY + height);
+                ctx.stroke();
+            }
+            // Fill 2 cells
+            ctx.fillRect(b3x, startY, cellW*2, height);
+        }
+
+        function drawQ6() {
+            var c = document.getElementById("canvasQ6");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, c.width, c.height);
+            
+            var centerX = 75;
+            var centerY = 75;
+            var radius = 60;
+
+            // Clock face
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 3, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+
+            // Time 2:45
+            // Hour hand: At 2, moving towards 3.
+            // 45 mins is 3/4 of circle. So hand is 3/4 way from 2 to 3.
+            // 2 is 60 deg. 3 is 90 deg. Difference 30. 3/4 of 30 is 22.5.
+            // 2 o'clock (60 deg from 12). Add 22.5 = 82.5 degrees from 12.
+            // In Canvas: 12 is -90 deg. 2 is -30. 3 is 0. 
+            // Let's use standard angle logic: 0 is 3pm. 
+            // 3pm = 0deg. 2pm = -30deg (330).
+            // Hand is moving closer to 3. 2:45 is closer to 3 than 2.
+            // Angle = (hour + min/60) * 30 - 90 (to adjust for canvas)
+            // Hour 2 + 45/60 = 2.75. 2.75 * 30 = 82.5 degrees from 12.
+            // Canvas rotation: 82.5 - 90 = -7.5 degrees.
+            var hourAngle = (82.5 - 90) * (Math.PI / 180); 
+            var hourLen = 35;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + hourLen * Math.cos(hourAngle), centerY + hourLen * Math.sin(hourAngle));
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Minute hand at 45 (9 o'clock)
+            // 9 o'clock is 180 degrees in canvas logic
+            var minAngle = Math.PI; 
+            var minLen = 50;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + minLen * Math.cos(minAngle), centerY + minLen * Math.sin(minAngle));
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function drawQ7() {
+            var c = document.getElementById("canvasQ7");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, c.width, c.height);
+            
+            var startX = 20;
+            var endX = 280;
+            var y = 50;
+            var unit = (endX - startX) / 3; // Show 0 to 3 inches
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(startX, y);
+            ctx.lineTo(endX, y);
+            ctx.stroke();
+
+            // Ticks
+            for(var i=0; i<=3; i++){
+                var pos = startX + i*unit;
+                ctx.beginPath();
+                ctx.moveTo(pos, y);
+                ctx.lineTo(pos, y-15);
+                ctx.stroke();
+                ctx.fillText(i, pos-3, y+15);
+            }
+
+            // Quarters
+            for(var i=0; i<=12; i++){
+                var pos = startX + i*(unit/4);
+                if(i % 4 !== 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(pos, y);
+                    ctx.lineTo(pos, y-8);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw Line Segment 1.25 inches
+            var lineEnd = startX + 1.25*unit;
+            ctx.beginPath();
+            ctx.moveTo(startX, y-25);
+            ctx.lineTo(lineEnd, y-25);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // End caps for segment
+            ctx.beginPath();
+            ctx.arc(startX, y-25, 3, 0, 2*Math.PI);
+            ctx.arc(lineEnd, y-25, 3, 0, 2*Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        function drawQ8() {
+            var c = document.getElementById("canvasQ8");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, c.width, c.height);
+            
+            var startX = 20;
+            var endX = 280;
+            var y = 50;
+            
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(startX, y);
+            ctx.lineTo(endX, y);
+            ctx.stroke();
+
+            // Ticks 3 and 4
+            ctx.beginPath();
+            ctx.moveTo(startX, y-10);
+            ctx.lineTo(startX, y+10);
+            ctx.stroke();
+            ctx.fillText("3", startX-3, y+25);
+
+            ctx.beginPath();
+            ctx.moveTo(endX, y-10);
+            ctx.lineTo(endX, y+10);
+            ctx.stroke();
+            ctx.fillText("4", endX-3, y+25);
+
+            // Eighths
+            var step = (endX - startX) / 8;
+            for(var i=1; i<8; i++){
+                var h = (i==4) ? 8 : 5; 
+                var pos = startX + i*step;
+                ctx.beginPath();
+                ctx.moveTo(pos, y-h);
+                ctx.lineTo(pos, y+h);
+                ctx.stroke();
+            }
+
+            // Arrow at 7/8
+            var arrowPos = startX + 7*step;
+            ctx.beginPath();
+            ctx.moveTo(arrowPos, y-20);
+            ctx.lineTo(arrowPos, y-5);
+            ctx.lineTo(arrowPos-5, y-10);
+            ctx.moveTo(arrowPos, y-5);
+            ctx.lineTo(arrowPos+5, y-10);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        // Initialize Drawings
+        window.onload = function() {
+            drawQ6();
+            drawQ7();
+            drawQ8();
+        };
+    </script>
+
+</body>
+</html>
