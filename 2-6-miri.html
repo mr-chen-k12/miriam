@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .problem-text {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .solution-container {
+            display: none; /* Hidden by default */
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-radius: 5px;
+            border: 1px solid #d1f2eb;
+        }
+        .solution-step {
+            margin-bottom: 8px;
+        }
+        .final-answer {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            margin-top: 10px;
+            display: block;
+        }
+        .canvas-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .correction-note {
+            color: #c0392b;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Worksheet Solutions & Explanations</h1>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 9: Number Line</div>
+        <div class="problem-text">To what number is the arrow pointing? Write the number two different ways.</div>
+        <div class="canvas-container">
+            <canvas id="canvas9" width="400" height="100"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol9')">Show Answer</button>
+        <div id="sol9" class="solution-container">
+            <div class="solution-step">The number line shows negative integers. The arrow is positioned exactly halfway between $-1$ and $-2$.</div>
+            <div class="solution-step">In decimals: halfway between $-1$ and $-2$ is $-1.5$.</div>
+            <div class="solution-step">In fractions: halfway is $-1 \frac{1}{2}$.</div>
+            <div class="final-answer">Answer: $-1.5$ and $-1 \frac{1}{2}$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 10: Value of Coins</div>
+        <div class="problem-text">When T'Von emptied his bank, he found 17 pennies, 4 nickels, 5 dimes, and 2 quarters. What was the value of the coins?</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol10')">Show Answer</button>
+        <div id="sol10" class="solution-container">
+            <div class="solution-step">Pennies: $17 \times \$0.01 = \$0.17$</div>
+            <div class="solution-step">Nickels: $4 \times \$0.05 = \$0.20$</div>
+            <div class="solution-step">Dimes: $5 \times \$0.10 = \$0.50$</div>
+            <div class="solution-step">Quarters: $2 \times \$0.25 = \$0.50$</div>
+            <div class="solution-step">Total: $\$0.17 + \$0.20 + \$0.50 + \$0.50 = \$1.37$</div>
+            <div class="final-answer">Answer: $1.37 (or 137 cents)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 11: Addition</div>
+        <div class="problem-text">$$794,150 + 9,863 =$$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol11')">Show Answer</button>
+        <div id="sol11" class="solution-container">
+            <div class="solution-step">
+                \begin{array}{r}
+                  794,150 \\
+                +\quad 9,863 \\
+                \hline
+                  804,013
+                \end{array}
+            </div>
+            <div class="final-answer">Answer: 804,013</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 12: Money Addition</div>
+        <div class="problem-text">$$ \$51,786 + \$36,357 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol12')">Show Answer</button>
+        <div id="sol12" class="solution-container">
+            <div class="solution-step">
+                \begin{array}{r}
+                  \$51,786 \\
+                +\quad \$36,357 \\
+                \hline
+                  \$88,143
+                \end{array}
+            </div>
+            <div class="final-answer">Answer: $88,143</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 13: Decimal Chain Addition</div>
+        <div class="problem-text">$$ 87.6 + 4.0 + 31.7 + 5.5 + 1.1 + 0.5 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol13')">Show Answer</button>
+        <div id="sol13" class="solution-container">
+            <div class="solution-step">Group the additions:</div>
+            <div class="solution-step">$87.6 + 4.0 = 91.6$</div>
+            <div class="solution-step">$91.6 + 31.7 = 123.3$</div>
+            <div class="solution-step">$123.3 + 5.5 = 128.8$</div>
+            <div class="solution-step">$128.8 + 1.1 = 129.9$</div>
+            <div class="solution-step">$129.9 + 0.5 = 130.4$</div>
+            <div class="final-answer">Answer: 130.4</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 14: Money Subtraction</div>
+        <div class="problem-text">$$ \$20.00 - \$18.47 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol14')">Show Answer</button>
+        <div id="sol14" class="solution-container">
+            <div class="solution-step">Regroup (borrow) across zeros:</div>
+            <div class="solution-step">
+                \begin{array}{r}
+                  20.00 \\
+                -\quad 18.47 \\
+                \hline
+                   1.53
+                \end{array}
+            </div>
+            <div class="final-answer">Answer: $1.53</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 15: Subtraction</div>
+        <div class="problem-text">$$ 41,315 - 29,418 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol15')">Show Answer</button>
+        <div id="sol15" class="solution-container">
+            <div class="solution-step">
+                \begin{array}{r}
+                  41,315 \\
+                -\quad 29,418 \\
+                \hline
+                  11,897
+                \end{array}
+            </div>
+            <div class="correction-note">Note: The student's answer in the image (12,167) was incorrect.</div>
+            <div class="final-answer">Answer: 11,897</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 16: Multiplication</div>
+        <div class="problem-text">$$ 46 \times 7 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol16')">Show Answer</button>
+        <div id="sol16" class="solution-container">
+            <div class="solution-step">$6 \times 7 = 42$ (write 2, carry 4)</div>
+            <div class="solution-step">$40 \times 7 = 280$</div>
+            <div class="solution-step">$280 + 40 = 320$</div>
+            <div class="final-answer">Answer: 322</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 17: Multiplication</div>
+        <div class="problem-text">$$ 54 \times 8 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol17')">Show Answer</button>
+        <div id="sol17" class="solution-container">
+            <div class="solution-step">$4 \times 8 = 32$ (write 2, carry 3)</div>
+            <div class="solution-step">$50 \times 8 = 400$</div>
+            <div class="solution-step">$400 + 30 = 430$</div>
+            <div class="final-answer">Answer: 432</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 18: Multiplication</div>
+        <div class="problem-text">$$ 39 \times 9 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol18')">Show Answer</button>
+        <div id="sol18" class="solution-container">
+            <div class="solution-step">$9 \times 9 = 81$ (write 1, carry 8)</div>
+            <div class="solution-step">$3 \times 9 = 27$</div>
+            <div class="solution-step">$27 + 8 = 35$</div>
+            <div class="final-answer">Answer: 351</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 19: Multiplication</div>
+        <div class="problem-text">$$ 40 \times 9 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol19')">Show Answer</button>
+        <div id="sol19" class="solution-container">
+            <div class="solution-step">$4 \times 9 = 36$</div>
+            <div class="solution-step">Add the zero place holder: 360</div>
+            <div class="correction-note">Note: The student wrote 320, which is incorrect.</div>
+            <div class="final-answer">Answer: 360</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 20: Decimal Addition</div>
+        <div class="problem-text">$$ 3.68 + 2.4 + 15.2 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol20')">Show Answer</button>
+        <div id="sol20" class="solution-container">
+            <div class="solution-step">Align decimal points:</div>
+            <div class="solution-step">
+                \begin{array}{r}
+                  03.68 \\
+                  02.40 \\
+                +\quad 15.20 \\
+                \hline
+                  21.28
+                \end{array}
+            </div>
+            <div class="final-answer">Answer: 21.28</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 21: Algebra</div>
+        <div class="problem-text">$$ 4y = 32 $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol21')">Show Answer</button>
+        <div id="sol21" class="solution-container">
+            <div class="solution-step">To isolate $y$, divide both sides by 4.</div>
+            <div class="solution-step">$$ y = \frac{32}{4} $$</div>
+            <div class="correction-note">Note: The student wrote 9, which is incorrect ($4 \times 9 = 36$).</div>
+            <div class="final-answer">Answer: y = 8</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 22: Division</div>
+        <div class="problem-text">$$ 43 \div 7 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol22')">Show Answer</button>
+        <div id="sol22" class="solution-container">
+            <div class="solution-step">How many times does 7 go into 43?</div>
+            <div class="solution-step">$7 \times 6 = 42$</div>
+            <div class="solution-step">$43 - 42 = 1$</div>
+            <div class="final-answer">Answer: 6 R 1 (6 Remainder 1)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 23: Division</div>
+        <div class="problem-text">$$ 64 \div 9 = $$</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol23')">Show Answer</button>
+        <div id="sol23" class="solution-container">
+            <div class="solution-step">How many times does 9 go into 64?</div>
+            <div class="solution-step">$9 \times 7 = 63$</div>
+            <div class="solution-step">$64 - 63 = 1$</div>
+            <div class="final-answer">Answer: 7 R 1</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 24: Writing Decimals</div>
+        <div class="problem-text">One inch equals 2.54 cm. Use words to write 2.54 cm.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol24')">Show Answer</button>
+        <div id="sol24" class="solution-container">
+            <div class="solution-step">2 is the whole number part: "Two"</div>
+            <div class="solution-step">The decimal point is read as "and"</div>
+            <div class="solution-step">54 ends in the hundredths place.</div>
+            <div class="final-answer">Answer: Two and fifty-four hundredths centimeters</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 25: Estimation</div>
+        <div class="problem-text">The answer to 52 divided by 9 is not a whole number. What whole number represents a reasonable estimate? Explain.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol25')">Show Answer</button>
+        <div id="sol25" class="solution-container">
+            <div class="solution-step">Multiples of 9 close to 52 are 45 ($9 \times 5$) and 54 ($9 \times 6$).</div>
+            <div class="solution-step">52 is closer to 54 than to 45.</div>
+            <div class="solution-step">Since $54 \div 9 = 6$, 6 is the best estimate.</div>
+            <div class="final-answer">Answer: 6, because 9 x 6 is 54, which is close to 52.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 26: Geometry</div>
+        <div class="problem-text">
+            a. Which line segment is the diameter of the circle?<br>
+            b. Name two intersecting line segments.
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas26" width="200" height="200"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol26')">Show Answer</button>
+        <div id="sol26" class="solution-container">
+            <div class="solution-step"><strong>a.</strong> The diameter is the line passing through the center connecting two points on the circle.</div>
+            <div class="final-answer">a. RM</div>
+            <div class="solution-step"><strong>b.</strong> Intersecting lines cross each other. RM and ST cross at point M.</div>
+            <div class="final-answer">b. RM and ST</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 27: Rounding</div>
+        <div class="problem-text">
+            a. Is $136.80 closer to $136 or $137?<br>
+            b. Is 136.8 closer to 136 or 137?
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol27')">Show Answer</button>
+        <div id="sol27" class="solution-container">
+            <div class="solution-step">When the decimal part is .5 or greater, round up.</div>
+            <div class="solution-step">.80 is greater than .50.</div>
+            <div class="correction-note">Note: The student incorrectly selected 136.</div>
+            <div class="final-answer">Answer: $137 (and 137)</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 28: Fractions and Percents</div>
+        <div class="problem-text">
+            a. What fraction of the large square is shaded?<br>
+            b. The shaded part represents what number?<br>
+            c. What percent of the large square is shaded?
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas28" width="200" height="200"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol28')">Show Answer</button>
+        <div id="sol28" class="solution-container">
+            <div class="solution-step">The grid is 10x10 (100 squares total). 2 squares are empty, so 98 are shaded.</div>
+            <div class="final-answer">a. 98/100</div>
+            <div class="final-answer">b. 0.98</div>
+            <div class="final-answer">c. 98%</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 29: Table Rule</div>
+        <div class="problem-text">Write a rule that describes the relationship of the data in the table ($1 bills vs $10 bills).</div>
+        <div class="solution-step">
+            <table border="1" style="margin: 10px 0; border-collapse: collapse;">
+                <tr><td>$1 Bills</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td></tr>
+                <tr><td>$10 Bills</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+            </table>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol29')">Show Answer</button>
+        <div id="sol29" class="solution-container">
+            <div class="solution-step">We are looking for the relationship between row 1 and row 2.</div>
+            <div class="solution-step">10 $\div$ 10 = 1</div>
+            <div class="solution-step">20 $\div$ 10 = 2</div>
+            <div class="final-answer">Answer: The number of $1 bills is 10 times the number of $10 bills (or divide $1 bills by 10 to get $10 bills).</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 30: Permutations</div>
+        <div class="problem-text">Show all the different ways these bills ($1, $5, $10) can be arranged in a row.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol30')">Show Answer</button>
+        <div id="sol30" class="solution-container">
+            <div class="solution-step">This is a permutation problem. We have 3 distinct items.</div>
+            <div class="solution-step">Possible arrangements:</div>
+            <ul>
+                <li>$1, $5, $10</li>
+                <li>$1, $10, $5</li>
+                <li>$5, $1, $10</li>
+                <li>$5, $10, $1</li>
+                <li>$10, $1, $5</li>
+                <li>$10, $5, $1</li>
+            </ul>
+            <div class="final-answer">Answer: There are 6 different ways.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q1: Division Word Problem</div>
+        <div class="problem-text">In Mr. Jensen's math class, 24 students are seated in 4 rows. Write and solve a division equation to find the number of students in each row.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_1')">Show Answer</button>
+        <div id="sol_p4_1" class="solution-container">
+            <div class="solution-step">Total students = 24. Rows = 4.</div>
+            <div class="final-answer">Answer: $24 \div 4 = 6$ children</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q2: Multiplication Word Problem</div>
+        <div class="problem-text">42 students, 9 projects each. Write and solve a multiplication equation.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_2')">Show Answer</button>
+        <div id="sol_p4_2" class="solution-container">
+            <div class="solution-step">$$ 42 \times 9 $$</div>
+            <div class="solution-step">$2 \times 9 = 18$</div>
+            <div class="solution-step">$40 \times 9 = 360$</div>
+            <div class="solution-step">$360 + 18 = 378$</div>
+            <div class="final-answer">Answer: $42 \times 9 = 378$ projects</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q3: Subtraction Word Problem</div>
+        <div class="problem-text">Write and solve a subtraction equation to find the number of years from 1921 to 1938.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_3')">Show Answer</button>
+        <div id="sol_p4_3" class="solution-container">
+            <div class="final-answer">Answer: $1938 - 1921 = 17$ years</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q4: Time Conversion</div>
+        <div class="problem-text">How many years is 5 decades?</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_4')">Show Answer</button>
+        <div id="sol_p4_4" class="solution-container">
+            <div class="solution-step">1 decade = 10 years.</div>
+            <div class="solution-step">$5 \times 10 = 50$.</div>
+            <div class="final-answer">Answer: 50 years</div>
+        </div>
+    </div>
+
+     <div class="problem-card">
+        <div class="problem-title">Page 4, Q5: Calendar</div>
+        <div class="problem-text">According to the calendar, what day of the week was December 25, 1957?</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_5')">Show Answer</button>
+        <div id="sol_p4_5" class="solution-container">
+            <div class="solution-step">Locating 25 on the grid, it falls under the column 'W' (Wednesday).</div>
+            <div class="final-answer">Answer: Wednesday</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q6: Rounding</div>
+        <div class="problem-text">Round 5236 to the nearest thousand. Then add the rounded numbers.</div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_6')">Show Answer</button>
+        <div id="sol_p4_6" class="solution-container">
+            <div class="solution-step">Look at the hundreds digit (2). Since it is less than 5, round down.</div>
+            <div class="solution-step">5236 rounded to the nearest thousand is 5000.</div>
+            <div class="correction-note">Note: The instruction "add the rounded numbers" is ambiguous without a second number provided in the problem. The student added 5236 + 5000 = 10236, which is a valid interpretation of an ambiguous prompt.</div>
+            <div class="final-answer">Answer: 5,000</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q7: Rectangle Area & Perimeter</div>
+        <div class="problem-text">
+            One side of a rectangle is 10 miles. Another side is 20 miles.<br>
+            a. Draw rectangle.<br>
+            b. Find Perimeter.<br>
+            c. Find Area.
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas_rect" width="300" height="150"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_7')">Show Answer</button>
+        <div id="sol_p4_7" class="solution-container">
+            <div class="solution-step"><strong>b. Perimeter:</strong> Add all sides ($10 + 10 + 20 + 20$).</div>
+            <div class="final-answer">Perimeter = 60 miles</div>
+            <div class="solution-step"><strong>c. Area:</strong> Width $\times$ Length ($10 \times 20$).</div>
+            <div class="final-answer">Area = 200 sq miles</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Page 4, Q8: Circle Fraction</div>
+        <div class="problem-text">
+            a. What fraction of this circle is shaded?<br>
+            b. What percent of this circle is shaded?
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas_circ_frac" width="100" height="100"></canvas>
+        </div>
+        <button class="btn-reveal" onclick="toggleSolution('sol_p4_8')">Show Answer</button>
+        <div id="sol_p4_8" class="solution-container">
+            <div class="solution-step">One part out of four is shaded.</div>
+            <div class="final-answer">a. 1/4</div>
+            <div class="final-answer">b. 25%</div>
+        </div>
+    </div>
+
+
+    <script>
+        function toggleSolution(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+
+        window.onload = function() {
+            // Draw Number Line (Problem 9)
+            var c9 = document.getElementById("canvas9");
+            var ctx9 = c9.getContext("2d");
+            ctx9.beginPath();
+            ctx9.moveTo(20, 50);
+            ctx9.lineTo(380, 50);
+            ctx9.stroke();
+            // Ticks
+            for(let i=0; i<=4; i++) {
+                let x = 60 + i*70;
+                let val = -2 + i;
+                ctx9.moveTo(x, 45);
+                ctx9.lineTo(x, 55);
+                ctx9.stroke();
+                ctx9.fillText(val, x-5, 70);
+            }
+            // Arrow at -1.5
+            ctx9.beginPath();
+            ctx9.moveTo(95, 20);
+            ctx9.lineTo(95, 50);
+            ctx9.strokeStyle = "red";
+            ctx9.lineWidth = 2;
+            ctx9.stroke();
+            // Arrow head
+            ctx9.beginPath();
+            ctx9.moveTo(90, 40);
+            ctx9.lineTo(95, 50);
+            ctx9.lineTo(100, 40);
+            ctx9.stroke();
+
+            // Draw Circle Geometry (Problem 26)
+            var c26 = document.getElementById("canvas26");
+            var ctx26 = c26.getContext("2d");
+            var cx = 100, cy = 100, r = 80;
+            ctx26.beginPath();
+            ctx26.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx26.strokeStyle = "black";
+            ctx26.lineWidth = 1;
+            ctx26.stroke();
+            // Diameter RM (approx coords for visual)
+            ctx26.beginPath();
+            ctx26.moveTo(cx - r + 10, cy - 30); // R
+            ctx26.lineTo(cx + r - 10, cy + 30); // M
+            ctx26.stroke();
+            ctx26.fillText("R", cx - r, cy - 30);
+            ctx26.fillText("M", cx + r - 10, cy + 45);
+            // Line ST
+            ctx26.beginPath();
+            ctx26.moveTo(cx - 30, cy + r - 10); // S
+            ctx26.lineTo(cx + 60, cy - r + 20); // T
+            ctx26.stroke();
+            ctx26.fillText("S", cx - 40, cy + r);
+            ctx26.fillText("T", cx + 65, cy - r + 15);
+
+            // Draw Grid (Problem 28)
+            var c28 = document.getElementById("canvas28");
+            var ctx28 = c28.getContext("2d");
+            // Fill background grey (shaded)
+            ctx28.fillStyle = "#888";
+            ctx28.fillRect(10, 10, 150, 150);
+            // Unshade 2 squares
+            ctx28.fillStyle = "#fff";
+            ctx28.fillRect(10 + 135, 10 + 135, 15, 15); // bottom right
+            ctx28.fillRect(10 + 120, 10 + 135, 15, 15); // next to it
+            // Draw grid lines
+            ctx28.strokeStyle = "#333";
+            ctx28.beginPath();
+            for(let i=0; i<=10; i++) {
+                ctx28.moveTo(10 + i*15, 10);
+                ctx28.lineTo(10 + i*15, 160);
+                ctx28.moveTo(10, 10 + i*15);
+                ctx28.lineTo(160, 10 + i*15);
+            }
+            ctx28.stroke();
+
+            // Draw Rectangle (Problem 7 p4)
+            var cr = document.getElementById("canvas_rect");
+            var ctxr = cr.getContext("2d");
+            ctxr.strokeRect(50, 20, 200, 100);
+            ctxr.fillText("20 miles", 130, 15);
+            ctxr.fillText("10 miles", 5, 70);
+
+            // Draw Circle Fraction (Problem 8 p4)
+            var cf = document.getElementById("canvas_circ_frac");
+            var ctxf = cf.getContext("2d");
+            ctxf.beginPath();
+            ctxf.arc(50, 50, 40, 0, 2*Math.PI);
+            ctxf.stroke();
+            // Fill 1/4
+            ctxf.fillStyle = "#888";
+            ctxf.beginPath();
+            ctxf.moveTo(50, 50);
+            ctxf.arc(50, 50, 40, 0, 0.5*Math.PI);
+            ctxf.lineTo(50, 50);
+            ctxf.fill();
+            // Lines
+            ctxf.beginPath();
+            ctxf.moveTo(50, 10);
+            ctxf.lineTo(50, 90);
+            ctxf.moveTo(10, 50);
+            ctxf.lineTo(90, 50);
+            ctxf.stroke();
+        };
+    </script>
+</body>
+</html>
