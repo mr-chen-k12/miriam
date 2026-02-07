@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f7fa;
+            --border-color: #e1e4e8;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .problem-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .problem-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-btn:hover {
+            background-color: #357abd;
+        }
+
+        .answer-panel {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .answer-panel.visible {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .visual-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .grid-visual {
+            display: grid;
+            grid-template-columns: repeat(10, 20px);
+            gap: 1px;
+            background-color: #ccc;
+            width: fit-content;
+            margin: 0 auto;
+            border: 1px solid #999;
+        }
+        .grid-cell {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+        }
+        .grid-cell.shaded {
+            background-color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Math Worksheet Solutions</h1>
+    <p style="text-align: center; color: #666;">Lesson Number: 52 - Subtracting Numbers with More Than Three Digits & Word Problems</p>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 1</div>
+        <div class="question-text">
+            There were 8 buses. Each bus could seat 60 students. How many students could ride in all the buses?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(1)">Show Answer & Explanation</button>
+        <div id="ans-1" class="answer-panel">
+            <p><strong>Answer:</strong> 480 students</p>
+            <p><strong>Explanation:</strong> This is a multiplication problem. We have 8 groups (buses) of 60 items (students).</p>
+            $$ 60 \times 8 = 480 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 2</div>
+        <div class="question-text">
+            Each van could carry 9 students. There were 63 students. How many vans were needed to carry all of the students?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(2)">Show Answer & Explanation</button>
+        <div id="ans-2" class="answer-panel">
+            <p><strong>Answer:</strong> 7 vans</p>
+            <p><strong>Explanation:</strong> This is a division problem. We are dividing the total students (63) by the capacity of each van (9).</p>
+            $$ 63 \div 9 = 7 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 3</div>
+        <div class="question-text">
+            The coach separated 28 players into 4 equal teams. How many players were on each team?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(3)">Show Answer & Explanation</button>
+        <div id="ans-3" class="answer-panel">
+            <p><strong>Answer:</strong> 7 players</p>
+            <p><strong>Explanation:</strong> Divide the total players (28) by the number of teams (4).</p>
+            $$ 28 \div 4 = 7 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 4</div>
+        <div class="question-text">
+            There are 10 swimmers in the race. Only 3 can be awarded medals. How many swimmers will not win a medal?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(4)">Show Answer & Explanation</button>
+        <div id="ans-4" class="answer-panel">
+            <p><strong>Answer:</strong> 7 swimmers</p>
+            <p><strong>Explanation:</strong> Subtract the winners from the total number of swimmers.</p>
+            $$ 10 - 3 = 7 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 5</div>
+        <div class="question-text">
+            Hermelinda finished first in the 100-meter freestyle race with a time of 57.18 seconds. Tanya finished second in 58.26 seconds. Hermelinda finished the race how many seconds sooner than Tanya?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(5)">Show Answer & Explanation</button>
+        <div id="ans-5" class="answer-panel">
+            <p><strong>Answer:</strong> 1.08 seconds</p>
+            <p><strong>Explanation:</strong> Find the difference between the two times by subtracting.</p>
+            $$ \begin{array}{r@{\quad}l} 58.26 \\ -~57.18 \\ \hline 1.08 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 6</div>
+        <div class="question-text">
+            Write four multiplication/division facts using the numbers 7, 8, and 56.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(6)">Show Answer & Explanation</button>
+        <div id="ans-6" class="answer-panel">
+            <p><strong>Answer:</strong></p>
+            <ol>
+                <li>\( 7 \times 8 = 56 \)</li>
+                <li>\( 8 \times 7 = 56 \)</li>
+                <li>\( 56 \div 8 = 7 \)</li>
+                <li>\( 56 \div 7 = 8 \)</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 7</div>
+        <div class="question-text">
+            Compare: \( 1 + 2 + 3 + 4 \bigcirc \sqrt{100} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(7)">Show Answer & Explanation</button>
+        <div id="ans-7" class="answer-panel">
+            <p><strong>Answer:</strong> = (Equal)</p>
+            <p><strong>Explanation:</strong> Simplify both sides.</p>
+            <p>Left Side: \( 1 + 2 + 3 + 4 = 10 \)</p>
+            <p>Right Side: \( \sqrt{100} = 10 \)</p>
+            <p>Since \( 10 = 10 \), the answer is equal.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 8</div>
+        <div class="question-text">
+            What are the next three numbers in this sequence?<br>
+            ..., 6000, 7000, 8000, ____, ____, ____
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(8)">Show Answer & Explanation</button>
+        <div id="ans-8" class="answer-panel">
+            <p><strong>Answer:</strong> 9000, 10000, 11000</p>
+            <p><strong>Explanation:</strong> The pattern is adding 1000 to the previous number.</p>
+            <p>\( 8000 + 1000 = 9000 \)</p>
+            <p>\( 9000 + 1000 = 10000 \)</p>
+            <p>\( 10000 + 1000 = 11000 \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 9</div>
+        <div class="question-text">
+            There were two hundred sixty-seven apples in the first bin. There were four hundred sixty-five apples in the second bin. How many fewer apples were in the first bin?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(9)">Show Answer & Explanation</button>
+        <div id="ans-9" class="answer-panel">
+            <p><strong>Answer:</strong> 198 apples</p>
+            <p><strong>Explanation:</strong> Subtract the smaller amount from the larger amount to find the difference.</p>
+            $$ \begin{array}{r@{\quad}l} 465 \\ -~267 \\ \hline 198 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 10</div>
+        <div class="question-text">
+            \( 8.49 + 7.3 + 6.15 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(10)">Show Answer & Explanation</button>
+        <div id="ans-10" class="answer-panel">
+            <p><strong>Answer:</strong> 21.94</p>
+            <p><strong>Explanation:</strong> Align the decimal points and add.</p>
+            $$ \begin{array}{r@{\quad}l} 8.49 \\ 7.30 \\ +~6.15 \\ \hline 21.94 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 11</div>
+        <div class="question-text">
+            Solve for n: \( 6n = 42 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(11)">Show Answer & Explanation</button>
+        <div id="ans-11" class="answer-panel">
+            <p><strong>Answer:</strong> \( n = 7 \)</p>
+            <p><strong>Explanation:</strong> Divide both sides by 6.</p>
+            $$ n = \frac{42}{6} = 7 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 12</div>
+        <div class="question-text">
+            \( 47,586 + 23,491 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(12)">Show Answer & Explanation</button>
+        <div id="ans-12" class="answer-panel">
+            <p><strong>Answer:</strong> 71,077</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} 47,586 \\ +~23,491 \\ \hline 71,077 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 13</div>
+        <div class="question-text">
+            \( \$5.00 - \$3.26 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(13)">Show Answer & Explanation</button>
+        <div id="ans-13" class="answer-panel">
+            <p><strong>Answer:</strong> $1.74</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} \$5.00 \\ -~\$3.26 \\ \hline \$1.74 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 14</div>
+        <div class="question-text">
+            Solve for n: \( n + 25.8 = 60.4 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(14)">Show Answer & Explanation</button>
+        <div id="ans-14" class="answer-panel">
+            <p><strong>Answer:</strong> \( n = 34.6 \)</p>
+            <p><strong>Explanation:</strong> Subtract 25.8 from 60.4.</p>
+            $$ \begin{array}{r@{\quad}l} 60.4 \\ -~25.8 \\ \hline 34.6 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 15</div>
+        <div class="question-text">
+            \( 49 \times 6 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(15)">Show Answer & Explanation</button>
+        <div id="ans-15" class="answer-panel">
+            <p><strong>Answer:</strong> 294</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} 49 \\ \times~6 \\ \hline 294 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 16</div>
+        <div class="question-text">
+            \( 84 \times 5 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(16)">Show Answer & Explanation</button>
+        <div id="ans-16" class="answer-panel">
+            <p><strong>Answer:</strong> 420</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} 84 \\ \times~5 \\ \hline 420 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 17</div>
+        <div class="question-text">
+            \( 70 \times 8 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(17)">Show Answer & Explanation</button>
+        <div id="ans-17" class="answer-panel">
+            <p><strong>Answer:</strong> 560</p>
+            <p><strong>Explanation:</strong> \( 7 \times 8 = 56 \), so \( 70 \times 8 = 560 \).</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 18</div>
+        <div class="question-text">
+            \( 35 \times 9 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(18)">Show Answer & Explanation</button>
+        <div id="ans-18" class="answer-panel">
+            <p><strong>Answer:</strong> 315</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} 35 \\ \times~9 \\ \hline 315 \end{array} $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 19</div>
+        <div class="question-text">
+            Solve for n: \( 400 - n = 256 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(19)">Show Answer & Explanation</button>
+        <div id="ans-19" class="answer-panel">
+            <p><strong>Answer:</strong> \( n = 144 \)</p>
+            <p><strong>Explanation:</strong> To find the missing subtrahend, subtract the difference from the minuend.</p>
+            $$ n = 400 - 256 $$
+            $$ n = 144 $$
+            <p><em>Note: The student on the paper incorrectly added 400 + 256.</em></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 20</div>
+        <div class="question-text">
+            \( \$40.00 - \$24.68 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(20)">Show Answer & Explanation</button>
+        <div id="ans-20" class="answer-panel">
+            <p><strong>Answer:</strong> $15.32</p>
+            <p><strong>Explanation:</strong></p>
+            $$ \begin{array}{r@{\quad}l} \$40.00 \\ -~\$24.68 \\ \hline \$15.32 \end{array} $$
+            <p><em>Note: The student on the paper set this up backward ($24.68 - $40.00) which resulted in an incorrect answer.</em></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 21</div>
+        <div class="question-text">
+            a. Round 639 to the nearest hundred.<br>
+            b. Round 639 to the nearest ten.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(21)">Show Answer & Explanation</button>
+        <div id="ans-21" class="answer-panel">
+            <p><strong>Answer:</strong></p>
+            <p>a. 600</p>
+            <p>b. 640</p>
+            <p><strong>Explanation:</strong><br>
+            a. For nearest hundred: Look at the tens digit (3). Since 3 < 5, round down to 600.<br>
+            b. For nearest ten: Look at the ones digit (9). Since 9 > 5, round up to 640.
+            </p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 22</div>
+        <div class="question-text">
+            Which side of this triangle appears to be perpendicular to PR?
+        </div>
+        <div class="visual-container">
+            <svg width="200" height="120" viewBox="0 0 200 120">
+                <text x="45" y="20" font-family="Arial" font-size="14">P</text>
+                <text x="45" y="115" font-family="Arial" font-size="14">R</text>
+                <text x="160" y="115" font-family="Arial" font-size="14">Q</text>
+                <polygon points="50,25 50,100 150,100" fill="#ddd" stroke="black" stroke-width="2" />
+                <rect x="50" y="90" width="10" height="10" fill="none" stroke="black" />
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(22)">Show Answer & Explanation</button>
+        <div id="ans-22" class="answer-panel">
+            <p><strong>Answer:</strong> Side RP (or Segment RP/PR)</p>
+            <p><strong>Explanation:</strong> In the diagram (Triangle PRQ), the angle at R appears to be a right angle (90 degrees). Therefore, the vertical side (PR/RP) is perpendicular to the horizontal side (RQ). Wait, let's re-examine the image text. The text asks "perpendicular to PR". Looking at the image, PR is the bottom horizontal leg. The vertical leg is P. Wait, let me look at the image again carefully.</p>
+            <p><em>Correction based on image:</em> The vertex at the top left is P. The vertex at bottom left is R. The vertex at bottom right is Q. So the vertical side is PR. The horizontal side is RQ. The question asks what is perpendicular to PR. The side perpendicular to PR is <strong>RQ</strong>.</p>
+            <p><em>Alternative Reading:</em> If the vertices are P (top), R (bottom left), Q (bottom right), then PR is the vertical side. The side perpendicular to the vertical side PR is the horizontal side RQ. <br>
+            <em>However</em>, if the letters are arranged differently: P(top), R(bottom left corner), Q(bottom right). The line segment PR is vertical. The line segment RQ is horizontal. They meet at R. So RQ is perpendicular to PR.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 23</div>
+        <div class="question-text">
+            Compare: \( 49\% \bigcirc 1/2 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(23)">Show Answer & Explanation</button>
+        <div id="ans-23" class="answer-panel">
+            <p><strong>Answer:</strong> \( < \) (Less than)</p>
+            <p><strong>Explanation:</strong> Convert the fraction to a percentage.</p>
+            $$ 1/2 = 50\% $$
+            <p>Since \( 49\% < 50\% \), the answer is less than.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 24</div>
+        <div class="question-text">
+            Divide. Check each answer by multiplying.<br>
+            a. \( 3 \overline{)27} \)<br>
+            b. \( 7 \overline{)28} \)<br>
+            c. \( 8 \overline{)72} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(24)">Show Answer & Explanation</button>
+        <div id="ans-24" class="answer-panel">
+            <p><strong>Answers:</strong></p>
+            <p>a. 9 (Check: \( 9 \times 3 = 27 \))</p>
+            <p>b. 4 (Check: \( 4 \times 7 = 28 \))</p>
+            <p>c. 9 (Check: \( 9 \times 8 = 72 \))</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 25</div>
+        <div class="question-text">
+            This figure has four sides, but it is not a rectangle. What is the perimeter of this figure?
+            <br>(Sides: 14m, 17m, 18m, 16m)
+        </div>
+        <div class="visual-container">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+                <polygon points="60,20 140,20 160,120 40,120" fill="#ddd" stroke="black" stroke-width="2" />
+                <text x="90" y="15" font-family="Arial" font-size="12">14 m</text>
+                <text x="155" y="70" font-family="Arial" font-size="12">16 m</text>
+                <text x="90" y="135" font-family="Arial" font-size="12">18 m</text>
+                <text x="25" y="70" font-family="Arial" font-size="12">17 m</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(25)">Show Answer & Explanation</button>
+        <div id="ans-25" class="answer-panel">
+            <p><strong>Answer:</strong> 65 m</p>
+            <p><strong>Explanation:</strong> Add the lengths of all sides together.</p>
+            $$ 14 + 16 + 18 + 17 = 65 $$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 26</div>
+        <div class="question-text">
+            a. Is $24.10 closer to $24 or to $25?<br>
+            b. Is 24.1 closer to 24 or 25?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(26)">Show Answer & Explanation</button>
+        <div id="ans-26" class="answer-panel">
+            <p><strong>Answer:</strong></p>
+            <p>a. $24</p>
+            <p>b. 24</p>
+            <p><strong>Explanation:</strong> The decimal part .10 (or .1) is less than .5, so we round down.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 27</div>
+        <div class="question-text">
+            If \( \triangle = \square \), which of these is not necessarily true?<br>
+            A. \( \triangle + 2 = \square + 2 \)<br>
+            B. \( 2 \times \triangle = 2 \times \square \)<br>
+            C. \( \triangle - 2 = \square - 2 \)<br>
+            D. \( 2 \times \triangle = \square + 2 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(27)">Show Answer & Explanation</button>
+        <div id="ans-27" class="answer-panel">
+            <p><strong>Answer:</strong> D</p>
+            <p><strong>Explanation:</strong> Since the triangle and square are equal, any operation done to one side must be done to the other to maintain equality.</p>
+            <ul>
+                <li>A adds 2 to both. (True)</li>
+                <li>B multiplies both by 2. (True)</li>
+                <li>C subtracts 2 from both. (True)</li>
+                <li>D multiplies one by 2 and adds 2 to the other. This is only true if \( \triangle = 2 \). It is not <em>necessarily</em> true for all numbers.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 28</div>
+        <div class="question-text">
+            a. What fraction of the large square is shaded?<br>
+            b. The shaded part of the large square represents what decimal number?<br>
+            c. What percent of the large square is shaded?
+        </div>
+        <div class="visual-container">
+            <div class="grid-visual">
+                <script>
+                   document.write('<div class="grid-cell shaded"></div>'.repeat(23));
+                   document.write('<div class="grid-cell"></div>'.repeat(77));
+                </script>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(28)">Show Answer & Explanation</button>
+        <div id="ans-28" class="answer-panel">
+            <p><strong>Answer:</strong></p>
+            <p>a. \( \frac{23}{100} \)</p>
+            <p>b. 0.23</p>
+            <p>c. 23%</p>
+            <p><strong>Explanation:</strong> There are 100 squares total. 2 full rows (20) plus 3 squares are shaded, making 23 shaded squares.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 29</div>
+        <div class="question-text">
+            The answer to 33 divided by 8 is not a whole number. What whole number represents a reasonable estimate of the answer? Explain why you chose that number.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(29)">Show Answer & Explanation</button>
+        <div id="ans-29" class="answer-panel">
+            <p><strong>Answer:</strong> 4</p>
+            <p><strong>Explanation:</strong> Multiples of 8 are 8, 16, 24, 32, 40. The number 33 is very close to 32. Since \( 32 \div 8 = 4 \), 4 is the best whole number estimate.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-header">Problem 30</div>
+        <div class="question-text">
+            Look at these coins. List all of the different amounts you could make using exactly two coins. Arrange the amounts in order from least to greatest and write each amount with a dollar sign.
+            <br><em>(Coins shown: Quarter, Quarter, Penny, Half Dollar)</em>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer(30)">Show Answer & Explanation</button>
+        <div id="ans-30" class="answer-panel">
+            <p><strong>Answer:</strong> $0.26, $0.50, $0.51, $0.75</p>
+            <p><strong>Explanation:</strong> The coins are 2 Quarters ($0.25), 1 Penny ($0.01), and 1 Half Dollar ($0.50). We need to find sums of exactly two coins:</p>
+            <ul>
+                <li>Quarter + Penny = $0.25 + $0.01 = <strong>$0.26</strong></li>
+                <li>Quarter + Quarter = $0.25 + $0.25 = <strong>$0.50</strong></li>
+                <li>Half Dollar + Penny = $0.50 + $0.01 = <strong>$0.51</strong></li>
+                <li>Half Dollar + Quarter = $0.50 + $0.25 = <strong>$0.75</strong></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAnswer(id) {
+        var answerDiv = document.getElementById('ans-' + id);
+        if (answerDiv.style.display === "block") {
+            answerDiv.style.display = "none";
+            answerDiv.classList.remove('visible');
+        } else {
+            answerDiv.style.display = "block";
+            // slight delay to allow display:block to apply before adding class for animation
+            setTimeout(() => {
+                answerDiv.classList.add('visible');
+            }, 10);
+        }
+    }
+</script>
+
+</body>
+</html>
