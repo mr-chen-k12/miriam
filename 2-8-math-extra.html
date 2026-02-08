@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Quiz</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 80px; /* Space for scoreboard */
+        }
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 30px;
+        }
+        .question-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-number {
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 10px 0;
+        }
+        .options label {
+            cursor: pointer;
+            padding: 10px;
+            display: block;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #f9f9f9;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .check-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        .check-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .scoreboard {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Math Skills Review</h1>
+    <p>30 Questions • Multiple Choice</p>
+</header>
+
+<div id="quiz-container">
+    </div>
+
+<div class="scoreboard">
+    Score: <span id="score">0</span> / 30
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "In a library, 35 books are placed on 5 shelves equally. Which equation finds the number of books on each shelf?",
+            options: ["\\( 35 + 5 = 40 \\)", "\\( 35 - 5 = 30 \\)", "\\( 35 \\times 5 = 175 \\)", "\\( 35 \\div 5 = 7 \\)"],
+            answer: 3,
+            explanation: "To distribute items equally, you use division. \\( 35 \\div 5 = 7 \\)."
+        },
+        {
+            q: "A baker bakes 12 loaves of bread every day. How many loaves does he bake in 8 days?",
+            options: ["20", "84", "96", "108"],
+            answer: 2,
+            explanation: "This is a multiplication problem. \\( 12 \\times 8 = 96 \\)."
+        },
+        {
+            q: "Find the number of years from 1945 to 1962.",
+            options: ["13 years", "17 years", "27 years", "22 years"],
+            answer: 1,
+            explanation: "Subtract the earlier year from the later year: \\( 1962 - 1945 = 17 \\)."
+        },
+        {
+            q: "How many years are in 4 centuries?",
+            options: ["40 years", "400 years", "4,000 years", "40,000 years"],
+            answer: 1,
+            explanation: "One century is 100 years. \\( 4 \\times 100 = 400 \\)."
+        },
+        {
+            q: "If November 8th is a Friday, what day of the week is November 15th?",
+            options: ["Thursday", "Friday", "Saturday", "Sunday"],
+            answer: 1,
+            explanation: "There are exactly 7 days in a week. Adding 7 days to any date results in the same day of the week."
+        },
+        {
+            q: "Round 7,842 to the nearest thousand.",
+            options: ["7,000", "7,800", "8,000", "7,900"],
+            answer: 2,
+            explanation: "Look at the hundreds digit (8). Since it is 5 or greater, round up to 8,000."
+        },
+        {
+            q: "A rectangle has a length of 8 ft and a width of 5 ft. What is its perimeter?",
+            options: ["13 ft", "26 ft", "40 ft", "20 ft"],
+            answer: 1,
+            explanation: "Perimeter is \\( 2 \\times (length + width) \\). \\( 2 \\times (8 + 5) = 2 \\times 13 = 26 \\)."
+        },
+        {
+            q: "If 3 out of 4 slices of a pie are eaten, what percentage of the pie is eaten?",
+            options: ["25%", "50%", "75%", "30%"],
+            answer: 2,
+            explanation: "\\( \\frac{3}{4} = 0.75 \\), which is 75%."
+        },
+        {
+            q: "Which number is exactly halfway between 2 and 3 on a number line?",
+            options: ["2.1", "2.25", "2.5", "2.9"],
+            answer: 2,
+            explanation: "The midpoint between 2 and 3 is 2.5 (or \\( 2\\frac{1}{2} \\))."
+        },
+        {
+            q: "You have 3 quarters, 2 dimes, and 4 pennies. What is the total value?",
+            options: ["$0.89", "$0.99", "$1.04", "$0.94"],
+            answer: 1,
+            explanation: "\\( (3 \\times 25) + (2 \\times 10) + (4 \\times 1) = 75 + 20 + 4 = 99 \\) cents."
+        },
+        {
+            q: "Calculate: \\( 523,400 + 12,350 \\)",
+            options: ["535,750", "646,900", "535,050", "511,050"],
+            answer: 0,
+            explanation: "Align the places: \\( 523,400 + 12,350 = 535,750 \\)."
+        },
+        {
+            q: "Calculate: \\( \\$45.50 + \\$22.75 \\)",
+            options: ["$67.25", "$68.25", "$68.50", "$67.05"],
+            answer: 1,
+            explanation: "\\( 45.50 + 22.75 = 68.25 \\)."
+        },
+        {
+            q: "Add: \\( 12.2 + 5.5 + 1.1 \\)",
+            options: ["17.7", "18.8", "19.8", "18.9"],
+            answer: 1,
+            explanation: "\\( 12.2 + 5.5 = 17.7 \\); \\( 17.7 + 1.1 = 18.8 \\)."
+        },
+        {
+            q: "Calculate: \\( \\$50.00 - \\$12.30 \\)",
+            options: ["$37.70", "$38.70", "$38.30", "$37.30"],
+            answer: 0,
+            explanation: "Regrouping is needed. \\( 50.00 - 12.30 = 37.70 \\)."
+        },
+        {
+            q: "Calculate: \\( 8,500 - 2,150 \\)",
+            options: ["6,450", "6,350", "6,400", "5,350"],
+            answer: 1,
+            explanation: "\\( 8,500 - 2,150 = 6,350 \\)."
+        },
+        {
+            q: "Multiply: \\( 23 \\times 4 \\)",
+            options: ["82", "92", "86", "102"],
+            answer: 1,
+            explanation: "\\( 3 \\times 4 = 12 \\) (carry 1). \\( 2 \\times 4 = 8 + 1 = 9 \\). Answer is 92."
+        },
+        {
+            q: "Multiply: \\( 65 \\times 6 \\)",
+            options: ["360", "390", "380", "410"],
+            answer: 1,
+            explanation: "\\( 5 \\times 6 = 30 \\) (carry 3). \\( 6 \\times 6 = 36 + 3 = 39 \\). Answer is 390."
+        },
+        {
+            q: "Multiply: \\( 72 \\times 3 \\)",
+            options: ["210", "216", "226", "206"],
+            answer: 1,
+            explanation: "\\( 2 \\times 3 = 6 \\). \\( 7 \\times 3 = 21 \\). Answer is 216."
+        },
+        {
+            q: "Multiply: \\( 80 \\times 7 \\)",
+            options: ["540", "560", "630", "490"],
+            answer: 1,
+            explanation: "\\( 8 \\times 7 = 56 \\). Add the zero. Answer is 560."
+        },
+        {
+            q: "Add: \\( 4.5 + 0.25 + 10.1 \\)",
+            options: ["14.85", "15.35", "14.65", "10.8"],
+            answer: 0,
+            explanation: "Align decimals: \\( 4.50 + 0.25 + 10.10 = 14.85 \\)."
+        },
+        {
+            q: "Solve for \\( z \\): \\( 5z = 45 \\)",
+            options: ["8", "9", "7", "5"],
+            answer: 1,
+            explanation: "Divide both sides by 5. \\( 45 \\div 5 = 9 \\)."
+        },
+        {
+            q: "Divide: \\( 26 \\div 4 \\)",
+            options: ["6", "6 R2", "7", "5 R6"],
+            answer: 1,
+            explanation: "\\( 4 \\times 6 = 24 \\). \\( 26 - 24 = 2 \\). Answer is 6 Remainder 2."
+        },
+        {
+            q: "Divide: \\( 8 \\overline{)75} \\)",
+            options: ["8 R3", "9 R3", "9 R1", "8 R5"],
+            answer: 1,
+            explanation: "\\( 8 \\times 9 = 72 \\). \\( 75 - 72 = 3 \\). Answer is 9 Remainder 3."
+        },
+        {
+            q: "How do you write 3.06 using words?",
+            options: ["Three and six tenths", "Three and sixty hundredths", "Three and six hundredths", "Thirty six"],
+            answer: 2,
+            explanation: "The 6 is in the hundredths place. 'Three and six hundredths'."
+        },
+        {
+            q: "Estimate \\( 65 \\div 8 \\). Why is your estimate reasonable?",
+            options: ["7, because 7x8=56", "8, because 8x8=64", "9, because 9x8=72", "6, because 6x8=48"],
+            answer: 1,
+            explanation: "65 is very close to 64. Since \\( 64 \\div 8 = 8 \\), 8 is the best estimate."
+        },
+        {
+            q: "In a circle, the line segment connecting the center to the edge is called the:",
+            options: ["Diameter", "Chord", "Radius", "Circumference"],
+            answer: 2,
+            explanation: "The radius connects the center to the edge. The diameter goes all the way across through the center."
+        },
+        {
+            q: "Is 45.7 closer to 45 or 46?",
+            options: ["45", "46", "Neither", "Both"],
+            answer: 1,
+            explanation: "Since the decimal part (.7) is greater than .5, we round up to 46."
+        },
+        {
+            q: "A grid has 100 squares. If 40 are shaded, what is the decimal representation?",
+            options: ["0.04", "0.40", "4.0", "0.004"],
+            answer: 1,
+            explanation: "\\( \\frac{40}{100} = 0.40 \\)."
+        },
+        {
+            q: "Find the pattern rule: Input(3) -> Output(12); Input(5) -> Output(20).",
+            options: ["Add 9", "Multiply by 3", "Multiply by 4", "Add 10"],
+            answer: 2,
+            explanation: "\\( 3 \\times 4 = 12 \\) and \\( 5 \\times 4 = 20 \\). The rule is multiply by 4."
+        },
+        {
+            q: "How many different ways can you arrange the letters A, B, and C in a row?",
+            options: ["3", "4", "5", "6"],
+            answer: 3,
+            explanation: "ABC, ACB, BAC, BCA, CAB, CBA. There are 6 ways (\\( 3 \\times 2 \\times 1 \\))."
+        }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+
+    questions.forEach((item, index) => {
+        // Create Card
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        // Question Title
+        const title = document.createElement('div');
+        title.className = 'question-number';
+        title.innerText = `Question ${index + 1}`;
+        card.appendChild(title);
+
+        // Question Text
+        const qText = document.createElement('div');
+        qText.innerHTML = item.q;
+        card.appendChild(qText);
+
+        // Options Container
+        const optionsList = document.createElement('ul');
+        optionsList.className = 'options';
+
+        item.options.forEach((opt, optIndex) => {
+            const li = document.createElement('li');
+            
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `q${index}`;
+            input.value = optIndex;
+            
+            label.appendChild(input);
+            // We use span to allow MathJax to render inside safely if needed, 
+            // though innerHTML on label works too.
+            const span = document.createElement('span');
+            span.innerHTML = opt;
+            label.appendChild(span);
+
+            li.appendChild(label);
+            optionsList.appendChild(li);
+        });
+        card.appendChild(optionsList);
+
+        // Feedback Section
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+        
+        // Button
+        const btn = document.createElement('button');
+        btn.className = 'check-btn';
+        btn.innerText = 'Check Answer';
+        btn.onclick = () => checkAnswer(index, item.answer, feedback, btn);
+
+        card.appendChild(btn);
+        card.appendChild(feedback);
+
+        quizContainer.appendChild(card);
+    });
+
+    function checkAnswer(questionIndex, correctIndex, feedbackDiv, button) {
+        const radios = document.getElementsByName(`q${questionIndex}`);
+        let selected = -1;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                selected = parseInt(radios[i].value);
+                break;
+            }
+        }
+
+        if (selected === -1) {
+            alert("Please select an option first.");
+            return;
+        }
+
+        // Disable button after checking
+        button.disabled = true;
+
+        if (selected === correctIndex) {
+            score++;
+            scoreDisplay.innerText = score;
+            feedbackDiv.className = 'feedback correct';
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br>${questions[questionIndex].explanation}`;
+        } else {
+            feedbackDiv.className = 'feedback incorrect';
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: ${questions[questionIndex].options[correctIndex]}<br><br><strong>Explanation:</strong> ${questions[questionIndex].explanation}`;
+        }
+
+        feedbackDiv.style.display = 'block';
+        
+        // Trigger MathJax typeset for the explanation content
+        MathJax.typesetPromise([feedbackDiv]);
+    }
+
+</script>
+
+</body>
+</html>
