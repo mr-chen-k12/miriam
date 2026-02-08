@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .problem-content {
+            margin-bottom: 15px;
+        }
+        .solution-container {
+            display: none; /* Hidden by default */
+            background-color: #e8f6f3;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #d1f2eb;
+            margin-top: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .correct-answer {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .img-placeholder {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Problem Solutions</h1>
+    <p style="text-align: center;">Click the buttons to check your answers.</p>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 1</div>
+        <div class="problem-content">
+            In Mr. Jensen's math class, 24 students are seated in 4 rows of desks. The same number of students are in each row. Write and solve a <u>division</u> equation to find the number of students in each row.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-1')">Show Answer</button>
+        <div id="sol-1" class="solution-container">
+            <p><strong>Equation:</strong> \( 24 \div 4 = s \)</p>
+            <p><strong>Step-by-step:</strong> Divide the total number of students (24) by the number of rows (4).</p>
+            <p class="correct-answer">Answer: 6 students</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 2</div>
+        <div class="problem-content">
+            An art teacher works with 42 different students each day. During the school year, each student will complete 9 art projects. Write and solve a <u>multiplication</u> equation to find the total number of projects the students will complete.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-2')">Show Answer</button>
+        <div id="sol-2" class="solution-container">
+            <p><strong>Equation:</strong> \( 42 \times 9 = p \)</p>
+            <p><strong>Step-by-step:</strong>
+            \[
+            \begin{array}{r@{\quad}l}
+              42 & \\
+            \times 9 & \\
+            \hline
+            378 & 
+            \end{array}
+            \]
+            (\(2 \times 9 = 18\), carry the 1. \(4 \times 9 = 36\), plus 1 is 37.)
+            </p>
+            <p class="correct-answer">Answer: 378 projects</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 3</div>
+        <div class="problem-content">
+            Write and solve a <u>subtraction</u> equation to find the number of years from 1921 to 1938.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-3')">Show Answer</button>
+        <div id="sol-3" class="solution-container">
+            <p><strong>Equation:</strong> \( 1938 - 1921 = y \)</p>
+            <p><strong>Step-by-step:</strong>
+            \[
+            \begin{array}{r}
+              1938 \\
+            - 1921 \\
+            \hline
+                17
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: 17 years</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 4</div>
+        <div class="problem-content">
+            How many years is 5 decades?<br>
+            A) 5 years &nbsp; B) 50 years &nbsp; C) 500 years &nbsp; D) 5000 years
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-4')">Show Answer</button>
+        <div id="sol-4" class="solution-container">
+            <p><strong>Reasoning:</strong> One decade is equal to 10 years.</p>
+            <p>\( 5 \text{ decades} \times 10 \text{ years/decade} = 50 \text{ years} \)</p>
+            <p class="correct-answer">Answer: B (50 years)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 5</div>
+        <div class="problem-content">
+            According to this calendar (December 1957), what day of the week was December 25, 1957?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-5')">Show Answer</button>
+        <div id="sol-5" class="solution-container">
+            <p><strong>Reasoning:</strong> Looking at the calendar grid:</p>
+            <ul>
+                <li>Dec 1st is a Sunday.</li>
+                <li>Adding 7 days repeatedly: Dec 8, 15, and 22 are also Sundays.</li>
+                <li>Count forward from Sunday the 22nd:
+                    <ul>
+                        <li>Dec 23 = Monday</li>
+                        <li>Dec 24 = Tuesday</li>
+                        <li>Dec 25 = Wednesday</li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="correct-answer">Answer: Wednesday</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 6</div>
+        <div class="problem-content">
+            Round 5236 to the nearest thousand.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-6')">Show Answer</button>
+        <div id="sol-6" class="solution-container">
+            <p><strong>Step-by-step:</strong> Look at the hundreds digit (2). Since 2 is less than 5, we round down.</p>
+            <p>\( 5,236 \approx 5,000 \)</p>
+            <p class="correct-answer">Answer: 5,000</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 7</div>
+        <div class="problem-content">
+            One side of a rectangle is 10 miles long. Another side is 20 miles long.<br>
+            b. What is the perimeter of the rectangle?<br>
+            c. What is the area of the rectangle?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-7')">Show Answer</button>
+        <div id="sol-7" class="solution-container">
+            <p><strong>b. Perimeter:</strong> Add all sides: \( 10 + 20 + 10 + 20 \) or \( 2 \times (10 + 20) \).</p>
+            <p class="correct-answer">Perimeter: 60 miles</p>
+            <br>
+            <p><strong>c. Area:</strong> Multiply length times width: \( 10 \times 20 \).</p>
+            <p class="correct-answer">Area: 200 sq miles</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 8</div>
+        <div class="problem-content">
+            a. What fraction of this circle is shaded?<br>
+            b. What percent of this circle is shaded?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-8')">Show Answer</button>
+        <div id="sol-8" class="solution-container">
+            <p><strong>Image Context:</strong> A circle is divided into 4 equal quadrants. 1 quadrant is shaded.</p>
+            <p><strong>a. Fraction:</strong> \( \frac{1}{4} \)</p>
+            <p><strong>b. Percent:</strong> \( \frac{1}{4} = 0.25 = 25\% \)</p>
+            <p class="correct-answer">Answer: a) 1/4, b) 25%</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 9</div>
+        <div class="problem-content">
+            To what number is the arrow pointing? Write the number two different ways. (Arrow is halfway between -1 and -2 on the number line).
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-9')">Show Answer</button>
+        <div id="sol-9" class="solution-container">
+            <p>The arrow points exactly in the middle of -1 and -2.</p>
+            <p class="correct-answer">Answer: -1.5 and -1\(\frac{1}{2}\)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 10</div>
+        <div class="problem-content">
+            When T'Von emptied his bank, he found 17 pennies, 4 nickels, 5 dimes, and 2 quarters. What was the value of the coins?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-10')">Show Answer</button>
+        <div id="sol-10" class="solution-container">
+            <p><strong>Calculate values:</strong></p>
+            <ul>
+                <li>17 pennies = \( 17 \times 1 = 17\cent \)</li>
+                <li>4 nickels = \( 4 \times 5 = 20\cent \)</li>
+                <li>5 dimes = \( 5 \times 10 = 50\cent \)</li>
+                <li>2 quarters = \( 2 \times 25 = 50\cent \)</li>
+            </ul>
+            <p><strong>Total:</strong> \( 17 + 20 + 50 + 50 = 137\cent \)</p>
+            <p class="correct-answer">Answer: 137 cents (or $1.37)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 11</div>
+        <div class="problem-content">
+            \( 794,150 + 9,863 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-11')">Show Answer</button>
+        <div id="sol-11" class="solution-container">
+            <p>
+            \[
+            \begin{array}{r}
+              794,150 \\
+            +\quad 9,863 \\
+            \hline
+              804,013
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: 804,013</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 12</div>
+        <div class="problem-content">
+            \( \$51,786 + \$36,357 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-12')">Show Answer</button>
+        <div id="sol-12" class="solution-container">
+            <p>
+            \[
+            \begin{array}{r}
+              51,786 \\
+            + 36,357 \\
+            \hline
+              88,143
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: $88,143</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 13</div>
+        <div class="problem-content">
+            \( 87.6 + 4.0 + 31.7 + 5.5 + 1.1 + 0.5 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-13')">Show Answer</button>
+        <div id="sol-13" class="solution-container">
+            <p>Align the decimal points and add:</p>
+            <p>\( 87.6 + 4.0 = 91.6 \)</p>
+            <p>\( 91.6 + 31.7 = 123.3 \)</p>
+            <p>\( 123.3 + 5.5 = 128.8 \)</p>
+            <p>\( 128.8 + 1.1 = 129.9 \)</p>
+            <p>\( 129.9 + 0.5 = 130.4 \)</p>
+            <p class="correct-answer">Answer: 130.4</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 14</div>
+        <div class="problem-content">
+            \( \$20.00 - \$18.47 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-14')">Show Answer</button>
+        <div id="sol-14" class="solution-container">
+            <p>
+            \[
+            \begin{array}{r}
+              20.00 \\
+            - 18.47 \\
+            \hline
+               1.53
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: $1.53</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 15</div>
+        <div class="problem-content">
+            \( 41,315 - 29,418 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-15')">Show Answer</button>
+        <div id="sol-15" class="solution-container">
+            <p>
+            \[
+            \begin{array}{r}
+              41,315 \\
+            - 29,418 \\
+            \hline
+              11,897
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: 11,897</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 16</div>
+        <div class="problem-content">
+            \( 46 \times 7 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-16')">Show Answer</button>
+        <div id="sol-16" class="solution-container">
+            <p>\( 6 \times 7 = 42 \) (write 2, carry 4)</p>
+            <p>\( 4 \times 7 = 28 \); \( 28 + 4 = 32 \)</p>
+            <p class="correct-answer">Answer: 322</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 17</div>
+        <div class="problem-content">
+            \( 54 \times 8 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-17')">Show Answer</button>
+        <div id="sol-17" class="solution-container">
+            <p>\( 4 \times 8 = 32 \) (write 2, carry 3)</p>
+            <p>\( 5 \times 8 = 40 \); \( 40 + 3 = 43 \)</p>
+            <p class="correct-answer">Answer: 432</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 18</div>
+        <div class="problem-content">
+            \( 39 \times 9 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-18')">Show Answer</button>
+        <div id="sol-18" class="solution-container">
+            <p>\( 9 \times 9 = 81 \) (write 1, carry 8)</p>
+            <p>\( 3 \times 9 = 27 \); \( 27 + 8 = 35 \)</p>
+            <p class="correct-answer">Answer: 351</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 19</div>
+        <div class="problem-content">
+            \( 40 \times 9 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-19')">Show Answer</button>
+        <div id="sol-19" class="solution-container">
+            <p>\( 4 \times 9 = 36 \)</p>
+            <p>Append the zero.</p>
+            <p class="correct-answer">Answer: 360</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 20</div>
+        <div class="problem-content">
+            \( 3.68 + 2.4 + 15.2 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-20')">Show Answer</button>
+        <div id="sol-20" class="solution-container">
+            <p>Align the decimal points:</p>
+            <p>
+            \[
+            \begin{array}{r@{\quad}l}
+               3.68 & \\
+               2.40 & (\text{add zero}) \\
+            + 15.20 & (\text{add zero}) \\
+            \hline
+              21.28 &
+            \end{array}
+            \]
+            </p>
+            <p class="correct-answer">Answer: 21.28</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 21</div>
+        <div class="problem-content">
+            \( 4y = 32 \). Find \( y \).
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-21')">Show Answer</button>
+        <div id="sol-21" class="solution-container">
+            <p>Divide both sides by 4.</p>
+            <p>\( y = 32 \div 4 \)</p>
+            <p class="correct-answer">Answer: 8</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 22</div>
+        <div class="problem-content">
+            \( 43 \div 7 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-22')">Show Answer</button>
+        <div id="sol-22" class="solution-container">
+            <p>\( 7 \times 6 = 42 \)</p>
+            <p>\( 43 - 42 = 1 \)</p>
+            <p class="correct-answer">Answer: 6 R1 (6 with a remainder of 1)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 23</div>
+        <div class="problem-content">
+            \( 9 \overline{)64} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-23')">Show Answer</button>
+        <div id="sol-23" class="solution-container">
+            <p>\( 9 \times 7 = 63 \)</p>
+            <p>\( 64 - 63 = 1 \)</p>
+            <p class="correct-answer">Answer: 7 R1</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 24</div>
+        <div class="problem-content">
+            One inch equals 2.54 cm. Use words to write 2.54 cm.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-24')">Show Answer</button>
+        <div id="sol-24" class="solution-container">
+            <p>Read the decimal places. 54 is in the "hundredths" place.</p>
+            <p class="correct-answer">Answer: Two and fifty-four hundredths centimeters</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 25</div>
+        <div class="problem-content">
+            The answer to 52 divided by 9 is not a whole number. What whole number represents a reasonable estimate of the answer? Explain why you chose that number.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-25')">Show Answer</button>
+        <div id="sol-25" class="solution-container">
+            <p>Multiples of 9 are: 9, 18, 27, 36, 45, 54.</p>
+            <p>52 is very close to 54. Since \( 54 \div 9 = 6 \), 6 is the best estimate.</p>
+            <p class="correct-answer">Answer: 6 (Because 6 × 9 is 54, which is close to 52)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 26</div>
+        <div class="problem-content">
+            a. Which line segment is the diameter of the circle?<br>
+            b. Name two intersecting line segments.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-26')">Show Answer</button>
+        <div id="sol-26" class="solution-container">
+            <p><strong>a. Diameter:</strong> The line passing through the center (M) from edge to edge is RT.</p>
+            <p><strong>b. Intersecting:</strong> The lines that cross each other are RT and SM.</p>
+            <p class="correct-answer">Answer: a) Segment RT, b) RT and SM</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 27</div>
+        <div class="problem-content">
+            a. Is $136.80 closer to $136 or to $137?<br>
+            b. Is 136.8 closer to 136 or to 137?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-27')">Show Answer</button>
+        <div id="sol-27" class="solution-container">
+            <p>Since the decimal part (.80 or .8) is greater than .50, round up.</p>
+            <p class="correct-answer">Answer: a) $137, b) 137</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 28</div>
+        <div class="problem-content">
+            a. What fraction of the large square is shaded?<br>
+            b. The shaded part of the large square represents what number?<br>
+            c. What percent of the large square is shaded?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-28')">Show Answer</button>
+        <div id="sol-28" class="solution-container">
+            <p><strong>Context:</strong> A 10x10 grid (100 squares). 2 squares are empty. 98 are shaded.</p>
+            <p class="correct-answer">
+                a) 98/100 (or 49/50)<br>
+                b) 0.98<br>
+                c) 98%
+            </p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 29</div>
+        <div class="problem-content">
+            Write a rule that describes the relationship of the data in the table.<br>
+            <strong>$1 Bills:</strong> 10, 20, 30, 40, 50<br>
+            <strong>$10 Bills:</strong> 1, 2, 3, 4, 5
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-29')">Show Answer</button>
+        <div id="sol-29" class="solution-container">
+            <p>Compare the top row to the bottom row.</p>
+            <p class="correct-answer">Answer: Divide the number of $1 bills by 10 to get the number of $10 bills.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 30</div>
+        <div class="problem-content">
+            Show all the different ways these bills can be arranged in a row: One $1 bill, One $5 bill, One $10 bill.
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol-30')">Show Answer</button>
+        <div id="sol-30" class="solution-container">
+            <p>This is a permutation of 3 items. There are 6 possible ways:</p>
+            <ul class="correct-answer">
+                <li>$1, $5, $10</li>
+                <li>$1, $10, $5</li>
+                <li>$5, $1, $10</li>
+                <li>$5, $10, $1</li>
+                <li>$10, $1, $5</li>
+                <li>$10, $5, $1</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var x = document.getElementById(id);
+            var btn = x.previousElementSibling;
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                btn.textContent = "Show Answer";
+            } else {
+                x.style.display = "block";
+                btn.textContent = "Hide Answer";
+            }
+        }
+    </script>
+</body>
+</html>
