@@ -3,50 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Skills Quiz</title>
+    <title>Comprehensive Math Practice</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0f7fa;
+            background-color: #f0f2f5;
             color: #333;
-            max-width: 700px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #00838f;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
         }
-        .score-box {
-            background-color: white;
-            color: #00838f;
-            padding: 10px 20px;
-            border-radius: 20px;
+        .score-display {
+            font-size: 1.5em;
             font-weight: bold;
-            font-size: 1.2em;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .section-title {
+            background-color: #fff;
+            padding: 15px;
+            border-left: 6px solid #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .question-card {
             background: white;
             border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .question-card:hover {
-            transform: translateY(-2px);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
         .question-text {
-            font-size: 1.15em;
+            font-size: 1.1em;
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -55,171 +63,525 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
         .option-btn {
-            background-color: #f0f4c3;
-            border: 2px solid #dce775;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
             padding: 12px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.95em;
             text-align: left;
             transition: all 0.2s;
         }
         .option-btn:hover {
-            background-color: #dce775;
+            background-color: #e2e6ea;
+            border-color: #cbd3da;
         }
         .option-btn.correct {
-            background-color: #a5d6a7 !important;
-            border-color: #2e7d32 !important;
-            color: #1b5e20;
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+            position: relative;
+        }
+        .option-btn.correct::after {
+            content: "✔";
+            position: absolute;
+            right: 15px;
+            font-weight: bold;
         }
         .option-btn.wrong {
-            background-color: #ef9a9a !important;
-            border-color: #c62828 !important;
-            color: #b71c1c;
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+            opacity: 0.7;
         }
         .explanation {
             display: none;
             margin-top: 15px;
             padding: 15px;
-            background-color: #e1f5fe;
-            border-left: 5px solid #0288d1;
+            background-color: #e7f3ff;
+            border-left: 4px solid #0056b3;
             border-radius: 4px;
-            animation: fadeIn 0.5s;
+            font-size: 0.95em;
+            animation: slideDown 0.3s ease-out;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Math Skills Practice</h1>
-        <div class="score-box">Score: <span id="score">0</span> / 5</div>
+        <h1>Mastery Quiz</h1>
+        <div class="score-display">Score: <span id="score">0</span> / 35</div>
     </div>
 
-    <div class="question-card" id="q1">
-        <div class="question-text">
-            1. Jason finished his homework 45 minutes before the time shown on the clock. If the clock shows 5:15, what time did Jason finish his homework?
-        </div>
-        <div class="options-grid">
-            <button class="option-btn" onclick="checkAnswer(1, 0)">A. 4:45</button>
-            <button class="option-btn" onclick="checkAnswer(1, 1)">B. 4:30</button>
-            <button class="option-btn" onclick="checkAnswer(1, 2)">C. 5:00</button>
-            <button class="option-btn" onclick="checkAnswer(1, 3)">D. 6:00</button>
-        </div>
-        <div class="explanation" id="exp1">
-            <strong>Answer: B (4:30)</strong><br>
-            If the clock is at 5:15, subtract 15 minutes to get to 5:00. You still need to subtract 30 more minutes. 5:00 minus 30 minutes is 4:30.
-        </div>
+    <div class="section-title">
+        <h2>Topic 1: Time Calculations (Ref #8)</h2>
+        <p>Skills: Elapsed time, reading clocks, subtracting time.</p>
     </div>
 
-    <div class="question-card" id="q2">
-        <div class="question-text">
-            2. On a centimeter ruler, point A is at the 3 cm mark and point B is at the 11 cm mark. What is the length of the segment AB?
-        </div>
+    <div class="question-card" id="q1_1">
+        <div class="question-text">1. Sarah's practice started 30 minutes before the clock showed 4:15. What time did practice start?</div>
         <div class="options-grid">
-            <button class="option-btn" onclick="checkAnswer(2, 0)">A. 14 cm</button>
-            <button class="option-btn" onclick="checkAnswer(2, 1)">B. 9 cm</button>
-            <button class="option-btn" onclick="checkAnswer(2, 2)">C. 8 cm</button>
-            <button class="option-btn" onclick="checkAnswer(2, 3)">D. 7 cm</button>
+            <button class="option-btn" onclick="check(this, '1_1', 0, 'To find 30 mins before 4:15: Subtract 15 mins to get 4:00, then 15 more to get 3:45.')">A. 3:45</button>
+            <button class="option-btn" onclick="check(this, '1_1', 1)">B. 3:30</button>
+            <button class="option-btn" onclick="check(this, '1_1', 2)">C. 4:45</button>
+            <button class="option-btn" onclick="check(this, '1_1', 3)">D. 4:00</button>
         </div>
-        <div class="explanation" id="exp2">
-            <strong>Answer: C (8 cm)</strong><br>
-            To find the length, subtract the starting point from the ending point: \( 11 - 3 = 8 \).
-        </div>
+        <div class="explanation" id="exp_1_1"></div>
     </div>
 
-    <div class="question-card" id="q3">
-        <div class="question-text">
-            3. A teacher has 22 pencils and wants to put them into boxes that hold 5 pencils each. How many full boxes can be made, and how many pencils will be left over?
-        </div>
+    <div class="question-card" id="q1_2">
+        <div class="question-text">2. The movie ended at 8:10 PM. It was 2 hours and 15 minutes long. When did it start?</div>
         <div class="options-grid">
-            <button class="option-btn" onclick="checkAnswer(3, 0)">A. 5 boxes, 2 left over</button>
-            <button class="option-btn" onclick="checkAnswer(3, 1)">B. 4 boxes, 2 left over</button>
-            <button class="option-btn" onclick="checkAnswer(3, 2)">C. 4 boxes, 0 left over</button>
-            <button class="option-btn" onclick="checkAnswer(3, 3)">D. 3 boxes, 7 left over</button>
+            <button class="option-btn" onclick="check(this, '1_2', 0)">A. 6:05 PM</button>
+            <button class="option-btn" onclick="check(this, '1_2', 1, 'Subtract 2 hours from 8:10 to get 6:10. Then subtract 15 minutes. 6:10 minus 10 mins is 6:00, minus 5 more is 5:55.')">B. 5:55 PM</button>
+            <button class="option-btn" onclick="check(this, '1_2', 2)">C. 5:45 PM</button>
+            <button class="option-btn" onclick="check(this, '1_2', 3)">D. 10:25 PM</button>
         </div>
-        <div class="explanation" id="exp3">
-            <strong>Answer: B (4 boxes, 2 left over)</strong><br>
-            Divide 22 by 5. \( 5 \times 4 = 20 \). Since \( 22 - 20 = 2 \), the answer is 4 with a remainder of 2.
-        </div>
+        <div class="explanation" id="exp_1_2"></div>
     </div>
 
-    <div class="question-card" id="q4">
-        <div class="question-text">
-            4. Solve the expression using the correct order of operations: <br>
-            \( (12 - 2) \div \sqrt{25} \)
-        </div>
+    <div class="question-card" id="q1_3">
+        <div class="question-text">3. If it is currently 1:50 PM, what time was it 40 minutes ago?</div>
         <div class="options-grid">
-            <button class="option-btn" onclick="checkAnswer(4, 0)">A. 2</button>
-            <button class="option-btn" onclick="checkAnswer(4, 1)">B. 5</button>
-            <button class="option-btn" onclick="checkAnswer(4, 2)">C. 10</button>
-            <button class="option-btn" onclick="checkAnswer(4, 3)">D. 50</button>
+            <button class="option-btn" onclick="check(this, '1_3', 0, 'Subtract 40 minutes from the minutes side: 50 - 40 = 10. The hour stays the same.')">A. 1:10 PM</button>
+            <button class="option-btn" onclick="check(this, '1_3', 1)">B. 1:20 PM</button>
+            <button class="option-btn" onclick="check(this, '1_3', 2)">C. 12:50 PM</button>
+            <button class="option-btn" onclick="check(this, '1_3', 3)">D. 2:30 PM</button>
         </div>
-        <div class="explanation" id="exp4">
-            <strong>Answer: A (2)</strong><br>
-            1. Parentheses: \( 12 - 2 = 10 \)<br>
-            2. Roots: \( \sqrt{25} = 5 \)<br>
-            3. Division: \( 10 \div 5 = 2 \)
-        </div>
+        <div class="explanation" id="exp_1_3"></div>
     </div>
 
-    <div class="question-card" id="q5">
-        <div class="question-text">
-            5. How many different 3-digit numbers can you make using the digits 1, 5, and 9 exactly once in each number?
-        </div>
+    <div class="question-card" id="q1_4">
+        <div class="question-text">4. A bus arrives at 7:05. You arrived 20 minutes early. What time did you arrive?</div>
         <div class="options-grid">
-            <button class="option-btn" onclick="checkAnswer(5, 0)">A. 3</button>
-            <button class="option-btn" onclick="checkAnswer(5, 1)">B. 5</button>
-            <button class="option-btn" onclick="checkAnswer(5, 2)">C. 6</button>
-            <button class="option-btn" onclick="checkAnswer(5, 3)">D. 9</button>
+            <button class="option-btn" onclick="check(this, '1_4', 0)">A. 6:55</button>
+            <button class="option-btn" onclick="check(this, '1_4', 1, '7:05 minus 5 mins is 7:00. You still need to subtract 15 mins. 7:00 - 15 mins = 6:45.')">B. 6:45</button>
+            <button class="option-btn" onclick="check(this, '1_4', 2)">C. 6:35</button>
+            <button class="option-btn" onclick="check(this, '1_4', 3)">D. 7:25</button>
         </div>
-        <div class="explanation" id="exp5">
-            <strong>Answer: C (6)</strong><br>
-            You can list them to check: 159, 195, 519, 591, 915, 951. That is 6 different numbers.
+        <div class="explanation" id="exp_1_4"></div>
+    </div>
+
+    <div class="question-card" id="q1_5">
+        <div class="question-text">5. Calculating forward: If it is 9:45 AM, what time will it be in 1 hour and 30 minutes?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '1_5', 0)">A. 10:15 AM</button>
+            <button class="option-btn" onclick="check(this, '1_5', 1)">B. 10:45 AM</button>
+            <button class="option-btn" onclick="check(this, '1_5', 2, 'Add 1 hour to get 10:45. Add 30 minutes: 15 mins to get to 11:00, and 15 more makes 11:15.')">C. 11:15 AM</button>
+            <button class="option-btn" onclick="check(this, '1_5', 3)">D. 11:45 AM</button>
         </div>
+        <div class="explanation" id="exp_1_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 2: Measurement & Number Lines (Ref #10)</h2>
+        <p>Skills: Calculating distance between points, reading rulers.</p>
+    </div>
+
+    <div class="question-card" id="q2_1">
+        <div class="question-text">6. Point A is at 5 cm. Point B is at 12 cm. What is the length of segment AB?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '2_1', 0, 'Subtract the start from the end: 12 - 5 = 7.')">A. 7 cm</button>
+            <button class="option-btn" onclick="check(this, '2_1', 1)">B. 17 cm</button>
+            <button class="option-btn" onclick="check(this, '2_1', 2)">C. 6 cm</button>
+            <button class="option-btn" onclick="check(this, '2_1', 3)">D. 8 cm</button>
+        </div>
+        <div class="explanation" id="exp_2_1"></div>
+    </div>
+
+    <div class="question-card" id="q2_2">
+        <div class="question-text">7. A worm started at the 2 inch mark and crawled to the 8 inch mark. How far did it crawl?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '2_2', 0)">A. 10 inches</button>
+            <button class="option-btn" onclick="check(this, '2_2', 1, 'End point (8) minus Start point (2) = 6 inches.')">B. 6 inches</button>
+            <button class="option-btn" onclick="check(this, '2_2', 2)">C. 5 inches</button>
+            <button class="option-btn" onclick="check(this, '2_2', 3)">D. 4 inches</button>
+        </div>
+        <div class="explanation" id="exp_2_2"></div>
+    </div>
+
+    <div class="question-card" id="q2_3">
+        <div class="question-text">8. A ribbon is 15 cm long. If you cut 4 cm off one end, how long is the remaining piece?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '2_3', 0)">A. 19 cm</button>
+            <button class="option-btn" onclick="check(this, '2_3', 1)">B. 12 cm</button>
+            <button class="option-btn" onclick="check(this, '2_3', 2, 'Simple subtraction: 15 - 4 = 11.')">C. 11 cm</button>
+            <button class="option-btn" onclick="check(this, '2_3', 3)">D. 10 cm</button>
+        </div>
+        <div class="explanation" id="exp_2_3"></div>
+    </div>
+
+    <div class="question-card" id="q2_4">
+        <div class="question-text">9. On a number line, what is the distance between 20 and 35?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '2_4', 0)">A. 10</button>
+            <button class="option-btn" onclick="check(this, '2_4', 1, '35 - 20 = 15.')">B. 15</button>
+            <button class="option-btn" onclick="check(this, '2_4', 2)">C. 55</button>
+            <button class="option-btn" onclick="check(this, '2_4', 3)">D. 25</button>
+        </div>
+        <div class="explanation" id="exp_2_4"></div>
+    </div>
+
+    <div class="question-card" id="q2_5">
+        <div class="question-text">10. Two sticks are placed end-to-end. One is 12 cm and the other is 9 cm. What is the total length?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '2_5', 0, 'Since they are end-to-end, you add them: 12 + 9 = 21.')">A. 21 cm</button>
+            <button class="option-btn" onclick="check(this, '2_5', 1)">B. 3 cm</button>
+            <button class="option-btn" onclick="check(this, '2_5', 2)">C. 20 cm</button>
+            <button class="option-btn" onclick="check(this, '2_5', 3)">D. 22 cm</button>
+        </div>
+        <div class="explanation" id="exp_2_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 3: Division (Ref #20)</h2>
+        <p>Skills: Standard division, finding remainders.</p>
+    </div>
+
+    <div class="question-card" id="q3_1">
+        <div class="question-text">11. Solve: \( 17 \div 3 \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '3_1', 0)">A. 6 R 0</button>
+            <button class="option-btn" onclick="check(this, '3_1', 1, '3 goes into 17 five times (15). 17 - 15 = 2. So, 5 Remainder 2.')">B. 5 R 2</button>
+            <button class="option-btn" onclick="check(this, '3_1', 2)">C. 4 R 5</button>
+            <button class="option-btn" onclick="check(this, '3_1', 3)">D. 5 R 1</button>
+        </div>
+        <div class="explanation" id="exp_3_1"></div>
+    </div>
+
+    <div class="question-card" id="q3_2">
+        <div class="question-text">12. Solve: \( 25 \div 4 \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '3_2', 0, '4 x 6 = 24. 25 - 24 = 1. Answer: 6 R 1.')">A. 6 R 1</button>
+            <button class="option-btn" onclick="check(this, '3_2', 1)">B. 5 R 5</button>
+            <button class="option-btn" onclick="check(this, '3_2', 2)">C. 7 R 0</button>
+            <button class="option-btn" onclick="check(this, '3_2', 3)">D. 6 R 3</button>
+        </div>
+        <div class="explanation" id="exp_3_2"></div>
+    </div>
+
+    <div class="question-card" id="q3_3">
+        <div class="question-text">13. Which division problem has a remainder of 0?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '3_3', 0)">A. \( 10 \div 3 \)</button>
+            <button class="option-btn" onclick="check(this, '3_3', 1)">B. \( 15 \div 4 \)</button>
+            <button class="option-btn" onclick="check(this, '3_3', 2, '20 divided by 5 is exactly 4. No remainder.')">C. \( 20 \div 5 \)</button>
+            <button class="option-btn" onclick="check(this, '3_3', 3)">D. \( 9 \div 2 \)</button>
+        </div>
+        <div class="explanation" id="exp_3_3"></div>
+    </div>
+
+    <div class="question-card" id="q3_4">
+        <div class="question-text">14. \( 45 \div 6 = \) ?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '3_4', 0)">A. 8 R 1</button>
+            <button class="option-btn" onclick="check(this, '3_4', 1)">B. 6 R 5</button>
+            <button class="option-btn" onclick="check(this, '3_4', 2)">C. 7 R 0</button>
+            <button class="option-btn" onclick="check(this, '3_4', 3, '6 x 7 = 42. 45 - 42 = 3. Answer: 7 R 3.')">D. 7 R 3</button>
+        </div>
+        <div class="explanation" id="exp_3_4"></div>
+    </div>
+
+    <div class="question-card" id="q3_5">
+        <div class="question-text">15. How many 8s are in 34?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '3_5', 0, '8 x 4 = 32. That is the closest without going over. There are 4 eights, with 2 left over.')">A. 4</button>
+            <button class="option-btn" onclick="check(this, '3_5', 1)">B. 3</button>
+            <button class="option-btn" onclick="check(this, '3_5', 2)">C. 5</button>
+            <button class="option-btn" onclick="check(this, '3_5', 3)">D. 6</button>
+        </div>
+        <div class="explanation" id="exp_3_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 4: Grouping & Visualization (Ref #22)</h2>
+        <p>Skills: Understanding division as grouping items.</p>
+    </div>
+
+    <div class="question-card" id="q4_1">
+        <div class="question-text">16. You have 14 cookies. You circle groups of 3. How many full groups do you have?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '4_1', 0, '3, 6, 9, 12... You can make 4 groups (12 cookies). You cannot make a 5th group because you only have 14.')">A. 4</button>
+            <button class="option-btn" onclick="check(this, '4_1', 1)">B. 3</button>
+            <button class="option-btn" onclick="check(this, '4_1', 2)">C. 5</button>
+            <button class="option-btn" onclick="check(this, '4_1', 3)">D. 6</button>
+        </div>
+        <div class="explanation" id="exp_4_1"></div>
+    </div>
+
+    <div class="question-card" id="q4_2">
+        <div class="question-text">17. If you draw 20 stars and group them into sets of 5, how many stars are left over?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '4_2', 0)">A. 1</button>
+            <button class="option-btn" onclick="check(this, '4_2', 1)">B. 5</button>
+            <button class="option-btn" onclick="check(this, '4_2', 2, '20 is perfectly divisible by 5. There is 0 remainder.')">C. 0</button>
+            <button class="option-btn" onclick="check(this, '4_2', 3)">D. 4</button>
+        </div>
+        <div class="explanation" id="exp_4_2"></div>
+    </div>
+
+    <div class="question-card" id="q4_3">
+        <div class="question-text">18. You are packing 25 apples into bags. Each bag holds 6 apples. How many apples are left unpacked?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '4_3', 0, '6, 12, 18, 24. That uses 24 apples. 25 - 24 = 1 apple left.')">A. 1</button>
+            <button class="option-btn" onclick="check(this, '4_3', 1)">B. 2</button>
+            <button class="option-btn" onclick="check(this, '4_3', 2)">C. 4</button>
+            <button class="option-btn" onclick="check(this, '4_3', 3)">D. 5</button>
+        </div>
+        <div class="explanation" id="exp_4_3"></div>
+    </div>
+
+    <div class="question-card" id="q4_4">
+        <div class="question-text">19. Which picture describes \( 13 \div 4 \)?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '4_4', 0)">A. 3 groups of 4, 0 left over</button>
+            <button class="option-btn" onclick="check(this, '4_4', 1, '3 groups of 4 equals 12. 13 minus 12 is 1 left over.')">B. 3 groups of 4, 1 left over</button>
+            <button class="option-btn" onclick="check(this, '4_4', 2)">C. 4 groups of 4, 1 left over</button>
+            <button class="option-btn" onclick="check(this, '4_4', 3)">D. 2 groups of 4, 5 left over</button>
+        </div>
+        <div class="explanation" id="exp_4_4"></div>
+    </div>
+
+    <div class="question-card" id="q4_5">
+        <div class="question-text">20. If you have 30 dots and divide them into groups of 7, how many dots are in the last incomplete group (the remainder)?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '4_5', 0)">A. 1</button>
+            <button class="option-btn" onclick="check(this, '4_5', 1, '7, 14, 21, 28. That makes 4 groups. 30 - 28 = 2 dots left.')">B. 2</button>
+            <button class="option-btn" onclick="check(this, '4_5', 2)">C. 3</button>
+            <button class="option-btn" onclick="check(this, '4_5', 3)">D. 4</button>
+        </div>
+        <div class="explanation" id="exp_4_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 5: Order of Operations (Ref #23)</h2>
+        <p>Skills: PEMDAS, Parentheses, Square Roots, Division.</p>
+    </div>
+
+    <div class="question-card" id="q5_1">
+        <div class="question-text">21. Solve: \( \sqrt{81} \div 3 \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '5_1', 0)">A. 9</button>
+            <button class="option-btn" onclick="check(this, '5_1', 1, 'First, find the root of 81, which is 9. Then, 9 / 3 = 3.')">B. 3</button>
+            <button class="option-btn" onclick="check(this, '5_1', 2)">C. 27</button>
+            <button class="option-btn" onclick="check(this, '5_1', 3)">D. 81</button>
+        </div>
+        <div class="explanation" id="exp_5_1"></div>
+    </div>
+
+    <div class="question-card" id="q5_2">
+        <div class="question-text">22. Solve: \( 10 + (20 \div 5) \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '5_2', 0)">A. 6</button>
+            <button class="option-btn" onclick="check(this, '5_2', 1, 'Do the parentheses first: 20 / 5 = 4. Then add: 10 + 4 = 14.')">B. 14</button>
+            <button class="option-btn" onclick="check(this, '5_2', 2)">C. 30</button>
+            <button class="option-btn" onclick="check(this, '5_2', 3)">D. 25</button>
+        </div>
+        <div class="explanation" id="exp_5_2"></div>
+    </div>
+
+    <div class="question-card" id="q5_3">
+        <div class="question-text">23. Solve: \( \sqrt{16} \times (2 + 3) \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '5_3', 0, 'Root of 16 is 4. Parentheses (2+3) is 5. Multiply 4 x 5 = 20.')">A. 20</button>
+            <button class="option-btn" onclick="check(this, '5_3', 1)">B. 11</button>
+            <button class="option-btn" onclick="check(this, '5_3', 2)">C. 9</button>
+            <button class="option-btn" onclick="check(this, '5_3', 3)">D. 24</button>
+        </div>
+        <div class="explanation" id="exp_5_3"></div>
+    </div>
+
+    <div class="question-card" id="q5_4">
+        <div class="question-text">24. What is the first step in solving \( (15 - 5) \div 2 \)?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '5_4', 0)">A. Divide 5 by 2</button>
+            <button class="option-btn" onclick="check(this, '5_4', 1, 'Parentheses always come first in Order of Operations.')">B. Subtract 5 from 15</button>
+            <button class="option-btn" onclick="check(this, '5_4', 2)">C. Divide 15 by 2</button>
+            <button class="option-btn" onclick="check(this, '5_4', 3)">D. Add 15 and 5</button>
+        </div>
+        <div class="explanation" id="exp_5_4"></div>
+    </div>
+
+    <div class="question-card" id="q5_5">
+        <div class="question-text">25. Solve: \( 12 \div \sqrt{4} \)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '5_5', 0, 'Root of 4 is 2. 12 divided by 2 is 6.')">A. 6</button>
+            <button class="option-btn" onclick="check(this, '5_5', 1)">B. 3</button>
+            <button class="option-btn" onclick="check(this, '5_5', 2)">C. 4</button>
+            <button class="option-btn" onclick="check(this, '5_5', 3)">D. 48</button>
+        </div>
+        <div class="explanation" id="exp_5_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 6: Estimation (Ref #26)</h2>
+        <p>Skills: Mental math, checking if answers make sense.</p>
+    </div>
+
+    <div class="question-card" id="q6_1">
+        <div class="question-text">26. 1 pound is 16 ounces. John estimates 3 pounds is about 50 ounces. Is this reasonable?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '6_1', 0, '3 x 16 = 48. 48 is very close to 50. Yes, it is reasonable.')">A. Yes, because 3 x 16 = 48</button>
+            <button class="option-btn" onclick="check(this, '6_1', 1)">B. No, because 3 x 16 = 30</button>
+            <button class="option-btn" onclick="check(this, '6_1', 2)">C. No, because 50 is too small</button>
+            <button class="option-btn" onclick="check(this, '6_1', 3)">D. Yes, because 1 pound = 50 ounces</button>
+        </div>
+        <div class="explanation" id="exp_6_1"></div>
+    </div>
+
+    <div class="question-card" id="q6_2">
+        <div class="question-text">27. A car drives 60 miles in 1 hour. Is it reasonable to say it drives 300 miles in 5 hours?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '6_2', 0, '60 x 5 = 300. It is exactly correct, so it is reasonable.')">A. Yes, 60 x 5 = 300</button>
+            <button class="option-btn" onclick="check(this, '6_2', 1)">B. No, that is too far</button>
+            <button class="option-btn" onclick="check(this, '6_2', 2)">C. No, it should be 100 miles</button>
+            <button class="option-btn" onclick="check(this, '6_2', 3)">D. Yes, 60 + 5 = 300</button>
+        </div>
+        <div class="explanation" id="exp_6_2"></div>
+    </div>
+
+    <div class="question-card" id="q6_3">
+        <div class="question-text">28. 1 meter is 100 cm. Tina estimates 2.5 meters is 250 cm. Is she correct?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '6_3', 0, '2.5 x 100 = 250. She is exactly correct.')">A. Yes</button>
+            <button class="option-btn" onclick="check(this, '6_3', 1)">B. No, it should be 2500 cm</button>
+            <button class="option-btn" onclick="check(this, '6_3', 2)">C. No, it should be 25 cm</button>
+            <button class="option-btn" onclick="check(this, '6_3', 3)">D. No, it is impossible to know</button>
+        </div>
+        <div class="explanation" id="exp_6_3"></div>
+    </div>
+
+    <div class="question-card" id="q6_4">
+        <div class="question-text">29. A candy bar costs $1.90. Is it reasonable to estimate that 5 bars cost $10.00?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '6_4', 0, '$1.90 is close to $2.00. 5 x $2.00 = $10.00. Yes, it is a good estimate.')">A. Yes, $1.90 is close to $2</button>
+            <button class="option-btn" onclick="check(this, '6_4', 1)">B. No, 5 bars cost $5</button>
+            <button class="option-btn" onclick="check(this, '6_4', 2)">C. No, that is way too expensive</button>
+            <button class="option-btn" onclick="check(this, '6_4', 3)">D. Yes, because $1.90 is $10</button>
+        </div>
+        <div class="explanation" id="exp_6_4"></div>
+    </div>
+
+    <div class="question-card" id="q6_5">
+        <div class="question-text">30. 1 foot is 12 inches. Rob says 10 feet is about 100 inches. Is his estimate high or low?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '6_5', 0, 'The exact value is 10 x 12 = 120. His estimate of 100 is lower than 120.')">A. Low (Actual is 120)</button>
+            <button class="option-btn" onclick="check(this, '6_5', 1)">B. High (Actual is 90)</button>
+            <button class="option-btn" onclick="check(this, '6_5', 2)">C. Correct (Actual is 100)</button>
+            <button class="option-btn" onclick="check(this, '6_5', 3)">D. Low (Actual is 200)</button>
+        </div>
+        <div class="explanation" id="exp_6_5"></div>
+    </div>
+
+
+    <div class="section-title">
+        <h2>Topic 7: Combinations (Ref #30)</h2>
+        <p>Skills: Place value, arranging digits, permutations.</p>
+    </div>
+
+    <div class="question-card" id="q7_1">
+        <div class="question-text">31. How many 3-digit numbers can be made with digits 1, 2, 3 (used exactly once)?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '7_1', 0, '123, 132, 213, 231, 312, 321. Total 6.')">A. 6</button>
+            <button class="option-btn" onclick="check(this, '7_1', 1)">B. 3</button>
+            <button class="option-btn" onclick="check(this, '7_1', 2)">C. 9</button>
+            <button class="option-btn" onclick="check(this, '7_1', 3)">D. 4</button>
+        </div>
+        <div class="explanation" id="exp_7_1"></div>
+    </div>
+
+    <div class="question-card" id="q7_2">
+        <div class="question-text">32. Using digits 5, 7, 9, what is the smallest number you can make?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '7_2', 0)">A. 597</button>
+            <button class="option-btn" onclick="check(this, '7_2', 1, 'Put the smallest digit (5) in the hundreds place, the next (7) in the tens, and the largest (9) in the ones: 579.')">B. 579</button>
+            <button class="option-btn" onclick="check(this, '7_2', 2)">C. 759</button>
+            <button class="option-btn" onclick="check(this, '7_2', 3)">D. 975</button>
+        </div>
+        <div class="explanation" id="exp_7_2"></div>
+    </div>
+
+    <div class="question-card" id="q7_3">
+        <div class="question-text">33. Using digits 4, 0, 8, what is the largest number you can make?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '7_3', 0, 'Put the largest digit (8) first, then 4, then 0: 840.')">A. 840</button>
+            <button class="option-btn" onclick="check(this, '7_3', 1)">B. 804</button>
+            <button class="option-btn" onclick="check(this, '7_3', 2)">C. 480</button>
+            <button class="option-btn" onclick="check(this, '7_3', 3)">D. 084</button>
+        </div>
+        <div class="explanation" id="exp_7_3"></div>
+    </div>
+
+    <div class="question-card" id="q7_4">
+        <div class="question-text">34. Which list shows all combinations of 1, 2, 3 starting with 1?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '7_4', 0)">A. 123, 132, 111</button>
+            <button class="option-btn" onclick="check(this, '7_4', 1, 'Fix 1 in the front. The other two can be 23 or 32.')">B. 123, 132</button>
+            <button class="option-btn" onclick="check(this, '7_4', 2)">C. 123, 213</button>
+            <button class="option-btn" onclick="check(this, '7_4', 3)">D. 111, 222</button>
+        </div>
+        <div class="explanation" id="exp_7_4"></div>
+    </div>
+
+    <div class="question-card" id="q7_5">
+        <div class="question-text">35. If you can use digits 2 and 4, how many 2-digit numbers can you make (using each once)?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="check(this, '7_5', 0, '24 and 42. Only 2 numbers.')">A. 2</button>
+            <button class="option-btn" onclick="check(this, '7_5', 1)">B. 4</button>
+            <button class="option-btn" onclick="check(this, '7_5', 2)">C. 1</button>
+            <button class="option-btn" onclick="check(this, '7_5', 3)">D. 3</button>
+        </div>
+        <div class="explanation" id="exp_7_5"></div>
     </div>
 
     <script>
-        // Correct answers index for Q1 to Q5
-        const correctAnswers = {
-            1: 1, // B
-            2: 2, // C
-            3: 1, // B
-            4: 0, // A
-            5: 2  // C
-        };
+        let score = 0;
+        let answered = {}; // Object to track answered question IDs
 
-        let currentScore = 0;
-        let answeredQuestions = [];
+        function check(btn, questionId, correctIndex, explanationText) {
+            // If this question has already been answered, do nothing
+            if (answered[questionId]) return;
 
-        function checkAnswer(qNum, selectedIndex) {
-            // Prevent changing answer
-            if (answeredQuestions.includes(qNum)) return;
+            // Mark question as answered
+            answered[questionId] = true;
+
+            // Find all buttons in this question's container
+            let parent = btn.parentElement;
+            let buttons = parent.getElementsByClassName('option-btn');
             
-            answeredQuestions.push(qNum);
-            
-            const buttons = document.querySelectorAll(`#q${qNum} .option-btn`);
-            const explanation = document.getElementById(`exp${qNum}`);
-            const correctIndex = correctAnswers[qNum];
+            // Identify the clicked button's index
+            let clickedIndex = Array.from(buttons).indexOf(btn);
 
-            // Highlight chosen and correct answers
-            if (selectedIndex === correctIndex) {
-                buttons[selectedIndex].classList.add('correct');
-                currentScore++;
-                document.getElementById('score').innerText = currentScore;
+            // Logic for Correct/Incorrect
+            if (clickedIndex === correctIndex) {
+                btn.classList.add('correct');
+                score++;
+                document.getElementById('score').innerText = score;
+                document.getElementById('exp_' + questionId).innerHTML = 
+                    "<strong style='color:green'>Correct!</strong> " + (explanationText || "");
             } else {
-                buttons[selectedIndex].classList.add('wrong');
-                buttons[correctIndex].classList.add('correct');
+                btn.classList.add('wrong');
+                buttons[correctIndex].classList.add('correct'); // Show the right answer
+                document.getElementById('exp_' + questionId).innerHTML = 
+                    "<strong style='color:red'>Incorrect.</strong> " + (explanationText || "");
             }
 
             // Show explanation
-            explanation.style.display = 'block';
+            document.getElementById('exp_' + questionId).style.display = 'block';
         }
     </script>
-
 </body>
 </html>
