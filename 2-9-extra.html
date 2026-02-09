@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Skills Quiz</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #00838f;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .score-box {
+            background-color: white;
+            color: #00838f;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+        }
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .option-btn {
+            background-color: #f0f4c3;
+            border: 2px solid #dce775;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            background-color: #dce775;
+        }
+        .option-btn.correct {
+            background-color: #a5d6a7 !important;
+            border-color: #2e7d32 !important;
+            color: #1b5e20;
+        }
+        .option-btn.wrong {
+            background-color: #ef9a9a !important;
+            border-color: #c62828 !important;
+            color: #b71c1c;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e1f5fe;
+            border-left: 5px solid #0288d1;
+            border-radius: 4px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Math Skills Practice</h1>
+        <div class="score-box">Score: <span id="score">0</span> / 5</div>
+    </div>
+
+    <div class="question-card" id="q1">
+        <div class="question-text">
+            1. Jason finished his homework 45 minutes before the time shown on the clock. If the clock shows 5:15, what time did Jason finish his homework?
+        </div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(1, 0)">A. 4:45</button>
+            <button class="option-btn" onclick="checkAnswer(1, 1)">B. 4:30</button>
+            <button class="option-btn" onclick="checkAnswer(1, 2)">C. 5:00</button>
+            <button class="option-btn" onclick="checkAnswer(1, 3)">D. 6:00</button>
+        </div>
+        <div class="explanation" id="exp1">
+            <strong>Answer: B (4:30)</strong><br>
+            If the clock is at 5:15, subtract 15 minutes to get to 5:00. You still need to subtract 30 more minutes. 5:00 minus 30 minutes is 4:30.
+        </div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <div class="question-text">
+            2. On a centimeter ruler, point A is at the 3 cm mark and point B is at the 11 cm mark. What is the length of the segment AB?
+        </div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(2, 0)">A. 14 cm</button>
+            <button class="option-btn" onclick="checkAnswer(2, 1)">B. 9 cm</button>
+            <button class="option-btn" onclick="checkAnswer(2, 2)">C. 8 cm</button>
+            <button class="option-btn" onclick="checkAnswer(2, 3)">D. 7 cm</button>
+        </div>
+        <div class="explanation" id="exp2">
+            <strong>Answer: C (8 cm)</strong><br>
+            To find the length, subtract the starting point from the ending point: \( 11 - 3 = 8 \).
+        </div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <div class="question-text">
+            3. A teacher has 22 pencils and wants to put them into boxes that hold 5 pencils each. How many full boxes can be made, and how many pencils will be left over?
+        </div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(3, 0)">A. 5 boxes, 2 left over</button>
+            <button class="option-btn" onclick="checkAnswer(3, 1)">B. 4 boxes, 2 left over</button>
+            <button class="option-btn" onclick="checkAnswer(3, 2)">C. 4 boxes, 0 left over</button>
+            <button class="option-btn" onclick="checkAnswer(3, 3)">D. 3 boxes, 7 left over</button>
+        </div>
+        <div class="explanation" id="exp3">
+            <strong>Answer: B (4 boxes, 2 left over)</strong><br>
+            Divide 22 by 5. \( 5 \times 4 = 20 \). Since \( 22 - 20 = 2 \), the answer is 4 with a remainder of 2.
+        </div>
+    </div>
+
+    <div class="question-card" id="q4">
+        <div class="question-text">
+            4. Solve the expression using the correct order of operations: <br>
+            \( (12 - 2) \div \sqrt{25} \)
+        </div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(4, 0)">A. 2</button>
+            <button class="option-btn" onclick="checkAnswer(4, 1)">B. 5</button>
+            <button class="option-btn" onclick="checkAnswer(4, 2)">C. 10</button>
+            <button class="option-btn" onclick="checkAnswer(4, 3)">D. 50</button>
+        </div>
+        <div class="explanation" id="exp4">
+            <strong>Answer: A (2)</strong><br>
+            1. Parentheses: \( 12 - 2 = 10 \)<br>
+            2. Roots: \( \sqrt{25} = 5 \)<br>
+            3. Division: \( 10 \div 5 = 2 \)
+        </div>
+    </div>
+
+    <div class="question-card" id="q5">
+        <div class="question-text">
+            5. How many different 3-digit numbers can you make using the digits 1, 5, and 9 exactly once in each number?
+        </div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(5, 0)">A. 3</button>
+            <button class="option-btn" onclick="checkAnswer(5, 1)">B. 5</button>
+            <button class="option-btn" onclick="checkAnswer(5, 2)">C. 6</button>
+            <button class="option-btn" onclick="checkAnswer(5, 3)">D. 9</button>
+        </div>
+        <div class="explanation" id="exp5">
+            <strong>Answer: C (6)</strong><br>
+            You can list them to check: 159, 195, 519, 591, 915, 951. That is 6 different numbers.
+        </div>
+    </div>
+
+    <script>
+        // Correct answers index for Q1 to Q5
+        const correctAnswers = {
+            1: 1, // B
+            2: 2, // C
+            3: 1, // B
+            4: 0, // A
+            5: 2  // C
+        };
+
+        let currentScore = 0;
+        let answeredQuestions = [];
+
+        function checkAnswer(qNum, selectedIndex) {
+            // Prevent changing answer
+            if (answeredQuestions.includes(qNum)) return;
+            
+            answeredQuestions.push(qNum);
+            
+            const buttons = document.querySelectorAll(`#q${qNum} .option-btn`);
+            const explanation = document.getElementById(`exp${qNum}`);
+            const correctIndex = correctAnswers[qNum];
+
+            // Highlight chosen and correct answers
+            if (selectedIndex === correctIndex) {
+                buttons[selectedIndex].classList.add('correct');
+                currentScore++;
+                document.getElementById('score').innerText = currentScore;
+            } else {
+                buttons[selectedIndex].classList.add('wrong');
+                buttons[correctIndex].classList.add('correct');
+            }
+
+            // Show explanation
+            explanation.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
