@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .problem-title {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .question-content {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 5px solid #2ecc71;
+            border-radius: 4px;
+        }
+        .answer-box.visible {
+            display: block;
+        }
+        /* Visualizations */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 20px);
+            gap: 1px;
+            margin: 10px 0;
+        }
+        .grid-cell {
+            width: 20px;
+            height: 20px;
+            background-color: #ddd;
+            border: 1px solid #bbb;
+        }
+        .grid-cell.shaded {
+            background-color: #555;
+        }
+        .shape-box {
+            border: 2px solid #333;
+            width: 200px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            background: #fff;
+            position: relative;
+        }
+        .dot-group {
+            border: 2px dashed #e74c3c;
+            border-radius: 50%;
+            padding: 5px;
+            display: inline-block;
+            margin: 5px;
+        }
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Review</h1>
+    <p style="text-align: center;">Click the button below each question to reveal the step-by-step solution.</p>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 1</div>
+        <div class="question-content">
+            Raimi bought a toy for $1.85 and sold it for $0.75 more. For what price did he sell the toy?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans1')">Show Answer</button>
+        <div id="ans1" class="answer-box">
+            <p><strong>Equation:</strong> \( \text{Selling Price} = \text{Buying Price} + \text{Profit} \)</p>
+            <p>\( \text{Price} = 1.85 + 0.75 \)</p>
+            <p><strong>Answer:</strong> $2.60</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 2</div>
+        <div class="question-content">
+            Two thousand people entered the contest. Only seven will win prizes. How many entrants will not win prizes?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans2')">Show Answer</button>
+        <div id="ans2" class="answer-box">
+            <p>Subtract the winners from the total:</p>
+            <p>\( 2000 - 7 = 1993 \)</p>
+            <p><strong>Answer:</strong> 1,993 entrants</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 3</div>
+        <div class="question-content">
+            A recent census in Arkansas showed that 11,003 people live in Scott County and 8,484 people live in Newton County. How many more people live in Scott County than in Newton County?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans3')">Show Answer</button>
+        <div id="ans3" class="answer-box">
+            <p>Subtract the population of Newton County from Scott County:</p>
+            <p>\( 11,003 - 8,484 \)</p>
+            <p>
+              \(\begin{array}{r}
+                11,003 \\
+              - \phantom{0}8,484 \\
+              \hline
+                2,519
+              \end{array}\)
+            </p>
+            <p><strong>Answer:</strong> 2,519 more people</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 4</div>
+        <div class="question-content">
+            Sixty percent of the students in the class were boys. Were there more girls or more boys in the class?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans4')">Show Answer</button>
+        <div id="ans4" class="answer-box">
+            <p>If 60% are boys, then the remaining percentage are girls.</p>
+            <p>\( 100\% - 60\% = 40\% \) (Girls)</p>
+            <p>Since 60% > 40%, there are more boys.</p>
+            <p><strong>Answer:</strong> More boys</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 5</div>
+        <div class="question-content">
+            Draw a rectangle that is 4 cm long and 3 cm wide.<br>
+            a. What is the perimeter of the rectangle?<br>
+            b. What is the area of the rectangle?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans5')">Show Answer</button>
+        <div id="ans5" class="answer-box">
+            <div style="border: 2px solid black; width: 200px; height: 150px; display: flex; align-items: center; justify-content: center; margin: 10px;">
+                Rectangle (Not to scale) <br> 4 cm (Length) x 3 cm (Width)
+            </div>
+            <p><strong>a. Perimeter:</strong> \( 2 \times (Length + Width) \)</p>
+            <p>\( 2 \times (4 + 3) = 2 \times 7 = 14 \text{ cm} \)</p>
+            <p><strong>b. Area:</strong> \( Length \times Width \)</p>
+            <p>\( 4 \times 3 = 12 \text{ sq cm} \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 6</div>
+        <div class="question-content">
+            Fidelia found the third multiple of 4. Then she subtracted two from this number. What was her answer?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans6')">Show Answer</button>
+        <div id="ans6" class="answer-box">
+            <p>Multiples of 4: 4, 8, <strong>12</strong>...</p>
+            <p>The third multiple is 12.</p>
+            <p>Subtract 2: \( 12 - 2 = 10 \)</p>
+            <p><strong>Answer:</strong> 10</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 7</div>
+        <div class="question-content">
+            Two factors of 15 are 1 and 15 because \(1 \times 15 = 15\). Find two more factors of 15.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans7')">Show Answer</button>
+        <div id="ans7" class="answer-box">
+            <p>We need to find two other numbers that multiply to make 15.</p>
+            <p>\( 3 \times 5 = 15 \)</p>
+            <p><strong>Answer:</strong> 3 and 5</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 8</div>
+        <div class="question-content">
+            Brenda arrived home from school 30 minutes before the time shown on the clock. What time did Brenda arrive home from school?
+            <br><em>(Clock shows hour hand near 4, minute hand on 8)</em>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans8')">Show Answer</button>
+        <div id="ans8" class="answer-box">
+            <p>The clock shows <strong>3:40</strong> (The minute hand is on the 8, which is 40 minutes).</p>
+            <p>Subtract 30 minutes from 3:40.</p>
+            <p>\( 40 \text{ min} - 30 \text{ min} = 10 \text{ min} \)</p>
+            <p><strong>Answer:</strong> 3:10</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 9</div>
+        <div class="question-content">
+            George Washington became the first U.S president in 1789. The declaration of Independence was written in 1776. How many years after the Declaration did Washington become president?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans9')">Show Answer</button>
+        <div id="ans9" class="answer-box">
+            <p>\( 1789 - 1776 = 13 \)</p>
+            <p><strong>Answer:</strong> 13 years</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 10</div>
+        <div class="question-content">
+            What is the length of ST?
+            <br><em>(Line segment shows S at 4cm and T at 9cm)</em>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans10')">Show Answer</button>
+        <div id="ans10" class="answer-box">
+            <p>Point T is at 9 cm.</p>
+            <p>Point S is at 4 cm.</p>
+            <p>\( \text{Length} = 9 - 4 = 5 \)</p>
+            <p><strong>Answer:</strong> 5 cm</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 11</div>
+        <div class="question-content">
+            \( 4.00 - 2.22 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans11')">Show Answer</button>
+        <div id="ans11" class="answer-box">
+             <p>
+              \(\begin{array}{r}
+                3.9\phantom{^1}10 \\
+                \phantom{^1}4.0\phantom{^1}0 \\
+              - 2.2\phantom{^1}2 \\
+              \hline
+                1.7\phantom{^1}8
+              \end{array}\)
+            </p>
+            <p><strong>Answer:</strong> 1.78</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 12</div>
+        <div class="question-content">
+             \( 70.5 - 42.3 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans12')">Show Answer</button>
+        <div id="ans12" class="answer-box">
+            <p>\( 70.5 - 42.3 = 28.2 \)</p>
+            <p><strong>Answer:</strong> 28.2</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 13</div>
+        <div class="question-content">
+             \( \$45.87 + \$23.64 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans13')">Show Answer</button>
+        <div id="ans13" class="answer-box">
+            <p>
+              \(\begin{array}{r}
+                45.87 \\
+              + 23.64 \\
+              \hline
+                69.51
+              \end{array}\)
+            </p>
+            <p><strong>Answer:</strong> $69.51</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 14</div>
+        <div class="question-content">
+             \( \$25.42 - \$7.25 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans14')">Show Answer</button>
+        <div id="ans14" class="answer-box">
+             <p>
+              \(\begin{array}{r}
+                25.42 \\
+              - \phantom{0}7.25 \\
+              \hline
+                18.17
+              \end{array}\)
+            </p>
+            <p><strong>Answer:</strong> $18.17</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 15</div>
+        <div class="question-content">
+             \( 64 \times 5 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans15')">Show Answer</button>
+        <div id="ans15" class="answer-box">
+            <p>\( 60 \times 5 = 300 \)</p>
+            <p>\( 4 \times 5 = 20 \)</p>
+            <p>\( 300 + 20 = 320 \)</p>
+            <p><strong>Answer:</strong> 320</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 16</div>
+        <div class="question-content">
+             \( 70 \times 6 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans16')">Show Answer</button>
+        <div id="ans16" class="answer-box">
+            <p>\( 7 \times 6 = 42 \)</p>
+            <p>Add the zero back: 420</p>
+            <p><strong>Answer:</strong> 420</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 17</div>
+        <div class="question-content">
+             \( 89 \times 4 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans17')">Show Answer</button>
+        <div id="ans17" class="answer-box">
+            <p>\( 80 \times 4 = 320 \)</p>
+            <p>\( 9 \times 4 = 36 \)</p>
+            <p>\( 320 + 36 = 356 \)</p>
+            <p><strong>Answer:</strong> 356</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 18</div>
+        <div class="question-content">
+             \( 63 \times 7 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans18')">Show Answer</button>
+        <div id="ans18" class="answer-box">
+            <p>\( 60 \times 7 = 420 \)</p>
+            <p>\( 3 \times 7 = 21 \)</p>
+            <p>\( 420 + 21 = 441 \)</p>
+            <p><strong>Answer:</strong> 441</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 19</div>
+        <div class="question-content">
+             \( \frac{63}{7} \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans19')">Show Answer</button>
+        <div id="ans19" class="answer-box">
+            <p>This fraction represents division.</p>
+            <p>\( 63 \div 7 = 9 \)</p>
+            <p><strong>Answer:</strong> 9</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 20</div>
+        <div class="question-content">
+             \( 15 \div 8 \) (Written as \( 8 \overline{)15} \))
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans20')">Show Answer</button>
+        <div id="ans20" class="answer-box">
+            <p>8 goes into 15 one time.</p>
+            <p>\( 15 - 8 = 7 \) (remainder)</p>
+            <p><strong>Answer:</strong> 1 R 7 (or \(1 \frac{7}{8}\))</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 21</div>
+        <div class="question-content">
+             \( 4.68 + 12.2 + 3.75 = \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans21')">Show Answer</button>
+        <div id="ans21" class="answer-box">
+            <p>Align the decimals:</p>
+            <p>
+              \(\begin{array}{r}
+                4.68 \\
+                12.20 \\
+              + 3.75 \\
+              \hline
+                20.63
+              \end{array}\)
+            </p>
+            <p><strong>Answer:</strong> 20.63</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 22</div>
+        <div class="question-content">
+            Draw dots and make groups to illustrate 15 divided by 6.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans22')">Show Answer</button>
+        <div id="ans22" class="answer-box">
+            <p>Draw 15 dots. Circle groups of 6.</p>
+            <div>
+                <span class="dot-group">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </span>
+                <span class="dot-group">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </span>
+                <span style="display:inline-block; padding: 5px;">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </span>
+            </div>
+            <p>We have 2 full groups and 3 dots left over.</p>
+            <p><strong>Answer:</strong> 2 R 3</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 23</div>
+        <div class="question-content">
+            Describe the order of operations in this expression and find the number it equals:
+            <br>
+            \( \sqrt{64} \div (4 + 4) \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans23')">Show Answer</button>
+        <div id="ans23" class="answer-box">
+            <ol>
+                <li><strong>Parentheses first:</strong> \( (4 + 4) = 8 \)</li>
+                <li><strong>Radical (Root):</strong> \( \sqrt{64} = 8 \)</li>
+                <li><strong>Division:</strong> \( 8 \div 8 = 1 \)</li>
+            </ol>
+            <p><strong>Answer:</strong> 1</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 24</div>
+        <div class="question-content">
+            Write this addition problem as a multiplication problem:
+            <br>
+            \( \$0.75 + \$0.75 + \$0.75 + \$0.75 \)
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans24')">Show Answer</button>
+        <div id="ans24" class="answer-box">
+            <p>Since $0.75 is repeated 4 times:</p>
+            <p><strong>Answer:</strong> \( 4 \times \$0.75 \)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 25</div>
+        <div class="question-content">
+            Which of these numbers can be divided by 5 without leaving a remainder?
+            <br>A 32 &nbsp; B 35 &nbsp; C 37 &nbsp; D 41
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans25')">Show Answer</button>
+        <div id="ans25" class="answer-box">
+            <p>A number is divisible by 5 if it ends in 0 or 5.</p>
+            <p>Only 35 ends in 5.</p>
+            <p><strong>Answer:</strong> B (35)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 26</div>
+        <div class="question-content">
+            One gallon is equal to 128 fluid ounces. Garrett estimates that four gallons is about 500 fluid ounces. Is Garrett's estimate reasonable? Explain.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans26')">Show Answer</button>
+        <div id="ans26" class="answer-box">
+            <p>Calculate the exact amount: \( 4 \times 128 = 512 \)</p>
+            <p>512 is very close to 500.</p>
+            <p><strong>Answer:</strong> Yes, it is reasonable because 500 is very close to the actual value of 512.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 27</div>
+        <div class="question-content">
+            a. Is $2.54 closer to $2 or $3?
+            <br>
+            b. Is 2.54 closer to 2 or 3?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans27')">Show Answer</button>
+        <div id="ans27" class="answer-box">
+            <p>Since the decimal part is .54, which is greater than .50, we round up.</p>
+            <p><strong>a. Answer:</strong> $3</p>
+            <p><strong>b. Answer:</strong> 3</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 28</div>
+        <div class="question-content">
+            (Grid image shows 10x10 square. 7 full columns and 3 squares in the next column are shaded)
+            <br>a. What fraction is shaded?
+            <br>b. What decimal number?
+            <br>c. What percent?
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans28')">Show Answer</button>
+        <div id="ans28" class="answer-box">
+            <div class="grid-container" id="grid28">
+                </div>
+            <p>There are 100 squares total. 73 are shaded (7 columns of 10 + 3).</p>
+            <p><strong>a. Fraction:</strong> \( \frac{73}{100} \)</p>
+            <p><strong>b. Decimal:</strong> 0.73</p>
+            <p><strong>c. Percent:</strong> 73%</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 29</div>
+        <div class="question-content">
+            Which of these numbers is a composite number and not a prime number?
+            <br>A 2 &nbsp; B 3 &nbsp; C 4 &nbsp; D 5
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans29')">Show Answer</button>
+        <div id="ans29" class="answer-box">
+            <p>A composite number has factors other than 1 and itself.</p>
+            <ul>
+                <li>2 is prime.</li>
+                <li>3 is prime.</li>
+                <li>4 is composite (\(2 \times 2\)).</li>
+                <li>5 is prime.</li>
+            </ul>
+            <p><strong>Answer:</strong> C (4)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-title">Problem 30</div>
+        <div class="question-content">
+            How many different three-digit numbers can you write using the digits 8, 3, and 4? Each digit may be used only once in every number. Arrange them from least to greatest.
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans30')">Show Answer</button>
+        <div id="ans30" class="answer-box">
+            <p>Combinations starting with 3: 348, 384</p>
+            <p>Combinations starting with 4: 438, 483</p>
+            <p>Combinations starting with 8: 834, 843</p>
+            <p><strong>Answer:</strong> 6 numbers: 348, 384, 438, 483, 834, 843</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.classList.contains('visible')) {
+                x.classList.remove('visible');
+            } else {
+                x.classList.add('visible');
+            }
+        }
+
+        // Draw the grid for problem 28
+        const gridContainer = document.getElementById('grid28');
+        for (let i = 0; i < 100; i++) {
+            let div = document.createElement('div');
+            div.className = 'grid-cell';
+            // Columns go 0-9, 10-19 etc horizontally in HTML flow, 
+            // but the problem implies columns shaded vertically. 
+            // 7 full columns means indices:
+            // The grid in CSS is row-major. So we need to shade based on visual columns.
+            // A 10x10 grid: 
+            // Row 0: 0, 1, 2, ...
+            // Column 0 consists of indices 0, 10, 20, 30...
+            // If 7 full vertical columns are shaded, we shade indices where (i % 10) < 7.
+            // Then column 8 (index 7) has 3 squares shaded.
+            
+            // However, typical math grids shade left-to-right, then down? 
+            // OR columns left-to-right.
+            // Let's assume standard "base 10 block" style where columns are filled.
+            
+            let col = i % 10;
+            let row = Math.floor(i / 10);
+            
+            // Shade first 7 columns completely (col 0 to 6)
+            if (col < 7) {
+                div.classList.add('shaded');
+            } 
+            // Shade first 3 in the 8th column (col 7)
+            else if (col === 7 && row < 3) {
+                 div.classList.add('shaded');
+            }
+            
+            gridContainer.appendChild(div);
+        }
+    </script>
+</body>
+</html>
