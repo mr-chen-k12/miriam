@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Test Review - 10B</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        .explanation { display: none; }
+        .explanation.show { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <header class="border-b pb-4 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Cumulative Test 10B Review</h1>
+            <p class="text-gray-600">Saxon Math 4 Solutions</p>
+        </header>
+
+        <div id="questions-container" class="space-y-8">
+            </div>
+    </div>
+
+    <script>
+        const questions = [
+            { id: 1, q: "Four hundred thirty-nine students are in one school. Seven hundred thirty-eight students are in another school. What is the total number of students in the two schools?", a: "$$439 + 738 = 1,177$$ students.", ex: "Add the two quantities together: 400+700=1100, 39+38=77. Total = 1,177." },
+            { id: 2, q: "Merle travelled 623 miles. Hannah travelled 801 miles. Hannah travelled how many more miles than Merle?", a: "$$801 - 623 = 178$$ miles.", ex: "To find 'how many more', subtract the smaller number from the larger number." },
+            { id: 3, q: "If the radius of a circle is one yard, then its diameter is:", a: "6 feet (Option A)", ex: "The diameter is twice the radius ($$1 \\text{ yard} \\times 2 = 2 \\text{ yards}$$). Since 1 yard = 3 feet, 2 yards = 6 feet." },
+            { id: 4, q: "Which digit in 12.3 is in the tenths place?", a: "3", ex: "The first digit to the right of the decimal point is the tenths place." },
+            { id: 5, q: "Use the digits 1, 2, 3, and 4 once each to write an odd number between 3300 and 3600.", a: "3421 (Example)", ex: "The number must start with 3. To be between 3300 and 3600, the second digit must be 4 or 5 (only 4 is available). To be odd, it must end in 1." },
+            { id: 6, q: "Write the mixed number shown by the shaded circles (3 full circles, 1 circle with 5/8 shaded).", a: "$$3\\frac{5}{8}$$", ex: "There are 3 whole shaded circles and 5 out of 8 parts shaded in the final circle." },
+            { id: 7, q: "What is the perimeter of this shape? (Sides: 7, 5, 9, 4, 5)", a: "30 feet", ex: "Perimeter is the sum of all sides: $$7 + 5 + 9 + 4 + 5 = 30$$." },
+            { id: 8, q: "The league has 6 teams with 9 players on each team. How many players does the league have altogether?", a: "54 players", ex: "Multiply the number of teams by the players per team: $$6 \\times 9 = 54$$." },
+            { id: 9, q: "Round 563 to the nearest hundred.", a: "600", ex: "Since the tens digit (6) is 5 or greater, we round up the hundreds place." },
+            { id: 10, q: "Add: 74,212 + 91,060", a: "165,272", ex: "Align by place value and add: $$74,212 + 91,060 = 165,272$$." },
+            { id: 11, q: "Subtract: $6.50 - $2.93", a: "$3.57", ex: "Remember to borrow: $6.50 - $2.93 = $3.57." },
+            { id: 12, q: "Find n: n + 267 = 912", a: "645", ex: "Subtract 267 from 912 to find the missing addend: $$912 - 267 = 645$$." },
+            { id: 13, q: "Find z: z - 536 = 143", a: "679", ex: "Add 536 to 143 to find the original number: $$536 + 143 = 679$$." },
+            { id: 14, q: "Multiply: 51 × 7", a: "357", ex: "$$50 \\times 7 = 350$$ and $$1 \\times 7 = 7$$. $$350 + 7 = 357$$." },
+            { id: 15, q: "Multiply: 64 × 9", a: "576", ex: "$$60 \\times 9 = 540$$ and $$4 \\times 9 = 36$$. $$540 + 36 = 576$$." },
+            { id: 16, q: "Subtract: 4.36 - 2.4", a: "1.96", ex: "Line up decimals: $$4.36 - 2.40 = 1.96$$." },
+            { id: 17, q: "Add: 4.3 + 2.64", a: "6.94", ex: "Line up decimals: $$4.30 + 2.64 = 6.94$$." },
+            { id: 18, q: "Add: $3.46 + $2 + 43¢ + 9¢", a: "$5.98", ex: "Convert all to decimals: $$3.46 + 2.00 + 0.43 + 0.09 = 5.98$$." },
+            { id: 19, q: "Compare: (2 × 3) + 4 O 2 × (3 + 4)", a: "10 < 14", ex: "Left: $$6 + 4 = 10$$. Right: $$2 \\times 7 = 14$$. 10 is less than 14." },
+            { id: 20, q: "Divide: (a) 28 ÷ 7 (b) 32 ÷ 4 (c) 56 / 8", a: "(a) 4 (b) 8 (c) 7", ex: "Basic division facts: $$7 \\times 4 = 28$$, $$4 \\times 8 = 32$$, $$8 \\times 7 = 56$$." }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        questions.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "p-4 border rounded-md bg-gray-50";
+            div.innerHTML = `
+                <p class="font-semibold text-lg mb-2 text-indigo-700">Question ${item.id}</p>
+                <p class="text-gray-800 mb-4">${item.q}</p>
+                <button onclick="toggle(${item.id})" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+                    Show Explanation
+                </button>
+                <div id="ex-${item.id}" class="explanation mt-4 p-4 bg-white border-l-4 border-indigo-500 rounded">
+                    <p class="font-bold text-green-700">Answer: ${item.a}</p>
+                    <p class="text-gray-600 mt-2 italic">${item.ex}</p>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+
+        function toggle(id) {
+            const el = document.getElementById(`ex-${id}`);
+            el.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
