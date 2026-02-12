@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Homework Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        .question-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .question-text { font-weight: bold; font-size: 1.1em; margin-bottom: 15px; }
+        .answer-area { display: none; margin-top: 15px; padding: 15px; background-color: #e8f4fd; border-radius: 5px; border: 1px dashed #3498db; }
+        button { background-color: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background 0.3s; }
+        button:hover { background-color: #2980b9; }
+        .explanation { font-style: italic; color: #555; margin-top: 10px; font-size: 0.95em; }
+        canvas { border: 1px solid #000; background: #fff; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>Homework Solutions: Lesson 56</h1>
+
+<div class="question-card">
+    <div class="question-text">1. Drew has fifty-six rolls. Seven rolls will fit on one tray. How many trays does he need? Write an equation.</div>
+    <button onclick="toggle(1)">Show Answer</button>
+    <div id="ans1" class="answer-area">
+        <strong>Answer:</strong> 8 trays<br>
+        <strong>Equation:</strong> \( 56 \div 7 = 8 \)<br>
+        <div class="explanation">Divide the total number of rolls by the capacity of one tray.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">2. One gallon is about 3.78 L. About how many liters is two gallons? (Use words)</div>
+    <button onclick="toggle(2)">Show Answer</button>
+    <div id="ans2" class="answer-area">
+        <strong>Answer:</strong> Seven and fifty-six hundredths liters.<br>
+        <strong>Math:</strong> \( 3.78 \times 2 = 7.56 \)<br>
+        <div class="explanation">To find the total, double the value of one gallon.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">3. Estimate the sum of $6.87 and $5.92 by rounding to the nearest dollar.</div>
+    <button onclick="toggle(3)">Show Answer</button>
+    <div id="ans3" class="answer-area">
+        <strong>Answer:</strong> $7.00 + $6.00 = $13.00<br>
+        <div class="explanation">$6.87 rounds up to $7; $5.92 rounds up to $6.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">4. Write four multiplication/division facts using 3, 8, and 24.</div>
+    <button onclick="toggle(4)">Show Answer</button>
+    <div id="ans4" class="answer-area">
+        1. \( 3 \times 8 = 24 \)<br>
+        2. \( 8 \times 3 = 24 \)<br>
+        3. \( 24 \div 3 = 8 \)<br>
+        4. \( 24 \div 8 = 3 \)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">5. What are the seven months of the year that have 31 days?</div>
+    <button onclick="toggle(5)">Show Answer</button>
+    <div id="ans5" class="answer-area">
+        <strong>Answer:</strong> January, March, May, July, August, October, and December.
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">6. Find the eighth multiple of six. Add one. What is the square root of the answer?</div>
+    <button onclick="toggle(6)">Show Answer</button>
+    <div id="ans6" class="answer-area">
+        <strong>Step 1:</strong> \( 6 \times 8 = 48 \)<br>
+        <strong>Step 2:</strong> \( 48 + 1 = 49 \)<br>
+        <strong>Step 3:</strong> \( \sqrt{49} = 7 \)<br>
+        <strong>Final Answer: 7</strong>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">7. Compare \( 1/4 \) and \( 1/6 \) using rectangles.</div>
+    <button onclick="toggle(7)">Show Answer</button>
+    <div id="ans7" class="answer-area">
+        <strong>Answer:</strong> \( 1/4 > 1/6 \)<br>
+        <canvas id="canvas7" width="300" height="100"></canvas>
+        <div class="explanation">The rectangle divided into 4 pieces has larger individual pieces than the one divided into 6.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">8. Round 4,651 to the nearest thousand, hundred, and ten.</div>
+    <button onclick="toggle(8)">Show Answer</button>
+    <div id="ans8" class="answer-area">
+        <strong>Thousand:</strong> 5,000<br>
+        <strong>Hundred:</strong> 4,700<br>
+        <strong>Ten:</strong> 4,650
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">9. Rectangle with 7 mi length and 4 mi width. Find Perimeter and Area.</div>
+    <button onclick="toggle(9)">Show Answer</button>
+    <div id="ans9" class="answer-area">
+        <strong>a. Perimeter:</strong> \( 7+7+4+4 = 22 \text{ miles} \)<br>
+        <strong>b. Area:</strong> \( 7 \times 4 = 28 \text{ sq miles} \)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">10. \( \$10.00 - \$5.46 = \)</div>
+    <button onclick="toggle(10)">Show Answer</button>
+    <div id="ans10" class="answer-area">
+        <strong>Answer: $4.54</strong>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">11-16. Arithmetic Practice</div>
+    <button onclick="toggle(11)">Show Answers</button>
+    <div id="ans11" class="answer-area">
+        11. \( 36,024 - 15,539 = \mathbf{20,485} \)<br>
+        12. \( 43,675 + 52,059 = \mathbf{95,734} \)<br>
+        13. \( 73 \times 9 = \mathbf{657} \)<br>
+        14. \( 46 \times 7 = \mathbf{322} \)<br>
+        15. \( 84 \times 6 = \mathbf{504} \)<br>
+        16. \( 40 \times 5 = \mathbf{200} \)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">17-18. Division/Fractions</div>
+    <button onclick="toggle(17)">Show Answer</button>
+    <div id="ans17" class="answer-area">
+        17. \( 48 \div 7 = \mathbf{6 \text{ remainder } 6} \) (or \( 6 \frac{6}{7} \))<br>
+        18. \( \frac{63}{7} = \mathbf{9} \)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">19-20. Decimal Arithmetic</div>
+    <button onclick="toggle(19)">Show Answer</button>
+    <div id="ans19" class="answer-area">
+        19. \( 3.75 + 2.5 + 0.4 = \mathbf{6.65} \)<br>
+        20. \( 42.25 - 7.5 = \mathbf{34.75} \)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">21. Which is a multiple of 10? (A: 35, B: 40, C: 45, D: 101)</div>
+    <button onclick="toggle(21)">Show Answer</button>
+    <div id="ans21" class="answer-area">
+        <strong>Answer: B (40)</strong><br>
+        <div class="explanation">Multiples of 10 always end in 0.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">22. A dime is what fraction and percent of a dollar?</div>
+    <button onclick="toggle(22)">Show Answer</button>
+    <div id="ans22" class="answer-area">
+        <strong>a. Fraction:</strong> \( 1/10 \) (or \( 10/100 \))<br>
+        <strong>b. Percent:</strong> 10%
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">23. Write $12,350,000 in words.</div>
+    <button onclick="toggle(23)">Show Answer</button>
+    <div id="ans23" class="answer-area">
+        <strong>Answer:</strong> Twelve million, three hundred fifty thousand dollars.
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">24. Find three more factors of 16 (besides 1 and 16).</div>
+    <button onclick="toggle(24)">Show Answer</button>
+    <div id="ans24" class="answer-area">
+        <strong>Answer: 2, 4, 8</strong><br>
+        <div class="explanation">\( 2 \times 8 = 16 \) and \( 4 \times 4 = 16 \).</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">25. Is 16 a prime number? Why or why not?</div>
+    <button onclick="toggle(25)">Show Answer</button>
+    <div id="ans25" class="answer-area">
+        <strong>Answer: No.</strong><br>
+        <div class="explanation">It is a composite number because it has factors other than 1 and itself (2, 4, and 8).</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">26. Refer to figure ABCD (Parallelogram).</div>
+    <button onclick="toggle(26)">Show Answer</button>
+    <div id="ans26" class="answer-area">
+        <strong>a. Parallel to AB:</strong> Segment DC (or CD).<br>
+        <strong>b. Angle B type:</strong> Obtuse angle.<br>
+        <div class="explanation">Angle B is greater than 90 degrees.</div>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">27-28. Factors vs Multiples of 12 (Options: 0, 6, 8, 24)</div>
+    <button onclick="toggle(27)">Show Answer</button>
+    <div id="ans27" class="answer-area">
+        <strong>27. Factor of 12:</strong> B (6)<br>
+        <strong>28. Multiple of 12:</strong> D (24)
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">29. A penny's relationship to a dollar.</div>
+    <button onclick="toggle(29)">Show Answer</button>
+    <div id="ans29" class="answer-area">
+        <strong>a. Fraction:</strong> \( 1/100 \)<br>
+        <strong>b. Decimal:</strong> $0.01<br>
+        <strong>c. Percent:</strong> 1%
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">30. Order from greatest to least: \( 3/4, 0.09, 2/5, 0.5, 1/3 \)</div>
+    <button onclick="toggle(30)">Show Answer</button>
+    <div id="ans30" class="answer-area">
+        <strong>1. \( 3/4 \) (0.75)</strong><br>
+        <strong>2. \( 0.5 \) (0.50)</strong><br>
+        <strong>3. \( 2/5 \) (0.40)</strong><br>
+        <strong>4. \( 1/3 \) (~0.33)</strong><br>
+        <strong>5. \( 0.09 \) (0.09)</strong>
+    </div>
+</div>
+
+<script>
+    function toggle(id) {
+        var x = document.getElementById("ans" + id);
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+            if(id === 7) drawFractions();
+        }
+    }
+
+    function drawFractions() {
+        const canvas = document.getElementById('canvas7');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0,0,300,100);
+
+        // 1/4 Rectangle
+        ctx.strokeRect(10, 20, 100, 40);
+        ctx.fillStyle = '#3498db';
+        ctx.fillRect(10, 20, 25, 40);
+        ctx.fillStyle = '#000';
+        ctx.fillText("1/4", 10, 75);
+
+        // 1/6 Rectangle
+        ctx.strokeRect(150, 20, 100, 40);
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillRect(150, 20, 100/6, 40);
+        ctx.fillStyle = '#000';
+        ctx.fillText("1/6", 150, 75);
+    }
+</script>
+
+</body>
+</html>
