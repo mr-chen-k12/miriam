@@ -53,7 +53,7 @@
             margin-right: 5px;
         }
         .problem-content {
-            flex-grow: 1; /* Pushes the button to the bottom if content sizes differ */
+            flex-grow: 1;
             margin-bottom: 15px;
         }
         .toggle-btn {
@@ -78,6 +78,10 @@
             font-weight: bold;
             display: none; /* Hidden by default */
         }
+        /* New class for toggling visibility */
+        .answer-section.visible {
+            display: block; 
+        }
         .svg-container {
             margin: 15px 0;
             text-align: center;
@@ -99,7 +103,7 @@
                 Write and solve equations for problems 1 and 2. <br>
                 Marcus baked 48 cookies. He wanted to pack them into boxes with 6 cookies in each box. How many boxes will he need?
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 48 \div 6 = b \). Marcus will need 8 boxes.
             </div>
@@ -110,7 +114,7 @@
                 <span class="problem-number">2.</span>
                 A classroom has 35 desks arranged in rows. There are 5 rows of desks. If each row has the same number of desks, how many desks are in each row?
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 35 \div 5 = d \). There are 7 desks in each row.
             </div>
@@ -121,7 +125,7 @@
                 <span class="problem-number">3.</span>
                 Write four multiplication/division facts using the numbers 6, 8, and 48.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: <br>
                 \( 6 \times 8 = 48 \)<br>
@@ -136,7 +140,7 @@
                 <span class="problem-number">4.</span>
                 How many days are in a leap year?
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: 366 days.
             </div>
@@ -149,7 +153,7 @@
                 <strong>a.</strong> Write a rule that describes how to find the next term of the sequence.<br>
                 <strong>b.</strong> What is the next term of the sequence?
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> Add 1,000 to the previous term.<br>
@@ -163,7 +167,7 @@
                 <strong>a.</strong> Round 6,815 to the nearest hundred.<br>
                 <strong>b.</strong> Round 6,815 to the nearest ten.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> 6,800<br>
@@ -176,7 +180,7 @@
                 <span class="problem-number">7.</span>
                 Write the time "a quarter to ten in the morning" in digital form.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: 9:45 a.m.
             </div>
@@ -189,7 +193,7 @@
                 <strong>a.</strong> What is the perimeter of the rectangle?<br>
                 <strong>b.</strong> What is the area?
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> 16 cm<br>
@@ -213,7 +217,7 @@
                     </svg>
                 </div>
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 3 \frac{1}{4} \) or 3.25 squares.
             </div>
@@ -225,7 +229,7 @@
                 Describe the order of operations in this expression and find the number it equals.<br>
                 \[ \sqrt{81} + (35 \div 5) \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: First, divide inside the parentheses (\(35 \div 5 = 7\)) and find the square root (\(\sqrt{81} = 9\)). Then, add the results together (\(9 + 7 = 16\)). The answer is 16.
             </div>
@@ -236,7 +240,7 @@
                 <span class="problem-number">11.</span>
                 \[ \$5.25 + \$10.50 + \$1.25 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: $17.00</div>
         </div>
 
@@ -245,7 +249,7 @@
                 <span class="problem-number">12.</span>
                 \[ \$50.00 - \$24.99 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: $25.01</div>
         </div>
 
@@ -254,7 +258,7 @@
                 <span class="problem-number">13.</span>
                 \[ 62,500 - 38,200 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 24,300</div>
         </div>
 
@@ -263,7 +267,7 @@
                 <span class="problem-number">14.</span>
                 \[ 70 \times 8 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 560</div>
         </div>
 
@@ -272,7 +276,7 @@
                 <span class="problem-number">15.</span>
                 \[ 64 \times 5 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 320</div>
         </div>
 
@@ -281,7 +285,7 @@
                 <span class="problem-number">16.</span>
                 Draw dots and make groups to show 17 divided by 3. Write the answer next to your drawing.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer: [Student should draw 5 groups of 3 dots, with 2 extra dots left outside the groups]. <br> Answer is 5 R 2.
             </div>
@@ -293,7 +297,7 @@
                 Divide for problems 17-19. Write each answer with a remainder.<br>
                 \[ 27 \div 5 \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 5 R 2</div>
         </div>
 
@@ -302,7 +306,7 @@
                 <span class="problem-number">18.</span>
                 \[ 8 \overline{)45} \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 5 R 5</div>
         </div>
 
@@ -311,7 +315,7 @@
                 <span class="problem-number">19.</span>
                 \[ 6 \overline{)50} \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 8 R 2</div>
         </div>
 
@@ -320,7 +324,7 @@
                 <span class="problem-number">20.</span>
                 \[ 45 \times 6 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 270</div>
         </div>
 
@@ -329,7 +333,7 @@
                 <span class="problem-number">21.</span>
                 \[ 53 \times 9 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 477</div>
         </div>
 
@@ -338,7 +342,7 @@
                 <span class="problem-number">22.</span>
                 \[ y + 12.4 = 30.5 \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: y = 18.1</div>
         </div>
 
@@ -347,7 +351,7 @@
                 <span class="problem-number">23.</span>
                 \[ 8.4 + 3.6 + 12.1 = \]
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 24.1</div>
         </div>
 
@@ -356,7 +360,7 @@
                 <span class="problem-number">24.</span>
                 Use digits to write five million, three hundred four thousand.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: 5,304,000</div>
         </div>
 
@@ -365,7 +369,7 @@
                 <span class="problem-number">25.</span>
                 A standard water bottle holds about 0.5 liters. Use words to write 0.5 L.
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: Five tenths of a liter.</div>
         </div>
 
@@ -380,7 +384,7 @@
                     <li>5 and 2</li>
                 </ol>
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">Answer: D. 5 and 2</div>
         </div>
 
@@ -390,7 +394,7 @@
                 <strong>a.</strong> 50 cents is what percent of a dollar?<br>
                 <strong>b.</strong> A pint is what percent of a quart? (Hint: 1 quart = 2 pints)
             </div>
-            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <button class="toggle-btn">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> 50%<br>
@@ -408,4 +412,68 @@
                     <svg width="150" height="150" viewBox="0 0 100 100">
                         <rect x="0" y="0" width="100" height="40" fill="#a0a0a0"/>
                         <rect x="0" y="40" width="20" height="10" fill="#a0a0a0"/>
-                        <path d="M0,10 H100 M0,20 H100 M0,30 H100 M0,40 H10
+                        <path d="M0,10 H100 M0,20 H100 M0,30 H100 M0,40 H100 M0,50 H100 M0,60 H100 M0,70 H100 M0,80 H100 M0,90 H100 M10,0 V100 M20,0 V100 M30,0 V100 M40,0 V100 M50,0 V100 M60,0 V100 M70,0 V100 M80,0 V100 M90,0 V100" stroke="#ccc" stroke-width="0.5" fill="none"/>
+                        <rect x="0" y="0" width="100" height="100" fill="none" stroke="black" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <button class="toggle-btn">Show Answer</button>
+            <div class="answer-section">
+                Answer:<br>
+                <strong>a.</strong> 42/100 (or 21/50)<br>
+                <strong>b.</strong> 0.42<br>
+                <strong>c.</strong> 42%
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">29.</span>
+                A large pitcher holds 2 liters of water, which is about 67.6 fluid ounces. Estimate the number of 8-ounce cups you can fill from the pitcher. Explain your thinking.
+            </div>
+            <button class="toggle-btn">Show Answer</button>
+            <div class="answer-section">
+                Answer: You can fill about 8 cups. <br>
+                Explanation: 67.6 rounds nicely to 64, and \( 64 \div 8 = 8 \).
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">30.</span>
+                The Eiffel Tower is 1,083 feet tall. The Washington Monument is 555 feet tall. How many feet taller is the Eiffel Tower? Explain how you found your answer.
+            </div>
+            <button class="toggle-btn">Show Answer</button>
+            <div class="answer-section">
+                Answer: 528 feet. <br>
+                Explanation: Subtract the height of the Washington Monument from the Eiffel Tower (\( 1,083 - 555 = 528 \)).
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Grab all toggle buttons on the page
+            const buttons = document.querySelectorAll('.toggle-btn');
+            
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // Find the answer section right after this button
+                    const answerSection = this.nextElementSibling;
+                    
+                    // Toggle the 'visible' class
+                    answerSection.classList.toggle('visible');
+                    
+                    // Update button text based on visibility
+                    if (answerSection.classList.contains('visible')) {
+                        this.innerText = 'Hide Answer';
+                    } else {
+                        this.innerText = 'Show Answer';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
