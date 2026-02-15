@@ -33,23 +33,6 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        .controls {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        button {
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #004494;
-        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
@@ -61,11 +44,31 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
         }
         .problem-number {
             font-weight: bold;
             font-size: 1.1em;
             margin-right: 5px;
+        }
+        .problem-content {
+            flex-grow: 1; /* Pushes the button to the bottom if content sizes differ */
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            align-self: flex-start;
+        }
+        .toggle-btn:hover {
+            background-color: #004494;
         }
         .answer-section {
             margin-top: 15px;
@@ -88,32 +91,37 @@
         <div><strong>Lesson Number:</strong> 54</div>
     </header>
 
-    <div class="controls">
-        <button onclick="toggleAnswers()">Show / Hide Answers</button>
-    </div>
-
     <div class="grid-container">
         
         <div class="problem-card">
-            <span class="problem-number">1.</span>
-            Write and solve equations for problems 1 and 2. <br>
-            Marcus baked 48 cookies. He wanted to pack them into boxes with 6 cookies in each box. How many boxes will he need?
+            <div class="problem-content">
+                <span class="problem-number">1.</span>
+                Write and solve equations for problems 1 and 2. <br>
+                Marcus baked 48 cookies. He wanted to pack them into boxes with 6 cookies in each box. How many boxes will he need?
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 48 \div 6 = b \). Marcus will need 8 boxes.
             </div>
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">2.</span>
-            A classroom has 35 desks arranged in rows. There are 5 rows of desks. If each row has the same number of desks, how many desks are in each row?
+            <div class="problem-content">
+                <span class="problem-number">2.</span>
+                A classroom has 35 desks arranged in rows. There are 5 rows of desks. If each row has the same number of desks, how many desks are in each row?
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 35 \div 5 = d \). There are 7 desks in each row.
             </div>
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">3.</span>
-            Write four multiplication/division facts using the numbers 6, 8, and 48.
+            <div class="problem-content">
+                <span class="problem-number">3.</span>
+                Write four multiplication/division facts using the numbers 6, 8, and 48.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: <br>
                 \( 6 \times 8 = 48 \)<br>
@@ -124,18 +132,24 @@
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">4.</span>
-            How many days are in a leap year?
+            <div class="problem-content">
+                <span class="problem-number">4.</span>
+                How many days are in a leap year?
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: 366 days.
             </div>
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">5.</span>
-            Consider this sequence: \( \dots, 24,000, 25,000, 26,000, 27,000, \dots \)<br>
-            <strong>a.</strong> Write a rule that describes how to find the next term of the sequence.<br>
-            <strong>b.</strong> What is the next term of the sequence?
+            <div class="problem-content">
+                <span class="problem-number">5.</span>
+                Consider this sequence: \( \dots, 24,000, 25,000, 26,000, 27,000, \dots \)<br>
+                <strong>a.</strong> Write a rule that describes how to find the next term of the sequence.<br>
+                <strong>b.</strong> What is the next term of the sequence?
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> Add 1,000 to the previous term.<br>
@@ -144,9 +158,12 @@
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">6.</span>
-            <strong>a.</strong> Round 6,815 to the nearest hundred.<br>
-            <strong>b.</strong> Round 6,815 to the nearest ten.
+            <div class="problem-content">
+                <span class="problem-number">6.</span>
+                <strong>a.</strong> Round 6,815 to the nearest hundred.<br>
+                <strong>b.</strong> Round 6,815 to the nearest ten.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> 6,800<br>
@@ -155,18 +172,24 @@
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">7.</span>
-            Write the time "a quarter to ten in the morning" in digital form.
+            <div class="problem-content">
+                <span class="problem-number">7.</span>
+                Write the time "a quarter to ten in the morning" in digital form.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: 9:45 a.m.
             </div>
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">8.</span>
-            A rectangle has a length of 5 cm and a width of 3 cm.<br>
-            <strong>a.</strong> What is the perimeter of the rectangle?<br>
-            <strong>b.</strong> What is the area?
+            <div class="problem-content">
+                <span class="problem-number">8.</span>
+                A rectangle has a length of 5 cm and a width of 3 cm.<br>
+                <strong>a.</strong> What is the perimeter of the rectangle?<br>
+                <strong>b.</strong> What is the area?
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer:<br>
                 <strong>a.</strong> 16 cm<br>
@@ -175,29 +198,214 @@
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">9.</span>
-            How many squares are shaded?
-            <div class="svg-container">
-                <svg width="220" height="50">
-                    <rect x="0" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
-                    <rect x="50" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
-                    <rect x="100" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
-                    <rect x="150" y="0" width="40" height="40" fill="none" stroke="black"/>
-                    <rect x="150" y="20" width="20" height="20" fill="#a0a0a0" stroke="none"/>
-                    <line x1="170" y1="0" x2="170" y2="40" stroke="black"/>
-                    <line x1="150" y1="20" x2="190" y2="20" stroke="black"/>
-                </svg>
+            <div class="problem-content">
+                <span class="problem-number">9.</span>
+                How many squares are shaded?
+                <div class="svg-container">
+                    <svg width="220" height="50">
+                        <rect x="0" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
+                        <rect x="50" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
+                        <rect x="100" y="0" width="40" height="40" fill="#a0a0a0" stroke="black"/>
+                        <rect x="150" y="0" width="40" height="40" fill="none" stroke="black"/>
+                        <rect x="150" y="20" width="20" height="20" fill="#a0a0a0" stroke="none"/>
+                        <line x1="170" y1="0" x2="170" y2="40" stroke="black"/>
+                        <line x1="150" y1="20" x2="190" y2="20" stroke="black"/>
+                    </svg>
+                </div>
             </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: \( 3 \frac{1}{4} \) or 3.25 squares.
             </div>
         </div>
 
         <div class="problem-card">
-            <span class="problem-number">10.</span>
-            Describe the order of operations in this expression and find the number it equals.<br>
-            \[ \sqrt{81} + (35 \div 5) \]
+            <div class="problem-content">
+                <span class="problem-number">10.</span>
+                Describe the order of operations in this expression and find the number it equals.<br>
+                \[ \sqrt{81} + (35 \div 5) \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
             <div class="answer-section">
                 Answer: First, divide inside the parentheses (\(35 \div 5 = 7\)) and find the square root (\(\sqrt{81} = 9\)). Then, add the results together (\(9 + 7 = 16\)). The answer is 16.
             </div>
         </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">11.</span>
+                \[ \$5.25 + \$10.50 + \$1.25 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: $17.00</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">12.</span>
+                \[ \$50.00 - \$24.99 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: $25.01</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">13.</span>
+                \[ 62,500 - 38,200 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 24,300</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">14.</span>
+                \[ 70 \times 8 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 560</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">15.</span>
+                \[ 64 \times 5 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 320</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">16.</span>
+                Draw dots and make groups to show 17 divided by 3. Write the answer next to your drawing.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">
+                Answer: [Student should draw 5 groups of 3 dots, with 2 extra dots left outside the groups]. <br> Answer is 5 R 2.
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">17.</span>
+                Divide for problems 17-19. Write each answer with a remainder.<br>
+                \[ 27 \div 5 \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 5 R 2</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">18.</span>
+                \[ 8 \overline{)45} \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 5 R 5</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">19.</span>
+                \[ 6 \overline{)50} \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 8 R 2</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">20.</span>
+                \[ 45 \times 6 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 270</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">21.</span>
+                \[ 53 \times 9 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 477</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">22.</span>
+                \[ y + 12.4 = 30.5 \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: y = 18.1</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">23.</span>
+                \[ 8.4 + 3.6 + 12.1 = \]
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 24.1</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">24.</span>
+                Use digits to write five million, three hundred four thousand.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: 5,304,000</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">25.</span>
+                A standard water bottle holds about 0.5 liters. Use words to write 0.5 L.
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: Five tenths of a liter.</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">26.</span>
+                Jessica said, "I am thinking of two numbers. Their product is 12." The two numbers Jessica was thinking of <strong>could not be</strong> _____
+                <ol type="A">
+                    <li>3 and 4</li>
+                    <li>2 and 6</li>
+                    <li>12 and 1</li>
+                    <li>5 and 2</li>
+                </ol>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">Answer: D. 5 and 2</div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">27.</span>
+                <strong>a.</strong> 50 cents is what percent of a dollar?<br>
+                <strong>b.</strong> A pint is what percent of a quart? (Hint: 1 quart = 2 pints)
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-section">
+                Answer:<br>
+                <strong>a.</strong> 50%<br>
+                <strong>b.</strong> 50%
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-content">
+                <span class="problem-number">28.</span>
+                <strong>a.</strong> What fraction of the large square is shaded?<br>
+                <strong>b.</strong> The shaded part represents what decimal number?<br>
+                <strong>c.</strong> What percent of the large square is shaded?
+                <div class="svg-container">
+                    <svg width="150" height="150" viewBox="0 0 100 100">
+                        <rect x="0" y="0" width="100" height="40" fill="#a0a0a0"/>
+                        <rect x="0" y="40" width="20" height="10" fill="#a0a0a0"/>
+                        <path d="M0,10 H100 M0,20 H100 M0,30 H100 M0,40 H10
