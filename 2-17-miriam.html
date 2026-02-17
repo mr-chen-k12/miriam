@@ -3,481 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Lesson 54</title>
-    
+    <title>Interactive Math Quiz</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #ecf0f1;
+            --accent-color: #3498db;
+            --correct-color: #27ae60;
+            --wrong-color: #e74c3c;
+            --text-color: #333;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
         }
-        .header {
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            padding-top: 100px; /* Space for fixed scoreboard */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Sticky Scoreboard */
+        .scoreboard {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            gap: 20px;
             font-size: 1.2em;
             font-weight: bold;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #333;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .problem-card {
-            background: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+
+        .score-item {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
         }
-        .problem-text {
-            font-size: 1.1em;
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card.answered {
+            background-color: #f9f9f9;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 500;
             margin-bottom: 15px;
         }
-        .answer-section {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed #eee;
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
         }
-        .answer-content {
-            display: none;
-            background-color: #e8f5e9;
-            padding: 10px;
-            border-left: 4px solid #4caf50;
-            margin-top: 10px;
-            border-radius: 4px;
+
+        .option {
+            padding: 15px;
+            background-color: #fafafa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .option:hover:not(.disabled) {
+            background-color: #e8f4fd;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* States for clicked options */
+        .option.correct {
+            background-color: #d4edda;
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+        }
+
+        .option.wrong {
+            background-color: #f8d7da;
+            border-color: var(--wrong-color);
+            color: var(--wrong-color);
+        }
+
+        .option.disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
+
+        .feedback-panel {
+            display: none; /* Hidden by default */
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
             font-weight: bold;
         }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.2s;
+
+        .feedback-panel.show-correct {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .feedback-panel.show-wrong {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        .diagram {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .grid-container {
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .options-grid {
                 grid-template-columns: 1fr;
+            }
+            .scoreboard {
+                width: 90%;
+                justify-content: space-between;
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div>Name: ____________________</div>
-        <div>Lesson Number: 54</div>
+<div class="scoreboard">
+    <div class="score-item">
+        <span>✅ Correct:</span>
+        <span id="score-correct">0</span>
+    </div>
+    <div class="score-item">
+        <span>❌ Incorrect:</span>
+        <span id="score-wrong">0</span>
+    </div>
+    <div class="score-item">
+        <span>Total:</span>
+        <span id="score-total">0 / 20</span>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Interactive Math Quiz</h1>
+    <p style="text-align: center; color: #666;">Click the best answer for each question. The scoreboard will update automatically!</p>
+
+    <h2>Set 1: Division Word Problems</h2>
+
+    <div class="problem-card" id="q1">
+        <div class="question-text">1. A teacher distributed 35 pencils equally among 5 students. How many pencils did each student get?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(1, 'A')">A) 6</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(1, 'B')">B) 7</div>
+            <div class="option" onclick="checkAnswer(1, 'C')">C) 8</div>
+            <div class="option" onclick="checkAnswer(1, 'D')">D) 5</div>
+        </div>
+        <div class="feedback-panel" id="feedback-1"></div>
     </div>
 
-    <div class="grid-container">
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>1.</strong> Write and solve equations for problems 1 and 2.<br><br>
-                Marcus baked 48 cookies. He wanted to pack them into boxes with 6 cookies in each box. How many boxes will he need?
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(1)">Reveal Answer</button>
-                <div id="ans-1" class="answer-content">Equation: \( 48 \div 6 = b \)<br>Answer: 8 boxes</div>
-            </div>
+    <div class="problem-card" id="q2">
+        <div class="question-text">2. There are 48 cookies in a jar. If you put them into bags of 6 cookies each, how many bags do you need?</div>
+        <div class="options-grid">
+            <div class="option" data-correct="true" onclick="checkAnswer(2, 'A')">A) 8</div>
+            <div class="option" onclick="checkAnswer(2, 'B')">B) 9</div>
+            <div class="option" onclick="checkAnswer(2, 'C')">C) 7</div>
+            <div class="option" onclick="checkAnswer(2, 'D')">D) 6</div>
         </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>2.</strong> A classroom has 35 desks arranged in rows. There are 5 rows of desks. If each row has the same number of desks, how many desks are in each row?
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(2)">Reveal Answer</button>
-                <div id="ans-2" class="answer-content">Equation: \( 35 \div 5 = d \)<br>Answer: 7 desks</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>3.</strong> Write four multiplication/division facts using the numbers 6, 8, and 48.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(3)">Reveal Answer</button>
-                <div id="ans-3" class="answer-content">
-                    \( 6 \times 8 = 48 \)<br>
-                    \( 8 \times 6 = 48 \)<br>
-                    \( 48 \div 6 = 8 \)<br>
-                    \( 48 \div 8 = 6 \)
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>4.</strong> How many days are in a leap year?
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(4)">Reveal Answer</button>
-                <div id="ans-4" class="answer-content">366 days</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>5.</strong> Consider this sequence: \( \dots, 24,000, 25,000, 26,000, 27,000, \dots \)<br><br>
-                <strong>a.</strong> Write a rule that describes how to find the next term of the sequence.<br>
-                <strong>b.</strong> What is the next term of the sequence?
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(5)">Reveal Answer</button>
-                <div id="ans-5" class="answer-content">
-                    a. Add 1,000 to the previous term.<br>
-                    b. 28,000
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>6.</strong> <br>
-                <strong>a.</strong> Round 6,815 to the nearest hundred.<br>
-                <strong>b.</strong> Round 6,815 to the nearest ten.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(6)">Reveal Answer</button>
-                <div id="ans-6" class="answer-content">a. 6,800<br>b. 6,820</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>7.</strong> Write the time "a quarter to ten in the morning" in digital form.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(7)">Reveal Answer</button>
-                <div id="ans-7" class="answer-content">9:45 a.m.</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>8.</strong> A rectangle has a length of 5 cm and a width of 3 cm.<br><br>
-                <strong>a.</strong> What is the perimeter of the rectangle?<br>
-                <strong>b.</strong> What is the area?
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(8)">Reveal Answer</button>
-                <div id="ans-8" class="answer-content">
-                    a. 16 cm ( \(5 + 3 + 5 + 3\) )<br>
-                    b. 15 sq cm ( \(5 \times 3\) )
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>9.</strong> How many squares are shaded?
-                <div class="diagram">
-                    <svg width="220" height="50" viewBox="0 0 220 50">
-                        <rect x="5" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
-                        <rect x="55" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
-                        <rect x="105" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
-                        
-                        <rect x="155" y="5" width="40" height="40" fill="none" stroke="black" stroke-width="2"/>
-                        <line x1="175" y1="5" x2="175" y2="45" stroke="black" stroke-width="2"/>
-                        <line x1="155" y1="25" x2="195" y2="25" stroke="black" stroke-width="2"/>
-                        <rect x="155" y="25" width="20" height="20" fill="#bbb" />
-                    </svg>
-                </div>
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(9)">Reveal Answer</button>
-                <div id="ans-9" class="answer-content">\( 3 \frac{1}{4} \) or 3.25 squares</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>10.</strong> Describe the order of operations in this expression and find the number it equals.
-                \[ \sqrt{81} + (35 \div 5) \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(10)">Reveal Answer</button>
-                <div id="ans-10" class="answer-content">
-                    First, solve the square root and the parentheses.<br>
-                    \( 9 + 7 = 16 \)
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>11.</strong> \[ \$5.25 + \$10.50 + \$1.25 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(11)">Reveal Answer</button>
-                <div id="ans-11" class="answer-content">$\$17.00$</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>12.</strong> \[ \$50.00 - \$24.99 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(12)">Reveal Answer</button>
-                <div id="ans-12" class="answer-content">$\$25.01$</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>13.</strong> \[ 62,500 - 38,200 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(13)">Reveal Answer</button>
-                <div id="ans-13" class="answer-content">24,300</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>14.</strong> \[ 70 \times 8 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(14)">Reveal Answer</button>
-                <div id="ans-14" class="answer-content">560</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>15.</strong> \[ 64 \times 5 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(15)">Reveal Answer</button>
-                <div id="ans-15" class="answer-content">320</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>16.</strong> Draw dots and make groups to show 17 divided by 3. Write the answer next to your drawing.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(16)">Reveal Answer</button>
-                <div id="ans-16" class="answer-content">
-                    Drawing should show 5 groups of 3 dots, with 2 dots left over.<br>
-                    Answer: 5 R 2
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>17.</strong> Divide for problems 17-19. Write each answer with a remainder.
-                \[ 27 \div 5 \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(17)">Reveal Answer</button>
-                <div id="ans-17" class="answer-content">5 R 2</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>18.</strong> \[ 8 \overline{)45} \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(18)">Reveal Answer</button>
-                <div id="ans-18" class="answer-content">5 R 5</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>19.</strong> \[ 6 \overline{)50} \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(19)">Reveal Answer</button>
-                <div id="ans-19" class="answer-content">8 R 2</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>20.</strong> \[ 45 \times 6 = \]
-                <br><em>(Set up vertically if needed)</em>
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(20)">Reveal Answer</button>
-                <div id="ans-20" class="answer-content">270</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>21.</strong> \[ 53 \times 9 = \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(21)">Reveal Answer</button>
-                <div id="ans-21" class="answer-content">477</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>22.</strong> \[ y + 12.4 = 30.5 \]
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(22)">Reveal Answer</button>
-                <div id="ans-22" class="answer-content">\( y = 18.1 \)</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>23.</strong> \[ 8.4 + 3.6 + 12.1 = \]
-                <br><em>(Stack vertically to align decimals)</em>
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(23)">Reveal Answer</button>
-                <div id="ans-23" class="answer-content">24.1</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>24.</strong> Use digits to write five million, three hundred four thousand.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(24)">Reveal Answer</button>
-                <div id="ans-24" class="answer-content">5,304,000</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>25.</strong> A standard water bottle holds about 0.5 liters. Use words to write 0.5 L.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(25)">Reveal Answer</button>
-                <div id="ans-25" class="answer-content">Five tenths of a liter (or one-half liter)</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>26.</strong> Jessica said, "I am thinking of two numbers. Their product is 12." The two numbers Jessica was thinking of <strong>could not be</strong> ______<br><br>
-                A. 3 and 4<br>
-                B. 2 and 6<br>
-                C. 12 and 1<br>
-                D. 5 and 2
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(26)">Reveal Answer</button>
-                <div id="ans-26" class="answer-content">D. 5 and 2 (Because 5 × 2 = 10)</div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>27.</strong><br>
-                <strong>a.</strong> 50 cents is what percent of a dollar?<br>
-                <strong>b.</strong> A pint is what percent of a quart? (Hint: 1 quart = 2 pints)
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(27)">Reveal Answer</button>
-                <div id="ans-27" class="answer-content">
-                    a. 50%<br>
-                    b. 50%
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>28.</strong><br>
-                <strong>a.</strong> What fraction of the large square is shaded?<br>
-                <strong>b.</strong> The shaded part represents what decimal number?<br>
-                <strong>c.</strong> What percent of the large square is shaded?
-                <div class="diagram">
-                    <svg width="150" height="150" viewBox="0 0 100 100" style="border: 2px solid black;">
-                        <rect x="0" y="0" width="100" height="40" fill="#a0a0a0" />
-                        <rect x="0" y="40" width="20" height="10" fill="#a0a0a0" />
-                        <path d="M10,0 V100 M20,0 V100 M30,0 V100 M40,0 V100 M50,0 V100 M60,0 V100 M70,0 V100 M80,0 V100 M90,0 V100" stroke="#666" stroke-width="0.5"/>
-                        <path d="M0,10 H100 M0,20 H100 M0,30 H100 M0,40 H100 M0,50 H100 M0,60 H100 M0,70 H100 M0,80 H100 M0,90 H100" stroke="#666" stroke-width="0.5"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(28)">Reveal Answer</button>
-                <div id="ans-28" class="answer-content">
-                    a. \( \frac{42}{100} \) or \( \frac{21}{50} \)<br>
-                    b. 0.42<br>
-                    c. 42%
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>29.</strong> A large pitcher holds 2 liters of water, which is about 67.6 fluid ounces. Estimate the number of 8-ounce cups you can fill from the pitcher. Explain your thinking.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(29)">Reveal Answer</button>
-                <div id="ans-29" class="answer-content">
-                    About 8 cups.<br>
-                    <em>Explanation:</em> 67.6 rounds to 64 (which is a multiple of 8) or 70. Since \( 64 \div 8 = 8 \), you can fill about 8 cups.
-                </div>
-            </div>
-        </div>
-
-        <div class="problem-card">
-            <div class="problem-text">
-                <strong>30.</strong> The Eiffel Tower is 1,083 feet tall. The Washington Monument is 555 feet tall. How many feet taller is the Eiffel Tower? Explain how you found your answer.
-            </div>
-            <div class="answer-section">
-                <button onclick="toggleAnswer(30)">Reveal Answer</button>
-                <div id="ans-30" class="answer-content">
-                    528 feet.<br>
-                    <em>Explanation:</em> I subtracted the height of the Washington Monument from the Eiffel Tower (\( 1,083 - 555 = 528 \)).
-                </div>
-            </div>
-        </div>
-
+        <div class="feedback-panel" id="feedback-2"></div>
     </div>
 
-    <script>
-        function toggleAnswer(problemNumber) {
-            const answerDiv = document.getElementById('ans-' + problemNumber);
-            const button = answerDiv.previousElementSibling;
+    <div class="problem-card" id="q3">
+        <div class="question-text">3. A gardener planted 24 flowers in 3 equal rows. How many flowers were in each row?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(3, 'A')">A) 6</div>
+            <div class="option" onclick="checkAnswer(3, 'B')">B) 12</div>
+            <div class="option" onclick="checkAnswer(3, 'C')">C) 9</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(3, 'D')">D) 8</div>
+        </div>
+        <div class="feedback-panel" id="feedback-3"></div>
+    </div>
+
+    <div class="problem-card" id="q4">
+        <div class="question-text">4. The librarian stacked 56 books on 7 shelves. If each shelf has the same number of books, how many books are on one shelf?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(4, 'A')">A) 7</div>
+            <div class="option" onclick="checkAnswer(4, 'B')">B) 9</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(4, 'C')">C) 8</div>
+            <div class="option" onclick="checkAnswer(4, 'D')">D) 6</div>
+        </div>
+        <div class="feedback-panel" id="feedback-4"></div>
+    </div>
+
+    <div class="problem-card" id="q5">
+        <div class="question-text">5. Four friends shared a pack of 32 stickers equally. How many stickers did each friend receive?</div>
+        <div class="options-grid">
+            <div class="option" data-correct="true" onclick="checkAnswer(5, 'A')">A) 8</div>
+            <div class="option" onclick="checkAnswer(5, 'B')">B) 4</div>
+            <div class="option" onclick="checkAnswer(5, 'C')">C) 7</div>
+            <div class="option" onclick="checkAnswer(5, 'D')">D) 9</div>
+        </div>
+        <div class="feedback-panel" id="feedback-5"></div>
+    </div>
+
+    <h2>Set 2: Decimal Addition</h2>
+
+    <div class="problem-card" id="q6">
+        <div class="question-text">6. \( 5.2 + 3.45 + 1.8 = \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(6, 'A')">A) 9.45</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(6, 'B')">B) 10.45</div>
+            <div class="option" onclick="checkAnswer(6, 'C')">C) 10.25</div>
+            <div class="option" onclick="checkAnswer(6, 'D')">D) 9.65</div>
+        </div>
+        <div class="feedback-panel" id="feedback-6"></div>
+    </div>
+
+    <div class="problem-card" id="q7">
+        <div class="question-text">7. \( 9.1 + 2.76 + 4.05 = \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(7, 'A')">A) 15.81</div>
+            <div class="option" onclick="checkAnswer(7, 'B')">B) 16.01</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(7, 'C')">C) 15.91</div>
+            <div class="option" onclick="checkAnswer(7, 'D')">D) 14.91</div>
+        </div>
+        <div class="feedback-panel" id="feedback-7"></div>
+    </div>
+
+    <div class="problem-card" id="q8">
+        <div class="question-text">8. \( 12.5 + 6.34 + 0.9 = \)</div>
+        <div class="options-grid">
+            <div class="option" data-correct="true" onclick="checkAnswer(8, 'A')">A) 19.74</div>
+            <div class="option" onclick="checkAnswer(8, 'B')">B) 18.84</div>
+            <div class="option" onclick="checkAnswer(8, 'C')">C) 19.64</div>
+            <div class="option" onclick="checkAnswer(8, 'D')">D) 20.14</div>
+        </div>
+        <div class="feedback-panel" id="feedback-8"></div>
+    </div>
+
+    <div class="problem-card" id="q9">
+        <div class="question-text">9. \( 3.88 + 4.1 + 7.2 = \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(9, 'A')">A) 14.18</div>
+            <div class="option" onclick="checkAnswer(9, 'B')">B) 15.08</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(9, 'C')">C) 15.18</div>
+            <div class="option" onclick="checkAnswer(9, 'D')">D) 14.98</div>
+        </div>
+        <div class="feedback-panel" id="feedback-9"></div>
+    </div>
+
+    <div class="problem-card" id="q10">
+        <div class="question-text">10. \( 15.2 + 3.99 + 1.4 = \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(10, 'A')">A) 20.49</div>
+            <div class="option" onclick="checkAnswer(10, 'B')">B) 19.59</div>
+            <div class="option" onclick="checkAnswer(10, 'C')">C) 20.69</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(10, 'D')">D) 20.59</div>
+        </div>
+        <div class="feedback-panel" id="feedback-10"></div>
+    </div>
+
+    <h2>Set 3: Solving for 'n'</h2>
+
+    <div class="problem-card" id="q11">
+        <div class="question-text">11. Solve for n: \( 300 - n = 145 \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(11, 'A')">A) 165</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(11, 'B')">B) 155</div>
+            <div class="option" onclick="checkAnswer(11, 'C')">C) 445</div>
+            <div class="option" onclick="checkAnswer(11, 'D')">D) 145</div>
+        </div>
+        <div class="feedback-panel" id="feedback-11"></div>
+    </div>
+
+    <div class="problem-card" id="q12">
+        <div class="question-text">12. Solve for n: \( 500 - n = 230 \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(12, 'A')">A) 330</div>
+            <div class="option" onclick="checkAnswer(12, 'B')">B) 730</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(12, 'C')">C) 270</div>
+            <div class="option" onclick="checkAnswer(12, 'D')">D) 230</div>
+        </div>
+        <div class="feedback-panel" id="feedback-12"></div>
+    </div>
+
+    <div class="problem-card" id="q13">
+        <div class="question-text">13. Solve for n: \( 100 - n = 37 \)</div>
+        <div class="options-grid">
+            <div class="option" data-correct="true" onclick="checkAnswer(13, 'A')">A) 63</div>
+            <div class="option" onclick="checkAnswer(13, 'B')">B) 73</div>
+            <div class="option" onclick="checkAnswer(13, 'C')">C) 137</div>
+            <div class="option" onclick="checkAnswer(13, 'D')">D) 53</div>
+        </div>
+        <div class="feedback-panel" id="feedback-13"></div>
+    </div>
+
+    <div class="problem-card" id="q14">
+        <div class="question-text">14. Solve for n: \( 250 - n = 198 \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(14, 'A')">A) 62</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(14, 'B')">B) 52</div>
+            <div class="option" onclick="checkAnswer(14, 'C')">C) 152</div>
+            <div class="option" onclick="checkAnswer(14, 'D')">D) 448</div>
+        </div>
+        <div class="feedback-panel" id="feedback-14"></div>
+    </div>
+
+    <div class="problem-card" id="q15">
+        <div class="question-text">15. Solve for n: \( 600 - n = 455 \)</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(15, 'A')">A) 245</div>
+            <div class="option" onclick="checkAnswer(15, 'B')">B) 1055</div>
+            <div class="option" onclick="checkAnswer(15, 'C')">C) 155</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(15, 'D')">D) 145</div>
+        </div>
+        <div class="feedback-panel" id="feedback-15"></div>
+    </div>
+
+    <h2>Set 4: Counting Coins</h2>
+
+    <div class="problem-card" id="q16">
+        <div class="question-text">16. You have exactly two coins: one Quarter and one Dime. What is the total amount?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(16, 'A')">A) $0.30</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(16, 'B')">B) $0.35</div>
+            <div class="option" onclick="checkAnswer(16, 'C')">C) $0.40</div>
+            <div class="option" onclick="checkAnswer(16, 'D')">D) $0.45</div>
+        </div>
+        <div class="feedback-panel" id="feedback-16"></div>
+    </div>
+
+    <div class="problem-card" id="q17">
+        <div class="question-text">17. Which two coins add up to $0.75?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(17, 'A')">A) Two Quarters</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(17, 'B')">B) A Half Dollar and a Quarter</div>
+            <div class="option" onclick="checkAnswer(17, 'C')">C) A Half Dollar and a Dime</div>
+            <div class="option" onclick="checkAnswer(17, 'D')">D) Three Quarters</div>
+        </div>
+        <div class="feedback-panel" id="feedback-17"></div>
+    </div>
+
+    <div class="problem-card" id="q18">
+        <div class="question-text">18. What is the total value of one Half Dollar and one Nickel?</div>
+        <div class="options-grid">
+            <div class="option" data-correct="true" onclick="checkAnswer(18, 'A')">A) $0.55</div>
+            <div class="option" onclick="checkAnswer(18, 'B')">B) $0.60</div>
+            <div class="option" onclick="checkAnswer(18, 'C')">C) $0.45</div>
+            <div class="option" onclick="checkAnswer(18, 'D')">D) $0.15</div>
+        </div>
+        <div class="feedback-panel" id="feedback-18"></div>
+    </div>
+
+    <div class="problem-card" id="q19">
+        <div class="question-text">19. Which amount can you make using exactly two coins?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(19, 'A')">A) $0.13</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(19, 'B')">B) $0.26</div>
+            <div class="option" onclick="checkAnswer(19, 'C')">C) $0.08</div>
+            <div class="option" onclick="checkAnswer(19, 'D')">D) $0.29</div>
+        </div>
+        <div class="feedback-panel" id="feedback-19"></div>
+    </div>
+
+    <div class="problem-card" id="q20">
+        <div class="question-text">20. What is the total value of two Dimes and one Penny?</div>
+        <div class="options-grid">
+            <div class="option" onclick="checkAnswer(20, 'A')">A) $0.11</div>
+            <div class="option" data-correct="true" onclick="checkAnswer(20, 'B')">B) $0.21</div>
+            <div class="option" onclick="checkAnswer(20, 'C')">C) $0.31</div>
+            <div class="option" onclick="checkAnswer(20, 'D')">D) $0.25</div>
+        </div>
+        <div class="feedback-panel" id="feedback-20"></div>
+    </div>
+
+</div>
+
+<script>
+    let correctCount = 0;
+    let wrongCount = 0;
+    let totalAnswered = 0;
+    const totalQuestions = 20;
+
+    // Track which questions have been answered to prevent multi-guessing
+    const answeredStatus = {};
+
+    function checkAnswer(questionId, selectedOption) {
+        // Prevent answering the same question twice
+        if (answeredStatus[questionId]) return;
+
+        const card = document.getElementById('q' + questionId);
+        const feedback = document.getElementById('feedback-' + questionId);
+        const options = card.querySelectorAll('.option');
+        
+        let isCorrect = false;
+
+        // Find correct option and check user selection
+        options.forEach(option => {
+            const isThisCorrect = option.getAttribute('data-correct') === 'true';
             
-            if (answerDiv.style.display === 'none' || answerDiv.style.display === '') {
-                answerDiv.style.display = 'block';
-                button.textContent = 'Hide Answer';
-            } else {
-                answerDiv.style.display = 'none';
-                button.textContent = 'Reveal Answer';
+            // Mark the selected option
+            if (option.innerText.startsWith(selectedOption)) {
+                if (isThisCorrect) {
+                    option.classList.add('correct');
+                    isCorrect = true;
+                } else {
+                    option.classList.add('wrong');
+                }
+            } else if (isThisCorrect) {
+                // Always highlight the correct answer so they learn
+                option.classList.add('correct');
             }
+
+            // Disable all options
+            option.classList.add('disabled');
+            option.onclick = null;
+        });
+
+        // Update Scoreboard
+        if (isCorrect) {
+            correctCount++;
+            feedback.innerHTML = "🎉 Correct! Great job.";
+            feedback.classList.add('show-correct');
+        } else {
+            wrongCount++;
+            feedback.innerHTML = "❌ Incorrect. The correct answer is highlighted above.";
+            feedback.classList.add('show-wrong');
         }
-    </script>
+        
+        answeredStatus[questionId] = true;
+        totalAnswered++;
+        
+        document.getElementById('score-correct').innerText = correctCount;
+        document.getElementById('score-wrong').innerText = wrongCount;
+        document.getElementById('score-total').innerText = totalAnswered + " / " + totalQuestions;
+        
+        // Visual cue that card is done
+        card.classList.add('answered');
+    }
+</script>
 
 </body>
 </html>
