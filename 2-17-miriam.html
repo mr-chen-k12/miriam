@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Lesson 54</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .problem-card {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .problem-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .answer-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+        }
+        .answer-content {
+            display: none;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-left: 4px solid #4caf50;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .diagram {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>Name: ____________________</div>
+        <div>Lesson Number: 54</div>
+    </div>
+
+    <div class="grid-container">
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>1.</strong> Write and solve equations for problems 1 and 2.<br><br>
+                Marcus baked 48 cookies. He wanted to pack them into boxes with 6 cookies in each box. How many boxes will he need?
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(1)">Reveal Answer</button>
+                <div id="ans-1" class="answer-content">Equation: \( 48 \div 6 = b \)<br>Answer: 8 boxes</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>2.</strong> A classroom has 35 desks arranged in rows. There are 5 rows of desks. If each row has the same number of desks, how many desks are in each row?
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(2)">Reveal Answer</button>
+                <div id="ans-2" class="answer-content">Equation: \( 35 \div 5 = d \)<br>Answer: 7 desks</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>3.</strong> Write four multiplication/division facts using the numbers 6, 8, and 48.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(3)">Reveal Answer</button>
+                <div id="ans-3" class="answer-content">
+                    \( 6 \times 8 = 48 \)<br>
+                    \( 8 \times 6 = 48 \)<br>
+                    \( 48 \div 6 = 8 \)<br>
+                    \( 48 \div 8 = 6 \)
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>4.</strong> How many days are in a leap year?
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(4)">Reveal Answer</button>
+                <div id="ans-4" class="answer-content">366 days</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>5.</strong> Consider this sequence: \( \dots, 24,000, 25,000, 26,000, 27,000, \dots \)<br><br>
+                <strong>a.</strong> Write a rule that describes how to find the next term of the sequence.<br>
+                <strong>b.</strong> What is the next term of the sequence?
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(5)">Reveal Answer</button>
+                <div id="ans-5" class="answer-content">
+                    a. Add 1,000 to the previous term.<br>
+                    b. 28,000
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>6.</strong> <br>
+                <strong>a.</strong> Round 6,815 to the nearest hundred.<br>
+                <strong>b.</strong> Round 6,815 to the nearest ten.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(6)">Reveal Answer</button>
+                <div id="ans-6" class="answer-content">a. 6,800<br>b. 6,820</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>7.</strong> Write the time "a quarter to ten in the morning" in digital form.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(7)">Reveal Answer</button>
+                <div id="ans-7" class="answer-content">9:45 a.m.</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>8.</strong> A rectangle has a length of 5 cm and a width of 3 cm.<br><br>
+                <strong>a.</strong> What is the perimeter of the rectangle?<br>
+                <strong>b.</strong> What is the area?
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(8)">Reveal Answer</button>
+                <div id="ans-8" class="answer-content">
+                    a. 16 cm ( \(5 + 3 + 5 + 3\) )<br>
+                    b. 15 sq cm ( \(5 \times 3\) )
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>9.</strong> How many squares are shaded?
+                <div class="diagram">
+                    <svg width="220" height="50" viewBox="0 0 220 50">
+                        <rect x="5" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
+                        <rect x="55" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
+                        <rect x="105" y="5" width="40" height="40" fill="#bbb" stroke="black" stroke-width="2"/>
+                        
+                        <rect x="155" y="5" width="40" height="40" fill="none" stroke="black" stroke-width="2"/>
+                        <line x1="175" y1="5" x2="175" y2="45" stroke="black" stroke-width="2"/>
+                        <line x1="155" y1="25" x2="195" y2="25" stroke="black" stroke-width="2"/>
+                        <rect x="155" y="25" width="20" height="20" fill="#bbb" />
+                    </svg>
+                </div>
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(9)">Reveal Answer</button>
+                <div id="ans-9" class="answer-content">\( 3 \frac{1}{4} \) or 3.25 squares</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>10.</strong> Describe the order of operations in this expression and find the number it equals.
+                \[ \sqrt{81} + (35 \div 5) \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(10)">Reveal Answer</button>
+                <div id="ans-10" class="answer-content">
+                    First, solve the square root and the parentheses.<br>
+                    \( 9 + 7 = 16 \)
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>11.</strong> \[ \$5.25 + \$10.50 + \$1.25 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(11)">Reveal Answer</button>
+                <div id="ans-11" class="answer-content">$\$17.00$</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>12.</strong> \[ \$50.00 - \$24.99 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(12)">Reveal Answer</button>
+                <div id="ans-12" class="answer-content">$\$25.01$</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>13.</strong> \[ 62,500 - 38,200 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(13)">Reveal Answer</button>
+                <div id="ans-13" class="answer-content">24,300</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>14.</strong> \[ 70 \times 8 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(14)">Reveal Answer</button>
+                <div id="ans-14" class="answer-content">560</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>15.</strong> \[ 64 \times 5 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(15)">Reveal Answer</button>
+                <div id="ans-15" class="answer-content">320</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>16.</strong> Draw dots and make groups to show 17 divided by 3. Write the answer next to your drawing.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(16)">Reveal Answer</button>
+                <div id="ans-16" class="answer-content">
+                    Drawing should show 5 groups of 3 dots, with 2 dots left over.<br>
+                    Answer: 5 R 2
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>17.</strong> Divide for problems 17-19. Write each answer with a remainder.
+                \[ 27 \div 5 \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(17)">Reveal Answer</button>
+                <div id="ans-17" class="answer-content">5 R 2</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>18.</strong> \[ 8 \overline{)45} \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(18)">Reveal Answer</button>
+                <div id="ans-18" class="answer-content">5 R 5</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>19.</strong> \[ 6 \overline{)50} \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(19)">Reveal Answer</button>
+                <div id="ans-19" class="answer-content">8 R 2</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>20.</strong> \[ 45 \times 6 = \]
+                <br><em>(Set up vertically if needed)</em>
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(20)">Reveal Answer</button>
+                <div id="ans-20" class="answer-content">270</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>21.</strong> \[ 53 \times 9 = \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(21)">Reveal Answer</button>
+                <div id="ans-21" class="answer-content">477</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>22.</strong> \[ y + 12.4 = 30.5 \]
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(22)">Reveal Answer</button>
+                <div id="ans-22" class="answer-content">\( y = 18.1 \)</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>23.</strong> \[ 8.4 + 3.6 + 12.1 = \]
+                <br><em>(Stack vertically to align decimals)</em>
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(23)">Reveal Answer</button>
+                <div id="ans-23" class="answer-content">24.1</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>24.</strong> Use digits to write five million, three hundred four thousand.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(24)">Reveal Answer</button>
+                <div id="ans-24" class="answer-content">5,304,000</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>25.</strong> A standard water bottle holds about 0.5 liters. Use words to write 0.5 L.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(25)">Reveal Answer</button>
+                <div id="ans-25" class="answer-content">Five tenths of a liter (or one-half liter)</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>26.</strong> Jessica said, "I am thinking of two numbers. Their product is 12." The two numbers Jessica was thinking of <strong>could not be</strong> ______<br><br>
+                A. 3 and 4<br>
+                B. 2 and 6<br>
+                C. 12 and 1<br>
+                D. 5 and 2
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(26)">Reveal Answer</button>
+                <div id="ans-26" class="answer-content">D. 5 and 2 (Because 5 × 2 = 10)</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>27.</strong><br>
+                <strong>a.</strong> 50 cents is what percent of a dollar?<br>
+                <strong>b.</strong> A pint is what percent of a quart? (Hint: 1 quart = 2 pints)
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(27)">Reveal Answer</button>
+                <div id="ans-27" class="answer-content">
+                    a. 50%<br>
+                    b. 50%
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>28.</strong><br>
+                <strong>a.</strong> What fraction of the large square is shaded?<br>
+                <strong>b.</strong> The shaded part represents what decimal number?<br>
+                <strong>c.</strong> What percent of the large square is shaded?
+                <div class="diagram">
+                    <svg width="150" height="150" viewBox="0 0 100 100" style="border: 2px solid black;">
+                        <rect x="0" y="0" width="100" height="40" fill="#a0a0a0" />
+                        <rect x="0" y="40" width="20" height="10" fill="#a0a0a0" />
+                        <path d="M10,0 V100 M20,0 V100 M30,0 V100 M40,0 V100 M50,0 V100 M60,0 V100 M70,0 V100 M80,0 V100 M90,0 V100" stroke="#666" stroke-width="0.5"/>
+                        <path d="M0,10 H100 M0,20 H100 M0,30 H100 M0,40 H100 M0,50 H100 M0,60 H100 M0,70 H100 M0,80 H100 M0,90 H100" stroke="#666" stroke-width="0.5"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(28)">Reveal Answer</button>
+                <div id="ans-28" class="answer-content">
+                    a. \( \frac{42}{100} \) or \( \frac{21}{50} \)<br>
+                    b. 0.42<br>
+                    c. 42%
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>29.</strong> A large pitcher holds 2 liters of water, which is about 67.6 fluid ounces. Estimate the number of 8-ounce cups you can fill from the pitcher. Explain your thinking.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(29)">Reveal Answer</button>
+                <div id="ans-29" class="answer-content">
+                    About 8 cups.<br>
+                    <em>Explanation:</em> 67.6 rounds to 64 (which is a multiple of 8) or 70. Since \( 64 \div 8 = 8 \), you can fill about 8 cups.
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text">
+                <strong>30.</strong> The Eiffel Tower is 1,083 feet tall. The Washington Monument is 555 feet tall. How many feet taller is the Eiffel Tower? Explain how you found your answer.
+            </div>
+            <div class="answer-section">
+                <button onclick="toggleAnswer(30)">Reveal Answer</button>
+                <div id="ans-30" class="answer-content">
+                    528 feet.<br>
+                    <em>Explanation:</em> I subtracted the height of the Washington Monument from the Eiffel Tower (\( 1,083 - 555 = 528 \)).
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAnswer(problemNumber) {
+            const answerDiv = document.getElementById('ans-' + problemNumber);
+            const button = answerDiv.previousElementSibling;
+            
+            if (answerDiv.style.display === 'none' || answerDiv.style.display === '') {
+                answerDiv.style.display = 'block';
+                button.textContent = 'Hide Answer';
+            } else {
+                answerDiv.style.display = 'none';
+                button.textContent = 'Reveal Answer';
+            }
+        }
+    </script>
+
+</body>
+</html>
