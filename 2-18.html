@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .problem-container:hover {
+            transform: translateY(-2px);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .btn-show {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-show:hover {
+            background-color: #2980b9;
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #27ae60;
+            font-size: 1.05em;
+        }
+        .explanation {
+            color: #555;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        canvas {
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Solutions</h1>
+
+    <div class="problem-container">
+        <div class="question">1. Chazz pays $7.50 every week for a bus pass. How much does she pay for 4 weeks of bus passes? Write an equation to solve the problem.</div>
+        <button class="btn-show" onclick="toggleAnswer(1)">Show Answer & Explanation</button>
+        <div id="ans-1" class="answer">
+            <strong>Answer:</strong> \$30.00<br>
+            <strong>Equation:</strong> \( \$7.50 \times 4 = x \)
+            <div class="explanation"><strong>Explanation:</strong> You multiply the weekly cost ($7.50) by the number of weeks (4) to find the total amount paid. \( 7.50 \times 4 = 30 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">2. It takes 4 apples to make 1 pint of applesauce. How many apples does it take to make 5 pints? Make a table to solve the problem.</div>
+        <button class="btn-show" onclick="toggleAnswer(2)">Show Answer & Explanation</button>
+        <div id="ans-2" class="answer">
+            <strong>Answer:</strong> 20 apples
+            <div class="explanation">
+                <strong>Explanation:</strong> Each pint requires 4 apples. The table shows the progression by adding 4 each time.
+                <table>
+                    <tr><th>Pints</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                    <tr><th>Apples</th><td>4</td><td>8</td><td>12</td><td>16</td><td>20</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">3. Calvin has to get up at 6 a.m. By what time should he go to bed in order to get 8 hours of sleep?</div>
+        <button class="btn-show" onclick="toggleAnswer(3)">Show Answer & Explanation</button>
+        <div id="ans-3" class="answer">
+            <strong>Answer:</strong> 10:00 p.m.
+            <div class="explanation"><strong>Explanation:</strong> Count backward 8 hours from 6:00 a.m. Counting back 6 hours gets you to 12:00 a.m. (midnight). Counting back 2 more hours gets you to 10:00 p.m.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">4. The store sells paint in quart cans, gallon cans, and 5-gallon cans. The price per quart is lower with larger cans. Hosni needs 8 quarts of paint. What containers of paint should he buy? Explain.</div>
+        <button class="btn-show" onclick="toggleAnswer(4)">Show Answer & Explanation</button>
+        <div id="ans-4" class="answer">
+            <strong>Answer:</strong> He should buy two 1-gallon cans.
+            <div class="explanation"><strong>Explanation:</strong> There are 4 quarts in 1 gallon. Therefore, 8 quarts equals 2 gallons (\(8 \div 4 = 2\)). Since larger cans offer a lower price per quart, buying two 1-gallon cans is more cost-effective than buying eight individual quart cans.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">5. Write 8402 in expanded form. Then use words to write the number.</div>
+        <button class="btn-show" onclick="toggleAnswer(5)">Show Answer & Explanation</button>
+        <div id="ans-5" class="answer">
+            <strong>Answer:</strong><br>
+            <strong>Expanded Form:</strong> \( 8000 + 400 + 2 \)<br>
+            <strong>Word Form:</strong> Eight thousand four hundred two
+            <div class="explanation"><strong>Explanation:</strong> Break down the place values: 8 thousands, 4 hundreds, 0 tens, and 2 ones.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">6. Find the fourth multiple of 7. Then find the sixth multiple of 6. Add these multiples. What is the square root of the answer?</div>
+        <button class="btn-show" onclick="toggleAnswer(6)">Show Answer & Explanation</button>
+        <div id="ans-6" class="answer">
+            <strong>Answer:</strong> 8
+            <div class="explanation"><strong>Explanation:</strong> 
+                <br>1. Fourth multiple of 7: \( 7 \times 4 = 28 \)
+                <br>2. Sixth multiple of 6: \( 6 \times 6 = 36 \)
+                <br>3. Add them: \( 28 + 36 = 64 \)
+                <br>4. Square root: \( \sqrt{64} = 8 \)
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">7. According to this calendar (September 2042), what is the date of the second Tuesday?</div>
+        <button class="btn-show" onclick="toggleAnswer(7)">Show Answer & Explanation</button>
+        <div id="ans-7" class="answer">
+            <strong>Answer:</strong> September 9, 2042
+            <div class="explanation"><strong>Explanation:</strong> Looking at the calendar grid, the Tuesdays fall under the "T" column. The first Tuesday is on the 2nd. The second Tuesday is 7 days later, on the 9th.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">8. If \( 5 + n = 23 \), then what number does \( n - 5 \) equal?</div>
+        <button class="btn-show" onclick="toggleAnswer(8)">Show Answer & Explanation</button>
+        <div id="ans-8" class="answer">
+            <strong>Answer:</strong> 13
+            <div class="explanation"><strong>Explanation:</strong> First, solve for \( n \) by subtracting 5 from 23, giving \( n = 18 \). Then substitute \( n \) into the second expression: \( 18 - 5 = 13 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">9. What is the perimeter of this figure? Measurements are in feet. Describe each angle as acute, obtuse, or right.</div>
+        <button class="btn-show" onclick="toggleAnswer(9, true)">Show Answer & Explanation</button>
+        <div id="ans-9" class="answer">
+            <strong>Answer:</strong> 
+            <br>Perimeter = 26 feet. 
+            <br>Angles: A = Acute, B = Right, C = Obtuse, D = Obtuse.
+            <canvas id="canvas-prob9" width="200" height="150"></canvas>
+            <div class="explanation"><strong>Explanation:</strong> The perimeter is the sum of all sides: \( 6 + 6 + 7 + 7 = 26 \). Visually, angle B has a square symbol indicating a 90° Right angle. Angle A is less than 90° (Acute). Angles C and D are wider than 90° (Obtuse).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">10. Compare these fractions. Draw and shade two congruent circles to show the comparison: \( \frac{1}{2} \) and \( \frac{2}{4} \)</div>
+        <button class="btn-show" onclick="toggleAnswer(10, true)">Show Answer & Explanation</button>
+        <div id="ans-10" class="answer">
+            <strong>Answer:</strong> They are equal (\( \frac{1}{2} = \frac{2}{4} \)).
+            <canvas id="canvas-prob10" width="300" height="150"></canvas>
+            <div class="explanation"><strong>Explanation:</strong> The fractions are equivalent. Simplifying \( \frac{2}{4} \) by dividing the numerator and denominator by 2 yields \( \frac{1}{2} \). The shaded areas in the circles cover the exact same amount of space.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">11. To what mixed number is the arrow pointing? (Number line from 7 to 8 with 5 intervals, arrow on the 3rd mark)</div>
+        <button class="btn-show" onclick="toggleAnswer(11)">Show Answer & Explanation</button>
+        <div id="ans-11" class="answer">
+            <strong>Answer:</strong> \( 7 \frac{3}{5} \)
+            <div class="explanation"><strong>Explanation:</strong> The space between 7 and 8 is divided into 5 equal sections, meaning each tick mark represents \( \frac{1}{5} \). The arrow points to the 3rd tick mark after 7.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">12. Which segment appears to be parallel to AB? (Looking at a 3D rectangular prism)</div>
+        <button class="btn-show" onclick="toggleAnswer(12)">Show Answer & Explanation</button>
+        <div id="ans-12" class="answer">
+            <strong>Answer:</strong> Segments DC, EF, and HG.
+            <div class="explanation"><strong>Explanation:</strong> In a rectangular prism, the opposite edges running in the same dimensional direction are parallel. If AB is the top front horizontal edge, the parallel edges are the bottom front (DC), top back (EF), and bottom back (HG).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">13. \( 0.47 + 3.62 + 0.85 + 4.54 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(13)">Show Answer & Explanation</button>
+        <div id="ans-13" class="answer">
+            <strong>Answer:</strong> 9.48
+            <div class="explanation"><strong>Explanation:</strong> Align the decimals vertically and add. \( 0.47 + 3.62 = 4.09 \). Then \( 4.09 + 0.85 = 4.94 \). Finally, \( 4.94 + 4.54 = 9.48 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">14. \( \$3 + \$4.39 + \$12.62 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(14)">Show Answer & Explanation</button>
+        <div id="ans-14" class="answer">
+            <strong>Answer:</strong> \$20.01
+            <div class="explanation"><strong>Explanation:</strong> Line up the decimal points (treat $3 as $3.00) and add. \( \$3.00 + \$4.39 = \$7.39 \). Then \( \$7.39 + \$12.62 = \$20.01 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">15. \( 36.47 - (3.5 + 12.6) \)</div>
+        <button class="btn-show" onclick="toggleAnswer(15)">Show Answer & Explanation</button>
+        <div id="ans-15" class="answer">
+            <strong>Answer:</strong> 20.37
+            <div class="explanation"><strong>Explanation:</strong> Follow the order of operations (PEMDAS) and calculate the parentheses first: \( 3.5 + 12.6 = 16.1 \). Then subtract that sum from 36.47: \( 36.47 - 16.10 = 20.37 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">16. \( \$20.00 - (\$0.29 + \$7) \)</div>
+        <button class="btn-show" onclick="toggleAnswer(16)">Show Answer & Explanation</button>
+        <div id="ans-16" class="answer">
+            <strong>Answer:</strong> \$12.71
+            <div class="explanation"><strong>Explanation:</strong> Calculate the parentheses first: \( \$0.29 + \$7.00 = \$7.29 \). Then subtract from $20.00: \( \$20.00 - \$7.29 = \$12.71 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">17. \( 41,059 - 36,275 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(17)">Show Answer & Explanation</button>
+        <div id="ans-17" class="answer">
+            <strong>Answer:</strong> 4,784
+            <div class="explanation"><strong>Explanation:</strong> Subtract using standard vertical borrowing methods.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">18. \( 768 \times 3 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(18)">Show Answer & Explanation</button>
+        <div id="ans-18" class="answer">
+            <strong>Answer:</strong> 2,304
+            <div class="explanation"><strong>Explanation:</strong> \( 8 \times 3 = 24 \) (carry 2). \( 6 \times 3 = 18 \), plus 2 is 20 (carry 2). \( 7 \times 3 = 21 \), plus 2 is 23. Result is 2304.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">19. \( \$2.80 \times 4 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(19)">Show Answer & Explanation</button>
+        <div id="ans-19" class="answer">
+            <strong>Answer:</strong> \$11.20
+            <div class="explanation"><strong>Explanation:</strong> \( 2.80 \times 4 \): \( 0 \times 4 = 0 \), \( 8 \times 4 = 32 \) (carry 3). \( 2 \times 4 = 8 \), plus 3 is 11. Place the decimal two spots in: \$11.20.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">20. \( 436 - z = 252 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(20)">Show Answer & Explanation</button>
+        <div id="ans-20" class="answer">
+            <strong>Answer:</strong> \( z = 184 \)
+            <div class="explanation"><strong>Explanation:</strong> To find the missing number, rearrange the equation: \( z = 436 - 252 \). Subtracting gives 184.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">21. \( 36 \div 5 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(21)">Show Answer & Explanation</button>
+        <div id="ans-21" class="answer">
+            <strong>Answer:</strong> 7 Remainder 1 (or 7.2)
+            <div class="explanation"><strong>Explanation:</strong> 5 goes into 36 seven times (\( 5 \times 7 = 35 \)) with 1 left over.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">22. \( 45 \div 7 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(22)">Show Answer & Explanation</button>
+        <div id="ans-22" class="answer">
+            <strong>Answer:</strong> 6 Remainder 3 (or \( 6 \frac{3}{7} \))
+            <div class="explanation"><strong>Explanation:</strong> 7 goes into 45 six times (\( 7 \times 6 = 42 \)) with 3 left over.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">23. \( 35 \div 4 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(23)">Show Answer & Explanation</button>
+        <div id="ans-23" class="answer">
+            <strong>Answer:</strong> 8 Remainder 3 (or 8.75)
+            <div class="explanation"><strong>Explanation:</strong> 4 goes into 35 eight times (\( 4 \times 8 = 32 \)) with 3 left over.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">24. How can you find the product of \( 4 \times 100 \) using only mental math?</div>
+        <button class="btn-show" onclick="toggleAnswer(24)">Show Answer & Explanation</button>
+        <div id="ans-24" class="answer">
+            <strong>Answer:</strong> 400
+            <div class="explanation"><strong>Explanation:</strong> Using mental math base-10 tricks, multiply the whole numbers (\( 4 \times 1 = 4 \)) and simply attach the two zeros from the 100 to the end of the 4.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">25. Two factors of 20 are 1 and 20 because \( 1 \times 20 = 20 \). Find four more factors of 20.</div>
+        <button class="btn-show" onclick="toggleAnswer(25)">Show Answer & Explanation</button>
+        <div id="ans-25" class="answer">
+            <strong>Answer:</strong> 2, 4, 5, and 10
+            <div class="explanation"><strong>Explanation:</strong> Factors are numbers that divide evenly into another number. For 20, the pairs are (1, 20), (2, 10), and (4, 5).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">26. According to the census, the population of South Fork was 6781.<br>a. Round 6781 to the nearest thousand.<br>b. Round 6781 to the nearest hundred.</div>
+        <button class="btn-show" onclick="toggleAnswer(26)">Show Answer & Explanation</button>
+        <div id="ans-26" class="answer">
+            <strong>Answer:</strong><br>a. 7,000<br>b. 6,800
+            <div class="explanation"><strong>Explanation:</strong> 
+                <br>a. The hundreds digit is 7, which is 5 or more, so round the thousands digit up to 7,000.
+                <br>b. The tens digit is 8, which is 5 or more, so round the hundreds digit up to 6,800.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">27. If \( 4n = 24 \), then which of these equations is <em>not</em> true?</div>
+        <button class="btn-show" onclick="toggleAnswer(27)">Show Answer & Explanation</button>
+        <div id="ans-27" class="answer">
+            <strong>Answer:</strong> Any equation where \( n \) does not equal 6.
+            <div class="explanation"><strong>Explanation:</strong> Because the options were cut off in the image, we find \( n \) by solving \( 4n = 24 \) (\( 24 \div 4 = 6 \)). Any equation in the multiple-choice list that evaluates to a false statement when plugging in \( n = 6 \) is the correct answer.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">28. a. Seven pennies are what fraction of a dollar?<br>b. Write the value of seven pennies as a decimal part of a dollar.<br>c. Seven pennies are what percent of a dollar?</div>
+        <button class="btn-show" onclick="toggleAnswer(28)">Show Answer & Explanation</button>
+        <div id="ans-28" class="answer">
+            <strong>Answer:</strong><br>a. \( \frac{7}{100} \)<br>b. 0.07<br>c. 7%
+            <div class="explanation"><strong>Explanation:</strong> There are 100 pennies in a dollar, so 7 pennies represent 7 out of 100 parts.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">29. Which of these even numbers is a prime number?<br>A 2&nbsp;&nbsp;&nbsp;B 4&nbsp;&nbsp;&nbsp;C 6&nbsp;&nbsp;&nbsp;D 8</div>
+        <button class="btn-show" onclick="toggleAnswer(29)">Show Answer & Explanation</button>
+        <div id="ans-29" class="answer">
+            <strong>Answer:</strong> A (2)
+            <div class="explanation"><strong>Explanation:</strong> A prime number has only two factors: 1 and itself. 2 is the only even prime number. Numbers 4, 6, and 8 all have more than two factors (e.g., 4 is divisible by 2).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">30. On a road trip across the country, Kwan drove 387 miles the first day and 409 miles the second day. If he drives about the same distance each day, approximately how many miles will Kwan drive in 5 days?</div>
+        <button class="btn-show" onclick="toggleAnswer(30)">Show Answer & Explanation</button>
+        <div id="ans-30" class="answer">
+            <strong>Answer:</strong> Approximately 2,000 miles.
+            <div class="explanation"><strong>Explanation:</strong> 387 and 409 both round approximately to 400 miles per day. If he averages 400 miles a day for 5 days: \( 400 \times 5 = 2000 \).</div>
+        </div>
+    </div>
+
+    <script>
+        // Track whether canvases have been drawn to prevent redrawing
+        const canvasDrawn = {};
+
+        function toggleAnswer(id, requiresCanvas = false) {
+            var element = document.getElementById('ans-' + id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+                if (requiresCanvas && !canvasDrawn[id]) {
+                    if (id === 9) drawProblem9Canvas();
+                    if (id === 10) drawProblem10Canvas();
+                    canvasDrawn[id] = true;
+                }
+            }
+        }
+
+        function drawProblem9Canvas() {
+            var canvas = document.getElementById('canvas-prob9');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw Trapezoid
+                ctx.beginPath();
+                ctx.moveTo(50, 100); // A
+                ctx.lineTo(150, 100); // B
+                ctx.lineTo(150, 30);  // C
+                ctx.lineTo(65, 30);   // D
+                ctx.closePath();
+                
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#34495e';
+                ctx.stroke();
+                ctx.fillStyle = '#ecf0f1';
+                ctx.fill();
+
+                // Draw Right Angle Box at B
+                ctx.beginPath();
+                ctx.moveTo(140, 100);
+                ctx.lineTo(140, 90);
+                ctx.lineTo(150, 90);
+                ctx.stroke();
+
+                // Labels
+                ctx.fillStyle = '#000';
+                ctx.font = '14px Arial';
+                ctx.fillText('A', 35, 110);
+                ctx.fillText('B', 155, 110);
+                ctx.fillText('C', 155, 25);
+                ctx.fillText('D', 50, 25);
+                ctx.fillText('7', 100, 115); // Bottom
+                ctx.fillText('7', 160, 65);  // Right
+                ctx.fillText('6', 100, 25);  // Top
+                ctx.fillText('6', 40, 65);   // Left
+            }
+        }
+
+        function drawProblem10Canvas() {
+            var canvas = document.getElementById('canvas-prob10');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                var radius = 50;
+
+                // Circle 1 (1/2)
+                var x1 = 75, y1 = 75;
+                ctx.beginPath();
+                ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
+                ctx.stroke();
+                
+                // Shade left half
+                ctx.beginPath();
+                ctx.arc(x1, y1, radius, 0.5 * Math.PI, 1.5 * Math.PI);
+                ctx.fillStyle = '#a2d9ce';
+                ctx.fill();
+                ctx.stroke();
+
+                // Line down middle
+                ctx.beginPath();
+                ctx.moveTo(x1, y1 - radius);
+                ctx.lineTo(x1, y1 + radius);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#000';
+                ctx.font = '16px Arial';
+                ctx.fillText('1/2', x1 - 10, y1 + radius + 20);
+
+                // Circle 2 (2/4)
+                var x2 = 225, y2 = 75;
+                ctx.beginPath();
+                ctx.arc(x2, y2, radius, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                // Shade left half
+                ctx.beginPath();
+                ctx.arc(x2, y2, radius, 0.5 * Math.PI, 1.5 * Math.PI);
+                ctx.fillStyle = '#a2d9ce';
+                ctx.fill();
+                ctx.stroke();
+
+                // Cross lines
+                ctx.beginPath();
+                ctx.moveTo(x2, y2 - radius);
+                ctx.lineTo(x2, y2 + radius);
+                ctx.moveTo(x2 - radius, y2);
+                ctx.lineTo(x2 + radius, y2);
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.fillText('2/4', x2 - 10, y2 + radius + 20);
+            }
+        }
+    </script>
+</body>
+</html>
