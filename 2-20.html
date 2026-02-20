@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Worksheet 2</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .problem-container:hover {
+            transform: translateY(-2px);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .btn-show {
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-show:hover {
+            background-color: #732d91;
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #27ae60;
+            font-size: 1.05em;
+        }
+        .explanation {
+            color: #555;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        canvas {
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Worksheet 2</h1>
+
+    <div class="problem-container">
+        <div class="question">1. Sarah earns $8.25 an hour for babysitting. How much does she earn if she works for 5 hours? Write an equation to solve the problem.</div>
+        <button class="btn-show" onclick="toggleAnswer(1)">Show Answer & Explanation</button>
+        <div id="ans-1" class="answer">
+            <strong>Answer:</strong> \$41.25<br>
+            <strong>Equation:</strong> \( \$8.25 \times 5 = x \)
+            <div class="explanation"><strong>Explanation:</strong> Multiply her hourly rate by the number of hours worked. \( 8.25 \times 5 = 41.25 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">2. It takes 3 cups of flour to make 1 batch of cookies. How many cups of flour does it take to make 4 batches? Make a table to solve the problem.</div>
+        <button class="btn-show" onclick="toggleAnswer(2)">Show Answer & Explanation</button>
+        <div id="ans-2" class="answer">
+            <strong>Answer:</strong> 12 cups
+            <div class="explanation">
+                <strong>Explanation:</strong> Each batch requires 3 cups. Adding 3 each time builds the table.
+                <table>
+                    <tr><th>Batches</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+                    <tr><th>Cups of Flour</th><td>3</td><td>6</td><td>9</td><td>12</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">3. The movie starts at 7:15 p.m. and is 2 hours and 10 minutes long. What time does it end?</div>
+        <button class="btn-show" onclick="toggleAnswer(3)">Show Answer & Explanation</button>
+        <div id="ans-3" class="answer">
+            <strong>Answer:</strong> 9:25 p.m.
+            <div class="explanation"><strong>Explanation:</strong> Add 2 hours to 7:15 p.m. to get 9:15 p.m. Then add the 10 minutes to get 9:25 p.m.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">4. A recipe calls for 12 pints of milk. The store only sells milk in quarts and gallons. What is the most efficient combination of containers to buy exactly 12 pints?</div>
+        <button class="btn-show" onclick="toggleAnswer(4)">Show Answer & Explanation</button>
+        <div id="ans-4" class="answer">
+            <strong>Answer:</strong> 1 gallon and 2 quarts (or 1 gallon and 1 half-gallon if available, but strictly using quarts and gallons, 1 gallon + 2 quarts).
+            <div class="explanation"><strong>Explanation:</strong> There are 2 pints in 1 quart, and 4 quarts in 1 gallon (so 8 pints in 1 gallon). 12 pints equals 6 quarts. 6 quarts can be grouped into 1 gallon (4 quarts) with 2 quarts left over.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">5. Write 15,039 in expanded form. Then use words to write the number.</div>
+        <button class="btn-show" onclick="toggleAnswer(5)">Show Answer & Explanation</button>
+        <div id="ans-5" class="answer">
+            <strong>Answer:</strong><br>
+            <strong>Expanded Form:</strong> \( 10000 + 5000 + 30 + 9 \)<br>
+            <strong>Word Form:</strong> Fifteen thousand thirty-nine
+            <div class="explanation"><strong>Explanation:</strong> Break down the place values: 1 ten-thousand, 5 thousands, 0 hundreds, 3 tens, and 9 ones.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">6. Find the third multiple of 8. Find the fifth multiple of 4. Subtract the smaller from the larger. What is the result?</div>
+        <button class="btn-show" onclick="toggleAnswer(6)">Show Answer & Explanation</button>
+        <div id="ans-6" class="answer">
+            <strong>Answer:</strong> 4
+            <div class="explanation"><strong>Explanation:</strong> 
+                <br>1. Third multiple of 8: \( 8 \times 3 = 24 \)
+                <br>2. Fifth multiple of 4: \( 4 \times 5 = 20 \)
+                <br>3. Subtract: \( 24 - 20 = 4 \)
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">7. If October 1st is a Wednesday, what is the date of the third Wednesday in October?</div>
+        <button class="btn-show" onclick="toggleAnswer(7)">Show Answer & Explanation</button>
+        <div id="ans-7" class="answer">
+            <strong>Answer:</strong> October 15th
+            <div class="explanation"><strong>Explanation:</strong> The first Wednesday is the 1st. Add 7 days to get the second Wednesday (the 8th). Add 7 more days to get the third Wednesday (the 15th).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">8. If \( x - 7 = 15 \), then what does \( x + 3 \) equal?</div>
+        <button class="btn-show" onclick="toggleAnswer(8)">Show Answer & Explanation</button>
+        <div id="ans-8" class="answer">
+            <strong>Answer:</strong> 25
+            <div class="explanation"><strong>Explanation:</strong> First, solve for \( x \) by adding 7 to 15, giving \( x = 22 \). Then substitute \( x \) into the second expression: \( 22 + 3 = 25 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">9. What is the perimeter and area of this rectangle? Measurements are in centimeters.</div>
+        <button class="btn-show" onclick="toggleAnswer(9, true)">Show Answer & Explanation</button>
+        <div id="ans-9" class="answer">
+            <strong>Answer:</strong> 
+            <br>Perimeter = 26 cm
+            <br>Area = 40 sq cm
+            <canvas id="canvas-prob9" width="300" height="150"></canvas>
+            <div class="explanation"><strong>Explanation:</strong> The perimeter is the total distance around the outside: \( 8 + 8 + 5 + 5 = 26 \). The area is length times width: \( 8 \times 5 = 40 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">10. Compare these fractions. Draw and shade two congruent rectangles to show the comparison: \( \frac{1}{3} \) and \( \frac{2}{6} \)</div>
+        <button class="btn-show" onclick="toggleAnswer(10, true)">Show Answer & Explanation</button>
+        <div id="ans-10" class="answer">
+            <strong>Answer:</strong> They are equal (\( \frac{1}{3} = \frac{2}{6} \)).
+            <canvas id="canvas-prob10" width="300" height="150"></canvas>
+            <div class="explanation"><strong>Explanation:</strong> \( \frac{2}{6} \) simplified is \( \frac{1}{3} \) (divide top and bottom by 2). Both represent the same proportion of a whole.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">11. A number line spans from 4 to 5 with 4 equal intervals. To what mixed number is an arrow pointing if it rests on the first mark after the 4?</div>
+        <button class="btn-show" onclick="toggleAnswer(11)">Show Answer & Explanation</button>
+        <div id="ans-11" class="answer">
+            <strong>Answer:</strong> \( 4 \frac{1}{4} \)
+            <div class="explanation"><strong>Explanation:</strong> The space between 4 and 5 is divided into 4 sections, so each mark is \( \frac{1}{4} \). The first mark is \( 4 \frac{1}{4} \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">12. How many faces, edges, and vertices does a standard cube have?</div>
+        <button class="btn-show" onclick="toggleAnswer(12)">Show Answer & Explanation</button>
+        <div id="ans-12" class="answer">
+            <strong>Answer:</strong> 6 faces, 12 edges, 8 vertices.
+            <div class="explanation"><strong>Explanation:</strong> A cube has 6 flat square surfaces (faces), 12 straight lines where the faces meet (edges), and 8 corners where the edges meet (vertices).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">13. \( 1.25 + 4.50 + 0.75 + 2.10 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(13)">Show Answer & Explanation</button>
+        <div id="ans-13" class="answer">
+            <strong>Answer:</strong> 8.60
+            <div class="explanation"><strong>Explanation:</strong> It's easiest to group numbers that make whole numbers. \( 1.25 + 0.75 = 2.00 \). Then \( 4.50 + 2.10 = 6.60 \). Add them together: \( 2.00 + 6.60 = 8.60 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">14. \( \$5.50 + \$2.99 + \$10.00 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(14)">Show Answer & Explanation</button>
+        <div id="ans-14" class="answer">
+            <strong>Answer:</strong> \$18.49
+            <div class="explanation"><strong>Explanation:</strong> Line up the decimals. \( \$5.50 + \$10.00 = \$15.50 \). Then \( \$15.50 + \$2.99 = \$18.49 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">15. \( 50.00 - (14.25 + 6.50) \)</div>
+        <button class="btn-show" onclick="toggleAnswer(15)">Show Answer & Explanation</button>
+        <div id="ans-15" class="answer">
+            <strong>Answer:</strong> 29.25
+            <div class="explanation"><strong>Explanation:</strong> Solve parentheses first: \( 14.25 + 6.50 = 20.75 \). Then subtract from 50: \( 50.00 - 20.75 = 29.25 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">16. \( \$15.00 - (\$1.50 + \$3.25) \)</div>
+        <button class="btn-show" onclick="toggleAnswer(16)">Show Answer & Explanation</button>
+        <div id="ans-16" class="answer">
+            <strong>Answer:</strong> \$10.25
+            <div class="explanation"><strong>Explanation:</strong> Solve parentheses first: \( \$1.50 + \$3.25 = \$4.75 \). Then subtract from 15: \( \$15.00 - \$4.75 = \$10.25 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">17. \( 52,104 - 28,346 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(17)">Show Answer & Explanation</button>
+        <div id="ans-17" class="answer">
+            <strong>Answer:</strong> 23,758
+            <div class="explanation"><strong>Explanation:</strong> Set up vertically. Borrowing is required across multiple places (e.g., borrowing from the 1 hundred to subtract 6 from 4).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">18. \( 842 \times 5 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(18)">Show Answer & Explanation</button>
+        <div id="ans-18" class="answer">
+            <strong>Answer:</strong> 4,210
+            <div class="explanation"><strong>Explanation:</strong> \( 2 \times 5 = 10 \) (carry 1). \( 4 \times 5 = 20 \), plus 1 is 21 (carry 2). \( 8 \times 5 = 40 \), plus 2 is 42.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">19. \( \$4.15 \times 6 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(19)">Show Answer & Explanation</button>
+        <div id="ans-19" class="answer">
+            <strong>Answer:</strong> \$24.90
+            <div class="explanation"><strong>Explanation:</strong> \( 5 \times 6 = 30 \) (carry 3). \( 1 \times 6 = 6 \), plus 3 is 9. \( 4 \times 6 = 24 \). Place the decimal two spots in.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">20. \( 520 + y = 700 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(20)">Show Answer & Explanation</button>
+        <div id="ans-20" class="answer">
+            <strong>Answer:</strong> \( y = 180 \)
+            <div class="explanation"><strong>Explanation:</strong> Subtract 520 from 700 to find the missing addend. \( 700 - 520 = 180 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">21. \( 47 \div 6 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(21)">Show Answer & Explanation</button>
+        <div id="ans-21" class="answer">
+            <strong>Answer:</strong> 7 Remainder 5
+            <div class="explanation"><strong>Explanation:</strong> 6 goes into 47 seven times (\( 6 \times 7 = 42 \)). Subtract 42 from 47 to get a remainder of 5.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">22. \( 63 \div 8 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(22)">Show Answer & Explanation</button>
+        <div id="ans-22" class="answer">
+            <strong>Answer:</strong> 7 Remainder 7
+            <div class="explanation"><strong>Explanation:</strong> 8 goes into 63 seven times (\( 8 \times 7 = 56 \)). Subtract 56 from 63 to get a remainder of 7.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">23. \( 85 \div 9 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(23)">Show Answer & Explanation</button>
+        <div id="ans-23" class="answer">
+            <strong>Answer:</strong> 9 Remainder 4
+            <div class="explanation"><strong>Explanation:</strong> 9 goes into 85 nine times (\( 9 \times 9 = 81 \)). Subtract 81 from 85 to get a remainder of 4.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">24. Find the product of \( 7 \times 1,000 \) using mental math.</div>
+        <button class="btn-show" onclick="toggleAnswer(24)">Show Answer & Explanation</button>
+        <div id="ans-24" class="answer">
+            <strong>Answer:</strong> 7,000
+            <div class="explanation"><strong>Explanation:</strong> Multiply the non-zero digits (\( 7 \times 1 = 7 \)) and attach the three zeros from the 1,000 to the end.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">25. List all the factors of 24.</div>
+        <button class="btn-show" onclick="toggleAnswer(25)">Show Answer & Explanation</button>
+        <div id="ans-25" class="answer">
+            <strong>Answer:</strong> 1, 2, 3, 4, 6, 8, 12, 24
+            <div class="explanation"><strong>Explanation:</strong> Factors are the numbers you multiply to get 24. The pairs are: \( 1 \times 24 \), \( 2 \times 12 \), \( 3 \times 8 \), and \( 4 \times 6 \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">26. Round 14,892 to the nearest thousand and the nearest hundred.</div>
+        <button class="btn-show" onclick="toggleAnswer(26)">Show Answer & Explanation</button>
+        <div id="ans-26" class="answer">
+            <strong>Answer:</strong><br>Nearest thousand: 15,000<br>Nearest hundred: 14,900
+            <div class="explanation"><strong>Explanation:</strong> 
+                <br>- For thousands, look at the hundreds digit (8). Since it's 5 or more, round 4 up to 5.
+                <br>- For hundreds, look at the tens digit (9). Since it's 5 or more, round 8 up to 9.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">27. If \( 3m = 27 \), which of these equations is <em>false</em>?<br>A) \( m + 1 = 10 \)&nbsp;&nbsp;&nbsp;B) \( 2m = 18 \)&nbsp;&nbsp;&nbsp;C) \( m - 2 = 5 \)&nbsp;&nbsp;&nbsp;D) \( m \times 0 = 9 \)</div>
+        <button class="btn-show" onclick="toggleAnswer(27)">Show Answer & Explanation</button>
+        <div id="ans-27" class="answer">
+            <strong>Answer:</strong> C and D
+            <div class="explanation"><strong>Explanation:</strong> First, solve \( 3m = 27 \) to find \( m = 9 \). 
+                <br>A) \( 9 + 1 = 10 \) (True)
+                <br>B) \( 2(9) = 18 \) (True)
+                <br>C) \( 9 - 2 = 7 \) (Not 5, so False)
+                <br>D) \( 9 \times 0 = 0 \) (Not 9, so False).
+                <br><em>Both C and D are false statements.</em>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">28. Three quarters (coins) are what fraction, decimal, and percent of a dollar?</div>
+        <button class="btn-show" onclick="toggleAnswer(28)">Show Answer & Explanation</button>
+        <div id="ans-28" class="answer">
+            <strong>Answer:</strong> Fraction: \( \frac{3}{4} \) (or \( \frac{75}{100} \)), Decimal: 0.75, Percent: 75%
+            <div class="explanation"><strong>Explanation:</strong> Three quarters equal 75 cents out of 100 cents. As a fraction, 3 out of 4 parts of a dollar is \( \frac{3}{4} \).</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">29. Which of these numbers is prime?<br>9, 15, 21, 23</div>
+        <button class="btn-show" onclick="toggleAnswer(29)">Show Answer & Explanation</button>
+        <div id="ans-29" class="answer">
+            <strong>Answer:</strong> 23
+            <div class="explanation"><strong>Explanation:</strong> A prime number only has 1 and itself as factors. 9 can be divided by 3; 15 can be divided by 3 and 5; 21 can be divided by 3 and 7. Only 23 cannot be divided evenly by anything other than 1 and 23.</div>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">30. A school has 412 students. If each student needs exactly 3 pencils for the year, approximately how many pencils should the school order in total?</div>
+        <button class="btn-show" onclick="toggleAnswer(30)">Show Answer & Explanation</button>
+        <div id="ans-30" class="answer">
+            <strong>Answer:</strong> Approximately 1,200 pencils (Exact: 1,236).
+            <div class="explanation"><strong>Explanation:</strong> Round 412 to 400 for a quick estimation. \( 400 \times 3 = 1200 \). The exact calculation is \( 412 \times 3 = 1236 \).</div>
+        </div>
+    </div>
+
+    <script>
+        const canvasDrawn = {};
+
+        function toggleAnswer(id, requiresCanvas = false) {
+            var element = document.getElementById('ans-' + id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+                if (requiresCanvas && !canvasDrawn[id]) {
+                    if (id === 9) drawProblem9Canvas();
+                    if (id === 10) drawProblem10Canvas();
+                    canvasDrawn[id] = true;
+                }
+            }
+        }
+
+        function drawProblem9Canvas() {
+            var canvas = document.getElementById('canvas-prob9');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw Rectangle
+                ctx.beginPath();
+                ctx.rect(50, 30, 160, 100); 
+                
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#2980b9';
+                ctx.stroke();
+                ctx.fillStyle = '#ebf5fb';
+                ctx.fill();
+
+                // Labels
+                ctx.fillStyle = '#000';
+                ctx.font = '16px Arial';
+                ctx.fillText('8 cm', 115, 20); // Top
+                ctx.fillText('8 cm', 115, 145); // Bottom
+                ctx.fillText('5 cm', 10, 85);   // Left
+                ctx.fillText('5 cm', 215, 85);  // Right
+            }
+        }
+
+        function drawProblem10Canvas() {
+            var canvas = document.getElementById('canvas-prob10');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                
+                // Rectangle 1 (1/3)
+                ctx.strokeRect(20, 30, 90, 60); // Outline
+                ctx.fillStyle = '#f5b041';
+                ctx.fillRect(20, 30, 30, 60);   // Shade 1/3
+                ctx.strokeRect(20, 30, 30, 60); // Inner line 1
+                ctx.strokeRect(50, 30, 30, 60); // Inner line 2
+                
+                ctx.fillStyle = '#000';
+                ctx.font = '16px Arial';
+                ctx.fillText('1/3', 55, 110);
+
+                // Rectangle 2 (2/6)
+                ctx.strokeRect(150, 30, 90, 60); // Outline
+                ctx.fillStyle = '#f5b041';
+                ctx.fillRect(150, 30, 30, 60);   // Shade 2/6 (same visual space)
+                
+                // Draw 6 smaller boxes
+                ctx.strokeRect(150, 30, 30, 30);
+                ctx.strokeRect(180, 30, 30, 30);
+                ctx.strokeRect(210, 30, 30, 30);
+                ctx.strokeRect(150, 60, 30, 30);
+                ctx.strokeRect(180, 60, 30, 30);
+                ctx.strokeRect(210, 60, 30, 30);
+
+                ctx.fillStyle = '#000';
+                ctx.fillText('2/6', 185, 110);
+            }
+        }
+    </script>
+</body>
+</html>
