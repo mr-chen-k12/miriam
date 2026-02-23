@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Prism Geometry Quiz</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            startup: {
+                typeset: false // We will trigger typesetting manually in JS
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* 3D Canvas styling */
+        .canvas-container {
+            background: #fff;
+            border: 4px solid #3498db;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            position: relative;
+            cursor: grab;
+            overflow: hidden;
+        }
+        
+        .canvas-container:active {
+            cursor: grabbing;
+        }
+
+        .drag-hint {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #7f8c8d;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* Index Card styling */
+        .quiz-card {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 2px;
+            box-shadow: 2px 8px 15px rgba(0,0,0,0.15);
+            padding: 30px;
+            position: relative;
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #3498db 31px, #3498db 32px);
+            background-attachment: local;
+            border-left: 6px solid #e74c3c;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 30px; bottom: 0;
+            width: 2px;
+            background-color: #f1c40f;
+            opacity: 0.5;
+        }
+
+        .question-header {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #2980b9;
+            background: white; 
+            padding: 5px;
+            line-height: 1.5;
+            margin-top: -10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .option-btn {
+            background-color: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            padding: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .option-btn:hover {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-btn.correct {
+            background-color: #2ecc71 !important;
+            color: white !important;
+            border-color: #27ae60 !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #e74c3c !important;
+            color: white !important;
+            border-color: #c0392b !important;
+        }
+
+        /* Scoreboard styling */
+        .scoreboard {
+            background: #2c3e50;
+            color: white;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .score-text {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .vibe-check {
+            font-size: 1.5em;
+            font-family: 'Comic Neue', cursive;
+            color: #f1c40f;
+        }
+
+        #next-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-end;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        #next-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .feedback {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 15px;
+            min-height: 25px;
+            text-align: center;
+            background: white;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Geometry: Parallel Lines</h1>
+    <p class="subtitle">Drag the shape to rotate it! Find the line segments that point in the exact same direction.</p>
+
+    <div class="game-container">
+        
+        <div class="canvas-container">
+            <canvas id="prismCanvas" width="400" height="350"></canvas>
+            <div class="drag-hint">👆 Click and drag to rotate</div>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question-header" id="question-text">Loading question...</div>
+            <div class="options-grid" id="options-container">
+                </div>
+            <div class="feedback" id="feedback-text"></div>
+            <button id="next-btn" onclick="nextQuestion()">Next Question ➡️</button>
+        </div>
+
+    </div>
+
+    <div class="scoreboard">
+        <div class="score-text">Score: <span id="score-number">0</span> / 10</div>
+        <div class="vibe-check" id="vibe-text">Let's go!</div>
+    </div>
+
+    <script>
+        /* --- 3D PRISM ENGINE --- */
+        const canvas = document.getElementById('prismCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Prism vertices (x, y, z)
+        const vertices = [
+            { id: 'A', x: -1, y: -1, z: -1 }, // 0: Top-Left-Back
+            { id: 'B', x:  1, y: -1, z: -1 }, // 1: Top-Right-Back
+            { id: 'C', x:  1, y:  1, z: -1 }, // 2: Bottom-Right-Back
+            { id: 'D', x: -1, y:  1, z: -1 }, // 3: Bottom-Left-Back
+            { id: 'E', x: -1, y: -1, z:  1 }, // 4: Top-Left-Front
+            { id: 'F', x:  1, y: -1, z:  1 }, // 5: Top-Right-Front
+            { id: 'G', x:  1, y:  1, z:  1 }, // 6: Bottom-Right-Front
+            { id: 'H', x: -1, y:  1, z:  1 }  // 7: Bottom-Left-Front
+        ];
+
+        // Edges connecting vertices
+        const edges = [
+            [0,1], [1,2], [2,3], [3,0], // Back face (AB, BC, CD, DA)
+            [4,5], [5,6], [6,7], [7,4], // Front face (EF, FG, GH, HE)
+            [0,4], [1,5], [2,6], [3,7]  // Connecting faces (AE, BF, CG, DH)
+        ];
+
+        // Highlighted segment tracking
+        let targetSegment = null; 
+
+        // Rotation angles
+        let angleX = 0.3; // Initial tilt
+        let angleY = -0.5;
+
+        // Mouse/Touch controls
+        let isDragging = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        canvas.addEventListener('mousedown', (e) => { isDragging = true; lastMouseX = e.clientX; lastMouseY = e.clientY; });
+        canvas.addEventListener('mouseup', () => isDragging = false);
+        canvas.addEventListener('mouseleave', () => isDragging = false);
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                let deltaX = e.clientX - lastMouseX;
+                let deltaY = e.clientY - lastMouseY;
+                angleY += deltaX * 0.01;
+                angleX -= deltaY * 0.01;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            }
+        });
+
+        // Touch support for mobile/tablets
+        canvas.addEventListener('touchstart', (e) => { isDragging = true; lastMouseX = e.touches[0].clientX; lastMouseY = e.touches[0].clientY; e.preventDefault(); }, {passive: false});
+        canvas.addEventListener('touchend', () => isDragging = false);
+        canvas.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                let deltaX = e.touches[0].clientX - lastMouseX;
+                let deltaY = e.touches[0].clientY - lastMouseY;
+                angleY += deltaX * 0.01;
+                angleX -= deltaY * 0.01;
+                lastMouseX = e.touches[0].clientX;
+                lastMouseY = e.touches[0].clientY;
+                e.preventDefault();
+            }
+        }, {passive: false});
+
+        function drawPrism() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dimensions for scaling
+            const scaleX = 80, scaleY = 60, scaleZ = 120;
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            // Project 3D to 2D
+            let projected = vertices.map(v => {
+                let x = v.x * scaleX;
+                let y = v.y * scaleY;
+                let z = v.z * scaleZ;
+
+                let cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+                let y1 = y * cosX - z * sinX;
+                let z1 = y * sinX + z * cosX;
+
+                let cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+                let x2 = x * cosY + z1 * sinY;
+                let z2 = -x * sinY + z1 * cosY;
+
+                let fov = 400;
+                let distance = 350;
+                let scale = fov / (distance + z2);
+
+                return {
+                    id: v.id,
+                    origId: v.id,
+                    px: x2 * scale + cx,
+                    py: y1 * scale + cy,
+                    scale: scale,
+                    zDepth: z2 
+                };
+            });
+
+            // Draw edges
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+            
+            edges.forEach(edge => {
+                let p1 = projected[edge[0]];
+                let p2 = projected[edge[1]];
+                
+                let isTarget = false;
+                if (targetSegment) {
+                    if ((p1.id === targetSegment[0] && p2.id === targetSegment[1]) ||
+                        (p1.id === targetSegment[1] && p2.id === targetSegment[0])) {
+                        isTarget = true;
+                    }
+                }
+
+                if (isTarget) {
+                    ctx.strokeStyle = "#e74c3c"; // Red highlight
+                    ctx.lineWidth = 6;
+                } else {
+                    ctx.strokeStyle = "#2c3e50"; // Standard dark blue
+                    ctx.lineWidth = 3;
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(p1.px, p1.py);
+                ctx.lineTo(p2.px, p2.py);
+                ctx.stroke();
+            });
+
+            // Draw vertices (letters)
+            ctx.font = "bold 18px Nunito";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            
+            projected.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.px, p.py, 12 * p.scale, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+                ctx.fill();
+                
+                ctx.fillStyle = "#2980b9";
+                ctx.fillText(p.id, p.px, p.py + 2);
+            });
+
+            requestAnimationFrame(drawPrism);
+        }
+
+        // Start 3D loop
+        drawPrism();
+
+
+        /* --- QUIZ LOGIC --- */
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizData = [
+            { target: 'AB', correct: 'EF', options: ['EF', 'EH', 'BC', 'CG'] },
+            { target: 'EH', correct: 'FG', options: ['AB', 'FG', 'DC', 'AE'] },
+            { target: 'CG', correct: 'DH', options: ['DH', 'BC', 'AB', 'EF'] },
+            { target: 'DC', correct: 'HG', options: ['AD', 'BF', 'HG', 'EH'] },
+            { target: 'BC', correct: 'AD', options: ['EF', 'AD', 'AE', 'GH'] },
+            { target: 'BF', correct: 'AE', options: ['AE', 'AB', 'DC', 'FG'] },
+            { target: 'HG', correct: 'AB', options: ['BC', 'DH', 'AB', 'EH'] },
+            { target: 'AD', correct: 'EH', options: ['EF', 'EH', 'CG', 'DC'] },
+            { target: 'AE', correct: 'CG', options: ['AB', 'BC', 'CG', 'FG'] },
+            { target: 'FG', correct: 'BC', options: ['DC', 'BF', 'DH', 'BC'] }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizData.length) {
+                endQuiz();
+                return;
+            }
+
+            let q = quizData[currentQuestionIndex];
+            targetSegment = q.target; 
+            
+            // Format with MathJax overbar
+            document.getElementById('question-text').innerHTML = `Question ${currentQuestionIndex + 1}: Which segment is parallel to segment \\(\\overline{${q.target}}\\) ?`;
+            document.getElementById('feedback-text').innerHTML = "";
+            document.getElementById('feedback-text').style.color = "#333";
+            document.getElementById('next-btn').style.display = "none";
+
+            let optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = ''; 
+
+            let shuffledOptions = shuffle([...q.options]);
+
+            shuffledOptions.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = 'option-btn';
+                // Set inner HTML to the MathJax notation
+                btn.innerHTML = `\\(\\overline{${opt}}\\)`;
+                btn.dataset.answer = opt; // Keep raw string for checking
+                btn.onclick = () => checkAnswer(btn, opt, q.correct);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Trigger MathJax to process the new elements
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function checkAnswer(clickedBtn, selected, correct) {
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const feedback = document.getElementById('feedback-text');
+
+            if (selected === correct) {
+                clickedBtn.classList.add('correct');
+                feedback.innerHTML = "Correct! Great job! 🎯";
+                feedback.style.color = "#27ae60";
+                updateScore(score + 1);
+            } else {
+                clickedBtn.classList.add('wrong');
+                // Include MathJax overbar in the feedback
+                feedback.innerHTML = `Oops! The correct answer was \\(\\overline{${correct}}\\).`;
+                feedback.style.color = "#c0392b";
+                
+                // Highlight the correct one
+                buttons.forEach(b => {
+                    if (b.dataset.answer === correct) b.classList.add('correct');
+                });
+            }
+
+            document.getElementById('next-btn').style.display = "block";
+
+            // Trigger MathJax for the feedback text
+            if (window.MathJax) {
+                MathJax.typesetPromise([feedback]);
+            }
+        }
+
+        function updateScore(newScore) {
+            score = newScore;
+            document.getElementById('score-number').innerText = score;
+            
+            let vibe = document.getElementById('vibe-text');
+            if (score === 0) vibe.innerText = "Nothing yet...";
+            else if (score >= 1 && score <= 4) vibe.innerText = "Good start! Keep it up!";
+            else if (score >= 5 && score <= 7) vibe.innerText = "Good work! 👍";
+            else if (score >= 8 && score <= 9) vibe.innerText = "Great job! 🔥";
+            else if (score === 10) vibe.innerText = "LIT! 💯🔥✨";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function endQuiz() {
+            targetSegment = null; 
+            document.getElementById('question-text').innerHTML = "Quiz Complete! 🎉";
+            document.getElementById('options-container').innerHTML = '';
+            document.getElementById('next-btn').style.display = "none";
+            
+            let finalMessage = document.getElementById('feedback-text');
+            finalMessage.style.color = "#2980b9";
+            
+            if (score === 10) {
+                finalMessage.innerHTML = "Perfect Score! You're a geometry master! 🏆";
+            } else if (score >= 7) {
+                finalMessage.innerHTML = `Awesome effort! You scored ${score} out of 10.`;
+            } else {
+                finalMessage.innerHTML = `Good practice! You scored ${score} out of 10. Keep trying!`;
+            }
+
+            let restartBtn = document.createElement('button');
+            restartBtn.className = 'option-btn correct';
+            restartBtn.innerHTML = "Play Again 🔄";
+            restartBtn.style.gridColumn = "span 2";
+            restartBtn.onclick = () => {
+                currentQuestionIndex = 0;
+                updateScore(0);
+                loadQuestion();
+            };
+            document.getElementById('options-container').appendChild(restartBtn);
+        }
+
+        // Wait for MathJax to load before setting up the first question
+        window.addEventListener('load', () => {
+            // Give MathJax a split second to initialize if network is slow
+            setTimeout(() => {
+                loadQuestion();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
