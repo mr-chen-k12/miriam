@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targeted Math Practice</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .section-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .problem-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .problem-number {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.95em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #eafaf1;
+            border-left: 5px solid #2ecc71;
+            border-radius: 4px;
+        }
+        .answer-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 5px;
+        }
+        .explanation {
+            font-style: italic;
+            color: #555;
+            margin-top: 8px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            text-align: center;
+        }
+        svg {
+            display: block;
+            margin: 15px 0;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Targeted Math Practice</h1>
+    <p style="text-align: center;">Two extra practice questions each for problems 2, 3, 4, 5, 6, 8, 9, 10, 11, 21, 22, 24, 26, 28, and 30.</p>
+
+    <div class="section-header">Reviewing Problem 2: Proportions & Rates</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 2.1</div>
+        <div class="question-text">A recipe calls for 2 cups of sugar to make 1 batch of cookies. How many cups of sugar are needed to make 4 batches of cookies?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans2a')">Reveal Answer</button>
+        <div id="ans2a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>8 cups</div>
+            <div class="explanation">Equation: $2 \text{ cups} \times 4 \text{ batches} = 8 \text{ cups}$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 2.2</div>
+        <div class="question-text">A car travels 40 miles on 1 gallon of gas. How many gallons of gas would the car need to travel 120 miles?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans2b')">Reveal Answer</button>
+        <div id="ans2b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>3 gallons</div>
+            <div class="explanation">Equation: $120 \div 40 = 3$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 3: Rate Tables</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 3.1</div>
+        <div class="question-text">John reads 20 pages in 1 hour. At that rate, how many pages could he read in 3 hours? Make a table to solve.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans3a')">Reveal Answer</button>
+        <div id="ans3a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>60 pages</div>
+            <div class="explanation">
+                <table><tr><th>Hours</th><th>Pages</th></tr><tr><td>1</td><td>20</td></tr><tr><td>2</td><td>40</td></tr><tr><td>3</td><td>60</td></tr></table>
+            </div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 3.2</div>
+        <div class="question-text">A machine produces 50 toys in 1 hour. At that rate, how many toys will it produce in 5 hours? Make a table to solve.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans3b')">Reveal Answer</button>
+        <div id="ans3b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>250 toys</div>
+            <div class="explanation">
+                <table><tr><th>Hours</th><th>Toys</th></tr><tr><td>1</td><td>50</td></tr><tr><td>2</td><td>100</td></tr><tr><td>3</td><td>150</td></tr><tr><td>4</td><td>200</td></tr><tr><td>5</td><td>250</td></tr></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 4: Percentages of Time</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 4.1</div>
+        <div class="question-text">Fifty percent of an hour is how many minutes?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans4a')">Reveal Answer</button>
+        <div id="ans4a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>30 minutes</div>
+            <div class="explanation">50% is half. Half of 60 minutes is 30 minutes.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 4.2</div>
+        <div class="question-text">Ten percent of an hour is how many minutes?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans4b')">Reveal Answer</button>
+        <div id="ans4b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>6 minutes</div>
+            <div class="explanation">10% is one-tenth ($\frac{1}{10}$). $60 \div 10 = 6$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 5: Estimation</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 5.1</div>
+        <div class="question-text">A plane was flying at an altitude of 3,850 feet. It climbed an additional 1,120 feet. What is a reasonable estimate of the plane's new altitude?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans5a')">Reveal Answer</button>
+        <div id="ans5a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>Approx. 5,000 feet</div>
+            <div class="explanation">Round to the nearest hundred or thousand: $3900 + 1100 = 5000$. (Exact is 4,970).</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 5.2</div>
+        <div class="question-text">A submarine is 1,950 feet below sea level. It dives another 880 feet deeper. Estimate the submarine's new depth.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans5b')">Reveal Answer</button>
+        <div id="ans5b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>Approx. 2,900 feet</div>
+            <div class="explanation">Round before adding the depths: $2000 + 900 = 2900$ feet below sea level. (Exact is 2,830).</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 6: Multiples</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 6.1</div>
+        <div class="question-text">Which of these numbers is <em>not</em> a multiple of 4?<br>A. 12 &nbsp; B. 18 &nbsp; C. 24 &nbsp; D. 32</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans6a')">Reveal Answer</button>
+        <div id="ans6a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>B. 18</div>
+            <div class="explanation">Multiples of 4 are 12 ($4 \times 3$), 24 ($4 \times 6$), and 32 ($4 \times 8$). 18 is not divisible by 4 evenly.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 6.2</div>
+        <div class="question-text">Which of these numbers is <em>not</em> a multiple of 5?<br>A. 15 &nbsp; B. 25 &nbsp; C. 35 &nbsp; D. 42</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans6b')">Reveal Answer</button>
+        <div id="ans6b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>D. 42</div>
+            <div class="explanation">Multiples of 5 always end in 0 or 5. 42 does not.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 8: Simple Equations</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 8.1</div>
+        <div class="question-text">Solve for $x$: $5x = 5 \times 9$</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans8a')">Reveal Answer</button>
+        <div id="ans8a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>$x = 9$</div>
+            <div class="explanation">Because both sides are multiplied by 5, $x$ must be 9. ($5x = 45 \rightarrow x = 9$).</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 8.2</div>
+        <div class="question-text">Solve for $y$: $8y = 8 \times 3$</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans8b')">Reveal Answer</button>
+        <div id="ans8b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>$y = 3$</div>
+            <div class="explanation">Because both sides are multiplied by 8, $y$ must be 3. ($8y = 24 \rightarrow y = 3$).</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 9: Products vs. Sums</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 9.1</div>
+        <div class="question-text">The product of 6 and 3 is how much greater than the sum of 6 and 3?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans9a')">Reveal Answer</button>
+        <div id="ans9a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>9</div>
+            <div class="explanation">Product: $6 \times 3 = 18$. Sum: $6 + 3 = 9$. Difference: $18 - 9 = 9$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 9.2</div>
+        <div class="question-text">The product of 10 and 5 is how much greater than the sum of 10 and 5?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans9b')">Reveal Answer</button>
+        <div id="ans9b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>35</div>
+            <div class="explanation">Product: $10 \times 5 = 50$. Sum: $10 + 5 = 15$. Difference: $50 - 15 = 35$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 10: Measuring Segments</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 10.1</div>
+        <div class="question-text">What is the length of segment PQ?
+            <svg viewBox="0 0 500 80" width="100%" height="80">
+                <line x1="50" y1="40" x2="450" y2="40" stroke="black" stroke-width="2"/>
+                <text x="100" y="25" font-size="14" font-weight="bold" text-anchor="middle">P</text>
+                <circle cx="100" cy="40" r="3" fill="black"/>
+                <text x="450" y="25" font-size="14" font-weight="bold" text-anchor="middle">Q</text>
+                <circle cx="450" cy="40" r="3" fill="black"/>
+                <line x1="50" y1="40" x2="50" y2="50" stroke="black" stroke-width="2"/>
+                <text x="50" y="65" font-size="12" text-anchor="middle">cm 0</text>
+                <line x1="100" y1="40" x2="100" y2="50" stroke="black" stroke-width="2"/>
+                <text x="100" y="65" font-size="12" text-anchor="middle">1</text>
+                <line x1="150" y1="40" x2="150" y2="50" stroke="black" stroke-width="2"/>
+                <text x="150" y="65" font-size="12" text-anchor="middle">2</text>
+                <line x1="200" y1="40" x2="200" y2="50" stroke="black" stroke-width="2"/>
+                <text x="200" y="65" font-size="12" text-anchor="middle">3</text>
+                <line x1="250" y1="40" x2="250" y2="50" stroke="black" stroke-width="2"/>
+                <text x="250" y="65" font-size="12" text-anchor="middle">4</text>
+                <line x1="300" y1="40" x2="300" y2="50" stroke="black" stroke-width="2"/>
+                <text x="300" y="65" font-size="12" text-anchor="middle">5</text>
+                <line x1="350" y1="40" x2="350" y2="50" stroke="black" stroke-width="2"/>
+                <text x="350" y="65" font-size="12" text-anchor="middle">6</text>
+                <line x1="400" y1="40" x2="400" y2="50" stroke="black" stroke-width="2"/>
+                <text x="400" y="65" font-size="12" text-anchor="middle">7</text>
+                <line x1="450" y1="40" x2="450" y2="50" stroke="black" stroke-width="2"/>
+                <text x="450" y="65" font-size="12" text-anchor="middle">8</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans10a')">Reveal Answer</button>
+        <div id="ans10a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>7 cm</div>
+            <div class="explanation">Point P is at 1 cm and Point Q is at 8 cm. $8 - 1 = 7$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 10.2</div>
+        <div class="question-text">What is the length of segment RS?
+            <svg viewBox="0 0 500 80" width="100%" height="80">
+                <line x1="50" y1="40" x2="450" y2="40" stroke="black" stroke-width="2"/>
+                <text x="200" y="25" font-size="14" font-weight="bold" text-anchor="middle">R</text>
+                <circle cx="200" cy="40" r="3" fill="black"/>
+                <text x="400" y="25" font-size="14" font-weight="bold" text-anchor="middle">S</text>
+                <circle cx="400" cy="40" r="3" fill="black"/>
+                <line x1="50" y1="40" x2="50" y2="50" stroke="black" stroke-width="2"/>
+                <text x="50" y="65" font-size="12" text-anchor="middle">cm 0</text>
+                <line x1="100" y1="40" x2="100" y2="50" stroke="black" stroke-width="2"/>
+                <text x="100" y="65" font-size="12" text-anchor="middle">1</text>
+                <line x1="150" y1="40" x2="150" y2="50" stroke="black" stroke-width="2"/>
+                <text x="150" y="65" font-size="12" text-anchor="middle">2</text>
+                <line x1="200" y1="40" x2="200" y2="50" stroke="black" stroke-width="2"/>
+                <text x="200" y="65" font-size="12" text-anchor="middle">3</text>
+                <line x1="250" y1="40" x2="250" y2="50" stroke="black" stroke-width="2"/>
+                <text x="250" y="65" font-size="12" text-anchor="middle">4</text>
+                <line x1="300" y1="40" x2="300" y2="50" stroke="black" stroke-width="2"/>
+                <text x="300" y="65" font-size="12" text-anchor="middle">5</text>
+                <line x1="350" y1="40" x2="350" y2="50" stroke="black" stroke-width="2"/>
+                <text x="350" y="65" font-size="12" text-anchor="middle">6</text>
+                <line x1="400" y1="40" x2="400" y2="50" stroke="black" stroke-width="2"/>
+                <text x="400" y="65" font-size="12" text-anchor="middle">7</text>
+                <line x1="450" y1="40" x2="450" y2="50" stroke="black" stroke-width="2"/>
+                <text x="450" y="65" font-size="12" text-anchor="middle">8</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans10b')">Reveal Answer</button>
+        <div id="ans10b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>4 cm</div>
+            <div class="explanation">Point R is at 3 cm and Point S is at 7 cm. $7 - 3 = 4$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 11: Comparing Expressions</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 11.1</div>
+        <div class="question-text">Compare: $(16 \div 4) \div 2 \bigcirc 16 \div (4 \div 2)$</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans11a')">Reveal Answer</button>
+        <div id="ans11a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>$<$ (Less than)</div>
+            <div class="explanation">Left side: $(16 \div 4) \div 2 = 4 \div 2 = 2$. Right side: $16 \div (4 \div 2) = 16 \div 2 = 8$. Since $2 < 8$, use $<$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 11.2</div>
+        <div class="question-text">Compare: $(36 \div 6) \div 3 \bigcirc 36 \div (6 \div 3)$</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans11b')">Reveal Answer</button>
+        <div id="ans11b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>$<$ (Less than)</div>
+            <div class="explanation">Left side: $(36 \div 6) \div 3 = 6 \div 3 = 2$. Right side: $36 \div (6 \div 3) = 36 \div 2 = 18$. Since $2 < 18$, use $<$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 21: Coin Fractions & Percents</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 21.1</div>
+        <div class="question-text">
+            a. A nickel is what fraction of a dollar?<br>
+            b. A nickel is what percent of a dollar?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans21a')">Reveal Answer</button>
+        <div id="ans21a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>a. $\frac{1}{20}$ (or $\frac{5}{100}$)<br>b. $5\%$</div>
+            <div class="explanation">A nickel is 5 cents out of 100. As a fraction, this simplifies to $\frac{1}{20}$. As a percentage, it is $5\%$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 21.2</div>
+        <div class="question-text">
+            a. A half-dollar is what fraction of a dollar?<br>
+            b. A half-dollar is what percent of a dollar?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans21b')">Reveal Answer</button>
+        <div id="ans21b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>a. $\frac{1}{2}$ (or $\frac{50}{100}$)<br>b. $50\%$</div>
+            <div class="explanation">A half-dollar is 50 cents out of 100. As a fraction, this simplifies to $\frac{1}{2}$. As a percentage, it is $50\%$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 22: Factors of Perfect Squares</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 22.1</div>
+        <div class="question-text">The number 25 is a perfect square. What are its three factors?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans22a')">Reveal Answer</button>
+        <div id="ans22a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>1, 5, and 25</div>
+            <div class="explanation">The numbers that multiply to give 25 are $1 \times 25$ and $5 \times 5$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 22.2</div>
+        <div class="question-text">The number 9 is a perfect square. What are its three factors?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans22b')">Reveal Answer</button>
+        <div id="ans22b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>1, 3, and 9</div>
+            <div class="explanation">The numbers that multiply to give 9 are $1 \times 9$ and $3 \times 3$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 24: Angle Types</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 24.1</div>
+        <div class="question-text">An angle measures exactly 135 degrees. What type of angle is this?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans24a')">Reveal Answer</button>
+        <div id="ans24a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>Obtuse</div>
+            <div class="explanation">An obtuse angle is greater than 90 degrees but less than 180 degrees.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 24.2</div>
+        <div class="question-text">An angle measures exactly 15 degrees. What type of angle is this?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans24b')">Reveal Answer</button>
+        <div id="ans24b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>Acute</div>
+            <div class="explanation">An acute angle is greater than 0 degrees but less than 90 degrees.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 26: Evaluating Equations</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 26.1</div>
+        <div class="question-text">If $x - 5 = 10$, then which of these equations is <em>not</em> true?<br>
+            A. $x + 2 = 17$<br>
+            B. $x - 10 = 5$<br>
+            C. $x + 5 = 25$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans26a')">Reveal Answer</button>
+        <div id="ans26a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>C. $x + 5 = 25$</div>
+            <div class="explanation">First find $x$: $x = 10 + 5 = 15$. Test option C: $15 + 5 = 20$, not 25. Therefore, C is false.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 26.2</div>
+        <div class="question-text">If $y + 4 = 12$, then which of these equations is <em>not</em> true?<br>
+            A. $y - 4 = 4$<br>
+            B. $y + 2 = 10$<br>
+            C. $y - 2 = 8$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans26b')">Reveal Answer</button>
+        <div id="ans26b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>C. $y - 2 = 8$</div>
+            <div class="explanation">First find $y$: $y = 12 - 4 = 8$. Test option C: $8 - 2 = 6$, not 8. Therefore, C is false.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 28: Coins as Fractions, Percents, and Decimals</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 28.1</div>
+        <div class="question-text">
+            a. Twelve pennies are what fraction of a dollar?<br>
+            b. Twelve pennies are what percent of a dollar?<br>
+            c. Write the value of twelve pennies as a decimal part of a dollar.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans28a')">Reveal Answer</button>
+        <div id="ans28a" class="answer-section">
+            <div class="answer-title">Answer:</div><div>a. $\frac{12}{100}$ (or $\frac{3}{25}$)<br>b. $12\%$<br>c. $\$0.12$</div>
+            <div class="explanation">12 cents out of 100 translates directly to $\frac{12}{100}$, $12\%$, and $0.12$.</div>
+        </div>
+    </div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 28.2</div>
+        <div class="question-text">
+            a. Eight pennies are what fraction of a dollar?<br>
+            b. Eight pennies are what percent of a dollar?<br>
+            c. Write the value of eight pennies as a decimal part of a dollar.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans28b')">Reveal Answer</button>
+        <div id="ans28b" class="answer-section">
+            <div class="answer-title">Answer:</div><div>a. $\frac{8}{100}$ (or $\frac{2}{25}$)<br>b. $8\%$<br>c. $\$0.08$</div>
+            <div class="explanation">8 cents out of 100 translates directly to $\frac{8}{100}$, $8\%$, and $0.08$.</div>
+        </div>
+    </div>
+
+    <div class="section-header">Reviewing Problem 30: Parallel and Perpendicular Segments</div>
+    <div class="problem-card">
+        <div class="problem-number">Practice 30.1 & 30.2</div>
+        <div class="question-text">
+            Refer to the rectangular prism below:<br>
+            <svg viewBox="0 0 250 140" width="200" height="120">
+                <polygon points="50,40 180,40 180,90 50,90" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                <polygon points="30,60 160,60 160,110 30,110" fill="#e0e0e0" fill-opacity="0.3" stroke="black" stroke-width="2"/>
+                <line x1="50" y1="40" x2="30" y2="60" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="180" y1="40" x2="160" y2="60" stroke="black" stroke-width="2"/>
+                <line x1="180" y1="90" x2="160" y2="110" stroke="black" stroke-width="2"/>
+                <line x1="50" y1="90" x2="30" y2="110" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                
+                <text x="45" y="30" font-weight="bold">A</text> 
+                <text x="180" y="30" font-weight="bold">B</text> 
+                <text x="20" y="55" font-weight="bold">E</text> 
+                <text x="165" y="55" font-weight="bold">F</text> 
+                <text x="20" y="125" font-weight="bold">H</text> 
+                <text x="165" y="125" font-weight="bold">G</text> 
+                <text x="60" y="100" font-weight="bold">D</text> 
+                <text x="185" y="100" font-weight="bold">C</text> 
+            </svg><br>
+            <b>Practice 30.1:</b> Name a segment that is parallel to segment AD.<br>
+            <b>Practice 30.2:</b> Name a segment that is perpendicular to segment CG.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans30a')">Reveal Answer</button>
+        <div id="ans30a" class="answer-section">
+            <div class="answer-title">Answers:</div>
+            <div>
+                <b>30.1 Answer:</b> BC, EH, or FG.<br>
+                <b>30.2 Answer:</b> BC, DC, FG, or HG.
+            </div>
+            <div class="explanation">
+                <b>30.1:</b> Parallel segments run in the same direction and never touch. Segments BC, EH, and FG all run "front-to-back" just like AD.<br>
+                <b>30.2:</b> Perpendicular segments meet at a 90-degree corner. The segments that meet CG to form corners are BC, DC, FG, and HG.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv.style.display === "none" || answerDiv.style.display === "") {
+                answerDiv.style.display = "block";
+            } else {
+                answerDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
