@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Worksheet (1-30)</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .problem-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .problem-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #eafaf1;
+            border-left: 5px solid #2ecc71;
+            border-radius: 4px;
+        }
+        .answer-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 5px;
+        }
+        .explanation {
+            font-style: italic;
+            color: #555;
+            margin-top: 8px;
+        }
+        svg {
+            display: block;
+            margin: 15px 0;
+            max-width: 100%;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Problems (1-30)</h1>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 1</div>
+        <div class="question-text">
+            A local library has four hundred twenty-one science fiction books, eight hundred fifteen mystery books, and one thousand thirty-four biographies. How many of these books are there in all?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans1')">Reveal Answer</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>2,270 books</div>
+            <div class="explanation">Equation: $421 + 815 + 1034 = 2270$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 2</div>
+        <div class="question-text">
+            A baker uses 1 bag of flour to bake 6 cakes. How many bags of flour would he need to bake 3 dozen cakes?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans2')">Reveal Answer</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>6 bags</div>
+            <div class="explanation">1 dozen = 12, so 3 dozen = 36 cakes. Equation: $36 \div 6 = 6$ bags.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 3</div>
+        <div class="question-text">
+            Sarah can read 15 pages of her book in 1 hour. At that rate, how many pages could she read in 4 hours? Make a table to solve this problem.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans3')">Reveal Answer</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>60 pages</div>
+            <div class="explanation">
+                <table>
+                    <tr><th>Hours</th><th>Pages</th></tr>
+                    <tr><td>1</td><td>15</td></tr>
+                    <tr><td>2</td><td>30</td></tr>
+                    <tr><td>3</td><td>45</td></tr>
+                    <tr><td>4</td><td>60</td></tr>
+                </table>
+                <br>Equation: $15 \times 4 = 60$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 4</div>
+        <div class="question-text">
+            Seventy-five percent of an hour is how many minutes?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans4')">Reveal Answer</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>45 minutes</div>
+            <div class="explanation">An hour has 60 minutes. 75% is three-quarters ($\frac{3}{4}$). $60 \times 0.75 = 45$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 5</div>
+        <div class="question-text">
+            A hot air balloon was flying at an altitude of 4,120 feet. It descended (dropped) 875 feet. What is a reasonable estimate of the balloon's new altitude? Explain your thinking.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans5')">Reveal Answer</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>Approx. 3,200 feet</div>
+            <div class="explanation">Estimate by rounding the numbers before subtracting: $4100 - 900 = 3200$ feet. (The exact answer is 3,245).</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 6</div>
+        <div class="question-text">
+            Which of these numbers is <em>not</em> a multiple of 3?<br>
+            A 12 &nbsp; B 15 &nbsp; C 23 &nbsp; D 27
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans6')">Reveal Answer</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>C. 23</div>
+            <div class="explanation">Multiples of 3 can be divided by 3 evenly ($3 \times 4 = 12$, $3 \times 5 = 15$, $3 \times 9 = 27$). 23 cannot.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 7</div>
+        <div class="question-text">
+            Write the time "half past four in the afternoon" in digital form.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans7')">Reveal Answer</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>4:30 p.m.</div>
+            <div class="explanation">"Half past" means 30 minutes after the hour. Afternoon indicates p.m.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 8</div>
+        <div class="question-text">
+            Solve for n: $4n = 4 \times 7$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans8')">Reveal Answer</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>$n = 7$</div>
+            <div class="explanation">Simplify the right side: $4 \times 7 = 28$. So, $4n = 28$. Divide by 4 to find $n = 7$. Because both sides are multiplied by 4, $n$ must equal 7.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 9</div>
+        <div class="question-text">
+            The product of 8 and 4 is how much greater than the sum of 8 and 4?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans9')">Reveal Answer</button>
+        <div id="ans9" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>20</div>
+            <div class="explanation">Product: $8 \times 4 = 32$. Sum: $8 + 4 = 12$. Difference: $32 - 12 = 20$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 10</div>
+        <div class="question-text">
+            What is the length of segment MN?
+            <svg viewBox="0 0 500 80" width="100%" height="80">
+                <line x1="50" y1="40" x2="450" y2="40" stroke="black" stroke-width="2"/>
+                <text x="150" y="25" font-size="14" font-weight="bold" text-anchor="middle">M</text>
+                <circle cx="150" cy="40" r="3" fill="black"/>
+                <text x="400" y="25" font-size="14" font-weight="bold" text-anchor="middle">N</text>
+                <circle cx="400" cy="40" r="3" fill="black"/>
+                <line x1="50" y1="40" x2="50" y2="50" stroke="black" stroke-width="2"/>
+                <text x="50" y="65" font-size="12" text-anchor="middle">cm 0</text>
+                <line x1="100" y1="40" x2="100" y2="50" stroke="black" stroke-width="2"/>
+                <text x="100" y="65" font-size="12" text-anchor="middle">1</text>
+                <line x1="150" y1="40" x2="150" y2="50" stroke="black" stroke-width="2"/>
+                <text x="150" y="65" font-size="12" text-anchor="middle">2</text>
+                <line x1="200" y1="40" x2="200" y2="50" stroke="black" stroke-width="2"/>
+                <text x="200" y="65" font-size="12" text-anchor="middle">3</text>
+                <line x1="250" y1="40" x2="250" y2="50" stroke="black" stroke-width="2"/>
+                <text x="250" y="65" font-size="12" text-anchor="middle">4</text>
+                <line x1="300" y1="40" x2="300" y2="50" stroke="black" stroke-width="2"/>
+                <text x="300" y="65" font-size="12" text-anchor="middle">5</text>
+                <line x1="350" y1="40" x2="350" y2="50" stroke="black" stroke-width="2"/>
+                <text x="350" y="65" font-size="12" text-anchor="middle">6</text>
+                <line x1="400" y1="40" x2="400" y2="50" stroke="black" stroke-width="2"/>
+                <text x="400" y="65" font-size="12" text-anchor="middle">7</text>
+                <line x1="450" y1="40" x2="450" y2="50" stroke="black" stroke-width="2"/>
+                <text x="450" y="65" font-size="12" text-anchor="middle">8</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans10')">Reveal Answer</button>
+        <div id="ans10" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>5 cm</div>
+            <div class="explanation">Point M is at 2 cm and Point N is at 7 cm. $7 - 2 = 5$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 11</div>
+        <div class="question-text">
+            Compare: $(24 \div 6) \div 2 \bigcirc 24 \div (6 \div 2)$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans11')">Reveal Answer</button>
+        <div id="ans11" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>$<$ (Less than)</div>
+            <div class="explanation">Left side: $(24 \div 6) \div 2 = 4 \div 2 = 2$. Right side: $24 \div (6 \div 2) = 24 \div 3 = 8$. Since $2 < 8$, the correct symbol is $<$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 12</div>
+        <div class="question-text">
+            $\$4.50 + \$15 + \$6.25 + \$0.05$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans12')">Reveal Answer</button>
+        <div id="ans12" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>$\$25.80$</div>
+            <div class="explanation">Align the decimals: $4.50 + 15.00 + 6.25 + 0.05 = 25.80$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 13</div>
+        <div class="question-text">
+            $5.2 + 3.85 + 12.1$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans13')">Reveal Answer</button>
+        <div id="ans13" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>21.15</div>
+            <div class="explanation">Align decimals: $5.20 + 3.85 + 12.10 = 21.15$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 14</div>
+        <div class="question-text">
+            $15.48 - 6.2$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans14')">Reveal Answer</button>
+        <div id="ans14" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>9.28</div>
+            <div class="explanation">Align decimals: $15.48 - 6.20 = 9.28$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 15</div>
+        <div class="question-text">
+            $240 \times 4$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans15')">Reveal Answer</button>
+        <div id="ans15" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>960</div>
+            <div class="explanation">$24 \times 4 = 96$. Add the zero to the end to get 960.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 16</div>
+        <div class="question-text">
+            $306 \times 5$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans16')">Reveal Answer</button>
+        <div id="ans16" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>1,530</div>
+            <div class="explanation">$300 \times 5 = 1500$, and $6 \times 5 = 30$. $1500 + 30 = 1530$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 17</div>
+        <div class="question-text">
+            $524 \times 7$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans17')">Reveal Answer</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>3,668</div>
+            <div class="explanation">$(500 \times 7) + (20 \times 7) + (4 \times 7) = 3500 + 140 + 28 = 3668$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 18</div>
+        <div class="question-text">
+            $6 \overline{)45}$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans18')">Reveal Answer</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>7 R 3</div>
+            <div class="explanation">6 goes into 45 seven times ($6 \times 7 = 42$). The remainder is $45 - 42 = 3$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 19</div>
+        <div class="question-text">
+            $8 \overline{)53}$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans19')">Reveal Answer</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>6 R 5</div>
+            <div class="explanation">8 goes into 53 six times ($8 \times 6 = 48$). The remainder is $53 - 48 = 5$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 20</div>
+        <div class="question-text">
+            $4 \overline{)39}$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans20')">Reveal Answer</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>9 R 3</div>
+            <div class="explanation">4 goes into 39 nine times ($4 \times 9 = 36$). The remainder is $39 - 36 = 3$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 21</div>
+        <div class="question-text">
+            a. A quarter is what fraction of a dollar?<br>
+            b. A quarter is what percent of a dollar?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans21')">Reveal Answer</button>
+        <div id="ans21" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. $\frac{1}{4}$ (or $\frac{25}{100}$)<br>b. $25\%$</div>
+            <div class="explanation">A quarter is 25 cents out of 100 cents. As a fraction, this simplifies to $\frac{1}{4}$. As a percentage, it is $25\%$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 22</div>
+        <div class="question-text">
+            Perfect squares of prime numbers have exactly an odd number of factors (specifically, three). The number 49 is a perfect square. What are the three factors of 49?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans22')">Reveal Answer</button>
+        <div id="ans22" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>1, 7, and 49</div>
+            <div class="explanation">The numbers that multiply to give 49 are $1 \times 49$ and $7 \times 7$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 23</div>
+        <div class="question-text">
+            Compare: $20\% \bigcirc \frac{1}{4}$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans23')">Reveal Answer</button>
+        <div id="ans23" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>$<$ (Less than)</div>
+            <div class="explanation">$\frac{1}{4}$ is equivalent to $0.25$ or $25\%$. Therefore, $20\% < 25\%$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 24</div>
+        <div class="question-text">
+            Refer to parallelogram WXYZ to answer parts a and b.<br>
+            a. What type of angle are angles W and Y?<br>
+            b. What type of angle are angles X and Z?
+            <svg viewBox="0 0 200 120" width="150" height="90">
+                <polygon points="70,90 170,90 140,30 40,30" fill="none" stroke="black" stroke-width="2"/>
+                <text x="30" y="20" font-weight="bold">W</text>
+                <text x="145" y="20" font-weight="bold">X</text>
+                <text x="175" y="110" font-weight="bold">Y</text>
+                <text x="55" y="110" font-weight="bold">Z</text>
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans24')">Reveal Answer</button>
+        <div id="ans24" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. Acute<br>b. Obtuse</div>
+            <div class="explanation">Angles W and Y are narrower than 90 degrees (acute). Angles X and Z are wider than 90 degrees (obtuse).</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 25</div>
+        <div class="question-text">
+            The rectangular patio is 6 yards long and 3 yards wide.<br>
+            <svg viewBox="0 0 160 100" width="160" height="100">
+                <rect x="10" y="20" width="120" height="60" fill="#e0e0e0" stroke="black" stroke-width="2"/>
+                <line x1="10" y1="40" x2="130" y2="40" stroke="black" stroke-width="1"/>
+                <line x1="10" y1="60" x2="130" y2="60" stroke="black" stroke-width="1"/>
+                
+                <line x1="30" y1="20" x2="30" y2="80" stroke="black" stroke-width="1"/>
+                <line x1="50" y1="20" x2="50" y2="80" stroke="black" stroke-width="1"/>
+                <line x1="70" y1="20" x2="70" y2="80" stroke="black" stroke-width="1"/>
+                <line x1="90" y1="20" x2="90" y2="80" stroke="black" stroke-width="1"/>
+                <line x1="110" y1="20" x2="110" y2="80" stroke="black" stroke-width="1"/>
+                <text x="60" y="15" font-weight="bold">6 yd</text>
+                <text x="135" y="55" font-weight="bold">3 yd</text>
+            </svg><br>
+            a. How many yards of fencing are needed to go around the patio?<br>
+            b. How many square yards of brick are needed to cover the patio floor?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans25')">Reveal Answer</button>
+        <div id="ans25" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. 18 yards<br>b. 18 square yards</div>
+            <div class="explanation">
+                a. Fencing goes around the perimeter: $P = 2(6 + 3) = 18$ yards.<br>
+                b. Bricks cover the area: $A = 6 \times 3 = 18$ square yards.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 26</div>
+        <div class="question-text">
+            If $n + 8 = 20$, then which of these equations is not true?<br>
+            A. $n + 2 = 14$<br>
+            B. $n - 2 = 10$<br>
+            C. $n + 5 = 15$<br>
+            D. $n - 5 = 7$
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans26')">Reveal Answer</button>
+        <div id="ans26" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>C. $n + 5 = 15$</div>
+            <div class="explanation">First, find $n$: $n = 20 - 8 = 12$. If $n = 12$, let's test C: $12 + 5 = 17$, not 15. Therefore, equation C is false.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 27</div>
+        <div class="question-text">
+            (a) Compare: $12 \div (6 \div 2) \bigcirc (12 \div 6) \div 2$<br>
+            (b) Does the associative property apply to division based on this problem?
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans27')">Reveal Answer</button>
+        <div id="ans27" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. $>$ (Greater than)<br>b. No</div>
+            <div class="explanation">
+                a. Left side: $12 \div (6 \div 2) = 12 \div 3 = 4$. Right side: $(12 \div 6) \div 2 = 2 \div 2 = 1$. Since $4 > 1$, use $>$.<br>
+                b. Because moving the parenthesis changed the answer, the associative property does NOT apply to division.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 28</div>
+        <div class="question-text">
+            a. Seven pennies are what fraction of a dollar?<br>
+            b. Seven pennies are what percent of a dollar?<br>
+            c. Write the value of seven pennies as a decimal part of a dollar.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans28')">Reveal Answer</button>
+        <div id="ans28" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. $\frac{7}{100}$<br>b. $7\%$<br>c. $\$0.07$</div>
+            <div class="explanation">A dollar equals 100 pennies, so 7 pennies is $\frac{7}{100}$, which translates directly to $7\%$ and $0.07$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 29</div>
+        <div class="question-text">
+            At the store, Marcus bought a notebook for $\$8.15$, some pens for $\$2.90$, and a calculator for $\$4.85$. Estimate Marcus's total bill.
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans29')">Reveal Answer</button>
+        <div id="ans29" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>$\$16.00$</div>
+            <div class="explanation">Round each item to the nearest dollar: $\$8.00 + \$3.00 + \$5.00 = \$16.00$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 30</div>
+        <div class="question-text">
+            a. Name a segment that is parallel to CD.<br>
+            b. Name a segment that is perpendicular to HD.<br>
+            <svg viewBox="0 0 250 140" width="200" height="120">
+                <polygon points="50,40 180,40 180,90 50,90" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                <polygon points="30,60 160,60 160,110 30,110" fill="#e0e0e0" fill-opacity="0.3" stroke="black" stroke-width="2"/>
+                <line x1="50" y1="40" x2="30" y2="60" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="180" y1="40" x2="160" y2="60" stroke="black" stroke-width="2"/>
+                <line x1="180" y1="90" x2="160" y2="110" stroke="black" stroke-width="2"/>
+                <line x1="50" y1="90" x2="30" y2="110" stroke="black" stroke-width="2" stroke-dasharray="4"/>
+                
+                <text x="45" y="30" font-weight="bold">A</text> 
+                <text x="180" y="30" font-weight="bold">B</text> 
+                <text x="20" y="55" font-weight="bold">E</text> 
+                <text x="165" y="55" font-weight="bold">F</text> 
+                <text x="20" y="125" font-weight="bold">H</text> 
+                <text x="165" y="125" font-weight="bold">G</text> 
+                <text x="60" y="100" font-weight="bold">D</text> 
+                <text x="185" y="100" font-weight="bold">C</text> 
+            </svg>
+        </div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans30')">Reveal Answer</button>
+        <div id="ans30" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <div>a. AB, EF, or HG<br>b. EH, FG, CD, or AD</div>
+            <div class="explanation">
+                a. Parallel segments run in the same direction. AB, EF, and HG run along the same horizontal axis as CD.<br>
+                b. Perpendicular segments meet at a 90-degree corner. Segments that meet segment HD at a corner (like EH, FG, CD, or AD) are perpendicular to it.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv.style.display === "none" || answerDiv.style.display === "") {
+                answerDiv.style.display = "block";
+            } else {
+                answerDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
