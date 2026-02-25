@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Questions for 13, 14, and 17</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #fdfdfd;
+        }
+        h1, h2 { text-align: center; color: #333; }
+        h2 { margin-top: 40px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .question-container { 
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px; 
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-text { 
+            font-size: 1.1em;
+            margin-bottom: 15px; 
+            color: #222;
+        }
+        .toggle-btn { 
+            background-color: #0078d7; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .toggle-btn:hover { background-color: #005a9e; }
+        .explanation { 
+            display: none; 
+            background-color: #f0f8ff; 
+            border-left: 5px solid #0078d7; 
+            padding: 15px; 
+            margin-top: 15px; 
+            border-radius: 0 5px 5px 0; 
+        }
+        .answer-text { font-weight: bold; color: #005a9e; margin-bottom: 5px;}
+    </style>
+
+    <script>
+        function toggleExplanation(id) {
+            var element = document.getElementById(id);
+            var btn = document.getElementById('btn-' + id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                btn.innerText = "Hide Answer & Explanation";
+            } else {
+                element.style.display = "none";
+                btn.innerText = "Review Answer & Explanation";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Practice Questions</h1>
+
+    <h2>Similar to Question 13 (Multi-digit Subtraction)</h2>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>13a.</strong> 
+            $$ \begin{array}{r} 53,104 \\ - \quad 28,476 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp13a" onclick="toggleExplanation('exp13a')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp13a">
+            <div class="answer-text">Answer: 24,628</div>
+            <p><strong>Explanation:</strong> Subtract column by column from right to left. You will need to regroup (borrow) multiple times.<br>
+            $$ \begin{array}{r} \small{4}\small{12}\small{10}\small{9}\small{14} \\ \cancel{5}\cancel{3},\cancel{1}\cancel{0}\cancel{4} \\ - \quad 28,476 \\ \hline 24,628 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>13b.</strong> 
+            $$ \begin{array}{r} 81,052 \\ - \quad 34,918 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp13b" onclick="toggleExplanation('exp13b')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp13b">
+            <div class="answer-text">Answer: 46,134</div>
+            <p><strong>Explanation:</strong> Subtract from right to left, borrowing when the top digit is smaller than the bottom digit.<br>
+            $$ \begin{array}{r} 81,052 \\ - \quad 34,918 \\ \hline 46,134 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>13c.</strong> 
+            $$ \begin{array}{r} 62,431 \\ - \quad 15,875 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp13c" onclick="toggleExplanation('exp13c')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp13c">
+            <div class="answer-text">Answer: 46,556</div>
+            <p><strong>Explanation:</strong> Borrow across the columns to subtract correctly.<br>
+            $$ \begin{array}{r} 62,431 \\ - \quad 15,875 \\ \hline 46,556 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <h2>Similar to Question 14 (2-digit Multiplication)</h2>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>14a.</strong> 
+            $$ \begin{array}{r} 68 \\ \times \quad 8 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp14a" onclick="toggleExplanation('exp14a')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp14a">
+            <div class="answer-text">Answer: 544</div>
+            <p><strong>Explanation:</strong> Multiply the ones column first: $8 \times 8 = 64$. Write down the 4 and carry the 6. Then multiply the tens column: $6 \times 8 = 48$. Add the carried 6: $48 + 6 = 54$.<br>
+            $$ \begin{array}{r} \small{6} \\ 68 \\ \times \quad 8 \\ \hline 544 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>14b.</strong> 
+            $$ \begin{array}{r} 43 \\ \times \quad 9 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp14b" onclick="toggleExplanation('exp14b')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp14b">
+            <div class="answer-text">Answer: 387</div>
+            <p><strong>Explanation:</strong> Multiply the ones: $3 \times 9 = 27$ (write 7, carry 2). Multiply the tens: $4 \times 9 = 36$. Add the carried 2: $36 + 2 = 38$.<br>
+            $$ \begin{array}{r} \small{2} \\ 43 \\ \times \quad 9 \\ \hline 387 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>14c.</strong> 
+            $$ \begin{array}{r} 95 \\ \times \quad 6 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp14c" onclick="toggleExplanation('exp14c')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp14c">
+            <div class="answer-text">Answer: 570</div>
+            <p><strong>Explanation:</strong> Multiply the ones: $5 \times 6 = 30$ (write 0, carry 3). Multiply the tens: $9 \times 6 = 54$. Add the carried 3: $54 + 3 = 57$.<br>
+            $$ \begin{array}{r} \small{3} \\ 95 \\ \times \quad 6 \\ \hline 570 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <h2>Similar to Question 17 (Division with Remainders)</h2>
+
+    <div class="question-container">
+        <div class="question-text"><strong>17a.</strong> $53 \div 8$</div>
+        <button class="toggle-btn" id="btn-exp17a" onclick="toggleExplanation('exp17a')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp17a">
+            <div class="answer-text">Answer: 6 R 5 (or 6 $\frac{5}{8}$)</div>
+            <p><strong>Explanation:</strong> Divide 53 by 8. <br>
+            $8 \times 6 = 48$. <br>
+            $53 - 48 = 5$, so there is a remainder of 5. <br>
+            Written as a mixed number, it is $6 \frac{5}{8}$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>17b.</strong> $74 \div 9$</div>
+        <button class="toggle-btn" id="btn-exp17b" onclick="toggleExplanation('exp17b')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp17b">
+            <div class="answer-text">Answer: 8 R 2 (or 8 $\frac{2}{9}$)</div>
+            <p><strong>Explanation:</strong> Divide 74 by 9. <br>
+            $9 \times 8 = 72$. <br>
+            $74 - 72 = 2$, so there is a remainder of 2. <br>
+            Written as a mixed number, it is $8 \frac{2}{9}$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>17c.</strong> $38 \div 5$</div>
+        <button class="toggle-btn" id="btn-exp17c" onclick="toggleExplanation('exp17c')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp17c">
+            <div class="answer-text">Answer: 7 R 3 (or 7 $\frac{3}{5}$)</div>
+            <p><strong>Explanation:</strong> Divide 38 by 5. <br>
+            $5 \times 7 = 35$. <br>
+            $38 - 35 = 3$, so there is a remainder of 3. <br>
+            Written as a mixed number, it is $7 \frac{3}{5}$.</p>
+        </div>
+    </div>
+
+</body>
+</html>
