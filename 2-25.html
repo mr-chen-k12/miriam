@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Test 11B Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #fdfdfd;
+        }
+        h1 { text-align: center; color: #333; }
+        .question-container { 
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px; 
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-text { 
+            font-size: 1.1em;
+            margin-bottom: 15px; 
+            color: #222;
+        }
+        .toggle-btn { 
+            background-color: #0078d7; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .toggle-btn:hover { background-color: #005a9e; }
+        .explanation { 
+            display: none; 
+            background-color: #f0f8ff; 
+            border-left: 5px solid #0078d7; 
+            padding: 15px; 
+            margin-top: 15px; 
+            border-radius: 0 5px 5px 0; 
+        }
+        .answer-text { font-weight: bold; color: #005a9e; margin-bottom: 5px;}
+        svg { margin: 15px 0; display: block; }
+    </style>
+
+    <script>
+        function toggleExplanation(id) {
+            var element = document.getElementById(id);
+            var btn = document.getElementById('btn-' + id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                btn.innerText = "Hide Answer & Explanation";
+            } else {
+                element.style.display = "none";
+                btn.innerText = "Review Answer & Explanation";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Cumulative Test 11B</h1>
+
+    <div class="question-container">
+        <div class="question-text"><strong>1.</strong> Forty-two days is how many weeks?</div>
+        <button class="toggle-btn" id="btn-exp1" onclick="toggleExplanation('exp1')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp1">
+            <div class="answer-text">Answer: 6 weeks</div>
+            <p><strong>Explanation:</strong> There are 7 days in a single week. To find out how many weeks are in 42 days, you divide the total number of days by 7.<br>
+            $42 \div 7 = 6$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>2.</strong> List the factors of 15.</div>
+        <button class="toggle-btn" id="btn-exp2" onclick="toggleExplanation('exp2')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp2">
+            <div class="answer-text">Answer: 1, 3, 5, 15</div>
+            <p><strong>Explanation:</strong> Factors are the whole numbers you multiply together to get another number. <br>
+            $1 \times 15 = 15$<br>
+            $3 \times 5 = 15$<br>
+            Therefore, the factors of 15 in order are 1, 3, 5, and 15.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>3.</strong> Thirty books were put into three equal stacks. How many books were in each stack?</div>
+        <button class="toggle-btn" id="btn-exp3" onclick="toggleExplanation('exp3')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp3">
+            <div class="answer-text">Answer: 10 books</div>
+            <p><strong>Explanation:</strong> You are taking a total of 30 books and dividing them equally into 3 groups.<br>
+            $30 \div 3 = 10$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>4.</strong> Draw a circle and shade 25% of it.</div>
+        <button class="toggle-btn" id="btn-exp4" onclick="toggleExplanation('exp4')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp4">
+            <div class="answer-text">Answer:</div>
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="#333" stroke-width="2" fill="#fff" />
+                <path d="M 60 60 L 60 10 A 50 50 0 0 1 110 60 Z" fill="#0078d7" opacity="0.6" stroke="#333" stroke-width="1"/>
+            </svg>
+            <p><strong>Explanation:</strong> 25% is equal to the fraction $\frac{1}{4}$. To show this, draw a circle, divide it into 4 equal quarters, and shade in exactly 1 of those quarters.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>5.</strong> Thirty years equals how many decades?</div>
+        <button class="toggle-btn" id="btn-exp5" onclick="toggleExplanation('exp5')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp5">
+            <div class="answer-text">Answer: 3 decades</div>
+            <p><strong>Explanation:</strong> One decade is equal to 10 years. To find out how many decades are in 30 years, divide by 10.<br>
+            $30 \div 10 = 3$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>6.</strong> Find the eighth multiple of 4. Then subtract 12. What is the answer?</div>
+        <button class="toggle-btn" id="btn-exp6" onclick="toggleExplanation('exp6')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp6">
+            <div class="answer-text">Answer: 20</div>
+            <p><strong>Explanation:</strong> <br>
+            Step 1: Find the 8th multiple of 4 by multiplying: $8 \times 4 = 32$.<br>
+            Step 2: Subtract 12 from that result: $32 - 12 = 20$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>7.</strong> Compare: $\frac{1}{4}$ &#9711; $50\%$</div>
+        <button class="toggle-btn" id="btn-exp7" onclick="toggleExplanation('exp7')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp7">
+            <div class="answer-text">Answer: < (Less than)</div>
+            <p><strong>Explanation:</strong> To compare them easily, convert the fraction to a percentage. <br>
+            $\frac{1}{4} = 25\%$<br>
+            Since $25\%$ is less than $50\%$, the correct symbol is $<$.<br>
+            $\frac{1}{4} < 50\%$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>8.</strong> Segment DE is 4 cm long. Segment DF is 8 cm long. How long is segment EF?
+            <svg width="300" height="50">
+                <line x1="20" y1="25" x2="260" y2="25" stroke="black" stroke-width="2"/>
+                <circle cx="20" cy="25" r="4" fill="black"/> <text x="15" y="15" font-family="Arial">D</text>
+                <circle cx="140" cy="25" r="4" fill="black"/> <text x="135" y="15" font-family="Arial">E</text>
+                <circle cx="260" cy="25" r="4" fill="black"/> <text x="255" y="15" font-family="Arial">F</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" id="btn-exp8" onclick="toggleExplanation('exp8')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp8">
+            <div class="answer-text">Answer: 4 cm</div>
+            <p><strong>Explanation:</strong> Looking at the line segment, point E sits between D and F. Therefore, the length of $DE$ plus the length of $EF$ equals the total length of $DF$.<br>
+            $DE + EF = DF$<br>
+            $4\text{ cm} + EF = 8\text{ cm}$<br>
+            $EF = 8 - 4 = 4\text{ cm}$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>9.</strong> What is the perimeter of this rectangle?
+            <svg width="200" height="120">
+                <rect x="20" y="30" width="120" height="70" stroke="black" stroke-width="2" fill="none"/>
+                <text x="65" y="20" font-family="Arial">25 mm</text>
+                <text x="145" y="70" font-family="Arial">14 mm</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" id="btn-exp9" onclick="toggleExplanation('exp9')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp9">
+            <div class="answer-text">Answer: 78 mm</div>
+            <p><strong>Explanation:</strong> The perimeter is the total distance around the outside of the rectangle. A rectangle has two equal lengths and two equal widths.<br>
+            Formula: $P = 2 \times (\text{length} + \text{width})$<br>
+            $P = 2 \times (25 + 14)$<br>
+            $P = 2 \times 39$<br>
+            $P = 78\text{ mm}$</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>10.</strong> Round 5280 to the nearest thousand.</div>
+        <button class="toggle-btn" id="btn-exp10" onclick="toggleExplanation('exp10')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp10">
+            <div class="answer-text">Answer: 5000</div>
+            <p><strong>Explanation:</strong> Look at the number in the thousands place (5) and then look at the number directly to its right in the hundreds place (2). Because 2 is less than 5, we round down, keeping the 5 and turning the rest of the digits into zeros. </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>11.</strong> 
+            $$ \begin{array}{r} \$12.00 \\ - \quad \$7.83 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp11" onclick="toggleExplanation('exp11')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp11">
+            <div class="answer-text">Answer: $4.17</div>
+            <p><strong>Explanation:</strong> Line up the decimals and subtract. You will need to borrow across the zeros.<br>
+            $$ \begin{array}{r} \$12.00 \\ - \quad \$7.83 \\ \hline \$4.17 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>12.</strong> 
+            $$ \begin{array}{r} 73,129 \\ + \quad 8,293 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp12" onclick="toggleExplanation('exp12')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp12">
+            <div class="answer-text">Answer: 81,422</div>
+            <p><strong>Explanation:</strong> Add column by column from right to left, carrying over when the sum is 10 or greater.<br>
+            $$ \begin{array}{r} \small{1}\small{1}\small{1}\quad\quad \\ 73,129 \\ + \quad 8,293 \\ \hline 81,422 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>13.</strong> 
+            $$ \begin{array}{r} 46,218 \\ - \quad 17,649 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp13" onclick="toggleExplanation('exp13')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp13">
+            <div class="answer-text">Answer: 28,569</div>
+            <p><strong>Explanation:</strong> Subtract column by column from right to left. You will need to regroup (borrow).<br>
+            $$ \begin{array}{r} \small{3}\small{15}\small{11}\small{10}\small{18} \\ \cancel{4}\cancel{6},\cancel{2}\cancel{1}\cancel{8} \\ - \quad 17,649 \\ \hline 28,569 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>14.</strong> 
+            $$ \begin{array}{r} 79 \\ \times \quad 7 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp14" onclick="toggleExplanation('exp14')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp14">
+            <div class="answer-text">Answer: 553</div>
+            <p><strong>Explanation:</strong> Multiply the ones column first: $9 \times 7 = 63$. Write down the 3 and carry the 6. Then multiply the tens column: $7 \times 7 = 49$. Add the carried 6: $49 + 6 = 55$.<br>
+            $$ \begin{array}{r} \small{6} \\ 79 \\ \times \quad 7 \\ \hline 553 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>15.</strong> $3.47 + 2.6 + 12.4$</div>
+        <button class="toggle-btn" id="btn-exp15" onclick="toggleExplanation('exp15')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp15">
+            <div class="answer-text">Answer: 18.47</div>
+            <p><strong>Explanation:</strong> When adding decimals, always line up the decimal points. You can add zeros as placeholders to the right to make it easier to read.<br>
+            $$ \begin{array}{r} \small{1}\quad\quad \\ 3.47 \\ 2.60 \\ + 12.40 \\ \hline 18.47 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>16.</strong> $\sqrt{25} + (20 \div 4)$</div>
+        <button class="toggle-btn" id="btn-exp16" onclick="toggleExplanation('exp16')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp16">
+            <div class="answer-text">Answer: 10</div>
+            <p><strong>Explanation:</strong> Follow the order of operations. Solve the square root and the parentheses first.<br>
+            The square root of 25 is 5 (because $5 \times 5 = 25$).<br>
+            The expression inside the parentheses is $20 \div 4 = 5$.<br>
+            Add the two results together: $5 + 5 = 10$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text"><strong>17.</strong> $49 \div 6$</div>
+        <button class="toggle-btn" id="btn-exp17" onclick="toggleExplanation('exp17')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp17">
+            <div class="answer-text">Answer: 8 R 1 (or 8 $\frac{1}{6}$)</div>
+            <p><strong>Explanation:</strong> Divide 49 by 6. <br>
+            $6 \times 8 = 48$. <br>
+            $49 - 48 = 1$, so there is a remainder of 1. <br>
+            Written as a mixed number, it is $8 \frac{1}{6}$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            <strong>18.</strong> 
+            $$ \begin{array}{r} 208 \\ - \quad 69 \\ \hline \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp18" onclick="toggleExplanation('exp18')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp18">
+            <div class="answer-text">Answer: 139</div>
+            <p><strong>Explanation:</strong> Subtract column by column, regrouping where necessary.<br>
+            $$ \begin{array}{r} \small{1}\small{9}\small{18} \\ \cancel{2}\cancel{0}\cancel{8} \\ - \quad 69 \\ \hline 139 \end{array} $$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            Find the missing number:<br>
+            <strong>19.</strong> 
+            $$ \begin{array}{r} n \\ - \quad 351 \\ \hline 600 \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp19" onclick="toggleExplanation('exp19')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp19">
+            <div class="answer-text">Answer: $n = 951$</div>
+            <p><strong>Explanation:</strong> To find the starting number ($n$) before 351 was subtracted from it, you do the opposite operation: addition. Add the difference (600) and the number subtracted (351) together.<br>
+            $600 + 351 = 951$<br>
+            So, $n = 951$.</p>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-text">
+            Find the missing number:<br>
+            <strong>20.</strong> 
+            $$ \begin{array}{r} z \\ + \quad 853 \\ \hline 1172 \end{array} $$
+        </div>
+        <button class="toggle-btn" id="btn-exp20" onclick="toggleExplanation('exp20')">Review Answer & Explanation</button>
+        <div class="explanation" id="exp20">
+            <div class="answer-text">Answer: $z = 319$</div>
+            <p><strong>Explanation:</strong> To find the missing addend ($z$), subtract the known addend (853) from the total sum (1172).<br>
+            $$ \begin{array}{r} 1172 \\ - \quad 853 \\ \hline 319 \end{array} $$
+            So, $z = 319$.</p>
+        </div>
+    </div>
+
+</body>
+</html>
