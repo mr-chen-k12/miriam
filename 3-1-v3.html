@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & Climate Super Quiz!</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #FFB703;
+            --background: #E0F7FA;
+            --text: #333333;
+            --correct: #8BC34A;
+            --incorrect: #FF5252;
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-shadow: 2px 2px #fff;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Main Menu Styles */
+        #main-menu button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #main-menu button:hover {
+            transform: scale(1.02);
+            background-color: #357ABD;
+        }
+
+        .scoreboard {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #FFF3E0;
+            border-radius: 15px;
+            border: 2px dashed var(--secondary);
+        }
+
+        .scoreboard h3 {
+            margin-top: 0;
+            color: #E65100;
+        }
+
+        .scoreboard p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Quiz Styles */
+        .hidden {
+            display: none !important;
+        }
+
+        #quiz-section h2 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            font-size: 1.1rem;
+            background-color: #F5F5F5;
+            border: 2px solid #DDDDDD;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .option-btn:hover {
+            background-color: #E3F2FD;
+            border-color: var(--primary);
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+
+        .option-btn.wrong {
+            background-color: var(--incorrect);
+            color: white;
+            border-color: var(--incorrect);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: var(--secondary);
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .action-btn:hover {
+            background-color: #E5A400;
+        }
+
+        /* Results Screen */
+        #results-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>🌤️ Weather & Climate Quiz 🌪️</h1>
+
+    <div class="container">
+        
+        <div id="main-menu">
+            <h2>Choose a Section to Study!</h2>
+            <button onclick="startQuiz('vocab')">📖 Section 1: Core Weather Vocab</button>
+            <button onclick="startQuiz('engineering')">🛠️ Section 2: Engineering & Science</button>
+            <button onclick="startQuiz('extreme')">⚡ Section 3: Extreme Weather Details</button>
+            <button onclick="startQuiz('meteorology')">👨‍🔬 Section 4: Meteorology & Inventions</button>
+            <button onclick="startQuiz('characteristics')" style="background-color: #E65100;">🌪️ Section 5: Storm Characteristics</button>
+
+            <div class="scoreboard">
+                <h3>🏆 Your Scores 🏆</h3>
+                <p>Core Weather Vocab: <span id="score-vocab">Not taken yet</span></p>
+                <p>Engineering & Science: <span id="score-engineering">Not taken yet</span></p>
+                <p>Extreme Weather Details: <span id="score-extreme">Not taken yet</span></p>
+                <p>Meteorology & Inventions: <span id="score-meteorology">Not taken yet</span></p>
+                <p>Storm Characteristics: <span id="score-characteristics">Not taken yet</span></p>
+            </div>
+        </div>
+
+        <div id="quiz-section" class="hidden">
+            <h2 id="quiz-title">Quiz</h2>
+            <p>Question <span id="q-current">1</span> of <span id="q-total">5</span></p>
+            
+            <div class="question-text" id="question-text">Question goes here?</div>
+            
+            <div class="options" id="options-container">
+                </div>
+
+            <div class="feedback" id="feedback-text"></div>
+
+            <div class="nav-buttons">
+                <button class="action-btn" onclick="returnToMenu()">🏠 Main Menu</button>
+                <button class="action-btn hidden" id="next-btn" onclick="nextQuestion()">Next ➡️</button>
+            </div>
+        </div>
+
+        <div id="results-section" class="hidden">
+            <h2>Great Job! 🎉</h2>
+            <p>You finished the section!</p>
+            <div class="score-display">
+                <span id="final-score">0</span> / <span id="total-score">0</span>
+            </div>
+            
+            <div class="nav-buttons" style="justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button class="action-btn" id="review-btn" onclick="startReview()" style="background-color: var(--primary); color: white;">🔄 Review Missed</button>
+                <button class="action-btn" onclick="returnToMenu()">🏠 Main Menu</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- COMPREHENSIVE QUIZ DATA ---
+        const quizData = {
+            vocab: [
+                { q: "What is a measure of how fast the wind is moving?", options: ["Wind Direction", "Wind Speed", "Air Pressure", "Prevailing Winds"], answer: 1 },
+                { q: "What tells us the direction from which the wind is blowing?", options: ["Wind Direction", "Wind Speed", "Humidity", "Air Mass"], answer: 0 },
+                { q: "Regular patterns of winds that blow from one direction are known as...", options: ["Fronts", "Prevailing Winds", "Tornadoes", "Atmosphere"], answer: 1 },
+                { q: "What is the air outside like at any given time and place called?", options: ["Climate", "Weather", "Atmosphere", "Air Mass"], answer: 1 },
+                { q: "What is the 'Atmosphere'?", options: ["The layer of air that surrounds Earth", "A large body of water", "The weight of air pressing down", "A type of storm"], answer: 0 },
+                { q: "What is the weight of air as it presses on objects below or within it?", options: ["Wind Speed", "Precipitation", "Air Pressure", "Humidity"], answer: 2 },
+                { q: "What do we call the gas form of water?", options: ["Precipitation", "Water Vapor", "Air Mass", "Condensation"], answer: 1 },
+                { q: "To change from a liquid to a gas is called...", options: ["Condense", "Precipitation", "Evaporate", "Seasonal"], answer: 2 },
+                { q: "To change from a gas back into a liquid is called...", options: ["Evaporate", "Condense", "Humidity", "Wind"], answer: 1 },
+                { q: "What is a measure of the amount of water vapor in the air?", options: ["Air Pressure", "Wind Direction", "Humidity", "Climate"], answer: 2 },
+                { q: "What is a large body of air in the atmosphere called?", options: ["Air Mass", "Atmosphere", "Front", "Wind"], answer: 0 },
+                { q: "The place where two air masses meet is called a...", options: ["Hazard", "Constraint", "Front", "Climate"], answer: 2 },
+                { q: "What do we call the weather patterns in a place over a long period of time?", options: ["Seasonal", "Climate", "Weather", "Data"], answer: 1 }
+            ],
+            engineering: [
+                { q: "What are the steps that engineers take to solve a problem called?", options: ["Engineering Design Process", "Scientific Method", "Technology Cycle", "Data Collection"], answer: 0 },
+                { q: "What is a 'Constraint' in engineering?", options: ["The final invention", "A dangerous condition", "The limitation of a design", "The requirements for success"], answer: 2 },
+                { q: "What are the 'Criteria' in a design?", options: ["The steps to build it", "The limitations of the design", "The requirements of a design for it to be a success", "The materials used"], answer: 2 },
+                { q: "What is the use of scientific knowledge to make something that is helpful to others?", options: ["Technology", "Data", "Prediction", "A Hazard"], answer: 0 },
+                { q: "What is a dangerous condition that can cause damage called?", options: ["A Constraint", "A Hazard", "A Front", "A Prediction"], answer: 1 },
+                { q: "What is information that is observed, measured, and recorded?", options: ["Criteria", "Technology", "Data", "Air Mass"], answer: 2 },
+                { q: "To say what is likely to happen is called a...", options: ["Prediction", "Measurement", "Constraint", "Observation"], answer: 0 }
+            ],
+            extreme: [
+                { q: "Which of the following are the four different forms of precipitation?", options: ["Rain, Wind, Snow, Ice", "Rain, Snow, Sleet, Hail", "Rain, Fog, Sleet, Hail", "Snow, Hail, Lightning, Thunder"], answer: 1 },
+                { q: "What is electricity that travels between clouds, or from clouds to the ground?", options: ["Thunder", "Lightning", "Wind", "Precipitation"], answer: 1 },
+                { q: "How do droughts develop?", options: ["They develop very quickly over a few hours", "They develop slowly and can last for months", "They form over the ocean", "They only happen in the winter"], answer: 1 },
+                { q: "Why can droughts lead to wildfires?", options: ["Because they create a lot of lightning", "Because the grass and trees in the area become so dry", "Because they cause high winds", "Because they flood the roads"], answer: 1 },
+                { q: "Which of these is a hazard caused by hurricanes once they reach the coast?", options: ["Very heavy rain and large waves", "Rising water levels causing severe flooding", "High winds damaging buildings", "All of the above"], answer: 3 }
+            ],
+            meteorology: [
+                { q: "What does a Meteorologist do?", options: ["Studies rocks and minerals", "Builds bridges and roads", "Studies weather conditions and patterns", "Designs new technology"], answer: 2 },
+                { q: "How often do meteorologists collect and record data?", options: ["Once a year", "Every hour, day, week, and month", "Only during extreme weather", "When a storm is over"], answer: 1 },
+                { q: "What methods do meteorologists use to organize their data?", options: ["Tables, Graphs, and Maps", "Rulers, Scales, and Weights", "Boxes, Bags, and Folders", "They don't organize data"], answer: 0 },
+                { q: "Which invention measures air pressure and was invented by Evangelista Torricelli?", options: ["Lightning Rod", "Radar", "Barometer", "Windshield Wipers"], answer: 2 },
+                { q: "Benjamin Franklin invented a skinny metal pole on top of buildings to redirect lightning safely to the ground. What is it?", options: ["Lightning Rod", "Barometer", "Cloud Model", "Wind Speedometer"], answer: 0 },
+                { q: "What does the Fujita-Pearson Scale do?", options: ["Measures how much rain falls in the tropics", "Measures the air pressure before a storm", "Classifies the strength of a tornado based on the damage it caused", "Tells you when a drought will end"], answer: 2 },
+                { q: "Besides the damage caused, what else does the Fujita-Pearson Scale consider?", options: ["The color of the funnel cloud", "The width of the tornado and the length of its path", "How much rain fell during the tornado", "The temperature of the air"], answer: 1 },
+                { q: "Who invented Windshield Wipers so people could safely drive through rain and snow?", options: ["Joanne Simpson", "Benjamin Franklin", "Mary Anderson", "Evangelista Torricelli"], answer: 2 },
+                { q: "Joanne Simpson invented Cloud Models and helped develop the first radar to measure tropical rainfall from where?", options: ["Space", "Underwater", "Mountain tops", "Airplanes"], answer: 0 }
+            ],
+            characteristics: [
+                { q: "This is a rotating column of air that moves along the ground.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 1 },
+                { q: "This storm forms over the ocean and gathers strength as it moves toward land.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 0 },
+                { q: "This is a winter storm that is very windy with a lot of snow.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 3 },
+                { q: "This is a long period of very dry weather.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 4 },
+                { q: "This storm produces lightning and thunder.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 2 },
+                { q: "This weather event develops slowly and can last for months, sometimes leading to wildfires.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 4 },
+                { q: "When this storm reaches the coast, its hazards include large waves, rising water levels, and heavy rain.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 0 },
+                { q: "The greatest hazard from this storm is its destructive winds that can reach up to 300 miles per hour.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 1 },
+                { q: "This storm causes hazards like power outages and road closures due to heavy, blowing snow.", options: ["Hurricane", "Tornado", "Thunderstorm", "Blizzard", "Drought"], answer: 3 }
+            ]
+        };
+
+        const sectionTitles = {
+            vocab: "📖 Core Weather Vocab",
+            engineering: "🛠️ Engineering & Science",
+            extreme: "⚡ Extreme Weather Details",
+            meteorology: "👨‍🔬 Meteorology & Inventions",
+            characteristics: "🌪️ Storm Characteristics"
+        };
+
+        // --- APP STATE ---
+        let currentSection = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let activeQuestions = [];
+        let missedQuestions = [];
+        let isReviewMode = false;
+        let answered = false;
+
+        // --- HTML ELEMENTS ---
+        const mainMenu = document.getElementById('main-menu');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsSection = document.getElementById('results-section');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextBtn = document.getElementById('next-btn');
+        const reviewBtn = document.getElementById('review-btn');
+
+        // --- FUNCTIONS ---
+        function startQuiz(sectionKey) {
+            currentSection = sectionKey;
+            activeQuestions = [...quizData[sectionKey]];
+            missedQuestions = [];
+            isReviewMode = false;
+            resetQuizState();
+            
+            document.getElementById('quiz-title').innerText = sectionTitles[sectionKey];
+            
+            mainMenu.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function startReview() {
+            activeQuestions = [...missedQuestions];
+            missedQuestions = []; // Reset missed questions for the review round
+            isReviewMode = true;
+            resetQuizState();
+
+            document.getElementById('quiz-title').innerText = "🔄 Review Mode";
+            
+            resultsSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function resetQuizState() {
+            currentQuestionIndex = 0;
+            score = 0;
+        }
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.classList.add('hidden');
+            feedbackText.innerText = '';
+            
+            document.getElementById('q-current').innerText = currentQuestionIndex + 1;
+            document.getElementById('q-total').innerText = activeQuestions.length;
+
+            const currentQ = activeQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answered) return;
+            answered = true;
+
+            const currentQ = activeQuestions[currentQuestionIndex];
+            const buttons = optionsContainer.children;
+
+            if (selectedIndex === currentQ.answer) {
+                btnElement.classList.add('correct');
+                feedbackText.innerText = "🌟 Correct! Great job!";
+                feedbackText.style.color = "var(--correct)";
+                score++;
+            } else {
+                btnElement.classList.add('wrong');
+                buttons[currentQ.answer].classList.add('correct');
+                feedbackText.innerText = "Oops! That's not quite right.";
+                feedbackText.style.color = "var(--incorrect)";
+                
+                // Save to missed questions if not already there
+                if (!missedQuestions.includes(currentQ)) {
+                    missedQuestions.push(currentQ);
+                }
+            }
+
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('total-score').innerText = activeQuestions.length;
+
+            // Update main menu scoreboard if it's a normal run (not a review run)
+            if (!isReviewMode) {
+                const percentage = Math.round((score / activeQuestions.length) * 100);
+                document.getElementById(`score-${currentSection}`).innerText = `${score}/${activeQuestions.length} (${percentage}%)`;
+            }
+
+            // Show/Hide review button based on whether there are missed questions
+            if (missedQuestions.length > 0) {
+                reviewBtn.classList.remove('hidden');
+            } else {
+                reviewBtn.classList.add('hidden');
+            }
+        }
+
+        function returnToMenu() {
+            quizSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            mainMenu.classList.remove('hidden');
+        }
+
+    </script>
+</body>
+</html>
