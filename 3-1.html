@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & Climate Super Quiz!</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #FFB703;
+            --background: #E0F7FA;
+            --text: #333333;
+            --correct: #8BC34A;
+            --incorrect: #FF5252;
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-shadow: 2px 2px #fff;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Main Menu Styles */
+        #main-menu button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #main-menu button:hover {
+            transform: scale(1.02);
+            background-color: #357ABD;
+        }
+
+        .scoreboard {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #FFF3E0;
+            border-radius: 15px;
+            border: 2px dashed var(--secondary);
+        }
+
+        .scoreboard h3 {
+            margin-top: 0;
+            color: #E65100;
+        }
+
+        /* Quiz Styles */
+        .hidden {
+            display: none !important;
+        }
+
+        #quiz-section h2 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            font-size: 1.1rem;
+            background-color: #F5F5F5;
+            border: 2px solid #DDDDDD;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .option-btn:hover {
+            background-color: #E3F2FD;
+            border-color: var(--primary);
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+
+        .option-btn.wrong {
+            background-color: var(--incorrect);
+            color: white;
+            border-color: var(--incorrect);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: var(--secondary);
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .action-btn:hover {
+            background-color: #E5A400;
+        }
+
+        /* Results Screen */
+        #results-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>🌤️ Weather & Climate Quiz 🌪️</h1>
+
+    <div class="container">
+        
+        <div id="main-menu">
+            <h2>Choose a Section to Study!</h2>
+            <button onclick="startQuiz('vocab')">📖 Section 1: Weather Words (Vocab)</button>
+            <button onclick="startQuiz('extreme')">⚡ Section 2: Extreme Weather & Precipitation</button>
+            <button onclick="startQuiz('meteorology')">👨‍🔬 Section 3: Meteorology & Data</button>
+            <button onclick="startQuiz('inventions')">💡 Section 4: Cool Inventions</button>
+
+            <div class="scoreboard">
+                <h3>🏆 Your Scores 🏆</h3>
+                <p>Weather Words: <span id="score-vocab">Not taken yet</span></p>
+                <p>Extreme Weather: <span id="score-extreme">Not taken yet</span></p>
+                <p>Meteorology & Data: <span id="score-meteorology">Not taken yet</span></p>
+                <p>Cool Inventions: <span id="score-inventions">Not taken yet</span></p>
+            </div>
+        </div>
+
+        <div id="quiz-section" class="hidden">
+            <h2 id="quiz-title">Quiz</h2>
+            <p>Question <span id="q-current">1</span> of <span id="q-total">5</span></p>
+            
+            <div class="question-text" id="question-text">Question goes here?</div>
+            
+            <div class="options" id="options-container">
+                </div>
+
+            <div class="feedback" id="feedback-text"></div>
+
+            <div class="nav-buttons">
+                <button class="action-btn" onclick="returnToMenu()">🏠 Main Menu</button>
+                <button class="action-btn hidden" id="next-btn" onclick="nextQuestion()">Next ➡️</button>
+            </div>
+        </div>
+
+        <div id="results-section" class="hidden">
+            <h2>Great Job! 🎉</h2>
+            <p>You finished the section!</p>
+            <div class="score-display">
+                <span id="final-score">0</span> / <span id="total-score">0</span>
+            </div>
+            
+            <div class="nav-buttons" style="justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button class="action-btn" id="review-btn" onclick="startReview()" style="background-color: var(--primary); color: white;">🔄 Review Missed</button>
+                <button class="action-btn" onclick="returnToMenu()">🏠 Main Menu</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- QUIZ DATA ---
+        const quizData = {
+            vocab: [
+                { q: "What is the layer of air that surrounds Earth called?", options: ["Atmosphere", "Water Vapor", "Climate", "Front"], answer: 0 },
+                { q: "What does it mean to 'evaporate'?", options: ["To change from gas to liquid", "To fall from the sky as rain", "To change from liquid to gas", "To measure wind speed"], answer: 2 },
+                { q: "What do we call the weather patterns in a place over a long period of time?", options: ["Seasonal", "Climate", "Air Mass", "Humidity"], answer: 1 },
+                { q: "What is 'precipitation'?", options: ["The weight of air pressing down", "A dangerous condition", "Water that falls from the sky", "A large body of air"], answer: 2 },
+                { q: "The place where two air masses meet is called a...", options: ["Drought", "Hazard", "Data", "Front"], answer: 3 },
+                { q: "What is a 'drought'?", options: ["A long period of very dry weather", "A storm with lots of snow", "A scientific prediction", "A rotating column of air"], answer: 0 }
+            ],
+            extreme: [
+                { q: "Which storm is a rotating column of air that moves along the ground?", options: ["Hurricane", "Thunderstorm", "Tornado", "Blizzard"], answer: 2 },
+                { q: "Where do hurricanes form and gather strength?", options: ["Over mountains", "Over the ocean", "Over the desert", "Over cold lakes"], answer: 1 },
+                { q: "What is a blizzard?", options: ["A rainstorm with heavy lightning", "A very windy winter storm with lots of snow", "A storm with winds up to 300 miles per hour", "A long period with no rain"], answer: 1 },
+                { q: "Which of the following is NOT a form of precipitation?", options: ["Rain", "Snow", "Sleet", "Wind"], answer: 3 },
+                { q: "What is the greatest hazard from a tornado?", options: ["Large waves", "Destructive winds", "Heavy snow", "Drought"], answer: 1 }
+            ],
+            meteorology: [
+                { q: "What is a meteorologist?", options: ["A scientist who studies rocks", "A scientist who studies space", "A scientist who studies weather conditions and patterns", "An engineer who builds bridges"], answer: 2 },
+                { q: "Which of these are ways meteorologists organize their data?", options: ["Tables, Graphs, and Maps", "Boxes, Bags, and Folders", "Jars, Cups, and Bowls", "They do not organize data"], answer: 0 },
+                { q: "What does it mean to make a 'prediction'?", options: ["To say what happened in the past", "To say what is likely to happen", "To measure the amount of water vapor", "To build a new invention"], answer: 1 },
+                { q: "What does 'data' mean in science?", options: ["Information that is observed, measured, and recorded", "A type of extreme weather", "A tool used to measure rain", "The gas form of water"], answer: 0 }
+            ],
+            inventions: [
+                { q: "What does a barometer measure?", options: ["Wind speed", "Rainfall", "Air pressure", "Temperature"], answer: 2 },
+                { q: "Who invented the lightning rod?", options: ["Joanne Simpson", "Benjamin Franklin", "Mary Anderson", "Evangelista Torricelli"], answer: 1 },
+                { q: "What is the purpose of the Fujita-Pearson Scale?", options: ["To measure rainfall from space", "To classify the strength of a tornado based on damage", "To keep windshields clear of rain", "To redirect lightning to the ground"], answer: 1 },
+                { q: "What did Mary Anderson invent?", options: ["Windshield Wipers", "Cloud Models", "The Barometer", "Radar"], answer: 0 },
+                { q: "Joanne Simpson helped develop the first radar that could measure rainfall in the tropics from where?", options: ["Under the ocean", "Underground", "From space", "On top of mountains"], answer: 2 }
+            ]
+        };
+
+        const sectionTitles = {
+            vocab: "📖 Weather Words",
+            extreme: "⚡ Extreme Weather & Precipitation",
+            meteorology: "👨‍🔬 Meteorology & Data",
+            inventions: "💡 Cool Inventions"
+        };
+
+        // --- APP STATE ---
+        let currentSection = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let activeQuestions = [];
+        let missedQuestions = [];
+        let isReviewMode = false;
+        let answered = false;
+
+        // --- HTML ELEMENTS ---
+        const mainMenu = document.getElementById('main-menu');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsSection = document.getElementById('results-section');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextBtn = document.getElementById('next-btn');
+        const reviewBtn = document.getElementById('review-btn');
+
+        // --- FUNCTIONS ---
+        function startQuiz(sectionKey) {
+            currentSection = sectionKey;
+            activeQuestions = [...quizData[sectionKey]];
+            missedQuestions = [];
+            isReviewMode = false;
+            resetQuizState();
+            
+            document.getElementById('quiz-title').innerText = sectionTitles[sectionKey];
+            
+            mainMenu.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function startReview() {
+            activeQuestions = [...missedQuestions];
+            missedQuestions = []; // Reset missed questions for the review round
+            isReviewMode = true;
+            resetQuizState();
+
+            document.getElementById('quiz-title').innerText = "🔄 Review Mode";
+            
+            resultsSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function resetQuizState() {
+            currentQuestionIndex = 0;
+            score = 0;
+        }
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.classList.add('hidden');
+            feedbackText.innerText = '';
+            
+            document.getElementById('q-current').innerText = currentQuestionIndex + 1;
+            document.getElementById('q-total').innerText = activeQuestions.length;
+
+            const currentQ = activeQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = currentQ.q;
+
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            if (answered) return;
+            answered = true;
+
+            const currentQ = activeQuestions[currentQuestionIndex];
+            const buttons = optionsContainer.children;
+
+            if (selectedIndex === currentQ.answer) {
+                btnElement.classList.add('correct');
+                feedbackText.innerText = "🌟 Correct! Great job!";
+                feedbackText.style.color = "var(--correct)";
+                score++;
+            } else {
+                btnElement.classList.add('wrong');
+                buttons[currentQ.answer].classList.add('correct');
+                feedbackText.innerText = "Oops! That's not quite right.";
+                feedbackText.style.color = "var(--incorrect)";
+                
+                // Save to missed questions if not already there
+                if (!missedQuestions.includes(currentQ)) {
+                    missedQuestions.push(currentQ);
+                }
+            }
+
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('total-score').innerText = activeQuestions.length;
+
+            // Update main menu scoreboard if it's a normal run (not a review run)
+            if (!isReviewMode) {
+                const percentage = Math.round((score / activeQuestions.length) * 100);
+                document.getElementById(`score-${currentSection}`).innerText = `${score}/${activeQuestions.length} (${percentage}%)`;
+            }
+
+            // Show/Hide review button based on whether there are missed questions
+            if (missedQuestions.length > 0) {
+                reviewBtn.classList.remove('hidden');
+            } else {
+                reviewBtn.classList.add('hidden');
+            }
+        }
+
+        function returnToMenu() {
+            quizSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            mainMenu.classList.remove('hidden');
+        }
+
+    </script>
+</body>
+</html>
