@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saxon Math 4 - Practice Set 6</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        .question-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #3498db; }
+        .question-text { font-weight: bold; font-size: 1.1em; margin-bottom: 10px; }
+        .btn { background-color: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.9em; transition: background 0.3s; }
+        .btn:hover { background-color: #2980b9; }
+        .answer-area { display: none; margin-top: 15px; padding: 15px; background-color: #ecf0f1; border-radius: 4px; border: 1px dashed #bdc3c7; }
+        .final-ans { color: #c0392b; font-weight: bold; }
+        canvas { background: white; border: 1px solid #ccc; display: block; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<h1>Practice Set 6 - 20 Questions</h1>
+
+<div class="question-card">
+    <div class="question-text">1. Ninety-six hours is how many days?</div>
+    <button class="btn" onclick="toggleAns(1)">Review Answer</button>
+    <div id="ans1" class="answer-area">
+        <p>There are 24 hours in 1 day.</p>
+        <p>$$96 \div 24 = 4$$</p>
+        <p class="final-ans">Answer: 4 days</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">2. List the factors of 20.</div>
+    <button class="btn" onclick="toggleAns(2)">Review Answer</button>
+    <div id="ans2" class="answer-area">
+        <p>Factors are numbers that divide into 20 evenly:</p>
+        <ul>
+            <li>\(1 \times 20 = 20\)</li>
+            <li>\(2 \times 10 = 20\)</li>
+            <li>\(4 \times 5 = 20\)</li>
+        </ul>
+        <p class="final-ans">Answer: 1, 2, 4, 5, 10, 20</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">3. Fifty-six chairs were placed equally into 7 rows. How many chairs were in each row?</div>
+    <button class="btn" onclick="toggleAns(3)">Review Answer</button>
+    <div id="ans3" class="answer-area">
+        <p>Divide the total number of chairs by the number of rows:</p>
+        <p>$$56 \div 7 = 8$$</p>
+        <p class="final-ans">Answer: 8 chairs</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">4. Draw a rectangle and shade \(\frac{1}{4}\) of it.</div>
+    <button class="btn" onclick="toggleAns(4)">Review Answer</button>
+    <div id="ans4" class="answer-area">
+        <p>Divide the rectangle into four equal sections and shade one of them.</p>
+        <canvas id="canvas4" width="160" height="40"></canvas>
+        <p class="final-ans">Answer: Shade one of four equal sections.</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">5. Five hundred years equals how many centuries?</div>
+    <button class="btn" onclick="toggleAns(5)">Review Answer</button>
+    <div id="ans5" class="answer-area">
+        <p>1 century = 100 years.</p>
+        <p>$$500 \div 100 = 5$$</p>
+        <p class="final-ans">Answer: 5 centuries</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">6. Find the sixth multiple of 7. Then subtract 10. What is the answer?</div>
+    <button class="btn" onclick="toggleAns(6)">Review Answer</button>
+    <div id="ans6" class="answer-area">
+        <p>Step 1 (6th multiple of 7): \(6 \times 7 = 42\)</p>
+        <p>Step 2 (Subtract 10): \(42 - 10 = 32\)</p>
+        <p class="final-ans">Answer: 32</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">7. Compare: \(75\% \bigcirc \frac{1}{2}\)</div>
+    <button class="btn" onclick="toggleAns(7)">Review Answer</button>
+    <div id="ans7" class="answer-area">
+        <p>75% is equal to \(\frac{3}{4}\).</p>
+        <p>\(\frac{3}{4}\) is greater than \(\frac{1}{2}\).</p>
+        <p class="final-ans">Answer: ></p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">8. Segment AB is 8 cm long. Segment BC is 4 cm long. If B is between A and C, how long is segment AC?</div>
+    <button class="btn" onclick="toggleAns(8)">Review Answer</button>
+    <div id="ans8" class="answer-area">
+        <p>The total length AC is the sum of AB and BC.</p>
+        <p>\(AB + BC = AC\)</p>
+        <p>\(8\text{ cm} + 4\text{ cm} = 12\text{ cm}\)</p>
+        <p class="final-ans">Answer: 12 cm</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">9. What is the perimeter of a square with a side length of 9 mm?</div>
+    <button class="btn" onclick="toggleAns(9)">Review Answer</button>
+    <div id="ans9" class="answer-area">
+        <p>A square has 4 equal sides. Perimeter = \(4 \times \text{side}\).</p>
+        <p>\(P = 4 \times 9\)</p>
+        <p>\(P = 36\)</p>
+        <p class="final-ans">Answer: 36 mm</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">10. Round 4,812 to the nearest thousand.</div>
+    <button class="btn" onclick="toggleAns(10)">Review Answer</button>
+    <div id="ans10" class="answer-area">
+        <p>The thousands digit is 4. Look at the hundreds digit (8). Since 8 is 5 or greater, we round up.</p>
+        <p class="final-ans">Answer: 5,000</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">11. $30.00 - $18.25</div>
+    <button class="btn" onclick="toggleAns(11)">Review Answer</button>
+    <div id="ans11" class="answer-area">
+        <p>Align the decimals and subtract:</p>
+        <p>$$30.00 - 18.25 = 11.75$$</p>
+        <p class="final-ans">Answer: $11.75</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">12. 32,415 + 18,652</div>
+    <button class="btn" onclick="toggleAns(12)">Review Answer</button>
+    <div id="ans12" class="answer-area">
+        <p>$$32,415 + 18,652 = 51,067$$</p>
+        <p class="final-ans">Answer: 51,067</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">13. 95,000 - 42,381</div>
+    <button class="btn" onclick="toggleAns(13)">Review Answer</button>
+    <div id="ans13" class="answer-area">
+        <p>$$95,000 - 42,381 = 52,619$$</p>
+        <p class="final-ans">Answer: 52,619</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">14. 85 x 9</div>
+    <button class="btn" onclick="toggleAns(14)">Review Answer</button>
+    <div id="ans14" class="answer-area">
+        <p>\(9 \times 5 = 45\) (Carry 4)</p>
+        <p>\(9 \times 8 = 72 \rightarrow 72 + 4 = 76\)</p>
+        <p class="final-ans">Answer: 765</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">15. 6.2 + 4.15 + 15.0</div>
+    <button class="btn" onclick="toggleAns(15)">Review Answer</button>
+    <div id="ans15" class="answer-area">
+        <p>Line up decimals (add placeholder zeros if helpful):</p>
+        <p>\(6.20 + 4.15 + 15.00 = 25.35\)</p>
+        <p class="final-ans">Answer: 25.35</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">16. \(\sqrt{100} - (24 \div 6)\)</div>
+    <button class="btn" onclick="toggleAns(16)">Review Answer</button>
+    <div id="ans16" class="answer-area">
+        <p>\(\sqrt{100} = 10\)</p>
+        <p>\(24 \div 6 = 4\)</p>
+        <p>\(10 - 4 = 6\)</p>
+        <p class="final-ans">Answer: 6</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">17. \(60 \div 7\)</div>
+    <button class="btn" onclick="toggleAns(17)">Review Answer</button>
+    <div id="ans17" class="answer-area">
+        <p>\(7 \times 8 = 56\)</p>
+        <p>\(60 - 56 = 4\)</p>
+        <p class="final-ans">Answer: 8 R 4</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">18. 605 - 347</div>
+    <button class="btn" onclick="toggleAns(18)">Review Answer</button>
+    <div id="ans18" class="answer-area">
+        <p>$$605 - 347 = 258$$</p>
+        <p class="final-ans">Answer: 258</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">19. Find \(n\): \(n - 150 = 350\)</div>
+    <button class="btn" onclick="toggleAns(19)">Review Answer</button>
+    <div id="ans19" class="answer-area">
+        <p>To find the minuend, add the subtrahend and the difference:</p>
+        <p>\(n = 350 + 150\)</p>
+        <p class="final-ans">Answer: n = 500</p>
+    </div>
+</div>
+
+<div class="question-card">
+    <div class="question-text">20. Find \(z\): \(z + 640 = 1200\)</div>
+    <button class="btn" onclick="toggleAns(20)">Review Answer</button>
+    <div id="ans20" class="answer-area">
+        <p>To find the missing addend, subtract the known addend from the total:</p>
+        <p>\(z = 1200 - 640\)</p>
+        <p class="final-ans">Answer: z = 560</p>
+    </div>
+</div>
+
+<script>
+    function toggleAns(id) {
+        var x = document.getElementById("ans" + id);
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+            // Trigger drawing if this is question 4
+            if(id === 4) drawRectangleFourth(); 
+        }
+    }
+
+    function drawRectangleFourth() {
+        var c = document.getElementById("canvas4");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,160,40);
+        
+        // Draw Rectangle Outline
+        ctx.beginPath();
+        ctx.rect(0, 0, 160, 40);
+        ctx.stroke();
+        
+        // Draw Shade (1/4)
+        ctx.fillStyle = "#3498db";
+        ctx.fillRect(0, 0, 40, 40);
+        
+        // Draw dividing lines
+        ctx.beginPath();
+        ctx.moveTo(40, 0); ctx.lineTo(40, 40);
+        ctx.moveTo(80, 0); ctx.lineTo(80, 40);
+        ctx.moveTo(120, 0); ctx.lineTo(120, 40);
+        ctx.stroke();
+    }
+</script>
+
+</body>
+</html>
