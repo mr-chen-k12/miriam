@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Set Solutions</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .problem-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .question {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+        .math-block {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        canvas {
+            display: block;
+            margin: 10px 0;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 61: Problem Set Solutions</h1>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 1</div>
+        <div class="question">The diameter of Filomena's bicycle tire is 24 inches. What is the radius of the tire?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol1')">Show Answer & Explanation</button>
+        <div id="sol1" class="solution">
+            <p><strong>Answer:</strong> 12 inches</p>
+            <p><strong>Explanation:</strong> The radius of a circle is exactly half of its diameter. Therefore, we divide the diameter by 2:</p>
+            <div class="math-block">$$ \text{Radius} = \frac{\text{Diameter}}{2} = \frac{24}{2} = 12 \text{ inches} $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 2</div>
+        <div class="question">Five sparrows could crowd into each birdhouse. If there were thirty-five birdhouses, how many sparrows could crowd in?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol2')">Show Answer & Explanation</button>
+        <div id="sol2" class="solution">
+            <p><strong>Answer:</strong> 175 sparrows</p>
+            <p><strong>Explanation:</strong> Multiply the number of sparrows per birdhouse by the total number of birdhouses.</p>
+            <div class="math-block">$$ 5 \times 35 = 175 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 3</div>
+        <div class="question">
+            (a) Two nickels are what fraction of a dollar?<br>
+            (b) Two nickels are what decimal part of a dollar?
+        </div>
+        <button class="toggle-btn" onclick="toggleSolution('sol3')">Show Answer & Explanation</button>
+        <div id="sol3" class="solution">
+            <p><strong>Answer:</strong> (a) $\frac{1}{10}$ (b) $0.10$</p>
+            <p><strong>Explanation:</strong> A dollar is worth 100 cents. Two nickels are worth 10 cents ($2 \times 5 = 10$).</p>
+            <ul>
+                <li>(a) Fraction: $\frac{10}{100}$, which simplifies to $\frac{1}{10}$.</li>
+                <li>(b) Decimal: $10 \div 100 = 0.10$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 4</div>
+        <div class="question">The Gilbreth family drank 39 quarts of milk in 3 days. That averages to how many quarts of milk each day?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol4')">Show Answer & Explanation</button>
+        <div id="sol4" class="solution">
+            <p><strong>Answer:</strong> 13 quarts each day</p>
+            <p><strong>Explanation:</strong> Divide the total quarts of milk by the number of days.</p>
+            <div class="math-block">$$ \frac{39}{3} = 13 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 5</div>
+        <div class="question">Carl weighed 88 pounds. He put on his clothes, which weighed 2 pounds, and his shoes, which weighed 1 pound each. Finally he put on a jacket that weighed 3 pounds and stepped on the scale. How much did the scale show that he weighed?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol5')">Show Answer & Explanation</button>
+        <div id="sol5" class="solution">
+            <p><strong>Answer:</strong> 95 pounds</p>
+            <p><strong>Explanation:</strong> Add all the weights together. Remember he has two shoes, so $1 \times 2 = 2$ pounds for shoes.</p>
+            <div class="math-block">$$ 88 \text{ (Carl)} + 2 \text{ (clothes)} + 2 \text{ (shoes)} + 3 \text{ (jacket)} = 95 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 6</div>
+        <div class="question">What fraction of this rectangle is not shaded? (A 2x5 grid is shown)</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol6')">Show Answer & Explanation</button>
+        <div id="sol6" class="solution">
+            <p><strong>Answer:</strong> $\frac{10}{10}$ or $1$</p>
+            <p class="note">Note: In the provided image, none of the squares appear to be shaded. There are 10 squares in total.</p>
+            <p><strong>Explanation:</strong> If 0 out of 10 squares are shaded, then all 10 squares are unshaded.</p>
+            <div class="math-block">$$ \frac{10 \text{ unshaded}}{10 \text{ total}} = 1 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 7</div>
+        <div class="question">Which of these numbers is a multiple of 10? <br> A. 2 &nbsp;&nbsp; B. 5 &nbsp;&nbsp; C. 25 &nbsp;&nbsp; D. 50</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol7')">Show Answer & Explanation</button>
+        <div id="sol7" class="solution">
+            <p><strong>Answer:</strong> D. 50</p>
+            <p><strong>Explanation:</strong> A multiple of 10 must end in a zero. $10 \times 5 = 50$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 8</div>
+        <div class="question">The pumpkin pie was sliced into 6 equal pieces. After 1 piece was taken, what fraction of the pie was left?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol8')">Show Answer & Explanation</button>
+        <div id="sol8" class="solution">
+            <p><strong>Answer:</strong> $\frac{5}{6}$</p>
+            <p><strong>Explanation:</strong> The whole pie is $\frac{6}{6}$. Subtract the $\frac{1}{6}$ that was taken.</p>
+            <div class="math-block">$$ \frac{6}{6} - \frac{1}{6} = \frac{5}{6} $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 9</div>
+        <div class="question">Compare these fractions. Draw and shade two congruent circles to show the comparison. $\frac{2}{3} \bigcirc \frac{3}{4}$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol9'); drawQ9();">Show Answer & Explanation</button>
+        <div id="sol9" class="solution">
+            <p><strong>Answer:</strong> $\frac{2}{3} < \frac{3}{4}$</p>
+            <p><strong>Explanation:</strong> To compare exactly, find a common denominator (12). $\frac{2}{3} = \frac{8}{12}$ and $\frac{3}{4} = \frac{9}{12}$. Since 8 < 9, $\frac{2}{3} < \frac{3}{4}$.</p>
+            <canvas id="q9Canvas" width="300" height="150"></canvas>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 10</div>
+        <div class="question">Estimate the sum of 5070 and 3840 by rounding each number to the nearest thousand before adding.</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol10')">Show Answer & Explanation</button>
+        <div id="sol10" class="solution">
+            <p><strong>Answer:</strong> 9000</p>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>5070 rounds to 5000 (since 0 in the hundreds place is less than 5).</li>
+                <li>3840 rounds to 4000 (since 8 in the hundreds place is 5 or greater).</li>
+            </ul>
+            <div class="math-block">$$ 5000 + 4000 = 9000 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 11</div>
+        <div class="question">If 60% of the answers were true, then were there more true answers or more false answers?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol11')">Show Answer & Explanation</button>
+        <div id="sol11" class="solution">
+            <p><strong>Answer:</strong> More true answers</p>
+            <p><strong>Explanation:</strong> The total must be 100%. If 60% are true, then $100\% - 60\% = 40\%$ are false. Since 60% > 40%, there were more true answers.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 12</div>
+        <div class="question">A rectangle is shown with sides 8 cm and 4 cm.<br>(a) What is the perimeter of this rectangle?<br>(b) What is the area of this rectangle?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol12')">Show Answer & Explanation</button>
+        <div id="sol12" class="solution">
+            <p><strong>Answer:</strong> (a) 24 cm (b) 32 cm²</p>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>(a) Perimeter = $2 \times (\text{length} + \text{width}) = 2 \times (8 + 4) = 2 \times 12 = 24 \text{ cm}$.</li>
+                <li>(b) Area = $\text{length} \times \text{width} = 8 \times 4 = 32 \text{ cm}^2$.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 13</div>
+        <div class="question">$\$62.59 + \$17.47$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol13')">Show Answer & Explanation</button>
+        <div id="sol13" class="solution">
+            <p><strong>Answer:</strong> $\$80.06$</p>
+            <p><strong>Explanation:</strong> Align the decimals and add:
+                <pre>
+  $62.59
++ $17.47
+--------
+  $80.06
+                </pre>
+            </p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 14</div>
+        <div class="question">$Z - 417 = 268$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol14')">Show Answer & Explanation</button>
+        <div id="sol14" class="solution">
+            <p><strong>Answer:</strong> $Z = 685$</p>
+            <p><strong>Explanation:</strong> Use inverse operations. To find Z, add 417 to 268.</p>
+            <div class="math-block">$$ Z = 268 + 417 = 685 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 15</div>
+        <div class="question">$1000 - (110 \times 9)$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol15')">Show Answer & Explanation</button>
+        <div id="sol15" class="solution">
+            <p><strong>Answer:</strong> 10</p>
+            <p><strong>Explanation:</strong> Solve inside the parentheses first (Order of Operations).</p>
+            <div class="math-block">$$ 110 \times 9 = 990 $$</div>
+            <div class="math-block">$$ 1000 - 990 = 10 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 16</div>
+        <div class="question">$3.675 - 1.76$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol16')">Show Answer & Explanation</button>
+        <div id="sol16" class="solution">
+            <p><strong>Answer:</strong> 1.915</p>
+            <p><strong>Explanation:</strong> Align the decimal points, add a placeholder zero to 1.76, and subtract:
+                <pre>
+  3.675
+- 1.760
+-------
+  1.915
+                </pre>
+            </p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 17</div>
+        <div class="question">$\$6.70 \times 4$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol17')">Show Answer & Explanation</button>
+        <div id="sol17" class="solution">
+            <p><strong>Answer:</strong> $\$26.80$</p>
+            <p><strong>Explanation:</strong> Multiply normally and retain the two decimal places.</p>
+            <div class="math-block">$$ 6.70 \times 4 = 26.80 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 18</div>
+        <div class="question">$703 \times 6$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol18')">Show Answer & Explanation</button>
+        <div id="sol18" class="solution">
+            <p><strong>Answer:</strong> 4218</p>
+            <p><strong>Explanation:</strong> Multiply 3 by 6 (18, carry 1), 0 by 6 plus 1 (1), 7 by 6 (42).</p>
+            <div class="math-block">$$ 703 \times 6 = 4218 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 19</div>
+        <div class="question">$\$346 \times 9$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol19')">Show Answer & Explanation</button>
+        <div id="sol19" class="solution">
+            <p><strong>Answer:</strong> $\$3114$</p>
+            <p><strong>Explanation:</strong> Multiply 346 by 9.</p>
+            <div class="math-block">$$ 346 \times 9 = 3114 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 20</div>
+        <div class="question">$39 \div 5$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol20')">Show Answer & Explanation</button>
+        <div id="sol20" class="solution">
+            <p><strong>Answer:</strong> 7 R 4 (or 7.8, or $7\frac{4}{5}$)</p>
+            <p><strong>Explanation:</strong> 5 goes into 39 seven times ($5 \times 7 = 35$). The remainder is $39 - 35 = 4$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 21</div>
+        <div class="question">$39 \div 7$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol21')">Show Answer & Explanation</button>
+        <div id="sol21" class="solution">
+            <p><strong>Answer:</strong> 5 R 4 (or $5\frac{4}{7}$)</p>
+            <p><strong>Explanation:</strong> 7 goes into 39 five times ($7 \times 5 = 35$). The remainder is $39 - 35 = 4$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 22</div>
+        <div class="question">$39 \div 4$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol22')">Show Answer & Explanation</button>
+        <div id="sol22" class="solution">
+            <p><strong>Answer:</strong> 9 R 3 (or 9.75, or $9\frac{3}{4}$)</p>
+            <p><strong>Explanation:</strong> 4 goes into 39 nine times ($4 \times 9 = 36$). The remainder is $39 - 36 = 3$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 23</div>
+        <div class="question">$16 \div 3$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol23')">Show Answer & Explanation</button>
+        <div id="sol23" class="solution">
+            <p><strong>Answer:</strong> 5 R 1 (or $5\frac{1}{3}$)</p>
+            <p><strong>Explanation:</strong> 3 goes into 16 five times ($3 \times 5 = 15$). The remainder is $16 - 15 = 1$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 24</div>
+        <div class="question">$26 \div 6$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol24')">Show Answer & Explanation</button>
+        <div id="sol24" class="solution">
+            <p><strong>Answer:</strong> 4 R 2 (or $4\frac{1}{3}$)</p>
+            <p><strong>Explanation:</strong> 6 goes into 26 four times ($6 \times 4 = 24$). The remainder is $26 - 24 = 2$.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 25</div>
+        <div class="question">$36 \div \sqrt{36}$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol25')">Show Answer & Explanation</button>
+        <div id="sol25" class="solution">
+            <p><strong>Answer:</strong> 6</p>
+            <p><strong>Explanation:</strong> First, evaluate the square root: $\sqrt{36} = 6$. Then divide:</p>
+            <div class="math-block">$$ 36 \div 6 = 6 $$</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 26</div>
+        <div class="question">Point A represents what number on this number line? (Point A is 3 tick marks to the left of 0, with -5 being 5 tick marks to the left).</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol26'); drawQ26();">Show Answer & Explanation</button>
+        <div id="sol26" class="solution">
+            <p><strong>Answer:</strong> -3</p>
+            <p><strong>Explanation:</strong> There are 5 intervals between 0 and -5, so each tick mark represents 1 unit. Moving 3 units to the left of 0 gives us -3.</p>
+            <canvas id="q26Canvas" width="400" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 27</div>
+        <div class="question">Compare: $-5 \bigcirc -3$</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol27')">Show Answer & Explanation</button>
+        <div id="sol27" class="solution">
+            <p><strong>Answer:</strong> $-5 < -3$</p>
+            <p><strong>Explanation:</strong> On a number line, numbers further to the left are smaller. Because -5 is to the left of -3, -5 is less than -3.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-number">Problem 28</div>
+        <div class="question">A 10x10 square grid is shown.<br>(a) What fraction of the large square is not shaded?<br>(b) What percent of the large square is not shaded?<br>(c) The unshaded part of the large square represents what decimal number?</div>
+        <button class="toggle-btn" onclick="toggleSolution('sol28')">Show Answer & Explanation</button>
+        <div id="sol28" class="solution">
+            <p><strong>Answer:</strong> (a) $\frac{100}{100}$ (or 1) (b) 100% (c) 1.0</p>
+            <p class="note">Note: In the provided image, none of the squares in the 100-square grid appear to be shaded. The answers below assume an entirely unshaded grid.</p>
+            <p><strong>Explanation:</strong> Since all 100 small squares out of 100 are unshaded:</p>
+            <ul>
+                <li>(a) Fraction: $\frac{100}{100} = 1$</li>
+                <li>(b) Percent: 100 out of 100 is 100%</li>
+                <li>(c) Decimal: $100 \div 100 = 1.0$</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var el = document.getElementById(id);
+            if (el.style.display === "none" || el.style.display === "") {
+                el.style.display = "block";
+            } else {
+                el.style.display = "none";
+            }
+        }
+
+        // Draw Circles for Problem 9
+        function drawQ9() {
+            const canvas = document.getElementById('q9Canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Avoid redrawing if already drawn
+            if (canvas.getAttribute('data-drawn') === 'true') return;
+            canvas.setAttribute('data-drawn', 'true');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Left Circle: 2/3
+            ctx.beginPath();
+            ctx.arc(80, 75, 50, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Shade 2/3
+            ctx.beginPath();
+            ctx.moveTo(80, 75);
+            ctx.arc(80, 75, 50, -Math.PI/2, 2 * Math.PI * (2/3) - Math.PI/2);
+            ctx.lineTo(80, 75);
+            ctx.fillStyle = '#a2d9ce';
+            ctx.fill();
+            ctx.stroke();
+            
+            // Draw division lines for 1/3s
+            for(let i=0; i<3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(80, 75);
+                ctx.lineTo(80 + 50*Math.cos(i*(2*Math.PI/3) - Math.PI/2), 75 + 50*Math.sin(i*(2*Math.PI/3) - Math.PI/2));
+                ctx.stroke();
+            }
+            ctx.fillStyle = "#333";
+            ctx.font = "16px sans-serif";
+            ctx.fillText("2/3", 70, 145);
+
+            // Right Circle: 3/4
+            ctx.beginPath();
+            ctx.arc(220, 75, 50, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Shade 3/4
+            ctx.beginPath();
+            ctx.moveTo(220, 75);
+            ctx.arc(220, 75, 50, -Math.PI/2, 2 * Math.PI * (3/4) - Math.PI/2);
+            ctx.lineTo(220, 75);
+            ctx.fillStyle = '#a2d9ce';
+            ctx.fill();
+            ctx.stroke();
+            
+            // Draw division lines for 1/4s
+            for(let i=0; i<4; i++) {
+                ctx.beginPath();
+                ctx.moveTo(220, 75);
+                ctx.lineTo(220 + 50*Math.cos(i*(2*Math.PI/4) - Math.PI/2), 75 + 50*Math.sin(i*(2*Math.PI/4) - Math.PI/2));
+                ctx.stroke();
+            }
+            ctx.fillStyle = "#333";
+            ctx.fillText("3/4", 210, 145);
+        }
+
+        // Draw Number Line for Problem 26
+        function drawQ26() {
+            const canvas = document.getElementById('q26Canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            if (canvas.getAttribute('data-drawn') === 'true') return;
+            canvas.setAttribute('data-drawn', 'true');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw main line
+            ctx.beginPath();
+            ctx.moveTo(30, 50);
+            ctx.lineTo(370, 50);
+            ctx.stroke();
+            
+            // Draw Ticks and labels
+            ctx.font = "14px sans-serif";
+            ctx.fillStyle = "#333";
+            for(let i=0; i<=10; i++) {
+                let x = 50 + i*30;
+                ctx.beginPath();
+                ctx.moveTo(x, 45);
+                ctx.lineTo(x, 55);
+                ctx.stroke();
+                
+                if(i === 0) ctx.fillText("-5", x-7, 75);
+                if(i === 5) ctx.fillText("0", x-4, 75);
+                if(i === 10) ctx.fillText("5", x-4, 75);
+                
+                // Plot Point A at -3 (index 2)
+                if(i === 2) { 
+                    ctx.fillText("A", x-5, 35);
+                    ctx.beginPath();
+                    ctx.arc(x, 50, 4, 0, 2*Math.PI);
+                    ctx.fillStyle = "#e74c3c";
+                    ctx.fill();
+                    ctx.fillStyle = "#333"; // reset
+                }
+            }
+        }
+    </script>
+</body>
+</html>
