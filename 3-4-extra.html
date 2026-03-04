@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radius and Diameter Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-top: 5px solid #3498db;
+        }
+        .question {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .option-btn {
+            background-color: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #d5dbdb;
+            border-color: #95a5a6;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .option-btn.correct {
+            background-color: #2ecc71 !important;
+            color: white;
+            border-color: #27ae60 !important;
+        }
+        .option-btn.wrong {
+            background-color: #e74c3c !important;
+            color: white;
+            border-color: #c0392b !important;
+        }
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 1.05em;
+            margin-top: 10px;
+        }
+        .feedback.success {
+            display: block;
+            background-color: #e8f8f5;
+            color: #1e8449;
+            border-left: 5px solid #2ecc71;
+        }
+        .feedback.error {
+            display: block;
+            background-color: #fdedec;
+            color: #b03a2e;
+            border-left: 5px solid #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Radius and Diameter Practice</h1>
+    <p style="text-align: center; margin-bottom: 30px;">Remember: The <strong>diameter</strong> is the full width of a circle. The <strong>radius</strong> is half of the diameter.</p>
+
+    <div id="quiz-wrapper"></div>
+
+    <script>
+        // Array containing all quiz questions, options, and explanations
+        const quizData = [
+            {
+                question: "1. A circular swimming pool has a diameter of 18 feet. What is the radius of the pool?",
+                options: ["36 feet", "18 feet", "9 feet", "4.5 feet"],
+                correctAnswer: 2, // Index of "9 feet"
+                explanation: "The radius is exactly half of the diameter. 18 ÷ 2 = 9."
+            },
+            {
+                question: "2. A pizza has a radius of 6 inches. What is the diameter of the pizza?",
+                options: ["3 inches", "12 inches", "24 inches", "36 inches"],
+                correctAnswer: 1, // Index of "12 inches"
+                explanation: "The diameter is twice the length of the radius. 6 × 2 = 12."
+            },
+            {
+                question: "3. The diameter of a wall clock is 30 centimeters. What is the radius of the clock?",
+                options: ["10 cm", "15 cm", "60 cm", "90 cm"],
+                correctAnswer: 1,
+                explanation: "To find the radius, divide the diameter by 2. 30 ÷ 2 = 15."
+            },
+            {
+                question: "4. A car's steering wheel has a radius of 7 inches. What is the diameter of the steering wheel?",
+                options: ["3.5 inches", "14 inches", "21 inches", "49 inches"],
+                correctAnswer: 1,
+                explanation: "To find the diameter, multiply the radius by 2. 7 × 2 = 14."
+            },
+            {
+                question: "5. The diameter of a standard basketball hoop is 18 inches. What is the radius of the hoop?",
+                options: ["9 inches", "18 inches", "36 inches", "72 inches"],
+                correctAnswer: 0,
+                explanation: "The radius is half of the diameter. 18 ÷ 2 = 9."
+            },
+            {
+                question: "6. A circular rug has a radius of 4 feet. What is the diameter of the rug?",
+                options: ["2 feet", "6 feet", "8 feet", "16 feet"],
+                correctAnswer: 2,
+                explanation: "The diameter is twice the length of the radius. 4 × 2 = 8."
+            },
+            {
+                question: "7. A coin has a diameter of 24 millimeters. What is the radius of the coin?",
+                options: ["6 mm", "12 mm", "48 mm", "96 mm"],
+                correctAnswer: 1,
+                explanation: "To find the radius, divide the diameter by 2. 24 ÷ 2 = 12."
+            },
+            {
+                question: "8. The circular lens of a telescope has a radius of 40 centimeters. What is the diameter of the lens?",
+                options: ["20 cm", "60 cm", "80 cm", "160 cm"],
+                correctAnswer: 2,
+                explanation: "To find the diameter, multiply the radius by 2. 40 × 2 = 80."
+            },
+            {
+                question: "9. A drumhead has a diameter of 22 inches. What is the radius of the drumhead?",
+                options: ["11 inches", "22 inches", "44 inches", "88 inches"],
+                correctAnswer: 0,
+                explanation: "The radius is exactly half of the diameter. 22 ÷ 2 = 11."
+            },
+            {
+                question: "10. A round dining table has a radius of 2.5 feet. What is the diameter of the table?",
+                options: ["1.25 feet", "3.5 feet", "5 feet", "7.5 feet"],
+                correctAnswer: 2,
+                explanation: "The diameter is twice the length of the radius. 2.5 × 2 = 5."
+            }
+        ];
+
+        const quizWrapper = document.getElementById('quiz-wrapper');
+
+        // Render the quiz
+        quizData.forEach((item, questionIndex) => {
+            const container = document.createElement('div');
+            container.className = 'quiz-container';
+            container.id = 'q-container-' + questionIndex;
+
+            // Add question text
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question';
+            questionEl.textContent = item.question;
+            container.appendChild(questionEl);
+
+            // Add options grid
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'options-grid';
+
+            item.options.forEach((optText, optIndex) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = optText;
+                
+                // Add click event
+                btn.onclick = () => checkAnswer(questionIndex, optIndex, btn);
+                optionsGrid.appendChild(btn);
+            });
+
+            container.appendChild(optionsGrid);
+
+            // Add feedback div
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = 'feedback-' + questionIndex;
+            feedbackDiv.className = 'feedback';
+            container.appendChild(feedbackDiv);
+
+            quizWrapper.appendChild(container);
+        });
+
+        // Function to handle answer checking
+        function checkAnswer(questionIndex, selectedOptionIndex, btnElement) {
+            const data = quizData[questionIndex];
+            const container = document.getElementById('q-container-' + questionIndex);
+            const feedbackDiv = document.getElementById('feedback-' + questionIndex);
+            const allButtons = container.querySelectorAll('.option-btn');
+
+            // Disable all buttons in this question to prevent multiple guesses
+            allButtons.forEach(button => button.disabled = true);
+
+            const isCorrect = (selectedOptionIndex === data.correctAnswer);
+
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+                feedbackDiv.innerHTML = `<strong>Correct!</strong> ${data.explanation}`;
+                feedbackDiv.className = 'feedback success';
+            } else {
+                btnElement.classList.add('wrong');
+                // Highlight the correct answer
+                allButtons[data.correctAnswer].classList.add('correct');
+                
+                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> ${data.explanation}`;
+                feedbackDiv.className = 'feedback error';
+            }
+        }
+    </script>
+</body>
+</html>
