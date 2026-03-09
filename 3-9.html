@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Lesson 64 Solutions</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            border-radius: 0 5px 5px 0;
+        }
+        .answer-title {
+            font-weight: bold;
+            color: #16a085;
+            margin-bottom: 5px;
+        }
+        svg {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 64 Solutions</h1>
+
+    <div class="question-card">
+        <div class="question-text">1. A square mile is twenty-seven million, eight hundred seventy-eight thousand, four hundred square feet. Use digits to write that number of square feet.</div>
+        <button class="btn" onclick="toggleAnswer(1)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-1">
+            <div class="answer-title">Answer: 27,878,400</div>
+            <p><strong>Explanation:</strong> Break down the words into their numerical groups: "twenty-seven million" is $27,000,000$. "Eight hundred seventy-eight thousand" is $878,000$. "Four hundred" is $400$. Combine them with commas separating the periods.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">2. Apollo's target was one hundred thirteen paces away. If each pace was 3 feet, how many feet away was the target?</div>
+        <button class="btn" onclick="toggleAnswer(2)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-2">
+            <div class="answer-title">Answer: 339 feet</div>
+            <p><strong>Explanation:</strong> Multiply the number of paces by the length of each pace: $113 \times 3 = 339$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">3. Tracy's baseball card album will hold five hundred cards. Tracy has three hundred eighty-four cards. How many more cards will fit in the album?</div>
+        <button class="btn" onclick="toggleAnswer(3)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-3">
+            <div class="answer-title">Answer: 116 cards</div>
+            <p><strong>Explanation:</strong> Subtract the number of cards Tracy currently has from the total capacity: $500 - 384 = 116$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">4. The trip lasted 21 days. How many weeks did the trip last?</div>
+        <button class="btn" onclick="toggleAnswer(4)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-4">
+            <div class="answer-title">Answer: 3 weeks</div>
+            <p><strong>Explanation:</strong> Since there are 7 days in a week, divide the total days by 7: $21 \div 7 = 3$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">5. A stop sign has the shape of an octagon. How many sides do seven stop signs have?</div>
+        <button class="btn" onclick="toggleAnswer(5)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-5">
+            <div class="answer-title">Answer: 56 sides</div>
+            <p><strong>Explanation:</strong> An octagon has 8 sides. Multiply the sides per sign by the number of signs: $8 \times 7 = 56$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">6. Find the length of this hairpin to the nearest quarter inch:</div>
+        <button class="btn" onclick="toggleAnswer(6)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-6">
+            <div class="answer-title">Answer: $2 \frac{1}{4}$ inches</div>
+            <p><strong>Explanation:</strong> Looking at the ruler provided in the image, the right edge of the hairpin ends exactly at the first quarter mark past the 2-inch line.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">7. Write 406,912 in expanded form. Then use words to write the number.</div>
+        <button class="btn" onclick="toggleAnswer(7)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-7">
+            <div class="answer-title">Answer:</div>
+            <p><strong>Expanded form:</strong> $400,000 + 6,000 + 900 + 10 + 2$</p>
+            <p><strong>Words:</strong> Four hundred six thousand, nine hundred twelve.</p>
+            <p><strong>Explanation:</strong> Identify the place value of each non-zero digit. 4 is in the hundred-thousands place, 6 is in the thousands, 9 is in the hundreds, 1 in the tens, and 2 in the ones.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">8. One foot equals 12 inches. If each side of a square is 1 foot long, then what is the perimeter of the square in inches?</div>
+        <button class="btn" onclick="toggleAnswer(8)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-8">
+            <div class="answer-title">Answer: 48 inches</div>
+            <p><strong>Explanation:</strong> A square has 4 equal sides. Each side is 1 foot, which is 12 inches. The perimeter is $4 \times 12 = 48$ inches.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">9. Estimate the sum of 586 and 797 by rounding the numbers to the nearest hundred before adding.</div>
+        <button class="btn" onclick="toggleAnswer(9)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-9">
+            <div class="answer-title">Answer: 1,400</div>
+            <p><strong>Explanation:</strong> 586 rounds up to 600. 797 rounds up to 800. Add the rounded numbers: $600 + 800 = 1400$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">10. Compare: $\frac{3}{6} \bigcirc \frac{1}{2}$. Draw and shade two congruent circles to show the comparison.</div>
+        <button class="btn" onclick="toggleAnswer(10)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-10">
+            <div class="answer-title">Answer: $\frac{3}{6} = \frac{1}{2}$</div>
+            <p><strong>Explanation:</strong> Both fractions represent the exact same proportion of a whole. $\frac{3}{6}$ simplifies to $\frac{1}{2}$.</p>
+            <svg width="220" height="100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="black" stroke-width="2"/>
+                <path d="M 50 10 A 40 40 0 0 1 50 90 Z" fill="#95a5a6" stroke="black" stroke-width="1"/> <line x1="50" y1="10" x2="50" y2="90" stroke="black" stroke-width="1"/>
+                <line x1="15.35" y1="30" x2="84.65" y2="70" stroke="black" stroke-width="1"/>
+                <line x1="15.35" y1="70" x2="84.65" y2="30" stroke="black" stroke-width="1"/>
+                <text x="50" y="100" font-size="12" text-anchor="middle">3/6</text>
+
+                <circle cx="160" cy="50" r="40" fill="none" stroke="black" stroke-width="2"/>
+                <path d="M 160 10 A 40 40 0 0 1 160 90 Z" fill="#95a5a6" stroke="black" stroke-width="1"/> <line x1="160" y1="10" x2="160" y2="90" stroke="black" stroke-width="1"/>
+                <text x="160" y="100" font-size="12" text-anchor="middle">1/2</text>
+            </svg>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">11. Compare: $50\% \text{ of } 100 \bigcirc \sqrt{100}$</div>
+        <button class="btn" onclick="toggleAnswer(11)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-11">
+            <div class="answer-title">Answer: $50\% \text{ of } 100 > \sqrt{100}$</div>
+            <p><strong>Explanation:</strong> Calculate the left side: $50\%$ of $100$ is $50$. Calculate the right side: the square root of $100$ is $10$. Since $50$ is greater than $10$, the symbol is $>$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">12. Some birds sat on the wire at sunup. After 47 more birds came there were 112 birds sitting on the wire. How many birds sat on the wire at sunup?</div>
+        <button class="btn" onclick="toggleAnswer(12)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-12">
+            <div class="answer-title">Answer: 65 birds</div>
+            <p><strong>Explanation:</strong> Let $x$ be the initial number of birds. The equation is $x + 47 = 112$. To find $x$, subtract 47 from 112: $112 - 47 = 65$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">13. $\$32.47 + \$67.54$</div>
+        <button class="btn" onclick="toggleAnswer(13)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-13">
+            <div class="answer-title">Answer: $100.01</div>
+            <p><strong>Explanation:</strong> Align the decimals and add: $32.47 + 67.54 = 100.01$. Don't forget the dollar sign.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">14. $51,036 - 7,648$</div>
+        <button class="btn" onclick="toggleAnswer(14)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-14">
+            <div class="answer-title">Answer: 43,388</div>
+            <p><strong>Explanation:</strong> Standard subtraction with borrowing: <br>
+                &nbsp;&nbsp; $51,036$<br>
+                $- \hphantom{0}7,648$<br>
+                $-------$<br>
+                &nbsp;&nbsp; $43,388$
+            </p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">15. $53.6 + 2.9 + 97.4 + 8.8 + 436.1$</div>
+        <button class="btn" onclick="toggleAnswer(15)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-15">
+            <div class="answer-title">Answer: 598.8</div>
+            <p><strong>Explanation:</strong> Align the decimal points and add up the columns. The tenths column adds up to $28$ (write down $8$, carry $2$). Resulting sum is $598.8$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">16. $75 \div 5$ (Written as $5\overline{)75}$)</div>
+        <button class="btn" onclick="toggleAnswer(16)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-16">
+            <div class="answer-title">Answer: 15</div>
+            <p><strong>Explanation:</strong> Using long division, 5 goes into 7 one time (with 2 left over). Bring down the 5 to make 25. 5 goes into 25 five times exactly.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">17. $84 \div 3$ (Written as $3\overline{)84}$)</div>
+        <button class="btn" onclick="toggleAnswer(17)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-17">
+            <div class="answer-title">Answer: 28</div>
+            <p><strong>Explanation:</strong> 3 goes into 8 two times ($3 \times 2 = 6$), leaving a remainder of 2. Bring down the 4 to make 24. 3 goes into 24 eight times exactly ($3 \times 8 = 24$).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">18. $92 \div 4$ (Written as $4\overline{)92}$)</div>
+        <button class="btn" onclick="toggleAnswer(18)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-18">
+            <div class="answer-title">Answer: 23</div>
+            <p><strong>Explanation:</strong> 4 goes into 9 two times ($4 \times 2 = 8$), remainder 1. Bring down the 2 to make 12. 4 goes into 12 three times ($4 \times 3 = 12$).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">19. $58 \div 6$ (Written as $6\overline{)58}$)</div>
+        <button class="btn" onclick="toggleAnswer(19)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-19">
+            <div class="answer-title">Answer: 9 R 4 (or $9 \frac{2}{3}$)</div>
+            <p><strong>Explanation:</strong> 6 goes into 58 nine times ($6 \times 9 = 54$). $58 - 54 = 4$. So the answer is 9 with a remainder of 4.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">20. $257 \times 5$</div>
+        <button class="btn" onclick="toggleAnswer(20)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-20">
+            <div class="answer-title">Answer: 1,285</div>
+            <p><strong>Explanation:</strong> $5 \times 7 = 35$ (carry 3). $5 \times 5 = 25$, plus 3 is 28 (carry 2). $5 \times 2 = 10$, plus 2 is 12.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">21. $\$7.09 \times 3$</div>
+        <button class="btn" onclick="toggleAnswer(21)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-21">
+            <div class="answer-title">Answer: $21.27</div>
+            <p><strong>Explanation:</strong> $3 \times 9 = 27$ (carry 2). $3 \times 0 = 0$, plus 2 is 2. $3 \times 7 = 21$. Maintain the decimal point for money.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">22. $\$334 \times 9$</div>
+        <button class="btn" onclick="toggleAnswer(22)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-22">
+            <div class="answer-title">Answer: $3,006</div>
+            <p><strong>Explanation:</strong> $9 \times 4 = 36$ (carry 3). $9 \times 3 = 27$, plus 3 is 30 (carry 3). $9 \times 3 = 27$, plus 3 is 30. Therefore $\$3006$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">23. $36 \div 2$ (Written as $2\overline{)36}$)</div>
+        <button class="btn" onclick="toggleAnswer(23)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-23">
+            <div class="answer-title">Answer: 18</div>
+            <p><strong>Explanation:</strong> Half of 36 is 18. Or by division: 2 goes into 3 once, remainder 1. Bring down 6 to make 16. 2 goes into 16 eight times.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">24. $4N = 36$</div>
+        <button class="btn" onclick="toggleAnswer(24)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-24">
+            <div class="answer-title">Answer: $N = 9$</div>
+            <p><strong>Explanation:</strong> Divide both sides by 4 to solve for N. $36 \div 4 = 9$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">25. $4^2 + 2^3$</div>
+        <button class="btn" onclick="toggleAnswer(25)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-25">
+            <div class="answer-title">Answer: 24</div>
+            <p><strong>Explanation:</strong> Evaluate the exponents first. $4^2 = 4 \times 4 = 16$. $2^3 = 2 \times 2 \times 2 = 8$. Add them together: $16 + 8 = 24$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">26. $3.5 - (2.4 - 1.3)$</div>
+        <button class="btn" onclick="toggleAnswer(26)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-26">
+            <div class="answer-title">Answer: 2.4</div>
+            <p><strong>Explanation:</strong> According to the order of operations, solve parentheses first. $2.4 - 1.3 = 1.1$. Then subtract that from the outside number: $3.5 - 1.1 = 2.4$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">27. Segments $AB$ and $BC$ are each $1 \frac{1}{2}$ in. long. How long is segment $AC$?</div>
+        
+        <svg width="300" height="40">
+            <line x1="20" y1="20" x2="280" y2="20" stroke="black" stroke-width="2"/>
+            <circle cx="20" cy="20" r="4" fill="black"/>
+            <text x="20" y="10" font-size="14" text-anchor="middle">A</text>
+            <circle cx="150" cy="20" r="4" fill="black"/>
+            <text x="150" y="10" font-size="14" text-anchor="middle">B</text>
+            <circle cx="280" cy="20" r="4" fill="black"/>
+            <text x="280" y="10" font-size="14" text-anchor="middle">C</text>
+        </svg>
+
+        <button class="btn" onclick="toggleAnswer(27)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-27">
+            <div class="answer-title">Answer: 3 inches</div>
+            <p><strong>Explanation:</strong> Segment $AC$ is the sum of $AB$ and $BC$. Add $1 \frac{1}{2} + 1 \frac{1}{2}$. <br>
+                First add the whole numbers: $1 + 1 = 2$.<br>
+                Next add the fractions: $\frac{1}{2} + \frac{1}{2} = 1$.<br>
+                Total: $2 + 1 = 3$ inches.
+            </p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">28. Three fourths of the game was over. What fraction of the game remained?</div>
+        <button class="btn" onclick="toggleAnswer(28)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-28">
+            <div class="answer-title">Answer: $\frac{1}{4}$</div>
+            <p><strong>Explanation:</strong> A whole game is represented by $1$, or $\frac{4}{4}$. Subtract the portion that is over: $\frac{4}{4} - \frac{3}{4} = \frac{1}{4}$.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">
+            29. <br>
+            (a) What fraction of the large square is shaded?<br>
+            (b) What percent of the large square is not shaded?<br>
+            (c) What decimal number is represented by the shaded part of the square?
+        </div>
+        
+        <svg width="150" height="150">
+            <rect x="0" y="0" width="75" height="150" fill="#7f8c8d"/>
+            <rect x="75" y="0" width="75" height="150" fill="white"/>
+            
+            <g stroke="#2c3e50" stroke-width="1.5">
+                <rect x="0" y="0" width="150" height="150" fill="none" stroke-width="3"/>
+                <line x1="0" y1="15" x2="150" y2="15"/>
+                <line x1="0" y1="30" x2="150" y2="30"/>
+                <line x1="0" y1="45" x2="150" y2="45"/>
+                <line x1="0" y1="60" x2="150" y2="60"/>
+                <line x1="0" y1="75" x2="150" y2="75"/>
+                <line x1="0" y1="90" x2="150" y2="90"/>
+                <line x1="0" y1="105" x2="150" y2="105"/>
+                <line x1="0" y1="120" x2="150" y2="120"/>
+                <line x1="0" y1="135" x2="150" y2="135"/>
+                <line x1="15" y1="0" x2="15" y2="150"/>
+                <line x1="30" y1="0" x2="30" y2="150"/>
+                <line x1="45" y1="0" x2="45" y2="150"/>
+                <line x1="60" y1="0" x2="60" y2="150"/>
+                <line x1="75" y1="0" x2="75" y2="150"/>
+                <line x1="90" y1="0" x2="90" y2="150"/>
+                <line x1="105" y1="0" x2="105" y2="150"/>
+                <line x1="120" y1="0" x2="120" y2="150"/>
+                <line x1="135" y1="0" x2="135" y2="150"/>
+            </g>
+        </svg>
+
+        <button class="btn" onclick="toggleAnswer(29)">Show Answer & Explanation</button>
+        <div class="answer-box" id="ans-29">
+            <div class="answer-title">Answer:</div>
+            <p><strong>(a)</strong> $\frac{1}{2}$ (or $\frac{50}{100}$)</p>
+            <p><strong>(b)</strong> $50\%$</p>
+            <p><strong>(c)</strong> $0.5$ (or $0.50$)</p>
+            <p><strong>Explanation:</strong> The grid is a $10 \times 10$ square, totaling $100$ small squares. Exactly half of the columns (5 out of 10) are shaded, meaning $50$ out of $100$ are shaded. $\frac{50}{100}$ reduces to $\frac{1}{2}$. The remaining unshaded squares are the other 50, so $50\%$. The decimal equivalent for $\frac{50}{100}$ is $0.50$.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var answerBox = document.getElementById('ans-' + id);
+            if (answerBox.style.display === "block") {
+                answerBox.style.display = "none";
+            } else {
+                answerBox.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
