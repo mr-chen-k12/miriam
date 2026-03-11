@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Test 12B Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .answer-highlight {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.2em;
+        }
+        canvas {
+            display: block;
+            margin: 10px 0;
+            background: #fff;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cumulative Test 12B Solutions</h1>
+
+    <div class="question-card">
+        <div class="question-text">1. One thousand, two hundred eighty-two is how much greater than two hundred nineteen?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q1')">Review Answer & Explanation</button>
+        <div id="q1" class="explanation">
+            <p><strong>Explanation:</strong> To find how much greater one number is than another, subtract the smaller number from the larger number.</p>
+            <p>\(1282 - 219 = 1063\)</p>
+            <p class="answer-highlight">Answer: 1063</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">2. How many people could ride in thirty-five carts if seven people could ride in each cart?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q2')">Review Answer & Explanation</button>
+        <div id="q2" class="explanation">
+            <p><strong>Explanation:</strong> Multiply the number of carts by the number of people per cart.</p>
+            <p>\(35 \times 7 = 245\)</p>
+            <p class="answer-highlight">Answer: 245 people</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">3. Dora rode her bike 5 miles to her grandmother's house. The ride took 30 minutes. On average, how many minutes did it take Dora to ride each mile?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q3')">Review Answer & Explanation</button>
+        <div id="q3" class="explanation">
+            <p><strong>Explanation:</strong> Divide the total time by the total distance to find minutes per mile.</p>
+            <p>\(30 \text{ minutes} \div 5 \text{ miles} = 6 \text{ minutes/mile}\)</p>
+            <p class="answer-highlight">Answer: 6 minutes</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">4. The Gilbreth family drank 48 quarts of milk in 6 days. On average, how many quarts of milk did the Gilbreths drink each day?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q4')">Review Answer & Explanation</button>
+        <div id="q4" class="explanation">
+            <p><strong>Explanation:</strong> Divide the total quarts by the total number of days.</p>
+            <p>\(48 \div 6 = 8\)</p>
+            <p class="answer-highlight">Answer: 8 quarts</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">5. Andreas drove for 8 hours at an average speed of 45 miles per hour. How far did Andreas drive?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q5')">Review Answer & Explanation</button>
+        <div id="q5" class="explanation">
+            <p><strong>Explanation:</strong> Multiply the speed by the time to get the distance.</p>
+            <p>\(45 \text{ mph} \times 8 \text{ hours} = 360 \text{ miles}\)</p>
+            <p class="answer-highlight">Answer: 360 miles</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">6. What fraction of this rectangle is shaded?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q6')">Review Answer & Explanation</button>
+        <div id="q6" class="explanation">
+            <p><strong>Explanation:</strong> Count the shaded squares and divide by the total number of squares. There are 5 shaded squares out of 12 total squares.</p>
+            <p>\(\frac{5}{12}\)</p>
+            <p class="answer-highlight">Answer: 5/12</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">7. Ten decades is the same as how many centuries?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q7')">Review Answer & Explanation</button>
+        <div id="q7" class="explanation">
+            <p><strong>Explanation:</strong> One decade is 10 years, so 10 decades is \(10 \times 10 = 100\) years. One century is 100 years.</p>
+            <p class="answer-highlight">Answer: 1 century</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">8. Compare these fractions. Draw and shade two congruent circles to show the comparison: \(\frac{2}{3} \bigcirc \frac{1}{2}\)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q8')">Review Answer & Explanation</button>
+        <div id="q8" class="explanation">
+            <p><strong>Explanation:</strong> \(\frac{2}{3}\) (approx. 0.66) is greater than \(\frac{1}{2}\) (0.5).</p>
+            <canvas id="canvasQ8" width="300" height="150"></canvas>
+            <p class="answer-highlight">Answer: \(\frac{2}{3} > \frac{1}{2}\)</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">9. Estimate the sum of 608 and 237 by rounding each number to the nearest hundred before adding.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q9')">Review Answer & Explanation</button>
+        <div id="q9" class="explanation">
+            <p><strong>Explanation:</strong> Round 608 down to 600. Round 237 down to 200. Add the rounded numbers.</p>
+            <p>\(600 + 200 = 800\)</p>
+            <p class="answer-highlight">Answer: 800</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">10. Which segment in this circle is a diameter?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q10')">Review Answer & Explanation</button>
+        <div id="q10" class="explanation">
+            <p><strong>Explanation:</strong> A diameter is a straight line segment that passes through the center of the circle and whose endpoints lie on the circle. In the image, segment WY passes through the center M.</p>
+            <p class="answer-highlight">Answer: Segment WY (or YW)</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">11. Find the seventh multiple of seven. Then subtract 19. What is the answer?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q11')">Review Answer & Explanation</button>
+        <div id="q11" class="explanation">
+            <p><strong>Explanation:</strong> The seventh multiple of seven is \(7 \times 7 = 49\). Subtracting 19 gives \(49 - 19 = 30\).</p>
+            <p class="answer-highlight">Answer: 30</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">12. $\( \$71.43 + \$16.77 \)$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q12')">Review Answer & Explanation</button>
+        <div id="q12" class="explanation">
+            <p><strong>Explanation:</strong> Line up the decimals and add: <br>
+                \(\hphantom{+}71.43\)<br>
+                \(\underline{+16.77}\)<br>
+                \(\hphantom{+}88.20\)
+            </p>
+            <p><em>(Note: The student's answer of $98.20 on the paper is incorrect due to an addition error.)</em></p>
+            <p class="answer-highlight">Answer: $88.20</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">13. \( 56,369 - 48,281 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q13')">Review Answer & Explanation</button>
+        <div id="q13" class="explanation">
+            <p><strong>Explanation:</strong> Subtract column by column, borrowing when necessary.<br>
+                \(\hphantom{-}56,369\)<br>
+                \(\underline{-48,281}\)<br>
+                \(\hphantom{-0}8,088\)
+            </p>
+            <p><em>(Note: The student's answer of 8,188 on the paper is incorrect due to a subtraction error in the hundreds column.)</em></p>
+            <p class="answer-highlight">Answer: 8,088</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">14. \( 6.48 - (1.6 + 2.44) \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q14')">Review Answer & Explanation</button>
+        <div id="q14" class="explanation">
+            <p><strong>Explanation:</strong> Follow order of operations (PEMDAS) and calculate the parentheses first.<br>
+            \(1.6 + 2.44 = 4.04\)<br>
+            Then subtract from 6.48:<br>
+            \(6.48 - 4.04 = 2.44\)
+            </p>
+            <p class="answer-highlight">Answer: 2.44</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">15. \( 1000 - (12 \times 8) \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q15')">Review Answer & Explanation</button>
+        <div id="q15" class="explanation">
+            <p><strong>Explanation:</strong> Calculate the parentheses first: \(12 \times 8 = 96\).<br>
+            Then subtract: \(1000 - 96 = 904\).</p>
+            <p class="answer-highlight">Answer: 904</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">16. \( 760 \times 5 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q16')">Review Answer & Explanation</button>
+        <div id="q16" class="explanation">
+            <p><strong>Explanation:</strong> \(760 \times 5 = 3800\)</p>
+            <p class="answer-highlight">Answer: 3800</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">17. \( 377 \times 3 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q17')">Review Answer & Explanation</button>
+        <div id="q17" class="explanation">
+            <p><strong>Explanation:</strong> \(377 \times 3 = 1131\)</p>
+            <p class="answer-highlight">Answer: 1131</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">18. \( \sqrt{64} \div 4 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q18')">Review Answer & Explanation</button>
+        <div id="q18" class="explanation">
+            <p><strong>Explanation:</strong> First find the square root of 64, which is 8. Then divide by 4.<br>
+            \(8 \div 4 = 2\)</p>
+            <p class="answer-highlight">Answer: 2</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">19. \( 59 \div 6 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q19')">Review Answer & Explanation</button>
+        <div id="q19" class="explanation">
+            <p><strong>Explanation:</strong> Divide 59 by 6. \(6 \times 9 = 54\).<br>
+            Subtract 54 from 59 to find the remainder: \(59 - 54 = 5\).<br>
+            The answer is 9 with a remainder of 5, or \(9 \frac{5}{6}\).</p>
+            <p class="answer-highlight">Answer: 9 R 5</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">20. Find the missing factor: \( 9r = 63 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q20')">Review Answer & Explanation</button>
+        <div id="q20" class="explanation">
+            <p><strong>Explanation:</strong> To find the missing factor \(r\), divide both sides by 9.<br>
+            \(r = 63 \div 9\)<br>
+            \(r = 7\)</p>
+            <p class="answer-highlight">Answer: r = 7</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle explanation visibility
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                // If question 8 is clicked, draw the canvas
+                if(id === 'q8') {
+                    drawFractions();
+                }
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        // Function to draw the fraction circles for Question 8
+        function drawFractions() {
+            var canvas = document.getElementById('canvasQ8');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                
+                // Draw 2/3 circle
+                ctx.beginPath();
+                ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(75,75);
+                ctx.arc(75, 75, 50, -Math.PI/2, (2/3 * 2 * Math.PI) - Math.PI/2);
+                ctx.lineTo(75,75);
+                ctx.fillStyle = '#b2bec3';
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = '16px Arial';
+                ctx.fillText('2/3', 63, 145);
+
+                // Draw 1/2 circle
+                ctx.beginPath();
+                ctx.arc(225, 75, 50, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(225,75);
+                ctx.arc(225, 75, 50, -Math.PI/2, Math.PI/2);
+                ctx.lineTo(225,75);
+                ctx.fillStyle = '#b2bec3';
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#000';
+                ctx.font = '16px Arial';
+                ctx.fillText('1/2', 213, 145);
+            }
+        }
+    </script>
+</body>
+</html>
