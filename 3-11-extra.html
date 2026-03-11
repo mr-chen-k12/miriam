@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targeted Math Practice</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .option-btn {
+            background-color: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .option-btn:hover {
+            background-color: #e0e6ed;
+            border-color: #95a5a6;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .option-btn.wrong {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.05em;
+        }
+        .feedback.success {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            color: #155724;
+        }
+        .feedback.error {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Targeted Math Practice</h1>
+    <p style="text-align: center;">Click on the best answer for each question to check your work!</p>
+
+    <h2>Concept 4: Finding Averages (Division)</h2>
+    
+    <div class="question-card" id="q4_1">
+        <div class="question-text">1. The Smith family ate 35 apples in 7 days. On average, how many apples did they eat each day?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_1', false, 'To find the average per day, divide the total apples (35) by the number of days (7). 35 &divide; 7 = 5.')">4 apples</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_1', true, 'Great job! You divided the total apples (35) by the number of days (7). 35 &divide; 7 = 5.')">5 apples</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_1', false, 'To find the average per day, divide the total apples (35) by the number of days (7). 35 &divide; 7 = 5.')">6 apples</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_1', false, 'To find the average per day, divide the total apples (35) by the number of days (7). 35 &divide; 7 = 5.')">28 apples</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q4_2">
+        <div class="question-text">2. A bakery sold 54 loaves of bread in 6 hours. On average, how many loaves did they sell each hour?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_2', false, 'Divide the total loaves (54) by the hours (6). 54 &divide; 6 = 9.')">8 loaves</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_2', false, 'Divide the total loaves (54) by the hours (6). 54 &divide; 6 = 9.')">48 loaves</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_2', true, 'Correct! 54 divided by 6 equals 9 loaves per hour.')">9 loaves</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_2', false, 'Divide the total loaves (54) by the hours (6). 54 &divide; 6 = 9.')">7 loaves</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q4_3">
+        <div class="question-text">3. A reading group read 72 pages in 8 days. On average, how many pages did they read per day?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_3', true, 'Spot on! 72 total pages divided by 8 days gives 9 pages per day.')">9 pages</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_3', false, 'Divide the total pages (72) by the days (8). 72 &divide; 8 = 9.')">8 pages</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_3', false, 'Divide the total pages (72) by the days (8). 72 &divide; 8 = 9.')">64 pages</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q4_3', false, 'Divide the total pages (72) by the days (8). 72 &divide; 8 = 9.')">10 pages</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Concept 5: Calculating Distance (Speed &times; Time)</h2>
+
+    <div class="question-card" id="q5_1">
+        <div class="question-text">1. Sarah drove for 6 hours at an average speed of 55 miles per hour. How far did she drive?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_1', false, 'To find distance, multiply Speed (55) &times; Time (6). 55 &times; 6 = 330.')">300 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_1', false, 'To find distance, multiply Speed (55) &times; Time (6). 55 &times; 6 = 330.')">61 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_1', true, 'Excellent! Distance = Speed &times; Time. 55 &times; 6 = 330 miles.')">330 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_1', false, 'To find distance, multiply Speed (55) &times; Time (6). 55 &times; 6 = 330.')">350 miles</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q5_2">
+        <div class="question-text">2. A train traveled for 4 hours at an average speed of 65 miles per hour. How far did the train travel?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_2', true, 'Correct! Multiply 65 by 4. 65 &times; 4 = 260 miles.')">260 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_2', false, 'Multiply the speed (65) by the time (4). 65 &times; 4 = 260.')">240 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_2', false, 'Multiply the speed (65) by the time (4). 65 &times; 4 = 260.')">69 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_2', false, 'Multiply the speed (65) by the time (4). 65 &times; 4 = 260.')">280 miles</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q5_3">
+        <div class="question-text">3. Marcus rode his bicycle for 3 hours at a speed of 12 miles per hour. How far did Marcus ride?</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_3', false, 'Multiply his speed (12 mph) by his time (3 hours). 12 &times; 3 = 36.')">15 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_3', false, 'Multiply his speed (12 mph) by his time (3 hours). 12 &times; 3 = 36.')">24 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_3', false, 'Multiply his speed (12 mph) by his time (3 hours). 12 &times; 3 = 36.')">48 miles</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q5_3', true, 'Great work! 12 miles per hour &times; 3 hours = 36 total miles.')">36 miles</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Concept 12: Adding Money (Decimals)</h2>
+
+    <div class="question-card" id="q12_1">
+        <div class="question-text">1. Calculate: \(\$45.68 + \$28.45\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_1', false, 'Make sure to carry the 1s properly! 8+5=13, carry 1. 6+4+1=11, carry 1. 5+8+1=14, carry 1. 4+2+1=7. Answer is $74.13.')">$64.13</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_1', true, 'Correct! You lined up the decimals and carried the 1s correctly to get $74.13.')">$74.13</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_1', false, 'Make sure to carry the 1s properly! 8+5=13, carry 1. 6+4+1=11, carry 1. 5+8+1=14, carry 1. 4+2+1=7. Answer is $74.13.')">$73.13</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_1', false, 'Make sure to carry the 1s properly! 8+5=13, carry 1. 6+4+1=11, carry 1. 5+8+1=14, carry 1. 4+2+1=7. Answer is $74.13.')">$74.03</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q12_2">
+        <div class="question-text">2. Calculate: \(\$105.50 + \$37.75\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_2', false, 'Line up the decimals! 50 cents + 75 cents is 1 dollar and 25 cents. Carry the 1 to the dollars column. The answer is $143.25.')">$142.25</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_2', false, 'Line up the decimals! 50 cents + 75 cents is 1 dollar and 25 cents. Carry the 1 to the dollars column. The answer is $143.25.')">$133.25</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_2', true, 'Perfect! You lined up the decimals and carried correctly to get $143.25.')">$143.25</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_2', false, 'Line up the decimals! 50 cents + 75 cents is 1 dollar and 25 cents. Carry the 1 to the dollars column. The answer is $143.25.')">$143.15</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q12_3">
+        <div class="question-text">3. Calculate: \(\$82.94 + \$19.18\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_3', true, 'Correct! $82.94 + $19.18 = $102.12.')">$102.12</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_3', false, 'Don\'t forget to carry over to the hundreds place! $82.94 + $19.18 = $102.12')">$92.12</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_3', false, 'Careful with the cents: 94 + 18 = 112 (or $1.12). $82.94 + $19.18 = $102.12')">$101.12</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q12_3', false, 'Careful with the cents: 94 + 18 = 112 (or $1.12). $82.94 + $19.18 = $102.12')">$102.02</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Concept 13: Subtraction with Borrowing</h2>
+
+    <div class="question-card" id="q13_1">
+        <div class="question-text">1. Calculate: \(74,251 - 39,184\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_1', false, 'Remember to borrow! For example, in the tens column you cannot do 5-8, you must borrow from the 2. The correct answer is 35,067.')">45,133</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_1', false, 'Remember to borrow! The correct answer is 35,067.')">35,167</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_1', false, 'Remember to borrow from the 7 in the ten-thousands column. 14 - 9 = 5. The correct answer is 35,067.')">45,067</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_1', true, 'Great job! You borrowed correctly across all the columns. 74,251 - 39,184 = 35,067.')">35,067</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q13_2">
+        <div class="question-text">2. Calculate: \(81,043 - 56,275\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_2', true, 'Correct! Subtracting with multiple borrowings gives 24,768.')">24,768</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_2', false, 'Be careful when borrowing across the 0 in the hundreds place. The correct answer is 24,768.')">25,232</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_2', false, 'Be careful when borrowing across the 0 in the hundreds place. The correct answer is 24,768.')">24,868</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_2', false, 'Be careful when borrowing across the 0 in the hundreds place. The correct answer is 24,768.')">35,232</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q13_3">
+        <div class="question-text">3. Calculate: \(60,500 - 23,842\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_3', false, 'You must borrow across the zeros carefully! The correct answer is 36,658.')">43,342</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_3', false, 'You must borrow across the zeros carefully! The correct answer is 36,658.')">37,658</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_3', true, 'Excellent! Borrowing across the double zeros can be tricky, but you got 36,658.')">36,658</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q13_3', false, 'You must borrow across the zeros carefully! The correct answer is 36,658.')">36,758</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Concept 19: Division with Remainders</h2>
+
+    <div class="question-card" id="q19_1">
+        <div class="question-text">1. Calculate: \(47 \div 5\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_1', false, 'What is the closest multiple of 5 to 47? 5 &times; 9 = 45. Then subtract to find the remainder: 47 - 45 = 2. Answer is 9 R 2.')">8 R 7</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_1', true, 'Correct! 5 goes into 47 nine times (45), with 2 left over.')">9 R 2</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_1', false, 'What is the closest multiple of 5 to 47? 5 &times; 9 = 45. Then subtract to find the remainder: 47 - 45 = 2. Answer is 9 R 2.')">9</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_1', false, 'What is the closest multiple of 5 to 47? 5 &times; 9 = 45. Then subtract to find the remainder: 47 - 45 = 2. Answer is 9 R 2.')">9 R 3</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q19_2">
+        <div class="question-text">2. Calculate: \(83 \div 9\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_2', false, '9 &times; 9 = 81. Subtract 81 from 83 to get the remainder. Answer is 9 R 2.')">8 R 11</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_2', false, '9 &times; 9 = 81. Subtract 81 from 83 to get the remainder. Answer is 9 R 2.')">9 R 1</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_2', false, '9 &times; 9 = 81. Subtract 81 from 83 to get the remainder. Answer is 9 R 2.')">9 R 3</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_2', true, 'Spot on! 9 times 9 is 81. 83 minus 81 leaves a remainder of 2.')">9 R 2</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q19_3">
+        <div class="question-text">3. Calculate: \(34 \div 4\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_3', true, 'Great job! 4 times 8 is 32. 34 minus 32 gives a remainder of 2.')">8 R 2</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_3', false, '4 &times; 8 = 32. 34 - 32 = 2. The answer is 8 R 2.')">7 R 6</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_3', false, '4 &times; 8 = 32. 34 - 32 = 2. The answer is 8 R 2.')">8 R 1</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q19_3', false, '4 &times; 8 = 32. 34 - 32 = 2. The answer is 8 R 2.')">9 R 2</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <h2>Concept 20: Finding the Missing Factor</h2>
+
+    <div class="question-card" id="q20_1">
+        <div class="question-text">1. Find the missing factor: \(8m = 56\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_1', false, 'To find the missing factor, divide both sides by 8. 56 &divide; 8 = 7.')">m = 6</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_1', false, 'To find the missing factor, divide both sides by 8. 56 &divide; 8 = 7.')">m = 8</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_1', true, 'Correct! To isolate m, you divide 56 by 8, which is 7.')">m = 7</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_1', false, 'To find the missing factor, divide both sides by 8. 56 &divide; 8 = 7.')">m = 9</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q20_2">
+        <div class="question-text">2. Find the missing factor: \(12k = 144\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_2', true, 'Excellent! 144 divided by 12 gives a factor of 12.')">k = 12</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_2', false, 'Divide 144 by 12 to find k. 144 &divide; 12 = 12.')">k = 10</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_2', false, 'Divide 144 by 12 to find k. 144 &divide; 12 = 12.')">k = 11</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_2', false, 'Divide 144 by 12 to find k. 144 &divide; 12 = 12.')">k = 14</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <div class="question-card" id="q20_3">
+        <div class="question-text">3. Find the missing factor: \(6p = 42\)</div>
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_3', false, 'To solve for p, perform the opposite of multiplication: division. 42 &divide; 6 = 7.')">p = 6</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_3', true, 'Correct! 42 divided by 6 equals 7.')">p = 7</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_3', false, 'To solve for p, perform the opposite of multiplication: division. 42 &divide; 6 = 7.')">p = 8</button>
+            <button class="option-btn" onclick="checkAnswer(this, 'q20_3', false, 'To solve for p, perform the opposite of multiplication: division. 42 &divide; 6 = 7.')">p = 9</button>
+        </div>
+        <div class="feedback"></div>
+    </div>
+
+    <script>
+        function checkAnswer(button, questionId, isCorrect, explanationText) {
+            // Find the container for this specific question
+            const container = document.getElementById(questionId);
+            const feedbackDiv = container.querySelector('.feedback');
+            const allButtons = container.querySelectorAll('.option-btn');
+
+            // Disable all buttons in this question once an answer is chosen
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn === button) {
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else {
+                        btn.classList.add('wrong');
+                    }
+                }
+            });
+
+            // Display the feedback
+            feedbackDiv.style.display = 'block';
+            if (isCorrect) {
+                feedbackDiv.className = 'feedback success';
+                feedbackDiv.innerHTML = '<strong>Correct!</strong><br>' + explanationText;
+            } else {
+                feedbackDiv.className = 'feedback error';
+                feedbackDiv.innerHTML = '<strong>Not quite.</strong><br>' + explanationText;
+            }
+        }
+    </script>
+</body>
+</html>
