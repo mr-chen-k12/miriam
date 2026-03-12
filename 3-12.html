@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Test - Cumulative 12B Parallel</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #219150;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            background-color: #f0fdf4;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .answer-highlight {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2em;
+        }
+        canvas {
+            display: block;
+            margin: 10px 0;
+            background: #fff;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Skills Practice Test</h1>
+
+    <div class="question-card">
+        <div class="question-text">1. Two thousand, four hundred sixty-five is how much greater than three hundred forty-seven?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q1')">Review Answer & Explanation</button>
+        <div id="q1" class="explanation">
+            <p><strong>Explanation:</strong> Subtract the smaller number from the larger number to find the difference.</p>
+            <p>\(2465 - 347 = 2118\)</p>
+            <p class="answer-highlight">Answer: 2118</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">2. If each crate can hold eight boxes, how many boxes can fit in forty-two crates?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q2')">Review Answer & Explanation</button>
+        <div id="q2" class="explanation">
+            <p><strong>Explanation:</strong> Multiply the number of crates by the capacity of each crate.</p>
+            <p>\(42 \times 8 = 336\)</p>
+            <p class="answer-highlight">Answer: 336 boxes</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">3. Liam ran 4 miles in 36 minutes. On average, how many minutes did it take Liam to run each mile?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q3')">Review Answer & Explanation</button>
+        <div id="q3" class="explanation">
+            <p><strong>Explanation:</strong> Divide the total time by the total distance.</p>
+            <p>\(36 \text{ minutes} \div 4 \text{ miles} = 9 \text{ minutes per mile}\)</p>
+            <p class="answer-highlight">Answer: 9 minutes</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">4. A bakery used 63 pounds of flour in 9 days. On average, how many pounds of flour did they use each day?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q4')">Review Answer & Explanation</button>
+        <div id="q4" class="explanation">
+            <p><strong>Explanation:</strong> Divide the total flour by the total days.</p>
+            <p>\(63 \div 9 = 7\)</p>
+            <p class="answer-highlight">Answer: 7 pounds</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">5. A train traveled for 6 hours at an average speed of 75 miles per hour. How far did the train travel?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q5')">Review Answer & Explanation</button>
+        <div id="q5" class="explanation">
+            <p><strong>Explanation:</strong> Distance = Speed \(\times\) Time.</p>
+            <p>\(75 \text{ mph} \times 6 \text{ hours} = 450 \text{ miles}\)</p>
+            <p class="answer-highlight">Answer: 450 miles</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">6. A rectangle is divided into 10 equal parts. If 7 parts are shaded, what fraction of the rectangle is shaded?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q6')">Review Answer & Explanation</button>
+        <div id="q6" class="explanation">
+            <p><strong>Explanation:</strong> The shaded parts represent the numerator, and the total parts represent the denominator.</p>
+            <p>\(\frac{7}{10}\)</p>
+            <p class="answer-highlight">Answer: 7/10</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">7. How many decades are in three centuries?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q7')">Review Answer & Explanation</button>
+        <div id="q7" class="explanation">
+            <p><strong>Explanation:</strong> One century = 100 years. Three centuries = 300 years. Since one decade = 10 years, divide 300 by 10.</p>
+            <p>\(300 \div 10 = 30\)</p>
+            <p class="answer-highlight">Answer: 30 decades</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">8. Compare these fractions using circles to show the comparison: \(\frac{1}{4} \bigcirc \frac{2}{5}\)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q8')">Review Answer & Explanation</button>
+        <div id="q8" class="explanation">
+            <p><strong>Explanation:</strong> Convert to decimals: \(\frac{1}{4} = 0.25\) and \(\frac{2}{5} = 0.40\).</p>
+            <canvas id="canvasQ8" width="300" height="150"></canvas>
+            <p class="answer-highlight">Answer: \(\frac{1}{4} < \frac{2}{5}\)</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">9. Estimate the sum of 582 and 419 by rounding to the nearest hundred.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q9')">Review Answer & Explanation</button>
+        <div id="q9" class="explanation">
+            <p><strong>Explanation:</strong> 582 rounds to 600. 419 rounds to 400.</p>
+            <p>\(600 + 400 = 1000\)</p>
+            <p class="answer-highlight">Answer: 1000</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">10. If a circle has a radius of 5 cm, what is the length of its diameter?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q10')">Review Answer & Explanation</button>
+        <div id="q10" class="explanation">
+            <p><strong>Explanation:</strong> The diameter is twice the length of the radius.</p>
+            <p>\(5 \text{ cm} \times 2 = 10 \text{ cm}\)</p>
+            <p class="answer-highlight">Answer: 10 cm</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">11. Find the eighth multiple of six. Then subtract 15. What is the answer?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q11')">Review Answer & Explanation</button>
+        <div id="q11" class="explanation">
+            <p><strong>Explanation:</strong> \(8 \times 6 = 48\). Then, \(48 - 15 = 33\).</p>
+            <p class="answer-highlight">Answer: 33</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">12. \( \$82.55 + \$14.96 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q12')">Review Answer & Explanation</button>
+        <div id="q12" class="explanation">
+            <p><strong>Explanation:</strong> Line up decimals and add:<br>
+                \(\hphantom{+}82.55\)<br>
+                \(\underline{+14.96}\)<br>
+                \(\hphantom{+}97.51\)
+            </p>
+            <p class="answer-highlight">Answer: $97.51</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">13. \( 72,403 - 35,168 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q13')">Review Answer & Explanation</button>
+        <div id="q13" class="explanation">
+            <p><strong>Explanation:</strong> Subtract carefully, borrowing where necessary.<br>
+                \(\hphantom{-}72,403\)<br>
+                \(\underline{-35,168}\)<br>
+                \(\hphantom{-}37,235\)
+            </p>
+            <p class="answer-highlight">Answer: 37,235</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">14. \( 9.25 - (2.5 + 3.12) \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q14')">Review Answer & Explanation</button>
+        <div id="q14" class="explanation">
+            <p><strong>Explanation:</strong> Parentheses first: \(2.5 + 3.12 = 5.62\).<br>
+            Then subtract: \(9.25 - 5.62 = 3.63\).</p>
+            <p class="answer-highlight">Answer: 3.63</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">15. \( 500 - (15 \times 4) \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q15')">Review Answer & Explanation</button>
+        <div id="q15" class="explanation">
+            <p><strong>Explanation:</strong> Multiply first: \(15 \times 4 = 60\).<br>
+            Then subtract: \(500 - 60 = 440\).</p>
+            <p class="answer-highlight">Answer: 440</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">16. \( 420 \times 8 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q16')">Review Answer & Explanation</button>
+        <div id="q16" class="explanation">
+            <p><strong>Explanation:</strong> \(420 \times 8 = 3360\)</p>
+            <p class="answer-highlight">Answer: 3360</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">17. \( 258 \times 4 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q17')">Review Answer & Explanation</button>
+        <div id="q17" class="explanation">
+            <p><strong>Explanation:</strong> \(258 \times 4 = 1032\)</p>
+            <p class="answer-highlight">Answer: 1032</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">18. \( \sqrt{81} \div 3 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q18')">Review Answer & Explanation</button>
+        <div id="q18" class="explanation">
+            <p><strong>Explanation:</strong> \(\sqrt{81} = 9\). Then, \(9 \div 3 = 3\).</p>
+            <p class="answer-highlight">Answer: 3</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">19. \( 45 \div 7 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q19')">Review Answer & Explanation</button>
+        <div id="q19" class="explanation">
+            <p><strong>Explanation:</strong> \(7 \times 6 = 42\). The remainder is \(45 - 42 = 3\).</p>
+            <p class="answer-highlight">Answer: 6 R 3</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-text">20. Find the missing factor: \( 8x = 72 \)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('q20')">Review Answer & Explanation</button>
+        <div id="q20" class="explanation">
+            <p><strong>Explanation:</strong> Divide 72 by 8.</p>
+            <p>\(x = 72 \div 8 = 9\)</p>
+            <p class="answer-highlight">Answer: x = 9</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+                if(id === 'q8') { drawFractions(); }
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function drawFractions() {
+            var canvas = document.getElementById('canvasQ8');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 1/4 Circle
+                ctx.beginPath();
+                ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(75, 75);
+                ctx.arc(75, 75, 50, -Math.PI/2, (1/4 * 2 * Math.PI) - Math.PI/2);
+                ctx.lineTo(75, 75);
+                ctx.fillStyle = '#95a5a6';
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = '#000';
+                ctx.fillText('1/4', 65, 140);
+
+                // 2/5 Circle
+                ctx.beginPath();
+                ctx.arc(225, 75, 50, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(225, 75);
+                ctx.arc(225, 75, 50, -Math.PI/2, (2/5 * 2 * Math.PI) - Math.PI/2);
+                ctx.lineTo(225, 75);
+                ctx.fillStyle = '#95a5a6';
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = '#000';
+                ctx.fillText('2/5', 215, 140);
+            }
+        }
+    </script>
+</body>
+</html>
