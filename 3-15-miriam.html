@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions - Practice Set 2</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .problem-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .show-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .show-btn:hover {
+            background-color: #d35400;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .answer-text {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            color: #555;
+        }
+        svg {
+            margin-top: 10px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Similar and Congruent Figures - Practice Set 2</h1>
+
+    <div id="problems-container"></div>
+
+    <script>
+        // Data for the 29 new problems
+        const problems = [
+            {
+                qNum: 1,
+                question: "Chef Maria cut 12 oranges into quarters for a snack. How many orange quarters were there?",
+                answer: "48 orange quarters",
+                explanation: "Since every orange is cut into 4 pieces (quarters), you multiply the number of oranges by 4. $12 \\times 4 = 48$."
+            },
+            {
+                qNum: 2,
+                question: "Every fourth shirt in the store display was blue. There were one hundred twenty shirts in all. How many shirts were blue?",
+                answer: "30 blue shirts",
+                explanation: "Divide the total number of shirts by 4 to find out how many 'fourth' shirts there are. $120 \\div 4 = 30$."
+            },
+            {
+                qNum: 3,
+                question: "Forty percent of a circle is shaded. What percent of the circle is not shaded?",
+                answer: "60%",
+                explanation: "The entire circle represents 100%. Subtract the shaded percentage from the total: $100\\% - 40\\% = 60\\%$."
+            },
+            {
+                qNum: 4,
+                question: "Brown Bear walked 30 miles east, then turned around and walked 12 miles west. How far was Brown Bear from where he started? (Draw a diagram to help solve.)",
+                answer: "18 miles",
+                explanation: "Going east is one direction, and west is the exact opposite. Subtract the distance traveled west from the distance traveled east: $30 - 12 = 18$ miles.<br><br><b>Diagram:</b><br><svg width='250' height='100'><line x1='10' y1='30' x2='200' y2='30' stroke='blue' stroke-width='2' marker-end='url(#arrow)'/><line x1='200' y1='50' x2='110' y2='50' stroke='red' stroke-width='2' marker-end='url(#arrow)'/><text x='80' y='20' font-size='12'>30 mi East</text><text x='130' y='70' font-size='12'>12 mi West</text><text x='30' y='70' font-size='12' fill='green'>18 mi gap</text></svg>"
+            },
+            {
+                qNum: 5,
+                question: "At 2:15 p.m. Sarah checked her watch. Her train was scheduled to arrive in $3\\frac{1}{2}$ hours. At what time will her train arrive?",
+                answer: "5:45 p.m.",
+                explanation: "$3\\frac{1}{2}$ hours is 3 hours and 30 minutes. Add 3 hours to 2:15 p.m. to get 5:15 p.m. Add 30 more minutes to get 5:45 p.m."
+            },
+            {
+                qNum: 6,
+                question: "A rectangle on a grid is 5 units long and 4 units wide. Find the perimeter and area of the rectangle. Use the terms units and square units.",
+                answer: "Perimeter: 18 units, Area: 20 square units",
+                explanation: "Perimeter = $2 \\times (length + width) = 2 \\times (5 + 4) = 2 \\times 9 = 18$ units.<br>Area = $length \\times width = 5 \\times 4 = 20$ square units."
+            },
+            {
+                qNum: 7,
+                question: "A motorcycle gets 45 miles to 1 gallon of gas. How far could the motorcycle go on 6 gallons of gas?",
+                answer: "270 miles",
+                explanation: "Multiply the distance per gallon by the number of gallons: $45 \\times 6 = 270$."
+            },
+            {
+                qNum: 8,
+                question: "Three-eighths of the pizza was eaten. The rest was saved for later. What fraction of the pizza was saved?",
+                answer: "$\\frac{5}{8}$",
+                explanation: "The whole pizza represents $\\frac{8}{8}$. Subtract the fraction that was eaten: $\\frac{8}{8} - \\frac{3}{8} = \\frac{5}{8}$."
+            },
+            {
+                qNum: 9,
+                question: "Thirty widgets fit into a pint-sized container. How many widgets will fit into a quart-sized container?",
+                answer: "60 widgets",
+                explanation: "There are 2 pints in 1 quart. Multiply the widgets per pint by 2: $30 \\times 2 = 60$."
+            },
+            {
+                qNum: 10,
+                question: "Compare: $\\frac{1}{3} \\bigcirc \\frac{2}{5}$. Draw and shade two congruent rectangles to show the comparison.",
+                answer: "$\\frac{1}{3} < \\frac{2}{5}$",
+                explanation: "Find a common denominator (15). $\\frac{1}{3} = \\frac{5}{15}$ and $\\frac{2}{5} = \\frac{6}{15}$. Since 5 < 6, $\\frac{2}{5}$ is greater.<br><br><svg width='250' height='70'><rect x='10' y='10' width='90' height='40' fill='none' stroke='black'/><rect x='10' y='10' width='30' height='40' fill='lightblue'/><text x='15' y='65' font-size='12'>1/3 (approx 33%)</text><rect x='130' y='10' width='90' height='40' fill='none' stroke='black'/><rect x='130' y='10' width='36' height='40' fill='lightgreen'/><text x='135' y='65' font-size='12'>2/5 (40%)</text></svg>"
+            },
+            {
+                qNum: 11,
+                question: "$N + 5 = 4 \\times 10$",
+                answer: "N = 35",
+                explanation: "Simplify the right side: $4 \\times 10 = 40$. So, $N + 5 = 40$. Subtract 5 from both sides to find N: $40 - 5 = 35$."
+            },
+            {
+                qNum: 12,
+                question: "$8.50 - (4.2 + 1.1)$",
+                answer: "3.2",
+                explanation: "Solve the parentheses first: $4.2 + 1.1 = 5.3$. Then subtract that from 8.50: $8.50 - 5.30 = 3.20$."
+            },
+            {
+                qNum: 13,
+                question: "$\\sqrt{64} + 20 + 4^2$",
+                answer: "44",
+                explanation: "First solve the square root and exponent. $\\sqrt{64} = 8$ and $4^2 = 16$. The equation becomes: $8 + 20 + 16 = 44$."
+            },
+            {
+                qNum: 14,
+                question: "$\\$5 - 50\\text{¢}$",
+                answer: "$4.50",
+                explanation: "Convert 50 cents to dollars ($0.50). Then subtract: $\\$5.00 - \\$0.50 = \\$4.50$."
+            },
+            {
+                qNum: 15,
+                question: "$52,010 - 4895$",
+                answer: "47,115",
+                explanation: "Standard subtraction. Set it up vertically and borrow appropriately to get 47,115."
+            },
+            {
+                qNum: 16,
+                question: "$15 \\times 4 \\times 10$",
+                answer: "600",
+                explanation: "Multiply left to right. First, $15 \\times 4 = 60$. Then, multiply by 10: $60 \\times 10 = 600$."
+            },
+            {
+                qNum: 17,
+                question: "$\\$3.45 \\times 6$",
+                answer: "$20.70",
+                explanation: "Multiply 345 by 6 to get 2070, then place the decimal two spots from the right: $\\$20.70$."
+            },
+            {
+                qNum: 18,
+                question: "$408 \\times 7$",
+                answer: "2856",
+                explanation: "Multiply $8 \\times 7 = 56$. Multiply $0 \\times 7 = 0$ (+5). Multiply $4 \\times 7 = 28$. Result: 2856."
+            },
+            {
+                qNum: 19,
+                question: "$\\$350 \\times 8$",
+                answer: "$2800",
+                explanation: "Multiply 350 by 8. $35 \\times 8 = 280$. Add the zero back: $\\$2800$."
+            },
+            {
+                qNum: 20,
+                question: "$186 \\div 3$",
+                answer: "62",
+                explanation: "3 goes into 18 six times (18). Bring down the 6. 3 goes into 6 two times. Result: 62."
+            },
+            {
+                qNum: 21,
+                question: "$375 \\div 5$",
+                answer: "75",
+                explanation: "5 goes into 37 seven times (35) with 2 left over. Bring down the 5 to make 25. 5 goes into 25 five times. Result: 75."
+            },
+            {
+                qNum: 22,
+                question: "$84 \\div 6$",
+                answer: "14",
+                explanation: "6 goes into 8 once with 2 left over. Bring down the 4 to make 24. 6 goes into 24 four times. Result: 14."
+            },
+            {
+                qNum: 23,
+                question: "$450 \\div 9$",
+                answer: "50",
+                explanation: "9 goes into 45 exactly five times. Bring down the 0. 9 goes into 0 zero times. Result: 50."
+            },
+            {
+                qNum: 24,
+                question: "$104 \\div 8$",
+                answer: "13",
+                explanation: "8 goes into 10 once with 2 left over. Bring down the 4 to make 24. 8 goes into 24 three times. Result: 13."
+            },
+            {
+                qNum: 25,
+                question: "$175 \\div 7$",
+                answer: "25",
+                explanation: "7 goes into 17 two times (14) with 3 left over. Bring down the 5 to make 35. 7 goes into 35 five times. Result: 25."
+            },
+            {
+                qNum: 26,
+                question: "Write each amount of money using a dollar sign and a decimal point:<br>(a) $25\\text{¢}$ &nbsp;&nbsp;&nbsp; (b) $5\\text{¢}$ &nbsp;&nbsp;&nbsp; (c) $450\\text{¢}$",
+                answer: "(a) $0.25<br>(b) $0.05<br>(c) $4.50",
+                explanation: "Move the decimal point two places to the left to convert cents to dollars."
+            },
+            {
+                qNum: 27,
+                question: "Use words to name each number:<br>(a) $3\\frac{7}{10}$ &nbsp;&nbsp;&nbsp; (b) $3.7$",
+                answer: "(a) three and seven tenths<br>(b) three and seven tenths",
+                explanation: "Both represent the exact same mathematical value. Read the whole number, use 'and' for the decimal/fraction, and read the fractional part by its place value."
+            },
+            {
+                qNum: 28,
+                question: "Which two rectangles are similar? (Assume grid angles are right angles)",
+                answer: "A and C",
+                explanation: "Similar figures have the same proportions. Rectangle A is 4 units by 2 units (ratio 2:1). Rectangle C is 6 units by 3 units (also a 2:1 ratio). Rectangle B is a square, and D has a 1:2 ratio.<br><br><svg width='280' height='80'><rect x='10' y='20' width='40' height='20' fill='none' stroke='black'/><text x='25' y='55' font-size='12'>A</text><rect x='70' y='20' width='30' height='30' fill='none' stroke='black'/><text x='80' y='65' font-size='12'>B</text><rect x='120' y='20' width='60' height='30' fill='none' stroke='black'/><text x='145' y='65' font-size='12'>C</text><rect x='200' y='20' width='20' height='40' fill='none' stroke='black'/><text x='205' y='75' font-size='12'>D</text></svg>"
+            },
+            {
+                qNum: 29,
+                question: "Draw a hexagon. A hexagon has how many vertices?",
+                answer: "6 vertices",
+                explanation: "A hexagon is a polygon with 6 sides and 6 vertices (corners).<br><br><canvas id='hexagonCanvas' width='120' height='120'></canvas>"
+            }
+        ];
+
+        // Generate HTML
+        const container = document.getElementById('problems-container');
+        
+        problems.forEach(prob => {
+            const card = document.createElement('div');
+            card.className = 'problem-card';
+            
+            card.innerHTML = `
+                <div class="problem-text">${prob.qNum}. ${prob.question}</div>
+                <button class="show-btn" onclick="toggleAnswer('ans-${prob.qNum}')">Show Answer</button>
+                <div class="answer-section" id="ans-${prob.qNum}">
+                    <div class="answer-text">Answer: ${prob.answer}</div>
+                    <div class="explanation"><strong>Explanation:</strong> ${prob.explanation}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Toggle visibility function
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            const btn = el.previousElementSibling;
+            
+            if (el.style.display === "block") {
+                el.style.display = "none";
+                btn.textContent = "Show Answer";
+            } else {
+                el.style.display = "block";
+                btn.textContent = "Hide Answer";
+                
+                // If it's the hexagon question, draw it when revealed
+                if(id === 'ans-29') {
+                    drawHexagon();
+                }
+            }
+        }
+
+        // Draw Hexagon on HTML5 Canvas for Question 29
+        function drawHexagon() {
+            const canvas = document.getElementById('hexagonCanvas');
+            if(canvas && canvas.getContext) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // clear first to avoid redrawing
+                
+                // Draw a regular hexagon
+                const size = 40;
+                const xCenter = 60;
+                const yCenter = 60;
+                
+                ctx.beginPath();
+                for (let i = 0; i <= 6; i++) {
+                    const angle = (i * 60) * Math.PI / 180;
+                    const x = xCenter + size * Math.cos(angle);
+                    const y = yCenter + size * Math.sin(angle);
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.closePath();
+                
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#2c3e50';
+                ctx.fillStyle = '#ecf0f1';
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw vertices as small red dots
+                ctx.fillStyle = '#e74c3c';
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * 60) * Math.PI / 180;
+                    const x = xCenter + size * Math.cos(angle);
+                    const y = yCenter + size * Math.sin(angle);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
