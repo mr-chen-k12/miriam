@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Lesson 68</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .explanation {
+            display: none;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .answer-highlight {
+            font-weight: bold;
+            color: #d35400;
+            font-size: 1.2em;
+        }
+        .drawing-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Review</h1>
+
+    <div class="question-card">
+        <div class="question-header">1. It took four spoonfuls to make one batch. How many spoonfuls were required to make 40 batches?</div>
+        <button class="btn" onclick="toggleAnswer('ans1')">Review Answer</button>
+        <div id="ans1" class="explanation">
+            <p><span class="answer-highlight">Answer: 160 spoonfuls</span></p>
+            <p><strong>Explanation:</strong> To find the total number of spoonfuls, multiply the number of spoonfuls per batch by the total number of batches: \( 4 \times 40 = 160 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">2. Find the perimeter and area of this rectangle:</div>
+        <div class="drawing-container">
+            <svg width="150" height="100" viewBox="0 0 150 100">
+                <defs>
+                    <pattern id="grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <path d="M 25 0 L 0 0 0 25" fill="none" stroke="black" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="150" height="100" fill="url(#grid)" stroke="black" stroke-width="2"/>
+            </svg>
+            <p><em>(6 units wide by 4 units high)</em></p>
+        </div>
+        <button class="btn" onclick="toggleAnswer('ans2')">Review Answer</button>
+        <div id="ans2" class="explanation">
+            <p><span class="answer-highlight">Answer: Perimeter = 20 units, Area = 24 sq units</span></p>
+            <p><strong>Explanation:</strong><br>
+            Perimeter is the distance around the outside: \( 6 + 4 + 6 + 4 = 20 \) units.<br>
+            Area is the space inside (length \(\times\) width): \( 6 \times 4 = 24 \) square units.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">3. Angela ran 100 meters in twelve and fourteen hundredths seconds. Use digits to write her time for 100 meters.</div>
+        <button class="btn" onclick="toggleAnswer('ans3')">Review Answer</button>
+        <div id="ans3" class="explanation">
+            <p><span class="answer-highlight">Answer: 12.14</span></p>
+            <p><strong>Explanation:</strong> "Twelve" is the whole number. "And" represents the decimal point. "Fourteen hundredths" is written as 0.14. Putting it together gives 12.14.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">4. Maura ran \( \frac{3}{5} \) of the course but walked the rest of the way. What fraction of the course did she walk?</div>
+        <button class="btn" onclick="toggleAnswer('ans4')">Review Answer</button>
+        <div id="ans4" class="explanation">
+            <p><span class="answer-highlight">Answer: \( \frac{2}{5} \)</span></p>
+            <p><strong>Explanation:</strong> The entire course represents \( \frac{5}{5} \) (or 1 whole). Subtract the fraction she ran from the total: \( \frac{5}{5} - \frac{3}{5} = \frac{2}{5} \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">5. In problem 4, did Maura run more than 50% of the course or less than 50% of the course?</div>
+        <button class="btn" onclick="toggleAnswer('ans5')">Review Answer</button>
+        <div id="ans5" class="explanation">
+            <p><span class="answer-highlight">Answer: More than 50%</span></p>
+            <p><strong>Explanation:</strong> She ran \( \frac{3}{5} \) of the course. To convert \( \frac{3}{5} \) to a percentage, multiply numerator and denominator by 20 to get \( \frac{60}{100} \), which is 60%. 60% is greater than 50%.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">6. Jimmy drew an octagon and a pentagon. What was the total number of sides in the two polygons?</div>
+        <button class="btn" onclick="toggleAnswer('ans6')">Review Answer</button>
+        <div id="ans6" class="explanation">
+            <p><span class="answer-highlight">Answer: 13 sides</span></p>
+            <p><strong>Explanation:</strong> An octagon has 8 sides. A pentagon has 5 sides. \( 8 + 5 = 13 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">7. To what mixed number is the arrow pointing?</div>
+        <div class="drawing-container">
+            <svg width="300" height="60" viewBox="0 0 300 60">
+                <line x1="20" y1="30" x2="280" y2="30" stroke="black" stroke-width="2"/>
+                <polygon points="280,25 290,30 280,35" fill="black"/>
+                <polygon points="20,25 10,30 20,35" fill="black"/>
+                <line x1="50" y1="20" x2="50" y2="40" stroke="black" stroke-width="2"/>
+                <text x="50" y="55" text-anchor="middle">6</text>
+                <line x1="150" y1="20" x2="150" y2="40" stroke="black" stroke-width="2"/>
+                <text x="150" y="55" text-anchor="middle">7</text>
+                <line x1="250" y1="20" x2="250" y2="40" stroke="black" stroke-width="2"/>
+                <text x="250" y="55" text-anchor="middle">8</text>
+                <line x1="166.6" y1="25" x2="166.6" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="183.3" y1="25" x2="183.3" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="200" y1="25" x2="200" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="216.6" y1="25" x2="216.6" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="233.3" y1="25" x2="233.3" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="233.3" y1="5" x2="233.3" y2="15" stroke="black" stroke-width="2"/>
+                <polygon points="228.3,15 238.3,15 233.3,25" fill="black"/>
+            </svg>
+        </div>
+        <button class="btn" onclick="toggleAnswer('ans7')">Review Answer</button>
+        <div id="ans7" class="explanation">
+            <p><span class="answer-highlight">Answer: \( 7 \frac{5}{6} \)</span></p>
+            <p><strong>Explanation:</strong> Between the numbers 7 and 8, there are 6 spaces (meaning it is divided into sixths). The arrow points to the 5th mark after the 7, making it \( 7 \frac{5}{6} \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">8. Mount Rainier stands four thousand, three hundred ninety-two meters above sea level. Use digits to write that number of meters.</div>
+        <button class="btn" onclick="toggleAnswer('ans8')">Review Answer</button>
+        <div id="ans8" class="explanation">
+            <p><span class="answer-highlight">Answer: 4,392</span></p>
+            <p><strong>Explanation:</strong> Translating the words into standard numerical digits gives 4,392.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">9. Abigail could make 35 prizes in 7 minutes. How many prizes could she make in 1 minute?</div>
+        <button class="btn" onclick="toggleAnswer('ans9')">Review Answer</button>
+        <div id="ans9" class="explanation">
+            <p><span class="answer-highlight">Answer: 5 prizes</span></p>
+            <p><strong>Explanation:</strong> Divide the total number of prizes by the total minutes: \( 35 \div 7 = 5 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">10. Estimate the sum of 6810 and 9030 by rounding each number to the nearest thousand before adding.</div>
+        <button class="btn" onclick="toggleAnswer('ans10')">Review Answer</button>
+        <div id="ans10" class="explanation">
+            <p><span class="answer-highlight">Answer: 16,000</span></p>
+            <p><strong>Explanation:</strong> <br>
+            6810 rounded to the nearest thousand is 7,000.<br>
+            9030 rounded to the nearest thousand is 9,000.<br>
+            \( 7,000 + 9,000 = 16,000 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">11. $20 - ($8.95 + 75¢)</div>
+        <button class="btn" onclick="toggleAnswer('ans11')">Review Answer</button>
+        <div id="ans11" class="explanation">
+            <p><span class="answer-highlight">Answer: $10.30</span></p>
+            <p><strong>Explanation:</strong> First, convert 75¢ to $0.75. Then, solve the parentheses: \( \$8.95 + \$0.75 = \$9.70 \). Finally, subtract from twenty dollars: \( \$20.00 - \$9.70 = \$10.30 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">12. \( 5^2 - 4^2 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans12')">Review Answer</button>
+        <div id="ans12" class="explanation">
+            <p><span class="answer-highlight">Answer: 9</span></p>
+            <p><strong>Explanation:</strong> Square the numbers first: \( 5^2 = 25 \) and \( 4^2 = 16 \). Then subtract: \( 25 - 16 = 9 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">13. \( 23.64 - 5.45 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans13')">Review Answer</button>
+        <div id="ans13" class="explanation">
+            <p><span class="answer-highlight">Answer: 18.19</span></p>
+            <p><strong>Explanation:</strong> Align the decimals and subtract: <br>
+                &nbsp;&nbsp;23.64<br>
+                -&nbsp;&nbsp;5.45<br>
+                -------<br>
+                &nbsp;&nbsp;18.19
+            </p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">14. \( 43\text{¢} \times 8 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans14')">Review Answer</button>
+        <div id="ans14" class="explanation">
+            <p><span class="answer-highlight">Answer: 344¢ or $3.44</span></p>
+            <p><strong>Explanation:</strong> Multiply the numbers: \( 43 \times 8 = 344 \). Since it is in cents, 344¢ is equal to $3.44.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">15. \( \$3.05 \times 5 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans15')">Review Answer</button>
+        <div id="ans15" class="explanation">
+            <p><span class="answer-highlight">Answer: $15.25</span></p>
+            <p><strong>Explanation:</strong> Multiply ignoring the decimal: \( 305 \times 5 = 1525 \). Place the decimal back two spots: $15.25.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">16. \( \$2.63 \times 7 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans16')">Review Answer</button>
+        <div id="ans16" class="explanation">
+            <p><span class="answer-highlight">Answer: $18.41</span></p>
+            <p><strong>Explanation:</strong> Multiply ignoring the decimal: \( 263 \times 7 = 1841 \). Place the decimal back two spots: $18.41.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">17. Rewrite this addition problem as a multiplication problem and find the answer.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;64 + 64 + 64 + 64 + 64</div>
+        <button class="btn" onclick="toggleAnswer('ans17')">Review Answer</button>
+        <div id="ans17" class="explanation">
+            <p><span class="answer-highlight">Answer: \( 5 \times 64 = 320 \)</span></p>
+            <p><strong>Explanation:</strong> The number 64 is added 5 times. Repeated addition is multiplication: \( 5 \times 64 = 320 \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">18. \( 47 \times 30 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans18')">Review Answer</button>
+        <div id="ans18" class="explanation">
+            <p><span class="answer-highlight">Answer: 1,410</span></p>
+            <p><strong>Explanation:</strong> Multiply \( 47 \times 3 = 141 \), then attach the zero at the end to get 1,410.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">19. \( 60 \times 39 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans19')">Review Answer</button>
+        <div id="ans19" class="explanation">
+            <p><span class="answer-highlight">Answer: 2,340</span></p>
+            <p><strong>Explanation:</strong> Multiply \( 6 \times 39 = 234 \), then attach the zero at the end to get 2,340.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">20. \( 85 \times 40 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans20')">Review Answer</button>
+        <div id="ans20" class="explanation">
+            <p><span class="answer-highlight">Answer: 3,400</span></p>
+            <p><strong>Explanation:</strong> Multiply \( 85 \times 4 = 340 \), then attach the zero at the end to get 3,400.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">21. \( 5 \overline{) 96 } \)</div>
+        <button class="btn" onclick="toggleAnswer('ans21')">Review Answer</button>
+        <div id="ans21" class="explanation">
+            <p><span class="answer-highlight">Answer: 19 R 1</span></p>
+            <p><strong>Explanation:</strong> Using long division: 5 goes into 9 one time (1 x 5 = 5), 9 - 5 = 4. Bring down the 6 to make 46. 5 goes into 46 nine times (5 x 9 = 45), 46 - 45 = 1. The quotient is 19 with a remainder of 1.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">22. \( 7 \overline{) 156 } \)</div>
+        <button class="btn" onclick="toggleAnswer('ans22')">Review Answer</button>
+        <div id="ans22" class="explanation">
+            <p><span class="answer-highlight">Answer: 22 R 2</span></p>
+            <p><strong>Explanation:</strong> 7 goes into 15 two times (7 x 2 = 14), 15 - 14 = 1. Bring down the 6 to make 16. 7 goes into 16 two times (7 x 2 = 14), 16 - 14 = 2. Quotient is 22 with a remainder of 2.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">23. \( 3 \overline{) 246 } \)</div>
+        <button class="btn" onclick="toggleAnswer('ans23')">Review Answer</button>
+        <div id="ans23" class="explanation">
+            <p><span class="answer-highlight">Answer: 82</span></p>
+            <p><strong>Explanation:</strong> 3 goes into 24 eight times exactly. Bring down the 6. 3 goes into 6 two times exactly. Quotient is 82, no remainder.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">24. \( \frac{216}{6} \)</div>
+        <button class="btn" onclick="toggleAnswer('ans24')">Review Answer</button>
+        <div id="ans24" class="explanation">
+            <p><span class="answer-highlight">Answer: 36</span></p>
+            <p><strong>Explanation:</strong> This is division. 6 goes into 21 three times (18), remainder 3. Bring down 6 to make 36. 6 goes into 36 six times. Result is 36.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">25. \( 156 \div 4 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans25')">Review Answer</button>
+        <div id="ans25" class="explanation">
+            <p><span class="answer-highlight">Answer: 39</span></p>
+            <p><strong>Explanation:</strong> 4 goes into 15 three times (12), remainder 3. Bring down the 6 to make 36. 4 goes into 36 nine times exactly. Result is 39.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">26. \( 195 \div 8 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans26')">Review Answer</button>
+        <div id="ans26" class="explanation">
+            <p><span class="answer-highlight">Answer: 24 R 3</span></p>
+            <p><strong>Explanation:</strong> 8 goes into 19 two times (16), remainder 3. Bring down the 5 to make 35. 8 goes into 35 four times (32), remainder 3. The answer is 24 with a remainder of 3.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">27. Use an inch ruler to find the lengths of segments AB, BC, and AC.</div>
+        <div class="drawing-container">
+            <svg width="250" height="40" viewBox="0 0 250 40">
+                <line x1="20" y1="20" x2="220" y2="20" stroke="black" stroke-width="2"/>
+                <circle cx="20" cy="20" r="3" fill="black"/>
+                <text x="20" y="10" text-anchor="middle" font-size="12">A</text>
+                
+                <circle cx="100" cy="20" r="3" fill="black"/>
+                <text x="100" y="10" text-anchor="middle" font-size="12">B</text>
+                
+                <circle cx="220" cy="20" r="3" fill="black"/>
+                <text x="220" y="10" text-anchor="middle" font-size="12">C</text>
+            </svg>
+        </div>
+        <button class="btn" onclick="toggleAnswer('ans27')">Review Answer</button>
+        <div id="ans27" class="explanation">
+            <p><span class="answer-highlight">Answer: Varies based on the physical paper size.</span></p>
+            <p><strong>Explanation:</strong> Since this is an image on a screen, you cannot measure it accurately with a physical ruler. On the physical worksheet, you would align the '0' mark of the ruler at point A to find AB, align at B to find BC, and align at A to find the total AC. Segment AC will be equal to AB + BC.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">28. Which word makes the following sentence untrue?<br><br>All squares are ____________.<br>A. polygons &nbsp;&nbsp;&nbsp;&nbsp; B. rectangles<br>C. similar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D. congruent</div>
+        <button class="btn" onclick="toggleAnswer('ans28')">Review Answer</button>
+        <div id="ans28" class="explanation">
+            <p><span class="answer-highlight">Answer: D. congruent</span></p>
+            <p><strong>Explanation:</strong> Congruent means identical in shape and size. Since squares can be different sizes (e.g., a \( 2 \times 2 \) square vs a \( 5 \times 5 \) square), they are not all congruent. They are, however, all polygons, rectangles, and similar to one another.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">29. Compare: 2 liters \( \bigcirc \) \( \frac{1}{2} \) gallon</div>
+        <button class="btn" onclick="toggleAnswer('ans29')">Review Answer</button>
+        <div id="ans29" class="explanation">
+            <p><span class="answer-highlight">Answer: 2 liters > \( \frac{1}{2} \) gallon</span></p>
+            <p><strong>Explanation:</strong> 1 gallon is approximately 3.785 liters. Half of a gallon is approximately 1.89 liters. Since 2 liters is more than 1.89 liters, 2 liters > \( \frac{1}{2} \) gallon.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">30. Draw an octagon. An octagon has how many vertices?</div>
+        <button class="btn" onclick="toggleAnswer('ans30')">Review Answer</button>
+        <div id="ans30" class="explanation">
+            <p><span class="answer-highlight">Answer: 8 vertices</span></p>
+            <div class="drawing-container">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <polygon points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30" fill="#e8f4f8" stroke="#3498db" stroke-width="3"/>
+                </svg>
+            </div>
+            <p><strong>Explanation:</strong> The prefix "octa-" means eight. Therefore, an octagon is a polygon with 8 sides and 8 vertices (corners). A stop sign is a common example of a regular octagon.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            var button = element.previousElementSibling;
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                button.textContent = "Hide Answer";
+            } else {
+                element.style.display = "none";
+                button.textContent = "Review Answer";
+            }
+        }
+    </script>
+</body>
+</html>
