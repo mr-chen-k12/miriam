@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decimal Division Practice - Part 2</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+        h1 { text-align: center; color: #2c3e50; }
+        .intro { text-align: center; margin-bottom: 30px; font-size: 1.1em; color: #555; }
+        .problem-container { border-bottom: 1px solid #ddd; padding: 20px 0; margin-bottom: 10px; }
+        .problem-number { font-weight: bold; margin-right: 10px; font-size: 1.1em; color: #0056b3; }
+        .question { font-size: 1.2em; margin-bottom: 15px; }
+        .btn { background-color: #0056b3; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-size: 0.9em; transition: background 0.2s; }
+        .btn:hover { background-color: #004494; }
+        .answer-box { display: none; margin-top: 15px; padding: 15px; border-left: 4px solid #28a745; background-color: #f8fff9; border-radius: 0 4px 4px 0; }
+        .answer-title { font-weight: bold; color: #28a745; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Extra Practice: Dividing Decimals (Continued)</h1>
+    <p class="intro">Find the quotient for each money amount when the divisor is 2.</p>
+
+    <div id="problems-wrapper">
+        </div>
+
+    <script>
+        const problems = [
+            {
+                num: "11.",
+                text: "\\(\\$16.80 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $8.40<br><br><strong>Explanation:</strong> Half of 16 dollars is 8 dollars. Half of 80 cents is 40 cents. Combined, that makes $8.40."
+            },
+            {
+                num: "12.",
+                text: "\\(\\$9.50 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $4.75<br><br><strong>Explanation:</strong> You can break this down: half of $9.00 is $4.50, and half of $0.50 is $0.25. Add them together to get $4.75."
+            },
+            {
+                num: "13.",
+                text: "\\(\\$21.40 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $10.70<br><br><strong>Explanation:</strong> Half of $20.00 is $10.00. Half of $1.40 is $0.70. Add those to get $10.70."
+            },
+            {
+                num: "14.",
+                text: "\\(\\$6.10 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $3.05<br><br><strong>Explanation:</strong> Half of 6 dollars is 3 dollars. Half of 10 cents is 5 cents. Be careful to place the zero: $3.05."
+            },
+            {
+                num: "15.",
+                text: "\\(\\$18.30 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $9.15<br><br><strong>Explanation:</strong> Half of 18 is 9. Half of 30 cents is 15 cents. The total is $9.15."
+            },
+            {
+                num: "16.",
+                text: "\\(\\$4.90 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $2.45<br><br><strong>Explanation:</strong> Half of $4.00 is $2.00, and half of $0.90 is $0.45. Put them together for $2.45."
+            },
+            {
+                num: "17.",
+                text: "\\(\\$13.20 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $6.60<br><br><strong>Explanation:</strong> Half of $12.00 is $6.00, leaving $1.20. Half of $1.20 is $0.60. Total: $6.60."
+            },
+            {
+                num: "18.",
+                text: "\\(\\$0.70 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $0.35<br><br><strong>Explanation:</strong> You are simply dividing 70 cents by 2. Half of 70 is 35, so the answer is $0.35."
+            },
+            {
+                num: "19.",
+                text: "\\(\\$35.00 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $17.50<br><br><strong>Explanation:</strong> Half of $30.00 is $15.00, and half of $5.00 is $2.50. Adding those gives $17.50."
+            },
+            {
+                num: "20.",
+                text: "\\(\\$10.16 \\div 2\\)",
+                ans: "<strong>Answer:</strong> $5.08<br><br><strong>Explanation:</strong> Half of 10 dollars is 5 dollars. Half of 16 cents is 8 cents. Remember to write 8 cents as .08, making the answer $5.08."
+            }
+        ];
+
+        const wrapper = document.getElementById('problems-wrapper');
+        
+        problems.forEach((prob, index) => {
+            const problemHtml = `
+                <div class="problem-container">
+                    <div class="question">
+                        <span class="problem-number">${prob.num}</span> 
+                        ${prob.text}
+                    </div>
+                    <button class="btn" onclick="toggleAnswer('ans_${index + 11}')">Review Answer</button>
+                    <div id="ans_${index + 11}" class="answer-box">
+                        <div class="answer-title">Answer & Explanation:</div>
+                        ${prob.ans}
+                    </div>
+                </div>
+            `;
+            wrapper.innerHTML += problemHtml;
+        });
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
