@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Worksheet</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .explanation {
+            display: none;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .answer-highlight {
+            font-weight: bold;
+            color: #d35400;
+            font-size: 1.2em;
+        }
+        .drawing-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Worksheet</h1>
+
+    <div class="question-card">
+        <div class="question-header">1. A baker makes 6 batches of cookies. If each batch contains 24 cookies, how many cookies did the baker make in total?</div>
+        <button class="btn" onclick="toggleAnswer('ans1')">Review Answer</button>
+        <div id="ans1" class="explanation">
+            <p><span class="answer-highlight">Answer: 144 cookies</span></p>
+            <p><strong>Explanation:</strong> Multiply the number of batches by the number of cookies in each batch: 6 &times; 24 = 144.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">2. Find the perimeter and area of this rectangle:</div>
+        <div class="drawing-container">
+            <svg width="125" height="75" viewBox="0 0 125 75">
+                <defs>
+                    <pattern id="grid2" width="25" height="25" patternUnits="userSpaceOnUse">
+                        <path d="M 25 0 L 0 0 0 25" fill="none" stroke="black" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="125" height="75" fill="url(#grid2)" stroke="black" stroke-width="2"/>
+            </svg>
+            <p><em>(5 units wide by 3 units high)</em></p>
+        </div>
+        <button class="btn" onclick="toggleAnswer('ans2')">Review Answer</button>
+        <div id="ans2" class="explanation">
+            <p><span class="answer-highlight">Answer: Perimeter = 16 units, Area = 15 sq units</span></p>
+            <p><strong>Explanation:</strong><br>
+            Perimeter is the total outside distance: 5 + 3 + 5 + 3 = 16 units.<br>
+            Area is the space inside (length &times; width): 5 &times; 3 = 15 square units.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">3. Write the following number using digits: "Forty-five and twenty-three hundredths."</div>
+        <button class="btn" onclick="toggleAnswer('ans3')">Review Answer</button>
+        <div id="ans3" class="explanation">
+            <p><span class="answer-highlight">Answer: 45.23</span></p>
+            <p><strong>Explanation:</strong> "Forty-five" is the whole number. The word "and" acts as the decimal point. "Twenty-three hundredths" translates to 0.23.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">4. A pizza is cut into 8 equal slices. Sarah eats 3 slices. What fraction of the pizza is left?</div>
+        <button class="btn" onclick="toggleAnswer('ans4')">Review Answer</button>
+        <div id="ans4" class="explanation">
+            <p><span class="answer-highlight">Answer: \(\frac{5}{8}\)</span></p>
+            <p><strong>Explanation:</strong> The whole pizza is \(\frac{8}{8}\). Subtract the slices eaten: \(\frac{8}{8} - \frac{3}{8} = \frac{5}{8}\).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">5. In problem 4, is the fraction of the pizza left more than 50% or less than 50%?</div>
+        <button class="btn" onclick="toggleAnswer('ans5')">Review Answer</button>
+        <div id="ans5" class="explanation">
+            <p><span class="answer-highlight">Answer: More than 50%</span></p>
+            <p><strong>Explanation:</strong> Exactly half (50%) of the pizza would be \(\frac{4}{8}\). Since \(\frac{5}{8}\) is greater than \(\frac{4}{8}\), more than 50% is left.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">6. A hexagon and a triangle are drawn on a page. What is the total number of sides of both polygons combined?</div>
+        <button class="btn" onclick="toggleAnswer('ans6')">Review Answer</button>
+        <div id="ans6" class="explanation">
+            <p><span class="answer-highlight">Answer: 9 sides</span></p>
+            <p><strong>Explanation:</strong> A hexagon has 6 sides and a triangle has 3 sides. 6 + 3 = 9.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">7. To what mixed number is the arrow pointing?</div>
+        <div class="drawing-container">
+            <svg width="300" height="60" viewBox="0 0 300 60">
+                <line x1="20" y1="30" x2="280" y2="30" stroke="black" stroke-width="2"/>
+                <polygon points="280,25 290,30 280,35" fill="black"/>
+                <polygon points="20,25 10,30 20,35" fill="black"/>
+                
+                <line x1="50" y1="20" x2="50" y2="40" stroke="black" stroke-width="2"/>
+                <text x="50" y="55" text-anchor="middle">3</text>
+                
+                <line x1="150" y1="20" x2="150" y2="40" stroke="black" stroke-width="2"/>
+                <text x="150" y="55" text-anchor="middle">4</text>
+                
+                <line x1="250" y1="20" x2="250" y2="40" stroke="black" stroke-width="2"/>
+                <text x="250" y="55" text-anchor="middle">5</text>
+                
+                <line x1="175" y1="25" x2="175" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="200" y1="25" x2="200" y2="35" stroke="black" stroke-width="1"/>
+                <line x1="225" y1="25" x2="225" y2="35" stroke="black" stroke-width="1"/>
+                
+                <line x1="175" y1="5" x2="175" y2="15" stroke="black" stroke-width="2"/>
+                <polygon points="170,15 180,15 175,25" fill="black"/>
+            </svg>
+        </div>
+        <button class="btn" onclick="toggleAnswer('ans7')">Review Answer</button>
+        <div id="ans7" class="explanation">
+            <p><span class="answer-highlight">Answer: \( 4 \frac{1}{4} \)</span></p>
+            <p><strong>Explanation:</strong> The space between 4 and 5 is divided into 4 equal sections (fourths). The arrow points to the first mark after the 4, making it \( 4 \frac{1}{4} \).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">8. The peak of Mount Everest is twenty-nine thousand, thirty-two feet above sea level. Use digits to write this height.</div>
+        <button class="btn" onclick="toggleAnswer('ans8')">Review Answer</button>
+        <div id="ans8" class="explanation">
+            <p><span class="answer-highlight">Answer: 29,032</span></p>
+            <p><strong>Explanation:</strong> Translating the word format into numbers: "Twenty-nine thousand" is 29,000, and "thirty-two" is 32. Combined, it is 29,032.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">9. A copy machine can print 42 pages in 6 minutes. How many pages can it print in 1 minute?</div>
+        <button class="btn" onclick="toggleAnswer('ans9')">Review Answer</button>
+        <div id="ans9" class="explanation">
+            <p><span class="answer-highlight">Answer: 7 pages</span></p>
+            <p><strong>Explanation:</strong> To find the per-minute rate, divide the total pages by the total minutes: 42 &divide; 6 = 7.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">10. Estimate the sum of 4,195 and 3,820 by rounding each number to the nearest thousand before adding.</div>
+        <button class="btn" onclick="toggleAnswer('ans10')">Review Answer</button>
+        <div id="ans10" class="explanation">
+            <p><span class="answer-highlight">Answer: 8,000</span></p>
+            <p><strong>Explanation:</strong><br>
+            4,195 rounded to the nearest thousand is 4,000.<br>
+            3,820 rounded to the nearest thousand is 4,000.<br>
+            4,000 + 4,000 = 8,000.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">11. $50.00 - ($12.50 + $3.25)</div>
+        <button class="btn" onclick="toggleAnswer('ans11')">Review Answer</button>
+        <div id="ans11" class="explanation">
+            <p><span class="answer-highlight">Answer: $34.25</span></p>
+            <p><strong>Explanation:</strong> Always solve the parentheses first: $12.50 + $3.25 = $15.75. Then subtract that sum from fifty dollars: $50.00 - $15.75 = $34.25.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">12. \( 6^2 - 3^2 \)</div>
+        <button class="btn" onclick="toggleAnswer('ans12')">Review Answer</button>
+        <div id="ans12" class="explanation">
+            <p><span class="answer-highlight">Answer: 27</span></p>
+            <p><strong>Explanation:</strong> Find the squares first: \( 6^2 = 36 \) and \( 3^2 = 9 \). Then subtract: 36 - 9 = 27.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">13. 45.12 - 12.87</div>
+        <button class="btn" onclick="toggleAnswer('ans13')">Review Answer</button>
+        <div id="ans13" class="explanation">
+            <p><span class="answer-highlight">Answer: 32.25</span></p>
+            <p><strong>Explanation:</strong> Align the decimals and subtract, carrying over as needed to get 32.25.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">14. 55&cent; &times; 6</div>
+        <button class="btn" onclick="toggleAnswer('ans14')">Review Answer</button>
+        <div id="ans14" class="explanation">
+            <p><span class="answer-highlight">Answer: 330&cent; or $3.30</span></p>
+            <p><strong>Explanation:</strong> Multiply 55 by 6 to get 330. Since the unit is cents, 330 cents converts to 3 dollars and 30 cents ($3.30).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">15. $4.15 &times; 4</div>
+        <button class="btn" onclick="toggleAnswer('ans15')">Review Answer</button>
+        <div id="ans15" class="explanation">
+            <p><span class="answer-highlight">Answer: $16.60</span></p>
+            <p><strong>Explanation:</strong> Multiply as if there is no decimal: 415 &times; 4 = 1660. Place the decimal back in two spots from the right: $16.60.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">16. $6.30 &times; 5</div>
+        <button class="btn" onclick="toggleAnswer('ans16')">Review Answer</button>
+        <div id="ans16" class="explanation">
+            <p><span class="answer-highlight">Answer: $31.50</span></p>
+            <p><strong>Explanation:</strong> 630 &times; 5 = 3150. Moving the decimal two places to the left gives $31.50.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">17. Rewrite this addition problem as a multiplication problem and find the answer:<br><br>&nbsp;&nbsp;&nbsp;&nbsp;45 + 45 + 45 + 45</div>
+        <button class="btn" onclick="toggleAnswer('ans17')">Review Answer</button>
+        <div id="ans17" class="explanation">
+            <p><span class="answer-highlight">Answer: 4 &times; 45 = 180</span></p>
+            <p><strong>Explanation:</strong> The number 45 is being added 4 times. Repeated addition is the same as multiplication: 4 &times; 45 = 180.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">18. 56 &times; 40</div>
+        <button class="btn" onclick="toggleAnswer('ans18')">Review Answer</button>
+        <div id="ans18" class="explanation">
+            <p><span class="answer-highlight">Answer: 2,240</span></p>
+            <p><strong>Explanation:</strong> Multiply 56 by 4 to get 224, then attach the zero from the 40 to the end to get 2,240.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">19. \( 6 \overline{) 145 } \)</div>
+        <button class="btn" onclick="toggleAnswer('ans19')">Review Answer</button>
+        <div id="ans19" class="explanation">
+            <p><span class="answer-highlight">Answer: 24 R 1</span></p>
+            <p><strong>Explanation:</strong> 6 goes into 14 two times (12), leaving a remainder of 2. Bring down the 5 to make 25. 6 goes into 25 four times (24), leaving a remainder of 1. The quotient is 24 with a remainder of 1.</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">20. Draw a hexagon. A hexagon has how many vertices?</div>
+        <button class="btn" onclick="toggleAnswer('ans20')">Review Answer</button>
+        <div id="ans20" class="explanation">
+            <p><span class="answer-highlight">Answer: 6 vertices</span></p>
+            <div class="drawing-container">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <polygon points="50,10 85,30 85,70 50,90 15,70 15,30" fill="#e8f4f8" stroke="#3498db" stroke-width="3"/>
+                </svg>
+            </div>
+            <p><strong>Explanation:</strong> A hexagon is a polygon with 6 straight sides. Where those sides meet, they form 6 corners or "vertices."</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            var button = element.previousElementSibling;
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                button.textContent = "Hide Answer";
+            } else {
+                element.style.display = "none";
+                button.textContent = "Review Answer";
+            }
+        }
+    </script>
+</body>
+</html>
