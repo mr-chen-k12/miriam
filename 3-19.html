@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .question-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .svg-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-radius: 5px;
+            border-left: 4px solid #1abc9c;
+        }
+        .answer {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 69 Worksheet Solutions</h1>
+
+    <div id="questions"></div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                question: "Maggie's house key is \\(5.2 \\text{ cm}\\) long. How many millimeters long is her house key?",
+                answer: "\\(52 \\text{ mm}\\)",
+                explanation: "There are 10 millimeters in every centimeter. To convert from centimeters to millimeters, multiply by 10. <br> \\( 5.2 \\times 10 = 52 \\)"
+            },
+            {
+                id: 2,
+                question: "Tracy has three hundred eighty-four baseball cards. Nathan has two hundred sixty baseball cards. Tracy has how many more cards than Nathan?",
+                answer: "124 cards",
+                explanation: "Set up a subtraction problem to find the difference between their totals. <br> \\( 384 - 260 = 124 \\)"
+            },
+            {
+                id: 3,
+                question: "Forty-two students could ride in one bus. There were 30 buses. How many students could ride in all the buses?",
+                answer: "1,260 students",
+                explanation: "Multiply the number of students per bus by the number of buses. <br> \\( 42 \\times 30 = 1260 \\)"
+            },
+            {
+                id: 4,
+                question: "To what number is the arrow pointing?",
+                svg: `<svg width="300" height="80" viewBox="0 0 300 80">
+                        <line x1="20" y1="50" x2="280" y2="50" stroke="black" stroke-width="2"/>
+                        <line x1="150" y1="45" x2="150" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="146" y="70">0</text>
+                        <line x1="250" y1="45" x2="250" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="246" y="70">5</text>
+                        <line x1="50" y1="45" x2="50" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="42" y="70">-5</text>
+                        <line x1="70" y1="47" x2="70" y2="53" stroke="black" stroke-width="1"/><line x1="90" y1="47" x2="90" y2="53" stroke="black" stroke-width="1"/><line x1="110" y1="47" x2="110" y2="53" stroke="black" stroke-width="1"/><line x1="130" y1="47" x2="130" y2="53" stroke="black" stroke-width="1"/>
+                        <line x1="170" y1="47" x2="170" y2="53" stroke="black" stroke-width="1"/><line x1="190" y1="47" x2="190" y2="53" stroke="black" stroke-width="1"/><line x1="210" y1="47" x2="210" y2="53" stroke="black" stroke-width="1"/><line x1="230" y1="47" x2="230" y2="53" stroke="black" stroke-width="1"/>
+                        <line x1="90" y1="15" x2="90" y2="40" stroke="black" stroke-width="2"/>
+                        <polygon points="85,35 95,35 90,45" fill="black"/>
+                      </svg>`,
+                answer: "-3",
+                explanation: "The number line shows increments of 1. Starting from 0 and moving to the left, the ticks represent -1, -2, -3, -4, and -5. The arrow points exactly 3 ticks to the left of 0, which is -3."
+            },
+            {
+                id: 5,
+                question: "Copy this hexagon and shade one sixth of it.",
+                svg: `<svg width="150" height="150" viewBox="0 0 150 150">
+                        <polygon points="75,75 110,20 145,75" fill="#a2d9ce"/>
+                        <polygon points="40,20 110,20 145,75 110,130 40,130 5,75" fill="none" stroke="black" stroke-width="2"/>
+                        <line x1="40" y1="20" x2="110" y2="130" stroke="black" stroke-width="1"/>
+                        <line x1="110" y1="20" x2="40" y2="130" stroke="black" stroke-width="1"/>
+                        <line x1="5" y1="75" x2="145" y2="75" stroke="black" stroke-width="1"/>
+                      </svg>`,
+                answer: "One of the six inner triangles is shaded.",
+                explanation: "A regular hexagon can be divided into 6 identical equilateral triangles by drawing diagonals from opposite vertices to the center. Shading one of these triangles represents shading \\( \\frac{1}{6} \\) of the hexagon."
+            },
+            {
+                id: 6,
+                question: "(a) This match is how many centimeters long? <br> (b) This match is how many millimeters long?",
+                svg: `<svg width="400" height="100" viewBox="0 0 400 100">
+                        <rect x="50" y="20" width="300" height="30" fill="none" stroke="black"/>
+                        <text x="55" y="35" font-size="12">mm</text>
+                        <text x="100" y="35" font-size="10">10</text><text x="150" y="35" font-size="10">20</text><text x="200" y="35" font-size="10">30</text><text x="250" y="35" font-size="10">40</text>
+                        <rect x="50" y="60" width="300" height="30" fill="none" stroke="black"/>
+                        <text x="55" y="75" font-size="12">cm</text>
+                        <text x="100" y="85" font-size="12">1</text><text x="150" y="85" font-size="12">2</text><text x="200" y="85" font-size="12">3</text><text x="250" y="85" font-size="12">4</text>
+                        <rect x="50" y="45" width="200" height="10" fill="#e67e22" stroke="black"/>
+                        <circle cx="250" cy="50" r="6" fill="black"/>
+                      </svg>`,
+                answer: "(a) 4 cm <br> (b) 40 mm",
+                explanation: "Looking at the ruler, the tip of the match ends exactly at the 4 cm mark on the bottom scale. Since \\(1 \\text{ cm} = 10 \\text{ mm}\\), \\(4 \\text{ cm}\\) is equal to \\(40 \\text{ mm}\\), which corresponds to the top scale."
+            },
+            {
+                id: 7,
+                question: "Twenty-five percent of the students earned an A. What percent of the students did not earn an A?",
+                answer: "75%",
+                explanation: "The total amount of students represents 100%. To find the percentage who did not earn an A, subtract the percentage that did from 100%. <br> \\( 100\\% - 25\\% = 75\\% \\)"
+            },
+            {
+                id: 8,
+                question: "One yard equals 3 feet. If each side of a square is 1 yard long, then what is the perimeter of the square in feet?",
+                answer: "12 feet",
+                explanation: "First, convert the side length to feet: 1 yard = 3 feet. A square has 4 equal sides. The perimeter is the sum of all sides. <br> \\( 4 \\times 3 \\text{ feet} = 12 \\text{ feet} \\)"
+            },
+            {
+                id: 9,
+                question: "Estimate the sum of 412, 695, and 379 by rounding each of the three numbers to the nearest hundred before adding.",
+                answer: "1,500",
+                explanation: "\\( 412 \\) rounds down to 400. <br> \\( 695 \\) rounds up to 700. <br> \\( 379 \\) rounds up to 400. <br> Add the rounded numbers: \\( 400 + 700 + 400 = 1500 \\)."
+            },
+            {
+                id: 10,
+                question: "Segment AB is \\(3.5 \\text{ cm}\\) long. Segment AC is \\(11.6 \\text{ cm}\\) long. How long is segment BC? Write a decimal subtraction problem and find the answer.",
+                svg: `<svg width="300" height="50" viewBox="0 0 300 50">
+                        <line x1="20" y1="25" x2="280" y2="25" stroke="black" stroke-width="2"/>
+                        <circle cx="20" cy="25" r="3" fill="black"/><text x="16" y="15">A</text>
+                        <circle cx="90" cy="25" r="3" fill="black"/><text x="86" y="15">B</text>
+                        <circle cx="280" cy="25" r="3" fill="black"/><text x="276" y="15">C</text>
+                      </svg>`,
+                answer: "\\(11.6 - 3.5 = 8.1 \\text{ cm}\\)",
+                explanation: "Points A, B, and C form a line segment where AC is the total length. To find BC, subtract AB from AC. <br> \\( \\text{BC} = \\text{AC} - \\text{AB} \\) <br> \\( \\text{BC} = 11.6 - 3.5 = 8.1 \\)"
+            },
+            {
+                id: 11,
+                question: "Hugo rode 125 miles in 5 hours. His average speed was how many miles per hour?",
+                answer: "25 miles per hour (mph)",
+                explanation: "Average speed is total distance divided by total time. <br> \\( \\frac{125}{5} = 25 \\)"
+            },
+            {
+                id: 12,
+                question: "Urgo could go 21 miles in 1 hour. At that rate, how many miles could Urgo go in 7 hours?",
+                answer: "147 miles",
+                explanation: "Multiply the rate (miles per hour) by the total hours. <br> \\( 21 \\times 7 = 147 \\)"
+            },
+            {
+                id: 13,
+                question: "Christine's meal cost $7.95. Tom's meal cost $8.95. Estimate the total price for both meals by rounding each amount to the nearest dollar before adding.",
+                answer: "$17.00",
+                explanation: "Round $7.95 up to $8.00. <br> Round $8.95 up to $9.00. <br> Add them together: \\( \\$8.00 + \\$9.00 = \\$17.00 \\)."
+            },
+            {
+                id: 14,
+                question: "\\( 250 \\div 6 \\)",
+                answer: "\\( 41 \\text{ R } 4 \\) (or \\( 41 \\frac{2}{3} \\))",
+                explanation: "\\( 250 \\div 6 = 41 \\) with a remainder of 4. <br> Proof: \\( 41 \\times 6 = 246 \\). \\( 250 - 246 = 4 \\)."
+            },
+            {
+                id: 15,
+                question: "\\( 100 \\div 9 \\)",
+                answer: "\\( 11 \\text{ R } 1 \\) (or \\( 11 \\frac{1}{9} \\))",
+                explanation: "9 goes into 100 eleven times. \\( 9 \\times 11 = 99 \\). <br> \\( 100 - 99 = 1 \\). So the answer is 11 with a remainder of 1."
+            },
+            {
+                id: 16,
+                question: "Add: <br> \\( 36.2 \\)<br>\\( \\phantom{+} 4.7 \\)<br>\\( 15.9 \\)<br>\\( 148.4 \\)<br>\\( 30.5 \\)<br>\\( + \\phantom{0}6.0 \\)",
+                answer: "241.7",
+                explanation: "Line up the decimal points and add straight down: <br> \\( 36.2 + 4.7 + 15.9 + 148.4 + 30.5 + 6.0 = 241.7 \\)"
+            },
+            {
+                id: 17,
+                question: "\\( \\frac{256}{8} \\)",
+                answer: "32",
+                explanation: "Perform the long division: 8 goes into 25 three times (24) with 1 left over. Bring down the 6 to make 16. 8 goes into 16 two times. Answer is 32."
+            },
+            {
+                id: 18,
+                question: "\\( 4W = 60 \\)",
+                answer: "\\( W = 15 \\)",
+                explanation: "To isolate \\( W \\), divide both sides of the equation by 4. <br> \\( W = \\frac{60}{4} = 15 \\)."
+            },
+            {
+                id: 19,
+                question: "\\( 9 \\times \\$4.63 \\)",
+                answer: "$41.67",
+                explanation: "Multiply ignoring the decimal: \\( 9 \\times 463 = 4167 \\). Since the original number had 2 decimal places, move the decimal 2 places left to get \\( \\$41.67 \\)."
+            },
+            {
+                id: 20,
+                question: "\\( 80 \\times 29¢ \\)",
+                answer: "2,320¢ or $23.20",
+                explanation: "Multiply: \\( 80 \\times 29 = 2320 \\). This is 2,320 cents. Convert to dollars by dividing by 100 to get $23.20."
+            },
+            {
+                id: 21,
+                question: "\\( \\$10.00 - \\$1.73 \\)",
+                answer: "$8.27",
+                explanation: "Line up the decimals and subtract. You will need to borrow across zeros. <br> \\( 10.00 - 1.73 = 8.27 \\)."
+            },
+            {
+                id: 22,
+                question: "\\( 36,428 - 27,338 \\)",
+                answer: "9,090",
+                explanation: "Perform standard multi-digit subtraction: <br> \\( 36428 - 27338 = 9090 \\)."
+            },
+            {
+                id: 23,
+                question: "\\( 78 \\times 60 \\)",
+                answer: "4,680",
+                explanation: "Multiply \\( 78 \\times 6 = 468 \\), then add the zero at the end to account for the multiple of ten. <br> Result is 4,680."
+            },
+            {
+                id: 24,
+                question: "\\( 4 \\overline{) 328 } \\)",
+                answer: "82",
+                explanation: "Divide 328 by 4. 4 goes into 32 eight times. 4 goes into 8 two times. <br> \\( 82 \\times 4 = 328 \\)."
+            },
+            {
+                id: 25,
+                question: "\\( 7 \\overline{) 375 } \\)",
+                answer: "\\( 53 \\text{ R } 4 \\) (or \\( 53 \\frac{4}{7} \\))",
+                explanation: "7 goes into 37 five times (35), remainder 2. Bring down the 5 to make 25. 7 goes into 25 three times (21), remainder 4."
+            },
+            {
+                id: 26,
+                question: "\\( 5 \\overline{) 320 } \\)",
+                answer: "64",
+                explanation: "5 goes into 32 six times (30), remainder 2. Bring down the 0 to make 20. 5 goes into 20 four times."
+            },
+            {
+                id: 27,
+                question: "\\( A + 5 = 25 + 25 \\)",
+                answer: "\\( A = 45 \\)",
+                explanation: "First, simplify the right side: \\( 25 + 25 = 50 \\). So, \\( A + 5 = 50 \\). Subtract 5 from both sides to find \\( A = 45 \\)."
+            },
+            {
+                id: 28,
+                question: "\\( 4.7 - (3.6 - 1.7) \\)",
+                answer: "2.8",
+                explanation: "Solve the parentheses first (order of operations): \\( 3.6 - 1.7 = 1.9 \\). Then, subtract that result from 4.7: \\( 4.7 - 1.9 = 2.8 \\)."
+            },
+            {
+                id: 29,
+                question: "(a) Find the perimeter of this rectangle in millimeters.<br>(b) Find the area of this rectangle in square centimeters.",
+                svg: `<svg width="200" height="120" viewBox="0 0 200 120">
+                        <rect x="50" y="30" width="100" height="60" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="85" y="20" font-size="12">3 cm</text>
+                        <text x="85" y="105" font-size="12">30 mm</text>
+                        <text x="160" y="65" font-size="12">2 cm</text>
+                        <text x="5" y="65" font-size="12">20 mm</text>
+                      </svg>`,
+                answer: "(a) \\( 100 \\text{ mm} \\) <br> (b) \\( 6 \\text{ sq cm} \\) (or \\( 6 \\text{ cm}^2 \\))",
+                explanation: "(a) Perimeter is the total distance around. In mm, sides are 30, 20, 30, 20. \\( P = 30 + 20 + 30 + 20 = 100 \\text{ mm} \\).<br> (b) Area is length times width. In cm, sides are 3 and 2. \\( A = 3 \\times 2 = 6 \\text{ cm}^2 \\)."
+            },
+            {
+                id: 30,
+                question: "Each angle of this triangle is:<br>A. acute<br>B. right<br>C. obtuse",
+                svg: `<svg width="100" height="100" viewBox="0 0 100 100">
+                        <polygon points="50,20 10,80 90,80" fill="none" stroke="black" stroke-width="2"/>
+                      </svg>`,
+                answer: "A. acute",
+                explanation: "An acute angle is strictly less than 90 degrees. Looking at the triangle, all three interior angles are smaller than a right angle (90 degrees). Therefore, it is an acute triangle."
+            }
+        ];
+
+        const container = document.getElementById('questions');
+
+        problems.forEach(prob => {
+            const card = document.createElement('div');
+            card.className = 'question-container';
+
+            // Question Text
+            const qText = document.createElement('div');
+            qText.className = 'question';
+            qText.innerHTML = `<strong>${prob.id}.</strong> ${prob.question}`;
+            card.appendChild(qText);
+
+            // SVG if exists
+            if (prob.svg) {
+                const svgDiv = document.createElement('div');
+                svgDiv.className = 'svg-container';
+                svgDiv.innerHTML = prob.svg;
+                card.appendChild(svgDiv);
+            }
+
+            // Button
+            const btn = document.createElement('button');
+            btn.className = 'btn-toggle';
+            btn.textContent = 'Show Answer & Explanation';
+            const answerId = `answer-${prob.id}`;
+            btn.onclick = () => {
+                const ansDiv = document.getElementById(answerId);
+                if (ansDiv.style.display === 'none' || ansDiv.style.display === '') {
+                    ansDiv.style.display = 'block';
+                    btn.textContent = 'Hide Answer';
+                } else {
+                    ansDiv.style.display = 'none';
+                    btn.textContent = 'Show Answer & Explanation';
+                }
+            };
+            card.appendChild(btn);
+
+            // Answer Section
+            const ansSection = document.createElement('div');
+            ansSection.className = 'answer-section';
+            ansSection.id = answerId;
+            ansSection.innerHTML = `
+                <div class="answer">Answer: ${prob.answer}</div>
+                <div class="explanation"><strong>Explanation:</strong> ${prob.explanation}</div>
+            `;
+            card.appendChild(ansSection);
+
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
