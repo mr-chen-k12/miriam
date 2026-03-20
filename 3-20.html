@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+        .problem-text {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+        }
+        .solution-answer {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .solution-explanation {
+            margin-bottom: 15px;
+        }
+        canvas {
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            background-color: #fdfdfd;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Solutions</h1>
+
+    <div id="problems-wrapper"></div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                question: "Forty-two million is how much greater than twenty-four million?",
+                answer: "\\(18,000,000\\)",
+                explanation: "To find how much greater one number is than another, you subtract them: <br> \\(42,000,000 - 24,000,000 = 18,000,000\\)."
+            },
+            {
+                id: 2,
+                question: "There were 150 seats at the Round Table. If 128 seats were filled, how many seats were empty?",
+                answer: "\\(22\\) seats",
+                explanation: "Subtract the number of filled seats from the total number of seats to find the empty ones: <br> \\(150 - 128 = 22\\)."
+            },
+            {
+                id: 3,
+                question: "Angela ran 100 meters in 12.14 seconds. Marion ran 100 meters in 11.98 seconds. Marion ran 100 meters how many seconds faster than Angela?",
+                answer: "\\(0.16\\) seconds",
+                explanation: "Subtract Marion's time from Angela's time to find the difference in speed: <br> \\(12.14 - 11.98 = 0.16\\)."
+            },
+            {
+                id: 4,
+                question: "Keenan bought his lunch Monday through Friday. If each lunch cost $1.25, how much did he spend on lunch for the week?",
+                answer: "\\(\\$6.25\\)",
+                explanation: "Monday through Friday is 5 days. Multiply the daily cost by the number of days: <br> \\(5 \\times \\$1.25 = \\$6.25\\)."
+            },
+            {
+                id: 5,
+                question: "Find the perimeter and area of this rectangle (5 units by 4 units):",
+                answer: "Perimeter = \\(18\\) units, Area = \\(20\\) square units",
+                explanation: "Perimeter is the total distance around the rectangle: \\(5 + 5 + 4 + 4 = 18\\). <br> Area is length multiplied by width: \\(5 \\times 4 = 20\\).",
+                canvasId: "canvas-prob5",
+                drawFunc: (ctx) => {
+                    ctx.beginPath();
+                    for(let i=0; i<=5; i++) { ctx.moveTo(20 + i*30, 20); ctx.lineTo(20 + i*30, 140); }
+                    for(let j=0; j<=4; j++) { ctx.moveTo(20, 20 + j*30); ctx.lineTo(170, 20 + j*30); }
+                    ctx.strokeStyle = "#333";
+                    ctx.stroke();
+                    ctx.fillStyle = "#000";
+                    ctx.font = "14px sans-serif";
+                    ctx.fillText("5 units", 80, 15);
+                    ctx.fillText("4 units", 180, 85);
+                },
+                canvasWidth: 240, canvasHeight: 160
+            },
+            {
+                id: 6,
+                question: "Rhonda read 30 pages a day on Monday, Tuesday, and Wednesday. She read 45 pages on Thursday and 26 pages on Friday. How many pages did she read in all?",
+                answer: "\\(161\\) pages",
+                explanation: "First calculate the pages read in the first three days: \\(30 \\times 3 = 90\\). Then add the pages from Thursday and Friday: \\(90 + 45 + 26 = 161\\)."
+            },
+            {
+                id: 7,
+                question: "One half of the cabbage seeds sprouted. If 74 seeds were planted, how many sprouted? Draw a picture to help you solve the problem.",
+                answer: "\\(37\\) seeds",
+                explanation: "Divide the total number of seeds by 2 to find half: \\(74 \\div 2 = 37\\). The drawing shows 74 split equally into two groups.",
+                canvasId: "canvas-prob7",
+                drawFunc: (ctx) => {
+                    ctx.fillStyle = "#a8d08d"; ctx.fillRect(20, 30, 150, 60);
+                    ctx.strokeStyle = "#333"; ctx.strokeRect(20, 30, 150, 60);
+                    ctx.strokeRect(170, 30, 150, 60);
+                    ctx.fillStyle = "#000"; ctx.font = "16px sans-serif";
+                    ctx.fillText("Sprouted: 37", 50, 65);
+                    ctx.fillText("Did Not Sprout: 37", 180, 65);
+                    ctx.fillText("Total Planted: 74", 120, 20);
+                },
+                canvasWidth: 340, canvasHeight: 110
+            },
+            {
+                id: 8,
+                question: "In problem 7, what percent of the seeds sprouted?",
+                answer: "\\(50\\%\\)",
+                explanation: "The fraction \"one half\" (\\(1/2\\)) is equivalent to \\(50\\%\\)."
+            },
+            {
+                id: 9,
+                question: "What is \\(\\frac{1}{6}\\) of 60? Draw a picture to help you solve the problem.",
+                answer: "\\(10\\)",
+                explanation: "To find \\(\\frac{1}{6}\\) of a number, divide it by 6: \\(60 \\div 6 = 10\\). The drawing shows 60 divided into 6 equal blocks of 10.",
+                canvasId: "canvas-prob9",
+                drawFunc: (ctx) => {
+                    for(let i=0; i<6; i++) {
+                        if(i===0) { ctx.fillStyle = "#a8d08d"; ctx.fillRect(20 + i*50, 20, 50, 50); }
+                        ctx.strokeStyle = "#333"; ctx.strokeRect(20 + i*50, 20, 50, 50);
+                        ctx.fillStyle = "#000"; ctx.font = "16px sans-serif";
+                        ctx.fillText("10", 35 + i*50, 50);
+                    }
+                    ctx.fillText("Total = 60", 140, 90);
+                },
+                canvasWidth: 340, canvasHeight: 110
+            },
+            {
+                id: 10,
+                question: "Driving at a highway speed limit of 65 miles per hour, how far can a truck travel in 3 hours?",
+                answer: "\\(195\\) miles",
+                explanation: "Use the formula: Distance = Rate \\(\\times\\) Time. Multiply the speed by the hours: \\(65 \\times 3 = 195\\)."
+            },
+            {
+                id: 11,
+                question: "If a truck traveled 248 miles in 4 hours, then the truck traveled an average of how many miles each hour?",
+                answer: "\\(62\\) miles per hour",
+                explanation: "To find the average speed, divide the total distance by the total time: \\(248 \\div 4 = 62\\)."
+            },
+            {
+                id: 12,
+                question: "(a) What is the diameter of this shirt button in centimeters? (b) What is the radius of this shirt button in millimeters? (Assuming the button fits exactly between the 0 and 2 cm marks on the ruler).",
+                answer: "(a) \\(2\\) cm (b) \\(10\\) mm",
+                explanation: "The button spans exactly from 0 to 2 cm, so its diameter is 2 cm. The radius is half the diameter, which is 1 cm. Since there are 10 millimeters in 1 centimeter, the radius is 10 mm.",
+                canvasId: "canvas-prob12",
+                drawFunc: (ctx) => {
+                    ctx.beginPath(); ctx.arc(100, 60, 40, 0, 2*Math.PI); ctx.strokeStyle="#333"; ctx.stroke();
+                    ctx.fillStyle = "#e0e0e0"; ctx.fill();
+                    // Draw ruler
+                    ctx.beginPath(); ctx.moveTo(60, 110); ctx.lineTo(140, 110); ctx.stroke();
+                    ctx.moveTo(60, 105); ctx.lineTo(60, 115); ctx.stroke(); // 0 mark
+                    ctx.moveTo(100, 105); ctx.lineTo(100, 115); ctx.stroke(); // 1 mark
+                    ctx.moveTo(140, 105); ctx.lineTo(140, 115); ctx.stroke(); // 2 mark
+                    ctx.fillStyle = "#000"; ctx.font = "12px sans-serif";
+                    ctx.fillText("0", 56, 130); ctx.fillText("1", 96, 130); ctx.fillText("2 cm", 136, 130);
+                    // Draw diameter line
+                    ctx.beginPath(); ctx.setLineDash([5, 5]); ctx.moveTo(60, 60); ctx.lineTo(140, 60); ctx.stroke(); ctx.setLineDash([]);
+                    ctx.fillText("Diameter = 2cm", 55, 50);
+                },
+                canvasWidth: 200, canvasHeight: 150
+            },
+            {
+                id: 13,
+                question: "Segment AB is 2.7 cm long. Segment BC is 4.8 cm long. How long is segment AC? Write a decimal addition problem and find the answer.",
+                answer: "\\(2.7 + 4.8 = 7.5\\) cm",
+                explanation: "Add the lengths of segment AB and segment BC together to find the total length of segment AC.",
+                canvasId: "canvas-prob13",
+                drawFunc: (ctx) => {
+                    ctx.beginPath(); ctx.moveTo(30, 50); ctx.lineTo(250, 50); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(30, 50, 3, 0, 2*Math.PI); ctx.fill();
+                    ctx.beginPath(); ctx.arc(110, 50, 3, 0, 2*Math.PI); ctx.fill();
+                    ctx.beginPath(); ctx.arc(250, 50, 3, 0, 2*Math.PI); ctx.fill();
+                    ctx.font = "14px sans-serif";
+                    ctx.fillText("A", 25, 40); ctx.fillText("B", 105, 40); ctx.fillText("C", 245, 40);
+                    ctx.fillText("2.7 cm", 50, 70); ctx.fillText("4.8 cm", 160, 70);
+                },
+                canvasWidth: 300, canvasHeight: 100
+            },
+            {
+                id: 14,
+                question: "\\(\\$8 + \\$9.48 + 79\\text{¢}\\)",
+                answer: "\\(\\$18.27\\)",
+                explanation: "First, write all amounts as decimals: \\(\\$8.00\\), \\(\\$9.48\\), and \\(\\$0.79\\). Align the decimals and add: <br> \\(8.00 + 9.48 = 17.48\\) <br> \\(17.48 + 0.79 = 18.27\\)."
+            },
+            {
+                id: 15,
+                question: "\\(5.36 + 2.1 + 0.43\\)",
+                answer: "\\(7.89\\)",
+                explanation: "Align the decimals and add (you can append a zero to 2.1 to make it 2.10): <br> \\(5.36 + 2.10 + 0.43 = 7.89\\)."
+            },
+            {
+                id: 16,
+                question: "\\(\\$100.00 - \\$59.47\\)",
+                answer: "\\(\\$40.53\\)",
+                explanation: "Align the decimals and subtract. You will need to borrow across the zeros. <br> \\(100.00 - 59.47 = 40.53\\)."
+            },
+            {
+                id: 17,
+                question: "\\(37,102 - 18,590\\)",
+                answer: "\\(18,512\\)",
+                explanation: "Perform standard multi-digit subtraction: <br> \\(37,102 - 18,590 = 18,512\\)."
+            },
+            {
+                id: 18,
+                question: "\\(\\sqrt{49} \\times 2^3\\)",
+                answer: "\\(56\\)",
+                explanation: "First, evaluate the terms: The square root of 49 is 7. Two cubed (\\(2 \\times 2 \\times 2\\)) is 8. Then multiply them together: \\(7 \\times 8 = 56\\)."
+            },
+            {
+                id: 19,
+                question: "\\(\\$1.63 \\times 40\\)",
+                answer: "\\(\\$65.20\\)",
+                explanation: "Multiply \\(1.63\\) by \\(40\\). <br> \\(1.63 \\times 40 = 65.2\\). Since it is money, format it with two decimal places: \\(\\$65.20\\)."
+            },
+            {
+                id: 20,
+                question: "\\(60 \\times 39\\)",
+                answer: "\\(2,340\\)",
+                explanation: "Multiply \\(60\\) by \\(39\\). You can do \\(6 \\times 39 = 234\\), then add the zero: \\(2,340\\)."
+            },
+            {
+                id: 21,
+                question: "\\(7 \\times \\$2.56\\)",
+                answer: "\\(\\$17.92\\)",
+                explanation: "Multiply the decimal by the whole number: <br> \\(7 \\times 2.56 = 17.92\\)."
+            },
+            {
+                id: 22,
+                question: "\\(89 \\div 3\\)",
+                answer: "\\(29\\) R \\(2\\)",
+                explanation: "\\(3\\) goes into \\(8\\) two times (which is \\(6\\)), with a remainder of \\(2\\). Bring down the \\(9\\) to make \\(29\\). \\(3\\) goes into \\(29\\) nine times (which is \\(27\\)), leaving a remainder of \\(2\\)."
+            },
+            {
+                id: 23,
+                question: "\\(234 \\div 9\\)",
+                answer: "\\(26\\)",
+                explanation: "\\(9\\) goes into \\(23\\) two times (which is \\(18\\)), with a remainder of \\(5\\). Bring down the \\(4\\) to make \\(54\\). \\(9\\) goes into \\(54\\) exactly six times."
+            },
+            {
+                id: 24,
+                question: "\\(\\frac{90}{6}\\)",
+                answer: "\\(15\\)",
+                explanation: "The fraction bar represents division. \\(90 \\div 6 = 15\\)."
+            },
+            {
+                id: 25,
+                question: "\\(243 \\div 7\\)",
+                answer: "\\(34\\) R \\(5\\)",
+                explanation: "\\(7\\) goes into \\(24\\) three times (which is \\(21\\)), leaving a remainder of \\(3\\). Bring down the \\(3\\) to make \\(33\\). \\(7\\) goes into \\(33\\) four times (which is \\(28\\)), leaving a remainder of \\(5\\)."
+            },
+            {
+                id: 26,
+                question: "\\(355 \\div 5\\)",
+                answer: "\\(71\\)",
+                explanation: "\\(5\\) goes into \\(35\\) exactly seven times. \\(5\\) goes into \\(5\\) exactly one time. The quotient is \\(71\\)."
+            },
+            {
+                id: 27,
+                question: "\\(7 + N = 28\\)",
+                answer: "\\(N = 21\\)",
+                explanation: "To find the missing addend \\(N\\), subtract \\(7\\) from \\(28\\): <br> \\(28 - 7 = 21\\)."
+            },
+            {
+                id: 28,
+                question: "Write twelve and three tenths as a mixed number and as a decimal number.",
+                answer: "Mixed: \\(12 \\frac{3}{10}\\), Decimal: \\(12.3\\)",
+                explanation: "The whole number is 12. The fractional part \"three tenths\" is written as \\(\\frac{3}{10}\\) or \\(0.3\\) in decimal form."
+            },
+            {
+                id: 29,
+                question: "Which of these numbers is a factor of both 12 and 20? <br> A. 3 &nbsp;&nbsp; B. 4 &nbsp;&nbsp; C. 5 &nbsp;&nbsp; D. 6",
+                answer: "B. 4",
+                explanation: "A factor divides evenly into a number without a remainder. <br> \\(12 \\div 4 = 3\\) and \\(20 \\div 4 = 5\\). So, 4 is a factor of both."
+            },
+            {
+                id: 30,
+                question: "Draw a triangle that has one right angle.",
+                answer: "A right triangle",
+                explanation: "A right triangle contains one angle that is exactly 90 degrees, often denoted with a small square in the corner.",
+                canvasId: "canvas-prob30",
+                drawFunc: (ctx) => {
+                    ctx.beginPath();
+                    ctx.moveTo(30, 120); // Bottom left
+                    ctx.lineTo(150, 120); // Bottom right
+                    ctx.lineTo(30, 30); // Top left
+                    ctx.closePath();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "#333";
+                    ctx.stroke();
+                    ctx.fillStyle = "#e0e0e0";
+                    ctx.fill();
+                    // Draw right angle square
+                    ctx.beginPath();
+                    ctx.moveTo(30, 100);
+                    ctx.lineTo(50, 100);
+                    ctx.lineTo(50, 120);
+                    ctx.stroke();
+                },
+                canvasWidth: 200, canvasHeight: 150
+            }
+        ];
+
+        const wrapper = document.getElementById('problems-wrapper');
+
+        problems.forEach(prob => {
+            const container = document.createElement('div');
+            container.className = 'problem-container';
+
+            const questionText = document.createElement('div');
+            questionText.className = 'problem-text';
+            questionText.innerHTML = `<strong>Problem ${prob.id}:</strong> ${prob.question}`;
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'btn-toggle';
+            toggleBtn.textContent = 'Show Answer & Explanation';
+
+            const solutionDiv = document.createElement('div');
+            solutionDiv.className = 'solution';
+            solutionDiv.id = `solution-${prob.id}`;
+
+            const answerDiv = document.createElement('div');
+            answerDiv.className = 'solution-answer';
+            answerDiv.innerHTML = `Answer: ${prob.answer}`;
+
+            const explanationDiv = document.createElement('div');
+            explanationDiv.className = 'solution-explanation';
+            explanationDiv.innerHTML = `<em>Explanation:</em> ${prob.explanation}`;
+
+            solutionDiv.appendChild(answerDiv);
+            solutionDiv.appendChild(explanationDiv);
+
+            // Handle Canvas if present
+            if (prob.canvasId) {
+                const canvas = document.createElement('canvas');
+                canvas.id = prob.canvasId;
+                canvas.width = prob.canvasWidth;
+                canvas.height = prob.canvasHeight;
+                solutionDiv.appendChild(canvas);
+            }
+
+            // Toggle functionality
+            toggleBtn.addEventListener('click', () => {
+                if (solutionDiv.style.display === 'block') {
+                    solutionDiv.style.display = 'none';
+                    toggleBtn.textContent = 'Show Answer & Explanation';
+                } else {
+                    solutionDiv.style.display = 'block';
+                    toggleBtn.textContent = 'Hide Answer';
+                }
+            });
+
+            container.appendChild(questionText);
+            container.appendChild(toggleBtn);
+            container.appendChild(solutionDiv);
+
+            wrapper.appendChild(container);
+        });
+
+        // Draw on canvases after DOM is populated
+        window.onload = () => {
+            problems.forEach(prob => {
+                if (prob.canvasId && prob.drawFunc) {
+                    const canvas = document.getElementById(prob.canvasId);
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        prob.drawFunc(ctx);
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
