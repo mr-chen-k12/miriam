@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Quiz</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        h1 { margin: 0; font-size: 1.5em; color: #2c3e50; }
+        .score-board {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2980b9;
+        }
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            min-height: 50px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #e2e6ea;
+            border-color: #dae0e5;
+        }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .option-btn.wrong {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .explanation-box {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .explanation-box.correct-bg {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        .explanation-box.wrong-bg {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+        }
+        .next-btn {
+            display: none;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .next-btn:hover { background-color: #2980b9; }
+        .topic-label {
+            display: inline-block;
+            background-color: #e1e8ed;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="header">
+        <h1>Math Practice</h1>
+        <div class="score-board">Score: <span id="score">0</span> / <span id="total-questions">27</span></div>
+    </div>
+    
+    <div id="quiz-content">
+        <div class="topic-label" id="topic-label">Topic</div>
+        <div class="question-text" id="question">Question goes here</div>
+        <div class="options-grid" id="options">
+            </div>
+        <div class="explanation-box" id="explanation">
+            <strong>Explanation:</strong> <span id="exp-text"></span>
+        </div>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <div id="end-screen" style="display: none; text-align: center;">
+        <h2>Quiz Complete!</h2>
+        <p style="font-size: 1.5em;">Your final score is: <strong id="final-score"></strong> out of 27</p>
+        <button class="next-btn" style="display: inline-block; width: auto; margin-top: 20px;" onclick="location.reload()">Try Again</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        // Topic 6: Estimation of Multiplication
+        {
+            topic: "Estimating Products (Based on Prob 6)",
+            q: "Estimate the product of 48 and 7.",
+            options: ["350", "280", "400", "300"],
+            answer: 0,
+            exp: "Round 48 to the nearest ten, which is 50. Then multiply by 7. \\(50 \\times 7 = 350\\)."
+        },
+        {
+            topic: "Estimating Products (Based on Prob 6)",
+            q: "Estimate the product of 82 and 6.",
+            options: ["540", "420", "500", "480"],
+            answer: 3,
+            exp: "Round 82 down to 80 to make it easier. \\(80 \\times 6 = 480\\)."
+        },
+        {
+            topic: "Estimating Products (Based on Prob 6)",
+            q: "Estimate the product of 59 and 8.",
+            options: ["480", "400", "560", "450"],
+            answer: 0,
+            exp: "Round 59 to the nearest ten, which is 60. \\(60 \\times 8 = 480\\)."
+        },
+
+        // Topic 9: Perimeter of Regular Polygons
+        {
+            topic: "Perimeter (Based on Prob 9)",
+            q: "If each side of a regular hexagon measures 4 cm, what is its perimeter?",
+            options: ["20 cm", "24 cm", "16 cm", "28 cm"],
+            answer: 1,
+            exp: "A hexagon has 6 equal sides. Multiply the side length by 6: \\(6 \\times 4\\text{ cm} = 24\\text{ cm}\\)."
+        },
+        {
+            topic: "Perimeter (Based on Prob 9)",
+            q: "If each side of a regular octagon measures 5 inches, what is its perimeter?",
+            options: ["35 in", "45 in", "40 in", "30 in"],
+            answer: 2,
+            exp: "An octagon has 8 sides. Multiply the side length by 8: \\(8 \\times 5\\text{ in} = 40\\text{ in}\\)."
+        },
+        {
+            topic: "Perimeter (Based on Prob 9)",
+            q: "If each side of an equilateral triangle measures 12 mm, what is its perimeter?",
+            options: ["24 mm", "36 mm", "48 mm", "30 mm"],
+            answer: 1,
+            exp: "A triangle has 3 sides. \\(3 \\times 12\\text{ mm} = 36\\text{ mm}\\)."
+        },
+
+        // Topic 11: Percentages adding to 100%
+        {
+            topic: "Percentages (Based on Prob 11)",
+            q: "If 42% of a pizza is eaten, what percent is left?",
+            options: ["58%", "48%", "68%", "52%"],
+            answer: 0,
+            exp: "The whole pizza represents 100%. Subtract the eaten part: \\(100\\% - 42\\% = 58\\%\\)."
+        },
+        {
+            topic: "Percentages (Based on Prob 11)",
+            q: "If it rained on 15% of the days in a month, what percent of the days did it NOT rain?",
+            options: ["75%", "85%", "95%", "65%"],
+            answer: 1,
+            exp: "The whole month is 100%. \\(100\\% - 15\\% = 85\\%\\)."
+        },
+        {
+            topic: "Percentages (Based on Prob 11)",
+            q: "In a bag of marbles, 37% are red and the rest are blue. What percent are blue?",
+            options: ["63%", "53%", "73%", "43%"],
+            answer: 0,
+            exp: "The total amount of marbles is 100%. \\(100\\% - 37\\% = 63\\%\\)."
+        },
+
+        // Topic 12: Large Number Addition
+        {
+            topic: "Addition (Based on Prob 12)",
+            q: "\\(14,285 + 53,912\\)",
+            options: ["67,197", "68,297", "68,197", "67,297"],
+            answer: 2,
+            exp: "Align by place value and add: \\(14,285 + 53,912 = 68,197\\)."
+        },
+        {
+            topic: "Addition (Based on Prob 12)",
+            q: "\\(105,340 + 82,761\\)",
+            options: ["188,101", "187,101", "188,001", "187,001"],
+            answer: 0,
+            exp: "Align by place value and add: \\(105,340 + 82,761 = 188,101\\)."
+        },
+        {
+            topic: "Addition (Based on Prob 12)",
+            q: "\\(9,999 + 45,002\\)",
+            options: ["54,901", "55,001", "55,011", "54,001"],
+            answer: 1,
+            exp: "Adding 9,999 is like adding 10,000 and subtracting 1. \\(45,002 + 10,000 - 1 = 55,001\\)."
+        },
+
+        // Topic 13: Money Subtraction
+        {
+            topic: "Money Subtraction (Based on Prob 13)",
+            q: "\\(\\$15 - 12\\text{&cent;}\\)",
+            options: ["$14.88", "$14.98", "$15.88", "$14.12"],
+            answer: 0,
+            exp: "Rewrite 12&cent; as \\(\\$0.12\\). \\(\\$15.00 - \\$0.12 = \\$14.88\\)."
+        },
+        {
+            topic: "Money Subtraction (Based on Prob 13)",
+            q: "\\(\\$20 - 75\\text{&cent;}\\)",
+            options: ["$19.35", "$20.25", "$19.25", "$18.25"],
+            answer: 2,
+            exp: "Rewrite 75&cent; as \\(\\$0.75\\). \\(\\$20.00 - \\$0.75 = \\$19.25\\)."
+        },
+        {
+            topic: "Money Subtraction (Based on Prob 13)",
+            q: "\\(\\$8 - 5\\text{&cent;}\\)",
+            options: ["$7.95", "$7.50", "$8.95", "$7.05"],
+            answer: 0,
+            exp: "Rewrite 5&cent; as \\(\\$0.05\\). \\(\\$8.00 - \\$0.05 = \\$7.95\\)."
+        },
+
+        // Topic 15: Sum of Squares
+        {
+            topic: "Exponents (Based on Prob 15)",
+            q: "\\(4^2 + 5^2\\)",
+            options: ["18", "41", "36", "81"],
+            answer: 1,
+            exp: "\\(4^2 = 16\\) and \\(5^2 = 25\\). Sum: \\(16 + 25 = 41\\)."
+        },
+        {
+            topic: "Exponents (Based on Prob 15)",
+            q: "\\(6^2 + 2^2\\)",
+            options: ["40", "16", "64", "32"],
+            answer: 0,
+            exp: "\\(6^2 = 36\\) and \\(2^2 = 4\\). Sum: \\(36 + 4 = 40\\)."
+        },
+        {
+            topic: "Exponents (Based on Prob 15)",
+            q: "\\(9^2 + 1^2\\)",
+            options: ["82", "81", "100", "10"],
+            answer: 0,
+            exp: "\\(9^2 = 81\\) and \\(1^2 = 1\\). Sum: \\(81 + 1 = 82\\)."
+        },
+
+        // Topic 16: Multiplication
+        {
+            topic: "Multiplication (Based on Prob 16)",
+            q: "\\(534 \\times 6\\)",
+            options: ["3184", "3244", "3004", "3204"],
+            answer: 3,
+            exp: "Multiply: \\(6 \\times 4 = 24\\) (carry 2). \\(6 \\times 3 = 18 + 2 = 20\\) (carry 2). \\(6 \\times 5 = 30 + 2 = 32\\). Result: 3204."
+        },
+        {
+            topic: "Multiplication (Based on Prob 16)",
+            q: "\\(817 \\times 5\\)",
+            options: ["4055", "4085", "4185", "4005"],
+            answer: 1,
+            exp: "\\(5 \\times 7 = 35\\) (carry 3). \\(5 \\times 1 = 5 + 3 = 8\\). \\(5 \\times 8 = 40\\). Result: 4085."
+        },
+        {
+            topic: "Multiplication (Based on Prob 16)",
+            q: "\\(295 \\times 8\\)",
+            options: ["2360", "2460", "2260", "2300"],
+            answer: 0,
+            exp: "Alternatively, \\(300 \\times 8 = 2400\\), subtract \\(5 \\times 8 = 40\\). \\(2400 - 40 = 2360\\)."
+        },
+
+        // Topic 18: Order of Operations (Division)
+        {
+            topic: "Order of Operations (Based on Prob 18)",
+            q: "\\(64 \\div (32 \\div 4)\\)",
+            options: ["4", "16", "8", "2"],
+            answer: 2,
+            exp: "Do parentheses first: \\(32 \\div 4 = 8\\). Then \\(64 \\div 8 = 8\\)."
+        },
+        {
+            topic: "Order of Operations (Based on Prob 18)",
+            q: "\\(100 \\div (50 \\div 2)\\)",
+            options: ["4", "2", "10", "5"],
+            answer: 0,
+            exp: "Parentheses first: \\(50 \\div 2 = 25\\). Then \\(100 \\div 25 = 4\\)."
+        },
+        {
+            topic: "Order of Operations (Based on Prob 18)",
+            q: "\\(72 \\div (36 \\div 6)\\)",
+            options: ["6", "18", "12", "9"],
+            answer: 2,
+            exp: "Parentheses first: \\(36 \\div 6 = 6\\). Then \\(72 \\div 6 = 12\\)."
+        },
+
+        // Topic 19: Decimal Addition
+        {
+            topic: "Decimal Addition (Based on Prob 19)",
+            q: "\\(4.5 + 3.21 + 15.6\\)",
+            options: ["22.31", "23.31", "23.13", "24.31"],
+            answer: 1,
+            exp: "Line up decimals and pad with zeros: \\(4.50 + 3.21 + 15.60 = 23.31\\)."
+        },
+        {
+            topic: "Decimal Addition (Based on Prob 19)",
+            q: "\\(9.05 + 1.2 + 0.38\\)",
+            options: ["10.53", "11.63", "10.63", "9.63"],
+            answer: 2,
+            exp: "Line up decimals: \\(9.05 + 1.20 + 0.38 = 10.63\\)."
+        },
+        {
+            topic: "Decimal Addition (Based on Prob 19)",
+            q: "\\(12.4 + 5.007 + 3.1\\)",
+            options: ["20.507", "21.507", "20.57", "19.507"],
+            answer: 0,
+            exp: "Line up decimals: \\(12.400 + 5.007 + 3.100 = 20.507\\)."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const topicLabel = document.getElementById('topic-label');
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const explanationBox = document.getElementById('explanation');
+    const expText = document.getElementById('exp-text');
+    const nextBtn = document.getElementById('next-btn');
+    const scoreEl = document.getElementById('score');
+
+    function loadQuestion() {
+        const qData = questions[currentQuestionIndex];
+        
+        // Reset UI
+        topicLabel.innerHTML = `${qData.topic} (Question ${currentQuestionIndex + 1} of ${questions.length})`;
+        questionEl.innerHTML = qData.q;
+        optionsEl.innerHTML = '';
+        explanationBox.style.display = 'none';
+        explanationBox.className = 'explanation-box';
+        nextBtn.style.display = 'none';
+
+        // Create option buttons
+        qData.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = opt;
+            btn.onclick = () => checkAnswer(index, btn);
+            optionsEl.appendChild(btn);
+        });
+
+        // Re-render math notation using MathJax
+        if (window.MathJax) {
+            MathJax.typesetPromise([questionEl, optionsEl]).catch((err) => console.log(err.message));
+        }
+    }
+
+    function checkAnswer(selectedIndex, btnElement) {
+        const qData = questions[currentQuestionIndex];
+        const buttons = optionsEl.getElementsByClassName('option-btn');
+        
+        // Disable all buttons after clicking
+        for (let btn of buttons) {
+            btn.disabled = true;
+        }
+
+        if (selectedIndex === qData.answer) {
+            // Correct
+            btnElement.classList.add('correct');
+            explanationBox.classList.add('correct-bg');
+            expText.innerHTML = "<strong>Correct!</strong> " + qData.exp;
+            score++;
+            scoreEl.innerText = score;
+        } else {
+            // Wrong
+            btnElement.classList.add('wrong');
+            buttons[qData.answer].classList.add('correct'); // Highlight actual correct answer
+            explanationBox.classList.add('wrong-bg');
+            expText.innerHTML = "<strong>Incorrect.</strong> " + qData.exp;
+        }
+
+        explanationBox.style.display = 'block';
+        nextBtn.style.display = 'block';
+        
+        // Re-render MathJax in explanation
+        if (window.MathJax) {
+            MathJax.typesetPromise([explanationBox]).catch((err) => console.log(err.message));
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            // End of quiz
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('end-screen').style.display = 'block';
+            document.getElementById('final-score').innerText = score;
+        }
+    }
+
+    // Initialize first question
+    loadQuestion();
+</script>
+
+</body>
+</html>
