@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Test 13A - Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .problem-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .svg-container {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .answer-container {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .answer-container.show {
+            display: block;
+        }
+        .answer-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cumulative Test 13A</h1>
+
+    <div id="test-container">
+        <div class="problem-card">
+            <div class="problem-text"><strong>1.</strong> Carl took 11 big steps to measure the length of the room. If each step was one yard, then the length of the room was how many feet?</div>
+            <button onclick="toggleAnswer('ans1')">Review Answer & Explanation</button>
+            <div id="ans1" class="answer-container">
+                <div class="answer-text">Answer: 33 feet</div>
+                <div><strong>Explanation:</strong> First, find the total length in yards: 11 steps &times; 1 yard/step = 11 yards. Since there are 3 feet in every yard, multiply the number of yards by 3: \( 11 \times 3 = 33 \). Therefore, the room is 33 feet long.</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>2.</strong> Every fifth student sings in the choir. There are two hundred fifty-five students in all. How many students sing in the choir?</div>
+            <button onclick="toggleAnswer('ans2')">Review Answer & Explanation</button>
+            <div id="ans2" class="answer-container">
+                <div class="answer-text">Answer: 51 students</div>
+                <div><strong>Explanation:</strong> "Every fifth student" means \(\frac{1}{5}\) of the total students. To find how many students sing, divide the total number of students by 5: \( 255 \div 5 = 51 \).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>3.</strong> Two fifths of the students walked to school. What fraction of the students did not walk to school?</div>
+            <button onclick="toggleAnswer('ans3')">Review Answer & Explanation</button>
+            <div id="ans3" class="answer-container">
+                <div class="answer-text">Answer: \(\frac{3}{5}\)</div>
+                <div><strong>Explanation:</strong> The total number of students represents a whole, or \(\frac{5}{5}\). Subtract the fraction that walked to find the fraction that did not walk: \(\frac{5}{5} - \frac{2}{5} = \frac{3}{5}\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>4.</strong> Compare: 25% of 24 \(\bigcirc\) \(3 \times 2\)</div>
+            <button onclick="toggleAnswer('ans4')">Review Answer & Explanation</button>
+            <div id="ans4" class="answer-container">
+                <div class="answer-text">Answer: = (Equal)</div>
+                <div><strong>Explanation:</strong> First, evaluate the left side: 25% is the same as \(\frac{1}{4}\). One-fourth of 24 is \(24 \div 4 = 6\). Next, evaluate the right side: \(3 \times 2 = 6\). Since both sides equal 6, the correct comparison is \(6 = 6\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>5.</strong> What is the area of this square?</div>
+            <div class="svg-container">
+                <svg width="120" height="120">
+                    <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="50" y="110" text-anchor="middle" font-family="Arial" font-size="14">12 mm</text>
+                </svg>
+            </div>
+            <button onclick="toggleAnswer('ans5')">Review Answer & Explanation</button>
+            <div id="ans5" class="answer-container">
+                <div class="answer-text">Answer: 144 sq mm (or \(144 \text{ mm}^2\))</div>
+                <div><strong>Explanation:</strong> The area of a square is calculated by multiplying its side length by itself (\(Area = side \times side\)). Here, \(12 \text{ mm} \times 12 \text{ mm} = 144 \text{ sq mm}\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>6.</strong> Estimate the product of 79 and 9.</div>
+            <button onclick="toggleAnswer('ans6')">Review Answer & Explanation</button>
+            <div id="ans6" class="answer-container">
+                <div class="answer-text">Answer: 720 (or 800)</div>
+                <div><strong>Explanation:</strong> To estimate, round the numbers to make multiplication easier. Round 79 up to 80. You can leave 9 as is: \(80 \times 9 = 720\). Alternatively, rounding 9 to 10 gives \(80 \times 10 = 800\). Both are acceptable estimates, though 720 is closer to the exact answer (711).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>7.</strong> The hiker could hike 36 miles in one day. How far could she hike in 9 days?</div>
+            <button onclick="toggleAnswer('ans7')">Review Answer & Explanation</button>
+            <div id="ans7" class="answer-container">
+                <div class="answer-text">Answer: 324 miles</div>
+                <div><strong>Explanation:</strong> Multiply the daily distance by the number of days: \(36 \text{ miles/day} \times 9 \text{ days} = 324 \text{ miles}\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>8.</strong> Name the polygon.</div>
+            <div class="svg-container">
+                <svg width="120" height="120">
+                    <polygon points="60,10 110,45 90,100 30,100 10,45" fill="none" stroke="black" stroke-width="2"/>
+                </svg>
+            </div>
+            <button onclick="toggleAnswer('ans8')">Review Answer & Explanation</button>
+            <div id="ans8" class="answer-container">
+                <div class="answer-text">Answer: Pentagon</div>
+                <div><strong>Explanation:</strong> Count the number of sides on the shape. A polygon with 5 sides is called a pentagon.</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>9.</strong> If each side of the polygon in problem 8 measures 3 units, then what is its perimeter?</div>
+            <button onclick="toggleAnswer('ans9')">Review Answer & Explanation</button>
+            <div id="ans9" class="answer-container">
+                <div class="answer-text">Answer: 15 units</div>
+                <div><strong>Explanation:</strong> The perimeter is the total distance around the outside of a shape. Since it is a pentagon (5 sides) and each side is 3 units, multiply: \(5 \text{ sides} \times 3 \text{ units/side} = 15 \text{ units}\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>10.</strong> Compare. Draw and shade two congruent squares to show the comparison. \(\frac{1}{2} \bigcirc \frac{5}{8}\)</div>
+            <button onclick="toggleAnswer('ans10')">Review Answer & Explanation</button>
+            <div id="ans10" class="answer-container">
+                <div class="answer-text">Answer: < (Less than)</div>
+                <div class="svg-container">
+                    <svg width="250" height="140">
+                        <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="2"/>
+                        <rect x="10" y="10" width="40" height="80" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <text x="50" y="115" text-anchor="middle" font-family="Arial" font-size="16">1/2</text>
+                        
+                        <text x="115" y="55" text-anchor="middle" font-family="Arial" font-size="24">&lt;</text>
+
+                        <rect x="140" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="2"/>
+                        <rect x="140" y="10" width="20" height="40" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <rect x="160" y="10" width="20" height="40" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <rect x="180" y="10" width="20" height="40" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <rect x="200" y="10" width="20" height="40" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <rect x="140" y="50" width="20" height="40" fill="#a0c4ff" stroke="black" stroke-width="1"/>
+                        <rect x="160" y="50" width="20" height="40" fill="none" stroke="black" stroke-width="1"/>
+                        <rect x="180" y="50" width="20" height="40" fill="none" stroke="black" stroke-width="1"/>
+                        <rect x="200" y="50" width="20" height="40" fill="none" stroke="black" stroke-width="1"/>
+                        <text x="180" y="115" text-anchor="middle" font-family="Arial" font-size="16">5/8</text>
+                    </svg>
+                </div>
+                <div><strong>Explanation:</strong> To compare them numerically, convert \(\frac{1}{2}\) to an equivalent fraction with a denominator of 8. \(\frac{1}{2} = \frac{4}{8}\). Since \(4 < 5\), we know \(\frac{4}{8} < \frac{5}{8}\), so \(\frac{1}{2} < \frac{5}{8}\). The visual drawing confirms that slightly more of the second square is shaded.</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>11.</strong> If 63% of the students were boys, then what percent of the students were girls?</div>
+            <button onclick="toggleAnswer('ans11')">Review Answer & Explanation</button>
+            <div id="ans11" class="answer-container">
+                <div class="answer-text">Answer: 37%</div>
+                <div><strong>Explanation:</strong> The total number of students represents 100%. Subtract the percentage of boys to find the percentage of girls: \(100\% - 63\% = 37\%\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>12.</strong> \(28,461 + 104,776\)</div>
+            <button onclick="toggleAnswer('ans12')">Review Answer & Explanation</button>
+            <div id="ans12" class="answer-container">
+                <div class="answer-text">Answer: 133,237</div>
+                <div><strong>Explanation:</strong> Align the numbers by place value and add:
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;28,461<br>
+                    +104,776<br>
+                    ---------<br>
+                    &nbsp;&nbsp;133,237
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>13.</strong> \(\$11 - 9\text{&cent;}\)</div>
+            <button onclick="toggleAnswer('ans13')">Review Answer & Explanation</button>
+            <div id="ans13" class="answer-container">
+                <div class="answer-text">Answer: $10.91</div>
+                <div><strong>Explanation:</strong> First, rewrite 9 cents in dollar format as $0.09. Then subtract it from $11.00. \( \$11.00 - \$0.09 = \$10.91 \).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>14.</strong> \(7 \times 6 \times 5\)</div>
+            <button onclick="toggleAnswer('ans14')">Review Answer & Explanation</button>
+            <div id="ans14" class="answer-container">
+                <div class="answer-text">Answer: 210</div>
+                <div><strong>Explanation:</strong> Multiply left to right. \(7 \times 6 = 42\). Then multiply \(42 \times 5 = 210\). (Alternatively, \(6 \times 5 = 30\), and \(30 \times 7 = 210\)).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>15.</strong> \(3^2 + 8^2\)</div>
+            <button onclick="toggleAnswer('ans15')">Review Answer & Explanation</button>
+            <div id="ans15" class="answer-container">
+                <div class="answer-text">Answer: 73</div>
+                <div><strong>Explanation:</strong> First, evaluate the exponents. \(3^2 = 3 \times 3 = 9\) and \(8^2 = 8 \times 8 = 64\). Then add the results together: \(9 + 64 = 73\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>16.</strong> 
+                <div style="font-family: monospace; font-size: 1.2em; line-height: 1;">
+                    &nbsp;728<br>
+                    <u>&times;&nbsp;&nbsp;4</u>
+                </div>
+            </div>
+            <button onclick="toggleAnswer('ans16')">Review Answer & Explanation</button>
+            <div id="ans16" class="answer-container">
+                <div class="answer-text">Answer: 2,912</div>
+                <div><strong>Explanation:</strong> Multiply step-by-step:
+                    <ul>
+                        <li>\(4 \times 8 = 32\) (write down 2, carry 3)</li>
+                        <li>\(4 \times 2 = 8\), plus 3 carried = 11 (write down 1, carry 1)</li>
+                        <li>\(4 \times 7 = 28\), plus 1 carried = 29</li>
+                    </ul>
+                    Result is 2912.
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>17.</strong> \(322 \div 7\)</div>
+            <button onclick="toggleAnswer('ans17')">Review Answer & Explanation</button>
+            <div id="ans17" class="answer-container">
+                <div class="answer-text">Answer: 46</div>
+                <div><strong>Explanation:</strong> Use long division: 7 goes into 32 four times (\(7 \times 4 = 28\)). Subtract 28 from 32 to get 4. Bring down the 2 to make 42. 7 goes into 42 six times exactly (\(7 \times 6 = 42\)). Therefore, the quotient is 46.</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>18.</strong> \(45 \div (45 \div 9)\)</div>
+            <button onclick="toggleAnswer('ans18')">Review Answer & Explanation</button>
+            <div id="ans18" class="answer-container">
+                <div class="answer-text">Answer: 9</div>
+                <div><strong>Explanation:</strong> According to the order of operations, perform the operation inside the parentheses first. \(45 \div 9 = 5\). Now substitute 5 back into the equation: \(45 \div 5 = 9\).</div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>19.</strong> \(8.3 + 2.56 + 12.7\)</div>
+            <button onclick="toggleAnswer('ans19')">Review Answer & Explanation</button>
+            <div id="ans19" class="answer-container">
+                <div class="answer-text">Answer: 23.56</div>
+                <div><strong>Explanation:</strong> Line up the decimal points and add zeros as placeholders if needed:
+                    <br><br>
+                    &nbsp;&nbsp;8.30<br>
+                    &nbsp;&nbsp;2.56<br>
+                    +12.70<br>
+                    -------<br>
+                    &nbsp;23.56
+                </div>
+            </div>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-text"><strong>20.</strong> Find the missing factor: \(4r = 52\)</div>
+            <button onclick="toggleAnswer('ans20')">Review Answer & Explanation</button>
+            <div id="ans20" class="answer-container">
+                <div class="answer-text">Answer: 13</div>
+                <div><strong>Explanation:</strong> To isolate the variable \(r\), divide both sides of the equation by 4. \(r = 52 \div 4\). \(r = 13\).</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle the visibility of the answer blocks
+        function toggleAnswer(answerId) {
+            const answerElement = document.getElementById(answerId);
+            if (answerElement.classList.contains('show')) {
+                answerElement.classList.remove('show');
+            } else {
+                answerElement.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>
