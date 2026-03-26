@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+        .answer-section.show {
+            display: block;
+        }
+        .correct-ans {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Review</h1>
+    <p style="text-align: center;">Click "Show Answer & Explanation" below each problem to check your work.</p>
+
+    <div id="problems-container">
+        </div>
+
+    <script>
+        const problems = [
+            {
+                q: "1. Terrell stared at the rectangular ceiling and saw that it was covered with square tiles. The ceiling was 40 tiles long and 30 tiles wide. In all, how many tiles were on the ceiling?",
+                a: "1,200 tiles",
+                exp: "To find the total number of tiles on a rectangular surface, multiply the length by the width: \\( 40 \\times 30 = 1,200 \\)."
+            },
+            {
+                q: "2. There were two hundred sixty seats in the movie theater. All but forty-three seats were occupied. How many seats were occupied?",
+                a: "217 seats",
+                exp: "Subtract the number of unoccupied seats from the total number of seats: \\( 260 - 43 = 217 \\)."
+            },
+            {
+                q: "3. Each cookie contains 5 chocolate chips. How many chocolate chips are in 115 cookies?",
+                a: "575 chocolate chips",
+                exp: "Multiply the number of cookies by the number of chips per cookie: \\( 115 \\times 5 = 575 \\). (Note: The handwritten division on the page is incorrect for what the word problem is asking)."
+            },
+            {
+                q: "4. A recipe for homemade ice cream calls for a cup of sugar for each quart of ice cream. How many cups of sugar are needed for a gallon of ice cream?",
+                a: "4 cups",
+                exp: "There are 4 quarts in 1 gallon. Since 1 quart needs 1 cup of sugar, 4 quarts will need \\( 4 \\times 1 = 4 \\) cups of sugar."
+            },
+            {
+                q: "5. What is the value of 5 pennies, 3 dimes, 2 quarters, and 3 nickels?",
+                a: "$1.00",
+                exp: "Calculate the value of each coin type:<br>Pennies: \\( 5 \\times 1¢ = 5¢ \\)<br>Dimes: \\( 3 \\times 10¢ = 30¢ \\)<br>Quarters: \\( 2 \\times 25¢ = 50¢ \\)<br>Nickels: \\( 3 \\times 5¢ = 15¢ \\)<br>Total: \\( 5 + 30 + 50 + 15 = 100¢ \\), which is \\( \\$1.00 \\)."
+            },
+            {
+                q: "6. One fourth of the students earned A's. There were 280 students in all. How many students earned A's?",
+                a: "70 students",
+                exp: "Multiply the total number of students by one fourth (or divide by 4): \\( 280 \\div 4 = 70 \\)."
+            },
+            {
+                q: "7. What percent of the students in problem 6 earned A's?",
+                a: "25%",
+                exp: "The fraction one-fourth (\\( \\frac{1}{4} \\)) is equal to 25%."
+            },
+            {
+                q: "8. What is \\( \\frac{1}{2} \\) of 560?",
+                a: "280",
+                exp: "To find half of a number, divide it by 2: \\( 560 \\div 2 = 280 \\)."
+            },
+            {
+                q: "9. (a) The line segment shown below is how many centimeters long? (b) The segment is how many millimeters long?",
+                a: "(a) 3 cm, (b) 30 mm",
+                exp: "Looking at the ruler in the image, the line starts at the 1 cm mark and ends at the 4 cm mark. \\( 4 - 1 = 3 \\text{ cm} \\). Since there are 10 millimeters in a centimeter, \\( 3 \\times 10 = 30 \\text{ mm} \\)."
+            },
+            {
+                q: "10. The first four multiples of 9 are 9, 18, 27, and 36. What are the first four multiples of 90?",
+                a: "90, 180, 270, 360",
+                exp: "Multiply 90 by 1, 2, 3, and 4. You can also just add a zero to the multiples of 9."
+            },
+            {
+                q: "11. Compare: \\( \\frac{2}{3} \\bigcirc \\frac{2}{5} \\)",
+                a: "\\( \\frac{2}{3} > \\frac{2}{5} \\)",
+                exp: "When numerators are the same, the fraction with the smaller denominator is larger because the whole is divided into fewer, larger pieces. Alternatively, find a common denominator (15): \\( \\frac{10}{15} > \\frac{6}{15} \\)."
+            },
+            {
+                q: "12. Jenny could hop 72 times in 1 minute. At that rate, how many times could she hop in 9 minutes?",
+                a: "648 times",
+                exp: "Multiply her hops per minute by the total number of minutes: \\( 72 \\times 9 = 648 \\)."
+            },
+            {
+                q: "13. \\( \\$375.48 + \\$536.70 \\)",
+                a: "$912.18",
+                exp: "Line up the decimals and add: <br>&nbsp;&nbsp;375.48<br>+ 536.70<br>---------<br>&nbsp;&nbsp;912.18"
+            },
+            {
+                q: "14. \\( 367,419 + 90,852 \\)",
+                a: "458,271",
+                exp: "Line up the digits by place value and add:<br>&nbsp;&nbsp;367,419<br>+&nbsp;&nbsp;90,852<br>---------<br>&nbsp;&nbsp;458,271"
+            },
+            {
+                q: "15. \\( 42.3 + 57.1 + 28.9 + 96.4 + 38.0 \\)",
+                a: "262.7",
+                exp: "Line up the decimals and add the stack of numbers together to get 262.7."
+            },
+            {
+                q: "16. \\( \\$20.00 - \\$19.39 \\)",
+                a: "$0.61",
+                exp: "Line up the decimals and subtract. You need to borrow across the zeros.<br>&nbsp;&nbsp;20.00<br>- 19.39<br>-------<br>&nbsp;&nbsp;&nbsp;0.61"
+            },
+            {
+                q: "17. \\( 310,419 - 250,527 \\)",
+                a: "59,892",
+                exp: "Standard subtraction with borrowing:<br>&nbsp;&nbsp;310,419<br>- 250,527<br>---------<br>&nbsp;&nbsp;&nbsp;59,892"
+            },
+            {
+                q: "18. \\( \\$6.08 \\times 7 \\)",
+                a: "$42.56",
+                exp: "\\( 6.08 \\times 7 = 42.56 \\). Remember to place the decimal point two places from the right."
+            },
+            {
+                q: "19. \\( 86 \\times 40 \\)",
+                a: "3,440",
+                exp: "Multiply \\( 86 \\times 4 = 344 \\), then add the zero at the end: 3440."
+            },
+            {
+                q: "20. \\( 59¢ \\times 8 \\)",
+                a: "472¢ or $4.72",
+                exp: "\\( 59 \\times 8 = 472 \\). Since the unit is cents, it is 472 cents, which converts to \\( \\$4.72 \\)."
+            },
+            {
+                q: "21. \\( 180 \\div 3 \\)",
+                a: "60",
+                exp: "Since \\( 18 \\div 3 = 6 \\), \\( 180 \\div 3 = 60 \\)."
+            },
+            {
+                q: "22. \\( 241 \\div 8 \\)",
+                a: "30 R 1",
+                exp: "\\( 240 \\div 8 = 30 \\), so \\( 241 \\div 8 \\) gives a quotient of 30 with a remainder of 1."
+            },
+            {
+                q: "23. \\( 323 \\div 5 \\)",
+                a: "64 R 3",
+                exp: "5 goes into 32 six times (30), leaving 2. Bring down 3 to make 23. 5 goes into 23 four times (20), leaving a remainder of 3. Answer: 64 R 3."
+            },
+            {
+                q: "24. \\( 184 \\div 6 \\)",
+                a: "30 R 4",
+                exp: "6 goes into 18 three times (18), leaving 0. Bring down 4. 6 goes into 4 zero times. The quotient is 30 with a remainder of 4."
+            },
+            {
+                q: "25. \\( 423 \\div 7 \\)",
+                a: "60 R 3",
+                exp: "7 goes into 42 six times exactly. Bring down the 3. 7 goes into 3 zero times, leaving a remainder of 3. Quotient: 60 R 3."
+            },
+            {
+                q: "26. \\( \\sqrt{36} + 4^2 + 10^2 \\)",
+                a: "122",
+                exp: "Evaluate each term first:<br>\\( \\sqrt{36} = 6 \\)<br>\\( 4^2 = 16 \\)<br>\\( 10^2 = 100 \\)<br>Add them together: \\( 6 + 16 + 100 = 122 \\)."
+            },
+            {
+                q: "27. \\( 9 + M = 27 + 72 \\)",
+                a: "M = 90",
+                exp: "First, solve the right side of the equation: \\( 27 + 72 = 99 \\).<br>The equation is now \\( 9 + M = 99 \\).<br>Subtract 9 from both sides: \\( M = 90 \\)."
+            },
+            {
+                q: "28. \\( 6N = 90 \\)",
+                a: "N = 15",
+                exp: "Divide both sides by 6 to isolate N: \\( 90 \\div 6 = 15 \\)."
+            },
+            {
+                q: "29. Use an inch ruler to find the lengths of segments AB, BC, and AC.",
+                a: "Requires physical measurement",
+                exp: "To solve this, you need to physically place an inch ruler on the printed paper to measure the distance between the points. Segment AC will be the sum of segment AB and segment BC."
+            },
+            {
+                q: "30. If the diameter of a coin is 2 centimeters, then its radius is how many millimeters?",
+                a: "10 millimeters",
+                exp: "First, find the radius in centimeters. The radius is half of the diameter, so \\( 2 \\div 2 = 1 \\text{ cm} \\).<br>Convert 1 cm to millimeters by multiplying by 10: \\( 1 \\times 10 = 10 \\text{ mm} \\)."
+            }
+        ];
+
+        const container = document.getElementById('problems-container');
+
+        problems.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            card.innerHTML = `
+                <div class="question-text">${item.q}</div>
+                <button class="btn-toggle" onclick="toggleAnswer(${index})">Show Answer & Explanation</button>
+                <div class="answer-section" id="ans-${index}">
+                    <div class="correct-ans">Answer: ${item.a}</div>
+                    <div class="explanation"><strong>Explanation:</strong> ${item.exp}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        function toggleAnswer(index) {
+            const ansDiv = document.getElementById(`ans-${index}`);
+            const btn = ansDiv.previousElementSibling;
+            
+            if (ansDiv.classList.contains('show')) {
+                ansDiv.classList.remove('show');
+                btn.textContent = "Show Answer & Explanation";
+            } else {
+                ansDiv.classList.add('show');
+                btn.textContent = "Hide Answer";
+            }
+        }
+    </script>
+</body>
+</html>
