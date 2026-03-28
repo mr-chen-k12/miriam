@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 72 Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            border-radius: 0 5px 5px 0;
+        }
+        .answer-final {
+            font-weight: bold;
+            color: #d35400;
+            margin-top: 10px;
+        }
+        svg {
+            display: block;
+            margin: 15px 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 72: Finding Information to Solve Problems</h1>
+
+    <div id="problems-container">
+        </div>
+
+    <script>
+        const problems = [
+            {
+                q: "1. Christie's car travels 18 miles on each gallon of gas. How many miles can it travel on 10 gallons of gas?",
+                steps: "Multiply the miles per gallon by the total number of gallons:<br> $$18 \\text{ miles/gallon} \\times 10 \\text{ gallons} = 180 \\text{ miles}$$",
+                ans: "180 miles"
+            },
+            {
+                q: "2. Alejandro mowed a yard that was 50 feet wide. Each time he pushed the mower along the length of the yard, he mowed a path 24 inches wide. To mow the entire yard, how many times did Alejandro need to push the mower along the length of the yard?",
+                steps: "First, convert the width of the yard into the same units as the mower path (inches):<br> $$50 \\text{ feet} \\times 12 \\text{ inches/foot} = 600 \\text{ inches}$$<br>Next, divide the total width by the width of the mower path:<br> $$600 \\div 24 = 25$$",
+                ans: "25 times"
+            },
+            {
+                q: "3. If Humpty Dumpty weighed 160 pounds and broke into 8 equal pieces, then how much did each piece weigh?",
+                steps: "Divide the total weight by the number of equal pieces:<br> $$160 \\div 8 = 20$$",
+                ans: "20 pounds"
+            },
+            {
+                q: "4. Soccer practice lasts for an hour and a half. If practice starts at 3:15 p.m., at what time does it end?",
+                steps: "An hour and a half is 1 hour and 30 minutes. Add this to the start time:<br> $$3:15 + 1:30 = 4:45$$",
+                ans: "4:45 p.m."
+            },
+            {
+                q: "5. One third of the team's 36 points were scored by Lucy. How many points did Lucy score? Draw a picture to help you solve the problem.",
+                steps: "Divide the total points by 3 to find one third:<br> $$36 \\div 3 = 12$$<br>Picture explanation: A circle divided into 3 equal sections, with each section representing 12 points.",
+                ans: "12 points",
+                svg: `<svg width="200" height="200" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="80" fill="none" stroke="#333" stroke-width="2"/>
+                        <path d="M 100 100 L 100 20" stroke="#333" stroke-width="2"/>
+                        <path d="M 100 100 L 30 140" stroke="#333" stroke-width="2"/>
+                        <path d="M 100 100 L 170 140" stroke="#333" stroke-width="2"/>
+                        <text x="130" y="80" font-size="16">12 points</text>
+                        <text x="40" y="80" font-size="16">12 points</text>
+                        <text x="75" y="160" font-size="16">12 (Lucy)</text>
+                      </svg>`
+            },
+            {
+                q: "6. Find the perimeter and area of this rectangle (grid shows 4 units wide by 3 units high):",
+                steps: "The grid shows the rectangle has a length of 4 units and a width of 3 units.<br>Perimeter = add all sides: $$4 + 3 + 4 + 3 = 14 \\text{ units}$$<br>Area = length $\\times$ width: $$4 \\times 3 = 12 \\text{ square units}$$",
+                ans: "Perimeter: 14 units, Area: 12 square units",
+                svg: `<svg width="180" height="140" viewBox="0 0 180 140">
+                        <rect x="10" y="10" width="160" height="120" fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+                        <line x1="50" y1="10" x2="50" y2="130" stroke="#333" stroke-width="1"/>
+                        <line x1="90" y1="10" x2="90" y2="130" stroke="#333" stroke-width="1"/>
+                        <line x1="130" y1="10" x2="130" y2="130" stroke="#333" stroke-width="1"/>
+                        <line x1="10" y1="50" x2="170" y2="50" stroke="#333" stroke-width="1"/>
+                        <line x1="10" y1="90" x2="170" y2="90" stroke="#333" stroke-width="1"/>
+                      </svg>`
+            },
+            {
+                q: "7. This key is 60 mm long. The key is how many centimeters long?",
+                steps: "There are 10 millimeters in 1 centimeter. Divide the length in mm by 10:<br> $$60 \\text{ mm} \\div 10 = 6 \\text{ cm}$$",
+                ans: "6 cm"
+            },
+            {
+                q: "8. According to this calendar (December 1901), the year 1902 began on what day of the week?",
+                steps: "Looking at the provided calendar for December 1901, the last day of the month (December 31st) falls on a Tuesday. The next day, January 1, 1902, must be a Wednesday.",
+                ans: "Wednesday"
+            },
+            {
+                q: "9. The chance of rain is 30%. What is the chance that it will not rain?",
+                steps: "The total probability of all weather outcomes is 100%. Subtract the chance of rain from 100%:<br> $$100\\% - 30\\% = 70\\%$$",
+                ans: "70%"
+            },
+            {
+                q: "10. A meter equals 100 centimeters. If each side of a square is 1 meter long, then what is the perimeter of the square in centimeters?",
+                steps: "First, convert the side length to centimeters: $$1 \\text{ meter} = 100 \\text{ cm}$$.<br>A square has 4 equal sides. Multiply the side length by 4:<br> $$100 + 100 + 100 + 100 = 400 \\text{ cm}$$",
+                ans: "400 cm"
+            },
+            {
+                q: "11. List the first four multiples of 90.",
+                steps: "Multiply 90 by 1, 2, 3, and 4:<br>$$90 \\times 1 = 90$$<br>$$90 \\times 2 = 180$$<br>$$90 \\times 3 = 270$$<br>$$90 \\times 4 = 360$$",
+                ans: "90, 180, 270, 360"
+            },
+            {
+                q: "12. $1.68 + 32¢ + $6.37 + $5",
+                steps: "Convert 32¢ to $0.32, and write $5 as $5.00 to align decimals.<br>$$1.68 + 0.32 + 6.37 + 5.00 = 13.37$$",
+                ans: "$13.37"
+            },
+            {
+                q: "13. 4.3 + 2.4 + 0.8 + 6.7",
+                steps: "Align the decimals and add:<br>$$4.3 + 2.4 + 0.8 + 6.7 = 14.2$$",
+                ans: "14.2"
+            },
+            {
+                q: "14. $10 - ($6.46 + $2.17)",
+                steps: "First, solve inside the parentheses:<br>$$6.46 + 2.17 = 8.63$$<br>Next, subtract that sum from $10.00:<br>$$10.00 - 8.63 = 1.37$$",
+                ans: "$1.37"
+            },
+            {
+                q: "15. 5 \u00d7 4 \u00d7 5",
+                steps: "Multiply from left to right (or in any order):<br>$$5 \\times 4 = 20$$<br>$$20 \\times 5 = 100$$",
+                ans: "100"
+            },
+            {
+                q: "16. 359 \u00d7 70",
+                steps: "Multiply 359 by 7, then add a zero to the end:<br>$$359 \\times 7 = 2513$$<br>$$2513 \\times 10 = 25130$$",
+                ans: "25,130"
+            },
+            {
+                q: "17. 50 \u00d7 74",
+                steps: "Multiply 74 by 5, then add a zero:<br>$$74 \\times 5 = 370$$<br>$$370 \\times 10 = 3700$$",
+                ans: "3,700"
+            },
+            {
+                q: "18. $2 \\overline{) 161}$",
+                steps: "Divide 161 by 2. 160 divided by 2 is 80, leaving a remainder of 1.<br>$$161 \\div 2 = 80 \\text{ R } 1$$ (or $80.5$)",
+                ans: "80 R 1 (or 80.5)"
+            },
+            {
+                q: "19. $5 \\overline{) 400}$",
+                steps: "Divide 400 by 5. 40 divided by 5 is 8, add the remaining zero.<br>$$400 \\div 5 = 80$$",
+                ans: "80"
+            },
+            {
+                q: "20. $9 \\overline{) 462}$",
+                steps: "Divide 462 by 9.<br>9 goes into 46 five times (45) with 1 left over.<br>Bring down the 2 to make 12. 9 goes into 12 one time (9) with 3 left over.<br>Result is 51 with a remainder of 3.",
+                ans: "51 R 3"
+            },
+            {
+                q: "21. $\\frac{216}{3}$",
+                steps: "Divide 216 by 3.<br>3 goes into 21 seven times. 3 goes into 6 two times.<br>$$216 \\div 3 = 72$$",
+                ans: "72"
+            },
+            {
+                q: "22. $159 \\div 4$",
+                steps: "Divide 159 by 4.<br>4 goes into 15 three times (12), remainder 3. Bring down 9 to make 39.<br>4 goes into 39 nine times (36), remainder 3.<br>$$159 \\div 4 = 39 \\text{ R } 3$$ (or $39.75$)",
+                ans: "39 R 3 (or 39.75)"
+            },
+            {
+                q: "23. $\\frac{490}{7}$",
+                steps: "Divide 490 by 7.<br>7 goes into 49 seven times, add the remaining zero.<br>$$490 \\div 7 = 70$$",
+                ans: "70"
+            },
+            {
+                q: "24. $\\frac{126}{3}$",
+                steps: "Divide 126 by 3.<br>3 goes into 12 four times. 3 goes into 6 two times.<br>$$126 \\div 3 = 42$$",
+                ans: "42"
+            },
+            {
+                q: "25. $360 \\div \\sqrt{36}$",
+                steps: "First, find the square root of 36:<br>$$\\sqrt{36} = 6$$<br>Next, divide 360 by 6:<br>$$360 \\div 6 = 60$$",
+                ans: "60"
+            },
+            {
+                q: "26. $5N = 120$",
+                steps: "Solve for N by dividing both sides by 5:<br>$$N = 120 \\div 5$$<br>$$N = 24$$",
+                ans: "N = 24"
+            },
+            {
+                q: "27. Selby scored two goals as her soccer team won 5 to 4 on November 3. To make the playoffs, her team needs to win two of the next three games. How many goals were scored by Selby's teammates?",
+                steps: "The team scored a total of 5 goals. Subtract the goals Selby scored (2) from the total:<br>$$5 - 2 = 3$$",
+                ans: "3 goals"
+            },
+            {
+                q: "28. Selby's team has won four games and lost three games. Altogether, how many games does Selby's team need to win to make the playoffs?",
+                steps: "They have already won 4 games. The prompt states they need to win 2 of the next 3 games to make the playoffs.<br>Total wins needed = Current wins + Needed wins:<br>$$4 + 2 = 6$$",
+                ans: "6 games"
+            },
+            {
+                q: "29. Angles C and D of this polygon are right angles. Which angle appears to be an obtuse angle?",
+                steps: "An obtuse angle is an angle greater than 90 degrees. Looking at the shape, Angle A is sharp (acute, less than 90°), while Angle B is wide (obtuse, greater than 90°).",
+                ans: "Angle B",
+                svg: `<svg width="150" height="150" viewBox="-20 -20 150 150">
+                        <polygon points="10,10 90,10 50,70 10,70" fill="none" stroke="black" stroke-width="2"/>
+                        <polyline points="10,20 20,20 20,10" fill="none" stroke="black" stroke-width="1"/>
+                        <polyline points="10,60 20,60 20,70" fill="none" stroke="black" stroke-width="1"/>
+                        <text x="-5" y="10" font-size="14" font-family="serif">D</text>
+                        <text x="95" y="10" font-size="14" font-family="serif">A</text>
+                        <text x="-5" y="80" font-size="14" font-family="serif">C</text>
+                        <text x="55" y="80" font-size="14" font-family="serif">B</text>
+                      </svg>`
+            },
+            {
+                q: "30. Draw a polygon that is congruent to the polygon in problem 29.",
+                steps: "Congruent means exactly the same size and shape. Here is the identical right trapezoid:",
+                ans: "Congruent right trapezoid drawn.",
+                svg: `<svg width="150" height="150" viewBox="-20 -20 150 150">
+                        <polygon points="10,10 90,10 50,70 10,70" fill="#e3f2fd" stroke="#1565c0" stroke-width="3"/>
+                        <polyline points="10,20 20,20 20,10" fill="none" stroke="#1565c0" stroke-width="1.5"/>
+                        <polyline points="10,60 20,60 20,70" fill="none" stroke="#1565c0" stroke-width="1.5"/>
+                      </svg>`
+            }
+        ];
+
+        // Function to toggle the visibility of the solution
+        function toggleSolution(id) {
+            const solDiv = document.getElementById('sol-' + id);
+            const btn = document.getElementById('btn-' + id);
+            if (solDiv.style.display === 'none' || solDiv.style.display === '') {
+                solDiv.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            } else {
+                solDiv.style.display = 'none';
+                btn.textContent = 'Reveal Answer';
+            }
+        }
+
+        // Generate the HTML for the problems
+        const container = document.getElementById('problems-container');
+        problems.forEach((prob, index) => {
+            const id = index + 1;
+            const svgContent = prob.svg ? prob.svg : '';
+            
+            const cardHtml = `
+                <div class="problem-card">
+                    <div class="question">${prob.q}</div>
+                    <button id="btn-${id}" class="btn-toggle" onclick="toggleSolution(${id})">Reveal Answer</button>
+                    <div id="sol-${id}" class="solution">
+                        <p>${prob.steps}</p>
+                        ${svgContent}
+                        <div class="answer-final">Final Answer: ${prob.ans}</div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHtml;
+        });
+    </script>
+</body>
+</html>
