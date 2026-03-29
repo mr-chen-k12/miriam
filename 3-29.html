@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Quiz: Conversions, Multiplication, and Algebra</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+        .quiz-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option-btn {
+            background-color: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            background-color: #dfe6e9;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+        .wrong {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            font-size: 1em;
+        }
+        .feedback-correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        .feedback-wrong {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+        }
+        .explanation-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Quiz</h1>
+    <p style="text-align: center;">Select an answer to see if you are correct and to view the explanation.</p>
+
+    <div id="quiz-container"></div>
+
+    <script>
+        const quizData = [
+            // Category 1: Based on Question 2 (Unit conversion & Division)
+            {
+                category: "Concept 1: Unit Conversions and Division (Based on Q2)",
+                questions: [
+                    {
+                        q: "Sarah is painting a fence that is 30 feet long. Her paint roller covers a width of 18 inches with each vertical stroke. How many strokes will it take to cover the entire length of the fence?",
+                        options: ["15 strokes", "20 strokes", "25 strokes", "30 strokes"],
+                        answer: 1, // Index of correct option
+                        explanation: "First, convert the length of the fence from feet to inches so the units match: <br> $$30 \\text{ feet} \\times 12 \\text{ inches/foot} = 360 \\text{ inches}$$ <br> Next, divide the total length by the width of one stroke: <br> $$360 \\div 18 = 20$$"
+                    },
+                    {
+                        q: "A gymnasium floor is 40 feet wide. A floor sanding machine sands a path 20 inches wide. How many passes are needed to sand the entire width of the floor?",
+                        options: ["20 passes", "24 passes", "30 passes", "12 passes"],
+                        answer: 1,
+                        explanation: "Convert the floor width to inches: <br> $$40 \\text{ feet} \\times 12 \\text{ inches/foot} = 480 \\text{ inches}$$ <br> Divide by the width of the sander's path: <br> $$480 \\div 20 = 24$$"
+                    },
+                    {
+                        q: "A driveway is 20 feet wide. A snowblower clears a path 24 inches wide. How many passes are needed to clear the whole driveway?",
+                        options: ["8 passes", "10 passes", "12 passes", "24 passes"],
+                        answer: 1,
+                        explanation: "Convert the driveway width to inches: <br> $$20 \\text{ feet} \\times 12 \\text{ inches/foot} = 240 \\text{ inches}$$ <br> Divide by the width of the snowblower: <br> $$240 \\div 24 = 10$$"
+                    },
+                    {
+                        q: "A farmer is plowing a field that is 100 feet wide. The plow blade is 30 inches wide. How many passes are needed to plow the field's width?",
+                        options: ["30 passes", "40 passes", "50 passes", "60 passes"],
+                        answer: 1,
+                        explanation: "Convert the field width to inches: <br> $$100 \\text{ feet} \\times 12 \\text{ inches/foot} = 1200 \\text{ inches}$$ <br> Divide by the width of the plow blade: <br> $$1200 \\div 30 = 40$$"
+                    },
+                    {
+                        q: "A wall is 15 feet wide. A strip of wallpaper is 18 inches wide. How many strips of wallpaper are needed to cover the width of the wall?",
+                        options: ["8 strips", "12 strips", "10 strips", "15 strips"],
+                        answer: 2,
+                        explanation: "Convert the wall width to inches: <br> $$15 \\text{ feet} \\times 12 \\text{ inches/foot} = 180 \\text{ inches}$$ <br> Divide by the width of the wallpaper strip: <br> $$180 \\div 18 = 10$$"
+                    }
+                ]
+            },
+            // Category 2: Based on Question 16 (Multi-digit Multiplication)
+            {
+                category: "Concept 2: Multiplying by Multiples of 10 (Based on Q16)",
+                questions: [
+                    {
+                        q: "Solve: $$428 \\times 60$$",
+                        options: ["24,680", "25,580", "2,568", "25,680"],
+                        answer: 3,
+                        explanation: "First, multiply 428 by 6: <br> $$428 \\times 6 = 2568$$ <br> Then, attach a zero to the end because you are multiplying by 60 (which is $6 \\times 10$): <br> $$2568 \\times 10 = 25680$$"
+                    },
+                    {
+                        q: "Solve: $$517 \\times 40$$",
+                        options: ["20,680", "2,068", "21,680", "20,480"],
+                        answer: 0,
+                        explanation: "First, multiply 517 by 4: <br> $$517 \\times 4 = 2068$$ <br> Then, attach a zero to the end: <br> $$2068 \\times 10 = 20680$$"
+                    },
+                    {
+                        q: "Solve: $$294 \\times 80$$",
+                        options: ["23,420", "24,520", "23,520", "2,352"],
+                        answer: 2,
+                        explanation: "First, multiply 294 by 8: <br> $$294 \\times 8 = 2352$$ <br> Then, attach a zero to the end: <br> $$2352 \\times 10 = 23520$$"
+                    },
+                    {
+                        q: "Solve: $$683 \\times 30$$",
+                        options: ["20,490", "20,390", "2,049", "21,490"],
+                        answer: 0,
+                        explanation: "First, multiply 683 by 3: <br> $$683 \\times 3 = 2049$$ <br> Then, attach a zero to the end: <br> $$2049 \\times 10 = 20490$$"
+                    },
+                    {
+                        q: "Solve: $$156 \\times 90$$",
+                        options: ["13,040", "14,040", "1,404", "14,140"],
+                        answer: 1,
+                        explanation: "First, multiply 156 by 9: <br> $$156 \\times 9 = 1404$$ <br> Then, attach a zero to the end: <br> $$1404 \\times 10 = 14040$$"
+                    }
+                ]
+            },
+            // Category 3: Based on Question 26 (Basic Algebra)
+            {
+                category: "Concept 3: Solving One-Step Equations (Based on Q26)",
+                questions: [
+                    {
+                        q: "Solve for N: $$8N = 144$$",
+                        options: ["12", "16", "18", "24"],
+                        answer: 2,
+                        explanation: "Divide both sides of the equation by 8 to isolate N: <br> $$N = 144 \\div 8$$ <br> $$N = 18$$"
+                    },
+                    {
+                        q: "Solve for Y: $$7Y = 217$$",
+                        options: ["30", "31", "32", "21"],
+                        answer: 1,
+                        explanation: "Divide both sides of the equation by 7 to isolate Y: <br> $$Y = 217 \\div 7$$ <br> $$Y = 31$$"
+                    },
+                    {
+                        q: "Solve for M: $$4M = 132$$",
+                        options: ["32", "33", "34", "43"],
+                        answer: 1,
+                        explanation: "Divide both sides of the equation by 4 to isolate M: <br> $$M = 132 \\div 4$$ <br> $$M = 33$$"
+                    },
+                    {
+                        q: "Solve for K: $$9K = 153$$",
+                        options: ["15", "16", "17", "18"],
+                        answer: 2,
+                        explanation: "Divide both sides of the equation by 9 to isolate K: <br> $$K = 153 \\div 9$$ <br> $$K = 17$$"
+                    },
+                    {
+                        q: "Solve for P: $$6P = 198$$",
+                        options: ["31", "32", "33", "34"],
+                        answer: 2,
+                        explanation: "Divide both sides of the equation by 6 to isolate P: <br> $$P = 198 \\div 6$$ <br> $$P = 33$$"
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        let questionCounter = 0;
+
+        // Generate the quiz dynamically
+        quizData.forEach((section) => {
+            // Add Category Header
+            const header = document.createElement('h2');
+            header.textContent = section.category;
+            container.appendChild(header);
+
+            section.questions.forEach((item) => {
+                const qId = questionCounter++;
+                
+                // Create Card
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+
+                // Question Text
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `${qId + 1}. ${item.q}`;
+                card.appendChild(qText);
+
+                // Options Container
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options-container';
+                optionsDiv.id = `options-${qId}`;
+
+                // Feedback Container (hidden initially)
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.id = `feedback-${qId}`;
+                feedbackDiv.className = 'feedback';
+
+                // Create Buttons for Options
+                item.options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `${String.fromCharCode(65 + index)}) ${opt}`;
+                    
+                    btn.onclick = () => {
+                        // Disable all buttons in this question after a click
+                        const allBtns = optionsDiv.querySelectorAll('button');
+                        allBtns.forEach(b => b.disabled = true);
+
+                        // Check Answer
+                        if (index === item.answer) {
+                            btn.classList.add('correct');
+                            feedbackDiv.classList.add('feedback-correct');
+                            feedbackDiv.innerHTML = `<div class="explanation-title">✅ Correct!</div><p>${item.explanation}</p>`;
+                        } else {
+                            btn.classList.add('wrong');
+                            // Highlight the correct one too
+                            allBtns[item.answer].classList.add('correct');
+                            feedbackDiv.classList.add('feedback-wrong');
+                            feedbackDiv.innerHTML = `<div class="explanation-title">❌ Incorrect</div><p><strong>The correct answer is ${String.fromCharCode(65 + item.answer)}.</strong></p><p>${item.explanation}</p>`;
+                        }
+                        
+                        // Show Feedback
+                        feedbackDiv.style.display = 'block';
+                        
+                        // Re-render MathJax in case equations were injected dynamically
+                        MathJax.typesetPromise([feedbackDiv]);
+                    };
+                    
+                    optionsDiv.appendChild(btn);
+                });
+
+                card.appendChild(optionsDiv);
+                card.appendChild(feedbackDiv);
+                container.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
