@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Transformations & Math Problems</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .intro {
+            background: #fff;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .question-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .q-number {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        .q-text {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .btn-reveal {
+            background-color: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+        .btn-reveal:hover {
+            background-color: #2ecc71;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            animation: fadeIn 0.5s;
+        }
+        .explanation.visible {
+            display: block;
+        }
+        .ans-bold {
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 1.1em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .svg-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 73: Geometric Transformations & Math Practice</h1>
+    
+    <div class="intro">
+        <p><strong>Use this information to answer problems 1–3:</strong><br>
+        <em>Thirty students are going on a field trip. Each car can hold five students. The field trip will cost each student $5.</em></p>
+    </div>
+
+    <div class="grid-container">
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">1.</div>
+                How many cars are needed for the field trip?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp1')">Show Answer & Explanation</button>
+            <div id="exp1" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">6 cars</span></p>
+                <p><strong>Explanation:</strong> Divide the total number of students by the number of students each car can hold: <br> \( 30 \div 5 = 6 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">2.</div>
+                Altogether, how much money will be needed?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp2')">Show Answer & Explanation</button>
+            <div id="exp2" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">$150</span></p>
+                <p><strong>Explanation:</strong> Multiply the total number of students by the cost per student: <br> \( 30 \times \$5 = \$150 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">3.</div>
+                Don has saved $3.25. How much more does he need to go on the field trip?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp3')">Show Answer & Explanation</button>
+            <div id="exp3" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">$1.75</span></p>
+                <p><strong>Explanation:</strong> Subtract the amount Don has already saved from the total cost of the field trip: <br> \( \$5.00 - \$3.25 = \$1.75 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">4.</div>
+                During the summer the swim team practiced \( 3\frac{1}{2} \) hours a day. If practice started at 6:30 a.m., at what time did it end if there were no breaks?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp4')">Show Answer & Explanation</button>
+            <div id="exp4" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">10:00 a.m.</span></p>
+                <p><strong>Explanation:</strong> \( 3\frac{1}{2} \) hours is equal to 3 hours and 30 minutes. Add 3 hours to 6:30 a.m. to get 9:30 a.m. Add the remaining 30 minutes to reach 10:00 a.m.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">5.</div>
+                Half of the 48 pencils were sharpened. How many were <em>not</em> sharpened? What percent of the pencils were not sharpened? Draw a picture to help you solve the problem.
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp5')">Show Answer & Explanation</button>
+            <div id="exp5" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">24 pencils, 50%</span></p>
+                <p><strong>Explanation:</strong> Half of 48 is \( 48 \div 2 = 24 \). Because exactly half are sharpened, the other half (50%) are not.</p>
+                <div class="svg-container">
+                    <svg width="200" height="60" viewBox="0 0 200 60">
+                        <rect x="0" y="0" width="100" height="50" fill="#bdc3c7" stroke="#333" stroke-width="2"/>
+                        <rect x="100" y="0" width="100" height="50" fill="#ecf0f1" stroke="#333" stroke-width="2"/>
+                        <text x="50" y="30" dominant-baseline="middle" text-anchor="middle" font-size="14">24 (Sharpened)</text>
+                        <text x="150" y="30" dominant-baseline="middle" text-anchor="middle" font-size="14">24 (Unsharpened)</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">6.</div>
+                What number is \( \frac{1}{4} \) of 60? Draw a picture to help you solve the problem.
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp6')">Show Answer & Explanation</button>
+            <div id="exp6" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">15</span></p>
+                <p><strong>Explanation:</strong> To find \( \frac{1}{4} \) of 60, divide 60 by 4: <br> \( 60 \div 4 = 15 \).</p>
+                <div class="svg-container">
+                    <svg width="200" height="60" viewBox="0 0 200 60">
+                        <rect x="0" y="0" width="50" height="50" fill="#3498db" stroke="#333" stroke-width="2"/>
+                        <rect x="50" y="0" width="50" height="50" fill="#ecf0f1" stroke="#333" stroke-width="2"/>
+                        <rect x="100" y="0" width="50" height="50" fill="#ecf0f1" stroke="#333" stroke-width="2"/>
+                        <rect x="150" y="0" width="50" height="50" fill="#ecf0f1" stroke="#333" stroke-width="2"/>
+                        <text x="25" y="30" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="bold">15</text>
+                        <text x="75" y="30" dominant-baseline="middle" text-anchor="middle">15</text>
+                        <text x="125" y="30" dominant-baseline="middle" text-anchor="middle">15</text>
+                        <text x="175" y="30" dominant-baseline="middle" text-anchor="middle">15</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">7.</div>
+                One gallon of water will be poured into 1-quart bottles. How many 1-quart bottles will be filled?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp7')">Show Answer & Explanation</button>
+            <div id="exp7" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">4 bottles</span></p>
+                <p><strong>Explanation:</strong> There are 4 quarts in 1 gallon. Therefore, the water will perfectly fill 4 one-quart bottles.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">8.</div>
+                Each side of a regular polygon has the same length. A regular hexagon is shown below. How many millimeters is the perimeter of this hexagon? (Based on the image's centimeter ruler).
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp8')">Show Answer & Explanation</button>
+            <div id="exp8" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">60 mm</span></p>
+                <p><strong>Explanation:</strong> The ruler in the image measures one side of the hexagon from the 1 cm mark to the 2 cm mark, which means the side length is 1 cm. <br>
+                1 cm = 10 mm. <br>
+                A regular hexagon has 6 equal sides. <br>
+                Perimeter = \( 6 \times 10 \text{ mm} = 60 \text{ mm} \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">9.</div>
+                A mile is five thousand, two hundred eighty feet. The Golden Gate Bridge is four thousand, two hundred feet long. The Golden Gate Bridge is how many feet less than 1 mile long?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp9')">Show Answer & Explanation</button>
+            <div id="exp9" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">1,080 feet</span></p>
+                <p><strong>Explanation:</strong> Subtract the length of the bridge from the length of a mile: <br>
+                \( 5,280 - 4,200 = 1,080 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">10.</div>
+                Which of these numbers is not a multiple of 90?<br>
+                A. 45 &nbsp;&nbsp; B. 180 &nbsp;&nbsp; C. 270 &nbsp;&nbsp; D. 360
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp10')">Show Answer & Explanation</button>
+            <div id="exp10" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">A. 45</span></p>
+                <p><strong>Explanation:</strong> A multiple of 90 is the product of 90 and an integer (e.g., \(90 \times 1 = 90\), \(90 \times 2 = 180\), etc.). 45 is a <em>factor</em> of 90, not a multiple.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">11.</div>
+                What number is halfway between 300 and 400?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp11')">Show Answer & Explanation</button>
+            <div id="exp11" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">350</span></p>
+                <p><strong>Explanation:</strong> The difference between 400 and 300 is 100. Half of 100 is 50. Add 50 to 300 to find the halfway point: 350. Alternatively, take the average: \( \frac{300 + 400}{2} = 350 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">12.</div>
+                \( 37.56 - 4.2 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp12')">Show Answer & Explanation</button>
+            <div id="exp12" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">33.36</span></p>
+                <p><strong>Explanation:</strong> Line up the decimals and subtract: <br>
+                \( 37.56 - 4.20 = 33.36 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">13.</div>
+                \( 4.2 + 3.5 + 0.25 + 4.0 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp13')">Show Answer & Explanation</button>
+            <div id="exp13" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">11.95</span></p>
+                <p><strong>Explanation:</strong> Align the decimal points and add:<br>
+                \( 4.20 + 3.50 + 0.25 + 4.00 = 11.95 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">14.</div>
+                \( \$100.00 - \$31.53 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp14')">Show Answer & Explanation</button>
+            <div id="exp14" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">$68.47</span></p>
+                <p><strong>Explanation:</strong> Subtract using standard regrouping algorithms:<br>
+                \( 100.00 - 31.53 = 68.47 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">15.</div>
+                \( 251,546 - 37,156 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp15')">Show Answer & Explanation</button>
+            <div id="exp15" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">214,390</span></p>
+                <p><strong>Explanation:</strong> Subtract matching place values carefully:<br>
+                \( 251,546 - 37,156 = 214,390 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">16.</div>
+                \( N + 423 = 618 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp16')">Show Answer & Explanation</button>
+            <div id="exp16" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">N = 195</span></p>
+                <p><strong>Explanation:</strong> Use subtraction to isolate \( N \):<br>
+                \( N = 618 - 423 = 195 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">17.</div>
+                \( \$3.46 \times 7 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp17')">Show Answer & Explanation</button>
+            <div id="exp17" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">$24.22</span></p>
+                <p><strong>Explanation:</strong> Multiply normally, then place the decimal two spots from the right:<br>
+                \( 3.46 \times 7 = 24.22 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">18.</div>
+                \( 96 \times 30 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp18')">Show Answer & Explanation</button>
+            <div id="exp18" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">2,880</span></p>
+                <p><strong>Explanation:</strong> Multiply \( 96 \times 3 = 288 \), then attach a zero at the end:<br>
+                \( 288 \times 10 = 2880 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">19.</div>
+                \( \$0.59 \times 8 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp19')">Show Answer & Explanation</button>
+            <div id="exp19" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">$4.72</span></p>
+                <p><strong>Explanation:</strong> \( 59 \times 8 = 472 \). Add the decimal point two spaces in: \( \$4.72 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">20.</div>
+                \( 633 \div 7 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp20')">Show Answer & Explanation</button>
+            <div id="exp20" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">90 R 3</span></p>
+                <p><strong>Explanation:</strong> 7 goes into 63 exactly 9 times. Drop the 3. 7 goes into 3 zero times. <br> Quotient is 90, remainder is 3.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">21.</div>
+                \( 98 \div 5 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp21')">Show Answer & Explanation</button>
+            <div id="exp21" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">19 R 3</span></p>
+                <p><strong>Explanation:</strong> \( 5 \times 19 = 95 \). <br> \( 98 - 95 = 3 \). Thus, 19 with a remainder of 3.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">22.</div>
+                \( 150 \div 3 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp22')">Show Answer & Explanation</button>
+            <div id="exp22" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">50</span></p>
+                <p><strong>Explanation:</strong> 3 goes into 15 exactly 5 times. Attach the 0. <br> \( 3 \times 50 = 150 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">23.</div>
+                \( 329 \div 6 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp23')">Show Answer & Explanation</button>
+            <div id="exp23" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">54 R 5</span></p>
+                <p><strong>Explanation:</strong> \( 6 \times 50 = 300 \), leaving 29. <br> \( 6 \times 4 = 24 \). <br> \( 29 - 24 = 5 \). Result: 54 Remainder 5.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">24.</div>
+                \( 274 \div 4 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp24')">Show Answer & Explanation</button>
+            <div id="exp24" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">68 R 2</span></p>
+                <p><strong>Explanation:</strong> 4 goes into 27 six times (\(4 \times 6 = 24\)), remainder 3. Bring down the 4 to make 34. <br>
+                4 goes into 34 eight times (\(4 \times 8 = 32\)), remainder 2. Result: 68 R 2.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">25.</div>
+                \( 247 \div 8 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp25')">Show Answer & Explanation</button>
+            <div id="exp25" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">30 R 7</span></p>
+                <p><strong>Explanation:</strong> \( 8 \times 30 = 240 \). <br> \( 247 - 240 = 7 \). Result: 30 Remainder 7.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">26.</div>
+                \( \sqrt{25} \times M = 135 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp26')">Show Answer & Explanation</button>
+            <div id="exp26" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">M = 27</span></p>
+                <p><strong>Explanation:</strong> The square root of 25 is 5. So the equation becomes: <br>
+                \( 5 \times M = 135 \) <br>
+                Divide both sides by 5: <br>
+                \( M = 135 \div 5 = 27 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">27.</div>
+                \( Z - 476 = 325 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp27')">Show Answer & Explanation</button>
+            <div id="exp27" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">Z = 801</span></p>
+                <p><strong>Explanation:</strong> Use addition to solve for \( Z \):<br>
+                \( Z = 325 + 476 = 801 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">28.</div>
+                \( 6A = 12 + 6 \)
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp28')">Show Answer & Explanation</button>
+            <div id="exp28" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">A = 3</span></p>
+                <p><strong>Explanation:</strong> First, simplify the right side of the equation:<br>
+                \( 6A = 18 \) <br>
+                Divide both sides by 6:<br>
+                \( A = 18 \div 6 = 3 \).</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">29.</div>
+                Segment \( AB \) is 2.3 cm long. Segment \( BC \) is 3.5 cm long. How long is segment \( AC \)? Write a decimal addition problem and find the answer.
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp29')">Show Answer & Explanation</button>
+            <div id="exp29" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">5.8 cm</span></p>
+                <p><strong>Explanation:</strong> The total length of segment \( AC \) is the sum of segments \( AB \) and \( BC \):<br>
+                \( 2.3 \text{ cm} + 3.5 \text{ cm} = 5.8 \text{ cm} \).</p>
+                <div class="svg-container">
+                    <svg width="250" height="40">
+                        <line x1="20" y1="20" x2="230" y2="20" stroke="#000" stroke-width="2"/>
+                        <circle cx="20" cy="20" r="4" fill="#000"/>
+                        <circle cx="100" cy="20" r="4" fill="#000"/>
+                        <circle cx="230" cy="20" r="4" fill="#000"/>
+                        <text x="20" y="38" font-size="12" text-anchor="middle">A</text>
+                        <text x="100" y="38" font-size="12" text-anchor="middle">B</text>
+                        <text x="230" y="38" font-size="12" text-anchor="middle">C</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="q-text">
+                <div class="q-number">30.</div>
+                Which transformation would position \( \Delta ABC \) on \( \Delta ABD \)?
+            </div>
+            <button class="btn-reveal" onclick="toggleExp('exp30')">Show Answer & Explanation</button>
+            <div id="exp30" class="explanation">
+                <p><strong>Answer:</strong> <span class="ans-bold">Reflection (or Flip)</span></p>
+                <p><strong>Explanation:</strong> The two triangles share the side \( AB \) as an axis of symmetry. To map triangle \( ABC \) exactly onto triangle \( ABD \), you perform a reflection across the line segment \( AB \).</p>
+                <div class="svg-container">
+                    <svg width="150" height="150" viewBox="0 0 100 100">
+                        <polygon points="50,10 10,90 90,90" fill="none" stroke="#000" stroke-width="2"/>
+                        <line x1="50" y1="10" x2="50" y2="90" stroke="#000" stroke-width="2"/>
+                        <text x="50" y="8" font-size="10" text-anchor="middle">A</text>
+                        <text x="50" y="100" font-size="10" text-anchor="middle">B</text>
+                        <text x="96" y="96" font-size="10" text-anchor="middle">C</text>
+                        <text x="4" y="96" font-size="10" text-anchor="middle">D</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleExp(id) {
+            var element = document.getElementById(id);
+            if (element.classList.contains('visible')) {
+                element.classList.remove('visible');
+            } else {
+                element.classList.add('visible');
+            }
+        }
+    </script>
+</body>
+</html>
