@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Math Quiz</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .question-container {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 12px 15px;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+            font-weight: bold;
+        }
+        .incorrect {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+        .explanation strong {
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Math Quiz</h1>
+    <p style="text-align: center;">Click on an option to check your answer and view the explanation.</p>
+
+    <div id="quiz-container"></div>
+
+    <script>
+        const quizData = [
+            // Based on Question 2 (Large number subtraction)
+            { section: "Based on Question #2 (Subtraction Word Problems)" },
+            {
+                q: "Mount Everest is 29,032 feet high. K2 is 28,251 feet high. How much taller is Mount Everest than K2?",
+                options: ["781 feet", "881 feet", "1,781 feet", "681 feet"],
+                answer: 0,
+                exp: "Subtract the height of K2 from Mount Everest: \\(29,032 - 28,251 = 781\\)."
+            },
+            {
+                q: "The Nile River is 4,132 miles long. The Amazon River is 4,000 miles long. How much longer is the Nile?",
+                options: ["100 miles", "132 miles", "232 miles", "8,132 miles"],
+                answer: 1,
+                exp: "Subtract the length of the Amazon from the Nile: \\(4,132 - 4,000 = 132\\)."
+            },
+            {
+                q: "A commercial airplane cruises at 35,000 feet. A private jet cruises at 41,000 feet. What is the difference in their cruising altitudes?",
+                options: ["5,000 feet", "6,000 feet", "7,000 feet", "76,000 feet"],
+                answer: 1,
+                exp: "Subtract the lower altitude from the higher altitude: \\(41,000 - 35,000 = 6,000\\)."
+            },
+
+            // Based on Question 4 (Division Word Problems)
+            { section: "Based on Question #4 (Division into Equal Groups)" },
+            {
+                q: "144 apples were placed into 6 baskets so that the same number of apples were in each basket. How many apples were in each basket?",
+                options: ["20 apples", "22 apples", "24 apples", "26 apples"],
+                answer: 2,
+                exp: "Divide the total number of apples by the number of baskets: \\(144 \\div 6 = 24\\)."
+            },
+            {
+                q: "A baker arranged 120 cookies evenly onto 5 trays. How many cookies are on each tray?",
+                options: ["20 cookies", "24 cookies", "25 cookies", "30 cookies"],
+                answer: 1,
+                exp: "Divide the total number of cookies by the number of trays: \\(120 \\div 5 = 24\\)."
+            },
+            {
+                q: "84 students are divided equally into 4 classrooms. How many students are in each classroom?",
+                options: ["19 students", "20 students", "21 students", "22 students"],
+                answer: 2,
+                exp: "Divide the total number of students by the number of classrooms: \\(84 \\div 4 = 21\\)."
+            },
+
+            // Based on Question 5 (Fractions and Percentages of a Set)
+            { section: "Based on Question #5 (Fractions and Percentages of a Set)" },
+            {
+                q: "One fourth of the 400 attendees voted 'yes'. How many attendees voted 'yes' and what percent is this?",
+                options: ["100 attendees; 25%", "200 attendees; 50%", "100 attendees; 20%", "40 attendees; 10%"],
+                answer: 0,
+                exp: "To find one fourth, divide by 4: \\(400 \\div 4 = 100\\). The fraction \\(\\frac{1}{4}\\) is equal to \\(25\\%\\)."
+            },
+            {
+                q: "Three quarters of the 120 cars in the lot are silver. How many cars are silver and what percent is this?",
+                options: ["30 cars; 25%", "90 cars; 75%", "60 cars; 50%", "80 cars; 66%"],
+                answer: 1,
+                exp: "First, find one quarter: \\(120 \\div 4 = 30\\). Multiply by 3 to get three quarters: \\(30 \\times 3 = 90\\). The fraction \\(\\frac{3}{4}\\) is equal to \\(75\\%\\)."
+            },
+            {
+                q: "One half of the 550 students pack their lunch. How many students pack their lunch and what percent is this?",
+                options: ["225 students; 25%", "250 students; 50%", "275 students; 50%", "300 students; 50%"],
+                answer: 2,
+                exp: "To find one half, divide by 2: \\(550 \\div 2 = 275\\). The fraction \\(\\frac{1}{2}\\) is equal to \\(50\\%\\)."
+            },
+
+            // Based on Question 11 (Area with Unit Squares)
+            { section: "Based on Question #11 (Area with Unit Squares)" },
+            {
+                q: "If a rectangle is 8 inches long and 3 inches wide, how many 1-inch squares are needed to cover it completely?",
+                options: ["11 squares", "22 squares", "24 squares", "30 squares"],
+                answer: 2,
+                exp: "This requires finding the area. Multiply length by width: \\(8 \\times 3 = 24\\) square inches."
+            },
+            {
+                q: "A tabletop is 5 feet long and 4 feet wide. How many 1-foot square tiles are needed to cover it completely?",
+                options: ["9 tiles", "18 tiles", "20 tiles", "25 tiles"],
+                answer: 2,
+                exp: "Area = length \\(\\times\\) width. \\(5 \\times 4 = 20\\) square feet, so 20 tiles are needed."
+            },
+            {
+                q: "If a rectangular garden is 10 yards by 7 yards, how many 1-yard squares will cover the garden?",
+                options: ["17 squares", "34 squares", "70 squares", "100 squares"],
+                answer: 2,
+                exp: "Area = length \\(\\times\\) width. \\(10 \\times 7 = 70\\) square yards."
+            },
+
+            // Based on Question 12 (Geometric Transformations)
+            { section: "Based on Question #12 (Geometric Transformations)" },
+            {
+                q: "Which transformation slides a figure in a straight line without turning or flipping it?",
+                options: ["Rotation", "Translation", "Reflection", "Dilation"],
+                answer: 1,
+                exp: "A <strong>translation</strong> simply moves (slides) every point of a figure the same distance in the same direction."
+            },
+            {
+                q: "Which transformation flips a figure across a line to create a mirror image?",
+                options: ["Rotation", "Translation", "Reflection", "Dilation"],
+                answer: 2,
+                exp: "A <strong>reflection</strong> flips a shape over a line of reflection, creating a mirror image."
+            },
+            {
+                q: "If a triangle is turned \\(90^{\\circ}\\) clockwise around the origin, which transformation has occurred?",
+                options: ["Rotation", "Translation", "Reflection", "Dilation"],
+                answer: 0,
+                exp: "A <strong>rotation</strong> turns a figure around a fixed point."
+            },
+
+            // Based on Question 17 (2-Digit Multiplication ending in zero)
+            { section: "Based on Question #17 (Multiplication)" },
+            {
+                q: "Calculate: \\(70 \\times 43\\)",
+                options: ["2,800", "2,910", "3,010", "3,100"],
+                answer: 2,
+                exp: "Multiply \\(7 \\times 43\\) first. \\(7 \\times 40 = 280\\) and \\(7 \\times 3 = 21\\). \\(280 + 21 = 301\\). Add the zero back to get \\(3,010\\)."
+            },
+            {
+                q: "Calculate: \\(60 \\times 82\\)",
+                options: ["4,920", "4,800", "4,820", "5,020"],
+                answer: 0,
+                exp: "Multiply \\(6 \\times 82\\). \\(6 \\times 80 = 480\\) and \\(6 \\times 2 = 12\\). \\(480 + 12 = 492\\). Add the zero to get \\(4,920\\)."
+            },
+            {
+                q: "Calculate: \\(90 \\times 35\\)",
+                options: ["2,700", "3,050", "3,150", "3,250"],
+                answer: 2,
+                exp: "Multiply \\(9 \\times 35\\). \\(9 \\times 30 = 270\\) and \\(9 \\times 5 = 45\\). \\(270 + 45 = 315\\). Add the zero to get \\(3,150\\)."
+            },
+
+            // Based on Question 25 (Algebraic Equations with Roots and Exponents)
+            { section: "Based on Question #25 (Algebraic Equations with Roots and Exponents)" },
+            {
+                q: "Solve for N: \\(\\sqrt{64} + N = 4^3\\)",
+                options: ["24", "56", "64", "72"],
+                answer: 1,
+                exp: "Simplify knowns: \\(\\sqrt{64} = 8\\) and \\(4^3 = 4 \\times 4 \\times 4 = 64\\). The equation becomes \\(8 + N = 64\\). Subtract 8 from both sides: \\(N = 56\\)."
+            },
+            {
+                q: "Solve for N: \\(\\sqrt{81} + N = 5^2\\)",
+                options: ["14", "16", "25", "34"],
+                answer: 1,
+                exp: "Simplify knowns: \\(\\sqrt{81} = 9\\) and \\(5^2 = 25\\). The equation becomes \\(9 + N = 25\\). Subtract 9 from both sides: \\(N = 16\\)."
+            },
+            {
+                q: "Solve for N: \\(\\sqrt{144} + N = 3^3\\)",
+                options: ["12", "15", "27", "39"],
+                answer: 1,
+                exp: "Simplify knowns: \\(\\sqrt{144} = 12\\) and \\(3^3 = 3 \\times 3 \\times 3 = 27\\). The equation becomes \\(12 + N = 27\\). Subtract 12 from both sides: \\(N = 15\\)."
+            },
+
+            // Based on Question 26 (Simple Algebraic Subtraction)
+            { section: "Based on Question #26 (Solving Subtraction Equations)" },
+            {
+                q: "Solve for Y: \\(530 - Y = 185\\)",
+                options: ["345", "445", "715", "245"],
+                answer: 0,
+                exp: "To find Y, rearrange the equation or swap Y and 185: \\(Y = 530 - 185\\). Solving this gives \\(Y = 345\\)."
+            },
+            {
+                q: "Solve for Y: \\(812 - Y = 450\\)",
+                options: ["262", "362", "462", "1,262"],
+                answer: 1,
+                exp: "To find Y, subtract 450 from 812: \\(Y = 812 - 450\\). Solving this gives \\(Y = 362\\)."
+            },
+            {
+                q: "Solve for Y: \\(375 - Y = 190\\)",
+                options: ["175", "185", "285", "565"],
+                answer: 1,
+                exp: "To find Y, subtract 190 from 375: \\(Y = 375 - 190\\). Solving this gives \\(Y = 185\\)."
+            }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        let questionCounter = 1;
+
+        quizData.forEach((item, index) => {
+            if (item.section) {
+                const secTitle = document.createElement('h2');
+                secTitle.textContent = item.section;
+                container.appendChild(secTitle);
+            } else {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-container';
+                qDiv.id = `q-${index}`;
+                
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `<button class="option-btn" onclick="checkAnswer(${index}, ${optIndex}, ${item.answer}, this)">${String.fromCharCode(65 + optIndex)}. ${opt}</button>`;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="question-text">${questionCounter}. ${item.q}</div>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation" id="exp-${index}">
+                        <strong>Explanation:</strong> ${item.exp}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+                questionCounter++;
+            }
+        });
+
+        function checkAnswer(questionIndex, selectedOptionIndex, correctOptionIndex, btnElement) {
+            const qContainer = document.getElementById(`q-${questionIndex}`);
+            const buttons = qContainer.querySelectorAll('.option-btn');
+            const explanation = document.getElementById(`exp-${questionIndex}`);
+
+            // Disable all buttons in this question once an answer is chosen
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Mark correct and incorrect
+            if (selectedOptionIndex === correctOptionIndex) {
+                btnElement.classList.add('correct');
+            } else {
+                btnElement.classList.add('incorrect');
+                // Also highlight the correct one
+                buttons[correctOptionIndex].classList.add('correct');
+            }
+
+            // Show explanation
+            explanation.style.display = 'block';
+            
+            // Re-run MathJax on the revealed explanation to ensure math renders properly
+            MathJax.typesetPromise([explanation]).catch(function (err) {
+                console.log(err.message);
+            });
+        }
+    </script>
+</body>
+</html>
