@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Review</title>
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+        .problem-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .diagram {
+            margin: 15px 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+        .answer-title {
+            font-weight: bold;
+            color: #16a085;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Problems</h1>
+
+    <div class="problem-container">
+        <div class="question">
+            1. Pears cost 59¢ per pound. How much would 4 pounds of pears cost?
+        </div>
+        <button onclick="toggleAnswer('ans1')">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$2.36 (or 236¢)</p>
+            <div class="answer-title">Explanation:</div>
+            <p>To find the total cost, multiply the cost per pound by the number of pounds:<br>
+            $59 \times 4 = 236$<br>
+            Since the cost is in cents, 236¢ is equal to $2.36.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            2. Find the perimeter and area of this rectangle:
+            <div class="diagram">
+                <svg width="180" height="120" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="gray" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="120" height="80" fill="none" stroke="black" stroke-width="2"/>
+                    <rect width="120" height="80" fill="url(#grid)" />
+                    <text x="50" y="-5" fill="black" font-size="12">6 units</text>
+                    <text x="-50" y="45" fill="black" font-size="12" transform="rotate(-90, -50, 45)">4 units</text>
+                </svg>
+            </div>
+        </div>
+        <button onclick="toggleAnswer('ans2')">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>Perimeter = 20 units; Area = 24 square units</p>
+            <div class="answer-title">Explanation:</div>
+            <p><strong>Perimeter</strong> is the distance around the outside of the rectangle. Add all four sides: $6 + 4 + 6 + 4 = 20$ units.<br>
+            <strong>Area</strong> is the number of square units inside. Multiply the length by the width: $6 \times 4 = 24$ square units.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            3. There were three hundred sixty books on the floor. Frankie put one fourth of the books on a table.<br>
+            (a) How many books did Frankie put on the table?<br>
+            (b) How many books were still on the floor?
+        </div>
+        <button onclick="toggleAnswer('ans3')">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>(a) 90 books<br>
+            (b) 270 books</p>
+            <div class="answer-title">Explanation:</div>
+            <p>(a) Find one fourth of 360 by dividing by 4: $\frac{360}{4} = 90$.<br>
+            (b) Subtract the books moved to the table from the total to find how many are left: $360 - 90 = 270$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            4. What percent of the books in problem 3 were left on the floor?
+        </div>
+        <button onclick="toggleAnswer('ans4')">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>75%</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Since $\frac{1}{4}$ of the books were moved to the table, $\frac{3}{4}$ of the books were left on the floor. $\frac{3}{4}$ as a percentage is $75\%$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            5. To what mixed number is the arrow pointing?
+            <div class="diagram" style="padding-top: 20px;">
+                <svg width="300" height="60" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="20" y1="30" x2="280" y2="30" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+                        </marker>
+                        <marker id="down-arrow" markerWidth="10" markerHeight="10" refX="5" refY="10" orient="auto">
+                            <path d="M 0 0 L 10 0 L 5 10 z" fill="black" />
+                        </marker>
+                    </defs>
+                    <line x1="50" y1="25" x2="50" y2="35" stroke="black" stroke-width="1.5"/>
+                    <text x="40" y="50" font-size="12">201</text>
+                    
+                    <line x1="72" y1="28" x2="72" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="94" y1="28" x2="94" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="116" y1="28" x2="116" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="138" y1="28" x2="138" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="160" y1="28" x2="160" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="182" y1="28" x2="182" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="204" y1="28" x2="204" y2="32" stroke="black" stroke-width="1"/>
+                    <line x1="226" y1="28" x2="226" y2="32" stroke="black" stroke-width="1"/>
+
+                    <line x1="248" y1="25" x2="248" y2="35" stroke="black" stroke-width="1.5"/>
+                    <text x="238" y="50" font-size="12">202</text>
+                    
+                    <line x1="138" y1="5" x2="138" y2="20" stroke="black" stroke-width="1.5" marker-end="url(#down-arrow)"/>
+                </svg>
+            </div>
+        </div>
+        <button onclick="toggleAnswer('ans5')">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$201 \frac{4}{9}$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>The space between 201 and 202 is divided into 9 equal intervals, meaning each mark represents $\frac{1}{9}$. The arrow points to the 4th mark past 201, which is $201 \frac{4}{9}$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            6. Estimate the sum of 272 and 483. Begin by rounding each number to the nearest hundred.
+        </div>
+        <button onclick="toggleAnswer('ans6')">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>800</p>
+            <div class="answer-title">Explanation:</div>
+            <p>First, round 272 to the nearest hundred: 300.<br>
+            Next, round 483 to the nearest hundred: 500.<br>
+            Then, add the rounded numbers: $300 + 500 = 800$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            7. What fraction of this set is shaded?
+            <div class="diagram">
+                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,10 60,30 40,30" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="40,30 50,50 30,50" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="60,30 70,50 50,50" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="40,30 60,30 50,50" fill="none" stroke="black" stroke-width="1"/>
+                    
+                    <polygon points="30,50 40,70 20,70" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="50,50 60,70 40,70" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="70,50 80,70 60,70" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="30,50 50,50 40,70" fill="none" stroke="black" stroke-width="1"/>
+                    <polygon points="50,50 70,50 60,70" fill="none" stroke="black" stroke-width="1"/>
+                </svg>
+            </div>
+        </div>
+        <button onclick="toggleAnswer('ans7')">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$\frac{0}{9}$ or $0$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>There are 9 triangles in total. Since none of the triangles are shaded black or filled in, the fraction representing the shaded portion is $\frac{0}{9}$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            8. One quart of milk is how many ounces?
+        </div>
+        <button onclick="toggleAnswer('ans8')">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>32 ounces</p>
+            <div class="answer-title">Explanation:</div>
+            <p>There are 8 fluid ounces in 1 cup, 2 cups in 1 pint (16 oz), and 2 pints in 1 quart. Therefore, $16 \times 2 = 32$ fluid ounces in one quart.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            17. $2 \overline{)161}$
+        </div>
+        <button onclick="toggleAnswer('ans17')">Show Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>80 R 1</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Divide 161 by 2. Two goes into 16 eight times ($2 \times 8 = 16$). Bring down the 1. Two goes into 1 zero times. The remainder is 1. The result is 80 with a remainder of 1.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            18. $7 \overline{)434}$
+        </div>
+        <button onclick="toggleAnswer('ans18')">Show Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>62</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Divide 434 by 7. Seven goes into 43 six times ($7 \times 6 = 42$), leaving a remainder of 1. Bring down the 4 to make 14. Seven goes into 14 two times exactly ($7 \times 2 = 14$). The answer is 62.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            19. $513 \div 6$
+        </div>
+        <button onclick="toggleAnswer('ans19')">Show Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>85 R 3 (or 85.5)</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Six goes into 51 eight times ($6 \times 8 = 48$) with a remainder of 3. Bring down the 3 to make 33. Six goes into 33 five times ($6 \times 5 = 30$) with a remainder of 3. Therefore, it is 85 with a remainder of 3.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            20. $\frac{270}{9}$
+        </div>
+        <button onclick="toggleAnswer('ans20')">Show Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>30</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Nine goes into 27 three times. Add the zero from the end of 270. $9 \times 30 = 270$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            21. $\frac{267}{3}$
+        </div>
+        <button onclick="toggleAnswer('ans21')">Show Answer & Explanation</button>
+        <div id="ans21" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>89</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Three goes into 26 eight times ($3 \times 8 = 24$), remainder 2. Bring down the 7 to make 27. Three goes into 27 nine times exactly. The result is 89.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            22. $N - 7.5 = 21.4$
+        </div>
+        <button onclick="toggleAnswer('ans22')">Show Answer & Explanation</button>
+        <div id="ans22" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$N = 28.9$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>To solve for $N$, add 7.5 to both sides of the equation: $21.4 + 7.5 = 28.9$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            23. $\$6.95 \times 8$
+        </div>
+        <button onclick="toggleAnswer('ans23')">Show Answer & Explanation</button>
+        <div id="ans23" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$\$55.60$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Multiply normally: $695 \times 8 = 5560$. Because there are two decimal places in $\$6.95$, place the decimal point two spots from the right to get $\$55.60$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            24. $46 \times 70$
+        </div>
+        <button onclick="toggleAnswer('ans24')">Show Answer & Explanation</button>
+        <div id="ans24" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>3220</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Multiply $46 \times 7$, which is $322$. Then attach the zero from the 70 to the end, resulting in 3220.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            25. $460 \times 9$
+        </div>
+        <button onclick="toggleAnswer('ans25')">Show Answer & Explanation</button>
+        <div id="ans25" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>4140</p>
+            <div class="answer-title">Explanation:</div>
+            <p>You can multiply $46 \times 9 = 414$ and attach the zero to get 4140. Alternatively, use subtraction: $(460 \times 10) - 460 = 4600 - 460 = 4140$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            26. $3A = 30 + 30$
+        </div>
+        <button onclick="toggleAnswer('ans26')">Show Answer & Explanation</button>
+        <div id="ans26" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$A = 20$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>First, simplify the right side: $30 + 30 = 60$. The equation is now $3A = 60$. Divide both sides by 3 to isolate A: $60 \div 3 = 20$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            27. $3^2 - 2^3$
+        </div>
+        <button onclick="toggleAnswer('ans27')">Show Answer & Explanation</button>
+        <div id="ans27" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>1</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Calculate the exponents first: $3^2 = 3 \times 3 = 9$. Next, $2^3 = 2 \times 2 \times 2 = 8$. Subtract the results: $9 - 8 = 1$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            28. $4 + 7 + 3 + 5 + 6 + 5 + 7 + 2 + N = 43$
+        </div>
+        <button onclick="toggleAnswer('ans28')">Show Answer & Explanation</button>
+        <div id="ans28" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>$N = 4$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Add all the known numbers together: $4 + 7 + 3 + 5 + 6 + 5 + 7 + 2 = 39$. The equation is now $39 + N = 43$. Subtract 39 from 43 to find N: $43 - 39 = 4$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            29. Which segment appears to be perpendicular to segment $BC$?
+            <div class="diagram">
+                <svg width="150" height="100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="30,20 30,80 120,80" fill="none" stroke="black" stroke-width="2"/>
+                    <text x="15" y="20" fill="black" font-size="14">A</text>
+                    <text x="15" y="90" fill="black" font-size="14">C</text>
+                    <text x="125" y="90" fill="black" font-size="14">B</text>
+                </svg>
+            </div>
+        </div>
+        <button onclick="toggleAnswer('ans29')">Show Answer & Explanation</button>
+        <div id="ans29" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>Segment $AC$</p>
+            <div class="answer-title">Explanation:</div>
+            <p>Perpendicular lines intersect to form a 90-degree (right) angle. Looking at the right triangle drawn, vertical segment $AC$ intersects the horizontal segment $BC$ at a right angle.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">
+            30. Draw a triangle similar to but not congruent to $\Delta ABC$ in problem 29.
+        </div>
+        <button onclick="toggleAnswer('ans30')">Show Answer & Explanation</button>
+        <div id="ans30" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <p>A smaller or larger right triangle.</p>
+            <div class="diagram">
+                <svg width="200" height="120" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="20,50 20,95 80,95" fill="none" stroke="blue" stroke-width="2"/>
+                    <text x="40" y="115" fill="blue" font-size="12">Smaller (Similar)</text>
+                    
+                    <polygon points="110,10 110,95 200,95" fill="none" stroke="green" stroke-width="2"/>
+                    <text x="130" y="115" fill="green" font-size="12">Larger (Similar)</text>
+                </svg>
+            </div>
+            <div class="answer-title">Explanation:</div>
+            <p>Similar triangles have the exact same shape (identical internal angles) but are different sizes. Congruent triangles are the same size and shape. To answer this, you draw a right triangle with the same proportions as $\Delta ABC$ but scale it up or down in size.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
