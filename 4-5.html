@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Math Test</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* Screen Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .header-info span {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            width: 250px;
+        }
+        .question-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+        .svg-container {
+            margin: 15px 0;
+        }
+        .vertical-math {
+            display: inline-block;
+            text-align: right;
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+        .vertical-math .line {
+            border-top: 1px solid #000;
+        }
+        .print-btn-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .print-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .print-btn:hover {
+            background-color: #27ae60;
+        }
+
+        /* Print Styles for 8.5 x 11 */
+        @media print {
+            @page {
+                size: letter;
+                margin: 0.75in;
+            }
+            body {
+                background-color: #fff;
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-btn-container, .toggle-btn, .answer-section {
+                display: none !important; /* Hides answers and buttons on printed test */
+            }
+            .question-card {
+                box-shadow: none;
+                border: none;
+                border-bottom: 1px solid #ccc;
+                border-radius: 0;
+                padding: 15px 0;
+                margin-bottom: 0;
+                page-break-inside: avoid; /* Prevents questions from splitting across pages */
+            }
+            h1 {
+                font-size: 1.5em;
+                margin-top: 0;
+            }
+            /* Two-column layout for print (optional, mimics original test) */
+            .test-container {
+                column-count: 2;
+                column-gap: 40px;
+                column-rule: 1px solid #000;
+            }
+            /* Add spacing below questions for student work */
+            .question-text {
+                margin-bottom: 40px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-container">
+        <button class="print-btn" onclick="window.print()">🖨️ Print Student Worksheet</button>
+        <p style="font-size: 0.9em; color: #666;">Answers and buttons will automatically be hidden when printed.</p>
+    </div>
+
+    <h1>Practice Math Test</h1>
+    
+    <div class="header-info">
+        <div>Name: <span></span></div>
+        <div>Score: <span></span></div>
+    </div>
+
+    <div class="test-container">
+        <div class="question-card">
+            <div class="question-text"><strong>1.</strong> Farmer Jones had 96 apples on his tree. Sarah picked one fourth of them. How many apples did Sarah pick?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans1')">Review Answer & Explanation</button>
+            <div id="ans1" class="answer-section">
+                <p><strong>Answer:</strong> $24$ apples</p>
+                <p><strong>Explanation:</strong> To find one fourth of $96$, divide the total number by $4$. <br>$$96 \div 4 = 24$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>2.</strong> Forty-five percent of the students brought their lunch from home. What percent of the students did NOT bring their lunch from home?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans2')">Review Answer & Explanation</button>
+            <div id="ans2" class="answer-section">
+                <p><strong>Answer:</strong> $55\%$</p>
+                <p><strong>Explanation:</strong> The total amount of students represents $100\%$. Subtract the percentage that brought lunch to find the percentage that did not. <br>$$100\% - 45\% = 55\%$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>3.</strong> Each box contains an average of eight pencils. How many pencils are in 120 boxes?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans3')">Review Answer & Explanation</button>
+            <div id="ans3" class="answer-section">
+                <p><strong>Answer:</strong> $960$ pencils</p>
+                <p><strong>Explanation:</strong> Multiply the number of boxes by the average number of pencils per box. <br>$$120 \times 8 = 960$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>4.</strong> Estimate the sum of 5431 and 6892 by rounding each number to the nearest thousand before adding.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans4')">Review Answer & Explanation</button>
+            <div id="ans4" class="answer-section">
+                <p><strong>Answer:</strong> $12,000$</p>
+                <p><strong>Explanation:</strong> <br>Step 1: Round $5431$ to the nearest thousand $\rightarrow 5000$ <br>Step 2: Round $6892$ to the nearest thousand $\rightarrow 7000$ <br>Step 3: Add the rounded numbers: <br>$$5000 + 7000 = 12000$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>5.</strong> What is the value of 6 pennies, 5 dimes, 4 quarters, and 2 nickels? Write the answer using a dollar sign and decimal point.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans5')">Review Answer & Explanation</button>
+            <div id="ans5" class="answer-section">
+                <p><strong>Answer:</strong> $\$1.66$</p>
+                <p><strong>Explanation:</strong> Convert each coin type to its monetary value and add them together:<br>
+                6 pennies = $\$0.06$<br>
+                5 dimes = $\$0.50$<br>
+                4 quarters = $\$1.00$<br>
+                2 nickels = $\$0.10$<br>
+                $$\$0.06 + \$0.50 + \$1.00 + \$0.10 = \$1.66$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>6.</strong> One third of the guests ate chocolate cake. There were 75 guests in all. How many guests ate chocolate cake?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans6')">Review Answer & Explanation</button>
+            <div id="ans6" class="answer-section">
+                <p><strong>Answer:</strong> $25$ guests</p>
+                <p><strong>Explanation:</strong> Find one third of the total amount of guests by dividing $75$ by $3$. <br>$$75 \div 3 = 25$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>7.</strong> What number is indicated on the number line below?<br>
+                <div class="svg-container">
+                    <svg width="400" height="80" viewBox="0 0 400 80">
+                        <line x1="20" y1="50" x2="380" y2="50" stroke="black" stroke-width="2"/>
+                        <line x1="50" y1="45" x2="50" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="50" y="70" text-anchor="middle">-5</text>
+                        <line x1="80" y1="45" x2="80" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="110" y1="45" x2="110" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="140" y1="45" x2="140" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="170" y1="45" x2="170" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="200" y1="45" x2="200" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="200" y="70" text-anchor="middle">0</text>
+                        <line x1="230" y1="45" x2="230" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="260" y1="45" x2="260" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="290" y1="45" x2="290" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="320" y1="45" x2="320" y2="55" stroke="black" stroke-width="2"/>
+                        <line x1="350" y1="45" x2="350" y2="55" stroke="black" stroke-width="2"/>
+                        <text x="350" y="70" text-anchor="middle">5</text>
+                        <line x1="140" y1="15" x2="140" y2="35" stroke="black" stroke-width="2"/>
+                        <polygon points="135,30 145,30 140,40" fill="black"/>
+                        <polygon points="20,50 30,45 30,55" fill="black"/>
+                        <polygon points="380,50 370,45 370,55" fill="black"/>
+                    </svg>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans7')">Review Answer & Explanation</button>
+            <div id="ans7" class="answer-section">
+                <p><strong>Answer:</strong> $-2$</p>
+                <p><strong>Explanation:</strong> The arrow points to the 2nd tick mark to the left of $0$. Since each tick mark represents $1$ unit, the number is $-2$.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>8.</strong> Marcus has an octagon and a pentagon. What is the total number of sides on the two polygons?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans8')">Review Answer & Explanation</button>
+            <div id="ans8" class="answer-section">
+                <p><strong>Answer:</strong> $13$ sides</p>
+                <p><strong>Explanation:</strong> An octagon has $8$ sides. A pentagon has $5$ sides. <br>$$8 + 5 = 13$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>9.</strong> 
+                a. The line segment shown below is how many centimeters long?<br>
+                b. The segment is how many millimeters long?<br>
+                <div class="svg-container">
+                    <svg width="400" height="120" viewBox="0 0 400 120">
+                        <line x1="20" y1="30" x2="270" y2="30" stroke="black" stroke-width="3"/>
+                        <circle cx="20" cy="30" r="4" fill="black"/>
+                        <circle cx="270" cy="30" r="4" fill="black"/>
+                        <rect x="20" y="50" width="360" height="60" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="25" y="65" font-size="12">mm</text>
+                        <text x="65" y="65" font-size="12">10</text>
+                        <text x="115" y="65" font-size="12">20</text>
+                        <text x="165" y="65" font-size="12">30</text>
+                        <text x="215" y="65" font-size="12">40</text>
+                        <text x="265" y="65" font-size="12">50</text>
+                        <text x="315" y="65" font-size="12">60</text>
+                        <text x="25" y="100" font-size="12">cm</text>
+                        <text x="65" y="100" font-size="12">1</text>
+                        <text x="115" y="100" font-size="12">2</text>
+                        <text x="165" y="100" font-size="12">3</text>
+                        <text x="215" y="100" font-size="12">4</text>
+                        <text x="265" y="100" font-size="12">5</text>
+                        <text x="315" y="100" font-size="12">6</text>
+                        <line x1="20" y1="70" x2="20" y2="85" stroke="black"/>
+                        <line x1="70" y1="70" x2="70" y2="85" stroke="black"/>
+                        <line x1="120" y1="70" x2="120" y2="85" stroke="black"/>
+                        <line x1="170" y1="70" x2="170" y2="85" stroke="black"/>
+                        <line x1="220" y1="70" x2="220" y2="85" stroke="black"/>
+                        <line x1="270" y1="70" x2="270" y2="85" stroke="black"/>
+                        <line x1="320" y1="70" x2="320" y2="85" stroke="black"/>
+                    </svg>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans9')">Review Answer & Explanation</button>
+            <div id="ans9" class="answer-section">
+                <p><strong>Answer:</strong> <br>a. $5$ cm <br>b. $50$ mm</p>
+                <p><strong>Explanation:</strong> <br>a. The segment starts at $0$ and ends exactly at the $5$ mark on the cm scale.<br>
+                b. There are $10$ millimeters in $1$ centimeter. Multiply the cm measurement by $10$: $5 \times 10 = 50$ mm.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>10.</strong> What is the perimeter of the rectangle?<br>
+                <div class="svg-container">
+                    <svg width="220" height="130" viewBox="0 0 220 130">
+                        <rect x="40" y="30" width="120" height="80" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="100" y="20" text-anchor="middle">6 cm</text>
+                        <text x="165" y="75" alignment-baseline="middle">4 cm</text>
+                    </svg>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans10')">Review Answer & Explanation</button>
+            <div id="ans10" class="answer-section">
+                <p><strong>Answer:</strong> $20$ cm</p>
+                <p><strong>Explanation:</strong> The perimeter is the distance around the outside of the shape. Add all four sides together. <br>$$6 + 6 + 4 + 4 = 20 \text{ cm}$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>11.</strong> What is the area of the rectangle in problem 10?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans11')">Review Answer & Explanation</button>
+            <div id="ans11" class="answer-section">
+                <p><strong>Answer:</strong> $24$ sq cm</p>
+                <p><strong>Explanation:</strong> Area is calculated by multiplying length by width. <br>$$\text{Area} = 6 \times 4 = 24 \text{ sq cm}$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>12.</strong> 
+                <div class="vertical-math">
+                    $345.67<br>
+                    + $412.30<br>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans12')">Review Answer & Explanation</button>
+            <div id="ans12" class="answer-section">
+                <p><strong>Answer:</strong> $\$757.97$</p>
+                <p><strong>Explanation:</strong> Add the numbers vertically, ensuring the decimal points are perfectly aligned.<br>
+                $$345.67 + 412.30 = 757.97$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>13.</strong> 
+                <div class="vertical-math">
+                    $40.00<br>
+                    - $38.45<br>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans13')">Review Answer & Explanation</button>
+            <div id="ans13" class="answer-section">
+                <p><strong>Answer:</strong> $\$1.55$</p>
+                <p><strong>Explanation:</strong> Subtract, borrowing across the zeros as needed.<br>
+                $$40.00 - 38.45 = 1.55$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text">
+                <strong>14.</strong> 
+                <div class="vertical-math">
+                    $3.24<br>
+                    &times; &nbsp;&nbsp;&nbsp;5<br>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans14')">Review Answer & Explanation</button>
+            <div id="ans14" class="answer-section">
+                <p><strong>Answer:</strong> $\$16.20$</p>
+                <p><strong>Explanation:</strong> Multiply $3.24$ by $5$. Since there are two decimal places in the top number, place the decimal two spots from the right in your answer.<br>
+                $$3.24 \times 5 = 16.20$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>15.</strong> $35 \times 20$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans15')">Review Answer & Explanation</button>
+            <div id="ans15" class="answer-section">
+                <p><strong>Answer:</strong> $700$</p>
+                <p><strong>Explanation:</strong> You can multiply $35 \times 2 = 70$, and then append the zero for the tens place to get $700$.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>16.</strong> $5^2 - \sqrt{9}$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans16')">Review Answer & Explanation</button>
+            <div id="ans16" class="answer-section">
+                <p><strong>Answer:</strong> $22$</p>
+                <p><strong>Explanation:</strong> First, evaluate the exponents and roots.<br>
+                $5^2 = 5 \times 5 = 25$.<br>
+                $\sqrt{9} = 3$.<br>
+                Then, subtract: $$25 - 3 = 22$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>17.</strong> $385 \div 6$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans17')">Review Answer & Explanation</button>
+            <div id="ans17" class="answer-section">
+                <p><strong>Answer:</strong> $64 \text{ R } 1$</p>
+                <p><strong>Explanation:</strong> Use long division. $6$ goes into $38$ six times ($6 \times 6 = 36$), remainder $2$. Bring down the $5$ to make $25$. $6$ goes into $25$ four times ($6 \times 4 = 24$), leaving a remainder of $1$.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>18.</strong> $8 \times 6 \times 5$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans18')">Review Answer & Explanation</button>
+            <div id="ans18" class="answer-section">
+                <p><strong>Answer:</strong> $240$</p>
+                <p><strong>Explanation:</strong> You can multiply in any order. For example:<br>
+                First: $6 \times 5 = 30$<br>
+                Next: $8 \times 30 = 240$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>19.</strong> $7.48 - 5.2$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans19')">Review Answer & Explanation</button>
+            <div id="ans19" class="answer-section">
+                <p><strong>Answer:</strong> $2.28$</p>
+                <p><strong>Explanation:</strong> Append a zero to $5.2$ to align decimal places, making it $5.20$.<br>
+                $$7.48 - 5.20 = 2.28$$</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-text"><strong>20.</strong> Find the missing factor: $8n = 104$</div>
+            <button class="toggle-btn" onclick="toggleAnswer('ans20')">Review Answer & Explanation</button>
+            <div id="ans20" class="answer-section">
+                <p><strong>Answer:</strong> $n = 13$</p>
+                <p><strong>Explanation:</strong> To isolate $n$, divide both sides of the equation by $8$. <br>$$n = 104 \div 8 = 13$$</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            var button = element.previousElementSibling;
+            
+            if (element.style.display === "block") {
+                element.style.display = "none";
+                button.textContent = "Review Answer & Explanation";
+            } else {
+                element.style.display = "block";
+                button.textContent = "Hide Answer";
+            }
+        }
+    </script>
+
+</body>
+</html>
