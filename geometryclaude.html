@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry Transformations Explorer</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+–bg: #0f0e17;
+–surface: #1a1a2e;
+–card: #16213e;
+–accent: #e94560;
+–gold: #f5a623;
+–teal: #0f3460;
+–green: #06d6a0;
+–blue: #4cc9f0;
+–purple: #7b2d8b;
+–text: #fffffe;
+–muted: #a7a9be;
+}
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘Nunito’, sans-serif;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+background-image: radial-gradient(ellipse at 20% 20%, #1a0a2e 0%, transparent 50%),
+radial-gradient(ellipse at 80% 80%, #0a1a2e 0%, transparent 50%);
+}
+
+header {
+text-align: center;
+margin-bottom: 28px;
+animation: fadeDown 0.6s ease;
+}
+
+header h1 {
+font-family: ‘Fredoka One’, cursive;
+font-size: clamp(1.8rem, 4vw, 2.8rem);
+background: linear-gradient(135deg, var(–blue), var(–accent), var(–gold));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+letter-spacing: 1px;
+}
+
+header p {
+color: var(–muted);
+font-size: 1rem;
+margin-top: 6px;
+}
+
+.scorebar {
+display: flex;
+gap: 20px;
+justify-content: center;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+
+.score-pill {
+background: var(–card);
+border: 1px solid rgba(255,255,255,0.08);
+border-radius: 50px;
+padding: 8px 22px;
+font-weight: 700;
+font-size: 0.95rem;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.score-pill .dot {
+width: 10px; height: 10px;
+border-radius: 50%;
+}
+
+.main-card {
+background: var(–card);
+border: 1px solid rgba(255,255,255,0.08);
+border-radius: 24px;
+padding: 28px;
+width: 100%;
+max-width: 860px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+animation: fadeUp 0.5s ease;
+}
+
+.question-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 18px;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.question-counter {
+font-size: 0.85rem;
+color: var(–muted);
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.shape-badge {
+background: rgba(76, 201, 240, 0.12);
+border: 1px solid rgba(76, 201, 240, 0.3);
+color: var(–blue);
+border-radius: 20px;
+padding: 4px 14px;
+font-size: 0.85rem;
+font-weight: 700;
+}
+
+.question-text {
+font-size: 1.15rem;
+font-weight: 700;
+color: var(–text);
+margin-bottom: 6px;
+line-height: 1.4;
+}
+
+.question-sub {
+font-size: 0.9rem;
+color: var(–muted);
+margin-bottom: 20px;
+}
+
+.canvas-row {
+display: flex;
+gap: 20px;
+justify-content: center;
+flex-wrap: wrap;
+margin-bottom: 24px;
+}
+
+.canvas-box {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 8px;
+}
+
+.canvas-label {
+font-size: 0.82rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+color: var(–muted);
+}
+
+canvas {
+border-radius: 16px;
+border: 2px solid rgba(255,255,255,0.08);
+background: #0d0d1a;
+display: block;
+}
+
+.arrow-center {
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+color: var(–gold);
+padding-top: 30px;
+animation: pulse 1.5s infinite;
+}
+
+.choices {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 20px;
+}
+
+.choice-btn {
+background: rgba(255,255,255,0.04);
+border: 2px solid rgba(255,255,255,0.1);
+border-radius: 14px;
+padding: 14px 18px;
+color: var(–text);
+font-family: ‘Nunito’, sans-serif;
+font-size: 0.98rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.25s ease;
+text-align: left;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.choice-btn:hover:not(:disabled) {
+border-color: var(–blue);
+background: rgba(76, 201, 240, 0.08);
+transform: translateY(-2px);
+}
+
+.choice-btn .choice-icon {
+width: 36px; height: 36px;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.1rem;
+flex-shrink: 0;
+}
+
+.choice-btn.correct {
+border-color: var(–green);
+background: rgba(6, 214, 160, 0.12);
+animation: correctPop 0.4s ease;
+}
+
+.choice-btn.wrong {
+border-color: var(–accent);
+background: rgba(233, 69, 96, 0.12);
+animation: shake 0.4s ease;
+}
+
+.choice-btn.dimmed {
+opacity: 0.35;
+}
+
+.feedback-box {
+border-radius: 16px;
+padding: 16px 20px;
+margin-bottom: 18px;
+display: none;
+animation: fadeUp 0.3s ease;
+}
+
+.feedback-box.show { display: flex; gap: 14px; align-items: flex-start; }
+
+.feedback-box.correct-fb {
+background: rgba(6, 214, 160, 0.1);
+border: 1px solid rgba(6, 214, 160, 0.3);
+}
+
+.feedback-box.wrong-fb {
+background: rgba(233, 69, 96, 0.1);
+border: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+.feedback-icon { font-size: 1.6rem; }
+
+.feedback-title {
+font-weight: 800;
+font-size: 1rem;
+margin-bottom: 4px;
+}
+
+.feedback-desc {
+font-size: 0.88rem;
+color: var(–muted);
+line-height: 1.5;
+}
+
+.math-explain {
+background: rgba(255,255,255,0.04);
+border-radius: 10px;
+padding: 10px 14px;
+margin-top: 10px;
+font-size: 0.85rem;
+color: var(–blue);
+border-left: 3px solid var(–blue);
+}
+
+.btn-next {
+width: 100%;
+background: linear-gradient(135deg, var(–blue), #5a67d8);
+border: none;
+border-radius: 14px;
+padding: 15px;
+color: #fff;
+font-family: ‘Nunito’, sans-serif;
+font-size: 1.05rem;
+font-weight: 800;
+cursor: pointer;
+transition: all 0.25s;
+display: none;
+letter-spacing: 0.5px;
+}
+
+.btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(76,201,240,0.3); }
+.btn-next.show { display: block; }
+
+.result-screen {
+text-align: center;
+display: none;
+animation: fadeUp 0.5s ease;
+}
+
+.result-screen.show { display: block; }
+.result-screen .trophy { font-size: 4rem; margin-bottom: 16px; }
+.result-screen h2 {
+font-family: ‘Fredoka One’, cursive;
+font-size: 2rem;
+margin-bottom: 10px;
+background: linear-gradient(135deg, var(–gold), var(–accent));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.result-screen p { color: var(–muted); margin-bottom: 24px; font-size: 1rem; }
+
+.result-score {
+font-size: 3.5rem;
+font-weight: 800;
+color: var(–green);
+font-family: ‘Fredoka One’, cursive;
+margin-bottom: 8px;
+}
+
+.btn-restart {
+background: linear-gradient(135deg, var(–accent), var(–purple));
+border: none;
+border-radius: 14px;
+padding: 14px 40px;
+color: #fff;
+font-family: ‘Nunito’, sans-serif;
+font-size: 1.05rem;
+font-weight: 800;
+cursor: pointer;
+transition: all 0.25s;
+margin-top: 10px;
+}
+
+.btn-restart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(233,69,96,0.4); }
+
+.progress-bar {
+width: 100%;
+height: 5px;
+background: rgba(255,255,255,0.08);
+border-radius: 10px;
+margin-bottom: 22px;
+overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+border-radius: 10px;
+background: linear-gradient(90deg, var(–blue), var(–green));
+transition: width 0.5s ease;
+}
+
+@keyframes fadeDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform:none; } }
+@keyframes fadeUp   { from { opacity:0; transform: translateY(15px); }  to { opacity:1; transform:none; } }
+@keyframes pulse    { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+@keyframes correctPop { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
+@keyframes shake {
+0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)}
+60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+}
+
+@media (max-width: 540px) {
+.choices { grid-template-columns: 1fr; }
+.canvas-row { gap: 10px; }
+.arrow-center { padding-top: 10px; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>🔷 Geometry Transformations</h1>
+  <p>Watch the shape transform — then identify what happened!</p>
+</header>
+
+<div class="scorebar">
+  <div class="score-pill"><span class="dot" style="background:var(--green)"></span> Correct: <span id="correct-count">0</span></div>
+  <div class="score-pill"><span class="dot" style="background:var(--accent)"></span> Wrong: <span id="wrong-count">0</span></div>
+  <div class="score-pill"><span class="dot" style="background:var(--gold)"></span> Question: <span id="q-num">1</span> / 10</div>
+</div>
+
+<div class="main-card">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
+
+  <!-- QUIZ CONTENT -->
+
+  <div id="quiz-content">
+    <div class="question-header">
+      <div class="question-counter" id="q-counter">Question 1 of 10</div>
+      <div class="shape-badge" id="shape-badge">Triangle</div>
+    </div>
+    <div class="question-text" id="q-text">What transformation is shown below?</div>
+    <div class="question-sub" id="q-sub">Look at the original shape (blue) and the transformed shape (orange).</div>
+
+```
+<div class="canvas-row">
+  <div class="canvas-box">
+    <div class="canvas-label">Original</div>
+    <canvas id="canvas-before" width="200" height="200"></canvas>
+  </div>
+  <div class="arrow-center">→</div>
+  <div class="canvas-box">
+    <div class="canvas-label">Transformed</div>
+    <canvas id="canvas-after" width="200" height="200"></canvas>
+  </div>
+</div>
+
+<div class="choices" id="choices-container"></div>
+
+<div class="feedback-box" id="feedback-box">
+  <div class="feedback-icon" id="fb-icon"></div>
+  <div>
+    <div class="feedback-title" id="fb-title"></div>
+    <div class="feedback-desc" id="fb-desc"></div>
+    <div class="math-explain" id="fb-math"></div>
+  </div>
+</div>
+
+<button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+```
+
+  </div>
+
+  <!-- RESULT SCREEN -->
+
+  <div class="result-screen" id="result-screen">
+    <div class="trophy" id="trophy-emoji">🏆</div>
+    <div class="result-score" id="result-score">0/10</div>
+    <h2 id="result-title">Great Work!</h2>
+    <p id="result-msg">You completed the Geometry Transformations Quiz!</p>
+    <button class="btn-restart" onclick="restartQuiz()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+// ─── TRANSFORMATION DEFINITIONS ────────────────────────────────────────────
+const TRANSFORMS = {
+  rotation: {
+    label: 'Rotation',
+    icon: '🔄',
+    color: '#4cc9f0',
+    description: 'The shape was rotated (turned) around a fixed point.',
+    mathHints: [
+      'Rotation by 90°: \\((x,y) \\rightarrow (-y,x)\\)',
+      'Rotation by 180°: \\((x,y) \\rightarrow (-x,-y)\\)',
+      'Rotation by 270°: \\((x,y) \\rightarrow (y,-x)\\)',
+    ]
+  },
+  dilation: {
+    label: 'Dilation',
+    icon: '🔍',
+    color: '#f5a623',
+    description: 'The shape was enlarged or shrunk from a center point. The shape stays the same, but its size changes.',
+    mathHints: [
+      'Dilation by scale \\(k\\): \\((x,y) \\rightarrow (kx,\\, ky)\\)',
+      'If \\(k>1\\), the shape grows. If \\(0<k<1\\), it shrinks.',
+    ]
+  },
+  translation: {
+    label: 'Translation',
+    icon: '↗️',
+    color: '#06d6a0',
+    description: 'The shape was slid to a new position without turning or resizing.',
+    mathHints: [
+      'Translation by \\((a,b)\\): \\((x,y) \\rightarrow (x+a,\\, y+b)\\)',
+    ]
+  },
+  reflection: {
+    label: 'Reflection',
+    icon: '🪞',
+    color: '#e94560',
+    description: 'The shape was flipped over a line of reflection — like a mirror image.',
+    mathHints: [
+      'Reflect over x-axis: \\((x,y) \\rightarrow (x,-y)\\)',
+      'Reflect over y-axis: \\((x,y) \\rightarrow (-x,y)\\)',
+      'Reflect over \\(y=x\\): \\((x,y) \\rightarrow (y,x)\\)',
+    ]
+  }
+};
+
+const SHAPES = ['triangle', 'rectangle', 'circle', 'pentagon', 'arrow'];
+const TRANSFORM_KEYS = Object.keys(TRANSFORMS);
+const CHOICES_ORDER = ['rotation','dilation','translation','reflection'];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let score = { correct: 0, wrong: 0 };
+let questionIndex = 0;
+let totalQuestions = 10;
+let currentAnswer = '';
+let answered = false;
+let questions = [];
+
+// ─── SHAPE DRAWING HELPERS ──────────────────────────────────────────────────
+function getShapePoints(shape, cx, cy, size) {
+  switch(shape) {
+    case 'triangle': return [
+      [cx, cy - size],
+      [cx + size * 0.87, cy + size * 0.5],
+      [cx - size * 0.87, cy + size * 0.5]
+    ];
+    case 'rectangle': return [
+      [cx - size * 1.3, cy - size * 0.7],
+      [cx + size * 1.3, cy - size * 0.7],
+      [cx + size * 1.3, cy + size * 0.7],
+      [cx - size * 1.3, cy + size * 0.7]
+    ];
+    case 'pentagon': {
+      const pts = [];
+      for (let i=0;i<5;i++) {
+        const a = (i * 2 * Math.PI / 5) - Math.PI/2;
+        pts.push([cx + size*Math.cos(a), cy + size*Math.sin(a)]);
+      }
+      return pts;
+    }
+    case 'arrow': return [
+      [cx - size*0.8, cy + size*0.3],
+      [cx,           cy + size*0.3],
+      [cx,           cy + size*0.6],
+      [cx + size*0.9,cy],
+      [cx,           cy - size*0.6],
+      [cx,           cy - size*0.3],
+      [cx - size*0.8,cy - size*0.3],
+    ];
+    case 'circle': return null; // special
+  }
+}
+
+function drawShape(ctx, shape, pts, color, alpha=1) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color + '33';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  if (shape === 'circle') {
+    ctx.beginPath();
+    ctx.arc(pts.cx, pts.cy, pts.r, 0, Math.PI*2);
+    ctx.fill(); ctx.stroke();
+  } else {
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i=1; i<pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    // dot at centroid
+    const cx = pts.reduce((s,p)=>s+p[0],0)/pts.length;
+    const cy = pts.reduce((s,p)=>s+p[1],0)/pts.length;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3, 0, Math.PI*2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawGrid(ctx, w, h) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for (let x=0;x<=w;x+=25) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for (let y=0;y<=h;y+=25) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+  // axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
+  ctx.restore();
+}
+
+// ─── QUESTION GENERATOR ─────────────────────────────────────────────────────
+function generateQuestion(idx) {
+  const shape = SHAPES[idx % SHAPES.length];
+  const tKey = TRANSFORM_KEYS[Math.floor(Math.random() * TRANSFORM_KEYS.length)];
+  const size = 30 + Math.random()*18;
+
+  let params = { shape, transform: tKey, size };
+
+  if (tKey === 'rotation') {
+    params.angle = [90, 180, 270][Math.floor(Math.random()*3)];
+  } else if (tKey === 'dilation') {
+    params.scale = Math.random() < 0.5
+      ? (1.6 + Math.random()*0.8).toFixed(1)
+      : (0.4 + Math.random()*0.3).toFixed(2);
+    params.scale = parseFloat(params.scale);
+  } else if (tKey === 'translation') {
+    const dirs = [[40,0],[-40,0],[0,40],[0,-40],[35,35],[-35,-35],[40,-30],[-40,30]];
+    const d = dirs[Math.floor(Math.random()*dirs.length)];
+    params.tx = d[0]; params.ty = d[1];
+  } else if (tKey === 'reflection') {
+    params.axis = ['x','y','y=x'][Math.floor(Math.random()*3)];
+  }
+
+  return params;
+}
+
+function applyTransform(pts, shape, params) {
+  const W=200, H=200, cx=W/2, cy=H/2;
+
+  if (shape === 'circle') {
+    const r = params.size;
+    let ncx=pts.cx, ncy=pts.cy, nr=r;
+    if (params.transform==='translation') { ncx+=params.tx; ncy+=params.ty; }
+    else if (params.transform==='dilation') { nr*=params.scale; }
+    else if (params.transform==='reflection') {
+      if (params.axis==='x') ncy = H - ncy;
+      else if (params.axis==='y') ncx = W - ncx;
+      else { const tmp=ncx-cx; ncx=ncy-cy+cx; ncy=tmp+cy; }
+    } else if (params.transform==='rotation') {
+      const a = params.angle * Math.PI/180;
+      const dx=pts.cx-cx, dy=pts.cy-cy;
+      ncx = cx + dx*Math.cos(a) - dy*Math.sin(a);
+      ncy = cy + dx*Math.sin(a) + dy*Math.cos(a);
+    }
+    return { cx: ncx, cy: ncy, r: nr };
+  }
+
+  return pts.map(([px,py]) => {
+    const dx=px-cx, dy=py-cy;
+    if (params.transform==='translation') return [px+params.tx, py+params.ty];
+    if (params.transform==='dilation')    return [cx+dx*params.scale, cy+dy*params.scale];
+    if (params.transform==='reflection') {
+      if (params.axis==='x') return [px, H-py];
+      if (params.axis==='y') return [W-px, py];
+      return [cy+(px-cx)+cx-(py-cy), cy+(py-cy)+(px-cx) - (px-cx) ]; // y=x
+    }
+    if (params.transform==='rotation') {
+      const a = params.angle * Math.PI/180;
+      return [cx + dx*Math.cos(a) - dy*Math.sin(a),
+              cy + dx*Math.sin(a) + dy*Math.cos(a)];
+    }
+    return [px, py];
+  });
+}
+
+function fixReflectionYeqX(pts, params) {
+  // fix y=x reflection properly
+  if (params.transform==='reflection' && params.axis==='y=x') {
+    const W=200,H=200,cx=W/2,cy=H/2;
+    return pts.map(([px,py])=>{
+      const dx=px-cx, dy=py-cy;
+      return [cx+dy, cy+dx];
+    });
+  }
+  return pts;
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function renderCanvases(params) {
+  const W=200, H=200;
+  const bc = document.getElementById('canvas-before');
+  const ac = document.getElementById('canvas-after');
+  const bx = bc.getContext('2d');
+  const ax = ac.getContext('2d');
+
+  bx.clearRect(0,0,W,H); ax.clearRect(0,0,W,H);
+  drawGrid(bx,W,H); drawGrid(ax,W,H);
+
+  const {shape, size} = params;
+  const cx=W/2+5, cy=H/2+5;
+
+  let beforePts, afterPts;
+
+  if (shape==='circle') {
+    const offx = params.transform==='translation' ? -params.tx/2 : 0;
+    const offy = params.transform==='translation' ? -params.ty/2 : 0;
+    beforePts = { cx: cx+offx, cy: cy+offy, r: size };
+    afterPts = applyTransform(beforePts, shape, params);
+  } else {
+    beforePts = getShapePoints(shape, cx, cy, size);
+    afterPts = applyTransform(beforePts, shape, params);
+    if (params.transform==='reflection' && params.axis==='y=x') {
+      afterPts = fixReflectionYeqX(beforePts, params);
+    }
+  }
+
+  // Draw reflection axis hint
+  if (params.transform==='reflection') {
+    bx.save(); ax.save();
+    [bx,ax].forEach(ctx=>{
+      ctx.strokeStyle='rgba(255,255,255,0.15)';
+      ctx.lineWidth=1.5;
+      ctx.setLineDash([6,4]);
+      ctx.beginPath();
+      if (params.axis==='x')   { ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); }
+      if (params.axis==='y')   { ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); }
+      if (params.axis==='y=x') { ctx.moveTo(0,H); ctx.lineTo(W,0); }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+    bx.restore(); ax.restore();
+  }
+
+  drawShape(bx, shape, beforePts, '#4cc9f0');
+  drawShape(ax, shape, afterPts,  '#f5a623');
+
+  // In after canvas also show ghost of before
+  drawShape(ax, shape, beforePts, '#4cc9f0', 0.22);
+}
+
+// ─── QUIZ LOGIC ─────────────────────────────────────────────────────────────
+function buildChoices(correctKey) {
+  const container = document.getElementById('choices-container');
+  container.innerHTML = '';
+  const shuffled = [...CHOICES_ORDER];
+
+  shuffled.forEach(key => {
+    const t = TRANSFORMS[key];
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.dataset.key = key;
+    btn.innerHTML = `
+      <div class="choice-icon" style="background:${t.color}22; color:${t.color}">${t.icon}</div>
+      <span>${t.label}</span>`;
+    btn.onclick = () => checkAnswer(key);
+    container.appendChild(btn);
+  });
+}
+
+function checkAnswer(chosen) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[questionIndex];
+  const correct = q.transform;
+  const btns = document.querySelectorAll('.choice-btn');
+
+  btns.forEach(btn => {
+    btn.disabled = true;
+    if (btn.dataset.key === correct) btn.classList.add('correct');
+    else if (btn.dataset.key === chosen) btn.classList.add('wrong');
+    else btn.classList.add('dimmed');
+  });
+
+  const isCorrect = chosen === correct;
+  if (isCorrect) score.correct++; else score.wrong++;
+
+  document.getElementById('correct-count').textContent = score.correct;
+  document.getElementById('wrong-count').textContent   = score.wrong;
+
+  // Feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  document.getElementById('fb-icon').textContent  = isCorrect ? '🎉' : '💡';
+  document.getElementById('fb-title').textContent = isCorrect ? 'Correct!' : `That's a ${TRANSFORMS[correct].label}`;
+
+  const t = TRANSFORMS[correct];
+  let desc = t.description;
+  if (q.transform==='rotation')    desc += ` (${q.angle}° here)`;
+  if (q.transform==='dilation')    desc += ` (scale factor ${q.scale})`;
+  if (q.transform==='translation') desc += ` (by \\((${q.tx}, ${q.ty})\\))`;
+  if (q.transform==='reflection')  desc += ` (over the ${q.axis==='y=x'?'y=x line':q.axis+'-axis'})`;
+
+  document.getElementById('fb-desc').textContent = desc;
+
+  const mathHint = t.mathHints[Math.floor(Math.random()*t.mathHints.length)];
+  const mathEl = document.getElementById('fb-math');
+  mathEl.innerHTML = '📐 ' + mathHint;
+  MathJax.typesetPromise([mathEl]).catch(()=>{});
+
+  document.getElementById('btn-next').classList.add('show');
+}
+
+function nextQuestion() {
+  questionIndex++;
+  if (questionIndex >= totalQuestions) {
+    showResult();
+  } else {
+    loadQuestion();
+  }
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[questionIndex];
+
+  document.getElementById('q-counter').textContent = `Question ${questionIndex+1} of ${totalQuestions}`;
+  document.getElementById('q-num').textContent = questionIndex+1;
+  document.getElementById('shape-badge').textContent = q.shape.charAt(0).toUpperCase()+q.shape.slice(1);
+  document.getElementById('progress-fill').style.width = ((questionIndex+1)/totalQuestions*100)+'%';
+
+  // Dynamic question text
+  const texts = [
+    'What transformation is shown below?',
+    'Which geometric transformation occurred?',
+    'Identify the transformation applied to the shape.',
+    'What happened to the original shape?'
+  ];
+  document.getElementById('q-text').textContent = texts[questionIndex%texts.length];
+
+  document.getElementById('feedback-box').className = 'feedback-box';
+  document.getElementById('btn-next').classList.remove('show');
+
+  renderCanvases(q);
+  buildChoices(q.transform);
+  document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=false);
+}
+
+function showResult() {
+  document.getElementById('quiz-content').style.display='none';
+  const rs = document.getElementById('result-screen');
+  rs.className = 'result-screen show';
+  document.getElementById('result-score').textContent = `${score.correct}/${totalQuestions}`;
+
+  const pct = score.correct/totalQuestions;
+  let emoji='🏆', title='Excellent!', msg='You nailed geometry transformations!';
+  if (pct<0.5) { emoji='📚'; title='Keep Practicing!'; msg='Review the concepts and try again — you\'ve got this!'; }
+  else if (pct<0.8) { emoji='⭐'; title='Good Job!'; msg='You\'re getting the hang of transformations!'; }
+
+  document.getElementById('trophy-emoji').textContent=emoji;
+  document.getElementById('result-title').textContent=title;
+  document.getElementById('result-msg').textContent=msg;
+}
+
+function restartQuiz() {
+  score = { correct: 0, wrong: 0 };
+  questionIndex = 0;
+  document.getElementById('correct-count').textContent='0';
+  document.getElementById('wrong-count').textContent='0';
+  document.getElementById('result-screen').className='result-screen';
+  document.getElementById('quiz-content').style.display='block';
+  initQuiz();
+}
+
+function initQuiz() {
+  questions = [];
+  for (let i=0; i<totalQuestions; i++) questions.push(generateQuestion(i));
+  // Ensure each transform appears at least twice in 10 questions
+  const forced = ['rotation','dilation','translation','reflection','rotation','dilation','translation','reflection'];
+  for (let i=0; i<Math.min(forced.length, totalQuestions); i++) {
+    questions[i].transform = forced[i];
+  }
+  // Shuffle
+  for (let i=questions.length-1; i>0; i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [questions[i],questions[j]]=[questions[j],questions[i]];
+  }
+  loadQuestion();
+}
+
+// ─── START ───────────────────────────────────────────────────────────────────
+initQuiz();
+</script>
+
+</body>
+</html>
