@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Remediation Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+        .question-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .option-btn {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #e2e6ea;
+            border-color: #dae0e5;
+        }
+        .option-btn:disabled {
+            cursor: default;
+        }
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .option-btn.wrong {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        .feedback-correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .feedback-wrong {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Remediation Practice</h1>
+    <p style="text-align: center;">Practice these similar problems to master the concepts you missed!</p>
+
+    <div id="quiz-container"></div>
+
+    <script>
+        const quizData = [
+            // Similar to Question 10 (Perimeter of a Triangle)
+            {
+                section: "Practice for Question 10 (Triangle Perimeter)",
+                questions: [
+                    {
+                        text: "What is the perimeter of a triangle with side lengths 12 cm, 16 cm, and 20 cm?",
+                        options: ["38 cm", "48 cm", "52 cm", "60 cm"],
+                        correctAnswer: 1,
+                        explanation: "The perimeter is the total distance around the outside of the shape. Add the three side lengths together: 12 + 16 + 20 = 48 cm."
+                    },
+                    {
+                        text: "What is the perimeter of a triangle with side lengths 8 inches, 15 inches, and 17 inches?",
+                        options: ["30 inches", "40 inches", "42 inches", "45 inches"],
+                        correctAnswer: 1,
+                        explanation: "Add all three side lengths together to find the perimeter: 8 + 15 + 17 = 40 inches."
+                    },
+                    {
+                        text: "What is the perimeter of a triangle with side lengths 30 mm, 40 mm, and 50 mm?",
+                        options: ["100 mm", "110 mm", "120 mm", "130 mm"],
+                        correctAnswer: 2,
+                        explanation: "Add the three sides together: 30 + 40 + 50 = 120 mm."
+                    }
+                ]
+            },
+            // Similar to Question 12 (Subtracting a Sum with Unit Conversion)
+            {
+                section: "Practice for Question 12 (Multi-step Money Math)",
+                questions: [
+                    {
+                        text: "Solve: $50.00 - ($32.50 + 75&cent;)",
+                        options: ["$16.75", "$17.25", "$18.25", "$16.25"],
+                        correctAnswer: 0,
+                        explanation: "First, convert 75&cent; to $0.75. Then, add the values inside the parentheses: $32.50 + $0.75 = $33.25. Finally, subtract that sum from $50.00: $50.00 - $33.25 = $16.75."
+                    },
+                    {
+                        text: "Solve: $20.00 - ($12.45 + 85&cent;)",
+                        options: ["$5.70", "$6.70", "$7.30", "$8.40"],
+                        correctAnswer: 1,
+                        explanation: "First, convert 85&cent; to $0.85. Add the values in parentheses: $12.45 + $0.85 = $13.30. Then, subtract from the total: $20.00 - $13.30 = $6.70."
+                    },
+                    {
+                        text: "Solve: $10.00 - ($4.99 + 50&cent;)",
+                        options: ["$4.41", "$4.51", "$5.49", "$5.51"],
+                        correctAnswer: 1,
+                        explanation: "Convert 50&cent; to $0.50. Add: $4.99 + $0.50 = $5.49. Subtract: $10.00 - $5.49 = $4.51."
+                    }
+                ]
+            },
+            // Similar to Question 17 (Multiplying by Multiples of 10)
+            {
+                section: "Practice for Question 17 (2-Digit Multiplication)",
+                questions: [
+                    {
+                        text: "Solve: 40 &times; 72",
+                        options: ["2,800", "2,840", "2,880", "2,920"],
+                        correctAnswer: 2,
+                        explanation: "You can multiply 4 &times; 72 first. 4 &times; 70 = 280, and 4 &times; 2 = 8, making 288. Then, attach the zero from the 40 to get 2,880."
+                    },
+                    {
+                        text: "Solve: 60 &times; 35",
+                        options: ["1,800", "2,000", "2,100", "2,400"],
+                        correctAnswer: 2,
+                        explanation: "Multiply 6 &times; 35 first. 6 &times; 30 = 180, and 6 &times; 5 = 30. 180 + 30 = 210. Attach the zero to get 2,100."
+                    },
+                    {
+                        text: "Solve: 30 &times; 84",
+                        options: ["2,420", "2,520", "2,640", "2,720"],
+                        correctAnswer: 1,
+                        explanation: "Multiply 3 &times; 84. 3 &times; 80 = 240, and 3 &times; 4 = 12. 240 + 12 = 252. Attach the zero to get 2,520."
+                    }
+                ]
+            },
+            // Similar to Question 24 (Dividing Money)
+            {
+                section: "Practice for Question 24 (Dividing Money by a Single Digit)",
+                questions: [
+                    {
+                        text: "Solve: $5.85 &divide; 9",
+                        options: ["$0.55", "$0.65", "$0.75", "$0.85"],
+                        correctAnswer: 1,
+                        explanation: "Bring the decimal point straight up. 9 goes into 58 six times (9 &times; 6 = 54) with a remainder of 4. Bring down the 5 to make 45. 9 goes into 45 five times. The answer is $0.65."
+                    },
+                    {
+                        text: "Solve: $8.32 &divide; 4",
+                        options: ["$2.02", "$2.08", "$2.80", "$2.82"],
+                        correctAnswer: 1,
+                        explanation: "Bring the decimal point up. 4 goes into 8 two times. 4 goes into 3 zero times. Bring down the 2 to make 32. 4 goes into 32 eight times. The answer is $2.08."
+                    },
+                    {
+                        text: "Solve: $7.56 &divide; 7",
+                        options: ["$1.01", "$1.08", "$1.18", "$1.80"],
+                        correctAnswer: 1,
+                        explanation: "Bring the decimal point up. 7 goes into 7 one time. 7 goes into 5 zero times. Bring down the 6 to make 56. 7 goes into 56 eight times. The answer is $1.08."
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('quiz-container');
+        let questionCounter = 0;
+
+        quizData.forEach((sectionGroup, sectionIndex) => {
+            // Add Section Title
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.className = 'section-title';
+            sectionTitle.textContent = sectionGroup.section;
+            container.appendChild(sectionTitle);
+
+            // Add Questions for this section
+            sectionGroup.questions.forEach((q, qIndex) => {
+                const qId = `q_${sectionIndex}_${qIndex}`;
+                
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.innerHTML = `${qIndex + 1}. ${q.text}`;
+                card.appendChild(questionText);
+
+                const optionsGrid = document.createElement('div');
+                optionsGrid.className = 'options-grid';
+                optionsGrid.id = `options_${qId}`;
+
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'feedback';
+                feedbackDiv.id = `feedback_${qId}`;
+
+                q.options.forEach((opt, optIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = opt;
+                    btn.onclick = () => handleAnswer(btn, optIndex, q.correctAnswer, qId, q.explanation, optionsGrid);
+                    optionsGrid.appendChild(btn);
+                });
+
+                card.appendChild(optionsGrid);
+                card.appendChild(feedbackDiv);
+                container.appendChild(card);
+            });
+        });
+
+        function handleAnswer(clickedBtn, selectedIndex, correctIndex, qId, explanation, optionsGrid) {
+            const buttons = optionsGrid.getElementsByClassName('option-btn');
+            const feedbackDiv = document.getElementById(`feedback_${qId}`);
+            
+            // Disable all buttons in this question once answered
+            Array.from(buttons).forEach(btn => btn.disabled = true);
+
+            // Highlight Correct and Wrong answers
+            Array.from(buttons).forEach((btn, index) => {
+                if (index === correctIndex) {
+                    btn.classList.add('correct');
+                } else if (index === selectedIndex && selectedIndex !== correctIndex) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            // Show feedback
+            feedbackDiv.classList.add('show');
+            if (selectedIndex === correctIndex) {
+                feedbackDiv.classList.add('feedback-correct');
+                feedbackDiv.innerHTML = `<strong>Correct!</strong> ${explanation}`;
+            } else {
+                feedbackDiv.classList.add('feedback-wrong');
+                feedbackDiv.innerHTML = `<strong>Not quite.</strong> ${explanation}`;
+            }
+        }
+    </script>
+</body>
+</html>
