@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Solutions</title>
+    
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .problem-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2980b9;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .problem-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            border-radius: 4px;
+        }
+        .answer-title {
+            font-weight: bold;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        .context-note {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Assignment Solutions</h1>
+
+    <div id="problems-container"></div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                context: "Based on the pictograph: Matt consumed 6 cups of water, 0 cups of soda, 4 cups of milk, and 3 cups of juice in one day. (Key: 1 cup = 8 ounces).",
+                text: "How many pints of liquid did Matt drink in 1 day?",
+                explanation: "First, find the total number of cups Matt drank: $6 \\text{ (water)} + 4 \\text{ (milk)} + 3 \\text{ (juice)} = 13 \\text{ cups}$.<br>Since there are 2 cups in 1 pint, divide the total cups by 2:<br>$13 \\div 2 = 6.5 \\text{ pints}$ (or $6 \\frac{1}{2}$ pints).",
+                answer: "6.5 pints"
+            },
+            {
+                id: 2,
+                text: "Matt drank twice as much water as he did what other beverage?",
+                explanation: "Matt drank 6 cups of water. Half of 6 is 3. Looking at the chart, he drank 3 cups of juice.",
+                answer: "Juice"
+            },
+            {
+                id: 3,
+                text: "Of which beverage did he drink exactly 1 quart?",
+                explanation: "There are 4 cups in 1 quart. According to the pictograph, Matt drank exactly 4 cups of milk.",
+                answer: "Milk"
+            },
+            {
+                id: 4,
+                text: "There were 4 rooms. One fourth of the 56 guests gathered in each room. How many guests were in each room? What percent of the guests were in each room?",
+                explanation: "To find the number of guests in each room, divide the total guests by the number of rooms: $56 \\div 4 = 14 \\text{ guests}$.<br>The fraction is $\\frac{1}{4}$, which is equivalent to $25\\%$.",
+                answer: "14 guests, 25%"
+            },
+            {
+                id: 5,
+                text: "Which of these arrows could be pointing to 2500?",
+                explanation: "The number line shows a range from 2000 to 3000. The number 2500 is exactly in the middle of this range. Arrow B is pointing to the exact midpoint.",
+                answer: "Arrow B"
+            },
+            {
+                id: 6,
+                text: "Estimate the sum of 682, 437, and 396 by rounding each number to the nearest hundred before adding.",
+                explanation: "Round each number:<br>$682 \\rightarrow 700$<br>$437 \\rightarrow 400$<br>$396 \\rightarrow 400$<br>Now add the rounded numbers: $700 + 400 + 400 = 1500$.",
+                answer: "1500"
+            },
+            {
+                id: 7,
+                context: "The image shows a set of 6 hexagons, none of which are shaded.",
+                text: "What fraction of this set is shaded?",
+                explanation: "There are 6 shapes in total and 0 are shaded. The fraction is $\\frac{0}{6}$, which simplifies to 0.",
+                answer: "0/6 (or 0)"
+            },
+            {
+                id: 8,
+                text: "McGillicuddy weighed 9 pounds when he was born. How many ounces is that?",
+                explanation: "There are 16 ounces in 1 pound. Multiply the weight in pounds by 16: $9 \\times 16 = 144 \\text{ ounces}$.",
+                answer: "144 ounces"
+            },
+            {
+                id: 9,
+                context: "The ruler shows a line segment starting at the 1 cm mark and ending at the 5.4 cm mark.",
+                text: "(a) The segment below is how many centimeters long?<br>(b) The segment is how many millimeters long?",
+                explanation: "Subtract the starting point from the ending point: $5.4 \\text{ cm} - 1.0 \\text{ cm} = 4.4 \\text{ cm}$.<br>Since $1 \\text{ cm} = 10 \\text{ mm}$, multiply by 10: $4.4 \\times 10 = 44 \\text{ mm}$.",
+                answer: "(a) 4.4 cm<br>(b) 44 mm"
+            },
+            {
+                id: 10,
+                text: "The mansion sold for $7,450,000. Use words to write that amount of money.",
+                explanation: "The first digit '7' is in the millions place. '450' is read as four hundred fifty in the thousands period. So it is read as Seven million, four hundred fifty thousand dollars.",
+                answer: "Seven million, four hundred fifty thousand dollars"
+            },
+            {
+                id: 11,
+                text: "If each side of a hexagon is 1 foot long, then how many inches is its perimeter?",
+                explanation: "A hexagon has 6 sides. The perimeter in feet is $6 \\times 1 = 6 \\text{ feet}$.<br>Since there are 12 inches in a foot, multiply by 12: $6 \\times 12 = 72 \\text{ inches}$.",
+                answer: "72 inches"
+            },
+            {
+                id: 12,
+                text: "$93,417 + 8,915 = ?$",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} 93,417 \\\\ + \\; 8,915 \\\\ \\hline 102,332 \\end{array} $$",
+                answer: "102,332"
+            },
+            {
+                id: 13,
+                text: "$42,718 - K = 26,054$. Find K.",
+                explanation: "To find the missing subtrahend, subtract the difference from the minuend: <br>$K = 42,718 - 26,054$<br>$K = 16,664$",
+                answer: "16,664"
+            },
+            {
+                id: 14,
+                text: "$1307 + 638 + 5219 + 138 + 16 = ?$",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} 1307 \\\\ 638 \\\\ 5219 \\\\ 138 \\\\ + \\; 16 \\\\ \\hline 7318 \\end{array} $$",
+                answer: "7318"
+            },
+            {
+                id: 15,
+                text: "$100.00 - $86.32 = ?",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} \\$100.00 \\\\ - \\; \\$86.32 \\\\ \\hline \\$13.68 \\end{array} $$",
+                answer: "$13.68"
+            },
+            {
+                id: 16,
+                text: "$405,158 - 396,370 = ?$",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} 405,158 \\\\ - \\; 396,370 \\\\ \\hline 8,788 \\end{array} $$",
+                answer: "8,788"
+            },
+            {
+                id: 17,
+                text: "$567 \\times 8 = ?$",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} 567 \\\\ \\times \\; 8 \\\\ \\hline 4536 \\end{array} $$",
+                answer: "4536"
+            },
+            {
+                id: 18,
+                text: "$30 \\times 84\\text{¢} = ?$",
+                explanation: "$30 \\times 84 = 2520\\text{¢}$. To convert to dollars, divide by 100: $\\$25.20$.",
+                answer: "2520¢ (or $25.20)"
+            },
+            {
+                id: 19,
+                text: "$2.08 \\times 4 = ?$",
+                explanation: "$$ \\begin{array}{r@{\\quad}l} \\$2.08 \\\\ \\times \\; 4 \\\\ \\hline \\$8.32 \\end{array} $$",
+                answer: "$8.32"
+            },
+            {
+                id: 20,
+                text: "$15.00 \\div 4 = ?$",
+                explanation: "Perform long division: $15.00 \\div 4 = 3.75$.",
+                answer: "$3.75"
+            },
+            {
+                id: 21,
+                text: "$936 \\div 6 = ?$",
+                explanation: "$9 \\div 6 = 1 \\text{ (remainder 3)}$. Bring down 3 making it 33.<br>$33 \\div 6 = 5 \\text{ (remainder 3)}$. Bring down 6 making it 36.<br>$36 \\div 6 = 6$. The result is $156$.",
+                answer: "156"
+            },
+            {
+                id: 22,
+                text: "$4537 \\div 8 = ?$",
+                explanation: "$45 \\div 8 = 5 \\text{ (remainder 5)}$. Bring down 3 making it 53.<br>$53 \\div 8 = 6 \\text{ (remainder 5)}$. Bring down 7 making it 57.<br>$57 \\div 8 = 7 \\text{ (remainder 1)}$. The result is $567 \\text{ R } 1$.",
+                answer: "567 R 1"
+            },
+            {
+                id: 23,
+                text: "$452 \\div 5 = ?$",
+                explanation: "$45 \\div 5 = 9$. Bring down 2.<br>$2 \\div 5 = 0 \\text{ (remainder 2)}$. The result is $90 \\text{ R } 2$.",
+                answer: "90 R 2"
+            },
+            {
+                id: 24,
+                text: "$378 \\div 9 = ?$",
+                explanation: "$37 \\div 9 = 4 \\text{ (remainder 1)}$. Bring down 8 making it 18.<br>$18 \\div 9 = 2$. The result is $42$.",
+                answer: "42"
+            },
+            {
+                id: 25,
+                text: "$960 \\div 7 = ?$",
+                explanation: "$9 \\div 7 = 1 \\text{ (remainder 2)}$. Bring down 6 making it 26.<br>$26 \\div 7 = 3 \\text{ (remainder 5)}$. Bring down 0 making it 50.<br>$50 \\div 7 = 7 \\text{ (remainder 1)}$. The result is $137 \\text{ R } 1$.",
+                answer: "137 R 1"
+            },
+            {
+                id: 26,
+                text: "$\\sqrt{16} \\times N = 100$",
+                explanation: "First, solve the square root: $\\sqrt{16} = 4$.<br>Substitute back into the equation: $4 \\times N = 100$.<br>Divide by 4: $N = 100 \\div 4 = 25$.",
+                answer: "N = 25"
+            },
+            {
+                id: 27,
+                text: "$5B = 10^2$",
+                explanation: "First, solve the exponent: $10^2 = 100$.<br>Substitute back: $5B = 100$.<br>Divide by 5: $B = 100 \\div 5 = 20$.",
+                answer: "B = 20"
+            },
+            {
+                id: 28,
+                context: "The number line has major markings at -5, 0, and 5 with single unit tick marks between them. The arrow points 3 units to the left of 0.",
+                text: "To what number is the arrow pointing?",
+                explanation: "Starting from 0 and moving 3 units to the left on the number line lands on -3.",
+                answer: "-3"
+            },
+            {
+                id: 29,
+                text: "Mona turned a quarter turn clockwise, then a quarter turn clockwise, then a quarter turn clockwise. Altogether Mona turned how many degrees?",
+                explanation: "A full circle is $360^\\circ$, so one quarter turn is $360^\\circ \\div 4 = 90^\\circ$.<br>Three quarter turns is $3 \\times 90^\\circ = 270^\\circ$.",
+                answer: "270 degrees"
+            },
+            {
+                id: 30,
+                context: "The image shows a rectangle that is 5 units long and 3 units wide.",
+                text: "Find the perimeter and area of this rectangle.",
+                explanation: "Perimeter is the total distance around the edge: $P = 2 \\times (length + width) = 2 \\times (5 + 3) = 2 \\times 8 = 16 \\text{ units}$.<br>Area is the length multiplied by the width: $A = 5 \\times 3 = 15 \\text{ square units}$.",
+                answer: "Perimeter = 16 units, Area = 15 square units"
+            }
+        ];
+
+        const container = document.getElementById('problems-container');
+
+        problems.forEach(prob => {
+            const card = document.createElement('div');
+            card.className = 'problem-card';
+            
+            let contextHtml = prob.context ? `<div class="context-note">Context: ${prob.context}</div>` : '';
+
+            card.innerHTML = `
+                <div class="problem-number">Problem ${prob.id}</div>
+                ${contextHtml}
+                <div class="problem-text">${prob.text}</div>
+                <button class="toggle-btn" id="btn-${prob.id}" onclick="toggleAnswer(${prob.id})">Show Answer & Explanation</button>
+                <div class="answer-section" id="ans-${prob.id}">
+                    <div class="answer-title">Explanation:</div>
+                    <div>${prob.explanation}</div>
+                    <div class="answer-title" style="margin-top: 15px;">Final Answer:</div>
+                    <div style="font-weight: bold; font-size: 1.1em;">${prob.answer}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        function toggleAnswer(id) {
+            const answerDiv = document.getElementById(`ans-${id}`);
+            const btn = document.getElementById(`btn-${id}`);
+            
+            if (answerDiv.style.display === "none" || answerDiv.style.display === "") {
+                answerDiv.style.display = "block";
+                btn.textContent = "Hide Answer & Explanation";
+            } else {
+                answerDiv.style.display = "none";
+                btn.textContent = "Show Answer & Explanation";
+            }
+        }
+    </script>
+</body>
+</html>
