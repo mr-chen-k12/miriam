@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math & Shapes Practice</title>
+    <title>Interactive Math & Shape Quiz</title>
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
             color: #333;
             max-width: 800px;
@@ -18,359 +18,273 @@
             padding: 20px;
         }
         h1, h2 {
+            text-align: center;
             color: #2c3e50;
         }
-        .section-card {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 30px;
+        .quiz-section {
+            background-color: #fff;
             border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
         }
         .question-block:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
-        .options label {
-            display: block;
-            margin: 8px 0;
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            background-color: #e2e8f0;
+            border: 2px solid #cbd5e1;
+            border-radius: 5px;
             cursor: pointer;
+            text-align: left;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        button:hover:not(:disabled) {
+            background-color: #cbd5e1;
+            transform: scale(1.01);
+        }
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
         }
         .feedback {
             margin-top: 10px;
-            font-weight: bold;
-            padding: 8px;
-            border-radius: 4px;
-            display: none;
+            font-size: 1.05em;
+            min-height: 24px;
         }
-        .correct {
-            background-color: #d4edda;
-            color: #155724;
+        .shape-canvas {
             display: block;
-        }
-        .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            display: block;
-        }
-        .canvas-container {
-            margin: 10px 0;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #2980b9;
+            margin: 10px auto;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
     </style>
 </head>
 <body>
 
-    <h1>Practice Test Corrections</h1>
-    <p>Answer the multiple-choice questions below. Click "Check Answers" at the bottom to see how you did!</p>
+    <h1>Math Correction & Shape Quiz</h1>
 
-    <div class="section-card" id="missed-questions">
-        <h2>Targeted Practice for Missed Questions</h2>
+    <div class="quiz-section">
+        <h2>Part 1: Math Corrections</h2>
+        <p><em>Review the questions below. Select the correct answer to check your work.</em></p>
 
-        <h3>Practice for Question 1 (Arithmetic)</h3>
-        <div class="question-block" data-correct="42">
-            <p>1a. What is \( 15 + 27 \)?</p>
+        <div class="question-block">
+            <div class="question-text">1. According to the pictograph, Matt drank 6 cups of water, 1 cup of soda, 4 cups of milk, and 3 cups of juice. How many <strong>pints</strong> of liquid did Matt drink in 1 day? (Hint: 1 pint = 2 cups)</div>
             <div class="options">
-                <label><input type="radio" name="q1a" value="32"> 32</label>
-                <label><input type="radio" name="q1a" value="42"> 42</label>
-                <label><input type="radio" name="q1a" value="52"> 52</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="26">
-            <p>1b. What is \( 45 - 19 \)?</p>
-            <div class="options">
-                <label><input type="radio" name="q1b" value="26"> 26</label>
-                <label><input type="radio" name="q1b" value="36"> 36</label>
-                <label><input type="radio" name="q1b" value="24"> 24</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="56">
-            <p>1c. What is \( 8 \times 7 \)?</p>
-            <div class="options">
-                <label><input type="radio" name="q1c" value="54"> 54</label>
-                <label><input type="radio" name="q1c" value="64"> 64</label>
-                <label><input type="radio" name="q1c" value="56"> 56</label>
+                <button onclick="checkAnswer(this, false, '7 pints')">A) 14 pints</button>
+                <button onclick="checkAnswer(this, false, '7 pints')">B) 56 pints</button>
+                <button onclick="checkAnswer(this, true, '7 pints')">C) 7 pints</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <h3>Practice for Question 2 (Fractions)</h3>
-        <div class="question-block" data-correct="3/4">
-            <p>2a. Solve: \( \frac{1}{2} + \frac{1}{4} \)</p>
+        <div class="question-block">
+            <div class="question-text">2. Matt drank 6 cups of water. He drank twice as much water as he did what other beverage?</div>
             <div class="options">
-                <label><input type="radio" name="q2a" value="3/4"> 3/4</label>
-                <label><input type="radio" name="q2a" value="2/6"> 2/6</label>
-                <label><input type="radio" name="q2a" value="1/8"> 1/8</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="1/2">
-            <p>2b. Solve: \( \frac{3}{4} - \frac{1}{4} \)</p>
-            <div class="options">
-                <label><input type="radio" name="q2b" value="1/2"> 1/2</label>
-                <label><input type="radio" name="q2b" value="2/8"> 2/8</label>
-                <label><input type="radio" name="q2b" value="1"> 1</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="2/3">
-            <p>2c. Solve: \( \frac{1}{3} \times 2 \)</p>
-            <div class="options">
-                <label><input type="radio" name="q2c" value="1/6"> 1/6</label>
-                <label><input type="radio" name="q2c" value="3/2"> 3/2</label>
-                <label><input type="radio" name="q2c" value="2/3"> 2/3</label>
+                <button onclick="checkAnswer(this, false, 'Juice (3 cups)')">A) Milk (4 cups)</button>
+                <button onclick="checkAnswer(this, true, 'Juice (3 cups)')">B) Juice (3 cups)</button>
+                <button onclick="checkAnswer(this, false, 'Juice (3 cups)')">C) Soda (1 cup)</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <h3>Practice for Question 8 (Basic Algebra)</h3>
-        <div class="question-block" data-correct="7">
-            <p>8a. Solve for x: \( x + 5 = 12 \)</p>
+        <div class="question-block">
+            <div class="question-text">8. McGillicuddy weighed 9 pounds when he was born. How many ounces is that? (Hint: 1 pound = 16 ounces)</div>
             <div class="options">
-                <label><input type="radio" name="q8a" value="6"> x = 6</label>
-                <label><input type="radio" name="q8a" value="7"> x = 7</label>
-                <label><input type="radio" name="q8a" value="8"> x = 8</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="5">
-            <p>8b. Solve for y: \( 2y = 10 \)</p>
-            <div class="options">
-                <label><input type="radio" name="q8b" value="4"> y = 4</label>
-                <label><input type="radio" name="q8b" value="5"> y = 5</label>
-                <label><input type="radio" name="q8b" value="6"> y = 6</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="12">
-            <p>8c. Solve for z: \( z - 3 = 9 \)</p>
-            <div class="options">
-                <label><input type="radio" name="q8c" value="12"> z = 12</label>
-                <label><input type="radio" name="q8c" value="6"> z = 6</label>
-                <label><input type="radio" name="q8c" value="10"> z = 10</label>
+                <button onclick="checkAnswer(this, false, '144 ounces')">A) 90 ounces</button>
+                <button onclick="checkAnswer(this, true, '144 ounces')">B) 144 ounces</button>
+                <button onclick="checkAnswer(this, false, '144 ounces')">C) 108 ounces</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <h3>Practice for Question 10 (Area)</h3>
-        <div class="question-block" data-correct="20">
-            <p>10a. What is the area of a rectangle with sides of 4 and 5?</p>
+        <div class="question-block">
+            <div class="question-text">10. The mansion sold for $7,450,000. Use words to write that amount of money.</div>
             <div class="options">
-                <label><input type="radio" name="q10a" value="9"> 9</label>
-                <label><input type="radio" name="q10a" value="18"> 18</label>
-                <label><input type="radio" name="q10a" value="20"> 20</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="36">
-            <p>10b. What is the area of a square with a side length of 6?</p>
-            <div class="options">
-                <label><input type="radio" name="q10b" value="24"> 24</label>
-                <label><input type="radio" name="q10b" value="12"> 12</label>
-                <label><input type="radio" name="q10b" value="36"> 36</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="30">
-            <p>10c. What is the area of a rectangle with sides of 10 and 3?</p>
-            <div class="options">
-                <label><input type="radio" name="q10c" value="30"> 30</label>
-                <label><input type="radio" name="q10c" value="13"> 13</label>
-                <label><input type="radio" name="q10c" value="26"> 26</label>
+                <button onclick="checkAnswer(this, true, 'Seven million, four hundred fifty thousand dollars')">A) Seven million, four hundred fifty thousand dollars</button>
+                <button onclick="checkAnswer(this, false, 'Seven million, four hundred fifty thousand dollars')">B) Seven thousand, four hundred fifty thousand dollars</button>
+                <button onclick="checkAnswer(this, false, 'Seven million, four hundred fifty thousand dollars')">C) Seven billion, four hundred fifty thousand dollars</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <h3>Practice for Question 11 (Perimeter)</h3>
-        <div class="question-block" data-correct="18">
-            <p>11a. What is the perimeter of a rectangle with sides of 4 and 5?</p>
+        <div class="question-block">
+            <div class="question-text">11. If each side of a hexagon is 1 foot long, then how many <strong>inches</strong> is its perimeter?</div>
             <div class="options">
-                <label><input type="radio" name="q11a" value="18"> 18</label>
-                <label><input type="radio" name="q11a" value="20"> 20</label>
-                <label><input type="radio" name="q11a" value="9"> 9</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="24">
-            <p>11b. What is the perimeter of a square with a side length of 6?</p>
-            <div class="options">
-                <label><input type="radio" name="q11b" value="36"> 36</label>
-                <label><input type="radio" name="q11b" value="24"> 24</label>
-                <label><input type="radio" name="q11b" value="12"> 12</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="15">
-            <p>11c. What is the perimeter of an equilateral triangle with a side length of 5?</p>
-            <div class="options">
-                <label><input type="radio" name="q11c" value="10"> 10</label>
-                <label><input type="radio" name="q11c" value="20"> 20</label>
-                <label><input type="radio" name="q11c" value="15"> 15</label>
+                <button onclick="checkAnswer(this, false, '72 inches (6 feet × 12 inches)')">A) 6 inches</button>
+                <button onclick="checkAnswer(this, false, '72 inches (6 feet × 12 inches)')">B) 60 inches</button>
+                <button onclick="checkAnswer(this, true, '72 inches (6 feet × 12 inches)')">C) 72 inches</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <h3>Practice for Question 13 (Word Problems)</h3>
-        <div class="question-block" data-correct="3">
-            <p>13a. You have 5 apples and eat 2. How many are left?</p>
+        <div class="question-block">
+            <div class="question-text">13. Find the missing number: $$42,718 - K = 26,054$$</div>
             <div class="options">
-                <label><input type="radio" name="q13a" value="2"> 2</label>
-                <label><input type="radio" name="q13a" value="3"> 3</label>
-                <label><input type="radio" name="q13a" value="7"> 7</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="12">
-            <p>13b. There are 4 boxes. Each box has 3 pens. How many pens total?</p>
-            <div class="options">
-                <label><input type="radio" name="q13b" value="7"> 7</label>
-                <label><input type="radio" name="q13b" value="12"> 12</label>
-                <label><input type="radio" name="q13b" value="1"> 1</label>
-            </div>
-            <div class="feedback"></div>
-        </div>
-        <div class="question-block" data-correct="5">
-            <p>13c. You share 10 candies equally between 2 friends. How many does each get?</p>
-            <div class="options">
-                <label><input type="radio" name="q13c" value="5"> 5</label>
-                <label><input type="radio" name="q13c" value="8"> 8</label>
-                <label><input type="radio" name="q13c" value="12"> 12</label>
+                <button onclick="checkAnswer(this, false, '16,664')">A) 68,772</button>
+                <button onclick="checkAnswer(this, true, '16,664')">B) 16,664</button>
+                <button onclick="checkAnswer(this, false, '16,664')">C) 26,054</button>
             </div>
             <div class="feedback"></div>
         </div>
     </div>
 
-    <div class="section-card" id="shape-questions">
-        <h2>Miscellaneous: Identifying Shapes (3 to 10 sides)</h2>
-        
-        <div class="question-block" data-correct="Triangle">
-            <div class="canvas-container"><canvas id="canvas3" width="100" height="100"></canvas></div>
-            <p>M1. What is the name of this 3-sided shape?</p>
+    <div class="quiz-section">
+        <h2>Part 2: Recognizing Polygons</h2>
+        <p><em>Look at the shape drawn below and identify its name based on the number of sides.</em></p>
+
+        <div class="question-block">
+            <canvas id="canvas-3" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 3-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s1" value="Square"> Square</label>
-                <label><input type="radio" name="s1" value="Triangle"> Triangle</label>
-                <label><input type="radio" name="s1" value="Pentagon"> Pentagon</label>
+                <button onclick="checkAnswer(this, true, 'Triangle')">A) Triangle</button>
+                <button onclick="checkAnswer(this, false, 'Triangle')">B) Square</button>
+                <button onclick="checkAnswer(this, false, 'Triangle')">C) Pentagon</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Square / Rectangle">
-            <div class="canvas-container"><canvas id="canvas4" width="100" height="100"></canvas></div>
-            <p>M2. What is the name of this 4-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-4" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 4-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s2" value="Square / Rectangle"> Square / Rectangle</label>
-                <label><input type="radio" name="s2" value="Hexagon"> Hexagon</label>
-                <label><input type="radio" name="s2" value="Triangle"> Triangle</label>
+                <button onclick="checkAnswer(this, false, 'Square / Rectangle (Quadrilateral)')">A) Hexagon</button>
+                <button onclick="checkAnswer(this, true, 'Square / Rectangle (Quadrilateral)')">B) Square / Rectangle</button>
+                <button onclick="checkAnswer(this, false, 'Square / Rectangle (Quadrilateral)')">C) Octagon</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Pentagon">
-            <div class="canvas-container"><canvas id="canvas5" width="100" height="100"></canvas></div>
-            <p>M3. What is the name of this 5-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-5" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 5-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s3" value="Octagon"> Octagon</label>
-                <label><input type="radio" name="s3" value="Hexagon"> Hexagon</label>
-                <label><input type="radio" name="s3" value="Pentagon"> Pentagon</label>
+                <button onclick="checkAnswer(this, false, 'Pentagon')">A) Heptagon</button>
+                <button onclick="checkAnswer(this, false, 'Pentagon')">B) Hexagon</button>
+                <button onclick="checkAnswer(this, true, 'Pentagon')">C) Pentagon</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Hexagon">
-            <div class="canvas-container"><canvas id="canvas6" width="100" height="100"></canvas></div>
-            <p>M4. What is the name of this 6-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-6" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 6-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s4" value="Hexagon"> Hexagon</label>
-                <label><input type="radio" name="s4" value="Heptagon"> Heptagon</label>
-                <label><input type="radio" name="s4" value="Pentagon"> Pentagon</label>
+                <button onclick="checkAnswer(this, true, 'Hexagon')">A) Hexagon</button>
+                <button onclick="checkAnswer(this, false, 'Hexagon')">B) Nonagon</button>
+                <button onclick="checkAnswer(this, false, 'Hexagon')">C) Decagon</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Heptagon">
-            <div class="canvas-container"><canvas id="canvas7" width="100" height="100"></canvas></div>
-            <p>M5. What is the name of this 7-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-7" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 7-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s5" value="Nonagon"> Nonagon</label>
-                <label><input type="radio" name="s5" value="Heptagon"> Heptagon</label>
-                <label><input type="radio" name="s5" value="Octagon"> Octagon</label>
+                <button onclick="checkAnswer(this, false, 'Heptagon')">A) Octagon</button>
+                <button onclick="checkAnswer(this, true, 'Heptagon')">B) Heptagon</button>
+                <button onclick="checkAnswer(this, false, 'Heptagon')">C) Triangle</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Octagon">
-            <div class="canvas-container"><canvas id="canvas8" width="100" height="100"></canvas></div>
-            <p>M6. What is the name of this 8-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-8" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 8-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s6" value="Hexagon"> Hexagon</label>
-                <label><input type="radio" name="s6" value="Decagon"> Decagon</label>
-                <label><input type="radio" name="s6" value="Octagon"> Octagon</label>
+                <button onclick="checkAnswer(this, false, 'Octagon')">A) Decagon</button>
+                <button onclick="checkAnswer(this, false, 'Octagon')">B) Hexagon</button>
+                <button onclick="checkAnswer(this, true, 'Octagon')">C) Octagon</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Nonagon">
-            <div class="canvas-container"><canvas id="canvas9" width="100" height="100"></canvas></div>
-            <p>M7. What is the name of this 9-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-9" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 9-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s7" value="Nonagon"> Nonagon</label>
-                <label><input type="radio" name="s7" value="Heptagon"> Heptagon</label>
-                <label><input type="radio" name="s7" value="Decagon"> Decagon</label>
+                <button onclick="checkAnswer(this, true, 'Nonagon')">A) Nonagon</button>
+                <button onclick="checkAnswer(this, false, 'Nonagon')">B) Heptagon</button>
+                <button onclick="checkAnswer(this, false, 'Nonagon')">C) Quadrilateral</button>
             </div>
             <div class="feedback"></div>
         </div>
 
-        <div class="question-block" data-correct="Decagon">
-            <div class="canvas-container"><canvas id="canvas10" width="100" height="100"></canvas></div>
-            <p>M8. What is the name of this 10-sided shape?</p>
+        <div class="question-block">
+            <canvas id="canvas-10" width="150" height="150" class="shape-canvas"></canvas>
+            <div class="question-text">What is the name of this 10-sided shape?</div>
             <div class="options">
-                <label><input type="radio" name="s8" value="Pentagon"> Pentagon</label>
-                <label><input type="radio" name="s8" value="Decagon"> Decagon</label>
-                <label><input type="radio" name="s8" value="Octagon"> Octagon</label>
+                <button onclick="checkAnswer(this, false, 'Decagon')">A) Octagon</button>
+                <button onclick="checkAnswer(this, true, 'Decagon')">B) Decagon</button>
+                <button onclick="checkAnswer(this, false, 'Decagon')">C) Nonagon</button>
             </div>
             <div class="feedback"></div>
         </div>
+
     </div>
-
-    <button onclick="checkAllAnswers()">Check All Answers</button>
 
     <script>
-        // Function to draw regular polygons on the canvas
+        // Interactive checking function for the quiz
+        function checkAnswer(btn, isCorrect, correctAnswerText) {
+            const optionsDiv = btn.parentElement;
+            const feedbackDiv = optionsDiv.nextElementSibling;
+            
+            // Disable all buttons in this specific question
+            const buttons = optionsDiv.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.style.borderColor = '#e2e8f0';
+            });
+
+            if (isCorrect) {
+                btn.style.backgroundColor = '#d4edda';
+                btn.style.borderColor = '#28a745';
+                feedbackDiv.innerHTML = `<strong style="color: #28a745;">Correct!</strong>`;
+            } else {
+                btn.style.backgroundColor = '#f8d7da';
+                btn.style.borderColor = '#dc3545';
+                feedbackDiv.innerHTML = `<strong style="color: #dc3545;">Incorrect.</strong> The correct answer is: <strong>${correctAnswerText}</strong>`;
+            }
+        }
+
+        // Canvas drawing function for polygons
         function drawPolygon(canvasId, sides) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
+            
             const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            const radius = Math.min(width, height) / 2 - 10;
-            const cx = width / 2;
-            const cy = height / 2;
+            const xCenter = canvas.width / 2;
+            const yCenter = canvas.height / 2;
+            const radius = Math.min(xCenter, yCenter) - 15; // 15px padding
 
             ctx.beginPath();
             for (let i = 0; i < sides; i++) {
-                // Rotate by -PI/2 so the shape points upwards
-                const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
-                const x = cx + radius * Math.cos(angle);
-                const y = cy + radius * Math.sin(angle);
+                // Determine the angle for each point. 
+                // Subtracting Math.PI/2 to make the shape point upwards.
+                const angle = (i * 2 * Math.PI / sides) - (Math.PI / 2);
+                const x = xCenter + radius * Math.cos(angle);
+                const y = yCenter + radius * Math.sin(angle);
+                
                 if (i === 0) {
                     ctx.moveTo(x, y);
                 } else {
@@ -379,42 +293,22 @@
             }
             ctx.closePath();
             
-            ctx.fillStyle = '#3498db'; // Shape fill color
+            // Styles
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#2c3e50';
+            ctx.fillStyle = '#ebf5fb';
+            
+            // Draw
             ctx.fill();
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = '#2980b9'; // Shape border color
             ctx.stroke();
         }
 
-        // Draw all shapes from 3 sides (triangle) to 10 sides (decagon)
+        // Draw shapes 3 through 10 once the window loads
         window.onload = function() {
             for (let i = 3; i <= 10; i++) {
-                drawPolygon('canvas' + i, i);
+                drawPolygon(`canvas-${i}`, i);
             }
         };
-
-        // Grading function
-        function checkAllAnswers() {
-            const questions = document.querySelectorAll('.question-block');
-            
-            questions.forEach((q) => {
-                const correctValue = q.getAttribute('data-correct');
-                const selectedRadio = q.querySelector('input[type="radio"]:checked');
-                const feedbackDiv = q.querySelector('.feedback');
-                
-                if (!selectedRadio) {
-                    feedbackDiv.innerHTML = "⚠️ Please select an answer.";
-                    feedbackDiv.className = "feedback incorrect";
-                } else if (selectedRadio.value === correctValue) {
-                    feedbackDiv.innerHTML = "✅ Correct!";
-                    feedbackDiv.className = "feedback correct";
-                } else {
-                    feedbackDiv.innerHTML = `❌ Incorrect. The correct answer is <strong>${correctValue}</strong>.`;
-                    feedbackDiv.className = "feedback incorrect";
-                }
-            });
-        }
     </script>
-
 </body>
 </html>
