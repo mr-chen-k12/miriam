@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Targeted Math Review Quiz</title>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  };
+</script>
+
+<style>
+  :root {
+    --primary: #0056b3;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --correct: #28a745;
+    --incorrect: #dc3545;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+  }
+  .header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+  }
+  .topic-section {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+  }
+  .topic-title {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 0;
+  }
+  .question-card {
+    background: var(--card-bg);
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 20px;
+    margin-bottom: 0;
+  }
+  .question-card:last-child {
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 20px;
+  }
+  .question-text {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .option-btn {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background: #f1f1f1;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1em;
+    transition: background 0.2s;
+  }
+  .option-btn:hover {
+    background: #e2e2e2;
+  }
+  .option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+  .feedback {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    font-weight: 500;
+  }
+  .feedback.correct {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+  }
+  .feedback.incorrect {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+  }
+  canvas {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Targeted Math Review</h1>
+  <p>Practice questions based on your previous worksheet. Select an answer to see if you are correct and to view the explanation.</p>
+</div>
+
+<div id="quiz-container"></div>
+
+<script>
+// Quiz Data grouped by the original question number/concept
+const quizData = [
+  // Topic 4: Fractions and Percentages
+  {
+    topic: "Topic 4: Fractions & Percentages",
+    questions: [
+      {
+        q: "If $\\frac{1}{5}$ of the students play soccer, what percentage of the students do NOT play soccer?",
+        options: ["20%", "40%", "80%", "100%"],
+        answer: 2,
+        exp: "The fraction that does NOT play is $1 - \\frac{1}{5} = \\frac{4}{5}$. To find the percentage, multiply by 100: $\\frac{4}{5} \\times 100 = 80\\%$."
+      },
+      {
+        q: "If $\\frac{1}{3}$ of a pizza is eaten, what fraction remains?",
+        options: ["$\\frac{1}{3}$", "$\\frac{1}{2}$", "$\\frac{2}{3}$", "$\\frac{3}{4}$"],
+        answer: 2,
+        exp: "A whole pizza is 1. Subtract the eaten portion: $1 - \\frac{1}{3} = \\frac{2}{3}$."
+      },
+      {
+        q: "If $\\frac{3}{10}$ of a garden is planted with tomatoes, what percentage is NOT tomatoes?",
+        options: ["30%", "60%", "70%", "100%"],
+        answer: 2,
+        exp: "The fraction that is not tomatoes is $1 - \\frac{3}{10} = \\frac{7}{10}$. $\\frac{7}{10}$ as a percentage is 70%."
+      }
+    ]
+  },
+  // Topic 7: Capacity Conversions
+  {
+    topic: "Topic 7: Fractions of Capacity",
+    questions: [
+      {
+        q: "A pint is what fraction of a gallon? (Hint: 1 gallon = 4 quarts, 1 quart = 2 pints)",
+        options: ["$\\frac{1}{2}$", "$\\frac{1}{4}$", "$\\frac{1}{8}$", "$\\frac{1}{16}$"],
+        answer: 2,
+        exp: "There are 4 quarts in a gallon, and 2 pints in a quart. $4 \\times 2 = 8$ pints in a gallon. So, a pint is $\\frac{1}{8}$ of a gallon."
+      },
+      {
+        q: "A cup is what fraction of a half-gallon?",
+        options: ["$\\frac{1}{4}$", "$\\frac{1}{8}$", "$\\frac{1}{16}$", "$\\frac{1}{32}$"],
+        answer: 1,
+        exp: "A half-gallon equals 2 quarts. 2 quarts = 4 pints = 8 cups. Therefore, one cup is $\\frac{1}{8}$ of a half-gallon."
+      },
+      {
+        q: "A quart is what fraction of a gallon?",
+        options: ["$\\frac{1}{2}$", "$\\frac{1}{3}$", "$\\frac{1}{4}$", "$\\frac{1}{8}$"],
+        answer: 2,
+        exp: "There are 4 quarts in a gallon, making 1 quart equal to $\\frac{1}{4}$ of a gallon."
+      }
+    ]
+  },
+  // Topic 8: Metric Mass
+  {
+    topic: "Topic 8: Metric Mass Conversions",
+    questions: [
+      {
+        q: "5 kilograms is equal to how many grams?",
+        options: ["50 grams", "500 grams", "5000 grams", "50000 grams"],
+        answer: 2,
+        exp: "There are 1000 grams in 1 kilogram. $5 \\times 1000 = 5000$ grams."
+      },
+      {
+        q: "2.5 kilograms is equal to how many grams?",
+        options: ["25 grams", "250 grams", "2500 grams", "25000 grams"],
+        answer: 2,
+        exp: "Multiply by 1000. $2.5 \\times 1000 = 2500$ grams."
+      },
+      {
+        q: "12 kilograms is equal to how many grams?",
+        options: ["120 grams", "1200 grams", "12000 grams", "120000 grams"],
+        answer: 2,
+        exp: "$12 \\times 1000 = 12000$ grams."
+      }
+    ]
+  },
+  // Topic 9: Estimation
+  {
+    topic: "Topic 9: Estimating Products",
+    questions: [
+      {
+        q: "Estimate the product of $492 \\times 6$ by rounding the 3-digit number to the nearest hundred.",
+        options: ["2400", "2500", "3000", "3500"],
+        answer: 2,
+        exp: "492 rounds up to 500. $500 \\times 6 = 3000$."
+      },
+      {
+        q: "Estimate the product of $805 \\times 4$ by rounding to the nearest hundred.",
+        options: ["3000", "3200", "3600", "4000"],
+        answer: 1,
+        exp: "805 rounds down to 800. $800 \\times 4 = 3200$."
+      },
+      {
+        q: "Estimate the product of $198 \\times 9$ by rounding to the nearest hundred.",
+        options: ["900", "1500", "1800", "2000"],
+        answer: 2,
+        exp: "198 rounds up to 200. $200 \\times 9 = 1800$."
+      }
+    ]
+  },
+  // Topic 11: Comparing Fractions
+  {
+    topic: "Topic 11: Comparing Fractions",
+    questions: [
+      {
+        q: "Compare $\\frac{2}{3}$ and $\\frac{3}{5}$.",
+        options: ["$\\frac{2}{3} > \\frac{3}{5}$", "$\\frac{2}{3} < \\frac{3}{5}$", "$\\frac{2}{3} = \\frac{3}{5}$"],
+        answer: 0,
+        exp: "Find a common denominator (15). $\\frac{2}{3} = \\frac{10}{15}$ and $\\frac{3}{5} = \\frac{9}{15}$. Since $10 > 9$, $\\frac{2}{3} > \\frac{3}{5}$."
+      },
+      {
+        q: "Compare $\\frac{5}{8}$ and $\\frac{3}{4}$.",
+        options: ["$\\frac{5}{8} > \\frac{3}{4}$", "$\\frac{5}{8} < \\frac{3}{4}$", "$\\frac{5}{8} = \\frac{3}{4}$"],
+        answer: 1,
+        exp: "Convert $\\frac{3}{4}$ to eighths: $\\frac{6}{8}$. Since $\\frac{5}{8} < \\frac{6}{8}$, the answer is less than."
+      },
+      {
+        q: "Compare $\\frac{4}{7}$ and $\\frac{1}{2}$.",
+        options: ["$\\frac{4}{7} > \\frac{1}{2}$", "$\\frac{4}{7} < \\frac{1}{2}$", "$\\frac{4}{7} = \\frac{1}{2}$"],
+        answer: 0,
+        exp: "Half of 7 is 3.5. Since the numerator 4 is greater than 3.5, the fraction $\\frac{4}{7}$ is greater than $\\frac{1}{2}$."
+      }
+    ]
+  },
+  // Topic 12: Decimal Subtraction
+  {
+    topic: "Topic 12: Decimal Subtraction",
+    questions: [
+      {
+        q: "$5.43 - 1.2$",
+        options: ["4.23", "4.31", "4.41", "6.63"],
+        answer: 0,
+        exp: "Align the decimals (5.43 - 1.20). $3 - 0 = 3$, $4 - 2 = 2$, $5 - 1 = 4$. Result is 4.23."
+      },
+      {
+        q: "$10.05 - 3.1$",
+        options: ["6.05", "6.95", "7.05", "7.95"],
+        answer: 1,
+        exp: "Align decimals (10.05 - 3.10). $5 - 0 = 5$, borrow to do $10 - 1 = 9$, $9 - 3 = 6$. Result is 6.95."
+      },
+      {
+        q: "$8.125 - 4.5$",
+        options: ["3.625", "4.125", "4.525", "3.525"],
+        answer: 0,
+        exp: "Align decimals (8.125 - 4.500). The result is 3.625."
+      }
+    ]
+  },
+  // Topic 15: Money Addition
+  {
+    topic: "Topic 15: Mixed Money Addition",
+    questions: [
+      {
+        q: "Add: $12.50 + 75¢ + $5.00",
+        options: ["$17.25", "$18.25", "$88.50", "$17.75"],
+        answer: 1,
+        exp: "Convert 75¢ to $0.75. Add $12.50 + 0.75 + 5.00 = $18.25."
+      },
+      {
+        q: "Add: $8.99 + 50¢ + $10.00",
+        options: ["$18.49", "$19.49", "$19.99", "$23.99"],
+        answer: 1,
+        exp: "Convert 50¢ to $0.50. Add $8.99 + 0.50 = 9.49. Add $10.00 to get $19.49."
+      },
+      {
+        q: "Add: $20.05 + 85¢ + $2.00",
+        options: ["$22.85", "$22.90", "$23.05", "$21.90"],
+        answer: 1,
+        exp: "Convert 85¢ to $0.85. Add $20.05 + 0.85 = 20.90. Add $2.00 to get $22.90."
+      }
+    ]
+  },
+  // Topic 17: Money Division
+  {
+    topic: "Topic 17: Money Division",
+    questions: [
+      {
+        q: "$45.24 \\div 4$",
+        options: ["$10.31", "$11.06", "$11.31", "$12.11"],
+        answer: 2,
+        exp: "$45 \\div 4 = 11$ remainder 1. Bring down the 2 to make 12. $12 \\div 4 = 3$. Bring down 4. $4 \\div 4 = 1$. The result is $11.31."
+      },
+      {
+        q: "$28.50 \\div 5$",
+        options: ["$4.70", "$5.50", "$5.70", "$6.10"],
+        answer: 2,
+        exp: "$28 \\div 5 = 5$ remainder 3. Bring down 5 to make 35. $35 \\div 5 = 7$. Add the trailing zero. The result is $5.70."
+      },
+      {
+        q: "$81.72 \\div 9$",
+        options: ["$8.08", "$9.08", "$9.80", "$10.08"],
+        answer: 1,
+        exp: "$81 \\div 9 = 9$. Next is 7, which can't be divided by 9, so put a 0. Bring down 2 to make 72. $72 \\div 9 = 8$. The result is $9.08."
+      }
+    ]
+  },
+  // Topic 27: Algebra Addition
+  {
+    topic: "Topic 27: Solving for N in Addition",
+    questions: [
+      {
+        q: "Find N: $5 + 3 + N + 4 = 20$",
+        options: ["6", "8", "10", "12"],
+        answer: 1,
+        exp: "Add the known numbers: $5 + 3 + 4 = 12$. The equation becomes $12 + N = 20$. Subtract 12 from 20 to get N = 8."
+      },
+      {
+        q: "Find N: $10 + N + 2 + 5 + 1 = 30$",
+        options: ["10", "12", "14", "18"],
+        answer: 1,
+        exp: "Add the known numbers: $10 + 2 + 5 + 1 = 18$. The equation becomes $18 + N = 30$. Subtract 18 from 30 to get N = 12."
+      },
+      {
+        q: "Find N: $2 + 4 + 6 + N + 8 = 25$",
+        options: ["3", "5", "7", "9"],
+        answer: 1,
+        exp: "Add the known numbers: $2 + 4 + 6 + 8 = 20$. The equation becomes $20 + N = 25$. Subtract 20 from 25 to get N = 5."
+      }
+    ]
+  },
+  // Topic 29: Transformations
+  {
+    topic: "Topic 29: Geometric Transformations",
+    questions: [
+      {
+        q: "Look at the canvas below. What geometric transformation flips the blue triangle over the dotted line to create the red mirror image?",
+        canvasDraw: "reflection",
+        options: ["Translation", "Rotation", "Reflection", "Dilation"],
+        answer: 2,
+        exp: "A reflection is a 'flip' over a line, creating a mirror image."
+      },
+      {
+        q: "What transformation turns a figure around a fixed central point?",
+        options: ["Translation", "Rotation", "Reflection", "Dilation"],
+        answer: 1,
+        exp: "A rotation turns a shape around a specific point, like hands on a clock."
+      },
+      {
+        q: "What transformation slides a figure to a new position without rotating or flipping it?",
+        options: ["Translation", "Rotation", "Reflection", "Dilation"],
+        answer: 0,
+        exp: "A translation is a 'slide' that moves a shape left, right, up, or down without changing its orientation."
+      }
+    ]
+  },
+  // Topic 30: Multiples
+  {
+    topic: "Topic 30: Scaled Multiples",
+    questions: [
+      {
+        q: "The first three multiples of 15 are 15, 30, and 45. What are the first three multiples of 150?",
+        options: ["150, 200, 250", "150, 300, 450", "150, 1500, 15000", "15, 30, 45"],
+        answer: 1,
+        exp: "Since 150 is $15 \\times 10$, simply multiply the multiples of 15 by 10 (add a zero)."
+      },
+      {
+        q: "The first three multiples of 25 are 25, 50, and 75. What are the first three multiples of 250?",
+        options: ["250, 500, 750", "250, 500, 1000", "25, 50, 75", "250, 350, 450"],
+        answer: 0,
+        exp: "Multiply the multiples of 25 by 10. $25 \\times 10 = 250$, $50 \\times 10 = 500$, $75 \\times 10 = 750$."
+      },
+      {
+        q: "The first three multiples of 12 are 12, 24, and 36. What are the first three multiples of 120?",
+        options: ["120, 140, 160", "120, 220, 320", "120, 240, 360", "120, 240, 480"],
+        answer: 2,
+        exp: "Multiply the multiples of 12 by 10 to get 120, 240, and 360."
+      }
+    ]
+  }
+];
+
+const container = document.getElementById('quiz-container');
+let globalQuestionCounter = 0;
+
+// Build the HTML structurally
+quizData.forEach((section) => {
+  const sectionDiv = document.createElement('div');
+  sectionDiv.className = 'topic-section';
+  
+  const title = document.createElement('h2');
+  title.className = 'topic-title';
+  title.innerText = section.topic;
+  sectionDiv.appendChild(title);
+
+  section.questions.forEach((item) => {
+    globalQuestionCounter++;
+    const qId = globalQuestionCounter;
+    
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    
+    let htmlContent = `<div class="question-text">${qId}. ${item.q}</div>`;
+    
+    // Add canvas element if defined for visualization
+    if (item.canvasDraw === "reflection") {
+      htmlContent += `<canvas id="canvas-${qId}" width="300" height="150"></canvas>`;
+    }
+
+    htmlContent += `<div class="options" id="options-${qId}">`;
+    
+    item.options.forEach((opt, idx) => {
+      // Escape single quotes if necessary, though not strictly needed here
+      htmlContent += `<button class="option-btn" onclick="checkAnswer(${qId}, ${idx}, ${item.answer}, '${item.exp.replace(/'/g, "\\'")}')">${opt}</button>`;
+    });
+    
+    htmlContent += `</div>
+      <div id="feedback-${qId}" class="feedback"></div>
+    `;
+    
+    card.innerHTML = htmlContent;
+    sectionDiv.appendChild(card);
+  });
+  
+  container.appendChild(sectionDiv);
+});
+
+// Logic to check answer
+function checkAnswer(qId, selectedIdx, correctIdx, explanation) {
+  const feedbackDiv = document.getElementById(`feedback-${qId}`);
+  const optionsDiv = document.getElementById(`options-${qId}`);
+  const buttons = optionsDiv.getElementsByTagName('button');
+  
+  // Disable all buttons after selection
+  for (let btn of buttons) {
+    btn.disabled = true;
+  }
+  
+  if (selectedIdx === correctIdx) {
+    feedbackDiv.className = "feedback correct";
+    feedbackDiv.innerHTML = `<strong>Correct!</strong> Great job. <br><br><em>Explanation:</em> ${explanation}`;
+    buttons[selectedIdx].style.backgroundColor = "#d4edda";
+    buttons[selectedIdx].style.borderColor = "#c3e6cb";
+  } else {
+    feedbackDiv.className = "feedback incorrect";
+    feedbackDiv.innerHTML = `<strong>Incorrect.</strong> <br><br><em>Explanation:</em> ${explanation}`;
+    buttons[selectedIdx].style.backgroundColor = "#f8d7da";
+    buttons[selectedIdx].style.borderColor = "#f5c6cb";
+    // Highlight the correct one softly
+    buttons[correctIdx].style.backgroundColor = "#d4edda";
+  }
+  
+  // Re-typeset MathJax in the newly visible feedback
+  if (window.MathJax) {
+    MathJax.typesetPromise([feedbackDiv]).catch((err) => console.log(err.message));
+  }
+}
+
+// Draw the canvas for the geometric reflection
+window.onload = () => {
+  const reflectionCanvas = document.querySelector('canvas[id^="canvas-"]');
+  if (reflectionCanvas) {
+    const ctx = reflectionCanvas.getContext('2d');
+    
+    // Draw dotted reflection line
+    ctx.beginPath();
+    ctx.setLineDash([5, 5]);
+    ctx.moveTo(150, 20);
+    ctx.lineTo(150, 130);
+    ctx.strokeStyle = '#000';
+    ctx.stroke();
+    
+    // Draw Original Triangle (Blue)
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(120, 100); // Bottom Right
+    ctx.lineTo(60, 100);  // Bottom Left
+    ctx.lineTo(120, 40);  // Top Right
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(0, 86, 179, 0.5)';
+    ctx.fill();
+    ctx.strokeStyle = '#0056b3';
+    ctx.stroke();
+
+    // Draw Reflected Triangle (Red)
+    ctx.beginPath();
+    ctx.moveTo(180, 100); // Bottom Left (mirrored)
+    ctx.lineTo(240, 100); // Bottom Right (mirrored)
+    ctx.lineTo(180, 40);  // Top Left (mirrored)
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(220, 53, 69, 0.5)';
+    ctx.fill();
+    ctx.strokeStyle = '#dc3545';
+    ctx.stroke();
+  }
+};
+</script>
+</body>
+</html>
