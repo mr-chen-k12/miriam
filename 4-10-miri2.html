@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Practice Set B</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Screen Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .action-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .action-btn:hover {
+            background-color: #219150;
+        }
+        .problem-container {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.95em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .diagram {
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Print Styles for 8.5 x 11 inches */
+        @media print {
+            @page {
+                size: letter; /* 8.5in x 11in */
+                margin: 0.75in;
+            }
+            body {
+                background-color: white;
+                margin: 0;
+                padding: 0;
+                font-size: 12pt;
+            }
+            /* Hide interactive elements and answers when printing */
+            .toggle-btn, .action-btn, .controls, .answer-section {
+                display: none !important;
+            }
+            /* Format problem containers for writing space */
+            .problem-container {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                margin-bottom: 60px; /* Space for students to show work */
+                page-break-inside: avoid; /* Prevent problems from splitting across pages */
+            }
+            .question {
+                font-size: 12pt;
+                font-weight: normal;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+    <script>
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById('answer-' + id);
+            var btn = document.getElementById('btn-' + id);
+            if (answerDiv.style.display === 'block') {
+                answerDiv.style.display = 'none';
+                btn.textContent = 'Show Answer & Explanation';
+            } else {
+                answerDiv.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="controls">
+        <button id="print-btn" class="action-btn" onclick="window.print()">Print Worksheet (Student View)</button>
+    </div>
+
+    <h1>Math Worksheet - Practice Set B</h1>
+
+    <div class="problem-container">
+        <div class="question">1. Marcus bought flour at 4 cents per pound at the bulk store. He spent 84 cents. How many pounds of flour did Marcus buy?</div>
+        <button id="btn-1" class="toggle-btn" onclick="toggleAnswer(1)">Show Answer & Explanation</button>
+        <div id="answer-1" class="answer-section">
+            <strong>Answer:</strong> 21 pounds<br><br>
+            <strong>Explanation:</strong> Divide the total amount spent by the cost per pound.<br>
+            \( 84 \div 4 = 21 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">2. The library had 315 science fiction books on the shelves. One hundred twenty-eight of the books were checked out on Monday. How many science fiction books stayed on the shelf?</div>
+        <button id="btn-2" class="toggle-btn" onclick="toggleAnswer(2)">Show Answer & Explanation</button>
+        <div id="answer-2" class="answer-section">
+            <strong>Answer:</strong> 187 books<br><br>
+            <strong>Explanation:</strong> Subtract the number of books checked out from the total.<br>
+            \( 315 - 128 = 187 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">3. Carlos watched a third of a 120-minute movie before falling asleep. How many minutes of the movie did he watch?</div>
+        <button id="btn-3" class="toggle-btn" onclick="toggleAnswer(3)">Show Answer & Explanation</button>
+        <div id="answer-3" class="answer-section">
+            <strong>Answer:</strong> 40 minutes<br><br>
+            <strong>Explanation:</strong> Divide the total minutes by 3 to find one third.<br>
+            \( 120 \div 3 = 40 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">4. One fifth of the students take the bus to school. What fraction of the students do not take the bus? What percent of the students do not take the bus?</div>
+        <button id="btn-4" class="toggle-btn" onclick="toggleAnswer(4)">Show Answer & Explanation</button>
+        <div id="answer-4" class="answer-section">
+            <strong>Answer:</strong> \( \frac{4}{5} \) and 80%<br><br>
+            <strong>Explanation:</strong> Subtract the fraction that takes the bus from 1 (the whole group).<br>
+            \( 1 - \frac{1}{5} = \frac{4}{5} \)<br>
+            To convert \( \frac{4}{5} \) to a percentage, multiply by 100: \( \frac{4}{5} \times 100 = 80\% \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">5. If one side of a square is 5 centimeters long, then what is its perimeter in (a) centimeters? (b) millimeters?</div>
+        <button id="btn-5" class="toggle-btn" onclick="toggleAnswer(5)">Show Answer & Explanation</button>
+        <div id="answer-5" class="answer-section">
+            <strong>Answer:</strong> (a) 20 cm (b) 200 mm<br><br>
+            <strong>Explanation:</strong> A square has 4 equal sides.<br>
+            (a) Perimeter in cm = \( 5 \times 4 = 20 \text{ cm} \)<br>
+            (b) Since 1 cm = 10 mm, multiply by 10: \( 20 \times 10 = 200 \text{ mm} \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">6. Draw a number line from 5000 to 6000 with tick marks every 250 units. If an arrow points exactly halfway between 5000 and 6000, what number is it pointing to?</div>
+        <button id="btn-6" class="toggle-btn" onclick="toggleAnswer(6)">Show Answer & Explanation</button>
+        <div id="answer-6" class="answer-section">
+            <strong>Answer:</strong> 5500<br><br>
+            <strong>Explanation:</strong> The total distance between 5000 and 6000 is 1000. Half of 1000 is 500. Adding 500 to the starting point (5000) gives 5500.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">7. There are 2 pints in a quart, and 4 quarts in a gallon. A pint is what fraction of a gallon?</div>
+        <button id="btn-7" class="toggle-btn" onclick="toggleAnswer(7)">Show Answer & Explanation</button>
+        <div id="answer-7" class="answer-section">
+            <strong>Answer:</strong> \( \frac{1}{8} \)<br><br>
+            <strong>Explanation:</strong> <br>
+            1 gallon = 4 quarts<br>
+            Since 1 quart = 2 pints, 4 quarts = \( 4 \times 2 = 8 \) pints.<br>
+            Therefore, 1 pint is \( \frac{1}{8} \) of a gallon.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">8. A puppy weighed 4.5 kilograms at its checkup. How many grams is that?</div>
+        <button id="btn-8" class="toggle-btn" onclick="toggleAnswer(8)">Show Answer & Explanation</button>
+        <div id="answer-8" class="answer-section">
+            <strong>Answer:</strong> 4500 grams<br><br>
+            <strong>Explanation:</strong> There are 1000 grams in 1 kilogram. Multiply the kilograms by 1000.<br>
+            \( 4.5 \times 1000 = 4500 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">9. Estimate the product of 498 and 6.</div>
+        <button id="btn-9" class="toggle-btn" onclick="toggleAnswer(9)">Show Answer & Explanation</button>
+        <div id="answer-9" class="answer-section">
+            <strong>Answer:</strong> 3000<br><br>
+            <strong>Explanation:</strong> Round 498 up to the nearest hundred, which is 500. Multiply by 6.<br>
+            \( 500 \times 6 = 3000 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">10. It is morning. What time was it 12 hours ago if the clock reads 8:15?</div>
+        <button id="btn-10" class="toggle-btn" onclick="toggleAnswer(10)">Show Answer & Explanation</button>
+        <div id="answer-10" class="answer-section">
+            <strong>Answer:</strong> 8:15 p.m.<br><br>
+            <strong>Explanation:</strong> Because it is morning, the time is 8:15 a.m. Exactly 12 hours before any a.m. time is the same time in p.m.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">11. Compare: \( \frac{2}{3} \bigcirc \frac{3}{5} \).</div>
+        <button id="btn-11" class="toggle-btn" onclick="toggleAnswer(11)">Show Answer & Explanation</button>
+        <div id="answer-11" class="answer-section">
+            <strong>Answer:</strong> \( \frac{2}{3} > \frac{3}{5} \)<br><br>
+            <strong>Explanation:</strong> Find a common denominator (15).<br>
+            \( \frac{2}{3} = \frac{10}{15} \)<br>
+            \( \frac{3}{5} = \frac{9}{15} \)<br>
+            Since 10 > 9, \( \frac{2}{3} > \frac{3}{5} \).
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">12. \( 5.45 - 1.2 \)</div>
+        <button id="btn-12" class="toggle-btn" onclick="toggleAnswer(12)">Show Answer & Explanation</button>
+        <div id="answer-12" class="answer-section">
+            <strong>Answer:</strong> 4.25<br><br>
+            <strong>Explanation:</strong> Align the decimals (treat 1.2 as 1.20) and subtract.<br>
+            &nbsp;&nbsp;5.45<br>
+            <u>- 1.20</u><br>
+            &nbsp;&nbsp;4.25
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">13. \( 4.12 + 6.3 + 0.25 \)</div>
+        <button id="btn-13" class="toggle-btn" onclick="toggleAnswer(13)">Show Answer & Explanation</button>
+        <div id="answer-13" class="answer-section">
+            <strong>Answer:</strong> 10.67<br><br>
+            <strong>Explanation:</strong> Align the decimals and add.<br>
+            &nbsp;&nbsp;4.12<br>
+            &nbsp;&nbsp;6.30<br>
+            <u>+ 0.25</u><br>
+            10.67
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">14. \( \$40.00 - \$31.45 \)</div>
+        <button id="btn-14" class="toggle-btn" onclick="toggleAnswer(14)">Show Answer & Explanation</button>
+        <div id="answer-14" class="answer-section">
+            <strong>Answer:</strong> $8.55<br><br>
+            <strong>Explanation:</strong> Standard decimal subtraction with borrowing.<br>
+            &nbsp;&nbsp;40.00<br>
+            <u>- 31.45</u><br>
+            &nbsp;&nbsp;&nbsp;8.55
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">15. \( \$22.15 + 85¢ + \$12 \)</div>
+        <button id="btn-15" class="toggle-btn" onclick="toggleAnswer(15)">Show Answer & Explanation</button>
+        <div id="answer-15" class="answer-section">
+            <strong>Answer:</strong> $35.00<br><br>
+            <strong>Explanation:</strong> Convert all to dollars and line up the decimal point.<br>
+            &nbsp;&nbsp;22.15<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;0.85<br>
+            <u>+ 12.00</u><br>
+            &nbsp;&nbsp;35.00
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">16. \( 845 \div 2 \)</div>
+        <button id="btn-16" class="toggle-btn" onclick="toggleAnswer(16)">Show Answer & Explanation</button>
+        <div id="answer-16" class="answer-section">
+            <strong>Answer:</strong> 422 R 1 (or 422.5)<br><br>
+            <strong>Explanation:</strong> <br>
+            8 ÷ 2 = 4<br>
+            4 ÷ 2 = 2<br>
+            5 ÷ 2 = 2 (remainder 1)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">17. \( \$45.24 \div 4 \)</div>
+        <button id="btn-17" class="toggle-btn" onclick="toggleAnswer(17)">Show Answer & Explanation</button>
+        <div id="answer-17" class="answer-section">
+            <strong>Answer:</strong> $11.31<br><br>
+            <strong>Explanation:</strong> Keep the decimal in the same position in the quotient.<br>
+            4 ÷ 4 = 1<br>
+            5 ÷ 4 = 1 (remainder 1)<br>
+            12 ÷ 4 = 3<br>
+            4 ÷ 4 = 1
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">18. \( 739 \div 3 \)</div>
+        <button id="btn-18" class="toggle-btn" onclick="toggleAnswer(18)">Show Answer & Explanation</button>
+        <div id="answer-18" class="answer-section">
+            <strong>Answer:</strong> 246 R 1<br><br>
+            <strong>Explanation:</strong> Use long division.<br>
+            7 ÷ 3 = 2 (remainder 1)<br>
+            13 ÷ 3 = 4 (remainder 1)<br>
+            19 ÷ 3 = 6 (remainder 1)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">19. \( 427 \times 5 \)</div>
+        <button id="btn-19" class="toggle-btn" onclick="toggleAnswer(19)">Show Answer & Explanation</button>
+        <div id="answer-19" class="answer-section">
+            <strong>Answer:</strong> 2135<br><br>
+            <strong>Explanation:</strong><br>
+            5 × 7 = 35 (write 5, carry 3)<br>
+            5 × 2 = 10 + 3 = 13 (write 3, carry 1)<br>
+            5 × 4 = 20 + 1 = 21
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">20. \( 53 \times 40 \)</div>
+        <button id="btn-20" class="toggle-btn" onclick="toggleAnswer(20)">Show Answer & Explanation</button>
+        <div id="answer-20" class="answer-section">
+            <strong>Answer:</strong> 2120<br><br>
+            <strong>Explanation:</strong> Multiply 53 by 4, then append a zero.<br>
+            53 × 4 = 212.<br>
+            212 × 10 = 2120.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">21. \( 6 \times \$4.75 \)</div>
+        <button id="btn-21" class="toggle-btn" onclick="toggleAnswer(21)">Show Answer & Explanation</button>
+        <div id="answer-21" class="answer-section">
+            <strong>Answer:</strong> $28.50<br><br>
+            <strong>Explanation:</strong> <br>
+            6 × 5 = 30 (carry 3)<br>
+            6 × 7 = 42 + 3 = 45 (carry 4)<br>
+            6 × 4 = 24 + 4 = 28<br>
+            Place decimal two spots from the right.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">22. \( 840 \div \sqrt{16} \)</div>
+        <button id="btn-22" class="toggle-btn" onclick="toggleAnswer(22)">Show Answer & Explanation</button>
+        <div id="answer-22" class="answer-section">
+            <strong>Answer:</strong> 210<br><br>
+            <strong>Explanation:</strong> First evaluate the square root: \( \sqrt{16} = 4 \).<br>
+            Then divide: \( 840 \div 4 = 210 \).
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">23. \( \frac{456}{4} \)</div>
+        <button id="btn-23" class="toggle-btn" onclick="toggleAnswer(23)">Show Answer & Explanation</button>
+        <div id="answer-23" class="answer-section">
+            <strong>Answer:</strong> 114<br><br>
+            <strong>Explanation:</strong> <br>
+            4 ÷ 4 = 1<br>
+            5 ÷ 4 = 1 (remainder 1)<br>
+            16 ÷ 4 = 4
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">24. \( 523 \div 6 \)</div>
+        <button id="btn-24" class="toggle-btn" onclick="toggleAnswer(24)">Show Answer & Explanation</button>
+        <div id="answer-24" class="answer-section">
+            <strong>Answer:</strong> 87 R 1<br><br>
+            <strong>Explanation:</strong> <br>
+            52 ÷ 6 = 8 (remainder 4)<br>
+            43 ÷ 6 = 7 (remainder 1)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">25. \( 7N = 105 \)</div>
+        <button id="btn-25" class="toggle-btn" onclick="toggleAnswer(25)">Show Answer & Explanation</button>
+        <div id="answer-25" class="answer-section">
+            <strong>Answer:</strong> \( N = 15 \)<br><br>
+            <strong>Explanation:</strong> Divide both sides by 7.<br>
+            \( N = \frac{105}{7} \)<br>
+            \( N = 15 \)
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">26. \( Y \times 2^3 = 96 \)</div>
+        <button id="btn-26" class="toggle-btn" onclick="toggleAnswer(26)">Show Answer & Explanation</button>
+        <div id="answer-26" class="answer-section">
+            <strong>Answer:</strong> \( Y = 12 \)<br><br>
+            <strong>Explanation:</strong> Evaluate the exponent first: \( 2^3 = 2 \times 2 \times 2 = 8 \).<br>
+            The equation becomes \( Y \times 8 = 96 \).<br>
+            Divide by 8: \( Y = \frac{96}{8} = 12 \).
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">27. \( 5 + 6 + 9 + N + 3 + 8 = 45 \)</div>
+        <button id="btn-27" class="toggle-btn" onclick="toggleAnswer(27)">Show Answer & Explanation</button>
+        <div id="answer-27" class="answer-section">
+            <strong>Answer:</strong> \( N = 14 \)<br><br>
+            <strong>Explanation:</strong> Add the known values: \( 5 + 6 + 9 + 3 + 8 = 31 \).<br>
+            Substitute back: \( 31 + N = 45 \).<br>
+            Subtract 31 from both sides: \( N = 14 \).
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">28. Find the perimeter and area of a rectangle that is 7 units wide and 5 units high.</div>
+        <button id="btn-28" class="toggle-btn" onclick="toggleAnswer(28)">Show Answer & Explanation</button>
+        <div id="answer-28" class="answer-section">
+            <strong>Answer:</strong> Perimeter = 24 units, Area = 35 square units<br><br>
+            <strong>Explanation:</strong><br>
+            Perimeter = \( 2 \times (7 + 5) = 2 \times 12 = 24 \) units.<br>
+            Area = \( 7 \times 5 = 35 \) square units.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">29. A triangle is shifted 4 units to the right and 2 units up without twisting or flipping. What is the name of this geometric transformation?</div>
+        <button id="btn-29" class="toggle-btn" onclick="toggleAnswer(29)">Show Answer & Explanation</button>
+        <div id="answer-29" class="answer-section">
+            <strong>Answer:</strong> Translation<br><br>
+            <strong>Explanation:</strong> A translation (or slide) moves a shape in a specific direction without rotating, resizing, or reflecting it.
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">30. The first four multiples of 15 are 15, 30, 45, and 60. What are the first four multiples of 150?</div>
+        <button id="btn-30" class="toggle-btn" onclick="toggleAnswer(30)">Show Answer & Explanation</button>
+        <div id="answer-30" class="answer-section">
+            <strong>Answer:</strong> 150, 300, 450, 600<br><br>
+            <strong>Explanation:</strong> Because 150 is 10 times 15, its multiples will simply be 10 times the multiples of 15.<br>
+            \( 15 \times 10 = 150 \)<br>
+            \( 30 \times 10 = 300 \)<br>
+            \( 45 \times 10 = 450 \)<br>
+            \( 60 \times 10 = 600 \)
+        </div>
+    </div>
+
+</body>
+</html>
