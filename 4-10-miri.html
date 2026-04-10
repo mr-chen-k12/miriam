@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Homework Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f7f6; color: #333; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .problem-card { border: 1px solid #e0e0e0; margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
+        .problem-header { padding: 15px; background: #ecf0f1; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .problem-header:hover { background: #dde4e6; }
+        .solution-content { padding: 20px; display: none; background: #fff; border-top: 1px solid #e0e0e0; }
+        .ans-pill { background: #27ae60; color: white; padding: 2px 10px; border-radius: 15px; font-size: 0.9em; }
+        button { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #2980b9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lesson 78: Problem Set Solutions</h1>
+    <div id="quiz-container"></div>
+</div>
+
+<script>
+const problems = [
+    { q: "1. Jamaal bought apples at 5 cents/lb. He spent 95 cents. How many pounds?", a: "19 pounds", e: "Divide the total cost by the price per pound: \\( 95 \\div 5 = 19 \\)." },
+    { q: "2. 243 cans on shelf. 95 fell. How many stayed?", a: "148 cans", e: "Subtract the cans that fell from the total: \\( 243 - 95 = 148 \\)." },
+    { q: "3. Half of a 90-minute tape?", a: "45 minutes", e: "Half of 90 is \\( 90 \\div 2 = 45 \\)." },
+    { q: "4. 1/4 of guests gathered in living room. What fraction and percent did NOT?", a: "3/4 and 75%", e: "The whole is 1. \\( 1 - 1/4 = 3/4 \\). Since \\( 1/4 = 25\\% \\), then \\( 3/4 = 75\\% \\)." },
+    { q: "5. Perimeter of equilateral triangle with 3cm side?", a: "9 cm; 90 mm", e: "Perimeter = \\( 3 + 3 + 3 = 9 \\text{ cm} \\). To get mm, multiply by 10: \\( 9 \\times 10 = 90 \\text{ mm} \\)." },
+    { q: "6. Which arrow points to 2750?", a: "Arrow C", e: "On a number line from 2000 to 3000, 2750 is three-quarters of the way across. Arrow C is closest to that mark." },
+    { q: "7. A cup is what fraction of a quart?", a: "1/4", e: "There are 2 cups in a pint and 2 pints in a quart. Therefore, there are \\( 2 \\times 2 = 4 \\) cups in a quart." },
+    { q: "8. 3 kilograms is how many grams?", a: "3000 grams", e: "Since \\( 1 \\text{ kg} = 1000 \\text{ g} \\), then \\( 3 \\text{ kg} = 3000 \\text{ g} \\)." },
+    { q: "9. Estimate the product of 396 and 7.", a: "2800", e: "Round 396 to 400. \\( 400 \\times 7 = 2800 \\)." },
+    { q: "10. Clock shows 5:56. What time was it 12 hours ago?", a: "5:56 a.m.", e: "Subtracting 12 hours from any time results in the same time but switches a.m. to p.m. or vice-versa." },
+    { q: "12. 4.325 - 2.5", a: "1.825", e: "Line up the decimals: \\( 4.325 - 2.500 = 1.825 \\)." },
+    { q: "13. 3.65 + 5.2 + 0.18", a: "9.03", e: "Align decimals: \\( 3.65 + 5.20 + 0.18 = 9.03 \\)." },
+    { q: "22. 970 / sqrt(25)", a: "194", e: "First, \\( \\sqrt{25} = 5 \\). Then divide: \\( 970 \\div 5 = 194 \\)." },
+    { q: "25. 8N = 120. Find N.", a: "15", e: "Divide both sides by 8: \\( N = 120 \\div 8 = 15 \\)." },
+    { q: "26. F x 3^2 = 108", a: "12", e: "First, \\( 3^2 = 9 \\). The equation is \\( 9F = 108 \\). \\( F = 108 \\div 9 = 12 \\)." },
+    { q: "28. Perimeter/Area of 8x4 rectangle.", a: "P=24; A=32", e: "P = \\( 2(8+4) = 24 \\text{ units} \\). Area = \\( 8 \\times 4 = 32 \\text{ sq units} \\)." }
+];
+
+const container = document.getElementById('quiz-container');
+
+problems.forEach((prob, index) => {
+    const card = document.createElement('div');
+    card.className = 'problem-card';
+    card.innerHTML = `
+        <div class="problem-header" onclick="toggle(${index})">
+            <span>${prob.q}</span>
+            <button>View Answer</button>
+        </div>
+        <div class="solution-content" id="sol-${index}">
+            <p><strong>Answer:</strong> <span class="ans-pill">${prob.a}</span></p>
+            <p><strong>Explanation:</strong> ${prob.e}</p>
+        </div>
+    `;
+    container.appendChild(card);
+});
+
+function toggle(id) {
+    const el = document.getElementById(`sol-${id}`);
+    el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>
