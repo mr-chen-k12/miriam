@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .info-block {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            animation: fadeIn 0.5s;
+        }
+        .answer-text {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            color: #555;
+        }
+        svg {
+            display: block;
+            margin: 15px auto;
+            max-width: 100%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Print Styles for 8.5x11 --- */
+        @media print {
+            @page {
+                size: letter;
+                margin: 0.75in;
+            }
+            body {
+                background-color: transparent;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            .problem-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+                padding: 15px;
+            }
+            .info-block {
+                page-break-inside: avoid;
+            }
+            /* Hide answers and buttons completely when printing */
+            .toggle-btn, .answer-section {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Practice Math Test</h1>
+
+    <div class="problem-card">
+        <div class="question"><strong>1.</strong> Sarah has seven days to complete a 210-page reading assignment. If she wants to read the same number of pages each day, how many pages should Sarah read daily?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans1')">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-text">Answer: 30 pages</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> To find the daily page count, divide the total number of pages by the total number of days.<br>
+                $$210 \div 7 = 30$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>2.</strong> When Sarah has read two fifths of her assignment, what fraction will she still have left to read?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans2')">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-text">Answer: $\frac{3}{5}$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The entire assignment represents 1 whole, which can be written as $\frac{5}{5}$. Subtract the part she has read from the whole.<br>
+                $$\frac{5}{5} - \frac{2}{5} = \frac{3}{5}$$
+            </div>
+        </div>
+    </div>
+
+    <div class="info-block">
+        <strong>Use the information given below to answer problems 3-5.</strong><br>
+        Two hundred students voted for their favorite sport. Ninety voted for basketball. Soccer received thirty fewer votes than basketball. The remaining students voted for baseball.
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>3.</strong> How many students chose soccer as their favorite sport?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans3')">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-text">Answer: 60 students</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The problem states soccer received 30 fewer votes than basketball. Basketball received 90 votes.<br>
+                $$90 - 30 = 60$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>4.</strong> How many students chose baseball as their favorite sport?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans4')">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-text">Answer: 50 students</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, find the total votes for basketball and soccer: $90 + 60 = 150$.<br>
+                Subtract this from the total number of students (200) to find the baseball votes:<br>
+                $$200 - 150 = 50$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>5.</strong> Which sport received the fewest votes?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans5')">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-text">Answer: Baseball</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Compare the votes for each sport:<br>
+                Basketball: 90<br>
+                Soccer: 60<br>
+                Baseball: 50<br>
+                Baseball has the lowest number of votes.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>6.</strong> How many hours equal 5 days?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans6')">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-text">Answer: 120 hours</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> There are 24 hours in a single day. Multiply the number of days by 24.<br>
+                $$5 \times 24 = 120$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>7.</strong> In the word MISSISSIPPI, what fraction of the letters are Is?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans7')">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-text">Answer: $\frac{4}{11}$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, count the total number of letters in MISSISSIPPI, which is 11. <br>
+                Next, count the number of 'I's in the word, which is 4. <br>
+                The fraction is the number of 'I's over the total letters: $\frac{4}{11}$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>8.</strong> A recipe calls for 8 liters of water. Eight liters is how many milliliters?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans8')">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-text">Answer: 8000 milliliters</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> There are 1,000 milliliters in 1 liter. Multiply the number of liters by 1,000.<br>
+                $$8 \times 1000 = 8000$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>9.</strong> Leo entered a 36-mile biking trail but stopped to rest after completing one third of the distance. How many miles did Leo bike before resting?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans9')">Show Answer & Explanation</button>
+        <div id="ans9" class="answer-section">
+            <div class="answer-text">Answer: 12 miles</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> To find one third of 36, multiply 36 by $\frac{1}{3}$ (or divide 36 by 3).<br>
+                $$36 \div 3 = 12$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>10.</strong> What is the perimeter of this triangle?<br>
+            <svg width="200" height="100" viewBox="0 0 200 100">
+                <polygon points="50,80 150,80 100,20" fill="none" stroke="black" stroke-width="2"/>
+                <text x="60" y="45" font-family="sans-serif" font-size="12">15 mm</text>
+                <text x="130" y="45" font-family="sans-serif" font-size="12">20 mm</text>
+                <text x="85" y="95" font-family="sans-serif" font-size="12">25 mm</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans10')">Show Answer & Explanation</button>
+        <div id="ans10" class="answer-section">
+            <div class="answer-text">Answer: 60 mm</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The perimeter is the total distance around the outside of the shape. Add the lengths of all three sides together.<br>
+                $$15 + 20 + 25 = 60$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>11.</strong> The length of $\overline{AB}$ is 35 mm. The length of $\overline{AC}$ is 100 mm. What is the length of $\overline{BC}$?<br>
+            <svg width="300" height="40" viewBox="0 0 300 40">
+                <line x1="20" y1="20" x2="280" y2="20" stroke="black" stroke-width="2"/>
+                <circle cx="20" cy="20" r="3" fill="black"/>
+                <text x="15" y="10" font-family="sans-serif" font-size="14">A</text>
+                <circle cx="120" cy="20" r="3" fill="black"/>
+                <text x="115" y="10" font-family="sans-serif" font-size="14">B</text>
+                <circle cx="280" cy="20" r="3" fill="black"/>
+                <text x="275" y="10" font-family="sans-serif" font-size="14">C</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans11')">Show Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <div class="answer-text">Answer: 65 mm</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Point B lies between A and C, meaning the length of AC is the sum of AB and BC ($AC = AB + BC$). To find BC, subtract the length of AB from AC.<br>
+                $$100 - 35 = 65$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>12.</strong> $\$80 - (\$22.50 + 75\text{¢})$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans12')">Show Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <div class="answer-text">Answer: $56.75</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, convert $75\text{¢}$ to dollars ($0.75). Then, solve the operations inside the parentheses by adding.<br>
+                $$\$22.50 + \$0.75 = \$23.25$$<br>
+                Next, subtract this sum from $\$80.00$.<br>
+                $$\$80.00 - \$23.25 = \$56.75$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>13.</strong> $85,024 - 2,560$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans13')">Show Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <div class="answer-text">Answer: 82,464</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Set up the subtraction problem vertically and subtract by place value, borrowing where necessary.<br>
+                $$85,024 - 2,560 = 82,464$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>14.</strong> $4.5 + 1.09 + 0.6 + 2.25$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans14')">Show Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <div class="answer-text">Answer: 8.44</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Align the decimal points and add. Adding placeholder zeroes ($4.50$ and $0.60$) helps keep place values aligned.<br>
+                $$4.50 + 1.09 + 0.60 + 2.25 = 8.44$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>15.</strong> $\$4.25 \times 5$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans15')">Show Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <div class="answer-text">Answer: $21.25</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Multiply as you would with whole numbers, then place the decimal two spots from the right (to represent cents).<br>
+                $$425 \times 5 = 2125 \rightarrow \$21.25$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>16.</strong> $532 \div 5$ &nbsp; (Shown as $5 \overline{) 532}$)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans16')">Show Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <div class="answer-text">Answer: 106 R 2</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Perform long division. 5 goes into 5 one time ($5 \times 1 = 5$). Subtract 5 from 5 to get 0. Bring down the 3. 5 goes into 3 zero times ($5 \times 0 = 0$). Bring down the 2 to make 32. 5 goes into 32 six times ($5 \times 6 = 30$). Subtract 30 from 32 to leave a remainder of 2.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>17.</strong> $850 \div 7$ &nbsp; (Shown as $7 \overline{) 850}$)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans17')">Show Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-text">Answer: 121 R 3</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Perform long division. 7 goes into 8 one time ($7 \times 1 = 7$). Subtract 7 from 8 to get 1. Bring down the 5 to make 15. 7 goes into 15 two times ($7 \times 2 = 14$). Subtract 14 from 15 to get 1. Bring down the 0 to make 10. 7 goes into 10 one time ($7 \times 1 = 7$). Subtract 7 from 10. The remainder is 3.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>18.</strong> $5m = 350$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans18')">Show Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-text">Answer: $m = 70$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Isolate the variable $m$ by performing the inverse operation. Divide both sides by 5.<br>
+                $$m = 350 \div 5$$
+                $$m = 70$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>19.</strong> Find the missing number $n$:<br>
+            <div style="font-family: monospace; font-size: 1.2em; line-height: 1.2; margin-left: 20px;">
+                &nbsp;&nbsp;320<br>
+                &nbsp;&nbsp;145<br>
+                <u>+&nbsp;&nbsp;&nbsp;$n$</u><br>
+                &nbsp;&nbsp;800
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans19')">Show Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-text">Answer: $n = 335$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, add the two known numbers together.<br>
+                $$320 + 145 = 465$$<br>
+                Next, subtract that sum from the total to find the missing addend.<br>
+                $$800 - 465 = 335$$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>20.</strong> Compare: $5 \times 2^4 \bigcirc \sqrt{400} \times \sqrt{25}$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans20')">Show Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-text">Answer: &lt; (Less than)</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Evaluate both sides of the comparison.<br>
+                Left side: Solve the exponent first ($2^4 = 2 \times 2 \times 2 \times 2 = 16$), then multiply.<br>
+                $$5 \times 16 = 80$$<br>
+                Right side: Find the square roots ($\sqrt{400} = 20$ and $\sqrt{25} = 5$), then multiply.<br>
+                $$20 \times 5 = 100$$<br>
+                Since $80 \lt 100$, the correct symbol is $\lt$.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            var btn = element.previousElementSibling;
+            if (element.style.display === "block") {
+                element.style.display = "none";
+                btn.textContent = "Show Answer & Explanation";
+            } else {
+                element.style.display = "block";
+                btn.textContent = "Hide Answer & Explanation";
+            }
+        }
+    </script>
+</body>
+</html>
