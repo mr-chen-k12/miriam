@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test 15C Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .info-block {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            animation: fadeIn 0.5s;
+        }
+        .answer-text {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            color: #555;
+        }
+        svg {
+            display: block;
+            margin: 15px auto;
+            max-width: 100%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Practice Test 15C Solutions</h1>
+
+    <div class="problem-card">
+        <div class="question"><strong>1.</strong> David has eight days to read a 400-page book. If he wants to read the same number of pages each day, how many pages should David read each day?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans1')">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-text">Answer: 50 pages</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> To find the daily page count, divide the total number of pages by the total number of days.<br>
+                $$ 400 \div 8 = 50 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>2.</strong> When David has read five eighths of the book, what fraction will he still have left to read?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans2')">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-text">Answer: $ \frac{3}{8} $</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The entire book represents 1 whole, which can be written as $ \frac{8}{8} $. Subtract the part he has read from the whole.<br>
+                $$ \frac{8}{8} - \frac{5}{8} = \frac{3}{8} $$
+            </div>
+        </div>
+    </div>
+
+    <div class="info-block">
+        <strong>Use the information given below to answer problems 3-5.</strong><br>
+        One hundred twenty students voted for their favorite foods. Forty-five voted for tacos. Hamburgers received ten fewer votes than tacos. The remaining students voted for pizza.
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>3.</strong> How many students chose hamburgers as their favorite food?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans3')">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-text">Answer: 35 students</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The problem states hamburgers received 10 fewer votes than tacos. Tacos received 45 votes.<br>
+                $$ 45 - 10 = 35 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>4.</strong> How many students chose pizza as their favorite food?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans4')">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-text">Answer: 40 students</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, find the total votes for tacos and hamburgers: $ 45 + 35 = 80 $.<br>
+                Subtract this from the total number of students (120) to find the pizza votes:<br>
+                $$ 120 - 80 = 40 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>5.</strong> Which food received the most votes?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans5')">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-text">Answer: Tacos</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Compare the votes for each food:<br>
+                Tacos: 45<br>
+                Pizza: 40<br>
+                Hamburgers: 35<br>
+                Tacos have the highest number of votes.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>6.</strong> How many days equal 12 weeks?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans6')">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-text">Answer: 84 days</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> There are 7 days in a single week. Multiply the number of weeks by 7.<br>
+                $$ 12 \times 7 = 84 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>7.</strong> In the word MISSISSIPPI, what fraction of the letters are Is?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans7')">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-text">Answer: $ \frac{4}{11} $</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, count the total number of letters in MISSISSIPPI, which is 11. <br>
+                Next, count the number of 'I's in the word, which is 4. <br>
+                The fraction is the number of 'I's over the total letters: $ \frac{4}{11} $.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>8.</strong> Sarah ran a 7-kilometer race. Seven kilometers is how many meters?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans8')">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-text">Answer: 7000 meters</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> There are 1,000 meters in 1 kilometer. Multiply the number of kilometers by 1,000.<br>
+                $$ 7 \times 1000 = 7000 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>9.</strong> Leo entered a 15-kilometer race but walked one third of the distance. How many kilometers did Leo walk?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans9')">Show Answer & Explanation</button>
+        <div id="ans9" class="answer-section">
+            <div class="answer-text">Answer: 5 kilometers</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> To find one third of 15, multiply 15 by $ \frac{1}{3} $ (or divide 15 by 3).<br>
+                $$ 15 \div 3 = 5 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>10.</strong> What is the perimeter of this triangle?<br>
+            <svg width="200" height="100" viewBox="0 0 200 100">
+                <polygon points="50,80 150,80 100,20" fill="none" stroke="black" stroke-width="2"/>
+                <text x="60" y="45" font-family="sans-serif" font-size="12">15 mm</text>
+                <text x="130" y="45" font-family="sans-serif" font-size="12">20 mm</text>
+                <text x="85" y="95" font-family="sans-serif" font-size="12">25 mm</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans10')">Show Answer & Explanation</button>
+        <div id="ans10" class="answer-section">
+            <div class="answer-text">Answer: 60 mm</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> The perimeter is the total distance around the outside of the shape. Add the lengths of all three sides together.<br>
+                $$ 15 + 20 + 25 = 60 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>11.</strong> The length of $\overline{XY}$ is 35 mm. The length of $\overline{XZ}$ is 90 mm. What is the length of $\overline{YZ}$?<br>
+            <svg width="300" height="40" viewBox="0 0 300 40">
+                <line x1="20" y1="20" x2="280" y2="20" stroke="black" stroke-width="2"/>
+                <circle cx="20" cy="20" r="3" fill="black"/>
+                <text x="15" y="10" font-family="sans-serif" font-size="14">X</text>
+                <circle cx="120" cy="20" r="3" fill="black"/>
+                <text x="115" y="10" font-family="sans-serif" font-size="14">Y</text>
+                <circle cx="280" cy="20" r="3" fill="black"/>
+                <text x="275" y="10" font-family="sans-serif" font-size="14">Z</text>
+            </svg>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans11')">Show Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <div class="answer-text">Answer: 55 mm</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Point Y lies between X and Z, meaning the length of XZ is the sum of XY and YZ ($XZ = XY + YZ$). To find YZ, subtract the length of XY from XZ.<br>
+                $$ 90 - 35 = 55 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>12.</strong> $\$50 - (\$24.35 + 85\text{¢})$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans12')">Show Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <div class="answer-text">Answer: $24.80</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, convert $85\text{¢}$ to dollars ($0.85). Then, solve the operations inside the parentheses by adding.<br>
+                $$ \$24.35 + \$0.85 = \$25.20 $$<br>
+                Next, subtract this sum from $\$50.00$.<br>
+                $$ \$50.00 - \$25.20 = \$24.80 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>13.</strong> $52,148 - 853$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans13')">Show Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <div class="answer-text">Answer: 51,295</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Set up the subtraction problem vertically and subtract by place value, borrowing where necessary.<br>
+                $$ 52,148 - 853 = 51,295 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>14.</strong> $4.1 + 1.85 + 0.34 + 3.2$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans14')">Show Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <div class="answer-text">Answer: 9.49</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Align the decimal points and add. Adding placeholder zeroes ($4.10$ and $3.20$) can help keep place values aligned.<br>
+                $$ 4.10 + 1.85 + 0.34 + 3.20 = 9.49 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>15.</strong> $\$4.62 \times 4$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans15')">Show Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <div class="answer-text">Answer: $18.48</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Multiply as you would with whole numbers, then place the decimal two spots from the right (to represent cents).<br>
+                $$ 462 \times 4 = 1848 \rightarrow \$18.48 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>16.</strong> $235 \div 6$ &nbsp; (Shown as $6 \overline{) 235}$)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans16')">Show Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <div class="answer-text">Answer: 39 R 1</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Perform long division. 6 goes into 23 three times ($6 \times 3 = 18$). Subtract 18 from 23 to get 5. Bring down the 5 to make 55. 6 goes into 55 nine times ($6 \times 9 = 54$). Subtract 54 from 55 to leave a remainder of 1.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>17.</strong> $817 \div 9$ &nbsp; (Shown as $9 \overline{) 817}$)</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans17')">Show Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-text">Answer: 90 R 7</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Perform long division. 9 goes into 81 exactly 9 times ($9 \times 9 = 81$). Subtracting gives 0. Bring down the 7. 9 goes into 7 zero times. The remainder is 7.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>18.</strong> $5y = 350$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans18')">Show Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-text">Answer: $y = 70$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Isolate the variable $y$ by performing the inverse operation. Divide both sides by 5.<br>
+                $$ y = 350 \div 5 $$
+                $$ y = 70 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">
+            <strong>19.</strong> Find the missing number $n$:<br>
+            <div style="font-family: monospace; font-size: 1.2em; line-height: 1.2; margin-left: 20px;">
+                &nbsp;&nbsp;426<br>
+                &nbsp;&nbsp;183<br>
+                <u>+&nbsp;&nbsp;&nbsp;$n$</u><br>
+                &nbsp;&nbsp;850
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans19')">Show Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-text">Answer: $n = 241$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> First, add the two known numbers together.<br>
+                $$ 426 + 183 = 609 $$<br>
+                Next, subtract that sum from the total to find the missing addend.<br>
+                $$ 850 - 609 = 241 $$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question"><strong>20.</strong> Compare: $2 \times 5^2 \bigcirc \sqrt{100} \times \sqrt{49}$</div>
+        <button class="toggle-btn" onclick="toggleAnswer('ans20')">Show Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-text">Answer: < (Less Than)</div>
+            <div class="explanation">
+                <strong>Explanation:</strong> Evaluate both sides of the comparison.<br>
+                Left side: Solve the exponent first ($5^2 = 25$), then multiply.<br>
+                $$ 2 \times 25 = 50 $$<br>
+                Right side: Find the square roots ($\sqrt{100} = 10$ and $\sqrt{49} = 7$), then multiply.<br>
+                $$ 10 \times 7 = 70 $$<br>
+                Since $50 < 70$, the correct symbol is $<$.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            var btn = element.previousElementSibling;
+            if (element.style.display === "block") {
+                element.style.display = "none";
+                btn.textContent = "Show Answer & Explanation";
+            } else {
+                element.style.display = "block";
+                btn.textContent = "Hide Answer & Explanation";
+            }
+        }
+    </script>
+</body>
+</html>
