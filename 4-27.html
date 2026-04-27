@@ -223,3 +223,74 @@
                 explanation: "$5^3 = 5 \\times 5 \\times 5 = 125$. Then $125 \\div 5 = 25$. (Alternatively, using exponent rules: $5^3 \\div 5^1 = 5^2 = 25$)."
             },
             {
+                id: 25,
+                question: "$\\$6.57 \\div 9$",
+                answer: "$0.73",
+                explanation: "Bring up the decimal point. $65 \\div 9 = 7$ (remainder 2). Bring down 7 to make 27. $27 \\div 9 = 3$. Answer: $\\$0.73$."
+            },
+            {
+                id: 26,
+                question: "$200 = 4 \\times B$",
+                answer: "B = 50",
+                explanation: "Divide both sides by 4 to solve for B: $200 \\div 4 = 50$."
+            },
+            {
+                id: 27,
+                question: "$D \\times 7 = 105$",
+                answer: "D = 15",
+                explanation: "Divide both sides by 7 to solve for D: $105 \\div 7 = 15$."
+            },
+            {
+                id: 28,
+                question: "Find N: <br>473<br>286<br>+ N<br>---<br>943",
+                answer: "N = 184",
+                explanation: "First, add the known numbers: $473 + 286 = 759$. Then subtract this sum from the total to find N: $943 - 759 = 184$."
+            },
+            {
+                id: 29,
+                question: "$21 + 12 + 3 + 14 + 5 + 26$",
+                answer: "81",
+                explanation: "Add the column of numbers: $21 + 12 = 33$. $33 + 3 = 36$. $36 + 14 = 50$. $50 + 5 = 55$. $55 + 26 = 81$."
+            },
+            {
+                id: 30,
+                question: "$22 + 33 + 4 + 25 + 6 + 27$",
+                answer: "117",
+                explanation: "Add the column of numbers: $22 + 33 = 55$. $55 + 4 = 59$. $59 + 25 = 84$. $84 + 6 = 90$. $90 + 27 = 117$."
+            }
+        ];
+
+        const container = document.getElementById('worksheet-container');
+
+        problems.forEach(prob => {
+            const card = document.createElement('div');
+            card.className = 'problem-card';
+
+            const questionHtml = `
+                <div class="question">${prob.id}. ${prob.question}</div>
+                <button class="toggle-btn" onclick="toggleSolution(${prob.id})">Show Answer & Explanation</button>
+                <div class="solution-section" id="solution-${prob.id}">
+                    <div class="answer">Answer: ${prob.answer}</div>
+                    <div class="explanation"><strong>Explanation:</strong> ${prob.explanation}</div>
+                </div>
+            `;
+            
+            card.innerHTML = questionHtml;
+            container.appendChild(card);
+        });
+
+        function toggleSolution(id) {
+            const solutionDiv = document.getElementById(`solution-${id}`);
+            const btn = solutionDiv.previousElementSibling;
+            
+            if (solutionDiv.style.display === "none" || solutionDiv.style.display === "") {
+                solutionDiv.style.display = "block";
+                btn.innerText = "Hide Answer & Explanation";
+            } else {
+                solutionDiv.style.display = "none";
+                btn.innerText = "Show Answer & Explanation";
+            }
+        }
+    </script>
+</body>
+</html>
