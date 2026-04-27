@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .solution-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .answer {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Worksheet Solutions (1 - 30)</h1>
+
+    <div id="worksheet-container"></div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                question: "Cecilia skated 27 times around the rink forward and 33 times around the rink backward. In all, how many times did she skate around the rink?",
+                answer: "60 times",
+                explanation: "Add the forward and backward laps together: $27 + 33 = 60$."
+            },
+            {
+                id: 2,
+                question: "Nectarines cost 68¢ per pound. What is the price for 3 pounds of nectarines?",
+                answer: "$2.04 or 204¢",
+                explanation: "Multiply the cost per pound by the number of pounds: $68 \\times 3 = 204$ cents. Since there are 100 cents in a dollar, this is equal to $2.04."
+            },
+            {
+                id: 3,
+                question: "In bowling, the sum of Amber's score and Beth's score was equal to Consuela's score. If Consuela's score was 113 and Beth's score was 55, what was Amber's score?",
+                answer: "58",
+                explanation: "Let $A$ be Amber's score. We know $A + 55 = 113$. To find $A$, subtract Beth's score from Consuela's score: $113 - 55 = 58$."
+            },
+            {
+                id: 4,
+                question: "One third of the 84 students were assigned to each room. How many students were assigned to each room?",
+                answer: "28 students",
+                explanation: "Divide the total number of students by 3: $84 \\div 3 = 28$."
+            },
+            {
+                id: 5,
+                question: "Round 2250 to the nearest thousand.",
+                answer: "2000",
+                explanation: "Look at the hundreds digit (2). Since 2 is less than 5, you round down, keeping the thousands digit the same and changing the rest to zeros: $2000$."
+            },
+            {
+                id: 6,
+                question: "In the word ARIZONA, what fraction of the letters are not A's?",
+                answer: "$\\frac{5}{7}$",
+                explanation: "There are 7 letters in total. There are 2 'A's, which means there are $7 - 2 = 5$ letters that are not 'A's. The fraction is $\\frac{5}{7}$."
+            },
+            {
+                id: 7,
+                question: "The African elephant weighed 7 tons. How many pounds is that?",
+                answer: "14,000 pounds",
+                explanation: "There are 2,000 pounds in one ton. Multiply the number of tons by 2,000: $7 \\times 2000 = 14,000$."
+            },
+            {
+                id: 8,
+                question: "The tip of this shoelace is how many millimeters long? (Based on the ruler image)",
+                answer: "15 mm",
+                explanation: "Looking at the provided ruler starting at 0, the tip of the shoelace ends halfway between 10 and 20, aligning with the 15 mm mark."
+            },
+            {
+                id: 9,
+                question: "Choose the more reasonable measure:<br>(a) box of cereal: 400 g or 400 kg<br>(b) pail of water: 10 mL or 10 L",
+                answer: "(a) 400 g, (b) 10 L",
+                explanation: "(a) 400 kg is roughly the weight of a horse, so a box of cereal is 400 g.<br>(b) 10 mL is a small spoonful, so a pail of water is 10 L."
+            },
+            {
+                id: 10,
+                question: "According to this calendar, what is the date of the last Tuesday in February 2019?",
+                answer: "February 26th",
+                explanation: "Looking at the calendar column for Tuesday (T), the dates are 5, 12, 19, and 26. The last one is the 26th."
+            },
+            {
+                id: 11,
+                question: "Forty-two thousand, seven hundred is how much greater than thirty-four thousand, nine hundred?",
+                answer: "7,800",
+                explanation: "Subtract the smaller number from the larger number: $42,700 - 34,900 = 7,800$."
+            },
+            {
+                id: 12,
+                question: "Find the perimeter and area of this rectangle. (10 units by 5 units)",
+                answer: "Perimeter = 30 units, Area = 50 square units",
+                explanation: "Perimeter is the total distance around the outside: $10 + 5 + 10 + 5 = 30$ units. Area is length times width: $10 \\times 5 = 50$ square units."
+            },
+            {
+                id: 13,
+                question: "Samantha was riding north. Then she turned 90° to the left. After turning, in what direction was Samantha riding?",
+                answer: "West",
+                explanation: "If you are facing North and turn 90 degrees to your left, you are now facing West."
+            },
+            {
+                id: 14,
+                question: "$6743 - (507 \\times 6)$",
+                answer: "3701",
+                explanation: "Follow order of operations (PEMDAS) and calculate the parentheses first: $507 \\times 6 = 3042$. Then subtract: $6743 - 3042 = 3701$."
+            },
+            {
+                id: 15,
+                question: "$\\$70.00 - \\$63.17$",
+                answer: "$6.83",
+                explanation: "Borrowing across the zeros to subtract: $70.00 - 63.17 = 6.83$."
+            },
+            {
+                id: 16,
+                question: "$3 \\times 7 \\times 0$",
+                answer: "0",
+                explanation: "Any number multiplied by 0 is 0."
+            },
+            {
+                id: 17,
+                question: "$\\$8.15 \\times 6$",
+                answer: "$48.90",
+                explanation: "$8.15 \\times 6 = 48.90$."
+            },
+            {
+                id: 18,
+                question: "$67¢ \\times 10$",
+                answer: "$6.70 or 670¢",
+                explanation: "Multiply $67$ by $10$ to get $670$ cents. Move the decimal two places to the left to convert to dollars: $\\$6.70$."
+            },
+            {
+                id: 19,
+                question: "$4.5 + 0.52 + 1.39$",
+                answer: "6.41",
+                explanation: "Align the decimals ($4.50 + 0.52 + 1.39$) and add: $4.50 + 0.52 = 5.02$. Then $5.02 + 1.39 = 6.41$."
+            },
+            {
+                id: 20,
+                question: "$\\$12.16 \\div 2$",
+                answer: "$6.08",
+                explanation: "Divide $12.16$ by $2$. $12 \\div 2 = 6$, and $16 \\div 2 = 8$ (with a placeholder zero for the tenths place). So, $\\$6.08$."
+            },
+            {
+                id: 21,
+                question: "$4321 \\div 6$",
+                answer: "720 R 1",
+                explanation: "$43 \\div 6 = 7$ (remainder 1). Bring down 2 to make 12. $12 \\div 6 = 2$. Bring down 1. $1 \\div 6 = 0$ (remainder 1). Thus, $720$ with a remainder of $1$."
+            },
+            {
+                id: 22,
+                question: "$4800 \\div 8$",
+                answer: "600",
+                explanation: "$48 \\div 8 = 6$, then attach the two zeros to get $600$."
+            },
+            {
+                id: 23,
+                question: "$963 \\div 9$",
+                answer: "107",
+                explanation: "$9 \\div 9 = 1$. $6 \\div 9 = 0$ (bring down 3). $63 \\div 9 = 7$. Thus, $107$."
+            },
+            {
+                id: 24,
+                question: "$5^3 \\div 5$",
+                answer: "25",
+                explanation: "$5^3 = 5 \\times 5 \\times 5 = 125$. Then $125 \\div 5 = 25$. (Alternatively, using exponent rules: $5^3 \\div 5^1 = 5^2 = 25$)."
+            },
+            {
