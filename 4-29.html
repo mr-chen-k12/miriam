@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .toggle-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .answer-title {
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .explanation-title {
+            color: #8e44ad;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .rotated-p {
+            display: inline-block;
+            transform: rotate(-90deg);
+            font-size: 2em;
+            font-weight: bold;
+            font-family: sans-serif;
+            margin: 10px;
+        }
+        table.custom-table {
+            border-collapse: collapse;
+            width: 50%;
+            margin-top: 10px;
+        }
+        table.custom-table th, table.custom-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        table.custom-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Test Solutions</h1>
+
+    <div id="problems-container"></div>
+
+    <script>
+        const problems = [
+            {
+                id: 1,
+                question: "There are 35 students in the class but only 28 math books. How many more math books are needed so that every student in the class has a math book?",
+                answer: "7 math books",
+                explanation: "Subtract the number of available books from the number of students: $35 - 28 = 7$."
+            },
+            {
+                id: 2,
+                question: "Each of the 7 children slid down the water slide 11 times. How many times did they slide in all?",
+                answer: "77 times",
+                explanation: "Multiply the number of children by the number of slides per child: $7 \\times 11 = 77$."
+            },
+            {
+                id: 3,
+                question: "A bowling lane is 60 feet long. How many yards is 60 feet?",
+                answer: "20 yards",
+                explanation: "Since there are 3 feet in 1 yard, divide the total feet by 3: $60 \\div 3 = 20$."
+            },
+            {
+                id: 4,
+                question: "Willis carried the baton four hundred forty yards. Eric carried it eight hundred eighty yards. Joe carried it one thousand, three hundred twenty yards, and Braulio carried it one thousand, seven hundred sixty yards. In all, how many yards was the baton carried?",
+                answer: "4,400 yards",
+                explanation: "Add the numerical values together: $440 + 880 + 1320 + 1760 = 4400$."
+            },
+            {
+                id: 5,
+                question: "One third of the members voted no. What fraction of the members did not vote no?",
+                answer: "$\\frac{2}{3}$",
+                explanation: "Subtract the fraction of 'no' votes from the whole (1): $1 - \\frac{1}{3} = \\frac{2}{3}$."
+            },
+            {
+                id: 6,
+                question: "Round 6821 and 4963 to the nearest thousand. Then add the rounded numbers.",
+                answer: "12,000",
+                explanation: "6821 rounds up to 7,000. 4963 rounds up to 5,000. Adding them together gives $7000 + 5000 = 12000$."
+            },
+            {
+                id: 7,
+                question: "What fraction of the days of the week start with the letter S?",
+                answer: "$\\frac{2}{7}$",
+                explanation: "There are 7 days in a week. Two of them start with 'S' (Saturday and Sunday). Therefore, the fraction is $\\frac{2}{7}$."
+            },
+            {
+                id: 8,
+                question: "Together, Bob's shoes weigh about 1 kilogram. Each shoe weighs about how many grams?",
+                answer: "500 grams",
+                explanation: "1 kilogram is equal to 1,000 grams. Since the two shoes together weigh 1,000 grams, divide by 2: $1000 \\div 2 = 500$ grams per shoe."
+            },
+            {
+                id: 9,
+                question: "Based on the line graph (Juan's Growth), about how many pounds did Juan weigh on his second birthday?",
+                answer: "25 pounds",
+                explanation: "Looking at the graph, at Age 2 on the horizontal axis, the point aligns with 25 on the vertical 'Weight in Pounds' axis."
+            },
+            {
+                id: 10,
+                question: "About how many pounds did Juan gain between his third and fifth birthdays?",
+                answer: "10 pounds",
+                explanation: "At 3 years, he weighed 30 pounds. At 5 years, he weighed 40 pounds. The gain is the difference: $40 - 30 = 10$."
+            },
+            {
+                id: 11,
+                question: "Copy and complete the table using information from the line graph (Juan's Growth).",
+                answer: "<table class='custom-table'><tr><th>Age</th><th>Weight</th></tr><tr><td>At birth</td><td>6 pounds</td></tr><tr><td>1 year</td><td>20 pounds</td></tr><tr><td>2 years</td><td>25 pounds</td></tr><tr><td>3 years</td><td>30 pounds</td></tr><tr><td>4 years</td><td>35 pounds</td></tr><tr><td>5 years</td><td>40 pounds</td></tr></table>",
+                explanation: "Read the Y-value for each corresponding X-value (Age) from the points plotted on the line graph."
+            },
+            {
+                id: 12,
+                question: "If 65% of the lights are on, then what percent of the lights are off?",
+                answer: "35%",
+                explanation: "The total must be 100%. Subtract the 'on' percentage from 100%: $100\\% - 65\\% = 35\\%$."
+            },
+            {
+                id: 13,
+                question: "Solve: $60.75 + $95.75",
+                answer: "$156.50",
+                explanation: "Line up the decimals and add: $60.75 + 95.75 = 156.50$."
+            },
+            {
+                id: 14,
+                question: "Solve: $16.00 - $15.43",
+                answer: "$0.57",
+                explanation: "Borrowing carefully across the zeroes: $16.00 - 15.43 = 0.57$."
+            },
+            {
+                id: 15,
+                question: "Solve: 3.15 - 3.12",
+                answer: "0.03",
+                explanation: "Subtract corresponding decimal places: $3.15 - 3.12 = 0.03$."
+            },
+            {
+                id: 16,
+                question: "Solve: 320 × 30",
+                answer: "9,600",
+                explanation: "Multiply $32 \\times 3 = 96$, then append the two zeros from 320 and 30 to get 9,600."
+            },
+            {
+                id: 17,
+                question: "Solve: 465 × 7",
+                answer: "3,255",
+                explanation: "Multiply each digit: $5 \\times 7 = 35$ (carry 3), $6 \\times 7 = 42 + 3 = 45$ (carry 4), $4 \\times 7 = 28 + 4 = 32$. Result: 3255."
+            },
+            {
+                id: 18,
+                question: "Solve: $0.98 × 6",
+                answer: "$5.88",
+                explanation: "Multiply $98 \\times 6 = 588$. Since there are two decimal places, it becomes $5.88."
+            },
+            {
+                id: 19,
+                question: "Solve: 425 ÷ 6",
+                answer: "70 R 5",
+                explanation: "$42 \\div 6 = 7$, so $420 \\div 6 = 70$. The remainder from 425 is 5. So, 70 Remainder 5."
+            },
+            {
+                id: 20,
+                question: "Solve: $6.00 ÷ 8",
+                answer: "$0.75",
+                explanation: "$600 \\div 8 = 75$. Adjusting for the decimal gives $0.75."
+            },
+            {
+                id: 21,
+                question: "Solve: 625 ÷ 5",
+                answer: "125",
+                explanation: "Divide step by step: $6 \\div 5 = 1$ (rem 1). Drop 2: $12 \\div 5 = 2$ (rem 2). Drop 5: $25 \\div 5 = 5$. Total: 125."
+            },
+            {
+                id: 22,
+                question: "Solve: $3R = 150$",
+                answer: "R = 50",
+                explanation: "Divide both sides by 3 to isolate R: $150 \\div 3 = 50$."
+            },
+            {
+                id: 23,
+                question: "Solve: $10^2 + T = 150$",
+                answer: "T = 50",
+                explanation: "First, evaluate the exponent: $10^2 = 100$. The equation becomes $100 + T = 150$. Subtract 100 from both sides to find $T = 50$."
+            },
+            {
+                id: 24,
+                question: "Solve: $1 + 7 + 2 + 6 + 9 + 4 + N = 37$",
+                answer: "N = 8",
+                explanation: "Sum the known numbers: $1+7+2+6+9+4 = 29$. The equation becomes $29 + N = 37$. Subtract 29 from 37 to get $N = 8$."
+            },
+            {
+                id: 25,
+                question: "If the 3-inch square is covered with 1-inch squares, how many of the 1-inch squares are needed?",
+                answer: "9 squares",
+                explanation: "Find the area of the 3-inch square ($3 \\times 3 = 9$ sq inches). Since each small square is $1 \\times 1 = 1$ sq inch, you need 9 of them to cover the area."
+            },
+            {
+                id: 26,
+                question: "What is the perimeter of the right triangle? (Sides: 1.2 cm, 1.6 cm, 2.0 cm)",
+                answer: "4.8 cm",
+                explanation: "Perimeter is the total distance around the outside. Add the lengths of all three sides: $1.2 + 1.6 + 2.0 = 4.8$ cm."
+            },
+            {
+                id: 27,
+                question: "Which of these letters has a line of symmetry? Q, R, S, T",
+                answer: "T",
+                explanation: "The letter T has a vertical line of symmetry straight down the middle. The left and right sides are mirror images."
+            },
+            {
+                id: 28,
+                question: "Write the capital letter P rotated 90° counterclockwise.",
+                answer: "<div class='rotated-p'>P</div>",
+                explanation: "Rotating a shape 90 degrees counterclockwise (to the left) tips it over. The vertical stem becomes a horizontal base, and the loop is pointing upward on the left."
+            },
+            {
+                id: 29,
+                question: "Three of these triangles are congruent. Which triangle is not one of the three congruent triangles? A, B, C, D",
+                answer: "D",
+                explanation: "Triangles A, B, and C are identical right triangles just drawn in different orientations. Triangle D has a different shape (larger overall/different angles) and is therefore not congruent to the others."
+            },
+            {
+                id: 30,
+                question: "The radius of this circle is 1.2 cm. What is the diameter of the circle?",
+                answer: "2.4 cm",
+                explanation: "The diameter is twice the length of the radius. Multiply the radius by 2: $1.2 \\times 2 = 2.4$ cm."
+            }
+        ];
+
+        const container = document.getElementById('problems-container');
+
+        problems.forEach(prob => {
+            const card = document.createElement('div');
+            card.className = 'problem-card';
+
+            card.innerHTML = `
+                <div class="question">${prob.id}. ${prob.question}</div>
+                <button class="toggle-btn" onclick="toggleAnswer(${prob.id})">Show Answer & Explanation</button>
+                <div class="answer-section" id="ans-${prob.id}">
+                    <div class="answer-title">Answer:</div>
+                    <div>${prob.answer}</div>
+                    <div class="explanation-title">Explanation:</div>
+                    <div>${prob.explanation}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        function toggleAnswer(id) {
+            const answerDiv = document.getElementById(`ans-${id}`);
+            const btn = answerDiv.previousElementSibling;
+            if (answerDiv.style.display === 'block') {
+                answerDiv.style.display = 'none';
+                btn.innerText = 'Show Answer & Explanation';
+            } else {
+                answerDiv.style.display = 'block';
+                btn.innerText = 'Hide Answer & Explanation';
+            }
+        }
+    </script>
+</body>
+</html>
