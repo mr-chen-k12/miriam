@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions - Lesson 84</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+        };
+
+        // Function to toggle answer visibility and draw canvas if needed
+        function toggleAnswer(id, qNum) {
+            var answerDiv = document.getElementById(id);
+            var btn = document.getElementById('btn_' + id);
+            
+            if (answerDiv.style.display === "none" || answerDiv.style.display === "") {
+                answerDiv.style.display = "block";
+                btn.innerText = "Hide Answer & Explanation";
+                
+                // Trigger canvas drawing only when the answer is revealed
+                if(qNum === 6) drawTally(document.getElementById('canvasQ6'));
+                if(qNum === 8) drawMarbles(document.getElementById('canvasQ8'));
+                if(qNum === 28) drawSquare(document.getElementById('canvasQ28'));
+                if(qNum === 29) drawTransformation(document.getElementById('canvasQ29'));
+                if(qNum === 30) drawAngleShape(document.getElementById('canvasQ30'));
+            } else {
+                answerDiv.style.display = "none";
+                btn.innerText = "Show Answer & Explanation";
+            }
+        }
+
+        // Canvas Drawing Functions
+        function drawTally(canvas) {
+            if(!canvas || canvas.drawn) return;
+            var ctx = canvas.getContext("2d");
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#333";
+            // First group of 5
+            for(let i=0; i<4; i++) {
+                ctx.beginPath(); ctx.moveTo(10 + i*10, 10); ctx.lineTo(10 + i*10, 40); ctx.stroke();
+            }
+            // Strike through
+            ctx.beginPath(); ctx.moveTo(5, 35); ctx.lineTo(45, 15); ctx.stroke();
+            // Group of 4
+            for(let i=0; i<4; i++) {
+                ctx.beginPath(); ctx.moveTo(60 + i*10, 10); ctx.lineTo(60 + i*10, 40); ctx.stroke();
+            }
+            canvas.drawn = true;
+        }
+
+        function drawMarbles(canvas) {
+            if(!canvas || canvas.drawn) return;
+            var ctx = canvas.getContext("2d");
+            for(let i=0; i<18; i++) {
+                let x = (i % 6) * 35 + 25;
+                let y = Math.floor(i / 6) * 35 + 25;
+                ctx.beginPath();
+                ctx.arc(x, y, 12, 0, 2 * Math.PI);
+                ctx.stroke();
+                if(i < 6) { // Shade one third (6 out of 18)
+                    ctx.fillStyle = "#4CAF50";
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = "#fff";
+                    ctx.fill();
+                }
+            }
+            canvas.drawn = true;
+        }
+
+        function drawSquare(canvas) {
+            if(!canvas || canvas.drawn) return;
+            var ctx = canvas.getContext("2d");
+            ctx.strokeRect(50, 20, 60, 60);
+            ctx.font = "14px Arial";
+            ctx.fillText("3 yards", 55, 15);
+            ctx.fillText("3 yards", 2, 55);
+            canvas.drawn = true;
+        }
+
+        function drawTransformation(canvas) {
+            if(!canvas || canvas.drawn) return;
+            var ctx = canvas.getContext("2d");
+            ctx.lineWidth = 2;
+            // First Trapezoid
+            ctx.beginPath(); ctx.moveTo(30, 20); ctx.lineTo(70, 10); ctx.lineTo(70, 60); ctx.lineTo(30, 60); ctx.closePath(); ctx.stroke();
+            ctx.font = "12px Arial"; ctx.fillText("D", 20, 20); ctx.fillText("A", 75, 10); ctx.fillText("C", 20, 65); ctx.fillText("B", 75, 65);
+            
+            // Arrow
+            ctx.beginPath(); ctx.moveTo(90, 35); ctx.lineTo(120, 35); ctx.lineTo(110, 25); ctx.moveTo(120, 35); ctx.lineTo(110, 45); ctx.stroke();
+            ctx.fillText("Translation (Slide)", 75, 85);
+
+            // Second Trapezoid (Dashed)
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(140, 20); ctx.lineTo(180, 10); ctx.lineTo(180, 60); ctx.lineTo(140, 60); ctx.closePath(); ctx.stroke();
+            ctx.fillText("W", 130, 20); ctx.fillText("X", 185, 10); ctx.fillText("Z", 130, 65); ctx.fillText("Y", 185, 65);
+            canvas.drawn = true;
+        }
+
+        function drawAngleShape(canvas) {
+            if(!canvas || canvas.drawn) return;
+            var ctx = canvas.getContext("2d");
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(50, 70); ctx.lineTo(150, 70); ctx.lineTo(150, 20); ctx.lineTo(100, 20); ctx.closePath(); ctx.stroke();
+            ctx.font = "14px Arial";
+            ctx.fillText("C", 35, 75); ctx.fillText("B", 155, 75); ctx.fillText("A", 155, 15); ctx.fillText("D", 90, 15);
+            // Highlight Angle C
+            ctx.strokeStyle = "red";
+            ctx.beginPath(); ctx.arc(50, 70, 20, 0, -Math.PI/4, true); ctx.stroke();
+            canvas.drawn = true;
+        }
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .problem-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #fafafa; transition: box-shadow 0.3s ease; }
+        .problem-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .question-text { font-size: 1.1em; font-weight: 600; margin-bottom: 15px; color: #2c3e50; }
+        .btn-toggle { background-color: #3498db; color: #fff; border: none; padding: 10px 20px; font-size: 1em; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .btn-toggle:hover { background-color: #2980b9; }
+        .answer-section { display: none; margin-top: 15px; padding: 15px; border-left: 5px solid #2ecc71; background-color: #eafaf1; border-radius: 4px; }
+        .answer-title { font-weight: bold; color: #27ae60; margin-bottom: 5px; font-size: 1.1em; }
+        .explanation { margin-top: 10px; line-height: 1.5; color: #555; }
+        .math-block { background: #fff; padding: 10px; border-radius: 4px; border: 1px dashed #ccc; display: inline-block; margin-top: 10px; }
+        canvas { background: #fff; border: 1px solid #ccc; border-radius: 4px; margin-top: 15px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Math Worksheet Solutions</h1>
+    <p style="text-align:center; color:#777;">Decimal Numbers to Thousandths (Lesson 84)</p>
+
+    <div class="problem-card">
+        <div class="question-text">1. If it is not a leap year, what is the total number of days in January, February, and March?</div>
+        <button id="btn_ans1" class="btn-toggle" onclick="toggleAnswer('ans1', 1)">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-title">Answer: 90 days</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                January has 31 days.<br>
+                February has 28 days (in a non-leap year).<br>
+                March has 31 days.<br>
+                $31 + 28 + 31 = 90$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">2. The shoemaker's wife made each of the 12 children a pair of pants and 2 shirts. How many pieces of clothing did she make?</div>
+        <button id="btn_ans2" class="btn-toggle" onclick="toggleAnswer('ans2', 2)">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-title">Answer: 36 pieces of clothing</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Each child receives 1 pair of pants + 2 shirts = 3 pieces of clothing per child.<br>
+                There are 12 children.<br>
+                $12 \times 3 = 36$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">3. John did seven more chin-ups than Paloma did. If John did eighteen chin-ups, how many chin-ups did Paloma do?</div>
+        <button id="btn_ans3" class="btn-toggle" onclick="toggleAnswer('ans3', 3)">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-title">Answer: 11 chin-ups</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Let $P$ be the number of chin-ups Paloma did.<br>
+                John's chin-ups = $P + 7$<br>
+                $18 = P + 7$<br>
+                $P = 18 - 7 = 11$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">4. Kadeeja drove 200 miles on 8 gallons of gas. Her car averaged how many miles on each gallon of gas?</div>
+        <button id="btn_ans4" class="btn-toggle" onclick="toggleAnswer('ans4', 4)">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-title">Answer: 25 miles per gallon</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Divide the total miles by the total gallons of gas to find the average.<br>
+                $200 \div 8 = 25$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">5. Melinda paid the clerk $20.00 for a book that was priced at $8.95. The tax was 54¢. How much money should she get back?</div>
+        <button id="btn_ans5" class="btn-toggle" onclick="toggleAnswer('ans5', 5)">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-title">Answer: $10.51</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                First, calculate the total cost: $\$8.95 + \$0.54 = \$9.49$.<br>
+                Subtract the total cost from the amount given to the clerk: $\$20.00 - \$9.49 = \$10.51$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">6. The tally for 8 is <del>||||</del> |||. What is the tally for 9?</div>
+        <button id="btn_ans6" class="btn-toggle" onclick="toggleAnswer('ans6', 6)">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-title">Answer: <del>||||</del> ||||</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Tally marks are grouped in fives. The first five is represented by four vertical lines with a diagonal line striking through them. To make 9, you add four individual vertical lines after the group of five.
+                <canvas id="canvasQ6" width="120" height="50"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">7. If each side of an octagon is 1 centimeter long, what is the octagon's perimeter in millimeters?</div>
+        <button id="btn_ans7" class="btn-toggle" onclick="toggleAnswer('ans7', 7)">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-title">Answer: 80 millimeters</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                An octagon has 8 sides. Perimeter in cm = $8 \times 1\text{ cm} = 8\text{ cm}$.<br>
+                Since $1\text{ cm} = 10\text{ mm}$, multiply by 10 to convert: $8 \times 10 = 80\text{ mm}$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">8. One third of the 18 marbles were cat's-eyes. How many of the marbles were cat's-eyes? Draw a picture to help you solve the problem.</div>
+        <button id="btn_ans8" class="btn-toggle" onclick="toggleAnswer('ans8', 8)">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-title">Answer: 6 marbles</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                To find one third of 18, divide 18 by 3.<br>
+                $18 \div 3 = 6$.<br>
+                The picture below shows 18 marbles in 3 groups of 6. One group (one third) is shaded green.
+                <canvas id="canvasQ8" width="250" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">9. Robert picked 46 peaches in 1 day. At that rate, how many peaches could he pick in 6 days?</div>
+        <button id="btn_ans9" class="btn-toggle" onclick="toggleAnswer('ans9', 9)">Show Answer & Explanation</button>
+        <div id="ans9" class="answer-section">
+            <div class="answer-title">Answer: 276 peaches</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Multiply the number of peaches picked per day by the number of days.<br>
+                $46 \times 6 = 276$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">10. Mary picked 3640 peaches in 7 days. She picked an average of how many peaches each day?</div>
+        <button id="btn_ans10" class="btn-toggle" onclick="toggleAnswer('ans10', 10)">Show Answer & Explanation</button>
+        <div id="ans10" class="answer-section">
+            <div class="answer-title">Answer: 520 peaches</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Divide the total number of peaches by the number of days to find the daily average.<br>
+                $3640 \div 7 = 520$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">11. In a feat of strength, Jack did 1000 push-ups, 129 of them with one arm. What fraction of the 1000 push-ups did Jack do with one arm?</div>
+        <button id="btn_ans11" class="btn-toggle" onclick="toggleAnswer('ans11', 11)">Show Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <div class="answer-title">Answer: $\frac{129}{1000}$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                The part is 129 and the whole is 1000. Put the part over the whole to make the fraction.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">12. Write the answer to problem 11 as a decimal number. Then use words to name the number.</div>
+        <button id="btn_ans12" class="btn-toggle" onclick="toggleAnswer('ans12', 12)">Show Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <div class="answer-title">Answer: 0.129; one hundred twenty-nine thousandths</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                To write $\frac{129}{1000}$ as a decimal, the last digit (9) goes into the thousandths place: $0.129$.<br>
+                In words, this is read as the numerator value followed by the place value of the last decimal digit: "one hundred twenty-nine thousandths".
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">13. $4.56 - (2.3 + 1.75)$</div>
+        <button id="btn_ans13" class="btn-toggle" onclick="toggleAnswer('ans13', 13)">Show Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <div class="answer-title">Answer: 0.51</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                According to the order of operations, solve inside the parentheses first:<br>
+                $2.30 + 1.75 = 4.05$<br>
+                Then subtract this sum from 4.56:<br>
+                $4.56 - 4.05 = 0.51$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">14. $\sqrt{36} + N = 7 \times 8$</div>
+        <button id="btn_ans14" class="btn-toggle" onclick="toggleAnswer('ans14', 14)">Show Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <div class="answer-title">Answer: $N = 50$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                First, simplify both sides of the equation:<br>
+                $\sqrt{36} = 6$ and $7 \times 8 = 56$<br>
+                The equation becomes: $6 + N = 56$<br>
+                Subtract 6 from both sides to find N:<br>
+                $N = 56 - 6 = 50$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">15. $3 \times 6 \times 3^2$</div>
+        <button id="btn_ans15" class="btn-toggle" onclick="toggleAnswer('ans15', 15)">Show Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <div class="answer-title">Answer: 162</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                First evaluate the exponent: $3^2 = 9$<br>
+                Now multiply from left to right:<br>
+                $3 \times 6 = 18$<br>
+                $18 \times 9 = 162$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">16. $462 \times \sqrt{9}$</div>
+        <button id="btn_ans16" class="btn-toggle" onclick="toggleAnswer('ans16', 16)">Show Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <div class="answer-title">Answer: 1386</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                First calculate the square root: $\sqrt{9} = 3$<br>
+                Then multiply:<br>
+                $462 \times 3 = 1386$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">17. $7^2 - \sqrt{49}$</div>
+        <button id="btn_ans17" class="btn-toggle" onclick="toggleAnswer('ans17', 17)">Show Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-title">Answer: 42</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Evaluate the exponent and the square root:<br>
+                $7^2 = 49$<br>
+                $\sqrt{49} = 7$<br>
+                Subtract: $49 - 7 = 42$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">18. $36 \times 50$</div>
+        <button id="btn_ans18" class="btn-toggle" onclick="toggleAnswer('ans18', 18)">Show Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-title">Answer: 1800</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $36 \times 5 = 180$<br>
+                Add the zero from the 50: $1800$
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">19. $\$4.76 \times 7$</div>
+        <button id="btn_ans19" class="btn-toggle" onclick="toggleAnswer('ans19', 19)">Show Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-title">Answer: $33.32</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $4.76 \times 7 = 33.32$<br>
+                Carry over the decimal two places, yielding $\$33.32$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">20. Column Addition: <br>4 + 3 + 2 + 7 + 6 + 8 + N = 47</div>
+        <button id="btn_ans20" class="btn-toggle" onclick="toggleAnswer('ans20', 20)">Show Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-title">Answer: $N = 17$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                First, sum the known numbers:<br>
+                $4 + 3 + 2 + 7 + 6 + 8 = 30$<br>
+                Now set up the equation: $30 + N = 47$<br>
+                Subtract 30 from both sides: $N = 47 - 30 = 17$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">21. $\frac{524}{4}$</div>
+        <button id="btn_ans21" class="btn-toggle" onclick="toggleAnswer('ans21', 21)">Show Answer & Explanation</button>
+        <div id="ans21" class="answer-section">
+            <div class="answer-title">Answer: 131</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Perform long division or mental division:<br>
+                $5 \div 4 = 1$ (R1)<br>
+                $12 \div 4 = 3$<br>
+                $4 \div 4 = 1$<br>
+                Result: 131.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">22. $6\overline{)4200}$</div>
+        <button id="btn_ans22" class="btn-toggle" onclick="toggleAnswer('ans22', 22)">Show Answer & Explanation</button>
+        <div id="ans22" class="answer-section">
+            <div class="answer-title">Answer: 700</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $42 \div 6 = 7$<br>
+                Carry over the two zeros to get 700.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">23. $5\overline{)\$26.30}$</div>
+        <button id="btn_ans23" class="btn-toggle" onclick="toggleAnswer('ans23', 23)">Show Answer & Explanation</button>
+        <div id="ans23" class="answer-section">
+            <div class="answer-title">Answer: $5.26</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $26 \div 5 = 5$ (R1)<br>
+                Bring down the 3 to make 13. $13 \div 5 = 2$ (R3)<br>
+                Bring down the 0 to make 30. $30 \div 5 = 6$<br>
+                Bring the decimal point straight up to get $\$5.26$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">24. $\$3.70 \div 2$</div>
+        <button id="btn_ans24" class="btn-toggle" onclick="toggleAnswer('ans24', 24)">Show Answer & Explanation</button>
+        <div id="ans24" class="answer-section">
+            <div class="answer-title">Answer: $1.85</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Half of $\$3.00$ is $\$1.50$<br>
+                Half of $70¢$ is $35¢$<br>
+                $\$1.50 + \$0.35 = \$1.85$.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">25. $786 \div 3$</div>
+        <button id="btn_ans25" class="btn-toggle" onclick="toggleAnswer('ans25', 25)">Show Answer & Explanation</button>
+        <div id="ans25" class="answer-section">
+            <div class="answer-title">Answer: 262</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $7 \div 3 = 2$ (R1)<br>
+                Bring down 8 to make 18. $18 \div 3 = 6$<br>
+                Bring down 6. $6 \div 3 = 2$<br>
+                Result: 262.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">26. $4902 \div 7$</div>
+        <button id="btn_ans26" class="btn-toggle" onclick="toggleAnswer('ans26', 26)">Show Answer & Explanation</button>
+        <div id="ans26" class="answer-section">
+            <div class="answer-title">Answer: 700 R2 (or $700\frac{2}{7}$)</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                $49 \div 7 = 7$<br>
+                $0 \div 7 = 0$<br>
+                $2 \div 7 = 0$ with a remainder of 2.<br>
+                Quotient is 700 with a remainder of 2.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">27. Write 0.321 as a fraction.</div>
+        <button id="btn_ans27" class="btn-toggle" onclick="toggleAnswer('ans27', 27)">Show Answer & Explanation</button>
+        <div id="ans27" class="answer-section">
+            <div class="answer-title">Answer: $\frac{321}{1000}$</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                The decimal 0.321 extends to the thousandths place. The numerator is the digits (321) and the denominator is 1000.
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">28. Find the perimeter and area of this square. (A square with side length 3 yards)</div>
+        <button id="btn_ans28" class="btn-toggle" onclick="toggleAnswer('ans28', 28)">Show Answer & Explanation</button>
+        <div id="ans28" class="answer-section">
+            <div class="answer-title">Answer: Perimeter = 12 yards, Area = 9 square yards</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                A square has 4 equal sides.<br>
+                Perimeter = $4 \times \text{side} = 4 \times 3\text{ yards} = 12\text{ yards}$.<br>
+                Area = $\text{side} \times \text{side} = 3\text{ yards} \times 3\text{ yards} = 9\text{ square yards}$.
+                <canvas id="canvasQ28" width="150" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">29. Which transformations would move figure ABCD to position WXYZ?</div>
+        <button id="btn_ans29" class="btn-toggle" onclick="toggleAnswer('ans29', 29)">Show Answer & Explanation</button>
+        <div id="ans29" class="answer-section">
+            <div class="answer-title">Answer: Translation (Slide)</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                The orientation and size of the figure remain exactly the same; it is simply shifted horizontally to the right. Moving a shape without rotating or flipping it is called a translation (or a slide).
+                <canvas id="canvasQ29" width="220" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question-text">30. Which angle in this figure looks like it measures about $45^\circ$?</div>
+        <button id="btn_ans30" class="btn-toggle" onclick="toggleAnswer('ans30', 30)">Show Answer & Explanation</button>
+        <div id="ans30" class="answer-section">
+            <div class="answer-title">Answer: Angle C</div>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                - Angle A and Angle B appear to be $90^\circ$ right angles.<br>
+                - Angle D is an obtuse angle (greater than $90^\circ$).<br>
+                - Angle C is an acute angle and is roughly half of a right angle, making it approximately $45^\circ$.
+                <canvas id="canvasQ30" width="200" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
