@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Review Adventure! 🚀</title>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --secondary: #4CAF50;
+            --bg-color: #F0F8FF;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5em;
+            text-shadow: 2px 2px #FFE4B5;
+        }
+
+        .intro {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .skill-section {
+            margin-bottom: 40px;
+        }
+
+        .skill-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.4em;
+            margin: 0;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-top: none;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .options label {
+            display: block;
+            background-color: #f9f9f9;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #FFF3E0;
+            border-color: #FFB74D;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.3);
+            margin-right: 10px;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .feedback-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+
+        .feedback-correct {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border: 2px solid #A5D6A7;
+        }
+
+        .feedback-incorrect {
+            background-color: #FFEBEE;
+            color: #C62828;
+            border: 2px solid #EF9A9A;
+        }
+
+        canvas {
+            display: block;
+            margin: 15px auto;
+            background-color: #fafafa;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Math Review Adventure! 🌟</h1>
+    <p class="intro">Let's power up our math brains! Here are some practice questions to help you master the tricky parts. You've got this!</p>
+
+    <div id="quiz-container"></div>
+</div>
+
+<script>
+    // Quiz Data with specific feedback for every single wrong answer
+    const quizData = [
+        {
+            skillTitle: "📐 Problem 8: Perpendicular Lines & Right Triangles",
+            visualType: "rightTriangle",
+            questions: [
+                {
+                    id: "q8_1",
+                    text: "What do we call an angle made by two perpendicular lines?",
+                    options: [
+                        { val: "A", text: "Acute angle", feedback: "Oops! An acute angle is tiny and sharp, less than 90°. Perpendicular lines make a bigger corner than that!" },
+                        { val: "B", text: "Right angle (90°)", feedback: "Awesome! Perpendicular lines meet to form a perfect square corner, which is exactly 90°." },
+                        { val: "C", text: "Obtuse angle", feedback: "Not quite! An obtuse angle is wider than a perfect corner. Perpendicular lines make a perfect 'L' shape." },
+                        { val: "D", text: "Straight angle", feedback: "Careful! A straight angle is just a flat straight line (180°)." }
+                    ],
+                    correct: "B",
+                    explanation: "Perpendicular lines always form perfect 'L' corners, just like the corners of a square or a book. In math, we call that a Right Angle!"
+                },
+                {
+                    id: "q8_2",
+                    text: "Which of these shapes ALWAYS has perpendicular sides?",
+                    options: [
+                        { val: "A", text: "Circle", feedback: "Circles are round! They don't have any straight sides to meet at corners." },
+                        { val: "B", text: "Rectangle", feedback: "Spot on! Every corner of a rectangle is a right angle, which means the sides are perpendicular." },
+                        { val: "C", text: "Equilateral Triangle", feedback: "Hmm, those angles are all 60° (acute). We need a shape with 90° corners." },
+                        { val: "D", text: "Hexagon", feedback: "A standard hexagon has wide, obtuse angles. We are looking for perfect 90° corners." }
+                    ],
+                    correct: "B",
+                    explanation: "A rectangle is made up entirely of right angles (perfect corners), so its adjacent sides are always perpendicular to each other."
+                },
+                {
+                    id: "q8_3",
+                    text: "If a triangle has exactly one right angle, what kind of triangle is it called?",
+                    options: [
+                        { val: "A", text: "Acute triangle", feedback: "An acute triangle only has small, sharp angles. This one has a right angle!" },
+                        { val: "B", text: "Right triangle", feedback: "Bingo! Mathematicians keep it simple: a triangle with a right angle is a Right Triangle." },
+                        { val: "C", text: "Obtuse triangle", feedback: "An obtuse triangle has one really wide angle. We are looking for the one with a perfect 90° corner." },
+                        { val: "D", text: "Perpendicular triangle", feedback: "That's a good guess based on the lines, but we use the angle's name for the triangle!" }
+                    ],
+                    correct: "B",
+                    explanation: "If you draw two perpendicular lines and connect their ends, you create a right triangle!"
+                }
+            ]
+        },
+        {
+            skillTitle: "🍕 Problem 11: Fractions with Large Denominators",
+            questions: [
+                {
+                    id: "q11_1",
+                    text: "Out of 1000 jellybeans in a jar, exactly 45 are red. What fraction of the jellybeans are red?",
+                    options: [
+                        { val: "A", text: "\\( \\frac{45}{100} \\)", feedback: "Watch out for the denominator! This means 45 out of 100, but we have 1000 jellybeans." },
+                        { val: "B", text: "\\( \\frac{45}{1000} \\)", feedback: "Fantastic! The 'part' is 45, and the 'whole' is 1000." },
+                        { val: "C", text: "\\( \\frac{1000}{45} \\)", feedback: "You flipped it! The total number (the whole) always goes on the bottom." },
+                        { val: "D", text: "\\( \\frac{4}{5} \\)", feedback: "That doesn't quite match our numbers. Put the part over the total amount." }
+                    ],
+                    correct: "B",
+                    explanation: "A fraction is just \\( \\frac{\\text{Part}}{\\text{Whole}} \\). The part is 45 red jellybeans, and the whole is 1000 total jellybeans."
+                },
+                {
+                    id: "q11_2",
+                    text: "A baker made 1000 cookies. 203 of them were chocolate chip. What fraction were chocolate chip?",
+                    options: [
+                        { val: "A", text: "\\( \\frac{203}{1000} \\)", feedback: "Yummy and correct! 203 is the part, 1000 is the whole." },
+                        { val: "B", text: "\\( \\frac{23}{100} \\)", feedback: "Don't drop the zero! The number of cookies is exactly 203, not 23." },
+                        { val: "C", text: "\\( \\frac{203}{100} \\)", feedback: "Look at the denominator. This would mean he baked more chocolate chip cookies than his total batch size!" },
+                        { val: "D", text: "\\( \\frac{1000}{203} \\)", feedback: "Oops, upside down! Remember: Part on top, Whole on the bottom." }
+                    ],
+                    correct: "A",
+                    explanation: "Just read it like a sentence: '203 out of 1000', which becomes the fraction \\( \\frac{203}{1000} \\)."
+                },
+                {
+                    id: "q11_3",
+                    text: "In a school of 1000 kids, 77 play soccer. What fraction represents the soccer players?",
+                    options: [
+                        { val: "A", text: "\\( \\frac{77}{10000} \\)", feedback: "You added an extra zero to the bottom! The whole is just 1000." },
+                        { val: "B", text: "\\( \\frac{7}{100} \\)", feedback: "That's close, but our numbers are 77 and 1000." },
+                        { val: "C", text: "\\( \\frac{77}{1000} \\)", feedback: "Goal! 77 is the part, and 1000 is the whole." },
+                        { val: "D", text: "\\( \\frac{1000}{77} \\)", feedback: "Ah! You put the big number on top. For this fraction, the whole school goes on the bottom." }
+                    ],
+                    correct: "C",
+                    explanation: "The part (soccer players) is 77, and the whole (total students) is 1000. So, \\( \\frac{77}{1000} \\)."
+                }
+            ]
+        },
+        {
+            skillTitle: "🔢 Problem 12: Decimals and Word Forms",
+            questions: [
+                {
+                    id: "q12_1",
+                    text: "How do you write \\( \\frac{45}{1000} \\) as a decimal number?",
+                    options: [
+                        { val: "A", text: "0.45", feedback: "This is forty-five hundredths (45/100). We need it to stretch into the thousandths place (3 decimal spots)!" },
+                        { val: "B", text: "0.045", feedback: "Perfect! You need three decimal places for thousandths, so you added a placeholder zero." },
+                        { val: "C", text: "4.5", feedback: "This is way too big! The number must be smaller than 1." },
+                        { val: "D", text: "0.0045", feedback: "You went one spot too far! That is ten-thousandths." }
+                    ],
+                    correct: "B",
+                    explanation: "Because the denominator is 1000, you need 3 decimal places. To fit '45' into 3 places, you put a zero in the tenths spot: 0.045."
+                },
+                {
+                    id: "q12_2",
+                    text: "What is the correct word name for 0.203?",
+                    options: [
+                        { val: "A", text: "Two hundred three tenths", feedback: "Tenths only has one decimal place (like 0.2). We have three places!" },
+                        { val: "B", text: "Two hundred three hundredths", feedback: "Hundredths only has two decimal places (like 0.20). We have three!" },
+                        { val: "C", text: "Two hundred three thousandths", feedback: "Superstar! Three decimal places always means 'thousandths'." },
+                        { val: "D", text: "Two hundred and three", feedback: "Without 'thousandths' at the end, this sounds like a whole number." }
+                    ],
+                    correct: "C",
+                    explanation: "Read the number normally: 'Two hundred three'. Then look at the last digit's place value. It's in the third spot after the decimal, which is the thousandths place."
+                },
+                {
+                    id: "q12_3",
+                    text: "How do you write 'seventy-seven thousandths' as a decimal number?",
+                    options: [
+                        { val: "A", text: "0.77", feedback: "That's seventy-seven hundredths (only two decimal places). We need thousandths!" },
+                        { val: "B", text: "0.077", feedback: "You got it! You used the zero to push the 77 into the thousandths place." },
+                        { val: "C", text: "0.770", feedback: "This is mathematically equal to 0.77 (seven hundred seventy thousandths). The 7s are in the wrong spots." },
+                        { val: "D", text: "7.7", feedback: "That represents seven wholes and seven tenths. We want a tiny fraction!" }
+                    ],
+                    correct: "B",
+                    explanation: "Thousandths means 3 decimal places: _ . _ _ _ . We want the 77 to end in the very last spot, so we fill the empty spot with a 0: 0.077."
+                }
+            ]
+        },
+        {
+            skillTitle: "✖️ Problem 19: Multi-Digit Multiplication with Zeros",
+            questions: [
+                {
+                    id: "q19_1",
+                    text: "Let's multiply: 304 &times; 6",
+                    options: [
+                        { val: "A", text: "1,824", feedback: "Excellent multiplication! You properly handled the zero in the tens place." },
+                        { val: "B", text: "1,804", feedback: "Oops! 6 x 4 is 24, so you have to carry the 2 into the tens place. You left it as a zero." },
+                        { val: "C", text: "1,864", feedback: "Check the tens place again. 6 x 0 is 0, plus the 2 you carried makes 2, not 6." },
+                        { val: "D", text: "184", feedback: "Don't forget to multiply the hundreds place: 6 x 300 = 1800!" }
+                    ],
+                    correct: "A",
+                    explanation: "6 x 4 = 24 (write 4, carry 2). 6 x 0 = 0, plus the 2 carried = 2. 6 x 3 = 18. Put it together: 1,824."
+                },
+                {
+                    id: "q19_2",
+                    text: "Solve: 408 &times; 3",
+                    options: [
+                        { val: "A", text: "1,224", feedback: "Nailed it! You are a multiplication master." },
+                        { val: "B", text: "1,204", feedback: "Remember: 3 x 8 = 24. You must carry the 2 over the zero!" },
+                        { val: "C", text: "124", feedback: "You forgot to multiply the 4 in the hundreds place!" },
+                        { val: "D", text: "1,284", feedback: "Careful with the tens place! 3 x 0 is 0, plus the 2 carried makes 2 (not 8)." }
+                    ],
+                    correct: "A",
+                    explanation: "3 x 8 = 24 (write 4, carry 2). 3 x 0 = 0, plus 2 = 2. 3 x 4 = 12.  1,224."
+                },
+                {
+                    id: "q19_3",
+                    text: "What is 507 &times; 4?",
+                    options: [
+                        { val: "A", text: "2,028", feedback: "Boom! Exactly right. Great job handling the carried digits." },
+                        { val: "B", text: "228", feedback: "You forgot the biggest part: 4 x 500!" },
+                        { val: "C", text: "2,008", feedback: "You forgot to add the 2 you carried from doing 4 x 7 = 28." },
+                        { val: "D", text: "2,428", feedback: "Wait, 4 x 0 is 0, not 4! Just add the carried 2." }
+                    ],
+                    correct: "A",
+                    explanation: "4 x 7 = 28 (write 8, carry 2). 4 x 0 = 0, plus 2 = 2. 4 x 5 = 20. Total is 2,028."
+                }
+            ]
+        },
+        {
+            skillTitle: "🦋 Problem 28: Lines of Symmetry",
+            visualType: "symmetry",
+            questions: [
+                {
+                    id: "q28_1",
+                    text: "Which of these letters has exactly ONE line of symmetry?",
+                    options: [
+                        { val: "A", text: "O", feedback: "A perfect 'O' has infinitely many lines of symmetry, or at least two depending on the font!" },
+                        { val: "B", text: "X", feedback: "An 'X' usually has TWO lines of symmetry (one vertical, one horizontal)." },
+                        { val: "C", text: "T", feedback: "Perfect! You can only fold a 'T' perfectly down the middle vertically." },
+                        { val: "D", text: "S", feedback: "Try folding an 'S'. It doesn't match up perfectly! It has zero lines of symmetry." }
+                    ],
+                    correct: "C",
+                    explanation: "A line of symmetry works like a mirror. If you draw a straight line down the middle of a 'T', both the left and right sides are perfect mirror reflections of each other."
+                },
+                {
+                    id: "q28_2",
+                    text: "How many lines of symmetry does a perfect Square have?",
+                    options: [
+                        { val: "A", text: "2", feedback: "You got the vertical and horizontal, but what about corner-to-corner?" },
+                        { val: "B", text: "4", feedback: "Brilliant! Up/down, left/right, and both diagonals." },
+                        { val: "C", text: "8", feedback: "That's a bit too many! A square only has 4." },
+                        { val: "D", text: "1", feedback: "There are way more ways to fold a square evenly than just one!" }
+                    ],
+                    correct: "B",
+                    explanation: "You can fold a square in half vertically, horizontally, and diagonally twice. That makes 4 lines of symmetry."
+                },
+                {
+                    id: "q28_3",
+                    text: "Which of these letters has ZERO lines of symmetry?",
+                    options: [
+                        { val: "A", text: "M", feedback: "You can fold an 'M' straight down the middle vertically!" },
+                        { val: "B", text: "E", feedback: "You can fold an 'E' straight across the middle horizontally!" },
+                        { val: "C", text: "F", feedback: "Correct! No matter how you try to slice an 'F', the two sides won't be identical mirror images." },
+                        { val: "D", text: "W", feedback: "You can fold a 'W' straight down the middle vertically!" }
+                    ],
+                    correct: "C",
+                    explanation: "If a shape cannot be folded in half so that both sides match perfectly, it has zero lines of symmetry. 'F' is asymmetrical."
+                }
+            ]
+        }
+    ];
+
+    // Function to generate the HTML for the quiz
+    function generateQuiz() {
+        const container = document.getElementById('quiz-container');
+        
+        quizData.forEach((section, secIndex) => {
+            // Create Section Wrapper
+            const secDiv = document.createElement('div');
+            secDiv.className = 'skill-section';
+            
+            // Add Header
+            const header = document.createElement('h2');
+            header.className = 'skill-header';
+            header.innerHTML = section.skillTitle;
+            secDiv.appendChild(header);
+
+            // Add Canvas if defined
+            if (section.visualType === "rightTriangle") {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'canvas-triangle';
+                canvas.width = 300;
+                canvas.height = 150;
+                secDiv.appendChild(canvas);
+            } else if (section.visualType === "symmetry") {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'canvas-symmetry';
+                canvas.width = 300;
+                canvas.height = 150;
+                secDiv.appendChild(canvas);
+            }
+
+            // Create Questions
+            section.questions.forEach((q, qIndex) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let html = `<div class="question-text">${qIndex + 1}. ${q.text}</div>`;
+                html += `<div class="options">`;
+                
+                q.options.forEach(opt => {
+                    html += `<label>
+                        <input type="radio" name="${q.id}" value="${opt.val}">
+                        ${opt.val}. ${opt.text}
+                    </label>`;
+                });
+                
+                html += `</div>`;
+                html += `<button class="btn" onclick="checkAnswer('${q.id}', '${q.correct}', ${secIndex}, ${qIndex})">Check Answer 🔍</button>`;
+                html += `<div id="feedback-${q.id}" class="feedback-box"></div>`;
+                
+                card.innerHTML = html;
+                secDiv.appendChild(card);
+            });
+
+            container.appendChild(secDiv);
+        });
+
+        // Trigger MathJax after generating HTML
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+
+        // Draw Canvas Graphics
+        drawCanvases();
+    }
+
+    // Function to draw visuals on Canvas elements
+    function drawCanvases() {
+        // Draw Right Triangle
+        const triCanvas = document.getElementById('canvas-triangle');
+        if (triCanvas) {
+            const ctx = triCanvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(100, 20); // Top
+            ctx.lineTo(100, 120); // Bottom left
+            ctx.lineTo(200, 120); // Bottom right
+            ctx.closePath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#FF8C00";
+            ctx.stroke();
+            ctx.fillStyle = "#FFF3E0";
+            ctx.fill();
+
+            // Draw right angle square
+            ctx.beginPath();
+            ctx.moveTo(100, 105);
+            ctx.lineTo(115, 105);
+            ctx.lineTo(115, 120);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("90° Right Angle", 80, 140);
+        }
+
+        // Draw Symmetry H
+        const symCanvas = document.getElementById('canvas-symmetry');
+        if (symCanvas) {
+            const ctx = symCanvas.getContext('2d');
+            
+            // Draw a big letter H
+            ctx.fillStyle = "#4CAF50";
+            ctx.fillRect(100, 30, 20, 90); // Left leg
+            ctx.fillRect(180, 30, 20, 90); // Right leg
+            ctx.fillRect(120, 65, 60, 20); // Crossbar
+            
+            // Draw lines of symmetry
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+
+            // Vertical line
+            ctx.beginPath();
+            ctx.moveTo(150, 10);
+            ctx.lineTo(150, 140);
+            ctx.stroke();
+
+            // Horizontal line
+            ctx.beginPath();
+            ctx.moveTo(80, 75);
+            ctx.lineTo(220, 75);
+            ctx.stroke();
+            
+            ctx.setLineDash([]); // reset dash
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Lines of Symmetry in the letter H", 50, 145);
+        }
+    }
+
+    // Function to check answers and show specific kid-friendly feedback
+    function checkAnswer(qId, correctVal, secIdx, qIdx) {
+        const radios = document.getElementsByName(qId);
+        let selectedVal = null;
+        for (let r of radios) {
+            if (r.checked) {
+                selectedVal = r.value;
+                break;
+            }
+        }
+
+        const feedbackBox = document.getElementById(`feedback-${qId}`);
+        const questionData = quizData[secIdx].questions[qIdx];
+
+        if (!selectedVal) {
+            feedbackBox.style.display = "block";
+            feedbackBox.className = "feedback-box feedback-incorrect";
+            feedbackBox.innerHTML = "Hey there! 👋 Make sure to click an answer before checking!";
+            return;
+        }
+
+        const selectedOptionData = questionData.options.find(opt => opt.val === selectedVal);
+        feedbackBox.style.display = "block";
+
+        if (selectedVal === correctVal) {
+            feedbackBox.className = "feedback-box feedback-correct";
+            let html = `<strong>🎉 Correct!</strong> ${selectedOptionData.feedback}<br><br>`;
+            html += `<em>Why?</em> ${questionData.explanation}`;
+            feedbackBox.innerHTML = html;
+        } else {
+            feedbackBox.className = "feedback-box feedback-incorrect";
+            let html = `<strong>🤔 Not quite... Let's think about it.</strong><br>`;
+            html += `You chose <b>${selectedVal}</b>: ${selectedOptionData.feedback}<br><br>`;
+            html += `<em>Hint:</em> ${questionData.explanation} Keep trying!`;
+            feedbackBox.innerHTML = html;
+        }
+        
+        // Re-render math if feedback contains fractions
+        if (window.MathJax) {
+            MathJax.typesetPromise([feedbackBox]);
+        }
+    }
+
+    // Run on load
+    window.onload = generateQuiz;
+</script>
+
+</body>
+</html>
