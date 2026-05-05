@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cumulative Test Solutions</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 20px; color: #2c3e50; background-color: #f4f7f6; }
+    h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; font-size: 2.2em; border-bottom: 2px solid #bdc3c7; padding-bottom: 10px; }
+    .question-card { background: #ffffff; border-left: 6px solid #3498db; margin-bottom: 20px; padding: 20px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .question { font-weight: 600; font-size: 1.1em; margin-bottom: 12px; }
+    .options { margin-left: 25px; margin-bottom: 15px; font-size: 1.05em; }
+    .btn { background-color: #3498db; color: white; border: none; padding: 10px 18px; cursor: pointer; border-radius: 4px; font-size: 14px; font-weight: bold; transition: background-color 0.3s; }
+    .btn:hover { background-color: #2980b9; }
+    .answer-section { display: none; margin-top: 15px; padding: 15px; background-color: #f0fbf9; border-left: 4px solid #1abc9c; border-radius: 4px; }
+    .answer-title { font-weight: bold; color: #16a085; font-size: 1.1em; }
+    .explanation { margin-top: 8px; }
+    canvas { background-color: #fff; border: 1px dashed #bdc3c7; display: block; margin: 15px 0; border-radius: 4px; }
+    .vertical-math { display: inline-block; text-align: right; font-family: 'Courier New', Courier, monospace; font-size: 1.2em; line-height: 1.2; margin-top: 10px; }
+    .vertical-math .underline { border-bottom: 2px solid #2c3e50; margin-bottom: 4px; padding-bottom: 2px; }
+    mjx-container { display: inline-block !important; }
+</style>
+<script>
+    function toggleAnswer(id, btnId) {
+        var x = document.getElementById(id);
+        var btn = document.getElementById(btnId);
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+            btn.innerText = "Hide Answer & Explanation";
+        } else {
+            x.style.display = "none";
+            btn.innerText = "Show Answer & Explanation";
+        }
+    }
+
+    window.onload = function() {
+        var canvas = document.getElementById('q5canvas');
+        if (canvas && canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+            
+            // Draw isosceles triangle
+            ctx.beginPath();
+            ctx.moveTo(100, 20); // Top
+            ctx.lineTo(30, 160); // Bottom left
+            ctx.lineTo(170, 160); // Bottom right
+            ctx.closePath();
+            
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#2c3e50';
+            ctx.stroke();
+            ctx.fillStyle = '#ecf0f1';
+            ctx.fill();
+            
+            // Draw line of symmetry
+            ctx.beginPath();
+            ctx.moveTo(100, 10);
+            ctx.lineTo(100, 170);
+            
+            ctx.setLineDash([6, 4]);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#e74c3c';
+            ctx.stroke();
+            
+            // Label
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#c0392b';
+            ctx.fillText('Line of Symmetry', 110, 90);
+        }
+    };
+</script>
+</head>
+<body>
+
+    <h1>Cumulative Test Solutions (1 - 20)</h1>
+
+    <div class="question-card">
+        <div class="question">1. Marie faces south and then turns 90° clockwise. What direction is Marie facing after the turn?</div>
+        <div class="options">A. north &nbsp;&nbsp; B. south &nbsp;&nbsp; C. east &nbsp;&nbsp; D. west</div>
+        <button id="btn1" class="btn" onclick="toggleAnswer('ans1', 'btn1')">Show Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <div class="answer-title">Answer: D. west</div>
+            <div class="explanation">Imagine a compass. If you are facing South (down), a clockwise turn means turning to your right. A 90-degree turn to the right from South points you directly West.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">2. Nectarines cost 57¢ per pound. What is the price for 4 pounds of nectarines?</div>
+        <button id="btn2" class="btn" onclick="toggleAnswer('ans2', 'btn2')">Show Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <div class="answer-title">Answer: $2.28</div>
+            <div class="explanation">Multiply the cost per pound by the number of pounds:<br>\( 57\text{¢} \times 4 = 228\text{¢} \).<br>Since 100 cents equal $1.00, 228 cents is written as <strong>$2.28</strong>.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">3. In bowling, the sum of Amber's score and Beth's score was equal to Consuela's score. If Consuela's score was 111 and Beth's score was 48, what was Amber's score?</div>
+        <button id="btn3" class="btn" onclick="toggleAnswer('ans3', 'btn3')">Show Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <div class="answer-title">Answer: 63</div>
+            <div class="explanation">We can set up the equation: \( \text{Amber} + \text{Beth} = \text{Consuela} \).<br>Substituting the known values: \( \text{Amber} + 48 = 111 \).<br>To find Amber's score, subtract Beth's score from Consuela's score: \( 111 - 48 = 63 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">4. One third of the 78 students were assigned to each room. How many students were assigned to each room?</div>
+        <button id="btn4" class="btn" onclick="toggleAnswer('ans4', 'btn4')">Show Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <div class="answer-title">Answer: 26</div>
+            <div class="explanation">To find one third of a number, you divide that number by 3.<br>\( 78 \div 3 = 26 \).<br>Therefore, 26 students were assigned to each room.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">5. Draw a triangle congruent to this triangle. Then draw its line of symmetry.</div>
+        <button id="btn5" class="btn" onclick="toggleAnswer('ans5', 'btn5')">Show Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <div class="answer-title">Answer:</div>
+            <canvas id="q5canvas" width="200" height="200"></canvas>
+            <div class="explanation">A <strong>congruent</strong> triangle is one that has the exact same size and shape as the original. For the tall isosceles triangle given in the test, the <strong>line of symmetry</strong> is a vertical line right down the middle, splitting it into two perfectly identical, mirror-image halves.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">6. What fraction of the letters in the word ALABAMA are <u>not</u> As?</div>
+        <button id="btn6" class="btn" onclick="toggleAnswer('ans6', 'btn6')">Show Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <div class="answer-title">Answer: \( \frac{3}{7} \)</div>
+            <div class="explanation">First, count the total number of letters in ALABAMA: 7 letters.<br>Next, count the letters that are NOT 'A': L, B, and M. That is 3 letters.<br>The fraction is the number of non-A letters over the total number of letters: <strong>3/7</strong>.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">7. The whale weighs 3 tons. How many pounds is 3 tons?</div>
+        <button id="btn7" class="btn" onclick="toggleAnswer('ans7', 'btn7')">Show Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <div class="answer-title">Answer: 6,000 pounds</div>
+            <div class="explanation">Recall the conversion factor: \( 1 \text{ ton} = 2,000 \text{ pounds} \).<br>To find the weight of 3 tons, multiply by 3: \( 3 \times 2,000 = 6,000 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">8. Which is the more reasonable measure of weight for a box of cereal?</div>
+        <div class="options">A. 300 g &nbsp;&nbsp; B. 300 kg</div>
+        <button id="btn8" class="btn" onclick="toggleAnswer('ans8', 'btn8')">Show Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <div class="answer-title">Answer: A. 300 g</div>
+            <div class="explanation">A gram (g) is a small unit of mass, whereas a kilogram (kg) is much heavier (1 kg ≈ 2.2 pounds). 300 kg would weigh over 660 pounds, which is impossible for a standard box of cereal. 300 grams (a little less than a pound) is a very reasonable weight.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">9. Which triangle appears to be an equilateral triangle?</div>
+        <button id="btn9" class="btn" onclick="toggleAnswer('ans9', 'btn9')">Show Answer & Explanation</button>
+        <div id="ans9" class="answer-section">
+            <div class="answer-title">Answer: Triangle B</div>
+            <div class="explanation">An equilateral triangle has three sides that are all equal in length, and all three internal angles are 60°. Triangle B is the only shape provided that demonstrates equal side lengths. (A is isosceles/scalene, C is a right triangle, D is obtuse).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">10. Fifty-two thousand, eight hundred thirty-four dollars is how much greater than forty-five thousand, nine hundred eighty-six dollars?</div>
+        <button id="btn10" class="btn" onclick="toggleAnswer('ans10', 'btn10')">Show Answer & Explanation</button>
+        <div id="ans10" class="answer-section">
+            <div class="answer-title">Answer: $6,848</div>
+            <div class="explanation">First, write both numbers in standard form:<br>Number 1: 52,834<br>Number 2: 45,986<br>Subtract the smaller amount from the larger amount:<br>\( 52,834 - 45,986 = 6,848 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">11. Estimate the sum of 396 and 512.</div>
+        <button id="btn11" class="btn" onclick="toggleAnswer('ans11', 'btn11')">Show Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <div class="answer-title">Answer: 900</div>
+            <div class="explanation">To estimate, round each number to the nearest hundred.<br>396 rounds up to 400.<br>512 rounds down to 500.<br>Add the rounded numbers together: \( 400 + 500 = 900 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">12. Michelle could load 105 packages in 3 hours. How many packages could Michelle load in 1 hour?</div>
+        <button id="btn12" class="btn" onclick="toggleAnswer('ans12', 'btn12')">Show Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <div class="answer-title">Answer: 35</div>
+            <div class="explanation">To find the hourly rate, divide the total number of packages by the total number of hours.<br>\( 105 \div 3 = 35 \).<br>She can load 35 packages per hour. <em>(Note: the student incorrectly wrote 40)</em>.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">13. \( 409 \times 6 \)</div>
+        <button id="btn13" class="btn" onclick="toggleAnswer('ans13', 'btn13')">Show Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <div class="answer-title">Answer: 2,454</div>
+            <div class="explanation">Multiply vertically or break it into parts:<br>
+            \( 400 \times 6 = 2400 \)<br>
+            \( 9 \times 6 = 54 \)<br>
+            \( 2400 + 54 = 2,454 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">14. \( \$9.23 \times 6 \)</div>
+        <button id="btn14" class="btn" onclick="toggleAnswer('ans14', 'btn14')">Show Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <div class="answer-title">Answer: $55.38</div>
+            <div class="explanation">Multiply as normal, then carry over the two decimal places:<br>
+            \( 923 \times 6 = 5538 \).<br>
+            Place the decimal point two spots from the right: <strong>$55.38</strong>.</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">15. \( 46.8 + 5.42 \)</div>
+        <button id="btn15" class="btn" onclick="toggleAnswer('ans15', 'btn15')">Show Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <div class="answer-title">Answer: 52.22</div>
+            <div class="explanation">When adding decimals, always line up the decimal points:<br>
+            <div class="vertical-math">
+                <span>&nbsp;&nbsp;46.80</span>
+                <span class="underline">+&nbsp;&nbsp;5.42</span>
+                <span>&nbsp;&nbsp;52.22</span>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">16. \( 6464 \div 8 \)</div>
+        <button id="btn16" class="btn" onclick="toggleAnswer('ans16', 'btn16')">Show Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <div class="answer-title">Answer: 808</div>
+            <div class="explanation">
+                Using long division:<br>
+                1. 8 goes into 64 eight times. (\(8 \times 8 = 64\))<br>
+                2. Bring down the 6. 8 goes into 6 <strong>zero</strong> times. This is an important placeholder! <br>
+                3. Bring down the 4 making it 64. 8 goes into 64 eight times.<br>
+                Result: <strong>808</strong>. <em>(The student missed the zero placeholder and got 88)</em>.
+            </div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">17. \( 1234 \div 5 \)</div>
+        <button id="btn17" class="btn" onclick="toggleAnswer('ans17', 'btn17')">Show Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <div class="answer-title">Answer: 246 R 4 (or 246.8)</div>
+            <div class="explanation">
+                1. 5 goes into 12 two times (10), remainder 2.<br>
+                2. Bring down 3 to make 23. 5 goes into 23 four times (20), remainder 3.<br>
+                3. Bring down 4 to make 34. 5 goes into 34 six times (30), remainder 4.<br>
+                The final answer is 246 with a remainder of 4.
+            </div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">18. Find the missing number: \( 3b = 201 \)</div>
+        <button id="btn18" class="btn" onclick="toggleAnswer('ans18', 'btn18')">Show Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <div class="answer-title">Answer: \( b = 67 \)</div>
+            <div class="explanation">To solve for \( b \), perform the inverse operation. Since \( b \) is multiplied by 3, divide both sides by 3:<br>
+            \( 201 \div 3 = 67 \).</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">19. Find the missing number:<br>
+            <div class="vertical-math" style="text-align: right; width: 60px;">
+                <span>2473</span>
+                <span>1286</span>
+                <span class="underline">+&nbsp;&nbsp;&nbsp;n</span>
+                <span>4000</span>
+            </div>
+        </div>
+        <button id="btn19" class="btn" onclick="toggleAnswer('ans19', 'btn19')">Show Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <div class="answer-title">Answer: \( n = 241 \)</div>
+            <div class="explanation">First, combine the numbers that are given: \( 2473 + 1286 = 3759 \).<br>
+            Now the equation is \( 3759 + n = 4000 \).<br>
+            To find \( n \), subtract 3759 from 4000: \( 4000 - 3759 = 241 \).<br>
+            <em>(The student incorrectly subtracted the two top numbers instead of solving for the missing addend).</em></div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question">20. Use a symbol to compare the number of cups in 1 pint to the number of cups in 1 quart.</div>
+        <button id="btn20" class="btn" onclick="toggleAnswer('ans20', 'btn20')">Show Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <div class="answer-title">Answer: < (Less than)</div>
+            <div class="explanation">
+                There are exactly <strong>2 cups in 1 pint</strong>.<br>
+                There are exactly <strong>4 cups in 1 quart</strong>.<br>
+                Comparing the two: 2 cups < 4 cups. Therefore, the correct symbol is <strong><</strong>.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
