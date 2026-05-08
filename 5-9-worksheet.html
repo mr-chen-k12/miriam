@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Solutions - Set 2</title>
+    
+    <script>
+        MathJax = {
+            loader: {load: ['[tex]/enclose']},
+            tex: {
+                packages: {'[+]': ['enclose']},
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .context-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .problem-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .answer-section {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            background-color: #fdfdfd;
+        }
+        .answer-title {
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        canvas {
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Problem Solutions - Practice Set 2</h1>
+
+    <div class="problem-container">
+        <div class="question">1. A baker made 50 trays of cookies. Each tray held 150 cookies. How many cookies were there in all?</div>
+        <button onclick="toggleAnswer('ans-1')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-1">
+            <div class="answer-title">Answer: 7,500 cookies</div>
+            <p><strong>Explanation:</strong> To find the total, multiply the number of trays by the number of cookies per tray. <br>
+            $150 \times 50 = 7500$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">2. The orchestra concert was 2 and a half hours long. If it started at 6:30 p.m., at what time did it end?</div>
+        <button onclick="toggleAnswer('ans-2')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-2">
+            <div class="answer-title">Answer: 9:00 p.m.</div>
+            <p><strong>Explanation:</strong> Add 2 hours and 30 minutes to the starting time. <br>
+            6:30 p.m. + 2.5 hours = 9:00 p.m.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">3. Marco is reading a 420-page textbook. If he has finished page 215, how many pages does he still have to read?</div>
+        <button onclick="toggleAnswer('ans-3')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-3">
+            <div class="answer-title">Answer: 205 pages</div>
+            <p><strong>Explanation:</strong> Subtract the number of pages he has read from the total number of pages. <br>
+            $420 - 215 = 205$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">4. Five friends shared a prize of 60 arcade tickets equally. How many tickets did each friend get?</div>
+        <button onclick="toggleAnswer('ans-4')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-4">
+            <div class="answer-title">Answer: 12 tickets</div>
+            <p><strong>Explanation:</strong> Divide the total number of tickets by 5. <br>
+            $60 \div 5 = 12$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">5. Round 8,499 to the nearest thousand.</div>
+        <button onclick="toggleAnswer('ans-5')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-5">
+            <div class="answer-title">Answer: 8,000</div>
+            <p><strong>Explanation:</strong> Look at the hundreds digit (4). Since it is less than 5, you round down. The thousands digit stays 8, and the rest become zeros.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">6. A toy was priced at $14.25. The tax was $1.15. Leo paid the clerk with a $20 bill. How much money should Leo get back?</div>
+        <button onclick="toggleAnswer('ans-6')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-6">
+            <div class="answer-title">Answer: $4.60</div>
+            <p><strong>Explanation:</strong> First, find the total cost by adding the price and the tax: $\$14.25 + \$1.15 = \$15.40$. <br>
+            Then, subtract the total cost from the amount paid: $\$20.00 - \$15.40 = \$4.60$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">7. What fraction of the letters in the following word are I's?<br> MISSISSIPPI</div>
+        <button onclick="toggleAnswer('ans-7')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-7">
+            <div class="answer-title">Answer: 4/11</div>
+            <p><strong>Explanation:</strong> Count the total number of letters in the word, which is 11. Then count the number of "I"s, which is 4. The fraction is $\frac{4}{11}$.</p>
+        </div>
+    </div>
+
+    <div class="context-box">
+        <strong>Use the information below to answer problems 8-10:</strong><br>
+        In the first 12 games of the season, the Valley High soccer team won 9 games and lost 3 games. They won their next game by a score of 8 to 4. The team will play 18 games in all.
+    </div>
+
+    <div class="problem-container">
+        <div class="question">8. In the first thirteen games of the season, how many games did Valley High win?</div>
+        <button onclick="toggleAnswer('ans-8')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-8">
+            <div class="answer-title">Answer: 10 games</div>
+            <p><strong>Explanation:</strong> They won 9 games out of their first 12. They also won their 13th game. <br>
+            $9 + 1 = 10$ total wins.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">9. Valley High won its thirteenth game by how many goals?</div>
+        <button onclick="toggleAnswer('ans-9')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-9">
+            <div class="answer-title">Answer: 4 goals</div>
+            <p><strong>Explanation:</strong> The score of the thirteenth game was 8 to 4. The difference is $8 - 4 = 4$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">10. What is the greatest number of games Valley High could win this season?</div>
+        <button onclick="toggleAnswer('ans-10')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-10">
+            <div class="answer-title">Answer: 15 games</div>
+            <p><strong>Explanation:</strong> They have currently played 13 games and won 10 of them. Since the season has 18 games total, there are 5 games remaining ($18 - 13 = 5$). If they win all the remaining games, their maximum possible wins would be $10 + 5 = 15$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">11. Compare: $3 \times 4 \times 8 \bigcirc 8 \times 3 \times 4$</div>
+        <button onclick="toggleAnswer('ans-11')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-11">
+            <div class="answer-title">Answer: =</div>
+            <p><strong>Explanation:</strong> Both sides equal 96. The commutative property of multiplication states that changing the order of the numbers does not change the product.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">12. $A - 150 = 300$</div>
+        <button onclick="toggleAnswer('ans-12')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-12">
+            <div class="answer-title">Answer: A = 450</div>
+            <p><strong>Explanation:</strong> To isolate $A$, add 150 to both sides of the equation. <br>
+            $A = 300 + 150 = 450$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">13. $B + 150 = 300$</div>
+        <button onclick="toggleAnswer('ans-13')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-13">
+            <div class="answer-title">Answer: B = 150</div>
+            <p><strong>Explanation:</strong> To isolate $B$, subtract 150 from both sides of the equation. <br>
+            $B = 300 - 150 = 150$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">14. $1.25 + 3.4 + 0.55 + 2.1$</div>
+        <button onclick="toggleAnswer('ans-14')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-14">
+            <div class="answer-title">Answer: 7.30</div>
+            <p><strong>Explanation:</strong> Align the decimals and add: <br>
+            &nbsp;&nbsp;1.25<br>
+            &nbsp;&nbsp;3.40<br>
+            &nbsp;&nbsp;0.55<br>
+            + 2.10<br>
+            -------<br>
+            &nbsp;&nbsp;7.30</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">15. $9.75 - (3.20 + 0.5)$</div>
+        <button onclick="toggleAnswer('ans-15')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-15">
+            <div class="answer-title">Answer: 6.05</div>
+            <p><strong>Explanation:</strong> Perform the operation in the parentheses first: <br>
+            $3.20 + 0.50 = 3.70$. <br>
+            Next, subtract that sum from 9.75: <br>
+            $9.75 - 3.70 = 6.05$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">16. $324 \times 40$</div>
+        <button onclick="toggleAnswer('ans-16')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-16">
+            <div class="answer-title">Answer: 12,960</div>
+            <p><strong>Explanation:</strong> First, multiply $324 \times 4$, which equals $1296$. Then, attach a zero at the end because we are multiplying by 40, resulting in $12960$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">17. $415 \times 6$</div>
+        <button onclick="toggleAnswer('ans-17')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-17">
+            <div class="answer-title">Answer: 2,490</div>
+            <p><strong>Explanation:</strong> Multiply exactly: $415 \times 6 = 2490$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">18. $\$4.15 \times 9$</div>
+        <button onclick="toggleAnswer('ans-18')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-18">
+            <div class="answer-title">Answer: $37.35</div>
+            <p><strong>Explanation:</strong> Ignore the decimal temporarily: $415 \times 9 = 3735$. Place the decimal point two spots from the right to get $\$37.35$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">19. $3 \enclose{longdiv}{966}$</div>
+        <button onclick="toggleAnswer('ans-19')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-19">
+            <div class="answer-title">Answer: 322</div>
+            <p><strong>Explanation:</strong> $9 \div 3 = 3$. $6 \div 3 = 2$. $6 \div 3 = 2$. The quotient is 322.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">20. $4 \enclose{longdiv}{531}$</div>
+        <button onclick="toggleAnswer('ans-20')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-20">
+            <div class="answer-title">Answer: 132 R 3</div>
+            <p><strong>Explanation:</strong> $5 \div 4 = 1$ (R1). Bring down 3 to make 13. $13 \div 4 = 3$ (R1). Bring down 1 to make 11. $11 \div 4 = 2$ (R3). The quotient is 132 with a remainder of 3.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">21. $6 \enclose{longdiv}{4200}$</div>
+        <button onclick="toggleAnswer('ans-21')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-21">
+            <div class="answer-title">Answer: 700</div>
+            <p><strong>Explanation:</strong> $42 \div 6 = 7$. Add the remaining two zeros to get 700.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">22. $\$18.60 \div 6$</div>
+        <button onclick="toggleAnswer('ans-22')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-22">
+            <div class="answer-title">Answer: $3.10</div>
+            <p><strong>Explanation:</strong> $18 \div 6 = 3$. Bring down 6. $6 \div 6 = 1$. Bring down 0. $0 \div 6 = 0$. Keep the decimal place to get $\$3.10$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">23. $\$35.42 \div 7$</div>
+        <button onclick="toggleAnswer('ans-23')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-23">
+            <div class="answer-title">Answer: $5.06</div>
+            <p><strong>Explanation:</strong> $35 \div 7 = 5$. Bring down 4. $4 \div 7 = 0$ (R4). Bring down 2 to make 42. $42 \div 7 = 6$. Keep the decimal place to get $\$5.06$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">24. $\$63.00 \div 9$</div>
+        <button onclick="toggleAnswer('ans-24')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-24">
+            <div class="answer-title">Answer: $7.00</div>
+            <p><strong>Explanation:</strong> $63 \div 9 = 7$. Bring down the two 0s to get 00. Keep the decimal place to get $\$7.00$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">25. $8^2 = 8 \times P$</div>
+        <button onclick="toggleAnswer('ans-25')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-25">
+            <div class="answer-title">Answer: P = 8</div>
+            <p><strong>Explanation:</strong> $8^2$ is the same as $8 \times 8$, which is 64. The equation is $64 = 8 \times P$. Dividing both sides by 8 gives $P = 8$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">26. $5 \times Q = 5 \times 10^2$</div>
+        <button onclick="toggleAnswer('ans-26')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-26">
+            <div class="answer-title">Answer: Q = 100</div>
+            <p><strong>Explanation:</strong> Calculate $10^2$, which is 100. The equation simplifies to $5 \times Q = 5 \times 100$. Divide both sides by 5 to find $Q = 100$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">27. One fourth of the people at the park are wearing hats. What percent of the people are wearing hats?</div>
+        <button onclick="toggleAnswer('ans-27')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-27">
+            <div class="answer-title">Answer: 25%</div>
+            <p><strong>Explanation:</strong> The fraction $\frac{1}{4}$ represents one fourth. As a percentage, one fourth is equal to $25\%$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">28. What is the perimeter of this rectangle in millimeters? <br><br>
+            <canvas id="rectCanvas28" width="250" height="120"></canvas>
+        </div>
+        <button onclick="toggleAnswer('ans-28')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-28">
+            <div class="answer-title">Answer: 120 mm</div>
+            <p><strong>Explanation:</strong> First, find the perimeter in centimeters. The sides are 4 cm, 2 cm, 4 cm, and 2 cm. <br>
+            Perimeter = $4 + 2 + 4 + 2 = 12$ cm. <br>
+            Since there are 10 millimeters in a centimeter, multiply by 10. <br>
+            $12 \text{ cm} \times 10 = 120 \text{ mm}$.</p>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">29. Draw a rectangle that is similar to the rectangle in problem 28 and whose sides are twice as long. What is the perimeter in centimeters of the rectangle you drew?</div>
+        <button onclick="toggleAnswer('ans-29')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-29">
+            <div class="answer-title">Answer: 24 cm</div>
+            <p><strong>Explanation:</strong> If the original sides were 4 cm and 2 cm, the new rectangle has sides twice as long: 8 cm and 4 cm. <br>
+            Perimeter = $8 + 4 + 8 + 4 = 24$ cm.</p>
+            <p><em>Drawing Representation:</em></p>
+            <canvas id="rectCanvas29" width="350" height="200"></canvas>
+        </div>
+    </div>
+
+    <div class="problem-container">
+        <div class="question">30. A gymnast completed one and a half flips in the air. How many degrees did the gymnast turn?</div>
+        <button onclick="toggleAnswer('ans-30')">Show Answer & Explanation</button>
+        <div class="answer-section" id="ans-30">
+            <div class="answer-title">Answer: 540°</div>
+            <p><strong>Explanation:</strong> One full flip (a circle) is 360 degrees. If the gymnast flipped 1.5 times, multiply by 1.5. <br>
+            $1.5 \times 360 = 540$ degrees.</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+            }
+        }
+
+        // Canvas drawing for Problem 28 (4cm x 2cm rectangle proxy)
+        const canvas28 = document.getElementById('rectCanvas28');
+        const ctx28 = canvas28.getContext('2d');
+        ctx28.strokeStyle = "#333";
+        ctx28.lineWidth = 2;
+        ctx28.strokeRect(20, 20, 160, 80); // represents 4x2 ratio
+        ctx28.font = "14px Arial";
+        ctx28.fillStyle = "#333";
+        ctx28.fillText("4 cm", 90, 15);
+        ctx28.fillText("2 cm", 190, 65); // Adjusted X position
+
+        // Canvas drawing for Problem 29 (8cm x 4cm rectangle proxy)
+        const canvas29 = document.getElementById('rectCanvas29');
+        const ctx29 = canvas29.getContext('2d');
+        ctx29.strokeStyle = "#333";
+        ctx29.lineWidth = 2;
+        // Scaled to fit canvas, represents 8x4 ratio
+        ctx29.strokeRect(20, 20, 240, 120); 
+        ctx29.font = "14px Arial";
+        ctx29.fillStyle = "#333";
+        ctx29.fillText("8 cm", 130, 15);
+        ctx29.fillText("4 cm", 270, 85); // Adjusted X position
+    </script>
+</body>
+</html>
