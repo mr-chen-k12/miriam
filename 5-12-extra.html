@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Quiz</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 10px;
+        }
+
+        label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        label:hover {
+            background-color: #f1f8ff;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1a252f;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            display: block;
+            background-color: #e8f5e9;
+            color: var(--correct-color);
+            border-left: 5px solid var(--correct-color);
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background-color: #ffebee;
+            color: var(--incorrect-color);
+            border-left: 5px solid var(--incorrect-color);
+        }
+        
+        .explanation {
+            margin-top: 10px;
+            color: #333;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Quiz</h1>
+    <p style="text-align: center;">Test your skills on making change, counting tally marks, and calculating perimeter!</p>
+
+    <h2>Topic 1: Making Change</h2>
+
+    <div class="question-card" id="q1">
+        <div class="question-text">1. Maria bought a book for $8.50. Tax was $0.75. She paid with a $10.00 bill. How much change should she get back?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q1" value="A"> A) $1.50</label></li>
+            <li><label><input type="radio" name="q1" value="B"> B) $0.75</label></li>
+            <li><label><input type="radio" name="q1" value="C"> C) $1.75</label></li>
+            <li><label><input type="radio" name="q1" value="D"> D) $0.50</label></li>
+        </ul>
+        <button onclick="checkAnswer('q1', 'B', 'First, find the total cost by adding the price and the tax: $8.50 + $0.75 = $9.25. Next, subtract the total cost from the amount paid to find the change: $10.00 - $9.25 = $0.75.')">Check Answer</button>
+        <div class="feedback" id="feedback-q1"></div>
+    </div>
+
+    <div class="question-card" id="q2">
+        <div class="question-text">2. John bought lunch for $15.20. Tax was $1.10. He paid with a $20.00 bill. How much change does he receive?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q2" value="A"> A) $4.80</label></li>
+            <li><label><input type="radio" name="q2" value="B"> B) $3.70</label></li>
+            <li><label><input type="radio" name="q2" value="C"> C) $3.30</label></li>
+            <li><label><input type="radio" name="q2" value="D"> D) $4.70</label></li>
+        </ul>
+        <button onclick="checkAnswer('q2', 'B', 'First, add the price and tax: $15.20 + $1.10 = $16.30. Then, subtract from the amount paid: $20.00 - $16.30 = $3.70.')">Check Answer</button>
+        <div class="feedback" id="feedback-q2"></div>
+    </div>
+
+    <div class="question-card" id="q3">
+        <div class="question-text">3. Sarah bought a plant for $22.45. Tax was $1.55. She paid with a $50.00 bill. How much change should she get back?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q3" value="A"> A) $25.00</label></li>
+            <li><label><input type="radio" name="q3" value="B"> B) $26.00</label></li>
+            <li><label><input type="radio" name="q3" value="C"> C) $27.55</label></li>
+            <li><label><input type="radio" name="q3" value="D"> D) $24.00</label></li>
+        </ul>
+        <button onclick="checkAnswer('q3', 'B', 'First, find the total cost: $22.45 + $1.55 = $24.00. Next, subtract from her $50 bill: $50.00 - $24.00 = $26.00.')">Check Answer</button>
+        <div class="feedback" id="feedback-q3"></div>
+    </div>
+
+    <h2>Topic 2: Tally Marks</h2>
+
+    <div class="question-card" id="q4">
+        <div class="question-text">4. If you see three groups of five tally marks and two single tally marks, what is the total number?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q4" value="A"> A) 15</label></li>
+            <li><label><input type="radio" name="q4" value="B"> B) 12</label></li>
+            <li><label><input type="radio" name="q4" value="C"> C) 17</label></li>
+            <li><label><input type="radio" name="q4" value="D"> D) 18</label></li>
+        </ul>
+        <button onclick="checkAnswer('q4', 'C', 'Tally marks are grouped in fives. Three groups of five equal 15 (5 + 5 + 5). Add the two single marks: 15 + 2 = 17.')">Check Answer</button>
+        <div class="feedback" id="feedback-q4"></div>
+    </div>
+
+    <div class="question-card" id="q5">
+        <div class="question-text">5. A tally chart shows four full groups of five marks and four single marks. What number does this represent?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q5" value="A"> A) 20</label></li>
+            <li><label><input type="radio" name="q5" value="B"> B) 24</label></li>
+            <li><label><input type="radio" name="q5" value="C"> C) 25</label></li>
+            <li><label><input type="radio" name="q5" value="D"> D) 19</label></li>
+        </ul>
+        <button onclick="checkAnswer('q5', 'B', 'Four groups of five equal 20 (4 x 5 = 20). Add the four single marks: 20 + 4 = 24.')">Check Answer</button>
+        <div class="feedback" id="feedback-q5"></div>
+    </div>
+
+    <div class="question-card" id="q6">
+        <div class="question-text">6. How many tally marks are there in one group of five and three single marks?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q6" value="A"> A) 6</label></li>
+            <li><label><input type="radio" name="q6" value="B"> B) 7</label></li>
+            <li><label><input type="radio" name="q6" value="C"> C) 8</label></li>
+            <li><label><input type="radio" name="q6" value="D"> D) 9</label></li>
+        </ul>
+        <button onclick="checkAnswer('q6', 'C', 'One group of five equals 5. Add the three single marks: 5 + 3 = 8.')">Check Answer</button>
+        <div class="feedback" id="feedback-q6"></div>
+    </div>
+
+    <h2>Topic 3: Perimeter of Polygons</h2>
+
+    <div class="question-card" id="q7">
+        <div class="question-text">7. What is the perimeter of a regular hexagon if each side is 15 centimeters long?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q7" value="A"> A) 75 cm</label></li>
+            <li><label><input type="radio" name="q7" value="B"> B) 90 cm</label></li>
+            <li><label><input type="radio" name="q7" value="C"> C) 60 cm</label></li>
+            <li><label><input type="radio" name="q7" value="D"> D) 105 cm</label></li>
+        </ul>
+        <button onclick="checkAnswer('q7', 'B', 'A hexagon has 6 sides. To find the perimeter, multiply the number of sides by the length of one side: 6 x 15 cm = 90 cm.')">Check Answer</button>
+        <div class="feedback" id="feedback-q7"></div>
+    </div>
+
+    <div class="question-card" id="q8">
+        <div class="question-text">8. Find the perimeter of a regular octagon where each side measures 12 inches.</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q8" value="A"> A) 72 inches</label></li>
+            <li><label><input type="radio" name="q8" value="B"> B) 84 inches</label></li>
+            <li><label><input type="radio" name="q8" value="C"> C) 96 inches</label></li>
+            <li><label><input type="radio" name="q8" value="D"> D) 108 inches</label></li>
+        </ul>
+        <button onclick="checkAnswer('q8', 'C', 'An octagon has 8 sides. Multiply the number of sides by the length of one side: 8 x 12 inches = 96 inches.')">Check Answer</button>
+        <div class="feedback" id="feedback-q8"></div>
+    </div>
+
+    <div class="question-card" id="q9">
+        <div class="question-text">9. What is the perimeter of an equilateral triangle if each side is 25 meters long?</div>
+        <ul class="options-list">
+            <li><label><input type="radio" name="q9" value="A"> A) 50 m</label></li>
+            <li><label><input type="radio" name="q9" value="B"> B) 75 m</label></li>
+            <li><label><input type="radio" name="q9" value="C"> C) 100 m</label></li>
+            <li><label><input type="radio" name="q9" value="D"> D) 25 m</label></li>
+        </ul>
+        <button onclick="checkAnswer('q9', 'B', 'A triangle has 3 sides. Because it is equilateral, all sides are the same length. Multiply the number of sides by the length of one side: 3 x 25 m = 75 m.')">Check Answer</button>
+        <div class="feedback" id="feedback-q9"></div>
+    </div>
+
+    <script>
+        function checkAnswer(questionId, correctValue, explanationText) {
+            // Get all radio buttons for this specific question
+            const radios = document.getElementsByName(questionId);
+            let selectedValue = null;
+
+            // Find which option the user selected
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    selectedValue = radios[i].value;
+                    break;
+                }
+            }
+
+            const feedbackDiv = document.getElementById('feedback-' + questionId);
+
+            // Handle case where no answer is selected
+            if (!selectedValue) {
+                alert("Please select an answer before checking.");
+                return;
+            }
+
+            // Check if the answer is correct or incorrect
+            if (selectedValue === correctValue) {
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.innerHTML = '<strong>Correct! Great job.</strong>';
+            } else {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.innerHTML = '<strong>Incorrect.</strong> <div class="explanation"><em>Explanation:</em> ' + explanationText + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>
