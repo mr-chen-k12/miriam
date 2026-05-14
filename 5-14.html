@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problems and Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6; color: #1f2937; }
+        .math-container { overflow-x: auto; }
+        .question-card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .question-title { font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem; display: flex; align-items: baseline; }
+        .q-num { background-color: #2563eb; color: white; border-radius: 9999px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; margin-right: 0.75rem; flex-shrink: 0; }
+        .btn-toggle { background-color: #e5e7eb; color: #374151; font-weight: 500; padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
+        .btn-toggle:hover { background-color: #d1d5db; }
+        .answer-box { margin-top: 1rem; padding: 1rem; background-color: #f8fafc; border-left: 4px solid #10b981; border-radius: 4px; display: none; }
+        .answer-box.visible { display: block; }
+        svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-2">Math Practice Solutions</h1>
+        <p class="text-center text-gray-500 mb-8">Mixed Numbers, Improper Fractions, and General Arithmetic</p>
+
+        <div id="questions-container"></div>
+    </div>
+
+    <script>
+        const problems = [
+            {
+                q: "The coach divided 33 players as equally as possible into 4 teams.<br>(a) How many teams had exactly 8 players?<br>(b) How many teams had 9 players?",
+                a: "To divide the 33 players as equally as possible among 4 teams, we divide 33 by 4. <br><br> \\( 33 \\div 4 = 8 \\) with a remainder of 1. <br>This means each of the 4 teams gets 8 players initially, and there is 1 player left over. That remaining player must be assigned to one of the teams.<br><br>Therefore, 3 teams will have exactly 8 players, and 1 team will have 9 players.<br><br><b>Answers:</b><br>(a) 3 teams<br>(b) 1 team"
+            },
+            {
+                q: "On the package there were two 37-cent stamps, two 20-cent stamps, and one 15-cent stamp. Altogether, how much did the stamps that were on the package cost?",
+                a: "First, find the total cost of each type of stamp:<br>Two 37-cent stamps: \\( 2 \\times 37 = 74 \\) cents<br>Two 20-cent stamps: \\( 2 \\times 20 = 40 \\) cents<br>One 15-cent stamp: \\( 1 \\times 15 = 15 \\) cents<br><br>Now, add them all together: <br>\\( 74 + 40 + 15 = 129 \\) cents.<br><br>Convert cents to dollars by dividing by 100: \\( 129 \\text{ cents} = \\$1.29 \\).<br><br><b>Answer:</b> \\$1.29"
+            },
+            {
+                q: "Danielle read 20 pages each day. How many pages did she read in 2 weeks?",
+                a: "First, determine how many days are in 2 weeks. There are 7 days in a week, so 2 weeks is \\( 2 \\times 7 = 14 \\) days.<br><br>If she reads 20 pages each day, multiply the pages by the number of days:<br>\\( 20 \\text{ pages/day} \\times 14 \\text{ days} = 280 \\text{ pages} \\).<br><br><b>Answer:</b> 280 pages"
+            },
+            {
+                q: "The Frog Prince leapt 27 feet to get out of the well. How many yards did he leap?",
+                a: "There are 3 feet in 1 yard. To convert feet to yards, divide the number of feet by 3.<br><br>\\( 27 \\div 3 = 9 \\)<br><br><b>Answer:</b> 9 yards"
+            },
+            {
+                q: "What is the perimeter of this isosceles triangle in centimeters?<br><div class='mt-4 flex justify-center'><svg width='200' height='120' viewBox='0 0 200 120'><polygon points='100,10 20,90 180,90' fill='none' stroke='black' stroke-width='2'/><text x='35' y='45' font-size='14'>20 mm</text><text x='125' y='45' font-size='14'>20 mm</text><text x='85' y='110' font-size='14'>30 mm</text></svg></div>",
+                a: "First, find the perimeter in millimeters by adding the lengths of all three sides:<br>\\( 20\\text{ mm} + 20\\text{ mm} + 30\\text{ mm} = 70\\text{ mm} \\).<br><br>The question asks for the perimeter in <b>centimeters</b>. Since there are 10 millimeters in 1 centimeter, divide by 10:<br>\\( 70 \\div 10 = 7 \\text{ cm} \\).<br><br><b>Answer:</b> 7 cm"
+            },
+            {
+                q: "This is the tally for what number?<br><div class='text-2xl mt-2 tracking-widest font-mono text-gray-700'><s>||||</s> <s>||||</s> <s>||||</s> |||</div>",
+                a: "Each group with a diagonal line through it represents 5. <br>There are three groups of 5, which is \\( 5 + 5 + 5 = 15 \\).<br>There are also 3 single tally marks.<br><br>Total = \\( 15 + 3 = 18 \\).<br><br><b>Answer:</b> 18"
+            },
+            {
+                q: "About how much liquid is in this medicine dropper?<br>A. 2 milliliters<br>B. 2 liters<br>C. 2 pints",
+                a: "A medicine dropper is very small and is used to dispense drops of liquid. <br>2 liters is the size of a large soda bottle. <br>2 pints is about the size of a large water bottle (1 quart). <br>2 milliliters is a tiny amount, perfectly matching the capacity of a small dropper.<br><br><b>Answer:</b> A. 2 milliliters"
+            },
+            {
+                q: "\\( 87 + 0 = 87 \\times N \\)",
+                a: "Simplify the left side of the equation:<br>\\( 87 + 0 = 87 \\)<br><br>Now substitute it back into the equation:<br>\\( 87 = 87 \\times N \\)<br><br>Any number multiplied by 1 equals itself, so \\( N \\) must be 1.<br><br><b>Answer:</b> \\( N = 1 \\)"
+            },
+            {
+                q: "One third of the 24 students finished early. How many students finished early? Draw a picture to illustrate the problem.",
+                a: "To find one third of 24, we divide 24 by 3:<br>\\( 24 \\div 3 = 8 \\) students.<br><br>Here is an illustration showing 24 students divided into 3 equal groups of 8:<br><div class='flex mt-4 space-x-4 justify-center'><svg width='100' height='100' viewBox='0 0 100 100'><rect x='5' y='5' width='90' height='90' fill='#e0f2fe' stroke='#0284c7' stroke-width='2' rx='10'/><circle cx='30' cy='30' r='6' fill='#0369a1'/><circle cx='50' cy='30' r='6' fill='#0369a1'/><circle cx='70' cy='30' r='6' fill='#0369a1'/><circle cx='30' cy='50' r='6' fill='#0369a1'/><circle cx='50' cy='50' r='6' fill='#0369a1'/><circle cx='70' cy='50' r='6' fill='#0369a1'/><circle cx='40' cy='70' r='6' fill='#0369a1'/><circle cx='60' cy='70' r='6' fill='#0369a1'/></svg><svg width='100' height='100' viewBox='0 0 100 100'><rect x='5' y='5' width='90' height='90' fill='white' stroke='#cbd5e1' stroke-dasharray='4' stroke-width='2' rx='10'/><circle cx='30' cy='30' r='6' fill='#94a3b8'/><circle cx='50' cy='30' r='6' fill='#94a3b8'/><circle cx='70' cy='30' r='6' fill='#94a3b8'/><circle cx='30' cy='50' r='6' fill='#94a3b8'/><circle cx='50' cy='50' r='6' fill='#94a3b8'/><circle cx='70' cy='50' r='6' fill='#94a3b8'/><circle cx='40' cy='70' r='6' fill='#94a3b8'/><circle cx='60' cy='70' r='6' fill='#94a3b8'/></svg><svg width='100' height='100' viewBox='0 0 100 100'><rect x='5' y='5' width='90' height='90' fill='white' stroke='#cbd5e1' stroke-dasharray='4' stroke-width='2' rx='10'/><circle cx='30' cy='30' r='6' fill='#94a3b8'/><circle cx='50' cy='30' r='6' fill='#94a3b8'/><circle cx='70' cy='30' r='6' fill='#94a3b8'/><circle cx='30' cy='50' r='6' fill='#94a3b8'/><circle cx='50' cy='50' r='6' fill='#94a3b8'/><circle cx='70' cy='50' r='6' fill='#94a3b8'/><circle cx='40' cy='70' r='6' fill='#94a3b8'/><circle cx='60' cy='70' r='6' fill='#94a3b8'/></svg></div><br><b>Answer:</b> 8 students"
+            },
+            {
+                q: "What percent of a dollar is a quarter?",
+                a: "A quarter is worth 25 cents. A dollar is worth 100 cents. <br>The fraction representing a quarter out of a dollar is \\( \\frac{25}{100} \\).<br>Since percent means \"per 100\", \\( \\frac{25}{100} \\) is equal to 25%.<br><br><b>Answer:</b> 25%"
+            },
+            {
+                q: "Solve: \\( \\$478.63 + \\$32.47 \\)",
+                a: "Align the decimals and add:<br><pre class='font-mono'>   $478.63<br>+  $ 32.47<br>----------<br>   $511.10</pre><br><b>Answer:</b> \\$511.10"
+            },
+            {
+                q: "Solve: \\( 137,140 - 129,536 \\)",
+                a: "Align the numbers and subtract:<br><pre class='font-mono'>   137,140<br>-  129,536<br>----------<br>     7,604</pre><br><b>Answer:</b> 7,604"
+            },
+            {
+                q: "Solve: \\( \\$60.00 - \\$24.38 \\)",
+                a: "Align the decimals and subtract (requires borrowing):<br><pre class='font-mono'>   $60.00<br>-  $24.38<br>----------<br>   $35.62</pre><br><b>Answer:</b> \\$35.62"
+            },
+            {
+                q: "Solve: \\( 70 \\times 90 \\)",
+                a: "First, multiply the non-zero digits: \\( 7 \\times 9 = 63 \\).<br>Next, count the number of zeros in the factors (there are two zeros, one from 70 and one from 90).<br>Add those two zeros to the end of 63 to get 6300.<br><br><b>Answer:</b> 6,300"
+            },
+            {
+                q: "Solve: \\( 11 \\times 13 \\)",
+                a: "Using standard multiplication:<br>\\( 11 \\times 10 = 110 \\)<br>\\( 11 \\times 3 = 33 \\)<br>\\( 110 + 33 = 143 \\)<br><br><b>Answer:</b> 143"
+            },
+            {
+                q: "Solve: \\( 12 \\times 12 \\)",
+                a: "This is a basic multiplication fact (a perfect square).<br>\\( 12 \\times 12 = 144 \\)<br><br><b>Answer:</b> 144"
+            },
+            {
+                q: "Solve: \\( \\$4.76 \\times 8 \\)",
+                a: "Multiply as if there were no decimals, then place the decimal point:<br>\\( 476 \\times 8 = 3808 \\).<br>Since there are two decimal places in \\$4.76, put two decimal places in the answer.<br>\\( \\$38.08 \\).<br><br><b>Answer:</b> \\$38.08"
+            },
+            {
+                q: "Solve: \\( 21 \\times 13 \\)",
+                a: "Using partial products:<br>\\( 21 \\times 10 = 210 \\)<br>\\( 21 \\times 3 = 63 \\)<br>\\( 210 + 63 = 273 \\)<br><br><b>Answer:</b> 273"
+            },
+            {
+                q: "Solve: \\( 21 \\times 21 \\)",
+                a: "Using partial products:<br>\\( 21 \\times 20 = 420 \\)<br>\\( 21 \\times 1 = 21 \\)<br>\\( 420 + 21 = 441 \\)<br><br><b>Answer:</b> 441"
+            },
+            {
+                q: "Solve: \\( 3000 \\div 4 \\)",
+                a: "You can divide step by step. Half of 3000 is 1500. Half of 1500 is 750. Dividing by 4 is the same as dividing by 2 twice.<br><br>Alternatively, use long division: <br>4 goes into 30 seven times (\\( 4 \\times 7 = 28 \\)), remainder 2. <br>Bring down the 0 to make 20. 4 goes into 20 five times (\\( 4 \\times 5 = 20 \\)), remainder 0. <br>Bring down the last 0. 4 goes into 0 zero times.<br><br><b>Answer:</b> 750"
+            },
+            {
+                q: "Solve: \\( 635 \\div 5 \\)",
+                a: "Use long division:<br>5 goes into 6 one time, remainder 1.<br>Bring down the 3 to make 13. 5 goes into 13 two times (\\( 5 \\times 2 = 10 \\)), remainder 3.<br>Bring down the 5 to make 35. 5 goes into 35 seven times (\\( 5 \\times 7 = 35 \\)), remainder 0.<br><br><b>Answer:</b> 127"
+            },
+            {
+                q: "Solve: \\( 426 \\div 7 \\)",
+                a: "Use long division:<br>7 does not go into 4. 7 goes into 42 exactly 6 times (\\( 7 \\times 6 = 42 \\)), remainder 0.<br>Bring down the 6. 7 goes into 6 zero times, remainder 6.<br>So the answer is 60 with a remainder of 6.<br><br><b>Answer:</b> 60 R 6"
+            },
+            {
+                q: "Solve: \\( 3614 \\div 8 \\)",
+                a: "Use long division:<br>8 goes into 36 four times (\\( 8 \\times 4 = 32 \\)), remainder 4.<br>Bring down the 1 to make 41. 8 goes into 41 five times (\\( 8 \\times 5 = 40 \\)), remainder 1.<br>Bring down the 4 to make 14. 8 goes into 14 one time (\\( 8 \\times 1 = 8 \\)), remainder 6.<br><br><b>Answer:</b> 451 R 6"
+            },
+            {
+                q: "Solve: \\( \\frac{2736}{6} \\)",
+                a: "Divide 2736 by 6 using long division:<br>6 goes into 27 four times (\\( 6 \\times 4 = 24 \\)), remainder 3.<br>Bring down the 3 to make 33. 6 goes into 33 five times (\\( 6 \\times 5 = 30 \\)), remainder 3.<br>Bring down the 6 to make 36. 6 goes into 36 six times (\\( 6 \\times 6 = 36 \\)), remainder 0.<br><br><b>Answer:</b> 456"
+            },
+            {
+                q: "How much is one fourth of \\$10.00?",
+                a: "To find one fourth, you divide by 4.<br>\\( \\$10.00 \\div 4 = \\$2.50 \\).<br><br>Think of it as 10 dollars divided among 4 people. Each person gets 2 dollars, leaving 2 dollars. Two dollars equals 200 cents. 200 cents divided by 4 is 50 cents. So \\$2.50.<br><br><b>Answer:</b> \\$2.50"
+            },
+            {
+                q: "Draw and shade circles to show that \\( 1 \\frac{1}{2} \\) equals \\( \\frac{3}{2} \\).",
+                a: "Here we draw two whole circles. To represent halves, we split each circle in half. <br>To show \\( 1 \\frac{1}{2} \\), we shade 1 entire circle (which is 2 halves) and 1 half of the second circle. <br>If we count the shaded halves, we have 1, 2, 3 halves, which is \\( \\frac{3}{2} \\).<br><div class='mt-4 flex justify-center space-x-6'><svg width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='#fca5a5' stroke='black' stroke-width='2'/><line x1='50' y1='5' x2='50' y2='95' stroke='black' stroke-width='2'/></svg><svg width='100' height='100' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='white' stroke='black' stroke-width='2'/><path d='M 50 5 A 45 45 0 0 0 50 95 Z' fill='#fca5a5' stroke='black' stroke-width='2'/><line x1='50' y1='5' x2='50' y2='95' stroke='black' stroke-width='2'/></svg></div>"
+            },
+            {
+                q: "Draw a rectangle that is 5 cm long and 4 cm wide.",
+                a: "A rectangle has 4 sides and 4 right angles. Opposite sides are equal in length.<br><div class='mt-4 flex justify-center'><svg width='280' height='220' viewBox='0 0 280 220'><rect x='40' y='30' width='200' height='160' fill='#fef08a' stroke='black' stroke-width='2'/><text x='125' y='20' font-size='16' font-weight='bold'>5 cm</text><text x='250' y='115' font-size='16' font-weight='bold'>4 cm</text></svg></div>"
+            },
+            {
+                q: "What is the perimeter and area of the rectangle you drew in problem 27?",
+                a: "<b>Perimeter</b> is the distance around the rectangle. Add all four sides: <br>\\( 5 + 4 + 5 + 4 = 18 \\text{ cm} \\).<br><br><b>Area</b> is the space inside the rectangle. Multiply length by width: <br>\\( 5 \\text{ cm} \\times 4 \\text{ cm} = 20 \\text{ sq cm} \\).<br><br><b>Answer:</b> Perimeter = 18 cm, Area = 20 sq cm"
+            },
+            {
+                q: "In this polygon, which side appears to be parallel to side BC?<br><div class='mt-4 flex justify-center'><svg width='180' height='120' viewBox='0 0 180 120'><polygon points='60,20 120,20 140,80 40,80' fill='none' stroke='black' stroke-width='2'/><text x='50' y='15' font-size='16'>D</text><text x='125' y='15' font-size='16'>A</text><text x='25' y='95' font-size='16'>C</text><text x='145' y='95' font-size='16'>B</text></svg></div>",
+                a: "Parallel lines are lines that never intersect and are always the same distance apart. Looking at the trapezoid, the top line (AD) and the bottom line (BC) run in the same horizontal direction and will never meet. <br><br><b>Answer:</b> Side AD (or DA)"
+            },
+            {
+                q: "Which two-digit number less than 20 is a multiple of both 4 and 6?",
+                a: "First, list the multiples of 4 that are less than 20:<br>4, 8, 12, 16<br><br>Next, list the multiples of 6 that are less than 20:<br>6, 12, 18<br><br>The common multiple in both lists is 12. Also, note that the question asks for a two-digit number, and 12 is a two-digit number.<br><br><b>Answer:</b> 12"
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        problems.forEach((prob, index) => {
+            const qNum = index + 1;
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            card.innerHTML = `
+                <div class="question-title">
+                    <span class="q-num">${qNum}</span>
+                    <div class="math-container">${prob.q}</div>
+                </div>
+                <button class="btn-toggle" id="btn-${qNum}" onclick="toggleAnswer(${qNum})">Show Answer & Explanation</button>
+                <div class="answer-box" id="ans-${qNum}">
+                    <div class="math-container">${prob.a}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        function toggleAnswer(id) {
+            const ansDiv = document.getElementById('ans-' + id);
+            const btn = document.getElementById('btn-' + id);
+            
+            if (ansDiv.classList.contains('visible')) {
+                ansDiv.classList.remove('visible');
+                btn.textContent = 'Show Answer & Explanation';
+            } else {
+                ansDiv.classList.add('visible');
+                btn.textContent = 'Hide Answer & Explanation';
+            }
+        }
+    </script>
+</body>
+</html>
