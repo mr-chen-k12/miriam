@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Worksheet Solutions</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <title>Math Problem Solutions</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,389 +27,350 @@
         h1 {
             text-align: center;
             color: #2c3e50;
+            margin-bottom: 30px;
         }
-        .problem-container {
+        .problem-card {
             background-color: #fff;
-            border: 1px solid #ddd;
             border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid #3498db;
         }
-        .problem-header {
-            font-weight: bold;
+        .question {
             font-size: 1.1em;
-            margin-bottom: 10px;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
-        .button {
+        .btn {
             background-color: #3498db;
             color: white;
             border: none;
-            padding: 10px 15px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            border-radius: 4px;
+            padding: 10px 18px;
+            border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease;
         }
-        .button:hover {
+        .btn:hover {
             background-color: #2980b9;
         }
-        .explanation {
+        .solution {
             display: none;
-            background-color: #e8f4f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
             margin-top: 15px;
-            border-radius: 4px;
+            padding-top: 15px;
+            border-top: 1px solid #eaeaea;
+            background-color: #fcfcfc;
+            padding: 15px;
+            border-radius: 5px;
         }
-        .svg-container {
-            text-align: center;
-            margin: 15px 0;
+        .answer {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            line-height: 1.6;
+            color: #555;
         }
     </style>
 </head>
 <body>
 
-    <h1>Math Worksheet Solutions</h1>
-    <p>Below are the solutions to the math problems presented in the worksheet, listed sequentially. Click "Review Answer" on any problem to view the correct answer and a step-by-step explanation.</p>
+    <h1>Math Assignment Solutions (1-30)</h1>
 
-    <div class="problem-container" style="background-color: #fffdee;">
-        <div class="problem-header">Context for Problems 1-3: "Baskets Made by Joe"</div>
-        <div class="svg-container">
-            <svg width="400" height="200" viewBox="0 0 400 200" style="border: 1px solid #ccc; background: white;">
-                <line x1="50" y1="20" x2="350" y2="20" stroke="#eee" />
-                <line x1="50" y1="40" x2="350" y2="40" stroke="#eee" />
-                <line x1="50" y1="60" x2="350" y2="60" stroke="#eee" />
-                <line x1="50" y1="80" x2="350" y2="80" stroke="#eee" />
-                <line x1="50" y1="100" x2="350" y2="100" stroke="#eee" />
-                <line x1="50" y1="120" x2="350" y2="120" stroke="#eee" />
-                <line x1="50" y1="140" x2="350" y2="140" stroke="#eee" />
-                <line x1="50" y1="160" x2="350" y2="160" stroke="#eee" />
-                
-                <line x1="50" y1="20" x2="50" y2="160" stroke="black" stroke-width="2"/>
-                <line x1="50" y1="160" x2="350" y2="160" stroke="black" stroke-width="2"/>
-                
-                <text x="30" y="25" font-size="12">8</text>
-                <text x="30" y="45" font-size="12">7</text>
-                <text x="30" y="65" font-size="12">6</text>
-                <text x="30" y="85" font-size="12">5</text>
-                <text x="30" y="105" font-size="12">4</text>
-                <text x="30" y="125" font-size="12">3</text>
-                <text x="30" y="145" font-size="12">2</text>
-                <text x="30" y="165" font-size="12">1</text>
-                
-                <text x="75" y="180" font-size="12">Game 1</text>
-                <text x="135" y="180" font-size="12">Game 2</text>
-                <text x="195" y="180" font-size="12">Game 3</text>
-                <text x="255" y="180" font-size="12">Game 4</text>
-                <text x="315" y="180" font-size="12">Game 5</text>
-                
-                <polyline points="90,100 150,80 210,60 270,120 330,40" fill="none" stroke="black" stroke-width="2" />
-                
-                <circle cx="90" cy="100" r="4" fill="black" />
-                <circle cx="150" cy="80" r="4" fill="black" />
-                <circle cx="210" cy="60" r="4" fill="black" />
-                <circle cx="270" cy="120" r="4" fill="black" />
-                <circle cx="330" cy="40" r="4" fill="black" />
-            </svg>
+    <div class="problem-card">
+        <div class="question">1. How many baskets did Joe make in the first game?</div>
+        <button class="btn" id="btn-1" onclick="toggleSolution(1)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-1">
+            <div class="answer">Answer: 4 baskets</div>
+            <div class="explanation">Looking at the "Baskets Made by Joe" line graph, the point corresponding to Game 1 aligns with 4 on the vertical axis (Number of Baskets).</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">1. How many baskets did Joe make in the first game?</div>
-        <button class="button" onclick="toggleExplanation('exp1')">Review Answer</button>
-        <div id="exp1" class="explanation">
-            <strong>Answer:</strong> 4 baskets<br><br>
-            <strong>Explanation:</strong> Locate "Game 1" on the horizontal axis (x-axis) of the graph. Trace up to the data point and look across to the vertical axis (y-axis) to read the number. The point aligns with 4.
+    <div class="problem-card">
+        <div class="question">2. Each basket is worth 2 points. How many points did Joe score in Game 5?</div>
+        <button class="btn" id="btn-2" onclick="toggleSolution(2)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-2">
+            <div class="answer">Answer: 14 points</div>
+            <div class="explanation">According to the graph, Joe made 7 baskets in Game 5. Multiplying the number of baskets by the points per basket gives $7 \times 2 = 14$ points.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">2. Each basket is worth 2 points. How many points did Joe score in Game 5?</div>
-        <button class="button" onclick="toggleExplanation('exp2')">Review Answer</button>
-        <div id="exp2" class="explanation">
-            <strong>Answer:</strong> 14 points<br><br>
-            <strong>Explanation:</strong> First, find how many baskets Joe made in Game 5 by looking at the graph (7 baskets). Since each basket is worth 2 points, multiply the number of baskets by 2: <br>
-            \( 7 \times 2 = 14 \).
+    <div class="problem-card">
+        <div class="question">3. How many more points did Joe score in Game 5 than in Game 3?</div>
+        <button class="btn" id="btn-3" onclick="toggleSolution(3)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-3">
+            <div class="answer">Answer: 2 points</div>
+            <div class="explanation">In Game 5, he made 7 baskets ($7 \times 2 = 14$ points). In Game 3, he made 6 baskets ($6 \times 2 = 12$ points). The difference is $14 - 12 = 2$ points.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">3. How many more points did Joe score in Game 5 than in Game 3?</div>
-        <button class="button" onclick="toggleExplanation('exp3')">Review Answer</button>
-        <div id="exp3" class="explanation">
-            <strong>Answer:</strong> 2 points<br><br>
-            <strong>Explanation:</strong> <br>
-            Game 5 Points: 7 baskets \(\times 2 = 14\) points.<br>
-            Game 3 Points: 6 baskets \(\times 2 = 12\) points.<br>
-            Subtract the two values: \( 14 - 12 = 2 \).
+    <div class="problem-card">
+        <div class="question">4. The 3-pound melon cost $1.44. What was the cost per pound?</div>
+        <button class="btn" id="btn-4" onclick="toggleSolution(4)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-4">
+            <div class="answer">Answer: $0.48 or 48¢</div>
+            <div class="explanation">Divide the total cost by the number of pounds: $\$1.44 \div 3 = \$0.48$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">4. The 3-pound melon cost $1.44. What was the cost per pound?</div>
-        <button class="button" onclick="toggleExplanation('exp4')">Review Answer</button>
-        <div id="exp4" class="explanation">
-            <strong>Answer:</strong> $0.48 (or 48¢)<br><br>
-            <strong>Explanation:</strong> Divide the total cost by the total weight: <br>
-            \( \$1.44 \div 3 \). <br>
-            \( 144 \div 3 = 48 \), so \( \$1.44 \div 3 = \$0.48 \).
+    <div class="problem-card">
+        <div class="question">5. Jim spun all the way around in the air and dunked the basketball. Jim turned about how many degrees?</div>
+        <button class="btn" id="btn-5" onclick="toggleSolution(5)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-5">
+            <div class="answer">Answer: 360°</div>
+            <div class="explanation">A complete circle or a full spin "all the way around" is exactly 360 degrees.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">5. Jim spun all the way around in the air and dunked the basketball. Jim turned about how many degrees?</div>
-        <button class="button" onclick="toggleExplanation('exp5')">Review Answer</button>
-        <div id="exp5" class="explanation">
-            <strong>Answer:</strong> 360 degrees<br><br>
-            <strong>Explanation:</strong> Spinning "all the way around" implies completing a full circle. A full circle measures 360 degrees.
+    <div class="problem-card">
+        <div class="question">6. Sammy bought a pair of shoes priced at $47.99. The sales tax was $2.88. Sammy gave the clerk $60.00. How much money should he get back?</div>
+        <button class="btn" id="btn-6" onclick="toggleSolution(6)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-6">
+            <div class="answer">Answer: $9.13</div>
+            <div class="explanation">First, find the total cost by adding the price and the tax: $\$47.99 + \$2.88 = \$50.87$. Then subtract the total cost from the amount Sammy paid: $\$60.00 - \$50.87 = \$9.13$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">6. Sammy bought a pair of shoes priced at $47.99. The sales tax was $2.88. Sammy gave the clerk $60.00. How much money should he get back?</div>
-        <button class="button" onclick="toggleExplanation('exp6')">Review Answer</button>
-        <div id="exp6" class="explanation">
-            <strong>Answer:</strong> $9.13<br><br>
-            <strong>Explanation:</strong> <br>
-            Step 1: Find the total cost. \( \$47.99 + \$2.88 = \$50.87 \). <br>
-            Step 2: Find the change. \( \$60.00 - \$50.87 = \$9.13 \).<br>
-            <em>(Note: The student originally calculated the sum incorrectly as $51.87, which led to a wrong final answer of $8.13).</em>
+    <div class="problem-card">
+        <div class="question">7. If the perimeter of a square is 1 foot, how many inches long is each side?</div>
+        <button class="btn" id="btn-7" onclick="toggleSolution(7)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-7">
+            <div class="answer">Answer: 3 inches</div>
+            <div class="explanation">First, convert the perimeter into inches. 1 foot = 12 inches. Since a square has 4 sides of equal length, divide the total perimeter by 4: $12 \div 4 = 3$ inches per side.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">7. If the perimeter of a square is 1 foot, how many inches long is each side?</div>
-        <button class="button" onclick="toggleExplanation('exp7')">Review Answer</button>
-        <div id="exp7" class="explanation">
-            <strong>Answer:</strong> 3 inches<br><br>
-            <strong>Explanation:</strong> <br>
-            Step 1: Convert feet to inches. 1 foot = 12 inches.<br>
-            Step 2: A square has 4 sides of equal length. Divide the perimeter by 4: \( 12 \div 4 = 3 \) inches.
+    <div class="problem-card">
+        <div class="question">8. A dollar bill weighs about 1 gram. Use this information to estimate the number of dollar bills it would take to weigh 1 kilogram.</div>
+        <button class="btn" id="btn-8" onclick="toggleSolution(8)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-8">
+            <div class="answer">Answer: 1000 dollar bills</div>
+            <div class="explanation">The prefix "kilo-" means 1,000. Therefore, 1 kilogram is equal to 1,000 grams. If one bill weighs 1 gram, it takes 1,000 bills to reach 1,000 grams.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">8. A dollar bill weighs about 1 gram. Use this information to estimate the number of dollar bills it would take to weigh 1 kilogram.</div>
-        <button class="button" onclick="toggleExplanation('exp8')">Review Answer</button>
-        <div id="exp8" class="explanation">
-            <strong>Answer:</strong> 1,000<br><br>
-            <strong>Explanation:</strong> There are 1,000 grams in 1 kilogram. If each dollar bill weighs 1 gram, it would take \( 1000 \div 1 = 1000 \) dollar bills.
+    <div class="problem-card">
+        <div class="question">9. One fourth of the 64 clowns had red noses. How many clowns had red noses? Draw a picture to illustrate the problem.</div>
+        <button class="btn" id="btn-9" onclick="toggleSolution(9)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-9">
+            <div class="answer">Answer: 16 clowns</div>
+            <div class="explanation">To find one fourth of a number, divide the number by 4. $64 \div 4 = 16$. (A drawing would show 64 objects separated into 4 equal groups, with 16 objects in each group).</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">17. \( 47 \times 100 \)</div>
-        <button class="button" onclick="toggleExplanation('exp17')">Review Answer</button>
-        <div id="exp17" class="explanation">
-            <strong>Answer:</strong> 4700<br><br>
-            <strong>Explanation:</strong> When multiplying a whole number by 100, you can simply append two zeros to the end of the number.
+    <div class="problem-card">
+        <div class="question">10. What percent of the clowns in problem 9 did not have red noses?</div>
+        <button class="btn" id="btn-10" onclick="toggleSolution(10)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-10">
+            <div class="answer">Answer: 75%</div>
+            <div class="explanation">If $\frac{1}{4}$ of the clowns *did* have red noses, then the remaining $\frac{3}{4}$ did *not*. As a percentage, $\frac{3}{4}$ translates to $75\%$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">18. \( 328 \times 4 \)</div>
-        <button class="button" onclick="toggleExplanation('exp18')">Review Answer</button>
-        <div id="exp18" class="explanation">
-            <strong>Answer:</strong> 1312<br><br>
-            <strong>Explanation:</strong><br>
-            \( 8 \times 4 = 32 \) (Write 2, carry 3)<br>
-            \( 2 \times 4 = 8 \). Add carry: \( 8 + 3 = 11 \) (Write 1, carry 1)<br>
-            \( 3 \times 4 = 12 \). Add carry: \( 12 + 1 = 13 \)<br>
-            Result is 1312.
+    <div class="problem-card">
+        <div class="question">11. Kerry knew that her trip would take about 7 hours. If she left at half past nine in the morning, around what time should she arrive?</div>
+        <button class="btn" id="btn-11" onclick="toggleSolution(11)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-11">
+            <div class="answer">Answer: 4:30 PM</div>
+            <div class="explanation">"Half past nine in the morning" is 9:30 AM. Counting forward 7 hours from 9:30 AM lands you exactly on 4:30 PM.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">19. \( 43 \times 32 \)</div>
-        <button class="button" onclick="toggleExplanation('exp19')">Review Answer</button>
-        <div id="exp19" class="explanation">
-            <strong>Answer:</strong> 1376<br><br>
-            <strong>Explanation:</strong><br>
-            Multiply by the ones digit: \( 43 \times 2 = 86 \)<br>
-            Multiply by the tens digit: \( 43 \times 30 = 1290 \)<br>
-            Add the partial products: \( 86 + 1290 = 1376 \)
+    <div class="problem-card">
+        <div class="question">12. Jill's boat holds 42 containers. Each container can hold 8 big fish. How many big fish can Jill put in her 42 containers?</div>
+        <button class="btn" id="btn-12" onclick="toggleSolution(12)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-12">
+            <div class="answer">Answer: 336 big fish</div>
+            <div class="explanation">Multiply the number of containers by the number of fish each container holds: $42 \times 8 = 336$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">20. \( 25 \times 35 \)</div>
-        <button class="button" onclick="toggleExplanation('exp20')">Review Answer</button>
-        <div id="exp20" class="explanation">
-            <strong>Answer:</strong> 875<br><br>
-            <strong>Explanation:</strong><br>
-            Multiply by the ones digit: \( 25 \times 5 = 125 \)<br>
-            Multiply by the tens digit: \( 25 \times 30 = 750 \)<br>
-            Add the partial products: \( 125 + 750 = 875 \)
+    <div class="problem-card">
+        <div class="question">13. Eighty-eight horseshoes are enough to shoe how many horses?</div>
+        <button class="btn" id="btn-13" onclick="toggleSolution(13)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-13">
+            <div class="answer">Answer: 22 horses</div>
+            <div class="explanation">Since each horse requires 4 horseshoes, you divide the total number of horseshoes by 4: $88 \div 4 = 22$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">21. \( 4317 \div 5 \)</div>
-        <button class="button" onclick="toggleExplanation('exp21')">Review Answer</button>
-        <div id="exp21" class="explanation">
-            <strong>Answer:</strong> 863 R 2<br><br>
-            <strong>Explanation:</strong><br>
-            \( 43 \div 5 = 8 \) remainder 3. Bring down 1 (31).<br>
-            \( 31 \div 5 = 6 \) remainder 1. Bring down 7 (17).<br>
-            \( 17 \div 5 = 3 \) remainder 2.<br>
-            Quotient is 863 with a remainder of 2.
+    <div class="problem-card">
+        <div class="question">14. Triangles ABC and DEF are congruent. Which transformations would move $\triangle ABC$ to the same position as $\triangle DEF$?</div>
+        <button class="btn" id="btn-14" onclick="toggleSolution(14)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-14">
+            <div class="answer">Answer: Reflection</div>
+            <div class="explanation">Looking at the figures, $\triangle ABC$ faces to the right, while $\triangle DEF$ is a mirror image facing left. The transformation that achieves a mirror image flip is called a reflection.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">22. \( \$40.00 \div 8 \)</div>
-        <button class="button" onclick="toggleExplanation('exp22')">Review Answer</button>
-        <div id="exp22" class="explanation">
-            <strong>Answer:</strong> $5.00<br><br>
-            <strong>Explanation:</strong> \( 40 \div 8 = 5 \). Maintain the decimal places for currency, resulting in $5.00.
+    <div class="problem-card">
+        <div class="question">15. Which of these words does not describe the triangles in problem 14? A. similar B. obtuse C. scalene D. isosceles</div>
+        <button class="btn" id="btn-15" onclick="toggleSolution(15)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-15">
+            <div class="answer">Answer: D. isosceles</div>
+            <div class="explanation">The triangles have no equal sides (scalene) and one angle greater than 90° (obtuse). Because they are congruent, they are also mathematically similar. They do not have two sides of equal length, so they are *not* isosceles.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">23. \( 3963 \div 6 \)</div>
-        <button class="button" onclick="toggleExplanation('exp23')">Review Answer</button>
-        <div id="exp23" class="explanation">
-            <strong>Answer:</strong> 660 R 3<br><br>
-            <strong>Explanation:</strong><br>
-            \( 39 \div 6 = 6 \) remainder 3. Bring down 6 (36).<br>
-            \( 36 \div 6 = 6 \) remainder 0. Bring down 3.<br>
-            \( 3 \div 6 = 0 \) remainder 3.<br>
-            Quotient is 660 with a remainder of 3. <em>(The student missed the final 0 in the quotient.)</em>
+    <div class="problem-card">
+        <div class="question">16. $0.625 - (0.5 + 0.12)$</div>
+        <button class="btn" id="btn-16" onclick="toggleSolution(16)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-16">
+            <div class="answer">Answer: 0.005</div>
+            <div class="explanation">By order of operations, evaluate the parentheses first: $0.5 + 0.12 = 0.62$. Then perform the subtraction: $0.625 - 0.62 = 0.005$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">24. \( 426 \div 3 \)</div>
-        <button class="button" onclick="toggleExplanation('exp24')">Review Answer</button>
-        <div id="exp24" class="explanation">
-            <strong>Answer:</strong> 142<br><br>
-            <strong>Explanation:</strong><br>
-            \( 4 \div 3 = 1 \) remainder 1. Bring down 2 (12).<br>
-            \( 12 \div 3 = 4 \) remainder 0. Bring down 6.<br>
-            \( 6 \div 3 = 2 \) remainder 0.<br>
-            Quotient is 142.
+    <div class="problem-card">
+        <div class="question">17. $47 \times 100$</div>
+        <button class="btn" id="btn-17" onclick="toggleSolution(17)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-17">
+            <div class="answer">Answer: 4700</div>
+            <div class="explanation">When multiplying a whole number by 100, you simply append two zeros to the end of the number.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">25. \( 2524 \div 4 \)</div>
-        <button class="button" onclick="toggleExplanation('exp25')">Review Answer</button>
-        <div id="exp25" class="explanation">
-            <strong>Answer:</strong> 631<br><br>
-            <strong>Explanation:</strong><br>
-            \( 25 \div 4 = 6 \) remainder 1. Bring down 2 (12).<br>
-            \( 12 \div 4 = 3 \) remainder 0. Bring down 4.<br>
-            \( 4 \div 4 = 1 \) remainder 0.<br>
-            Quotient is 631.
+    <div class="problem-card">
+        <div class="question">18. $328 \times 4$</div>
+        <button class="btn" id="btn-18" onclick="toggleSolution(18)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-18">
+            <div class="answer">Answer: 1312</div>
+            <div class="explanation">$4 \times 8 = 32$. Write 2, carry 3.<br>
+            $4 \times 2 = 8$. $8 + 3 = 11$. Write 1, carry 1.<br>
+            $4 \times 3 = 12$. $12 + 1 = 13$. Result is 1312.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">26. \( 60 \times 700 \)</div>
-        <button class="button" onclick="toggleExplanation('exp26')">Review Answer</button>
-        <div id="exp26" class="explanation">
-            <strong>Answer:</strong> 42,000<br><br>
-            <strong>Explanation:</strong> Multiply the non-zero digits: \( 6 \times 7 = 42 \). Then count the total number of zeros in the factors (one from 60, two from 700 = three zeros) and append them: 42,000.
+    <div class="problem-card">
+        <div class="question">19. $43 \times 32$</div>
+        <button class="btn" id="btn-19" onclick="toggleSolution(19)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-19">
+            <div class="answer">Answer: 1376</div>
+            <div class="explanation">$43 \times 2 = 86$.<br>
+            $43 \times 30 = 1290$.<br>
+            Adding the partial products: $86 + 1290 = 1376$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">27. Draw and shade circles to show that \( 2 \frac{1}{2} \) equals \( \frac{5}{2} \).</div>
-        <button class="button" onclick="toggleExplanation('exp27')">Review Answer</button>
-        <div id="exp27" class="explanation">
-            <strong>Answer:</strong><br>
-            <div class="svg-container">
-                <svg height="80" width="260">
-                  <circle cx="40" cy="40" r="35" stroke="black" stroke-width="2" fill="#a4c2f4" />
-                  <line x1="40" y1="5" x2="40" y2="75" stroke="black" stroke-width="2" />
-                  
-                  <circle cx="130" cy="40" r="35" stroke="black" stroke-width="2" fill="#a4c2f4" />
-                  <line x1="130" y1="5" x2="130" y2="75" stroke="black" stroke-width="2" />
-                  
-                  <circle cx="220" cy="40" r="35" stroke="black" stroke-width="2" fill="white" />
-                  <path d="M 220 5 A 35 35 0 0 0 220 75 Z" fill="#a4c2f4" stroke="black" />
-                  <line x1="220" y1="5" x2="220" y2="75" stroke="black" stroke-width="2" />
-                </svg>
-            </div>
-            <strong>Explanation:</strong> To show \( 2 \frac{1}{2} \), you need 3 whole circles split into halves. You completely shade 2 whole circles (which is 4 halves) and shade half of the 3rd circle (1 half). Counting the shaded halves gives \( 1, 2, 3, 4, 5 \) halves, which proves it equals \( \frac{5}{2} \).
+    <div class="problem-card">
+        <div class="question">20. $25 \times 35$</div>
+        <button class="btn" id="btn-20" onclick="toggleSolution(20)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-20">
+            <div class="answer">Answer: 875</div>
+            <div class="explanation">$25 \times 5 = 125$.<br>
+            $25 \times 30 = 750$.<br>
+            Adding the partial products: $125 + 750 = 875$.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">28. \( 4 + 3 + 27 + 35 + 8 + N = 112 \)</div>
-        <button class="button" onclick="toggleExplanation('exp28')">Review Answer</button>
-        <div id="exp28" class="explanation">
-            <strong>Answer:</strong> \( N = 35 \)<br><br>
-            <strong>Explanation:</strong><br>
-            Step 1: Add the known numbers together.<br>
-            \( 4 + 3 = 7 \)<br>
-            \( 7 + 27 = 34 \)<br>
-            \( 34 + 35 = 69 \)<br>
-            \( 69 + 8 = 77 \)<br>
-            Step 2: Set up the simplified equation: \( 77 + N = 112 \).<br>
-            Step 3: Subtract 77 from 112 to find N: \( 112 - 77 = 35 \).
+    <div class="problem-card">
+        <div class="question">21. $5 \overline{) 4317}$</div>
+        <button class="btn" id="btn-21" onclick="toggleSolution(21)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-21">
+            <div class="answer">Answer: 863 R 2</div>
+            <div class="explanation">5 goes into 43 eight times (40), remainder 3. Bring down 1 (31). 5 goes into 31 six times (30), remainder 1. Bring down 7 (17). 5 goes into 17 three times (15), remainder 2. The quotient is 863 with a remainder of 2.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">29. Segment BC is 1.7 cm long. How many centimeters long is segment AB?</div>
-        <div class="svg-container">
-            <svg height="80" width="300" style="background: white; border: 1px solid #ccc;">
-                <rect x="20" y="40" width="250" height="30" fill="#f9f9f9" stroke="black" />
-                <text x="25" y="60" font-size="10">cm</text>
-                <line x1="50" y1="40" x2="50" y2="55" stroke="black" />
-                <text x="47" y="65" font-size="10">0</text>
-                <line x1="100" y1="40" x2="100" y2="55" stroke="black" />
-                <text x="97" y="65" font-size="10">1</text>
-                <line x1="150" y1="40" x2="150" y2="55" stroke="black" />
-                <text x="147" y="65" font-size="10">2</text>
-                <line x1="200" y1="40" x2="200" y2="55" stroke="black" />
-                <text x="197" y="65" font-size="10">3</text>
-                <line x1="250" y1="40" x2="250" y2="55" stroke="black" />
-                <text x="247" y="65" font-size="10">4</text>
-                
-                <line x1="50" y1="20" x2="225" y2="20" stroke="black" stroke-width="2" />
-                <circle cx="50" cy="20" r="3" fill="black" />
-                <text x="46" y="12" font-size="12">A</text>
-                
-                <circle cx="140" cy="20" r="3" fill="black" />
-                <text x="136" y="12" font-size="12">B</text>
-                
-                <circle cx="225" cy="20" r="3" fill="black" />
-                <text x="221" y="12" font-size="12">C</text>
-            </svg>
-        </div>
-        <button class="button" onclick="toggleExplanation('exp29')">Review Answer</button>
-        <div id="exp29" class="explanation">
-            <strong>Answer:</strong> 1.8 cm<br><br>
-            <strong>Explanation:</strong> Looking at the ruler provided in the image, point A is at the 0 cm mark and point C is at the 3.5 cm mark. The total length of AC is 3.5 cm. We are given that BC is 1.7 cm. <br>
-            Since \( AB + BC = AC \): <br>
-            \( AB + 1.7 = 3.5 \)<br>
-            \( AB = 3.5 - 1.7 = 1.8 \) cm. You can also verify this by observing point B rests exactly on the 1.8 mark on the ruler.
+    <div class="problem-card">
+        <div class="question">22. $8 \overline{) \$40.00}$</div>
+        <button class="btn" id="btn-22" onclick="toggleSolution(22)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-22">
+            <div class="answer">Answer: $5.00</div>
+            <div class="explanation">Since 8 times 5 is 40, 8 divides evenly into 40 exactly 5 times. Keep the decimal in the same place.</div>
         </div>
     </div>
 
-    <div class="problem-container">
-        <div class="problem-header">30. Write a decimal addition problem that is illustrated by the lengths of segments AB, BC, and AC in problem 29.</div>
-        <button class="button" onclick="toggleExplanation('exp30')">Review Answer</button>
-        <div id="exp30" class="explanation">
-            <strong>Answer:</strong> \( 1.8 + 1.7 = 3.5 \)<br><br>
-            <strong>Explanation:</strong> The length of segment AB (1.8) added to the length of segment BC (1.7) equals the total length of segment AC (3.5).
+    <div class="problem-card">
+        <div class="question">23. $6 \overline{) 3963}$</div>
+        <button class="btn" id="btn-23" onclick="toggleSolution(23)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-23">
+            <div class="answer">Answer: 660 R 3</div>
+            <div class="explanation">6 goes into 39 six times (36), remainder 3. Bring down 6 (36). 6 goes into 36 six times (36), remainder 0. Bring down 3. 6 goes into 3 zero times. You must record this zero! The remainder is 3.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">24. $426 \div 3$</div>
+        <button class="btn" id="btn-24" onclick="toggleSolution(24)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-24">
+            <div class="answer">Answer: 142</div>
+            <div class="explanation">3 goes into 4 one time, remainder 1. Bring down 2 (12). 3 goes into 12 four times (12), remainder 0. Bring down 6. 3 goes into 6 two times (6), remainder 0.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">25. $2524 \div 4$</div>
+        <button class="btn" id="btn-25" onclick="toggleSolution(25)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-25">
+            <div class="answer">Answer: 631</div>
+            <div class="explanation">4 goes into 25 six times (24), remainder 1. Bring down 2 (12). 4 goes into 12 three times (12), remainder 0. Bring down 4. 4 goes into 4 one time (4).</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">26. $60 \times 700$</div>
+        <button class="btn" id="btn-26" onclick="toggleSolution(26)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-26">
+            <div class="answer">Answer: 42000</div>
+            <div class="explanation">Multiply the non-zero digits first: $6 \times 7 = 42$. Then, count the total number of zeros in the problem (one in 60, two in 700 = three zeros) and append them to 42.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">27. Draw and shade circles to show that $2 \frac{1}{2}$ equals $\frac{5}{2}$.</div>
+        <button class="btn" id="btn-27" onclick="toggleSolution(27)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-27">
+            <div class="answer">Answer: Three total circles. Shade two entirely, and one halfway.</div>
+            <div class="explanation">If you draw 3 circles and cut each in half, you have 6 halves. To show $2 \frac{1}{2}$, you fully shade 2 circles (which covers 4 halves), and shade 1 half of the final circle. Counting up the shaded halves proves it equals $\frac{5}{2}$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">28. $4 + 3 + 27 + 35 + 8 + N = 112$</div>
+        <button class="btn" id="btn-28" onclick="toggleSolution(28)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-28">
+            <div class="answer">Answer: N = 35</div>
+            <div class="explanation">First, add all the known numbers on the left side: $4 + 3 = 7$; $7 + 27 = 34$; $34 + 35 = 69$; $69 + 8 = 77$.<br>
+            Now the equation is $77 + N = 112$. Subtract 77 from 112 to solve for N: $112 - 77 = 35$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">29. Segment BC is 1.7 cm long. How many centimeters long is segment AB?</div>
+        <button class="btn" id="btn-29" onclick="toggleSolution(29)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-29">
+            <div class="answer">Answer: 1.8 cm</div>
+            <div class="explanation">Looking at the ruler, point A starts at $1.0\text{ cm}$ and point C ends at $4.5\text{ cm}$. This means the entire segment $AC = 4.5 - 1.0 = 3.5\text{ cm}$.<br>
+            If $BC = 1.7\text{ cm}$, subtract that from the total to find $AB$: $3.5\text{ cm} - 1.7\text{ cm} = 1.8\text{ cm}$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">30. Write a decimal addition problem that is illustrated by the lengths of segments AB, BC, and AC in problem 29.</div>
+        <button class="btn" id="btn-30" onclick="toggleSolution(30)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-30">
+            <div class="answer">Answer: 1.8 + 1.7 = 3.5</div>
+            <div class="explanation">The length of segment AB plus the length of segment BC equals the total length AC. Putting in the decimal values we found: $1.8\text{ cm} + 1.7\text{ cm} = 3.5\text{ cm}$.</div>
         </div>
     </div>
 
     <script>
-        function toggleExplanation(id) {
-            var element = document.getElementById(id);
-            if (element.style.display === "block") {
-                element.style.display = "none";
+        function toggleSolution(id) {
+            var solutionDiv = document.getElementById('sol-' + id);
+            var button = document.getElementById('btn-' + id);
+            
+            if (solutionDiv.style.display === 'none' || solutionDiv.style.display === '') {
+                solutionDiv.style.display = 'block';
+                button.textContent = 'Hide Answer & Explanation';
+                button.style.backgroundColor = '#e74c3c'; // Change to red when open
             } else {
-                element.style.display = "block";
+                solutionDiv.style.display = 'none';
+                button.textContent = 'Show Answer & Explanation';
+                button.style.backgroundColor = '#3498db'; // Change back to blue
             }
         }
     </script>
