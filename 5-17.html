@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Solutions</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .problem-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8e44ad;
+        }
+        .graph-context {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #732d91;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eaeaea;
+            background-color: #fcfcfc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .answer {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Math Practice Solutions (1-30)</h1>
+
+    <div class="graph-context">
+        Use the following information for problems 1-3: Imagine a line graph titled "Books Read by Sarah". Month 1 is at 3 books, Month 2 is at 4 books, Month 3 is at 5 books, Month 4 is at 2 books, and Month 5 is at 6 books.
+    </div>
+
+    <div class="problem-card">
+        <div class="question">1. How many books did Sarah read in the first month?</div>
+        <button class="btn" id="btn-1" onclick="toggleSolution(1)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-1">
+            <div class="answer">Answer: 3 books</div>
+            <div class="explanation">Looking at the graph context, the data point corresponding to Month 1 aligns with 3 on the vertical axis (Number of Books).</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">2. If every book Sarah read in Month 5 was exactly 50 pages long, how many total pages did she read that month?</div>
+        <button class="btn" id="btn-2" onclick="toggleSolution(2)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-2">
+            <div class="answer">Answer: 300 pages</div>
+            <div class="explanation">According to the graph data, Sarah read 6 books in Month 5. Multiplying the number of books by the pages per book gives $6 \times 50 = 300$ pages.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">3. How many more books did Sarah read in Month 5 than in Month 2?</div>
+        <button class="btn" id="btn-3" onclick="toggleSolution(3)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-3">
+            <div class="answer">Answer: 2 books</div>
+            <div class="explanation">In Month 5, she read 6 books. In Month 2, she read 4 books. The difference is $6 - 4 = 2$ books.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">4. A 4-pound bag of apples costs $2.60. What is the cost per pound?</div>
+        <button class="btn" id="btn-4" onclick="toggleSolution(4)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-4">
+            <div class="answer">Answer: $0.65 or 65¢</div>
+            <div class="explanation">Divide the total cost by the number of pounds: $\$2.60 \div 4 = \$0.65$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">5. A skateboarder spun halfway around in the air. The skateboarder turned about how many degrees?</div>
+        <button class="btn" id="btn-5" onclick="toggleSolution(5)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-5">
+            <div class="answer">Answer: 180°</div>
+            <div class="explanation">A full circle or a complete spin is 360 degrees. Half of a spin is $360 \div 2 = 180$ degrees.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">6. Mark bought a shirt priced at $24.50. The sales tax was $1.50. Mark gave the cashier a $50.00 bill. How much money should he get back?</div>
+        <button class="btn" id="btn-6" onclick="toggleSolution(6)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-6">
+            <div class="answer">Answer: $24.00</div>
+            <div class="explanation">First, find the total cost by adding the price and the tax: $\$24.50 + \$1.50 = \$26.00$. Then subtract the total cost from the amount Mark paid: $\$50.00 - \$26.00 = \$24.00$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">7. If the perimeter of an equilateral triangle is 1 yard, how many inches long is each side?</div>
+        <button class="btn" id="btn-7" onclick="toggleSolution(7)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-7">
+            <div class="answer">Answer: 12 inches</div>
+            <div class="explanation">First, convert the perimeter into inches. 1 yard = 36 inches. Since an equilateral triangle has 3 sides of equal length, divide the total perimeter by 3: $36 \div 3 = 12$ inches per side.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">8. A standard paperclip weighs about 1 gram. Use this information to estimate the number of paperclips it would take to weigh 2 kilograms.</div>
+        <button class="btn" id="btn-8" onclick="toggleSolution(8)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-8">
+            <div class="answer">Answer: 2000 paperclips</div>
+            <div class="explanation">The prefix "kilo-" means 1,000. Therefore, 2 kilograms is equal to 2,000 grams. If one paperclip weighs 1 gram, it takes 2,000 paperclips to reach 2,000 grams.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">9. One fifth of the 50 students in the band wear glasses. How many students in the band wear glasses?</div>
+        <button class="btn" id="btn-9" onclick="toggleSolution(9)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-9">
+            <div class="answer">Answer: 10 students</div>
+            <div class="explanation">To find one fifth of a number, divide the number by 5. $50 \div 5 = 10$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">10. What percent of the students in problem 9 do NOT wear glasses?</div>
+        <button class="btn" id="btn-10" onclick="toggleSolution(10)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-10">
+            <div class="answer">Answer: 80%</div>
+            <div class="explanation">If $\frac{1}{5}$ of the students *do* wear glasses, then the remaining $\frac{4}{5}$ do *not*. As a percentage, $\frac{4}{5}$ translates to $80\%$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">11. A movie is 2 and a half hours long. If the movie starts at 7:15 PM, what time will it end?</div>
+        <button class="btn" id="btn-11" onclick="toggleSolution(11)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-11">
+            <div class="answer">Answer: 9:45 PM</div>
+            <div class="explanation">Two hours after 7:15 PM is 9:15 PM. Adding the remaining half hour (30 minutes) brings the time to 9:45 PM.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">12. A teacher has 35 boxes of markers. Each box contains 12 markers. How many total markers does the teacher have?</div>
+        <button class="btn" id="btn-12" onclick="toggleSolution(12)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-12">
+            <div class="answer">Answer: 420 markers</div>
+            <div class="explanation">Multiply the number of boxes by the number of markers in each box: $35 \times 12 = 420$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">13. An auto shop has 120 tires. This is enough to put a full set of new tires on how many 4-wheel cars?</div>
+        <button class="btn" id="btn-13" onclick="toggleSolution(13)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-13">
+            <div class="answer">Answer: 30 cars</div>
+            <div class="explanation">Since each car requires 4 tires, divide the total number of tires by 4: $120 \div 4 = 30$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">14. Triangle ABC is identical to Triangle DEF, but Triangle DEF is positioned 5 inches straight to the right. Which transformation moves $\triangle ABC$ to $\triangle DEF$?</div>
+        <button class="btn" id="btn-14" onclick="toggleSolution(14)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-14">
+            <div class="answer">Answer: Translation (or Slide)</div>
+            <div class="explanation">A movement that shifts a shape straight in a given direction without rotating or flipping it is called a translation.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">15. Which of these words best describes a triangle that has three sides that are all 5 cm long? A. scalene B. obtuse C. equilateral D. right</div>
+        <button class="btn" id="btn-15" onclick="toggleSolution(15)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-15">
+            <div class="answer">Answer: C. equilateral</div>
+            <div class="explanation">A triangle with all three sides of equal length is classified as equilateral.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">16. $0.850 - (0.3 + 0.25)$</div>
+        <button class="btn" id="btn-16" onclick="toggleSolution(16)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-16">
+            <div class="answer">Answer: 0.300 (or 0.3)</div>
+            <div class="explanation">By order of operations, evaluate the parentheses first: $0.30 + 0.25 = 0.55$. Then perform the subtraction: $0.850 - 0.550 = 0.300$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">17. $89 \times 1000$</div>
+        <button class="btn" id="btn-17" onclick="toggleSolution(17)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-17">
+            <div class="answer">Answer: 89000</div>
+            <div class="explanation">When multiplying a whole number by 1000, you simply append three zeros to the end of the number.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">18. $417 \times 5$</div>
+        <button class="btn" id="btn-18" onclick="toggleSolution(18)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-18">
+            <div class="answer">Answer: 2085</div>
+            <div class="explanation">$5 \times 7 = 35$. Write 5, carry 3.<br>
+            $5 \times 1 = 5$. $5 + 3 = 8$. Write 8.<br>
+            $5 \times 4 = 20$. Result is 2085.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">19. $54 \times 26$</div>
+        <button class="btn" id="btn-19" onclick="toggleSolution(19)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-19">
+            <div class="answer">Answer: 1404</div>
+            <div class="explanation">$54 \times 6 = 324$.<br>
+            $54 \times 20 = 1080$.<br>
+            Adding the partial products: $324 + 1080 = 1404$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">20. $38 \times 45$</div>
+        <button class="btn" id="btn-20" onclick="toggleSolution(20)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-20">
+            <div class="answer">Answer: 1710</div>
+            <div class="explanation">$38 \times 5 = 190$.<br>
+            $38 \times 40 = 1520$.<br>
+            Adding the partial products: $190 + 1520 = 1710$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">21. $7 \overline{) 5218}$</div>
+        <button class="btn" id="btn-21" onclick="toggleSolution(21)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-21">
+            <div class="answer">Answer: 745 R 3</div>
+            <div class="explanation">7 goes into 52 seven times (49), remainder 3. Bring down 1 (31). 7 goes into 31 four times (28), remainder 3. Bring down 8 (38). 7 goes into 38 five times (35), remainder 3. The quotient is 745 with a remainder of 3.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">22. $4 \overline{) \$21.20}$</div>
+        <button class="btn" id="btn-22" onclick="toggleSolution(22)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-22">
+            <div class="answer">Answer: $5.30</div>
+            <div class="explanation">4 goes into 21 five times (20), remainder 1. Bring down the 2 (12). 4 goes into 12 three times (12), remainder 0. Bring down the 0. 4 goes into 0 zero times. Ensure you keep the decimal directly above its original place.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">23. $8 \overline{) 4865}$</div>
+        <button class="btn" id="btn-23" onclick="toggleSolution(23)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-23">
+            <div class="answer">Answer: 608 R 1</div>
+            <div class="explanation">8 goes into 48 six times (48), remainder 0. Bring down 6. 8 goes into 6 zero times. You must record this zero! Bring down 5 (65). 8 goes into 65 eight times (64), remainder 1.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">24. $535 \div 5$</div>
+        <button class="btn" id="btn-24" onclick="toggleSolution(24)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-24">
+            <div class="answer">Answer: 107</div>
+            <div class="explanation">5 goes into 5 one time, remainder 0. Bring down 3. 5 goes into 3 zero times, remainder 3. Bring down 5 (35). 5 goes into 35 seven times (35), remainder 0.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">25. $3618 \div 6$</div>
+        <button class="btn" id="btn-25" onclick="toggleSolution(25)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-25">
+            <div class="answer">Answer: 603</div>
+            <div class="explanation">6 goes into 36 six times (36), remainder 0. Bring down 1. 6 goes into 1 zero times, remainder 1. Bring down 8 (18). 6 goes into 18 three times (18), remainder 0.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">26. $80 \times 400$</div>
+        <button class="btn" id="btn-26" onclick="toggleSolution(26)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-26">
+            <div class="answer">Answer: 32000</div>
+            <div class="explanation">Multiply the non-zero digits first: $8 \times 4 = 32$. Then, count the total number of zeros in the problem (one in 80, two in 400 = three zeros) and append them to 32.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">27. Draw and shade circles to show that $3 \frac{1}{4}$ equals $\frac{13}{4}$.</div>
+        <button class="btn" id="btn-27" onclick="toggleSolution(27)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-27">
+            <div class="answer">Answer: Draw four total circles. Shade three entirely, and one a quarter of the way.</div>
+            <div class="explanation">If you draw 4 circles and cut each into four equal pieces (quarters), you have 16 quarters total. To show $3 \frac{1}{4}$, you fully shade 3 circles (which covers 12 quarters), and shade 1 quarter of the final circle. $12 + 1 = 13$ quarters, proving it equals $\frac{13}{4}$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">28. $15 + 22 + 8 + 10 + N = 75$</div>
+        <button class="btn" id="btn-28" onclick="toggleSolution(28)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-28">
+            <div class="answer">Answer: N = 20</div>
+            <div class="explanation">First, add all the known numbers on the left side: $15 + 22 = 37$; $37 + 8 = 45$; $45 + 10 = 55$.<br>
+            Now the equation is $55 + N = 75$. Subtract 55 from 75 to solve for N: $75 - 55 = 20$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">29. Segment AC is 5.2 cm long. If segment AB is 2.1 cm long, how many centimeters long is segment BC?</div>
+        <button class="btn" id="btn-29" onclick="toggleSolution(29)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-29">
+            <div class="answer">Answer: 3.1 cm</div>
+            <div class="explanation">Segment AC is made up of segment AB and segment BC combined. To find the missing segment BC, subtract AB from the total length: $5.2\text{ cm} - 2.1\text{ cm} = 3.1\text{ cm}$.</div>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="question">30. Write a decimal addition problem that is illustrated by the lengths of segments AB, BC, and AC in problem 29.</div>
+        <button class="btn" id="btn-30" onclick="toggleSolution(30)">Show Answer & Explanation</button>
+        <div class="solution" id="sol-30">
+            <div class="answer">Answer: 2.1 + 3.1 = 5.2</div>
+            <div class="explanation">The length of segment AB plus the length of segment BC equals the total length AC. Putting in the decimal values: $2.1\text{ cm} + 3.1\text{ cm} = 5.2\text{ cm}$.</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var solutionDiv = document.getElementById('sol-' + id);
+            var button = document.getElementById('btn-' + id);
+            
+            if (solutionDiv.style.display === 'none' || solutionDiv.style.display === '') {
+                solutionDiv.style.display = 'block';
+                button.textContent = 'Hide Answer & Explanation';
+                button.style.backgroundColor = '#e74c3c'; // Change to red when open
+            } else {
+                solutionDiv.style.display = 'none';
+                button.textContent = 'Show Answer & Explanation';
+                button.style.backgroundColor = '#8e44ad'; // Change back to purple
+            }
+        }
+    </script>
+</body>
+</html>
