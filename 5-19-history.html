@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North America Exploration Epic Quiz!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: #0288d1;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #ff9800;
+        }
+
+        /* Progress Bar Styles */
+        #progress-container {
+            position: relative;
+            margin: 40px 0 30px 0;
+            padding-top: 20px;
+            display: none; /* Hidden on start screen */
+        }
+
+        #triangle-marker {
+            position: absolute;
+            top: 0;
+            left: 0%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #ff3d00;
+            transition: left 0.5s ease-out;
+            z-index: 10;
+        }
+
+        #progress-bar-background {
+            background-color: #eeeeee;
+            border-radius: 15px;
+            height: 20px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #progress-bar-fill {
+            background: linear-gradient(90deg, #ffca28, #66bb6a, #29b6f6);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        #progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-weight: 800;
+            color: #757575;
+        }
+
+        /* Question Styles */
+        #question-text {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #424242;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: #fce4ec;
+            border: 3px solid #f06292;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.1em;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            color: #ad1457;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: #f8bbd0;
+            transform: scale(1.02);
+        }
+
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+
+        .option-btn.correct {
+            background-color: #c8e6c9 !important;
+            border-color: #388e3c !important;
+            color: #1b5e20 !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #ffcdd2 !important;
+            border-color: #d32f2f !important;
+            color: #b71c1c !important;
+        }
+
+        /* Screens */
+        #start-screen, #end-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #quiz-screen {
+            display: none;
+        }
+
+        .action-btn {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        #feedback-area {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: 800;
+            min-height: 30px;
+        }
+        
+        .correct-text { color: #388e3c; }
+        .wrong-text { color: #d32f2f; }
+
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="progress-container">
+        <div id="triangle-marker">▼</div>
+        <div id="progress-bar-background">
+            <div id="progress-bar-fill"></div>
+        </div>
+        <div id="progress-labels">
+            <span>Trying... 🧗</span>
+            <span>Good Job! ⭐</span>
+            <span>LIT! 🔥</span>
+        </div>
+    </div>
+
+    <div id="start-screen">
+        <h1>🌎 Exploration Adventure! 🚢</h1>
+        <p style="font-size: 1.2em;">Get ready to master your Exploration of North America Study Guide! Every word is tested 3 times so you can become a genius.</p>
+        <button class="action-btn" onclick="startQuiz()">Let's Go! 🚀</button>
+    </div>
+
+    <div id="quiz-screen">
+        <div id="question-text">Question will appear here</div>
+        <div class="options-grid" id="options-grid">
+            </div>
+        <div id="feedback-area"></div>
+        <button id="next-btn" class="action-btn hidden" onclick="nextQuestion()">Next Question ➡️</button>
+    </div>
+
+    <div id="end-screen" class="hidden">
+        <h1>🎉 Quiz Complete! 🎉</h1>
+        <h2 id="score-text">You scored X out of Y</h2>
+        <p id="end-message" style="font-size: 1.2em;"></p>
+        
+        <button id="review-btn" class="action-btn hidden" onclick="startReview()">🧠 Review Mistakes</button>
+        <button class="action-btn" style="background-color: #4CAF50;" onclick="resetFullQuiz()">🔄 Play Again</button>
+    </div>
+
+</div>
+
+<script>
+    // The master list of questions testing each term 3 times + exploration facts
+    const masterQuestions = [
+        // Spice
+        { q: "What is a plant used to add flavor to food?", a: "Spice", options: ["Spice", "Colony", "Pioneer", "Natural Resource"] },
+        { q: "What does the word 'Spice' mean?", a: "A plant used to add flavor to food", options: ["A plant used to add flavor to food", "A Spanish fort", "A special journey", "A sea route"] },
+        { q: "Explorers traveled far to find this item (like cinnamon) to make their food taste better. What is it?", a: "Spice", options: ["Spice", "Mutiny", "Conquistador", "Trading Post"] },
+        
+        // Colony
+        { q: "What is an area controlled and settled by people from another country?", a: "Colony", options: ["Colony", "Expedition", "Presidios", "Spice"] },
+        { q: "What is the definition of a Colony?", a: "An area controlled and settled by people from another country", options: ["An area controlled and settled by people from another country", "A rebellion on a ship", "A small settlement for trading goods", "A Spanish fort in Florida"] },
+        { q: "England set up a ____ in North America so their people could live there and claim the land.", a: "Colony", options: ["Colony", "Pioneer", "Expedition", "Northwest Passage"] },
+
+        // Expedition
+        { q: "What is a special journey taken by a group that has a clear purpose or goal?", a: "Expedition", options: ["Expedition", "Colony", "Presidios", "Mutiny"] },
+        { q: "When explorers go on an Expedition, what are they doing?", a: "Taking a special journey with a clear purpose or goal", options: ["Taking a special journey with a clear purpose or goal", "Building a Spanish fort", "Taking unfair advantage of someone", "Farming natural resources"] },
+        { q: "Lewis and Clark went on a famous ____ to explore the newly bought land.", a: "Expedition", options: ["Expedition", "Trading Post", "Conquistador", "Spice"] },
+
+        // Exploit
+        { q: "What does it mean to take unfair advantage of a person or group?", a: "Exploit", options: ["Exploit", "Pioneer", "Mutiny", "Expedition"] },
+        { q: "If someone exploits someone else, what are they doing?", a: "Taking unfair advantage of them", options: ["Taking unfair advantage of them", "Helping them build a colony", "Trading goods with them", "Guarding them in a fort"] },
+        { q: "It is wrong to ____ people by making them work hard without fair reward.", a: "Exploit", options: ["Exploit", "Pioneer", "Spice", "Colony"] },
+
+        // Pioneer
+        { q: "Who is one of the first people to settle in a region?", a: "Pioneer", options: ["Pioneer", "Conquistador", "Mutiny", "Spice"] },
+        { q: "What is a Pioneer?", a: "One of the first people to settle in a region", options: ["One of the first people to settle in a region", "A sailor who rebels against a captain", "A leader of a trading post", "A plant used for food"] },
+        { q: "A brave ____ packed up their wagon to move to land no one had lived on yet.", a: "Pioneer", options: ["Pioneer", "Expedition", "Presidios", "Colony"] },
+
+        // Conquistador
+        { q: "What is the Spanish word for conqueror?", a: "Conquistador", options: ["Conquistador", "Pioneer", "Presidios", "Mutiny"] },
+        { q: "What is a Conquistador?", a: "The Spanish word for conqueror", options: ["The Spanish word for conqueror", "A route to the Pacific Ocean", "A small trading settlement", "A useful thing from nature"] },
+        { q: "The Spanish ____ sailed across the ocean looking to claim new lands and gold.", a: "Conquistador", options: ["Conquistador", "Spice", "Exploit", "Trading Post"] },
+
+        // Northwest Passage
+        { q: "What is a sea route connecting the Atlantic Ocean and Pacific Ocean?", a: "Northwest Passage", options: ["Northwest Passage", "Colony", "Trading Post", "Expedition"] },
+        { q: "Why were explorers looking for the Northwest Passage?", a: "To find a water route connecting the Atlantic and Pacific Oceans", options: ["To find a water route connecting the Atlantic and Pacific Oceans", "To find a new place to build forts", "To find wild spices growing in the ice", "To hide from a mutiny"] },
+        { q: "Many ships searched the icy waters trying to find the ____ to get to Asia faster.", a: "Northwest Passage", options: ["Northwest Passage", "Presidios", "Expedition", "Conquistador"] },
+
+        // Mutiny
+        { q: "What is a rebellion of a ship's crew against the captain?", a: "Mutiny", options: ["Mutiny", "Exploit", "Expedition", "Pioneer"] },
+        { q: "What happens during a Mutiny?", a: "The ship's crew rebels against the captain", options: ["The ship's crew rebels against the captain", "The crew trades goods for spices", "The crew builds a Spanish fort", "The crew discovers a natural resource"] },
+        { q: "The angry sailors decided to start a ____ and take control of the ship!", a: "Mutiny", options: ["Mutiny", "Colony", "Trading Post", "Pioneer"] },
+
+        // Natural Resource
+        { q: "What is something from nature that is useful for humans?", a: "Natural Resource", options: ["Natural Resource", "Spice", "Presidios", "Exploit"] },
+        { q: "Which of these describes a Natural Resource?", a: "Something from nature that is useful for humans", options: ["Something from nature that is useful for humans", "A journey with a clear purpose", "A sea route to the Pacific", "A Spanish conqueror"] },
+        { q: "Trees, fresh water, and gold are all examples of a ____.", a: "Natural Resource", options: ["Natural Resource", "Mutiny", "Trading Post", "Colony"] },
+
+        // Trading Post
+        { q: "What is a small settlement that is set up to sell or trade goods?", a: "Trading Post", options: ["Trading Post", "Presidios", "Conquistador", "Northwest Passage"] },
+        { q: "What do people do at a Trading Post?", a: "Sell or trade goods", options: ["Sell or trade goods", "Rebel against their captain", "Search for the Northwest Passage", "Build a fort in Florida"] },
+        { q: "The fur trapper brought his beaver pelts to the ____ to swap them for tools and supplies.", a: "Trading Post", options: ["Trading Post", "Colony", "Expedition", "Spice"] },
+
+        // Presidios
+        { q: "What were Spanish forts built along the coast of Florida called?", a: "Presidios", options: ["Presidios", "Colonies", "Trading Posts", "Conquistadors"] },
+        { q: "What are Presidios?", a: "Spanish forts built along the coast of Florida", options: ["Spanish forts built along the coast of Florida", "Plants used to flavor food", "Journeys with a specific goal", "People who settle in a new region"] },
+        { q: "The Spanish soldiers guarded the coast from inside the strong walls of the ____.", a: "Presidios", options: ["Presidios", "Northwest Passage", "Natural Resources", "Mutiny"] },
+
+        // General Exploration Knowledge
+        { q: "Explorers were looking for an all-water route to Asia because...", a: "They wanted an easier way to get to the spice islands", options: ["They wanted an easier way to get to the spice islands", "They wanted to build presidios", "They wanted to start a mutiny", "They wanted to find new diseases"] },
+        { q: "Which of these is a POSITIVE effect of Exploration?", a: "Learned new information, settled new areas, and created new maps", options: ["Learned new information, settled new areas, and created new maps", "Slavery, Disease, and War", "Starting a mutiny on ships", "Exploiting native peoples"] },
+        { q: "Which of these is a NEGATIVE effect of Exploration on Native Americans?", a: "Disease, Slavery, and War", options: ["Disease, Slavery, and War", "Creating new maps", "Learning about faraway lands", "Finding the Northwest Passage"] }
+    ];
+
+    let currentQuiz = [];
+    let wrongQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let isReviewMode = false;
+
+    function shuffleArray(array) {
+        let curId = array.length;
+        while (0 !== curId) {
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    function startQuiz() {
+        // Deep copy and shuffle the master questions for a fresh game
+        currentQuiz = shuffleArray(JSON.parse(JSON.stringify(masterQuestions)));
+        wrongQuestions = [];
+        currentQuestionIndex = 0;
+        score = 0;
+        isReviewMode = false;
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('end-screen').classList.add('hidden');
+        document.getElementById('progress-container').style.display = 'block';
+        document.getElementById('quiz-screen').style.display = 'block';
+        
+        updateProgress();
+        showQuestion();
+    }
+
+    function showQuestion() {
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('feedback-area').innerHTML = '';
+        
+        let qData = currentQuiz[currentQuestionIndex];
+        document.getElementById('question-text').innerText = `Question ${currentQuestionIndex + 1}: ${qData.q}`;
+        
+        let optionsGrid = document.getElementById('options-grid');
+        optionsGrid.innerHTML = '';
+        
+        // Shuffle options so correct answer isn't always in the same spot
+        let shuffledOptions = shuffleArray([...qData.options]);
+        
+        shuffledOptions.forEach(opt => {
+            let btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.className = 'option-btn';
+            btn.onclick = () => checkAnswer(btn, opt, qData.a);
+            optionsGrid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(btnClicked, selectedAnswer, correctAnswer) {
+        // Disable all buttons after clicking
+        let allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        let feedbackArea = document.getElementById('feedback-area');
+
+        if (selectedAnswer === correctAnswer) {
+            btnClicked.classList.add('correct');
+            feedbackArea.innerHTML = `<span class="correct-text">Awesome job! That's correct! 🎉</span>`;
+            if(!isReviewMode) score++;
+        } else {
+            btnClicked.classList.add('wrong');
+            feedbackArea.innerHTML = `<span class="wrong-text">Oops! The correct answer was: <b>${correctAnswer}</b></span>`;
+            
+            // Smart Memorization: Save the exact question object so they can retry it later
+            if (!wrongQuestions.includes(currentQuiz[currentQuestionIndex])) {
+                wrongQuestions.push(currentQuiz[currentQuestionIndex]);
+            }
+
+            // Highlight the correct answer for them to see
+            allBtns.forEach(b => {
+                if(b.innerText === correctAnswer) b.classList.add('correct');
+            });
+        }
+
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        updateProgress();
+
+        if (currentQuestionIndex < currentQuiz.length) {
+            showQuestion();
+        } else {
+            endQuiz();
+        }
+    }
+
+    function updateProgress() {
+        // Calculate progress percentage
+        let percentage = (currentQuestionIndex / currentQuiz.length) * 100;
+        
+        // Update bar width
+        document.getElementById('progress-bar-fill').style.width = percentage + '%';
+        
+        // Update triangle position
+        // Keep triangle within bounds (2% to 98% to look good)
+        let visualPercent = Math.max(2, Math.min(percentage, 98));
+        document.getElementById('triangle-marker').style.left = visualPercent + '%';
+    }
+
+    function endQuiz() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('end-screen').classList.remove('hidden');
+        document.getElementById('progress-container').style.display = 'none';
+
+        let scoreText = document.getElementById('score-text');
+        let endMsg = document.getElementById('end-message');
+        let reviewBtn = document.getElementById('review-btn');
+
+        if (!isReviewMode) {
+            scoreText.innerText = `You scored ${score} out of ${currentQuiz.length}!`;
+        } else {
+            scoreText.innerText = `Review Complete!`;
+        }
+
+        if (wrongQuestions.length === 0) {
+            endMsg.innerText = "You are totally LIT! 🔥 You mastered everything!";
+            reviewBtn.classList.add('hidden');
+        } else {
+            endMsg.innerText = `You missed ${wrongQuestions.length} question(s). Let's use Smart Memorization to master them!`;
+            reviewBtn.classList.remove('hidden');
+        }
+    }
+
+    function startReview() {
+        // Set the current quiz to only the questions they got wrong
+        currentQuiz = shuffleArray([...wrongQuestions]);
+        wrongQuestions = []; // Reset wrong questions for this specific review round
+        currentQuestionIndex = 0;
+        isReviewMode = true;
+
+        document.getElementById('end-screen').classList.add('hidden');
+        document.getElementById('progress-container').style.display = 'block';
+        document.getElementById('quiz-screen').style.display = 'block';
+        
+        updateProgress();
+        showQuestion();
+    }
+
+    function resetFullQuiz() {
+        startQuiz();
+    }
+
+</script>
+
+</body>
+</html>
