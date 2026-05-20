@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Adventure: Practice Makes Perfect! (Set 2)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        /* ================= SCREEN STYLES ================= */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f3e5f5; /* Light purple theme for Set 2 */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            color: #6a1b9a;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #e1bee7;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .topic-section {
+            background-color: #fff3e0;
+            border: 3px dashed #ffb74d;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .topic-title {
+            color: #e65100;
+            font-size: 1.8em;
+            margin-top: 0;
+            border-bottom: 2px solid #ffb74d;
+            padding-bottom: 10px;
+        }
+        .question-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .question-card:hover {
+            transform: scale(1.01);
+            border-color: #ba68c8;
+        }
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #424242;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .option-btn {
+            background-color: #e1bee7;
+            color: #4a148c;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            border: 2px solid #ce93d8;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .option-btn:hover {
+            background-color: #ba68c8;
+            color: #fff;
+            border-color: #ab47bc;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .correct-btn {
+            background-color: #c8e6c9 !important;
+            border-color: #81c784 !important;
+            color: #2e7d32 !important;
+        }
+        .incorrect-btn {
+            background-color: #ffcdd2 !important;
+            border-color: #e57373 !important;
+            color: #c62828 !important;
+        }
+
+        /* Elements meant only for printing are hidden on screen */
+        .print-header { display: none; }
+        .answer-key-section { display: none; }
+        .print-instructions { text-align: center; margin-bottom: 20px; font-weight: bold; color: #555; }
+
+        /* ================= PRINT STYLES ================= */
+        @media print {
+            @page {
+                size: 8.5in 11in; /* US Letter Size */
+                margin: 0.5in 0.75in; /* Standard margins */
+            }
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                color: #000000 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .print-instructions {
+                display: none !important; /* Hide screen instructions */
+            }
+            .header {
+                color: #000 !important;
+                text-shadow: none !important;
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+            
+            /* Show Name & Date headers for print */
+            .print-header {
+                display: flex !important;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                font-size: 1.2em;
+                font-weight: bold;
+                border-bottom: 2px solid #000;
+                padding-bottom: 10px;
+            }
+            
+            .topic-section {
+                background-color: transparent !important;
+                border: 2px solid #aaa !important;
+                page-break-inside: avoid; /* Prevent topics breaking awkwardly if possible */
+                margin-bottom: 20px;
+            }
+            .topic-title {
+                color: #000 !important;
+                border-bottom: 1px solid #aaa !important;
+            }
+            
+            .question-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                page-break-inside: avoid; /* Keep questions together on one page */
+                padding: 15px;
+            }
+            .question-text {
+                color: #000 !important;
+            }
+            
+            /* Make buttons look like multiple choice options on paper */
+            .option-btn {
+                background-color: transparent !important;
+                border: 1px solid #999 !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                padding: 8px !important;
+            }
+            
+            /* Hide the JS feedback system */
+            .feedback {
+                display: none !important; 
+            }
+            
+            /* Show Answer Key on a new page at the very end */
+            .answer-key-section {
+                display: block !important;
+                page-break-before: always; /* Force to a new printed page */
+                border: 2px dashed #000;
+                padding: 20px;
+                margin-top: 20px;
+            }
+            .answer-key-section h2 {
+                text-align: center;
+                margin-top: 0;
+            }
+            .answer-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 10px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">🚀 Math Adventure Practice (Set 2) 🚀</h1>
+        
+        <div class="print-instructions">
+            💻 <em>Interactive Mode Active: Click the buttons to check your answers!</em><br>
+            🖨️ <em>Tip: Press <strong>Ctrl+P</strong> (or Cmd+P) to print this out on 8.5x11 paper perfectly!</em>
+        </div>
+
+        <div class="print-header">
+            <div>Name: _______________________</div>
+            <div>Date: ____________</div>
+        </div>
+        
+        <div class="topic-section">
+            <h2 class="topic-title">🛍️ Shopping Math!</h2>
+            
+            <div class="question-card">
+                <div class="question-text">
+                    1. Max bought 4 notebooks for $1.75 each. The sales tax was $0.60. What was his total price?
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Remember to multiply $1.75 by 4 first, then add the tax!')">A) $7.00</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Great job! 4 notebooks x $1.75 = $7.00. Add $0.60 for tax, and you get $7.60!')">B) $7.60</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Oops! That looks like you only bought one notebook. Make sure to multiply by 4!')">C) $2.35</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Not quite! Did you subtract the tax instead of adding it?')">D) $6.40</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    2. Jenna bought 3 comic books for $3.50 each. The sales tax was $0.75. She paid with a $15 bill. How much change should she get back?
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That is the total cost of the comic books plus tax ($11.25). But the question asks for her CHANGE from $15!')">A) $11.25</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Oops! Make sure to add the 75 cent tax to the book cost ($10.50) before subtracting from $15.')">B) $4.50</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Awesome! The books cost $10.50 + $0.75 tax = $11.25 total. $15.00 - $11.25 = $3.75 in change!')">C) $3.75</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your math again! Multiply 3 x $3.50, add $0.75, then subtract that total from $15.00.')">D) $5.25</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    3. Sam bought 2 action figures for $6.20 each. The sales tax was $0.80. What was the total price?
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That is the cost of the figures, but do not forget to add the sales tax!')">A) $12.40</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Super! 2 figures x $6.20 = $12.40. Add $0.80 tax and the total is $13.20.')">B) $13.20</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Almost! Check your addition when adding the $0.80 tax.')">C) $13.00</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That looks like the cost of just one figure plus tax. Multiply by 2 first!')">D) $7.00</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2 class="topic-title">🍰 Fraction Magic!</h2>
+            
+            <div class="question-card">
+                <div class="question-text">
+                    4. Write $\frac{718}{1000}$ as a decimal number.
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'If the bottom is 1000, the decimal needs to end in the thousandths place (3 spots after the dot!).')">A) 7.18</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That would be seven hundred eighteen ten-thousandths. You only need 3 decimal places.')">B) 0.0718</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That decimal only has one spot (tenths place).')">C) 71.8</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Spot on! Three zeros in 1000 means three numbers after the decimal point: 0.718.')">D) 0.718</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    5. Write $\frac{45}{1000}$ as a decimal number.
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, '0.45 is 45 hundredths (over 100). We need thousandths! We need a placeholder zero.')">A) 0.45</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Bingo! We need 3 decimal spots, so we put a 0 in front of the 45: 0.045.')">B) 0.045</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That is just 0.45 with an extra zero at the end. That is 450 over 1000.')">C) 0.450</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That is way too big! The top number is smaller than the bottom, so it must start with 0.')">D) 4.5</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    6. Write $\frac{7}{1000}$ as a decimal number.
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, '0.7 is seven tenths. We need seven thousandths!')">A) 0.7</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, '0.07 is seven hundredths. We need one more decimal place!')">B) 0.07</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Perfect! Thousandths means 3 decimal places, so we use two placeholder zeros: 0.007.')">C) 0.007</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'That decimal has 4 places, which means ten-thousandths. Too many zeros!')">D) 0.0007</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2 class="topic-title">➕ Lining Up Decimals!</h2>
+            
+            <div class="question-card">
+                <div class="question-text">
+                    7. Solve: 
+                    $$\begin{array}{r} 51.624 \\ + 18.190 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check the hundredths column! 2 + 9 = 11, so write 1 and carry the 1.')">A) 69.714</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Fantastic! You added perfectly and carried the 1 to make the tenths column 8.')">B) 69.814</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Almost! Did you forget to carry the 1 when you added 2 + 9?')">C) 69.724</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your addition in the tens column (5 + 1).')">D) 79.814</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    8. Solve: 
+                    $$\begin{array}{r} 26.850 \\ + 12.425 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Oops! 8 + 4 in the tenths column is 12. Write 2 and carry the 1 over the decimal point!')">A) 38.275</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Did you forget to add the 1 you carried over to the ones column (6 + 2 + 1)?')">B) 38.375</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Awesome! 8 + 4 = 12, so we carry the 1 to the whole numbers. 26 + 12 + 1 = 39.')">C) 39.275</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your addition in the hundredths column (5 + 2).')">D) 39.375</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    9. Solve: 
+                    $$\begin{array}{r} 115.348 \\ + 62.800 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Brilliant! You lined everything up, added the tenths (3+8=11), and carried the 1 to the ones column (5+2+1=8)!')">A) 178.148</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Careful! 3 + 8 = 11, so write 1 and carry 1 to the ones column (5 + 2).')">B) 177.148</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Did you line up the decimals? Make sure 115 and 62 are lined up correctly before adding.')">C) 167.148</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check the tenths column. 3 + 8 = 11, not 10!')">D) 178.048</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2 class="topic-title">✖️ Mighty Multiplication!</h2>
+            
+            <div class="question-card">
+                <div class="question-text">
+                    10. Solve: 
+                    $$\begin{array}{r} 427 \\ \times \quad 5 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your multiplication: 5 x 2 is 10, but did you remember to add the 3 carried over from 5 x 7 (35)?')">A) 2105</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'You got it! 7x5=35 (carry 3). 2x5=10+3=13 (carry 1). 4x5=20+1=21. Result: 2135!')">B) 2135</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Oops! Look at the hundreds column. 4 x 5 = 20, but you have to add the 1 carried over.')">C) 2035</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Not quite. Try multiplying column by column again carefully!')">D) 2155</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    11. Solve: 
+                    $$\begin{array}{r} 638 \\ \times \quad 7 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Way to go! 8x7=56 (carry 5). 3x7=21+5=26 (carry 2). 6x7=42+2=44. Total: 4466.')">A) 4466</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Did you forget to add the 5 carried over from 8x7=56 to the tens column?')">B) 4416</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check the hundreds column! 6 x 7 = 42, plus 2 carried over is 44.')">C) 4266</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Try one more time! 3 x 7 is 21, plus 5 carried over is 26.')">D) 4456</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    12. Solve: 
+                    $$\begin{array}{r} 794 \\ \times \quad 6 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check the hundreds column. 7 x 6 = 42, but you need to add the 5 carried over from 9x6=54 (plus 2).')">A) 4264</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Almost! In the tens column: 9 x 6 = 54, plus 2 carried over = 56. You put a 4 in the tens place.')">B) 4744</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Right on target! 4x6=24 (carry 2). 9x6=54+2=56 (carry 5). 7x6=42+5=47. Answer: 4764.')">C) 4764</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your carrying on the tens column! 9 x 6 = 54, plus 2 carried over is 56.')">D) 4864</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="topic-section">
+            <h2 class="topic-title">🚀 Zero Heroes!</h2>
+            
+            <div class="question-card">
+                <div class="question-text">
+                    13. Solve: 
+                    $$\begin{array}{r} 42 \\ \times 30 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'You forgot the zero at the end! 42 x 3 is 126, but you are multiplying by 30.')">A) 126</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Smart thinking! 42 x 3 = 126, and then you just pop the zero on the end to make 1260.')">B) 1260</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your multiplication: 3 x 2 is 6. 3 x 4 is 12.')">C) 1360</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Not quite! 42 x 3 is 126, not 146.')">D) 1460</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    14. Solve: 
+                    $$\begin{array}{r} 63 \\ \times 50 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Did you add the numbers instead? This is multiplication!')">A) 113</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check the ones digit multiplication. 3 x 5 is 15, so there should be a 5 before the final zero.')">B) 3000</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Almost! 6 x 5 = 30, plus 1 carried over is 31.')">C) 3050</button>
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Great work! 63 x 5 = 315. Drop the zero on the end and you have 3150.')">D) 3150</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text">
+                    15. Solve: 
+                    $$\begin{array}{r} 94 \\ \times 40 \\ \hline \end{array}$$
+                </div>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="checkAnswer(this, true, 'Awesome! 94 x 4 = 376. Attach the zero and it becomes 3760!')">A) 3760</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Check your multiplication: 4 x 4 = 16 (carry the 1). 4 x 9 = 36, plus 1 is 37!')">B) 3660</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'You forgot the zero hero! You multiplied by 4 instead of 40.')">C) 376</button>
+                    <button class="option-btn" onclick="checkAnswer(this, false, 'Oops! 9 x 4 is 36, plus 1 carried over is 37, not 38.')">D) 3860</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+        
+        <div class="answer-key-section">
+            <h2>TEACHER ANSWER KEY (Set 2)</h2>
+            <div class="answer-grid">
+                <div><strong>1.</strong> B ($7.60)</div>
+                <div><strong>2.</strong> C ($3.75)</div>
+                <div><strong>3.</strong> B ($13.20)</div>
+                <div><strong>4.</strong> D (0.718)</div>
+                <div><strong>5.</strong> B (0.045)</div>
+                <div><strong>6.</strong> C (0.007)</div>
+                <div><strong>7.</strong> B (69.814)</div>
+                <div><strong>8.</strong> C (39.275)</div>
+                <div><strong>9.</strong> A (178.148)</div>
+                <div><strong>10.</strong> B (2135)</div>
+                <div><strong>11.</strong> A (4466)</div>
+                <div><strong>12.</strong> C (4764)</div>
+                <div><strong>13.</strong> B (1260)</div>
+                <div><strong>14.</strong> D (3150)</div>
+                <div><strong>15.</strong> A (3760)</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkAnswer(btn, isCorrect, message) {
+            const card = btn.closest('.question-card');
+            const feedbackDiv = card.querySelector('.feedback');
+            
+            const allBtns = card.querySelectorAll('.option-btn');
+            allBtns.forEach(b => {
+                b.classList.remove('correct-btn', 'incorrect-btn');
+            });
+
+            if (isCorrect) {
+                btn.classList.add('correct-btn');
+                feedbackDiv.innerHTML = "🎉 <strong>Correct!</strong> " + message;
+                feedbackDiv.style.backgroundColor = "#e8f5e9";
+                feedbackDiv.style.color = "#2e7d32";
+                feedbackDiv.style.border = "1px solid #c8e6c9";
+            } else {
+                btn.classList.add('incorrect-btn');
+                feedbackDiv.innerHTML = "🤔 <strong>Not quite!</strong> " + message;
+                feedbackDiv.style.backgroundColor = "#ffebee";
+                feedbackDiv.style.color = "#c62828";
+                feedbackDiv.style.border = "1px solid #ffcdd2";
+            }
+            
+            feedbackDiv.style.display = "block";
+            
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise([feedbackDiv]);
+            }
+        }
+    </script>
+</body>
+</html>
