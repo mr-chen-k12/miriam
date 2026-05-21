@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Problems - Similar Set</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Screen Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #555;
+            font-style: italic;
+        }
+        .problem-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+        }
+        .question {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eafaf1;
+            border-left: 5px solid #2ecc71;
+            border-radius: 0 6px 6px 0;
+            display: none;
+            line-height: 1.6;
+        }
+        .answer-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        svg {
+            margin-top: 15px;
+            display: block;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                margin: 0;
+                color: #000;
+            }
+            .problem-card {
+                box-shadow: none;
+                border: none;
+                border-bottom: 1px solid #ccc;
+                border-radius: 0;
+                margin-bottom: 20px;
+                padding: 15px 0;
+                page-break-inside: avoid;
+            }
+            .btn-reveal {
+                display: none !important;
+            }
+            .answer-section {
+                display: none !important;
+            }
+            .instructions {
+                display: none;
+            }
+            /* Add space for students to write answers when printed */
+            .problem-card::after {
+                content: "";
+                display: block;
+                height: 80px; 
+            }
+            /* Adjust spacing for specific drawing problems */
+            #card-23::after, #card-24::after {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Practice Problems</h1>
+    <div class="instructions screen-only">
+        Print this page directly from your browser to create a clean, printer-friendly worksheet with space to write answers. The answer buttons will be automatically hidden when printing!
+    </div>
+
+    <!-- Problem 2 Variation -->
+    <div class="problem-card" id="card-2">
+        <div class="question">2. David separated 45 science books as equally as possible into 6 stacks.<br>(a) How many stacks had exactly 7 books?<br>(b) How many stacks had 8 books?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans2')">Review Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <p><strong>Answer:</strong> (a) 3 stacks, (b) 3 stacks</p>
+            <p><strong>Explanation:</strong> Divide the total number of books by the number of stacks: \( 45 \div 6 = 7 \) with a remainder of \( 3 \).</p>
+            <p>This means if we put 7 books in each of the 6 stacks, we have used 42 books. There are 3 leftover books. To distribute them equally, we place 1 extra book on 3 of the stacks. Therefore, 3 stacks get 8 books, and the remaining 3 stacks keep 7 books.</p>
+        </div>
+    </div>
+
+    <!-- Problem 3 Variation -->
+    <div class="problem-card" id="card-3">
+        <div class="question">3. Mark paid $5.00 for a notebook and received $2.15 back in change. If the tax was $0.25, how much did the notebook cost without tax?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans3')">Review Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <p><strong>Answer:</strong> $2.60</p>
+            <p><strong>Explanation:</strong> First, find the total cost of the notebook including tax by subtracting the change from the amount paid:</p>
+            <p>\( \$5.00 - \$2.15 = \$2.85 \) (total cost with tax)</p>
+            <p>Next, subtract the tax amount to find the base cost:</p>
+            <p>\( \$2.85 - \$0.25 = \$2.60 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 7 Variation -->
+    <div class="problem-card" id="card-7">
+        <div class="question">7. Name the shaded part of this square (a) as a fraction. (b) as a decimal number.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans7')">Review Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <p><strong>Answer:</strong> (a) \( \frac{4}{10} \) or \( \frac{2}{5} \) &nbsp;&nbsp; (b) 0.4</p>
+            <p><strong>Explanation:</strong> The square is divided into 10 equal vertical strips. Out of the 10 strips, 4 are shaded.</p>
+            <p>As a fraction, this is 4 out of 10, or \( \frac{4}{10} \). As a decimal, four tenths is written as 0.4.</p>
+        </div>
+        <!-- Grid drawing always visible for the question -->
+        <svg width="100" height="100" style="border: 2px solid #333;">
+            <rect x="0" y="0" width="40" height="100" fill="#a0a0a0" />
+            <line x1="10" y1="0" x2="10" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="20" y1="0" x2="20" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="30" y1="0" x2="30" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="40" y1="0" x2="40" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="50" y1="0" x2="50" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="60" y1="0" x2="60" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="70" y1="0" x2="70" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="80" y1="0" x2="80" y2="100" stroke="#333" stroke-width="1"/>
+            <line x1="90" y1="0" x2="90" y2="100" stroke="#333" stroke-width="1"/>
+        </svg>
+    </div>
+
+    <!-- Problem 8 Variation -->
+    <div class="problem-card" id="card-8">
+        <div class="question">8. One fifth of the 35 markers are dry. How many markers are dry? Draw a picture to illustrate the problem.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans8')">Review Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <p><strong>Answer:</strong> 7 markers</p>
+            <p><strong>Explanation:</strong> To find one fifth of a number, divide it by 5. \( 35 \div 5 = 7 \).</p>
+            <p>We can draw 5 boxes to represent the fifths, each containing 7 markers, and shade one box to show the dry ones.</p>
+            <svg width="270" height="60">
+                <rect x="10" y="10" width="40" height="40" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <text x="30" y="35" text-anchor="middle" fill="#fff" font-weight="bold">7</text>
+                <rect x="60" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="80" y="35" text-anchor="middle" font-weight="bold">7</text>
+                <rect x="110" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="130" y="35" text-anchor="middle" font-weight="bold">7</text>
+                <rect x="160" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="180" y="35" text-anchor="middle" font-weight="bold">7</text>
+                <rect x="210" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="230" y="35" text-anchor="middle" font-weight="bold">7</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 11 Variation -->
+    <div class="problem-card" id="card-11">
+        <div class="question">11. If a quart of juice weighs about 2 pounds, then about how many pounds does a gallon of juice weigh?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans11')">Review Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <p><strong>Answer:</strong> 8 pounds</p>
+            <p><strong>Explanation:</strong> There are 4 quarts in 1 gallon. If each quart weighs 2 pounds, a gallon weighs \( 4 \times 2 = 8 \text{ pounds} \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 12 Variation -->
+    <div class="problem-card" id="card-12">
+        <div class="question">12. \( 5.64 - 0.564 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans12')">Review Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <p><strong>Answer:</strong> 5.076</p>
+            <p><strong>Explanation:</strong> Align the decimal points and add a placeholder zero to 5.64 before subtracting:</p>
+            <div style="font-family: monospace; white-space: pre; margin-top: 10px; font-size: 1.2em;">
+   5.640
+ - 0.564
+---------
+   5.076
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 13 Variation -->
+    <div class="problem-card" id="card-13">
+        <div class="question">13. \( 4^2 + \sqrt{16} + N = 25 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans13')">Review Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <p><strong>Answer:</strong> N = 5</p>
+            <p><strong>Explanation:</strong> Evaluate the exponents and roots first:</p>
+            <p>\( 4^2 = 16 \)</p>
+            <p>\( \sqrt{16} = 4 \)</p>
+            <p>Substitute these values back into the equation:</p>
+            <p>\( 16 + 4 + N = 25 \)</p>
+            <p>\( 20 + N = 25 \)</p>
+            <p>\( N = 5 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 14 Variation -->
+    <div class="problem-card" id="card-14">
+        <div class="question">14. \( \$7.05 \times 6 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans14')">Review Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <p><strong>Answer:</strong> $42.30</p>
+            <p><strong>Explanation:</strong> Multiply normally and retain the decimal place.</p>
+            <p>\( 5 \times 6 = 30 \)</p>
+            <p>\( 7 \times 6 = 42 \)</p>
+            <p>Combining gives 42.30. The answer is \$42.30.</p>
+        </div>
+    </div>
+
+    <!-- Problem 15 Variation -->
+    <div class="problem-card" id="card-15">
+        <div class="question">15. \( 58 \times 32 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans15')">Review Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <p><strong>Answer:</strong> 1856</p>
+            <p><strong>Explanation:</strong> Use standard multiplication:</p>
+            <p>\( 58 \times 2 = 116 \)</p>
+            <p>\( 58 \times 30 = 1740 \)</p>
+            <p>\( 116 + 1740 = 1856 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 16 Variation -->
+    <div class="problem-card" id="card-16">
+        <div class="question">16. \( 45 \times 73 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans16')">Review Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <p><strong>Answer:</strong> 3285</p>
+            <p><strong>Explanation:</strong> Use standard multiplication:</p>
+            <p>\( 45 \times 3 = 135 \)</p>
+            <p>\( 45 \times 70 = 3150 \)</p>
+            <p>\( 135 + 3150 = 3285 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 17 Variation -->
+    <div class="problem-card" id="card-17">
+        <div class="question">17. \( 64 \times 40 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans17')">Review Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <p><strong>Answer:</strong> 2560</p>
+            <p><strong>Explanation:</strong> Ignore the zero temporarily: \( 64 \times 4 = 256 \). Then append the zero to the right: 2560.</p>
+        </div>
+    </div>
+
+    <!-- Problem 18 Variation -->
+    <div class="problem-card" id="card-18">
+        <div class="question">18. \( 72 \times 28 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans18')">Review Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <p><strong>Answer:</strong> 2016</p>
+            <p><strong>Explanation:</strong></p>
+            <p>\( 72 \times 8 = 576 \)</p>
+            <p>\( 72 \times 20 = 1440 \)</p>
+            <p>\( 576 + 1440 = 2016 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 20 Variation -->
+    <div class="problem-card" id="card-20">
+        <div class="question">20. \( 4254 \div 6 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans20')">Review Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <p><strong>Answer:</strong> 709</p>
+            <p><strong>Explanation:</strong> Perform long division:</p>
+            <ul>
+                <li>\( 42 \div 6 = 7 \) (remainder 0)</li>
+                <li>Bring down 5. \( 5 \div 6 = 0 \) (remainder 5)</li>
+                <li>Bring down 4, making 54. \( 54 \div 6 = 9 \) (remainder 0)</li>
+            </ul>
+            <p>Result: 709</p>
+        </div>
+    </div>
+
+    <!-- Problem 23 Variation -->
+    <div class="problem-card" id="card-23">
+        <div class="question">23. Draw and shade rectangles to show that \( 1 \frac{1}{3} \) equals \( \frac{4}{3} \).</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans23')">Review Answer & Explanation</button>
+        <div id="ans23" class="answer-section">
+            <p><strong>Answer & Explanation:</strong></p>
+            <p>Draw two whole rectangles and divide each into 3 equal sections (representing thirds). Shade all 3 sections in the first rectangle (representing 1 whole, or \( \frac{3}{3} \)). Shade 1 section in the second rectangle (representing \( \frac{1}{3} \)).</p>
+            <p>Counting the shaded parts, you have exactly 4 shaded sections, which demonstrates that \( 1 \frac{1}{3} = \frac{4}{3} \).</p>
+            <svg width="250" height="80">
+                <!-- Rectangle 1 (Fully shaded) -->
+                <rect x="10" y="10" width="90" height="40" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <line x1="40" y1="10" x2="40" y2="50" stroke="#333" stroke-width="2"/>
+                <line x1="70" y1="10" x2="70" y2="50" stroke="#333" stroke-width="2"/>
+                
+                <!-- Rectangle 2 (1/3 shaded) -->
+                <rect x="120" y="10" width="90" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <rect x="120" y="10" width="30" height="40" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <line x1="150" y1="10" x2="150" y2="50" stroke="#333" stroke-width="2"/>
+                <line x1="180" y1="10" x2="180" y2="50" stroke="#333" stroke-width="2"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 24 Variation -->
+    <div class="problem-card" id="card-24">
+        <div class="question">24. Draw a square with sides 6 cm long.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans24')">Review Answer & Explanation</button>
+        <div id="ans24" class="answer-section">
+            <p><strong>Answer & Explanation:</strong> Draw a square shape with all four sides of equal length. Label the sides to indicate they represent 6 cm.</p>
+            <svg width="150" height="150">
+                <rect x="25" y="25" width="100" height="100" fill="transparent" stroke="#333" stroke-width="2"/>
+                <text x="75" y="145" text-anchor="middle" font-size="14">6 cm</text>
+                <text x="0" y="75" text-anchor="middle" font-size="14" transform="rotate(-90 10,75)">6 cm</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 25 Variation -->
+    <div class="problem-card" id="card-25">
+        <div class="question">25. Shade 50% of the square you drew in problem 24. How many square centimeters did you shade?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans25')">Review Answer & Explanation</button>
+        <div id="ans25" class="answer-section">
+            <p><strong>Answer:</strong> 18 square centimeters</p>
+            <p><strong>Explanation:</strong> First, find the total area of the square: \( 6 \text{ cm} \times 6 \text{ cm} = 36 \text{ cm}^2 \).</p>
+            <p>To shade 50%, we shade exactly half the area. \( 50\% \text{ of } 36 \text{ cm}^2 = 18 \text{ cm}^2 \).</p>
+            <svg width="150" height="150">
+                <rect x="25" y="25" width="50" height="100" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <rect x="75" y="25" width="50" height="100" fill="transparent" stroke="#333" stroke-width="2"/>
+                <text x="75" y="145" text-anchor="middle" font-size="14">6 cm</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 26 Variation -->
+    <div class="problem-card" id="card-26">
+        <div class="question">26. Write thirty-seven thousandths as a fraction and as a decimal number.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans26')">Review Answer & Explanation</button>
+        <div id="ans26" class="answer-section">
+            <p><strong>Answer:</strong> Fraction: \( \frac{37}{1000} \), Decimal: 0.037</p>
+            <p><strong>Explanation:</strong> The term "thousandths" means the denominator of the fraction is 1000. So we have \( \frac{37}{1000} \).</p>
+            <p>To write this as a decimal, the number 37 must end in the thousandths place (the third digit after the decimal point). Therefore, we place a zero in the tenths place: 0.037.</p>
+        </div>
+    </div>
+
+    <!-- Problem 28 Variation -->
+    <div class="problem-card" id="card-28">
+        <div class="question">28. Which of these polygons is NOT a quadrilateral?<br>(A) Rectangle<br>(B) Hexagon<br>(C) Trapezoid<br>(D) Square</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans28')">Review Answer & Explanation</button>
+        <div id="ans28" class="answer-section">
+            <p><strong>Answer:</strong> B</p>
+            <p><strong>Explanation:</strong> A quadrilateral is a polygon with exactly 4 sides. Rectangles, trapezoids, and squares all have 4 sides. A hexagon has 6 sides, making it the only option that is not a quadrilateral.</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle the toggle visibility of answers
+        function toggleAnswer(id) {
+            var el = document.getElementById(id);
+            if (el.classList.contains('active')) {
+                el.classList.remove('active');
+            } else {
+                el.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
