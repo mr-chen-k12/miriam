@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 91: Decimal Place Value - Solutions</title>
+    <!-- MathJax for rendering math equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+        .problem-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .question {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .btn-reveal {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .btn-reveal:hover {
+            background-color: #2980b9;
+        }
+        .answer-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eafaf1;
+            border-left: 5px solid #2ecc71;
+            border-radius: 0 6px 6px 0;
+            display: none;
+            line-height: 1.6;
+        }
+        .answer-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .math-block {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        svg {
+            margin-top: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 91: Decimal Place Value - Problem Solutions</h1>
+
+    <!-- Problem 1 -->
+    <div class="problem-card">
+        <div class="question">1. Three quarters, four dimes, two nickels, and seven pennies is how much money?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans1')">Review Answer & Explanation</button>
+        <div id="ans1" class="answer-section">
+            <p><strong>Answer:</strong> $1.32</p>
+            <p><strong>Explanation:</strong> Calculate the value of each coin type and sum them up:</p>
+            <ul>
+                <li>3 quarters = \( 3 \times \$0.25 = \$0.75 \)</li>
+                <li>4 dimes = \( 4 \times \$0.10 = \$0.40 \)</li>
+                <li>2 nickels = \( 2 \times \$0.05 = \$0.10 \)</li>
+                <li>7 pennies = \( 7 \times \$0.01 = \$0.07 \)</li>
+            </ul>
+            <p>Total = \( \$0.75 + \$0.40 + \$0.10 + \$0.07 = \$1.32 \)</p>
+            <p><em>(Note: The student wrote $1.36 on the worksheet, which is incorrect due to an addition error.)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="problem-card">
+        <div class="question">2. Carmen separated the 37 math books as equally as possible into 4 stacks.<br>(a) How many stacks had exactly 9 books?<br>(b) How many stacks had 10 books?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans2')">Review Answer & Explanation</button>
+        <div id="ans2" class="answer-section">
+            <p><strong>Answer:</strong> (a) 3 stacks, (b) 1 stack</p>
+            <p><strong>Explanation:</strong> Divide the total number of books by the number of stacks: \( 37 \div 4 = 9 \) with a remainder of \( 1 \).</p>
+            <p>This means if we put 9 books in each of the 4 stacks, we have used 36 books. There is 1 leftover book. To distribute as equally as possible, we place that 1 extra book on one of the stacks. Therefore, 1 stack gets 10 books, and the remaining 3 stacks keep 9 books.</p>
+        </div>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="problem-card">
+        <div class="question">3. Lily paid $1 for a folder and received 52¢ back in change. If the tax was 3¢, how much did the folder cost without tax?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans3')">Review Answer & Explanation</button>
+        <div id="ans3" class="answer-section">
+            <p><strong>Answer:</strong> $0.45</p>
+            <p><strong>Explanation:</strong> First, find the total cost of the folder including tax by subtracting the change from the amount paid:</p>
+            <p>\( \$1.00 - \$0.52 = \$0.48 \) (total cost with tax)</p>
+            <p>Next, subtract the tax amount to find the base cost:</p>
+            <p>\( \$0.48 - \$0.03 = \$0.45 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 4 -->
+    <div class="problem-card">
+        <div class="question">4. Frank wrote each of his 12 spelling words five times. In all, how many words did he write?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans4')">Review Answer & Explanation</button>
+        <div id="ans4" class="answer-section">
+            <p><strong>Answer:</strong> 60 words</p>
+            <p><strong>Explanation:</strong> Multiply the number of words by the number of times each was written:</p>
+            <p>\( 12 \text{ words} \times 5 \text{ times} = 60 \text{ words in total} \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 5 -->
+    <div class="problem-card">
+        <div class="question">5. Round 5456 to the nearest thousand. Round 2872 to the nearest thousand. Find the sum of the two rounded numbers.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans5')">Review Answer & Explanation</button>
+        <div id="ans5" class="answer-section">
+            <p><strong>Answer:</strong> 8000</p>
+            <p><strong>Explanation:</strong></p>
+            <ul>
+                <li>\( 5456 \) rounded to the nearest thousand is \( 5000 \) (because the hundreds digit '4' is less than 5, we round down).</li>
+                <li>\( 2872 \) rounded to the nearest thousand is \( 3000 \) (because the hundreds digit '8' is 5 or greater, we round up).</li>
+            </ul>
+            <p>Sum: \( 5000 + 3000 = 8000 \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 6 -->
+    <div class="problem-card">
+        <div class="question">6. What is the tally for 10?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans6')">Review Answer & Explanation</button>
+        <div id="ans6" class="answer-section">
+            <p><strong>Answer:</strong> Two groups of five tally marks.</p>
+            <p><strong>Explanation:</strong> In tally marks, each group of five is represented by four vertical lines and one diagonal line crossing them out. For 10, you draw two such groups.</p>
+            <svg width="120" height="50">
+                <!-- Group 1 -->
+                <line x1="10" y1="10" x2="10" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="20" y1="10" x2="20" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="30" y1="10" x2="30" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="40" y1="10" x2="40" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="5" y1="42" x2="45" y2="8" stroke="#333" stroke-width="3"/>
+                <!-- Group 2 -->
+                <line x1="70" y1="10" x2="70" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="80" y1="10" x2="80" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="90" y1="10" x2="90" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="100" y1="10" x2="100" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="65" y1="42" x2="105" y2="8" stroke="#333" stroke-width="3"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 7 -->
+    <div class="problem-card">
+        <div class="question">7. Name the shaded part of this square (a) as a fraction. (b) as a decimal number.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans7')">Review Answer & Explanation</button>
+        <div id="ans7" class="answer-section">
+            <p><strong>Answer:</strong> (a) \( \frac{6}{10} \) or \( \frac{3}{5} \) &nbsp;&nbsp; (b) 0.6</p>
+            <p><strong>Explanation:</strong> The square is divided into 10 equal horizontal strips. Out of the 10 strips, 6 are shaded.</p>
+            <p>As a fraction, this is 6 out of 10, or \( \frac{6}{10} \). As a decimal, six tenths is written as 0.6.</p>
+            <svg width="100" height="100" style="border: 2px solid #333;">
+                <rect x="0" y="0" width="100" height="60" fill="#a0a0a0" />
+                <line x1="0" y1="10" x2="100" y2="10" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="20" x2="100" y2="20" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="30" x2="100" y2="30" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="40" x2="100" y2="40" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="50" x2="100" y2="50" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="60" x2="100" y2="60" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="70" x2="100" y2="70" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="80" x2="100" y2="80" stroke="#333" stroke-width="1"/>
+                <line x1="0" y1="90" x2="100" y2="90" stroke="#333" stroke-width="1"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 8 -->
+    <div class="problem-card">
+        <div class="question">8. One sixth of the 48 crayons are broken. How many crayons are broken? Draw a picture to illustrate the problem.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans8')">Review Answer & Explanation</button>
+        <div id="ans8" class="answer-section">
+            <p><strong>Answer:</strong> 8 crayons</p>
+            <p><strong>Explanation:</strong> To find one sixth of a number, divide it by 6. \( 48 \div 6 = 8 \).</p>
+            <p>We can draw 6 boxes to represent the sixths, each containing 8 crayons, and shade one box to show the broken ones.</p>
+            <svg width="320" height="60">
+                <rect x="10" y="10" width="40" height="40" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <text x="30" y="35" text-anchor="middle" fill="#fff" font-weight="bold">8</text>
+                <rect x="60" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="80" y="35" text-anchor="middle" font-weight="bold">8</text>
+                <rect x="110" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="130" y="35" text-anchor="middle" font-weight="bold">8</text>
+                <rect x="160" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="180" y="35" text-anchor="middle" font-weight="bold">8</text>
+                <rect x="210" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="230" y="35" text-anchor="middle" font-weight="bold">8</text>
+                <rect x="260" y="10" width="40" height="40" fill="white" stroke="#333" stroke-width="2"/>
+                <text x="280" y="35" text-anchor="middle" font-weight="bold">8</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 9 -->
+    <div class="problem-card">
+        <div class="question">9. Segment AB is 32 mm long. Segment BC is 26 mm long. Segment AD is 91 mm long. How many millimeters long is segment CD?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans9')">Review Answer & Explanation</button>
+        <div id="ans9" class="answer-section">
+            <p><strong>Answer:</strong> 33 mm</p>
+            <p><strong>Explanation:</strong> The total length of segment AD is the sum of its parts: \( AD = AB + BC + CD \).</p>
+            <p>We know: \( 91 = 32 + 26 + CD \)</p>
+            <p>\( 91 = 58 + CD \)</p>
+            <p>\( CD = 91 - 58 = 33 \text{ mm} \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 10 -->
+    <div class="problem-card">
+        <div class="question">10. Which digit in 6.125 is in the hundredths place?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans10')">Review Answer & Explanation</button>
+        <div id="ans10" class="answer-section">
+            <p><strong>Answer:</strong> 2</p>
+            <p><strong>Explanation:</strong> In the decimal 6.125:</p>
+            <ul>
+                <li>The 1 is in the tenths place.</li>
+                <li>The 2 is in the <strong>hundredths</strong> place.</li>
+                <li>The 5 is in the thousandths place.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Problem 11 -->
+    <div class="problem-card">
+        <div class="question">11. If a pint of water weighs about one pound, then about how many pounds does a quart of water weigh?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans11')">Review Answer & Explanation</button>
+        <div id="ans11" class="answer-section">
+            <p><strong>Answer:</strong> 2 pounds</p>
+            <p><strong>Explanation:</strong> Since 1 quart equals 2 pints, and each pint weighs about 1 pound, a quart weighs about \( 2 \times 1 = 2 \text{ pounds} \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 12 -->
+    <div class="problem-card">
+        <div class="question">12. \( 4.32 - 0.432 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans12')">Review Answer & Explanation</button>
+        <div id="ans12" class="answer-section">
+            <p><strong>Answer:</strong> 3.888</p>
+            <p><strong>Explanation:</strong> Align the decimal points and add a placeholder zero to 4.32 before subtracting:</p>
+            <div style="font-family: monospace; white-space: pre; margin-top: 10px; font-size: 1.2em;">
+   4.320
+ - 0.432
+---------
+   3.888
+            </div>
+            <p><em>(Note: The student made a calculation error, writing 4.112 instead.)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 13 -->
+    <div class="problem-card">
+        <div class="question">13. \( 5^2 + \sqrt{25} + N = 30 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans13')">Review Answer & Explanation</button>
+        <div id="ans13" class="answer-section">
+            <p><strong>Answer:</strong> N = 0</p>
+            <p><strong>Explanation:</strong> Evaluate the exponents and roots first:</p>
+            <p>\( 5^2 = 25 \)</p>
+            <p>\( \sqrt{25} = 5 \)</p>
+            <p>Substitute these values back into the equation:</p>
+            <p>\( 25 + 5 + N = 30 \)</p>
+            <p>\( 30 + N = 30 \)</p>
+            <p>\( N = 0 \)</p>
+            <p><em>(Note: The student incorrectly wrote N = 1.)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 14 -->
+    <div class="problem-card">
+        <div class="question">14. \( \$6.08 \times 8 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans14')">Review Answer & Explanation</button>
+        <div id="ans14" class="answer-section">
+            <p><strong>Answer:</strong> $48.64</p>
+            <p><strong>Explanation:</strong> Multiply normally and retain the decimal place.</p>
+            <p>\( 8 \times 8 = 64 \)</p>
+            <p>\( 6 \times 8 = 48 \)</p>
+            <p>Combining gives 48.64. The answer is \$48.64.</p>
+            <p><em>(Note: The student wrote $47.64, miscalculating \( 6 \times 8 \).)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 15 -->
+    <div class="problem-card">
+        <div class="question">15. \( 47 \times 24 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans15')">Review Answer & Explanation</button>
+        <div id="ans15" class="answer-section">
+            <p><strong>Answer:</strong> 1128</p>
+            <p><strong>Explanation:</strong> Use standard multiplication:</p>
+            <p>\( 47 \times 4 = 188 \)</p>
+            <p>\( 47 \times 20 = 940 \)</p>
+            <p>\( 188 + 940 = 1128 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 16 -->
+    <div class="problem-card">
+        <div class="question">16. \( 36 \times 62 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans16')">Review Answer & Explanation</button>
+        <div id="ans16" class="answer-section">
+            <p><strong>Answer:</strong> 2232</p>
+            <p><strong>Explanation:</strong> Use standard multiplication:</p>
+            <p>\( 36 \times 2 = 72 \)</p>
+            <p>\( 36 \times 60 = 2160 \)</p>
+            <p>\( 72 + 2160 = 2232 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 17 -->
+    <div class="problem-card">
+        <div class="question">17. \( 53 \times 30 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans17')">Review Answer & Explanation</button>
+        <div id="ans17" class="answer-section">
+            <p><strong>Answer:</strong> 1590</p>
+            <p><strong>Explanation:</strong> Ignore the zero temporarily: \( 53 \times 3 = 159 \). Then append the zero to the right: 1590.</p>
+            <p><em>(Note: The student incorrectly wrote 590.)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 18 -->
+    <div class="problem-card">
+        <div class="question">18. \( 63 \times 37 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans18')">Review Answer & Explanation</button>
+        <div id="ans18" class="answer-section">
+            <p><strong>Answer:</strong> 2331</p>
+            <p><strong>Explanation:</strong></p>
+            <p>\( 63 \times 7 = 441 \)</p>
+            <p>\( 63 \times 30 = 1890 \)</p>
+            <p>\( 441 + 1890 = 2331 \)</p>
+        </div>
+    </div>
+
+    <!-- Problem 19 -->
+    <div class="problem-card">
+        <div class="question">19. \( 100 \times 32 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans19')">Review Answer & Explanation</button>
+        <div id="ans19" class="answer-section">
+            <p><strong>Answer:</strong> 3200</p>
+            <p><strong>Explanation:</strong> When multiplying any whole number by 100, simply append two zeros to the end of the number: \( 32 \rightarrow 3200 \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 20 -->
+    <div class="problem-card">
+        <div class="question">20. \( 3456 \div 4 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans20')">Review Answer & Explanation</button>
+        <div id="ans20" class="answer-section">
+            <p><strong>Answer:</strong> 864</p>
+            <p><strong>Explanation:</strong> Perform long division:</p>
+            <ul>
+                <li>\( 34 \div 4 = 8 \) (remainder 2)</li>
+                <li>Bring down 5, making 25. \( 25 \div 4 = 6 \) (remainder 1)</li>
+                <li>Bring down 6, making 16. \( 16 \div 4 = 4 \) (remainder 0)</li>
+            </ul>
+            <p>Result: 864</p>
+            <p><em>(Note: The student made an arithmetic error and wrote 764 initially, but it seems there are corrections in circle marking 764. The correct mathematical quotient is 864.)</em></p>
+        </div>
+    </div>
+
+    <!-- Problem 21 -->
+    <div class="problem-card">
+        <div class="question">21. \( 6912 \div 8 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans21')">Review Answer & Explanation</button>
+        <div id="ans21" class="answer-section">
+            <p><strong>Answer:</strong> 864</p>
+            <p><strong>Explanation:</strong> Perform long division:</p>
+            <ul>
+                <li>\( 69 \div 8 = 8 \) (remainder 5)</li>
+                <li>Bring down 1, making 51. \( 51 \div 8 = 6 \) (remainder 3)</li>
+                <li>Bring down 2, making 32. \( 32 \div 8 = 4 \) (remainder 0)</li>
+            </ul>
+            <p>Result: 864</p>
+        </div>
+    </div>
+
+    <!-- Problem 22 -->
+    <div class="problem-card">
+        <div class="question">22. \( \$50.40 \div 7 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans22')">Review Answer & Explanation</button>
+        <div id="ans22" class="answer-section">
+            <p><strong>Answer:</strong> $7.20</p>
+            <p><strong>Explanation:</strong> Divide keeping the decimal in place:</p>
+            <ul>
+                <li>\( 50 \div 7 = 7 \) (remainder 1)</li>
+                <li>Bring down 4 past the decimal, making 14. \( 14 \div 7 = 2 \) (remainder 0)</li>
+                <li>Bring down 0, \( 0 \div 7 = 0 \)</li>
+            </ul>
+            <p>Result: \$7.20</p>
+        </div>
+    </div>
+
+    <!-- Problem 23 -->
+    <div class="problem-card">
+        <div class="question">23. Draw and shade circles to show that \( 1 \frac{1}{4} \) equals \( \frac{5}{4} \).</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans23')">Review Answer & Explanation</button>
+        <div id="ans23" class="answer-section">
+            <p><strong>Answer & Explanation:</strong></p>
+            <p>Draw two whole circles and divide each into 4 equal quadrants (representing fourths). Shade all 4 quadrants in the first circle (representing 1 whole, or \( \frac{4}{4} \)). Shade 1 quadrant in the second circle (representing \( \frac{1}{4} \)).</p>
+            <p>Counting the shaded parts, you have exactly 5 shaded quadrants, which demonstrates that \( 1 \frac{1}{4} = \frac{5}{4} \).</p>
+            <svg width="250" height="120">
+                <!-- Circle 1 (Fully shaded) -->
+                <circle cx="60" cy="60" r="50" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <line x1="10" y1="60" x2="110" y2="60" stroke="#333" stroke-width="2"/>
+                <line x1="60" y1="10" x2="60" y2="110" stroke="#333" stroke-width="2"/>
+                <!-- Circle 2 (1/4 shaded) -->
+                <circle cx="180" cy="60" r="50" fill="white" stroke="#333" stroke-width="2"/>
+                <!-- Top Right quadrant shaded -->
+                <path d="M 180 60 L 180 10 A 50 50 0 0 1 230 60 Z" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <line x1="130" y1="60" x2="230" y2="60" stroke="#333" stroke-width="2"/>
+                <line x1="180" y1="10" x2="180" y2="110" stroke="#333" stroke-width="2"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 24 -->
+    <div class="problem-card">
+        <div class="question">24. Draw a square with sides 4 cm long.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans24')">Review Answer & Explanation</button>
+        <div id="ans24" class="answer-section">
+            <p><strong>Answer & Explanation:</strong> Draw a square shape with all four sides of equal length. Label the sides to indicate they represent 4 cm.</p>
+            <svg width="150" height="150">
+                <rect x="25" y="25" width="100" height="100" fill="transparent" stroke="#333" stroke-width="2"/>
+                <text x="75" y="145" text-anchor="middle" font-size="14">4 cm</text>
+                <text x="0" y="75" text-anchor="middle" font-size="14" transform="rotate(-90 10,75)">4 cm</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 25 -->
+    <div class="problem-card">
+        <div class="question">25. Shade 50% of the square you drew in problem 24. How many square centimeters did you shade?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans25')">Review Answer & Explanation</button>
+        <div id="ans25" class="answer-section">
+            <p><strong>Answer:</strong> 8 square centimeters</p>
+            <p><strong>Explanation:</strong> First, find the total area of the square: \( 4 \text{ cm} \times 4 \text{ cm} = 16 \text{ cm}^2 \).</p>
+            <p>To shade 50%, we shade exactly half the area. \( 50\% \text{ of } 16 \text{ cm}^2 = 8 \text{ cm}^2 \).</p>
+            <svg width="150" height="150">
+                <rect x="25" y="25" width="50" height="100" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                <rect x="75" y="25" width="50" height="100" fill="transparent" stroke="#333" stroke-width="2"/>
+                <text x="75" y="145" text-anchor="middle" font-size="14">4 cm</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Problem 26 -->
+    <div class="problem-card">
+        <div class="question">26. Write twenty-one thousandths as a fraction and as a decimal number.</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans26')">Review Answer & Explanation</button>
+        <div id="ans26" class="answer-section">
+            <p><strong>Answer:</strong> Fraction: \( \frac{21}{1000} \), Decimal: 0.021</p>
+            <p><strong>Explanation:</strong> The term "thousandths" means the denominator of the fraction is 1000. So we have \( \frac{21}{1000} \).</p>
+            <p>To write this as a decimal, the number 21 must end in the thousandths place (the third digit after the decimal point). Therefore, we place a zero in the tenths place: 0.021.</p>
+        </div>
+    </div>
+
+    <!-- Problem 27 -->
+    <div class="problem-card">
+        <div class="question">27. Which of these polygons has no lines of symmetry? (A, B, C, D)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans27')">Review Answer & Explanation</button>
+        <div id="ans27" class="answer-section">
+            <p><strong>Answer:</strong> D</p>
+            <p><strong>Explanation:</strong> Let's check each shape:</p>
+            <ul>
+                <li><strong>A: Equilateral triangle.</strong> Has 3 lines of symmetry.</li>
+                <li><strong>B: Isosceles trapezoid.</strong> Has 1 vertical line of symmetry down the middle.</li>
+                <li><strong>C: Square.</strong> Has 4 lines of symmetry.</li>
+                <li><strong>D: Right trapezoid.</strong> Because one side is straight up and the other is slanted, there is no way to fold it in half such that both sides match perfectly. It has 0 lines of symmetry.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Problem 28 -->
+    <div class="problem-card">
+        <div class="question">28. Which polygon in problem 27 is not a quadrilateral?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans28')">Review Answer & Explanation</button>
+        <div id="ans28" class="answer-section">
+            <p><strong>Answer:</strong> A</p>
+            <p><strong>Explanation:</strong> A quadrilateral is a polygon with exactly 4 sides. Shape A is a triangle, which has 3 sides. Shapes B, C, and D all have 4 sides.</p>
+        </div>
+    </div>
+
+    <!-- Problem 29 -->
+    <div class="problem-card">
+        <div class="question">29. In half an hour the minute hand of a clock turns how many degrees?</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans29')">Review Answer & Explanation</button>
+        <div id="ans29" class="answer-section">
+            <p><strong>Answer:</strong> \( 180^\circ \)</p>
+            <p><strong>Explanation:</strong> A full clock circle represents one hour and spans \( 360^\circ \). Half an hour covers exactly half of the circle, which is \( 360^\circ \div 2 = 180^\circ \).</p>
+        </div>
+    </div>
+
+    <!-- Problem 30 -->
+    <div class="problem-card">
+        <div class="question">30. Compare: \( 4.2 \bigcirc 4.200 \)</div>
+        <button class="btn-reveal" onclick="toggleAnswer('ans30')">Review Answer & Explanation</button>
+        <div id="ans30" class="answer-section">
+            <p><strong>Answer:</strong> \( 4.2 = 4.200 \)</p>
+            <p><strong>Explanation:</strong> Trailing zeros after a decimal point do not change the value of the number. Both numbers have a 4 in the ones place and a 2 in the tenths place, and no other non-zero digits. Thus, they are equal.</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle the toggle visibility of answers
+        function toggleAnswer(id) {
+            var el = document.getElementById(id);
+            if (el.classList.contains('active')) {
+                el.classList.remove('active');
+            } else {
+                el.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
