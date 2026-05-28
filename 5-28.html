@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Solutions</title>
+    <!-- MathJax for rendering math equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-bg: #f0fdf4;
+            --success-border: #bbf7d0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .problem-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .question-number {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 12px;
+            min-width: 30px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            flex-grow: 1;
+        }
+
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .answer-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--success-bg);
+            border: 1px solid var(--success-border);
+            border-radius: 8px;
+            border-left: 4px solid #22c55e;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-container.show {
+            display: block;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            color: #166534;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .svg-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Utility for vertical math alignment */
+        .math-vertical {
+            display: inline-block;
+            text-align: right;
+        }
+        .math-vertical-line {
+            border-bottom: 1px solid #000;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Interactive Math Worksheet</h1>
+        <p>Lesson 93: Estimating Multiplication and Division Answers & Mixed Practice</p>
+    </header>
+
+    <!-- Generating Problems 1 through 30 dynamically -->
+    <div id="worksheet">
+        <!-- The JS will populate this -->
+    </div>
+</div>
+
+<script>
+    const problems = [
+        {
+            num: 1,
+            question: "Ninety-one students are divided as equally as possible among 3 classrooms.<br>(a) How many classrooms have exactly 30 students?<br>(b) How many classrooms have 31 students?",
+            answer: "To divide 91 students equally among 3 classrooms, perform division: \( 91 \div 3 = 30 \) with a remainder of 1. This means there are 30 students in each of the 3 classrooms, and 1 extra student who needs to be placed in one of the classrooms. Therefore, one classroom will have \(30 + 1 = 31\) students, and the other two will have 30.<br><br><strong>(a)</strong> 2 classrooms<br><strong>(b)</strong> 1 classroom"
+        },
+        {
+            num: 2,
+            question: "In 1970 it cost 6¢ to mail a letter. How much did it cost to mail twenty letters in 1970?",
+            answer: "Multiply the number of letters by the cost per letter: \( 20 \times 6\text{¢} = 120\text{¢} \). Since 100 cents equals $1.00, \(120\text{¢}\) is equal to <strong>$1.20</strong>."
+        },
+        {
+            num: 3,
+            question: "What number is seven hundred ninety more than two hundred ten?",
+            answer: "The phrase "more than" implies addition. Set up the equation: \( 210 + 790 = 1000 \). The number is <strong>1000</strong>."
+        },
+        {
+            num: 4,
+            question: "George Washington was born in 1732 and died in 1799. About how many years did he live?",
+            answer: "To estimate ("About how many"), round the years to the nearest ten: \( 1800 - 1730 = 70 \) years. To find the exact age, subtract the birth year from the death year: \( 1799 - 1732 = 67 \). He lived for exactly <strong>67 years</strong> (or approximately 70 years)."
+        },
+        {
+            num: 5,
+            question: "A $1 bill weighs about 1 gram. How much would a $5 bill weigh?",
+            answer: "All U.S. paper currency is printed on paper of the same physical dimensions and composition, so a $5 bill weighs exactly the same as a $1 bill: <strong>about 1 gram</strong>."
+        },
+        {
+            num: 6,
+            question: "This is the tally for what number?<br> <span style='font-family: sans-serif; font-size:1.2em;'><s>||||</s> <s>||||</s> <s>||||</s> ||||</span>",
+            answer: "Each grouped tally mark with a diagonal strike-through represents 5. There are three groups of 5 and one group of 4. <br>\( 5 + 5 + 5 + 4 = 19 \). The number is <strong>19</strong>."
+        },
+        {
+            num: 7,
+            question: "Name the shaded part of the large square<br>(a) as a fraction.<br>(b) as a decimal number.",
+            answer: "The large square in the image is divided into 10 equal horizontal strips. Counting them reveals that 7 out of the 10 strips are shaded.<br><br><strong>(a)</strong> As a fraction: <strong>\( \frac{7}{10} \)</strong><br><strong>(b)</strong> As a decimal: <strong>0.7</strong>"
+        },
+        {
+            num: 8,
+            question: "Estimate the product of 49 and 62.",
+            answer: "To estimate, round each number to the nearest ten before multiplying. 49 rounds to 50, and 62 rounds to 60. Then multiply: \( 50 \times 60 = 3000 \). The estimated product is <strong>3000</strong>."
+        },
+        {
+            num: 9,
+            question: "One half of the 32 chess pieces were still on the board. How many chess pieces were still on the board? Draw a picture to illustrate the problem.",
+            answer: "One half means dividing by 2. \( 32 \div 2 = 16 \). There were <strong>16</strong> chess pieces still on the board.<br><div class='svg-container'><svg width='360' height='150' viewBox='0 0 360 150' xmlns='http://www.w3.org/2000/svg'><rect x='10' y='10' width='160' height='130' fill='#f0fdf4' stroke='#22c55e' stroke-width='2' rx='10'/><text x='90' y='130' text-anchor='middle' font-family='sans-serif' font-size='12' fill='#166534'>16 pieces on board</text><g fill='#22c55e'><circle cx='40' cy='35' r='5'/><circle cx='65' cy='35' r='5'/><circle cx='90' cy='35' r='5'/><circle cx='115' cy='35' r='5'/><circle cx='140' cy='35' r='5'/><circle cx='40' cy='60' r='5'/><circle cx='65' cy='60' r='5'/><circle cx='90' cy='60' r='5'/><circle cx='115' cy='60' r='5'/><circle cx='140' cy='60' r='5'/><circle cx='40' cy='85' r='5'/><circle cx='65' cy='85' r='5'/><circle cx='90' cy='85' r='5'/><circle cx='115' cy='85' r='5'/><circle cx='140' cy='85' r='5'/><circle cx='90' cy='110' r='5'/></g><rect x='190' y='10' width='160' height='130' fill='#fef2f2' stroke='#ef4444' stroke-width='2' rx='10' stroke-dasharray='5,5'/><text x='270' y='130' text-anchor='middle' font-family='sans-serif' font-size='12' fill='#991b1b'>16 pieces removed</text><g fill='#ef4444'><circle cx='220' cy='35' r='5'/><circle cx='245' cy='35' r='5'/><circle cx='270' cy='35' r='5'/><circle cx='295' cy='35' r='5'/><circle cx='320' cy='35' r='5'/><circle cx='220' cy='60' r='5'/><circle cx='245' cy='60' r='5'/><circle cx='270' cy='60' r='5'/><circle cx='295' cy='60' r='5'/><circle cx='320' cy='60' r='5'/><circle cx='220' cy='85' r='5'/><circle cx='245' cy='85' r='5'/><circle cx='270' cy='85' r='5'/><circle cx='295' cy='85' r='5'/><circle cx='320' cy='85' r='5'/><circle cx='270' cy='110' r='5'/></g></svg></div>"
+        },
+        {
+            num: 10,
+            question: "Miriam left home at 10:30 a.m. She traveled for 7 hours. What time was it when she arrived?",
+            answer: "Add 7 hours to 10:30 a.m. <br>10:30 a.m. + 1.5 hours = 12:00 p.m. (Noon).<br>Since we used 1.5 hours of the 7, we have 5.5 hours remaining.<br>12:00 p.m. + 5.5 hours = 5:30 p.m. <br>She arrived at <strong>5:30 p.m.</strong>"
+        },
+        {
+            num: 11,
+            question: "Mark traveled 42 miles in 1 hour. If he kept going at the same speed, how far would he travel in 20 hours?",
+            answer: "Use the formula Distance = Speed \(\times\) Time. <br>\( 42 \text{ miles/hour} \times 20 \text{ hours} = 840 \text{ miles} \). <br>He would travel <strong>840 miles</strong>."
+        },
+        {
+            num: 12,
+            question: "Violet gave the cashier $40 for a toaster that cost $29.99 plus $1.80 in tax. How much money should she get back?",
+            answer: "First, calculate the total cost: \( \$29.99 + \$1.80 = \$31.79 \). <br>Then, subtract the total cost from the amount given to the cashier: \( \$40.00 - \$31.79 = \$8.21 \). <br>She should get back <strong>$8.21</strong>."
+        },
+        {
+            num: 13,
+            question: "Connor faced the sun as it set in the west, then turned 90° counterclockwise and headed home. In what direction was Connor heading after the turn?",
+            answer: "Connor is initially facing West. A 90° counterclockwise turn means making a quarter-turn to his left. If you are facing West and turn to your left, you are now facing South. He was heading <strong>South</strong>."
+        },
+        {
+            num: 14,
+            question: "\( N + 8 + 2 + 3 + 5 + 2 = 24 \)",
+            answer: "First, combine all the known constants on the left side: \( 8 + 2 + 3 + 5 + 2 = 20 \). <br>The equation becomes \( N + 20 = 24 \). <br>Subtract 20 from both sides: \( N = 24 - 20 \).<br>Therefore, <strong>\( N = 4 \)</strong>."
+        },
+        {
+            num: 15,
+            question: "\( 4.12 - (3.6 + 0.2 + 0.125) \)",
+            answer: "Following the order of operations, solve the math inside the parentheses first: <br>\( 3.6 + 0.2 = 3.8 \)<br>\( 3.8 + 0.125 = 3.925 \) <br>Next, subtract that sum from 4.12: <br>\( 4.120 - 3.925 = 0.195 \). <br>The answer is <strong>0.195</strong>."
+        },
+        {
+            num: 16,
+            question: "\( \$18 - \$15.63 \)",
+            answer: "Align the decimals and subtract: <br>\( \$18.00 - \$15.63 = \$2.37 \). <br>The answer is <strong>$2.37</strong>."
+        },
+        {
+            num: 17,
+            question: "\( \$15.27 + \$85.75 \)",
+            answer: "Align the decimals and add: <br>\( \$15.27 + \$85.75 = \$101.02 \). <br>The answer is <strong>$101.02</strong>."
+        },
+        {
+            num: 18,
+            question: "\( 2^3 \times \sqrt{25} \)",
+            answer: "Evaluate the exponent and the square root first: <br>\( 2^3 = 2 \times 2 \times 2 = 8 \). <br>\( \sqrt{25} = 5 \). <br>Then multiply the results: \( 8 \times 5 = 40 \). <br>The answer is <strong>40</strong>."
+        },
+        {
+            num: 19,
+            question: "\( 30 \times 90 \)",
+            answer: "Multiply the non-zero leading digits: \( 3 \times 9 = 27 \). <br>Then count the zeros in the factors (two zeros) and attach them to the product: <strong>2700</strong>."
+        },
+        {
+            num: 20,
+            question: "\( \$7.50 \times 8 \)",
+            answer: "Multiply: \( 7.50 \times 8 = 60.00 \). <br>The answer is <strong>$60.00</strong>."
+        },
+        {
+            num: 21,
+            question: "\( 49 \times 62 \)",
+            answer: "Using standard multiplication:<br>\( 49 \times 2 = 98 \)<br>\( 49 \times 60 = 2940 \)<br>Add the partial products: \( 98 + 2940 = 3038 \). <br>The answer is <strong>3038</strong>."
+        },
+        {
+            num: 22,
+            question: "\( 54 \times 23 \)",
+            answer: "Using standard multiplication:<br>\( 54 \times 3 = 162 \)<br>\( 54 \times 20 = 1080 \)<br>Add the partial products: \( 162 + 1080 = 1242 \). <br>The answer is <strong>1242</strong>."
+        },
+        {
+            num: 23,
+            question: "\( 74 \times 40 \)",
+            answer: "Multiply \( 74 \times 4 = 296 \), then add the zero. <br>The answer is <strong>2960</strong>."
+        },
+        {
+            num: 24,
+            question: "\( 4 \overline{) \$6.36 } \)",
+            answer: "Divide 6.36 by 4 using long division.<br>\( 6 \div 4 = 1 \) with a remainder of 2. <br>Bring down the 3: \( 23 \div 4 = 5 \) with a remainder of 3. <br>Bring down the 6: \( 36 \div 4 = 9 \). <br>Place the decimal point directly above its position in the dividend. <br>The answer is <strong>$1.59</strong>."
+        },
+        {
+            num: 25,
+            question: "\( 5 \overline{) 800 } \)",
+            answer: "Divide 800 by 5. <br>\( 80 \div 5 = 16 \), then attach the remaining zero. <br>The answer is <strong>160</strong>."
+        },
+        {
+            num: 26,
+            question: "\( 4735 \div 8 \)",
+            answer: "Divide 4735 by 8 using long division:<br>\( 47 \div 8 = 5 \) remainder 7.<br>Bring down 3 to make 73. \( 73 \div 8 = 9 \) remainder 1.<br>Bring down 5 to make 15. \( 15 \div 8 = 1 \) remainder 7.<br>The answer is <strong>591 R 7</strong> (or \( 591 \frac{7}{8} \), which is \( 591.875 \))."
+        },
+        {
+            num: 27,
+            question: "\( 1800 \div 3 \)",
+            answer: "Divide 18 by 3 to get 6, then attach the two zeros. <br>The answer is <strong>600</strong>."
+        },
+        {
+            num: 28,
+            question: "Estimate the quotient when 1520 is divided by 5. Then find the exact quotient.",
+            answer: "To estimate, round 1520 to a highly compatible number, like 1500. <br>\( 1500 \div 5 = 300 \). <br>To find the exact quotient, divide 1520 by 5: <br>\( 1520 \div 5 = 304 \). <br><br>Estimated: <strong>300</strong> <br>Exact: <strong>304</strong>."
+        },
+        {
+            num: 29,
+            question: "Draw and shade circles to show that \( 2 \frac{1}{4} \) equals \( \frac{9}{4} \).",
+            answer: "A whole circle represents 1. Divide circles into quarters (4 equal slices). Two whole circles require shading \( 4 + 4 = 8 \) quarters. The remaining fraction \( \frac{1}{4} \) requires shading 1 more quarter of a third circle. Total quarters shaded = \( 8 + 1 = 9 \) quarters, demonstrating visually that \( 2 \frac{1}{4} = \frac{9}{4} \).<br><div class='svg-container'><svg width='300' height='100' viewBox='0 0 300 100' xmlns='http://www.w3.org/2000/svg'><g transform='translate(50,50)'><circle cx='0' cy='0' r='40' fill='#4ea8de' stroke='#000' stroke-width='2'/><line x1='-40' y1='0' x2='40' y2='0' stroke='#000' stroke-width='2'/><line x1='0' y1='-40' x2='0' y2='40' stroke='#000' stroke-width='2'/></g><g transform='translate(150,50)'><circle cx='0' cy='0' r='40' fill='#4ea8de' stroke='#000' stroke-width='2'/><line x1='-40' y1='0' x2='40' y2='0' stroke='#000' stroke-width='2'/><line x1='0' y1='-40' x2='0' y2='40' stroke='#000' stroke-width='2'/></g><g transform='translate(250,50)'><circle cx='0' cy='0' r='40' fill='none' stroke='#000' stroke-width='2'/><path d='M 0 0 L 40 0 A 40 40 0 0 0 0 -40 Z' fill='#4ea8de' stroke='#000' stroke-width='2'/><line x1='-40' y1='0' x2='40' y2='0' stroke='#000' stroke-width='2'/><line x1='0' y1='-40' x2='0' y2='40' stroke='#000' stroke-width='2'/></g></svg></div>"
+        },
+        {
+            num: 30,
+            question: "Find the perimeter and area of this rectangle. <br><em style='font-size: 0.9em; color: gray;'>(Dimensions: Length = 50 ft, Width = 20 ft)</em>",
+            answer: "<strong>Perimeter</strong> is the total distance around the outside of the rectangle:<br> \( P = 2 \times (\text{length} + \text{width}) = 2 \times (50 + 20) = 2 \times 70 = 140 \text{ ft} \). <br><br><strong>Area</strong> is the total space inside the boundary:<br> \( A = \text{length} \times \text{width} = 50 \times 20 = 1000 \text{ sq ft} \)."
+        }
+    ];
+
+    const worksheetDiv = document.getElementById('worksheet');
+
+    problems.forEach(prob => {
+        const card = document.createElement('div');
+        card.className = 'problem-card';
+        
+        card.innerHTML = `
+            <div class="question-header">
+                <div class="question-number">${prob.num}.</div>
+                <div class="question-text">${prob.question}</div>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(${prob.num})">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                Review Answer
+            </button>
+            <div id="answer-${prob.num}" class="answer-container">
+                <div class="answer-title">Solution Explanation:</div>
+                <div>${prob.answer}</div>
+            </div>
+        `;
+        worksheetDiv.appendChild(card);
+    });
+
+    function toggleAnswer(id) {
+        const answerDiv = document.getElementById(`answer-${id}`);
+        if (answerDiv.classList.contains('show')) {
+            answerDiv.classList.remove('show');
+        } else {
+            answerDiv.classList.add('show');
+        }
+    }
+</script>
+
+</body>
+</html>
