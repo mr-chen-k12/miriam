@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 93 Practice Quiz</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-bg: #eff6ff;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --error: #dc2626;
+            --error-bg: #fef2f2;
+            --text-main: #1e293b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af, var(--primary));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--border);
+            color: #1e3a8a;
+        }
+
+        .quiz-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .options-container {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            display: block;
+            background-color: var(--success-bg);
+            border-left: 5px solid var(--success);
+            color: #14532d;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background-color: var(--error-bg);
+            border-left: 5px solid var(--error);
+            color: #7f1d1d;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            font-size: 0.95em;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+            padding-top: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Lesson 93 Interactive Practice Quiz</h1>
+        <p>Select your answers for instant feedback and detailed explanations!</p>
+    </header>
+
+    <h2 class="section-title">Concept 1: Worded Addition (Problem 3 Clones)</h2>
+    
+    <div class="quiz-card" data-q="1">
+        <span class="question-num">Question 1</span>
+        <p>What number is five hundred sixty more than three hundred forty?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q1" value="wrong"> 800</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong"> 220</label>
+            <label class="option-label"><input type="radio" name="q1" value="correct"> 900</label>
+            <label class="option-label"><input type="radio" name="q1" value="wrong"> 1,000</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 900</strong><br>
+            <div class="explanation">"More than" tells us we need to add the two quantities together: \(340 + 560 = 900\).</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="2">
+        <span class="question-num">Question 2</span>
+        <p>What number is four hundred eighty more than five hundred twenty?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q2" value="correct"> 1,000</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong"> 900</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong"> 40</label>
+            <label class="option-label"><input type="radio" name="q2" value="wrong"> 1,080</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 1,000</strong><br>
+            <div class="explanation">Add four hundred eighty (480) and five hundred twenty (520): \(520 + 480 = 1,000\).</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="3">
+        <span class="question-num">Question 3</span>
+        <p>What number is six hundred seventy more than one hundred thirty?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q3" value="wrong"> 700</label>
+            <label class="option-label"><input type="radio" name="q3" value="correct"> 800</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong"> 540</label>
+            <label class="option-label"><input type="radio" name="q3" value="wrong"> 770</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 800</strong><br>
+            <div class="explanation">Combine the values using standard addition: \(130 + 670 = 800\).</div>
+        </template>
+    </div>
+
+    <h2 class="section-title">Concept 2: Currency Weights & Logic (Problem 5 Clones)</h2>
+
+    <div class="quiz-card" data-q="4">
+        <span class="question-num">Question 4</span>
+        <p>A $1 bill weighs about 1 gram. Approximately how much would a single $20 bill weigh?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q4" value="wrong"> About 20 grams</label>
+            <label class="option-label"><input type="radio" name="q4" value="correct"> About 1 gram</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong"> About 5 grams</label>
+            <label class="option-label"><input type="radio" name="q4" value="wrong"> About 2 grams</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: About 1 gram</strong><br>
+            <div class="explanation">All standard federal U.S. paper currency bills share the exact same material specifications and dimensions. Because of this, a $20 bill weighs the same as a $1 bill: about 1 gram.</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="5">
+        <span class="question-num">Question 5</span>
+        <p>If a standard $10 bill weighs about 1 gram, what is the approximate weight of a single $100 bill?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q5" value="wrong"> About 100 grams</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong"> About 10 grams</label>
+            <label class="option-label"><input type="radio" name="q5" value="correct"> About 1 gram</label>
+            <label class="option-label"><input type="radio" name="q5" value="wrong"> About 0.1 grams</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: About 1 gram</strong><br>
+            <div class="explanation">Paper bills are manufactured uniformly. Changing the printed value layout does not alter the underlying paper weight; thus, it weighs about 1 gram.</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="6">
+        <span class="question-num">Question 6</span>
+        <p>A stack of ten $1 bills weighs about 10 grams. About how much would a uniform stack of ten $50 bills weigh?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q6" value="correct"> About 10 grams</label>
+            <label class="option-label"><input type="radio" name="q6" value="wrong"> About 500 grams</label>
+            <label class="option-label"><input type="radio" name="q6" value="wrong"> About 50 grams</label>
+            <label class="option-label"><input type="radio" name="q6" value="wrong"> About 100 grams</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: About 10 grams</strong><br>
+            <div class="explanation">Since each individual bill weighs 1 gram regardless of face denomination value, 10 banknotes of any type will always total \(10 \times 1 = 10\text{ grams}\).</div>
+        </template>
+    </div>
+
+    <h2 class="section-title">Concept 3: Estimating 2-Digit Products (Problem 8 Clones)</h2>
+
+    <div class="quiz-card" data-q="7">
+        <span class="question-num">Question 7</span>
+        <p>Estimate the product of 38 and 71 by rounding each factor to the nearest ten.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q7" value="wrong"> 2,100</label>
+            <label class="option-label"><input type="radio" name="q7" value="correct"> 2,800</label>
+            <label class="option-label"><input type="radio" name="q7" value="wrong"> 3,200</label>
+            <label class="option-label"><input type="radio" name="q7" value="wrong"> 2,400</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 2,800</strong><br>
+            <div class="explanation">Round each value to the nearest ten: \(38 \approx 40\) and \(71 \approx 70\). Then multiply the rounded numbers together: \(40 \times 70 = 2,800\).</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="8">
+        <span class="question-num">Question 8</span>
+        <p>Estimate the product of 52 and 89 by rounding each factor to the nearest ten.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q8" value="wrong"> 4,000</label>
+            <label class="option-label"><input type="radio" name="q8" value="wrong"> 4,800</label>
+            <label class="option-label"><input type="radio" name="q8" value="correct"> 4,500</label>
+            <label class="option-label"><input type="radio" name="q8" value="wrong"> 5,000</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 4,500</strong><br>
+            <div class="explanation">Round the terms: \(52 \approx 50\) and \(89 \approx 90\). Now run the evaluation: \(50 \times 90 = 4,500\).</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="9">
+        <span class="question-num">Question 9</span>
+        <p>Estimate the product of 27 and 43 by rounding each factor to the nearest ten.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q9" value="correct"> 1,200</label>
+            <label class="option-label"><input type="radio" name="q9" value="wrong"> 800</label>
+            <label class="option-label"><input type="radio" name="q9" value="wrong"> 1,500</label>
+            <label class="option-label"><input type="radio" name="q9" value="wrong"> 1,400</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: 1,200</strong><br>
+            <div class="explanation">Round the factors up/down: \(27 \approx 30\) and \(43 \approx 40\). Multiply the approximations: \(30 \times 40 = 1,200\).</div>
+        </template>
+    </div>
+
+    <h2 class="section-title">Concept 4: Multi-Step Money Calculations (Problem 12 Clones)</h2>
+
+    <div class="quiz-card" data-q="10">
+        <span class="question-num">Question 10</span>
+        <p>Leo gave the cashier $50 for a game that cost $34.99 plus $2.50 in sales tax. How much change should he get back?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q10" value="wrong"> $15.01</label>
+            <label class="option-label"><input type="radio" name="q10" value="correct"> $12.51</label>
+            <label class="option-label"><input type="radio" name="q10" value="wrong"> $13.51</label>
+            <label class="option-label"><input type="radio" name="q10" value="wrong"> $17.51</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $12.51</strong><br>
+            <div class="explanation">
+                1. Calculate total price: \(\$34.99 + \$2.50 = \$37.49\).<br>
+                2. Subtract from money paid: \(\$50.00 - \$37.49 = \$12.51\).
+            </div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="11">
+        <span class="question-num">Question 11</span>
+        <p>Maya paid with a $20 bill for a new sketchbook costing $14.95 plus $0.90 sales tax. What is her correct change?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q11" value="wrong"> $5.05</label>
+            <label class="option-label"><input type="radio" name="q11" value="wrong"> $4.25</label>
+            <label class="option-label"><input type="radio" name="q11" value="correct"> $4.15</label>
+            <label class="option-label"><input type="radio" name="q11" value="wrong"> $3.95</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $4.15</strong><br>
+            <div class="explanation">
+                1. Find the sum cost: \(\$14.95 + \$0.90 = \$15.85\).<br>
+                2. Subtract from cash tendered: \(\$20.00 - \$15.85 = \$4.15\).
+            </div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="12">
+        <span class="question-num">Question 12</span>
+        <p>Sam bought a tool kit for $79.99 with $5.20 sales tax added. He paid using a single $100 bill. How much change does he receive?</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q12" value="correct"> $14.81</label>
+            <label class="option-label"><input type="radio" name="q12" value="wrong"> $20.01</label>
+            <label class="option-label"><input type="radio" name="q12" value="wrong"> $15.21</label>
+            <label class="option-label"><input type="radio" name="q12" value="wrong"> $25.19</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $14.81</strong><br>
+            <div class="explanation">
+                1. Combine tool kit and tax item cost: \(\$79.99 + \$5.20 = \$85.19\).<br>
+                2. Calculate target change: \(\$100.00 - \$85.19 = \$14.81\).
+            </div>
+        </template>
+    </div>
+
+    <h2 class="section-title">Concept 5: Decimal Subtraction from Wholes (Problem 16 Clones)</h2>
+
+    <div class="quiz-card" data-q="13">
+        <span class="question-num">Question 13</span>
+        <p>Calculate: &nbsp; \(\$20 - \$14.32\)</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q13" value="wrong"> $6.68</label>
+            <label class="option-label"><input type="radio" name="q13" value="correct"> $5.68</label>
+            <label class="option-label"><input type="radio" name="q13" value="wrong"> $5.78</label>
+            <label class="option-label"><input type="radio" name="q13" value="wrong"> $6.32</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $5.68</strong><br>
+            <div class="explanation">Line up decimal places vertically by adding placeholder trailing zeros to the whole number: <br>\(\begin{array}{r} \$20.00 \\ - \quad \$14.32 \\ \hline \$5.68 \end{array}\)</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="14">
+        <span class="question-num">Question 14</span>
+        <p>Calculate: &nbsp; \(\$15 - \$8.74\)</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q14" value="wrong"> $7.26</label>
+            <label class="option-label"><input type="radio" name="q14" value="wrong"> $6.36</label>
+            <label class="option-label"><input type="radio" name="q14" value="correct"> $6.26</label>
+            <label class="option-label"><input type="radio" name="q14" value="wrong"> $7.74</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $6.26</strong><br>
+            <div class="explanation">Align points and subtract with regrouping: <br>\(\begin{array}{r} \$15.00 \\ - \quad \$8.74 \\ \hline \$6.26 \end{array}\)</div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="15">
+        <span class="question-num">Question 15</span>
+        <p>Calculate: &nbsp; \(\$50 - \$32.18\)</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q15" value="correct"> $17.82</label>
+            <label class="option-label"><input type="radio" name="q15" value="wrong"> $18.82</label>
+            <label class="option-label"><input type="radio" name="q15" value="wrong"> $17.92</label>
+            <label class="option-label"><input type="radio" name="q15" value="wrong"> $28.18</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: $17.82</strong><br>
+            <div class="explanation">Ensure precision alignment before performing column subtraction: <br>\(\begin{array}{r} \$50.00 \\ - \quad \$32.18 \\ \hline \$17.82 \end{array}\)</div>
+        </template>
+    </div>
+
+    <h2 class="section-title">Concept 6: Area & Perimeter Formulas (Problem 30 Clones)</h2>
+
+    <div class="quiz-card" data-q="16">
+        <span class="question-num">Question 16</span>
+        <p>Find the perimeter and area of a rectangle with a Length of 40 ft and a Width of 30 ft.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q16" value="wrong"> Perimeter = 70 ft | Area = 1,200 sq ft</label>
+            <label class="option-label"><input type="radio" name="q16" value="correct"> Perimeter = 140 ft | Area = 1,200 sq ft</label>
+            <label class="option-label"><input type="radio" name="q16" value="wrong"> Perimeter = 140 ft | Area = 700 sq ft</label>
+            <label class="option-label"><input type="radio" name="q16" value="wrong"> Perimeter = 2,400 ft | Area = 140 sq ft</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: Perimeter = 140 ft | Area = 1,200 sq ft</strong><br>
+            <div class="explanation">
+                &bull; <strong>Perimeter:</strong> Sum all sides: \(P = 2 \times (40 + 30) = 2 \times 70 = 140\text{ ft}\).<br>
+                &bull; <strong>Area:</strong> Multiply length by width: \(A = 40 \times 30 = 1,200\text{ sq ft}\).
+            </div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="17">
+        <span class="question-num">Question 17</span>
+        <p>Find the perimeter and area of a rectangle with a Length of 60 m and a Width of 10 m.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q17" value="wrong"> Perimeter = 70 m | Area = 600 sq m</label>
+            <label class="option-label"><input type="radio" name="q17" value="wrong"> Perimeter = 140 m | Area = 700 sq m</label>
+            <label class="option-label"><input type="radio" name="q17" value="correct"> Perimeter = 140 m | Area = 600 sq m</label>
+            <label class="option-label"><input type="radio" name="q17" value="wrong"> Perimeter = 120 m | Area = 600 sq m</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: Perimeter = 140 m | Area = 600 sq m</strong><br>
+            <div class="explanation">
+                &bull; <strong>Perimeter:</strong> Total path around box boundary: \(P = 2 \times (60 + 10) = 140\text{ m}\).<br>
+                &bull; <strong>Area:</strong> Total grid layout internal coverage space: \(A = 60 \times 10 = 600\text{ sq m}\).
+            </div>
+        </template>
+    </div>
+
+    <div class="quiz-card" data-q="18">
+        <span class="question-num">Question 18</span>
+        <p>Find the perimeter and area of a rectangle with a Length of 25 in. and a Width of 20 in.</p>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q18" value="wrong"> Perimeter = 45 in. | Area = 500 sq in.</label>
+            <label class="option-label"><input type="radio" name="q18" value="correct"> Perimeter = 90 in. | Area = 500 sq in.</label>
+            <label class="option-label"><input type="radio" name="q18" value="wrong"> Perimeter = 90 in. | Area = 450 sq in.</label>
+            <label class="option-label"><input type="radio" name="q18" value="wrong"> Perimeter = 500 in. | Area = 90 sq in.</label>
+        </div>
+        <div class="feedback"></div>
+        <template class="exp-text">
+            <strong>Correct Answer: Perimeter = 90 in. | Area = 500 sq in.</strong><br>
+            <div class="explanation">
+                &bull; <strong>Perimeter:</strong> \(P = 2 \times (25 + 20) = 2 \times 45 = 90\text{ in.}\)<br>
+                &bull; <strong>Area:</strong> \(A = 25 \times 20 = 500\text{ sq in.}\)
+            </div>
+        </template>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('change', function(e) {
+        if (e.target.tagName === 'INPUT' && e.target.type === 'radio') {
+            const card = e.target.closest('.quiz-card');
+            const feedbackDiv = card.querySelector('.feedback');
+            const template = card.querySelector('.exp-text');
+            const isCorrect = e.target.value === 'correct';
+            
+            // Clear any previous classes
+            feedbackDiv.className = 'feedback';
+            
+            if (isCorrect) {
+                feedbackDiv.classList.add('correct');
+                feedbackDiv.innerHTML = "🎉 <strong>Correct! Excellent job!</strong>";
+            } else {
+                feedbackDiv.classList.add('incorrect');
+                // Insert entire warning label plus explanation markup
+                feedbackDiv.innerHTML = "❌ <strong>Incorrect. Let's look at why:</strong> " + template.innerHTML;
+                
+                // Retrigger MathJax to render dynamic math within the newly exposed text block
+                if (window.MathJax && window.MathJax.typeset) {
+                    window.MathJax.typeset([feedbackDiv]);
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
