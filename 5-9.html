@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 94: Two-Step Word Problems & Review</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .problem-card {
+            background: #fafafa;
+            border-left: 5px solid #3498db;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .problem-num {
+            font-weight: bold;
+            color: #2980b9;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .question {
+            font-size: 1.05em;
+            margin-bottom: 12px;
+        }
+        .btn-review {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-review:hover {
+            background-color: #2980b9;
+        }
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #eef7fc;
+            border-radius: 4px;
+            border-left: 3px solid #27ae60;
+        }
+        .answer-highlight {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        canvas {
+            background: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lesson 94: Two-Step Word Problems</h1>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 1</div>
+        <div class="question">Gabriel gave the clerk a $5 bill to pay for a half gallon of milk that cost $1.06 and a box of cereal that cost $2.39. How much money should he get back?</div>
+        <button class="btn-review" onclick="toggleExp('exp1')">Review Answer & Explanation</button>
+        <div id="exp1" class="explanation-box">
+            <strong>Step 1 (Find total cost):</strong> \(\$1.06 + \$2.39 = \$3.45\)<br>
+            <strong>Step 2 (Calculate change):</strong> \(\$5.00 - \$3.45 = \$1.55\)<br>
+            <span class="answer-highlight">Answer: $1.55</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 2</div>
+        <div class="question">Eighty-one animals crossed the bridge. One third of them were billy goats. The rest were bears. How many bears crossed the bridge? <em>(Hint: First find how many billy goats crossed the bridge.)</em></div>
+        <button class="btn-review" onclick="toggleExp('exp2')">Review Answer & Explanation</button>
+        <div id="exp2" class="explanation-box">
+            <strong>Step 1 (Find billy goats):</strong> \(\frac{1}{3} \text{ of } 81 = 81 \div 3 = 27\text{ billy goats}\)<br>
+            <strong>Step 2 (Find bears):</strong> \(81 - 27 = 54\)<br>
+            <span class="answer-highlight">Answer: 54 bears</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 3</div>
+        <div class="question">Johnny planted 8 rows of apple trees. There were 15 trees in each row. How many trees did he plant?</div>
+        <button class="btn-review" onclick="toggleExp('exp3')">Review Answer & Explanation</button>
+        <div id="exp3" class="explanation-box">
+            <strong>Calculation:</strong> \(8 \times 15 = 120\)<br>
+            <span class="answer-highlight">Answer: 120 trees</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 4</div>
+        <div class="question">Four pounds of bananas cost Titania one hundred fifty-six rubles. Each pound of bananas cost how many rubles?</div>
+        <button class="btn-review" onclick="toggleExp('exp4')">Review Answer & Explanation</button>
+        <div id="exp4" class="explanation-box">
+            <strong>Calculation:</strong> \(156 \div 4 = 39\)<br>
+            <span class="answer-highlight">Answer: 39 rubles</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 5</div>
+        <div class="question">This scale shows a mass of how many grams?</div>
+        <canvas id="canvasQ5" width="200" height="200"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp5')">Review Answer & Explanation</button>
+        <div id="exp5" class="explanation-box">
+            <strong>Explanation:</strong> The dial marks go up by increments of 200. The needle is pointing perfectly halfway between 400 and 600.<br>
+            <strong>Calculation:</strong> \(\frac{400 + 600}{2} = 500\)<br>
+            <span class="answer-highlight">Answer: 500 grams</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 6</div>
+        <div class="question">Write the tally for 16.</div>
+        <canvas id="canvasQ6" width="250" height="60"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp6')">Review Answer & Explanation</button>
+        <div id="exp6" class="explanation-box">
+            <strong>Explanation:</strong> Tallies are collected in groups of 5. For 16, we write three sets of 5-tally markers, plus one single unit marker remaining: \(5 + 5 + 5 + 1 = 16\).<br>
+            <span class="answer-highlight">Answer: Shown in the diagram above.</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 7</div>
+        <div class="question">Name the shaded part of the large square (a) as a fraction, (b) as a decimal number.</div>
+        <canvas id="canvasQ7" width="160" height="160"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp7')">Review Answer & Explanation</button>
+        <div id="exp7" class="explanation-box">
+            <strong>Explanation:</strong> The large grid consists of 100 small squares total. Exactly 7 individual squares are shaded in the bottom row.<br>
+            <strong>(a) Fraction:</strong> \(\frac{7}{100}\)<br>
+            <strong>(b) Decimal:</strong> 0.07<br>
+            <span class="answer-highlight">Answer: (a) \(\frac{7}{100}\), (b) 0.07</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 8</div>
+        <div class="question">Estimate the product of 32 and 48. Then find the exact product.</div>
+        <button class="btn-review" onclick="toggleExp('exp8')">Review Answer & Explanation</button>
+        <div id="exp8" class="explanation-box">
+            <strong>Estimation:</strong> Round 32 to 30 and 48 to 50. \(30 \times 50 = 1500\)<br>
+            <strong>Exact Calculation:</strong> \(32 \times 48 = 1536\)<br>
+            <span class="answer-highlight">Answer: Estimate = 1500; Exact = 1536</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 9</div>
+        <div class="question">One third of the 24 camels were Bactrian. How many camels were Bactrian? Draw a picture to illustrate the problem.</div>
+        <canvas id="canvasQ9" width="300" height="100"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp9')">Review Answer & Explanation</button>
+        <div id="exp9" class="explanation-box">
+            <strong>Calculation:</strong> \(\frac{1}{3} \times 24 = 24 \div 3 = 8\)<br>
+            <span class="answer-highlight">Answer: 8 camels</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 10</div>
+        <div class="question">A quart is a quarter of a gallon. A quart is what percent of a gallon?</div>
+        <button class="btn-review" onclick="toggleExp('exp10')">Review Answer & Explanation</button>
+        <div id="exp10" class="explanation-box">
+            <strong>Explanation:</strong> A "quarter" means one-fourth (\(\frac{1}{4}\)). Converting a quarter to a percentage:<br>
+            \(\frac{1}{4} \times 100\% = 25\%\)<br>
+            <span class="answer-highlight">Answer: 25%</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 11</div>
+        <div class="question">For each statement, write either "true" or "false."<br>(a) Every square is also a rectangle.<br>(b) Every rectangle is also a square.</div>
+        <button class="btn-review" onclick="toggleExp('exp11')">Review Answer & Explanation</button>
+        <div id="exp11" class="explanation-box">
+            <strong>(a) True:</strong> A rectangle requires four 90° angles, which a square satisfies.<br>
+            <strong>(b) False:</strong> A square requires all four sides to be equal lengths, which standard rectangles do not satisfy.<br>
+            <span class="answer-highlight">Answer: (a) true, (b) false</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 12</div>
+        <div class="question">Four hundred seventy-one of the one thousand students in the school were girls. Girls made up what fraction of the students in the school?</div>
+        <button class="btn-review" onclick="toggleExp('exp12')">Review Answer & Explanation</button>
+        <div id="exp12" class="explanation-box">
+            <strong>Explanation:</strong> Put the target quantity over the total quantity.<br>
+            <span class="answer-highlight">Answer: \(\frac{471}{1000}\)</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 13</div>
+        <div class="question">Write the answer to problem 12 as a decimal number. Then use words to name the number.</div>
+        <button class="btn-review" onclick="toggleExp('exp13')">Review Answer & Explanation</button>
+        <div id="exp13" class="explanation-box">
+            <strong>Decimal Form:</strong> 0.471<br>
+            <strong>Word Form:</strong> four hundred seventy-one thousandths<br>
+            <span class="answer-highlight">Answer: 0.471; four hundred seventy-one thousandths</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 14</div>
+        <div class="question">Which digit in 1.875 is in the tenths place?</div>
+        <button class="btn-review" onclick="toggleExp('exp14')">Review Answer & Explanation</button>
+        <div id="exp14" class="explanation-box">
+            <strong>Explanation:</strong> Place values right of the decimal run: Tenths, Hundreths, Thousandths. The first digit to the right of the decimal point is 8.<br>
+            <span class="answer-highlight">Answer: 8</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 15</div>
+        <div class="question">Matthew traveled 496 miles in 8 hours. He traveled an average of how many miles per hour?</div>
+        <button class="btn-review" onclick="toggleExp('exp15')">Review Answer & Explanation</button>
+        <div id="exp15" class="explanation-box">
+            <strong>Calculation:</strong> \(496 \div 8 = 62\)<br>
+            <span class="answer-highlight">Answer: 62 miles per hour</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 16</div>
+        <div class="question">Simplify: \(8.3 - (1.74 + 0.9)\)</div>
+        <button class="btn-review" onclick="toggleExp('exp16')">Review Answer & Explanation</button>
+        <div id="exp16" class="explanation-box">
+            <strong>Step 1 (Parentheses):</strong> \(1.74 + 0.90 = 2.64\)<br>
+            <strong>Step 2 (Subtraction):</strong> \(8.30 - 2.64 = 5.66\)<br>
+            <span class="answer-highlight">Answer: 5.66</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 17</div>
+        <div class="question">Multiply: \(63 \times 1000\)</div>
+        <button class="btn-review" onclick="toggleExp('exp17')">Review Answer & Explanation</button>
+        <div id="exp17" class="explanation-box">
+            <strong>Explanation:</strong> Shift place value positions 3 steps up by appending three zeros.<br>
+            <span class="answer-highlight">Answer: 63,000</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 18</div>
+        <div class="question">Multiply: \(80 \times 50\unicode{x00A2}\)</div>
+        <button class="btn-review" onclick="toggleExp('exp18')">Review Answer & Explanation</button>
+        <div id="exp18" class="explanation-box">
+            <strong>Calculation in Cents:</strong> \(80 \times 50 = 4000\unicode{x00A2}\)<br>
+            <strong>Convert to Dollars:</strong> \(4000 \div 100 = \$40.00\)<br>
+            <span class="answer-highlight">Answer: $40.00 (or 4000¢)</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 19</div>
+        <div class="question">Add the column: \(37 + 81 + 45 + 139 + 7 + 15 + 60\)</div>
+        <button class="btn-review" onclick="toggleExp('exp19')">Review Answer & Explanation</button>
+        <div id="exp19" class="explanation-box">
+            <strong>Step-by-step Addition:</strong><br>
+            \(37 + 81 = 118\)<br>
+            \(118 + 45 = 163\)<br>
+            \(163 + 139 = 302\)<br>
+            \(302 + 7 = 309\)<br>
+            \(309 + 15 = 324\)<br>
+            \(324 + 60 = 384\)<br>
+            <span class="answer-highlight">Answer: 384</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 20</div>
+        <div class="question">Multiply:<br>&nbsp;&nbsp;&nbsp;&nbsp;52<br>&nbsp;&times;&nbsp;15<br>&nbsp;&nbsp;&nbsp;&nbsp;---</div>
+        <button class="btn-review" onclick="toggleExp('exp20')">Review Answer & Explanation</button>
+        <div id="exp20" class="explanation-box">
+            <strong>Partial Products:</strong><br>
+            \(52 \times 5 = 260\)<br>
+            \(52 \times 10 = 520\)<br>
+            \(260 + 520 = 780\)<br>
+            <span class="answer-highlight">Answer: 780</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 21</div>
+        <div class="question">Multiply:<br>&nbsp;&nbsp;&nbsp;&nbsp;36<br>&nbsp;&times;&nbsp;27<br>&nbsp;&nbsp;&nbsp;&nbsp;---</div>
+        <button class="btn-review" onclick="toggleExp('exp21')">Review Answer & Explanation</button>
+        <div id="exp21" class="explanation-box">
+            <strong>Partial Products:</strong><br>
+            \(36 \times 7 = 252\)<br>
+            \(36 \times 20 = 720\)<br>
+            \(252 + 720 = 972\)<br>
+            <span class="answer-highlight">Answer: 972</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 22</div>
+        <div class="question">Divide: \(714 \div 2\)</div>
+        <button class="btn-review" onclick="toggleExp('exp22')">Review Answer & Explanation</button>
+        <div id="exp22" class="explanation-box">
+            <strong>Long Division Process:</strong><br>
+            \(7 \div 2 = 3\) remainder 1<br>
+            \(11 \div 2 = 5\) remainder 1<br>
+            \(14 \div 2 = 7\)<br>
+            <span class="answer-highlight">Answer: 357</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 23</div>
+        <div class="question">Divide: \(789 \div 6\)</div>
+        <button class="btn-review" onclick="toggleExp('exp23')">Review Answer & Explanation</button>
+        <div id="exp23" class="explanation-box">
+            <strong>Long Division Process:</strong><br>
+            \(7 \div 6 = 1\) remainder 1<br>
+            \(18 \div 6 = 3\) remainder 0<br>
+            \(9 \div 6 = 1\) remainder 3<br>
+            <span class="answer-highlight">Answer: 131 R 3 (or 131.5)</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 24</div>
+        <div class="question">Find \(N\): \(3N = 624\)</div>
+        <button class="btn-review" onclick="toggleExp('exp24')">Review Answer & Explanation</button>
+        <div id="exp24" class="explanation-box">
+            <strong>Calculation:</strong> Divide both sides by 3:<br>
+            \(N = 624 \div 3 = 208\)<br>
+            <span class="answer-highlight">Answer: 208</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 25</div>
+        <div class="question">Find \(W\): \(5 + W = 5^2\)</div>
+        <button class="btn-review" onclick="toggleExp('exp25')">Review Answer & Explanation</button>
+        <div id="exp25" class="explanation-box">
+            <strong>Step 1:</strong> Evaluate exponent: \(5^2 = 25\)<br>
+            <strong>Step 2:</strong> Solve expression: \(5 + W = 25 \rightarrow W = 25 - 5\)<br>
+            <span class="answer-highlight">Answer: 20</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 26</div>
+        <div class="question">Draw and shade rectangles to show that \(1\frac{2}{5}\) equals \(\frac{7}{5}\).</div>
+        <canvas id="canvasQ26" width="320" height="80"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp26')">Review Answer & Explanation</button>
+        <div id="exp26" class="explanation-box">
+            <strong>Explanation:</strong> Split rectangles into 5 segments each. One full rectangle (\(5/5\)) plus \(2/5\) of the next rectangle matches a total of \(7/5\) shaded blocks.<br>
+            <span class="answer-highlight">Answer: Visual confirmation shown above.</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 27</div>
+        <div class="question">A room is 5 yards long and 4 yards wide. How many square yards of carpeting are needed to cover the floor?</div>
+        <button class="btn-review" onclick="toggleExp('exp27')">Review Answer & Explanation</button>
+        <div id="exp27" class="explanation-box">
+            <strong>Area Formula:</strong> \(\text{Area} = \text{length} \times \text{width}\)<br>
+            <strong>Calculation:</strong> \(5 \text{ yards} \times 4 \text{ yards} = 20 \text{ sq yards}\)<br>
+            <span class="answer-highlight">Answer: 20 square yards</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 28</div>
+        <div class="question">The radius of this circle is 15 millimeters. The diameter of the circle is how many centimeters?</div>
+        <canvas id="canvasQ28" width="150" height="150"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp28')">Review Answer & Explanation</button>
+        <div id="exp28" class="explanation-box">
+            <strong>Step 1 (Find diameter in mm):</strong> \(\text{Diameter} = 2 \times \text{radius} = 2 \times 15\text{ mm} = 30\text{ mm}\)<br>
+            <strong>Step 2 (Convert mm to cm):</strong> Since \(10\text{ mm} = 1\text{ cm}\), divide by 10:<br>
+            \(30 \div 10 = 3\text{ cm}\)<br>
+            <span class="answer-highlight">Answer: 3 centimeters</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 29</div>
+        <div class="question">Which of these letters has two lines of symmetry?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>V&nbsp;&nbsp;&nbsp;&nbsp;W&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;&nbsp;&nbsp;&nbsp;Y&nbsp;&nbsp;&nbsp;&nbsp;Z</strong></div>
+        <canvas id="canvasQ29" width="300" height="80"></canvas>
+        <button class="btn-review" onclick="toggleExp('exp29')">Review Answer & Explanation</button>
+        <div id="exp29" class="explanation-box">
+            <strong>Explanation:</strong> <br>
+            - <strong>V, W, Y:</strong> have only 1 vertical line of symmetry.<br>
+            - <strong>Z:</strong> has rotational symmetry but no reflection lines.<br>
+            - <strong>X:</strong> has 2 lines of symmetry (both vertical and horizontal axes match).<br>
+            <span class="answer-highlight">Answer: X</span>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-num">Problem 30</div>
+        <div class="question">The angle formed by the letter V in problem 29 measures about how many degrees?<br>A. 45° &nbsp;&nbsp;&nbsp;&nbsp; B. 90° &nbsp;&nbsp;&nbsp;&nbsp; C. 135° &nbsp;&nbsp;&nbsp;&nbsp; D. 180°</div>
+        <button class="btn-review" onclick="toggleExp('exp30')">Review Answer & Explanation</button>
+        <div id="exp30" class="explanation-box">
+            <strong>Explanation:</strong> A right angle is 90°. The vertex inside a standard typographic letter 'V' is sharp and acute, which means it measures distinctly less than 90°. 45° is the only reasonable option.<br>
+            <span class="answer-highlight">Answer: A. 45°</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Logic to toggle button panel visibility
+    function toggleExp(id) {
+        var box = document.getElementById(id);
+        if(box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+        }
+    }
+
+    window.onload = function() {
+        // --- Q5 Scale Canvas ---
+        var c5 = document.getElementById("canvasQ5").getContext("2d");
+        c5.translate(100, 100);
+        c5.beginPath();
+        c5.arc(0, 0, 70, 0, 2 * Math.PI);
+        c5.stroke();
+        // Labels & ticks
+        c5.font = "12px sans-serif";
+        c5.textAlign = "center";
+        c5.textBaseline = "middle";
+        c5.fillText("0", 0, -55);
+        c5.fillText("200", 50, -25);
+        c5.fillText("400", 45, 35);
+        c5.fillText("600", -45, 35);
+        c5.fillText("800", -50, -25);
+        c5.fillText("Grams", 0, -20);
+        // Needle pointing straight down (500)
+        c5.beginPath();
+        c5.moveTo(0,0);
+        c5.lineTo(0, 50);
+        c5.lineWidth = 3;
+        c5.strokeStyle = "red";
+        c5.stroke();
+
+        // --- Q6 Tallies Canvas ---
+        var c6 = document.getElementById("canvasQ6").getContext("2d");
+        c6.strokeStyle = "#333";
+        c6.lineWidth = 2;
+        function drawTallyGroup(x) {
+            for(let i=0; i<4; i++) {
+                c6.beginPath();
+                c6.moveTo(x + i*10, 10);
+                c6.lineTo(x + i*10, 50);
+                c6.stroke();
+            }
+            c6.beginPath();
+            c6.moveTo(x - 5, 45);
+            c6.lineTo(x + 35, 15);
+            c6.strokeStyle = "red";
+            c6.stroke();
+            c6.strokeStyle = "#333";
+        }
+        drawTallyGroup(20);
+        drawTallyGroup(70);
+        drawTallyGroup(120);
+        // Last line
+        c6.beginPath();
+        c6.moveTo(170, 10);
+        c6.lineTo(170, 50);
+        c6.stroke();
+
+        // --- Q7 Grid Canvas ---
+        var c7 = document.getElementById("canvasQ7").getContext("2d");
+        for(let r=0; r<10; r++) {
+            for(let col=0; col<10; col++) {
+                if(r === 9 && col < 7) {
+                    c7.fillStyle = "#7f8c8d";
+                    c7.fillRect(col*15 + 5, r*15 + 5, 15, 15);
+                }
+                c7.strokeStyle = "#bdc3c7";
+                c7.strokeRect(col*15 + 5, r*15 + 5, 15, 15);
+            }
+        }
+
+        // --- Q9 Camels Diagram ---
+        var c9 = document.getElementById("canvasQ9").getContext("2d");
+        c9.strokeRect(10, 10, 270, 50);
+        c9.beginPath();
+        c9.moveTo(100, 10); c9.lineTo(100, 60);
+        c9.moveTo(190, 10); c9.lineTo(190, 60);
+        c9.stroke();
+        c9.font = "14px sans-serif";
+        c9.fillText("8 Camels (Bactrian)", 20, 90);
+        c9.fillText("8 Camels", 115, 90);
+        c9.fillText("8 Camels", 205, 90);
+        c9.fillStyle = "#e74c3c";
+        c9.fillRect(10, 10, 90, 50);
+
+        // --- Q26 Fraction Rectangles ---
+        var c26 = document.getElementById("canvasQ26").getContext("2d");
+        // Box 1
+        c26.fillStyle = "#2ecc71";
+        c26.fillRect(10, 15, 125, 40);
+        // Box 2 parts
+        c26.fillRect(160, 15, 50, 40);
+        // Outlines
+        for(let b=0; b<2; b++) {
+            let offset = b * 150 + 10;
+            c26.strokeStyle = "#333";
+            c26.strokeRect(offset, 15, 125, 40);
+            for(let i=1; i<5; i++) {
+                c26.beginPath();
+                c26.moveTo(offset + i*25, 15);
+                c26.lineTo(offset + i*25, 55);
+                c26.stroke();
+            }
+        }
+
+        // --- Q28 Circle Radius ---
+        var c28 = document.getElementById("canvasQ28").getContext("2d");
+        c28.beginPath();
+        c28.arc(75, 75, 50, 0, 2 * Math.PI);
+        c28.stroke();
+        c28.beginPath();
+        c28.moveTo(75, 75);
+        c28.lineTo(125, 75);
+        c28.stroke();
+        c28.font = "12px sans-serif";
+        c28.fillText("15 mm", 80, 70);
+
+        // --- Q29 Reflection Symmetry ---
+        var c29 = document.getElementById("canvasQ29").getContext("2d");
+        c29.font = "bold 28px Georgia";
+        c29.fillText("V     W     X     Y     Z", 20, 45);
+        // X horizontal & vertical symmetry lines
+        c29.strokeStyle = "red";
+        c29.lineWidth = 1;
+        c29.setLineDash([4, 4]);
+        // Vertical axis through X
+        c29.beginPath(); c29.moveTo(103, 10); c29.lineTo(103, 65); c29.stroke();
+        // Horizontal axis through X
+        c29.beginPath(); c29.moveTo(85, 36); c29.lineTo(120, 36); c29.stroke();
+    };
+</script>
+
+</body>
+</html>
