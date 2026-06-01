@@ -51,20 +51,22 @@
 
         .tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 8px;
+            min-width: 120px;
+            padding: 12px 6px;
             background: var(--light);
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
             transition: all 0.3s;
         }
@@ -96,6 +98,7 @@
             font-size: 14px;
             text-align: center;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .vocab-bank {
@@ -109,7 +112,6 @@
             width: 100%;
             min-height: 60px;
             box-sizing: border-box;
-            user-select: none;
         }
 
         .vocab-card {
@@ -118,14 +120,12 @@
             border: 2px solid var(--primary);
             border-radius: 20px;
             cursor: pointer;
-            user-select: none;
             font-weight: 600;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
             user-select: none;
         }
 
-        /* Styles for when a card is selected but not being dragged */
         .vocab-card.selected {
             background: var(--primary-dark) !important;
             color: white !important;
@@ -133,7 +133,6 @@
             animation: selectPulse 2s infinite;
         }
 
-        /* Styles for when a card is actively being dragged by touch */
         .vocab-card.dragging {
             position: fixed;
             opacity: 0.9;
@@ -164,21 +163,9 @@
             pointer-events: all;
         }
 
-        .drop-box.hovered {
-            fill: #e8f4fd;
-            stroke: var(--primary);
-        }
-
-        .drop-box.correct {
-            fill: #e8f8f0;
-            stroke: var(--success);
-            stroke-dasharray: none;
-        }
-
-        .drop-box.incorrect {
-            fill: #fdeaea;
-            stroke: var(--danger);
-        }
+        .drop-box.hovered { fill: #e8f4fd; stroke: var(--primary); }
+        .drop-box.correct { fill: #e8f8f0; stroke: var(--success); stroke-dasharray: none; }
+        .drop-box.incorrect { fill: #fdeaea; stroke: var(--danger); }
 
         .label-text {
             font-size: 14px;
@@ -188,18 +175,37 @@
             dominant-baseline: middle;
         }
 
-        .quiz-item {
+        /* CARD VIEW FOR SINGLE QUESTIONS */
+        .quiz-card {
             background: var(--light);
-            padding: 20px;
-            border-radius: 8px;
+            padding: 22px;
+            border-radius: 12px;
+            margin: 10px auto;
+            max-width: 600px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .quiz-progress {
+            font-size: 13px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .quiz-question-text {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 0;
             margin-bottom: 15px;
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            margin-top: 15px;
         }
 
         @media(min-width: 600px) {
@@ -209,23 +215,14 @@
         .option-btn {
             background: var(--white);
             border: 2px solid #bdc3c7;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 14px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: left;
             font-size: 15px;
+            font-weight: 500;
             transition: all 0.2s;
             touch-action: manipulation;
-        }
-
-        .options-grid.answered .option-btn {
-            cursor: default;
-            opacity: 0.6;
-        }
-
-        .options-grid.answered .option-btn.correct,
-        .options-grid.answered .option-btn.incorrect {
-            opacity: 1;
         }
 
         .option-btn:hover {
@@ -233,6 +230,15 @@
             background: #f7f9fa;
         }
 
+        /* Main locked setup */
+        .options-grid.answered .option-btn {
+            cursor: default;
+            opacity: 0.5;
+        }
+        .options-grid.answered .option-btn.correct,
+        .options-grid.answered .option-btn.incorrect {
+            opacity: 1;
+        }
         .options-grid.answered .option-btn:hover {
             border-color: #bdc3c7;
             background: var(--white);
@@ -250,6 +256,25 @@
             border-color: var(--danger);
         }
 
+        .nav-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .action-btn {
+            background: var(--dark);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .action-btn:hover { background: #1a252f; }
+
         .alert-box {
             padding: 15px;
             border-radius: 6px;
@@ -262,25 +287,13 @@
         .alert-success { background-color: #d4edda; color: #155724; display: block; }
         .alert-danger { background-color: #f8d7da; color: #721c24; display: block; }
 
-        .mistake-list-item {
-            background: #fff;
-            border-left: 4px solid var(--danger);
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 0 6px 6px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .retry-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 4px;
-            cursor: pointer;
+        .gap-complete-card {
+            background: #e8f8f0;
+            border: 2px solid var(--success);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            color: #155724;
         }
     </style>
 </head>
@@ -291,8 +304,9 @@
     
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('diagram')">Labeling Activity</button>
-        <button class="tab-btn" onclick="switchTab('quiz')">Unit Quiz</button>
-        <button class="tab-btn" onclick="switchTab('mistakes'); renderMistakesRoom();">Review Gaps</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">Concepts Quiz</button>
+        <button class="tab-btn" onclick="switchTab('reverse')">Reverse Quiz</button>
+        <button class="tab-btn" onclick="switchTab('mistakes')">Review Gaps</button>
     </div>
 
     <div id="feedback-alert" class="alert-box"></div>
@@ -300,24 +314,20 @@
     <div id="tab-diagram" class="tab-content active">
         <h2>Practice Labeling</h2>
         <div id="mobile-instructions">
-            📱 <strong>Mobile/Tablet Users:</strong> Drag the word cards with your finger and drop them into the target boxes. The word will move with your finger! (Or tap a word and then tap a box).
+            📱 <strong>Mobile/Tablet Users:</strong> Drag the word cards with your finger and drop them into the target boxes. (Or tap a word, then tap a box).
         </div>
         <div class="diagram-layout">
-            <div class="vocab-bank" id="vocab-bank">
-                </div>
+            <div class="vocab-bank" id="vocab-bank"></div>
 
             <div class="svg-container">
                 <svg viewBox="0 0 700 450" width="100%" height="100%" id="eye-svg">
                     <circle cx="230" cy="215" r="110" fill="#ffffff" stroke="#333" stroke-width="3"/>
                     
-                    <path d="M 124 215 A 100 100 0 0 1 140 160 Q 130 170 120 180" fill="none" stroke="#f1948a" stroke-width="4" id="optic-disc-retina"/>
-                    
-                    <path d="M 120 200 Q 100 195 80 190 Q 60 170 50 170 C 40 170 30 180 30 180" fill="none" stroke="#7f8c8d" stroke-width="3" id="optic-nerve-sheath-top"/>
-                    <path d="M 120 230 Q 100 235 80 240 Q 60 260 50 260 C 40 260 30 250 30 250" fill="none" stroke="#7f8c8d" stroke-width="3" id="optic-nerve-sheath-bottom"/>
+                    <path d="M 124 215 A 100 100 0 0 1 140 160 Q 130 170 120 180" fill="none" stroke="#f1948a" stroke-width="4"/>
+                    <path d="M 120 200 Q 100 195 80 190 Q 60 170 50 170 C 40 170 30 180 30 180" fill="none" stroke="#7f8c8d" stroke-width="3"/>
+                    <path d="M 120 230 Q 100 235 80 240 Q 60 260 50 260 C 40 260 30 250 30 250" fill="none" stroke="#7f8c8d" stroke-width="3"/>
                     <path d="M 120 200 L 120 230" fill="none" stroke="#7f8c8d" stroke-width="3"/>
-                    <path d="M 30 180 C 20 180 10 190 10 190 C 0 190 -10 180 -10 180" fill="none" stroke="#ccc" stroke-dasharray="2 2"/>
-                    <path d="M 30 250 C 20 250 10 240 10 240 C 0 240 -10 250 -10 250" fill="none" stroke="#ccc" stroke-dasharray="2 2"/>
-
+                    
                     <g fill="none" stroke="#bdc3c7" stroke-width="1.5">
                         <path d="M 120 205 Q 110 208 100 205 Q 90 202 80 205"/>
                         <path d="M 120 215 Q 110 212 100 215 Q 90 218 80 215"/>
@@ -325,32 +335,20 @@
                         <path d="M 80 205 Q 70 208 60 205 Q 50 202 40 205"/>
                         <path d="M 80 215 Q 70 212 60 215 Q 50 218 40 215"/>
                         <path d="M 80 225 Q 70 222 60 225 Q 50 228 40 225"/>
-                        <path d="M 40 205 Q 35 200 30 205"/>
-                        <path d="M 40 215 Q 35 210 30 215"/>
-                        <path d="M 40 225 Q 35 220 30 225"/>
                         <path d="M 115 208 Q 105 205 95 210 Q 85 215 75 212 Q 65 209 55 214" stroke="#ccc"/>
                         <path d="M 115 222 Q 105 225 95 220 Q 85 215 75 218 Q 65 221 55 216" stroke="#ccc"/>
                     </g>
                     <g fill="none" stroke="#f1948a" stroke-width="2">
-                        <path d="M 120 200 Q 118 205 120 210"/>
-                        <path d="M 120 210 Q 118 215 120 220"/>
-                        <path d="M 120 220 Q 118 225 120 230"/>
-                    </g>
-                    <g stroke="#ddd" stroke-width="2">
-                        <path d="M 10 195 L 30 200 M 10 205 L 30 210 M 10 215 L 30 220 M 10 225 L 30 230 M 10 235 L 30 240"/>
+                        <path d="M 120 200 Q 118 205 120 210"/><path d="M 120 210 Q 118 215 120 220"/><path d="M 120 220 Q 118 225 120 230"/>
                     </g>
 
                     <path d="M 140 160 A 100 100 0 0 1 310 150" fill="none" stroke="#f1948a" stroke-width="4"/>
                     <path d="M 140 270 A 100 100 0 0 0 310 280" fill="none" stroke="#f1948a" stroke-width="4"/>
                     <path d="M 124 215 A 100 100 0 0 0 140 270" fill="none" stroke="#f1948a" stroke-width="4"/>
-
                     <circle cx="220" cy="215" r="85" fill="#f4faff"/>
-
                     <path d="M 324 147 A 112 112 0 0 1 324 283 A 75 75 0 0 0 324 147" fill="#e8f4fd" stroke="#333" stroke-width="3" opacity="0.8"/>
-
                     <line x1="322" y1="148" x2="315" y2="185" stroke="#5d6d7e" stroke-width="8"/>
                     <line x1="322" y1="282" x2="315" y2="245" stroke="#5d6d7e" stroke-width="8"/>
-
                     <ellipse cx="295" cy="215" rx="14" ry="28" fill="#d4e6f1" stroke="#5499c7" stroke-width="2" opacity="0.9"/>
 
                     <line x1="230" y1="105" x2="230" y2="60" stroke="#000" stroke-width="1.5"/>
@@ -358,46 +356,39 @@
                         <rect x="150" y="25" width="160" height="35" rx="5" class="drop-box"/>
                         <text x="230" y="42" class="label-text"></text>
                     </g>
-
                     <line x1="60" y1="215" x2="60" y2="290" stroke="#000" stroke-width="1.5"/>
                     <line x1="60" y1="290" x2="150" y2="290" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="optic nerve">
                         <rect x="155" y="272" width="140" height="35" rx="5" class="drop-box"/>
                         <text x="225" y="290" class="label-text"></text>
                     </g>
-
                     <line x1="145" y1="250" x2="60" y2="370" stroke="#000" stroke-width="1.5"/>
                     <line x1="60" y1="370" x2="150" y2="370" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Retina">
                         <rect x="155" y="352" width="130" height="35" rx="5" class="drop-box"/>
                         <text x="220" y="370" class="label-text"></text>
                     </g>
-
                     <line x1="340" y1="190" x2="420" y2="150" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Cornea">
                         <rect x="425" y="132" width="130" height="35" rx="5" class="drop-box"/>
                         <text x="490" y="150" class="label-text"></text>
                     </g>
-
                     <line x1="318" y1="215" x2="420" y2="215" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Pupil">
                         <rect x="425" y="197" width="130" height="35" rx="5" class="drop-box"/>
                         <text x="490" y="215" class="label-text"></text>
                     </g>
-
                     <line x1="318" y1="260" x2="420" y2="275" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Iris">
                         <rect x="425" y="257" width="130" height="35" rx="5" class="drop-box"/>
                         <text x="490" y="275" class="label-text"></text>
                     </g>
-
                     <line x1="295" y1="215" x2="310" y2="100" stroke="#000" stroke-width="1.5"/>
                     <line x1="310" y1="100" x2="340" y2="100" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Lens">
                         <rect x="345" y="82" width="130" height="35" rx="5" class="drop-box"/>
                         <text x="410" y="100" class="label-text"></text>
                     </g>
-
                     <line x1="240" y1="240" x2="380" y2="360" stroke="#000" stroke-width="1.5"/>
                     <g class="drop-zone" data-label="Vitreous Humor">
                         <rect x="385" y="342" width="165" height="35" rx="5" class="drop-box"/>
@@ -410,16 +401,18 @@
     </div>
 
     <div id="tab-quiz" class="tab-content">
-        <h2>Vocabulary Concepts Practice Quiz</h2>
-        <div id="quiz-questions-container">
-            </div>
+        <h2>Concepts Quiz</h2>
+        <div id="quiz-card-container"></div>
+    </div>
+
+    <div id="tab-reverse" class="tab-content">
+        <h2>Reverse Vocabulary Quiz</h2>
+        <div id="reverse-card-container"></div>
     </div>
 
     <div id="tab-mistakes" class="tab-content">
-        <h2>Review Mistake Gaps Room</h2>
-        <p>This dynamic list stores structural labels or concepts you have missed. Re-test your gaps here to drill the material until perfected!</p>
-        <div id="mistakes-container">
-            </div>
+        <h2>Review Practice Gaps</h2>
+        <div id="gaps-card-container"></div>
     </div>
 </div>
 
@@ -427,65 +420,43 @@
     const rawAnatomyTerms = ["Sclera", "Cornea", "Pupil", "Iris", "Lens", "optic nerve", "Retina", "Vitreous Humor"];
     
     const conceptualQuestions = [
-        {
-            id: "q1",
-            text: "What is the primary function of Blinking according to your study guide?",
-            options: ["To let light enter the eye", "Used as a protection", "To carry information to the brain", "To focus on objects"],
-            answer: "Used as a protection"
-        },
-        {
-            id: "q2",
-            text: "How does the Pupil behave when walking into a dark room?",
-            options: ["It gets smaller", "It stays completely unchanged", "It gets larger", "It changes its physical color"],
-            answer: "It gets larger"
-        },
-        {
-            id: "q3",
-            text: "How does the Pupil behave when stepping into a brightly lit room?",
-            options: ["It gets smaller", "It gets larger", "It disappears", "It expands to let more light in"],
-            answer: "It gets smaller"
-        },
-        {
-            id: "q4",
-            text: "What structure functions as a transparent dome in front of the colored part of the eye, behaving like a window to the world?",
-            options: ["Retina", "Sclera", "Iris", "Cornea"],
-            answer: "Cornea"
-        },
-        {
-            id: "q5",
-            text: "What is the function of the Nerve Cell (Optic Nerve)?",
-            options: ["It acts as a colorful part of the eye", "It carries information from the eye to the brain", "It opens and closes the eye as protection", "It protects the white portion of the eye"],
-            answer: "It carries information from the eye to the brain"
-        },
-        {
-            id: "q6",
-            text: "When does an Optical Illusion occur?",
-            options: ["When the pupil gets smaller", "When the lens turns transparent", "When the eyes trick the brain", "When the sclera changes color"],
-            answer: "When the eyes trick the brain"
-        },
-        {
-            id: "q7",
-            text: "Which explicit example of an optical illusion was highlighted on your class study guide?",
-            options: ["A spinning colorful circle pattern", "A 3D cube illustration on paper", "A picture of an old woman that also looks like a young woman", "Parallel straight lines that appear bent"],
-            answer: "A picture of an old woman that also looks like a young woman"
-        }
+        { id: "q1", text: "What is the primary function of Blinking according to your study guide?", options: ["To let light enter the eye", "Used as a protection", "To carry information to the brain", "To focus on objects"], answer: "Used as a protection" },
+        { id: "q2", text: "How does the Pupil behave when walking into a dark room?", options: ["It gets smaller", "It stays completely unchanged", "It gets larger", "It changes its physical color"], answer: "It gets larger" },
+        { id: "q3", text: "How does the Pupil behave when stepping into a brightly lit room?", options: ["It gets smaller", "It gets larger", "It disappears", "It expands to let more light in"], answer: "It gets smaller" },
+        { id: "q4", text: "What structure functions as a transparent dome in front of the colored part of the eye, behaving like a window to the world?", options: ["Retina", "Sclera", "Iris", "Cornea"], answer: "Cornea" },
+        { id: "q5", text: "What is the function of the Nerve Cell (Optic Nerve)?", options: ["It acts as a colorful part of the eye", "It carries information from the eye to the brain", "It opens and closes the eye as protection", "It protects the white portion of the eye"], answer: "It carries information from the eye to the brain" },
+        { id: "q6", text: "When does an Optical Illusion occur?", options: ["When the pupil gets smaller", "When the lens turns transparent", "When the eyes trick the brain", "When the sclera changes color"], answer: "When the eyes trick the brain" },
+        { id: "q7", text: "Which explicit example of an optical illusion was highlighted on your class study guide?", options: ["A spinning colorful circle pattern", "A 3D cube illustration on paper", "A picture of an old woman that also looks like a young woman", "Parallel straight lines that appear bent"], answer: "A picture of an old woman that also looks like a young woman" }
+    ];
+
+    const reverseQuestions = [
+        { id: "r1", text: "This part of the eye gets larger when the room is dark and smaller when it is bright.", options: ["Iris", "Pupil", "Lens", "Sclera"], answer: "Pupil" },
+        { id: "r2", text: "This functions as a transparent dome in front of the colored part of the eye, like a window.", options: ["Retina", "Cornea", "Optic Nerve", "Vitreous Humor"], answer: "Cornea" },
+        { id: "r3", text: "This part carries visual information directly from the eye to your brain.", options: ["Iris", "Pupil", "Optic Nerve", "Sclera"], answer: "Optic Nerve" },
+        { id: "r4", text: "This is the tough, white protective outer structure of the eye.", options: ["Sclera", "Retina", "Lens", "Iris"], answer: "Sclera" },
+        { id: "r5", text: "This is the colorful part of your eye that controls light entry.", options: ["Lens", "Pupil", "Cornea", "Iris"], answer: "Iris" },
+        { id: "r6", text: "This layer acts like the film screen at the back of the eye where images are focused.", options: ["Sclera", "Retina", "Vitreous Humor", "Cornea"], answer: "Retina" },
+        { id: "r7", text: "This clear gel fills the large space inside the back of the eyeball to maintain its shape.", options: ["Vitreous Humor", "Lens", "Pupil", "Cornea"], answer: "Vitreous Humor" }
     ];
 
     let selectedTermElement = null;
     let selectedTermValue = "";
-    
-    // NEW Touch Drag States
     let activeTouchElement = null;
     let touchStartX = 0;
     let touchStartY = 0;
 
+    // Index tracking for one-at-a-time display
+    let currentQuizIndex = 0;
+    let currentReverseIndex = 0;
+    let currentGapIndex = 0;
+
     function getStoredMistakes() {
-        let stored = localStorage.getItem('eye_exam_gaps');
-        return stored ? JSON.parse(stored) : { anatomy: [], concepts: [] };
+        let stored = localStorage.getItem('eye_exam_gaps_v2');
+        return stored ? JSON.parse(stored) : { anatomy: [], concepts: [], reverse: [] };
     }
 
     function saveMistakes(mistakes) {
-        localStorage.setItem('eye_exam_gaps', JSON.stringify(mistakes));
+        localStorage.setItem('eye_exam_gaps_v2', JSON.stringify(mistakes));
     }
 
     function addMistake(type, item) {
@@ -511,6 +482,10 @@
         
         document.getElementById(`tab-${tabName}`).classList.add('active');
         clearAlert();
+
+        if(tabName === 'quiz') initializeConceptsQuiz();
+        if(tabName === 'reverse') initializeReverseQuiz();
+        if(tabName === 'mistakes') renderMistakesRoom();
     }
 
     function showAlert(text, type) {
@@ -524,13 +499,9 @@
         document.getElementById('feedback-alert').style.display = 'none';
     }
 
-    // NEW AND IMPROVED Selection Handler (Desktop/Tap)
     function selectCard(cardElement, termValue) {
-        // Deselect any previous
         document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('selected'));
-        
         if (selectedTermElement === cardElement) {
-            // Already selected, deselect
             selectedTermElement = null;
             selectedTermValue = "";
         } else {
@@ -546,183 +517,110 @@
         bank.innerHTML = '';
         selectedTermElement = null;
         selectedTermValue = "";
-        activeTouchElement = null;
         
         const shuffled = [...rawAnatomyTerms].sort(() => Math.random() - 0.5);
-        
         shuffled.forEach(term => {
             const card = document.createElement('div');
             card.className = 'vocab-card';
             card.innerText = term;
             card.id = `card-${term.replace(/\s+/g, '_')}`;
-            
-            // Native DOM Dragging (for desktop mouse)
             card.draggable = true;
+
             card.addEventListener('dragstart', (e) => {
                 e.dataTransfer.setData('text/plain', term);
                 selectCard(card, term);
             });
-            card.addEventListener('dragend', () => {
-                card.classList.remove('dragging');
-            });
             
-            // --- NEW TRUE TOUCH DRAGGING ---
-            const handleTouchStart = (e) => {
-                // If already answering, prevent other touches
+            // Touch Drag Mechanics
+            card.addEventListener('touchstart', (e) => {
                 if (activeTouchElement) return;
-
                 const touch = e.touches[0];
                 touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
-
                 activeTouchElement = card;
-                selectCard(card, term); // Visualize selection
-
-                // Calculate the initial offset relative to the finger position
+                selectCard(card, term);
                 const rect = card.getBoundingClientRect();
-                activeTouchElement.initialTouchOffset = {
-                    x: rect.width / 2,
-                    y: rect.height / 2
-                };
-            };
+                activeTouchElement.initialTouchOffset = { x: rect.width / 2, y: rect.height / 2 };
+            }, {passive: false});
             
-            const handleTouchMove = (e) => {
+            card.addEventListener('touchmove', (e) => {
                 if (activeTouchElement !== card) return;
-                
                 const touch = e.touches[0];
-                e.preventDefault(); // Prevent page scrolling
-
-                // Check if dragging has truly started after a small threshold to avoid accidental tap detection
+                e.preventDefault();
                 if (Math.abs(touch.clientX - touchStartX) > 10 || Math.abs(touch.clientY - touchStartY) > 10) {
                     activeTouchElement.classList.add('dragging');
                 }
-
                 if (activeTouchElement.classList.contains('dragging')) {
-                    // Position the element relative to the screen, centered on the finger
                     activeTouchElement.style.left = (touch.clientX - activeTouchElement.initialTouchOffset.x) + 'px';
                     activeTouchElement.style.top = (touch.clientY - activeTouchElement.initialTouchOffset.y) + 'px';
-
-                    // Manually calculate which SVG drop target we are over
-                    // elementFromPoint must exclude the dragged item itself
-                    let targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
-                    
-                    // The dragged element's styles might interfere, but `dragging` is position:fixed,
-                    // so it shouldn't interfere with elementFromPoint. If it does, we temporarily hide it.
-                    // Instead, let's look for any element from the main SVG container under that point.
-                    if (targetElement && targetElement.ownerSVGElement) {
-                        // We found an SVG element. It's likely a drop-box.
-                    }
                 }
-            };
+            }, {passive: false});
 
-            const handleTouchEnd = (e) => {
+            card.addEventListener('touchend', (e) => {
                 if (activeTouchElement !== card) return;
-                
                 const touch = e.changedTouches[0];
                 e.preventDefault();
-
                 if (activeTouchElement.classList.contains('dragging')) {
-                    // Drop has occurred. Clean up fixed position.
                     activeTouchElement.classList.remove('dragging');
                     activeTouchElement.style.left = '0';
                     activeTouchElement.style.top = '0';
-
-                    // Determine the target we dropped over
-                    // Temporarily hide the card to see the SVG targets underneath it.
                     activeTouchElement.style.display = 'none';
                     let droppedOver = document.elementFromPoint(touch.clientX, touch.clientY);
                     activeTouchElement.style.display = 'block';
 
-                    // Check if we dropped over an SVG drop-box target
                     if (droppedOver && (droppedOver.classList.contains('drop-box') || droppedOver.classList.contains('label-text'))) {
-                        let targetBox = droppedOver;
-                        // If we dropped over the text part, find the main target box
-                        if (droppedOver.classList.contains('label-text')) {
-                            targetBox = droppedOver.parentElement.querySelector('.drop-box');
-                        }
-                        
+                        let targetBox = droppedOver.classList.contains('label-text') ? droppedOver.parentElement.querySelector('.drop-box') : droppedOver;
                         const targetLabel = targetBox.parentElement.getAttribute('data-label');
                         const textElement = targetBox.parentElement.querySelector('.label-text');
-                        
                         evaluateLabelDrop(term, targetLabel, targetBox, textElement);
                     }
-                    
-                    // If it wasn't a valid drop, the card remains selected, ready for a tap
                     activeTouchElement = null;
                 } else {
-                    // It was just a tap. Let `selectCard` handle it.
                     activeTouchElement = null;
                 }
-            };
-            
-            // Add custom mobile listeners
-            card.addEventListener('touchstart', handleTouchStart, {passive: false});
-            card.addEventListener('touchmove', handleTouchMove, {passive: false});
-            card.addEventListener('touchend', handleTouchEnd, {passive: false});
-            // Desktop fallback click
+            }, {passive: false});
+
             card.addEventListener('click', () => { selectCard(card, term); });
-            
             bank.appendChild(card);
         });
 
-        // Configure SVG Target Boxes
         document.querySelectorAll('.drop-zone').forEach(zone => {
             const box = zone.querySelector('.drop-box');
             const txt = zone.querySelector('.label-text');
             const targetLabel = zone.getAttribute('data-label');
 
-            // --- Native DOM Dragging Events ---
             box.addEventListener('dragover', (e) => e.preventDefault());
-            box.addEventListener('dragenter', () => box.classList.add('hovered'));
-            box.addEventListener('dragleave', () => box.classList.remove('hovered'));
-            
             box.addEventListener('drop', (e) => {
                 e.preventDefault();
-                box.classList.remove('hovered');
                 const droppedTerm = e.dataTransfer.getData('text/plain') || selectedTermValue;
                 evaluateLabelDrop(droppedTerm, targetLabel, box, txt);
             });
 
-            // --- Desktop Fallback Click Target Activation ---
-            // Allows the user to tap-then-tap instead of dragging.
             const handleTargetClick = (e) => {
                 e.preventDefault();
-                if(selectedTermValue) {
-                    evaluateLabelDrop(selectedTermValue, targetLabel, box, txt);
-                }
+                if(selectedTermValue) evaluateLabelDrop(selectedTermValue, targetLabel, box, txt);
             };
             box.addEventListener('click', handleTargetClick);
-            // Touchfallback Click
             box.addEventListener('touchstart', handleTargetClick, {passive: false});
         });
     }
 
     function evaluateLabelDrop(chosenTerm, correctTarget, boxElement, textElement) {
         if (!chosenTerm) return;
-
         if (chosenTerm.toLowerCase() === correctTarget.toLowerCase()) {
             boxElement.className = "drop-box correct";
             textElement.textContent = chosenTerm;
-            
-            // Clean up original card from option choices
-            const cardId = `card-${chosenTerm.replace(/\s+/g, '_')}`;
-            const card = document.getElementById(cardId);
+            const card = document.getElementById(`card-${chosenTerm.replace(/\s+/g, '_')}`);
             if(card) card.remove();
-            
             showAlert(`Correct! That is the ${chosenTerm}.`, 'success');
             removeMistake('anatomy', correctTarget);
-            
             selectedTermElement = null;
             selectedTermValue = "";
         } else {
             boxElement.className = "drop-box incorrect";
             showAlert(`Incorrect placement. Try again!`, 'danger');
             addMistake('anatomy', correctTarget);
-            setTimeout(() => { 
-                if(boxElement.className.baseVal !== "drop-box correct" && boxElement.className !== "drop-box correct") {
-                    boxElement.className = "drop-box"; 
-                }
-            }, 1500);
+            setTimeout(() => { if(!boxElement.classList.contains('correct')) boxElement.className = "drop-box"; }, 1500);
         }
     }
 
@@ -732,122 +630,249 @@
         initializeDiagramGame();
     }
 
-    // --- SETUP CONCEPTS QUIZ ---
+    // --- SETUP SINGLE-QUESTION CONCEPT QUIZ ---
     function initializeConceptsQuiz() {
-        const container = document.getElementById('quiz-questions-container');
+        const container = document.getElementById('quiz-card-container');
         container.innerHTML = '';
 
-        conceptualQuestions.forEach((q, index) => {
-            const item = document.createElement('div');
-            item.className = 'quiz-item';
-            item.innerHTML = `<p><strong>Q${index + 1}: ${q.text}</strong></p>`;
-            
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'options-grid';
-
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                
-                const processAnswer = (e) => {
-                    e.preventDefault();
-                    if (optionsDiv.classList.contains('answered')) return;
-                    evaluateQuizAnswer(btn, opt, q.answer, q.id);
-                };
-                btn.addEventListener('click', processAnswer);
-                btn.addEventListener('touchstart', processAnswer, {passive: false});
-                
-                optionsDiv.appendChild(btn);
-            });
-
-            item.appendChild(optionsDiv);
-            container.appendChild(item);
-        });
-    }
-
-    function evaluateQuizAnswer(buttonClicked, selectedOption, correctValue, questionId) {
-        const parentGrid = buttonClicked.parentElement;
-        parentGrid.classList.add('answered');
-        const siblings = parentGrid.querySelectorAll('.option-btn');
-        siblings.forEach(btn => btn.disabled = true);
-
-        if (selectedOption === correctValue) {
-            buttonClicked.classList.add('correct');
-            showAlert("Excellent work! That is correct.", "success");
-            removeMistake('concepts', questionId);
-        } else {
-            buttonClicked.classList.add('incorrect');
-            showAlert("Oops! That is incorrect. Review your guide details.", "danger");
-            addMistake('concepts', questionId);
-            siblings.forEach(btn => {
-                if (btn.innerText === correctValue) btn.classList.add('correct');
-            });
-        }
-    }
-
-    // --- GENERATE AND MANAGE DYNAMIC MISTAKES ROOM ---
-    function renderMistakesRoom() {
-        const container = document.getElementById('mistakes-container');
-        container.innerHTML = '';
-        const mistakes = getStoredMistakes();
-
-        if (mistakes.anatomy.length === 0 && mistakes.concepts.length === 0) {
+        if (currentQuizIndex >= conceptualQuestions.length) {
             container.innerHTML = `
-                <div style="text-align:center; padding:30px; background:#e8f8f0; border-radius:8px; color:#155724;">
-                    <h3>🎉 Your Mistakes Gaps Log is Empty!</h3>
-                    <p>Keep studying. If you miss any items in the diagram or quiz sections, they will pop up here automatically.</p>
+                <div class="gap-complete-card">
+                    <h3>🎉 Quiz Finished!</h3>
+                    <p>Excellent progress. Use the tabs above to label structures or view flagged mistakes.</p>
+                    <button class="action-btn" onclick="currentQuizIndex=0; initializeConceptsQuiz();">Restart Quiz</button>
                 </div>`;
             return;
         }
 
-        if (mistakes.anatomy.length > 0) {
-            const head = document.createElement('h3');
-            head.innerText = "Anatomy Labels To Re-drill:";
-            container.appendChild(head);
+        const q = conceptualQuestions[currentQuizIndex];
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.innerHTML = `
+            <div class="quiz-progress">Question ${currentQuizIndex + 1} of ${conceptualQuestions.length}</div>
+            <p class="quiz-question-text">${q.text}</p>
+        `;
 
-            mistakes.anatomy.forEach(label => {
-                const row = document.createElement('div');
-                row.className = 'mistake-list-item';
-                row.innerHTML = `<span>Review placement for structural item: <strong>${label}</strong></span>`;
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options-grid';
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            
+            const handleAns = (e) => {
+                e.preventDefault();
+                if (optionsDiv.classList.contains('answered')) return;
+                optionsDiv.classList.add('answered');
                 
-                const btn = document.createElement('button');
-                btn.className = 'retry-btn';
-                btn.innerText = 'Go Fix';
-                btn.onclick = () => { switchTab('diagram'); };
-                
-                row.appendChild(btn);
-                container.appendChild(row);
-            });
+                if (opt === q.answer) {
+                    btn.classList.add('correct');
+                    showAlert("Correct summary!", "success");
+                    removeMistake('concepts', q.id);
+                } else {
+                    btn.classList.add('incorrect');
+                    addMistake('concepts', q.id);
+                    showAlert("Incorrect choice. Added to study gaps.", "danger");
+                    optionsDiv.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === q.answer) b.classList.add('correct'); });
+                }
+                document.getElementById('quiz-next-btn').style.display = 'block';
+            };
+            btn.addEventListener('click', handleAns);
+            btn.addEventListener('touchstart', handleAns, {passive: false});
+            optionsDiv.appendChild(btn);
+        });
+
+        card.appendChild(optionsDiv);
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'nav-actions';
+        actionsDiv.innerHTML = `<button id=\"quiz-next-btn\" class=\"action-btn\" style=\"display:none;\">Next Question ➔</button>`;
+        card.appendChild(actionsDiv);
+        container.appendChild(card);
+
+        document.getElementById('quiz-next-btn').onclick = () => {
+            currentQuizIndex++;
+            initializeConceptsQuiz();
+        };
+    }
+
+    // --- SETUP REVERSE VOCABULARY QUIZ ---
+    function initializeReverseQuiz() {
+        const container = document.getElementById('reverse-card-container');
+        container.innerHTML = '';
+
+        if (currentReverseIndex >= reverseQuestions.length) {
+            container.innerHTML = `
+                <div class="gap-complete-card">
+                    <h3>🎉 Reverse Quiz Finished!</h3>
+                    <p>Fantastic job tracking descriptions to components!</p>
+                    <button class="action-btn" onclick="currentReverseIndex=0; initializeReverseQuiz();">Restart Quiz</button>
+                </div>`;
+            return;
         }
 
-        if (mistakes.concepts.length > 0) {
-            const head = document.createElement('h3');
-            head.innerText = "Concept Gaps to Fix:";
-            container.appendChild(head);
+        const q = reverseQuestions[currentReverseIndex];
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.innerHTML = `
+            <div class="quiz-progress">Reverse Match ${currentReverseIndex + 1} of ${reverseQuestions.length}</div>
+            <p class="quiz-question-text">Identify the structure: "<em>${q.text}</em>"</p>
+        `;
 
-            mistakes.concepts.forEach(qId => {
-                const questionObj = conceptualQuestions.find(q => q.id === qId);
-                if (questionObj) {
-                    const row = document.createElement('div');
-                    row.className = 'mistake-list-item';
-                    row.innerHTML = `<div><small>Concept Question Prompt:</small><br><strong>${questionObj.text}</strong></div>`;
-                    
-                    const btn = document.createElement('button');
-                    btn.className = 'retry-btn';
-                    btn.innerText = 'Go Quiz';
-                    btn.onclick = () => { switchTab('quiz'); };
-                    
-                    row.appendChild(btn);
-                    container.appendChild(row);
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options-grid';
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            
+            const handleAns = (e) => {
+                e.preventDefault();
+                if (optionsDiv.classList.contains('answered')) return;
+                optionsDiv.classList.add('answered');
+                
+                if (opt === q.answer) {
+                    btn.classList.add('correct');
+                    showAlert("Perfect description match!", "success");
+                    removeMistake('reverse', q.id);
+                } else {
+                    btn.classList.add('incorrect');
+                    addMistake('reverse', q.id);
+                    showAlert("Incorrect. Structural gap recorded.", "danger");
+                    optionsDiv.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === q.answer) b.classList.add('correct'); });
                 }
+                document.getElementById('reverse-next-btn').style.display = 'block';
+            };
+            btn.addEventListener('click', handleAns);
+            btn.addEventListener('touchstart', handleAns, {passive: false});
+            optionsDiv.appendChild(btn);
+        });
+
+        card.appendChild(optionsDiv);
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'nav-actions';
+        actionsDiv.innerHTML = `<button id=\"reverse-next-btn\" class=\"action-btn\" style=\"display:none;\">Next Question ➔</button>`;
+        card.appendChild(actionsDiv);
+        container.appendChild(card);
+
+        document.getElementById('reverse-next-btn').onclick = () => {
+            currentReverseIndex++;
+            initializeReverseQuiz();
+        };
+    }
+
+    // --- MASTER GAP ROOM: DRILL UNTIL CORRECT (ONE BY ONE) ---
+    function renderMistakesRoom() {
+        const container = document.getElementById('gaps-card-container');
+        container.innerHTML = '';
+        const mistakes = getStoredMistakes();
+
+        // Compile list of unresolved questions across activities
+        let activeGaps = [];
+
+        mistakes.anatomy.forEach(label => {
+            activeGaps.push({ type: 'anatomy', raw: label, heading: 'Anatomy Placement Gap', text: `Where belongs the label structure: "${label}" on your diagram?` });
+        });
+        mistakes.concepts.forEach(qId => {
+            const match = conceptualQuestions.find(c => c.id === qId);
+            if(match) activeGaps.push({ type: 'concepts', raw: match, heading: 'Concept Quiz Mistake', text: match.text, options: match.options, answer: match.answer });
+        });
+        mistakes.reverse.forEach(rId => {
+            const match = reverseQuestions.find(r => r.id === rId);
+            if(match) activeGaps.push({ type: 'reverse', raw: match, heading: 'Reverse Description Mistake', text: match.text, options: match.options, answer: match.answer });
+        });
+
+        if (activeGaps.length === 0) {
+            container.innerHTML = `
+                <div class="gap-complete-card">
+                    <h3>🎉 All Gaps Cleared!</h3>
+                    <p>There are no recorded mistakes right now. Keep practice testing to check your knowledge.</p>
+                </div>`;
+            return;
+        }
+
+        if (currentGapIndex >= activeGaps.length) {
+            currentGapIndex = 0; // wrap around
+        }
+
+        const currentGap = activeGaps[currentGapIndex];
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.style.borderLeft = "5px solid var(--danger)";
+        card.innerHTML = `
+            <div class="quiz-progress">${currentGap.heading} (Item ${currentGapIndex + 1} of ${activeGaps.length})</div>
+            <p class="quiz-question-text">${currentGap.text}</p>
+        `;
+
+        if (currentGap.type === 'anatomy') {
+            card.innerHTML += `<p style="color:#7f8c8d;">➜ Head to the <strong>Labeling Activity</strong> tab to correct this dynamic visual entry.</p>`;
+            const navDiv = document.createElement('div');
+            navDiv.className = 'nav-actions';
+            
+            if(activeGaps.length > 1) {
+                navDiv.innerHTML = `<button class="action-btn" onclick="currentGapIndex++; renderMistakesRoom();">Skip / Next Gap ➔</button>`;
+            }
+            card.appendChild(navDiv);
+        } else {
+            // Interactive Multiple Choice Card - DRILL UNTIL CORRECT
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';
+
+            currentGap.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                
+                const processGapChoice = (e) => {
+                    e.preventDefault();
+                    // Block execution if they already found the correct one
+                    if(optionsDiv.classList.contains('resolved')) return;
+
+                    if (opt === currentGap.answer) {
+                        btn.className = "option-btn correct";
+                        optionsDiv.classList.add('resolved');
+                        showAlert("Correct! Gap resolved.", "success");
+                        
+                        // Clear from dynamic registry
+                        if(currentGap.type === 'concepts') removeMistake('concepts', currentGap.raw.id);
+                        if(currentGap.type === 'reverse') removeMistake('reverse', currentGap.raw.id);
+                        
+                        document.getElementById('gap-resolve-btn').style.display = 'block';
+                    } else {
+                        btn.className = "option-btn incorrect";
+                        showAlert("Still incorrect. Keep trying options until you find the right one!", "danger");
+                    }
+                };
+                
+                btn.addEventListener('click', processGapChoice);
+                btn.addEventListener('touchstart', processGapChoice, {passive: false});
+                optionsDiv.appendChild(btn);
             });
+
+            card.appendChild(optionsDiv);
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'nav-actions';
+            actionsDiv.innerHTML = `<button id="gap-resolve-btn" class="action-btn" style="display:none; background-color: var(--success);">Continue Practice ➔</button>`;
+            card.appendChild(actionsDiv);
+        }
+
+        container.appendChild(card);
+
+        const resBtn = document.getElementById('gap-resolve-btn');
+        if(resBtn) {
+            resBtn.onclick = () => {
+                // Refresh list
+                renderMistakesRoom();
+            };
         }
     }
 
     window.onload = () => {
         initializeDiagramGame();
-        initializeConceptsQuiz();
     };
 </script>
 </body>
