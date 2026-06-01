@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 94: Spiral Review - Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+
+        canvas {
+            background: #fff;
+            border: 1px solid #ddd;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 94 Solutions Guide</h1>
+        <p>Spiral Review Homework Sheet (Problems 17–30)</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 17</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:
+                    <div class="math-block">
+                        $$\begin{array}{r} 67 \\ \times\ 32 \\ \hline \end{array}$$
+                    </div>
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 2,144</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply by the ones place digit (\(2\)):
+                                <div class="math-block">$$67 \times 2 = 134$$</div>
+                            </li>
+                            <li>Multiply by the tens place digit (\(3\), which represents \(30\)):
+                                <div class="math-block">$$67 \times 30 = 2010$$</div>
+                            </li>
+                            <li>Add the partial products together to secure the final answer:
+                                <div class="math-block">$$134 + 2010 = 2144$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 18</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:
+                    <div class="math-block">
+                        $$\begin{array}{r} \$8.95 \\ \times\quad 4 \\ \hline \end{array}$$
+                    </div>
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: \$35.80</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the base figures as you would with whole numbers:
+                                <div class="math-block">$$895 \times 4 = 3580$$</div>
+                            </li>
+                            <li>Count two spaces inward from the right side to properly adjust the decimal point position for currency:
+                                <div class="math-block">$$\$8.95 \times 4 = \$35.80$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 19</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(625 \div 3\) (or \(3 \overline{)625}\))
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: 208 R 1</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the hundreds digit: \(6 \div 3 = 2\) exactly.</li>
+                            <li>Divide the tens digit: \(2 \div 3 = 0\) with a remainder of \(2\).</li>
+                            <li>Bring down the ones digit (\(5\)) to form \(25\), then divide by \(3\): \(25 \div 3 = 8\) with a remainder of \(1\).</li>
+                            <li>Combine terms into standard quotient and remainder notation:
+                                <div class="math-block">$$625 \div 3 = 208 \text{ R } 1$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 20</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(714 \div 4\) (or \(4 \overline{)714}\))
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: 178 R 2</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the hundreds digit: \(7 \div 4 = 1\) with a remainder of \(3\).</li>
+                            <li>Bring down the \(1\) to make \(31\), then divide: \(31 \div 4 = 7\) with a remainder of \(3\).</li>
+                            <li>Bring down the \(4\) to make \(34\), then divide: \(34 \div 4 = 8\) with a remainder of \(2\).</li>
+                            <li>Combine terms:
+                                <div class="math-block">$$714 \div 4 = 178 \text{ R } 2$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 21</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(1385 \div 6\) (or \(6 \overline{)1385}\))
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: 230 R 5</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the first two digits: \(13 \div 6 = 2\) with a remainder of \(1\).</li>
+                            <li>Bring down the \(8\) to make \(18\), then divide: \(18 \div 6 = 3\) exactly.</li>
+                            <li>Bring down the \(5\). Since \(5\) cannot be divided evenly by \(6\), place a \(0\) in the quotient column. The remaining value left over is \(5\):
+                                <div class="math-block">$$1385 \div 6 = 230 \text{ R } 5$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 22</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(\frac{900}{5}\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 180</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the hundreds digit: \(9 \div 5 = 1\) with a remainder of \(4\).</li>
+                            <li>Bring down the first zero to make \(40\), then divide: \(40 \div 5 = 8\) exactly.</li>
+                            <li>Divide the final remaining zero unit: \(0 \div 5 = 0\).
+                                <div class="math-block">$$\frac{900}{5} = 180$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 23</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(3748 \div 9\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 416 R 4</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the initial grouping: \(37 \div 9 = 4\) with a remainder of \(1\).</li>
+                            <li>Bring down the \(4\) to make \(14\), then divide: \(14 \div 9 = 1\) with a remainder of \(5\).</li>
+                            <li>Bring down the \(8\) to make \(58\), then divide: \(58 \div 9 = 6\) with a final remainder of \(4\).
+                                <div class="math-block">$$3748 \div 9 = 416 \text{ R } 4$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 24</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(\$28.56 \div 8\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: \$3.57</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align your decimal point vertically in the quotient directly above the dividend setup.</li>
+                            <li>Divide the dollar amount: \(28 \div 8 = 3\) with a remainder of \(4\).</li>
+                            <li>Bring down the \(5\) to form \(45\): \(45 \div 8 = 5\) with a remainder of \(5\).</li>
+                            <li>Bring down the final \(6\) to form \(56\): \(56 \div 8 = 7\) exactly.
+                                <div class="math-block">$$\$28.56 \div 8 = \$3.57$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 25</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    This circle shows that \(\frac{2}{2}\) equals 1. Draw a circle that shows that \(\frac{3}{3}\) equals 1.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ25" width="240" height="110"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: Model Shown in Diagram</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>To visualize the target fraction \(\frac{3}{3} = 1\), partition the single continuous layout circle uniformly into 3 balanced slices (thirds).</li>
+                            <li>Shading all 3 regions completely fills the model area, validating that three combined thirds yield one whole unit.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 26</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Find the perimeter and area of this rectangle:
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ26" width="200" height="120"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: Perimeter = 180 miles &nbsp;|&nbsp; Area = 2,000 square miles</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>Perimeter calculation:</strong> Add the outer boundary segments together (\(2 \times \text{length} + 2 \times \text{width}\)):
+                                <div class="math-block">$$\text{Perimeter} = 50 + 50 + 40 + 40 = 180 \text{ miles}$$</div>
+                            </li>
+                            <li><strong>Area calculation:</strong> Multiply the base length times side width (\(\text{length} \times \text{width}\)):
+                                <div class="math-block">$$\text{Area} = 50 \times 40 = 2,000 \text{ square miles}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 27</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Draw a quadrilateral on your paper congruent to this quadrilateral. Then write the name for this type of quadrilateral.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ27" width="160" height="90"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: Trapezoid</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Examine the geometric parameters of the shape: it features four straight line bounds, classifying it as a quadrilateral.</li>
+                            <li>Because it contains exactly one set of parallel opposite boundary tracks (top and bottom), it is specifically classified as a <strong>trapezoid</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 28</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    On the figure you made for problem 27, draw the line of symmetry.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ28" width="160" height="90"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: Indicated by the dashed line above</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A line of symmetry splits a shape into two mirror-image halves.</li>
+                            <li>For this isosceles trapezoid, a single vertical reflection track runs right through the absolute horizontal midpoint, mapping both slanted sides onto one another perfectly.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 29</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Compare: \(0.05 \bigcirc 0.050\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: \(0.05 = 0.050\)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Examine structural place value coordinates: both values possess \(0\) tenths and \(5\) hundredths.</li>
+                            <li>Appending a trailing zero to the far right end of a decimal string adds zero thousandths, keeping the baseline balance identical:
+                                <div class="math-block">$$0.05 = \frac{5}{100} \quad \text{and} \quad 0.050 = \frac{50}{1000} = \frac{5}{100}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 30</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Estimate the quotient when 2412 is divided by 6. Then find the exact quotient.
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: Estimated = 400 &nbsp;|&nbsp; Exact = 402</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>Estimation Step:</strong> Round the value 2412 to a nearby compatible number easily divisible by 6, which is 2400:
+                                <div class="math-block">$$2400 \div 6 = 400$$</div>
+                            </li>
+                            <li><strong>Exact Step:</strong> Run accurate division processing against the original baseline input term:
+                                <div class="math-block">$$2412 \div 6 = 402$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Formatted via Saxon Math Evaluation Protocols</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+
+        // --- Q25 Circles Canvas ---
+        var c25 = document.getElementById("canvasQ25").getContext("2d");
+        c25.textAlign = "center";
+        c25.lineWidth = 2;
+        
+        // 2/2 Circle Reference
+        c25.beginPath(); c25.arc(50, 45, 30, 0, 2 * Math.PI); c25.fillStyle = "#cbd5e1"; c25.fill(); c25.stroke();
+        c25.beginPath(); c25.moveTo(50, 15); c25.lineTo(50, 75); c25.stroke();
+        c25.font = "bold 11px sans-serif"; c25.fillStyle = "#475569"; c25.fillText("2/2 = 1 (Given)", 50, 95);
+
+        // 3/3 Circle Solution
+        c25.beginPath(); c25.arc(170, 45, 30, 0, 2 * Math.PI); c25.fillStyle = "#93c5fd"; c25.fill(); c25.stroke();
+        for(let i = 0; i < 3; i++) {
+            let angle = -Math.PI / 2 + (i * 2 * Math.PI / 3);
+            c25.beginPath(); c25.moveTo(170, 45);
+            c25.lineTo(170 + 30 * Math.cos(angle), 45 + 30 * Math.sin(angle));
+            c25.stroke();
+        }
+        c25.fillStyle = "#1e3a8a"; c25.fillText("3/3 = 1 (Answer)", 170, 95);
+
+        // --- Q26 Rectangle Canvas ---
+        var c26 = document.getElementById("canvasQ26").getContext("2d");
+        c26.strokeStyle = "#1e3a8a"; c26.lineWidth = 2.5;
+        c26.strokeRect(30, 25, 120, 75);
+        c26.font = "11px sans-serif"; c26.fillStyle = "#1e293b";
+        c26.fillText("50 mi", 75, 18);
+        c26.fillText("40 mi", 156, 65);
+
+        // --- Q27 Trapezoid Canvas ---
+        var c27 = document.getElementById("canvasQ27").getContext("2d");
+        c27.beginPath();
+        c27.moveTo(45, 20); c27.lineTo(115, 20);
+        c27.lineTo(140, 70); c27.lineTo(20, 70);
+        c27.closePath();
+        c27.strokeStyle = "#1e3a8a"; c27.lineWidth = 2.5;
+        c27.stroke();
+
+        // --- Q28 Trapezoid Symmetry Canvas ---
+        var c28 = document.getElementById("canvasQ28").getContext("2d");
+        c28.beginPath();
+        c28.moveTo(45, 20); c28.lineTo(115, 20);
+        c28.lineTo(140, 70); c28.lineTo(20, 70);
+        c28.closePath();
+        c28.strokeStyle = "#1e3a8a"; c28.lineWidth = 2.5;
+        c28.stroke();
+        
+        // Vertical Line of Symmetry
+        c28.strokeStyle = "#dc2626"; c28.lineWidth = 2; c28.setLineDash([5, 4]);
+        c28.beginPath(); c28.moveTo(80, 10); c28.lineTo(80, 80); c28.stroke();
+    };
+</script>
+
+</body>
+</html>
