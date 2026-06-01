@@ -181,9 +181,24 @@
             touch-action: manipulation;
         }
 
+        .options-grid.answered .option-btn {
+            cursor: default;
+            opacity: 0.6;
+        }
+
+        .options-grid.answered .option-btn.correct,
+        .options-grid.answered .option-btn.incorrect {
+            opacity: 1;
+        }
+
         .option-btn:hover {
             border-color: var(--primary);
             background: #f7f9fa;
+        }
+
+        .options-grid.answered .option-btn:hover {
+            border-color: #bdc3c7;
+            background: var(--white);
         }
 
         .option-btn.correct {
@@ -443,12 +458,10 @@
         document.getElementById('feedback-alert').style.display = 'none';
     }
 
-    // Handle selection of a card (Desktop click or Mobile tap)
     function selectCard(cardElement, termValue) {
         document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('selected'));
         
         if (selectedTermElement === cardElement) {
-            // Deselect if tapped twice
             selectedTermElement = null;
             selectedTermValue = "";
         } else {
@@ -474,13 +487,11 @@
             card.draggable = true;
             card.id = `card-${term.replace(/\s+/g, '_')}`;
             
-            // Desktop Drag Handlers
             card.addEventListener('dragstart', (e) => {
                 e.dataTransfer.setData('text/plain', term);
                 selectCard(card, term);
             });
             
-            // Unified Mobile Tap & Desktop Click Handler
             const activateTap = (e) => {
                 e.preventDefault(); 
                 selectCard(card, term);
@@ -491,13 +502,11 @@
             bank.appendChild(card);
         });
 
-        // Configure Targets
         document.querySelectorAll('.drop-zone').forEach(zone => {
             const box = zone.querySelector('.drop-box');
             const txt = zone.querySelector('.label-text');
             const targetLabel = zone.getAttribute('data-label');
 
-            // Drag Events
             box.addEventListener('dragover', (e) => e.preventDefault());
             box.addEventListener('dragenter', () => box.classList.add('hovered'));
             box.addEventListener('dragleave', () => box.classList.remove('hovered'));
@@ -509,7 +518,6 @@
                 evaluateLabelDrop(droppedTerm, targetLabel, box, txt);
             });
 
-            // Mobile and Desktop click target activation
             const triggerTargetTouch = (e) => {
                 e.preventDefault();
                 if(selectedTermValue) {
@@ -528,7 +536,6 @@
             boxElement.className = "drop-box correct";
             textElement.textContent = chosenTerm;
             
-            // Clean up original card from option choices
             const cardId = `card-${chosenTerm.replace(/\s+/g, '_')}`;
             const card = document.getElementById(cardId);
             if(card) card.remove();
@@ -576,6 +583,8 @@
                 
                 const processAnswer = (e) => {
                     e.preventDefault();
+                    // CRITICAL FIX: If this question has already been answered, block all clicks!
+                    if (optionsDiv.classList.contains('answered')) return;
                     evaluateQuizAnswer(btn, opt, q.answer, q.id);
                 };
                 btn.addEventListener('click', processAnswer);
@@ -591,6 +600,9 @@
 
     function evaluateQuizAnswer(buttonClicked, selectedOption, correctValue, questionId) {
         const parentGrid = buttonClicked.parentElement;
+        
+        // Lock the whole grid instantly by adding the answered class
+        parentGrid.classList.add('answered');
         const siblings = parentGrid.querySelectorAll('.option-btn');
         
         siblings.forEach(btn => btn.disabled = true);
