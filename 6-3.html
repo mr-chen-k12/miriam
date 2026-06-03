@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 94: Extra Practice - Parallel Problem Set</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+
+        canvas {
+            background: #fff;
+            border: 1px solid #ddd;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 94 Parallel Practice Set</h1>
+        <p>Two-Step Word Problems & Spiral Review (Problems 1–30)</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 1</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Audrey gave the clerk a \$10 bill to pay for a school notebook that cost \$2.45 and a backpack organizer that cost \$4.80. How much money should she get back?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: \$2.75</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the total combined cost of the notebook and organizer:
+                                <div class="math-block">$$\$2.45 + \$4.80 = \$7.25$$</div>
+                            </li>
+                            <li>Subtract the total cost from the \$10 bill to find the remaining change:
+                                <div class="math-block">$$\$10.00 - \$7.25 = \$2.75$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 2</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Sixty-four students went on a field trip. One fourth of them wore blue shirts. The rest wore red shirts. How many students wore red shirts? <em>(Hint: First find how many students wore blue shirts.)</em>
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(2)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-2">
+                    <div class="answer-highlight">Answer: 48 students</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the number of students in blue shirts by calculating \(\frac{1}{4}\) of 64:
+                                <div class="math-block">$$64 \div 4 = 16 \text{ blue shirts}$$</div>
+                            </li>
+                            <li>Subtract those students from the total group count to find how many wore red shirts:
+                                <div class="math-block">$$64 - 16 = 48 \text{ red shirts}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 3</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    An orchard worker sorted oranges into 7 crates. There were 18 oranges in each crate. How many total oranges did he sort?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: 126 oranges</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the number of crates by the number of items packed inside each crate:
+                                <div class="math-block">$$7 \times 18 = 126 \text{ oranges}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 4</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Five kilograms of organic apples cost a small shop exactly one hundred eighty-five rubles. Each kilogram of apples cost how many rubles?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: 37 rubles</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the total monetary cost by the equivalent unit weight purchased:
+                                <div class="math-block">$$185 \div 5 = 37 \text{ rubles}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 5</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    This scale shows a mass of how many grams?
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ5" width="200" height="200"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 250 grams</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The scale's major tracking indicators progress in intervals of 100 grams.</li>
+                            <li>The alignment needle points perfectly halfway between 200 and 300:
+                                <div class="math-block">$$\frac{200 + 300}{2} = 250 \text{ grams}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 6</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Write the tally for 18.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ6" width="250" height="60"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: Shown in the diagram above</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Standard tally charts group vertical strokes into sets of 5.</li>
+                            <li>Deconstruct 18 into chunks of five:
+                                <div class="math-block">$$18 = 5 + 5 + 5 + 3$$</div>
+                            </li>
+                            <li>This gives three fully crossed groups of five tallies followed by three single vertical ticks.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 7</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Name the shaded part of the large square (a) as a fraction, (b) as a decimal number.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ7" width="160" height="160"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: (a) \(\frac{13}{100}\) &nbsp;|&nbsp; (b) 0.13</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The outer grid is composed of 100 individual small square elements.</li>
+                            <li>Exactly 13 small squares are shaded gray in the diagram.</li>
+                            <li>Fraction representation: \(\frac{13}{100}\)</li>
+                            <li>Decimal representation: \(0.13\)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 8</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Estimate the product of 24 and 51 by rounding to the nearest ten. Then find the exact product.
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(8)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-8">
+                    <div class="answer-highlight">Answer: Estimated = 1,000 &nbsp;|&nbsp; Exact = 1,224</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Round 24 down to 20, and round 51 down to 50:
+                                <div class="math-block">$$\text{Estimated Product} = 20 \times 50 = 1,000$$</div>
+                            </li>
+                            <li>Calculate the true configuration without rounding steps:
+                                <div class="math-block">$$\text{Exact Product} = 24 \times 51 = 1,224$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 9</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    One fourth of the 32 horses in the pasture were Clydesdales. How many horses were Clydesdales? Draw a picture to illustrate the problem.
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ9" width="300" height="100"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(9)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-9">
+                    <div class="answer-highlight">Answer: 8 horses</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>To divide the total group of horses into four balanced structural rows:
+                                <div class="math-block">$$32 \div 4 = 8 \text{ horses per group}$$</div>
+                            </li>
+                            <li>One row out of four is composed of Clydesdales, matching exactly 8 horses.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 10</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    A dime is a tenth of a dollar. A dime is what percent of a dollar?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: 10%</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A "tenth" represents one out of ten parts, which is written as the fraction \(\frac{1}{10}\).</li>
+                            <li>Convert this benchmark fractional part into percentage form:
+                                <div class="math-block">$$\frac{1}{10} \times 100\% = 10\%$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 11</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    For each statement, write either "true" or "false."<br>
+                    <strong>(a)</strong> Every equilateral triangle is also an isosceles triangle.<br>
+                    <strong>(b)</strong> Every isosceles triangle is also an equilateral triangle.
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: (a) true &nbsp;|&nbsp; (b) false</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>(a) True:</strong> An isosceles triangle requires at least two equal side dimensions. Because equilateral triangles possess three equal side dimensions, they fulfill this property automatically.</li>
+                            <li><strong>(b) False:</strong> Equilateral triangles strictly require all three side boundaries to be perfectly equal, which regular isosceles triangles do not always satisfy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 12</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Three hundred twenty-nine of the one thousand trees in the state park were maples. Maples made up what fraction of the trees in the park?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: \(\frac{329}{1000}\)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Place the specific item count directly over the total base value population:
+                                <div class="math-block">$$\text{Fraction} = \frac{329}{1000}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 13</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Write the answer to problem 12 as a decimal number. Then use words to name the number.
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(13)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-13">
+                    <div class="answer-highlight">Answer: 0.329 &nbsp;|&nbsp; three hundred twenty-nine thousandths</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Convert the millesimal fraction base into its regular place-value format:
+                                <div class="math-block">$$\frac{329}{1000} = 0.329$$</div>
+                            </li>
+                            <li>Express this sequence of values as spoken text: "three hundred twenty-nine thousandths".</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 14</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Which digit in 6.294 is in the hundredths place?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(14)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-14">
+                    <div class="answer-highlight">Answer: 9</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Identify the standard columns moving to the right of the decimal point:
+                                <div class="math-block">$$6 \ . \ [Tenths] \ \mathbf{[Hundredths]} \ [Thousandths] \rightarrow 6.2\mathbf{9}4$$</div>
+                            </li>
+                            <li>The occupant inside the hundredths column field is 9.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 15</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Sophia traveled 378 miles in 6 hours. She traveled an average of how many miles per hour?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: 63 miles per hour</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide total distance units by total hours logged to find the rate:
+                                <div class="math-block">$$378 \div 6 = 63 \text{ mph}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 16</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Simplify: \(9.4 - (2.65 + 1.2)\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 5.55</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, combine values located inside the grouping parentheses:
+                                <div class="math-block">$$2.65 + 1.20 = 3.85$$</div>
+                            </li>
+                            <li>Now subtract that sum value from the initial target decimal number:
+                                <div class="math-block">$$9.40 - 3.85 = 5.55$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 17</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply: \(47 \times 1000\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 47,000</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiplying by 1,000 shifts a whole number up three base decimal place values:
+                                <div class="math-block">$$47 \times 1,000 = 47,000$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 18</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply: \(60 \times 40\text{¢}\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: \$24.00 (or 2400¢)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find total absolute units in cents:
+                                <div class="math-block">$$60 \times 40\text{¢} = 2,400\text{¢}$$</div>
+                            </li>
+                            <li>Convert cents into regular currency notation by dividing by 100:
+                                <div class="math-block">$$2,400\text{¢} \div 100 = \$24.00$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 19</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Add the column: \(26 + 74 + 53 + 148 + 9 + 12 + 50\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: 372</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Carefully sum all numbers by alignment of local place column paths:
+                                <div class="math-block">$$26 + 74 + 53 + 148 + 9 + 12 + 50 = 372$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 20</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;43<br>
+                    &nbsp;&times;&nbsp;16<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;---
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: 688</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate individual partial products:
+                                <div class="math-block">$$43 \times 6 = 258$$</div>
+                                <div class="math-block">$$43 \times 10 = 430$$</div>
+                            </li>
+                            <li>Sum the subcomponents together:
+                                <div class="math-block">$$258 + 430 = 688$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 21</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;28<br>
+                    &nbsp;&times;&nbsp;34<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;---
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: 952</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate individual partial products:
+                                <div class="math-block">$$28 \times 4 = 112$$</div>
+                                <div class="math-block">$$28 \times 30 = 840$$</div>
+                            </li>
+                            <li>Sum the subcomponents together:
+                                <div class="math-block">$$112 + 840 = 952$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 22</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(825 \div 3\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 275</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide digits one column slot at a time from left to right:
+                                <div class="math-block">$$8 \div 3 = 2 \text{ R } 2$$</div>
+                                <div class="math-block">$$22 \div 3 = 7 \text{ R } 1$$</div>
+                                <div class="math-block">$$15 \div 3 = 5$$</div>
+                            </li>
+                            <li>Combine local components to read the exact answer: 275.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 23</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Divide: \(647 \div 5\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 129 R 2</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide digits from left to right to find values and remainders:
+                                <div class="math-block">$$6 \div 5 = 1 \text{ R } 1$$</div>
+                                <div class="math-block">$$14 \div 5 = 2 \text{ R } 4$$</div>
+                                <div class="math-block">$$47 \div 5 = 9 \text{ R } 2$$</div>
+                            </li>
+                            <li>Collect values to state your final evaluation parameters: 129 R 2.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 24</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Find \(M\): \(4M = 936\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: 234</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Isolate variable \(M\) by dividing both parameters of your equation setup by 4:
+                                <div class="math-block">$$M = 936 \div 4$$</div>
+                                <div class="math-block">$$M = 234$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 25</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Find \(Y\): \(7 + Y = 6^2\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: 29</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the exponential power expression first:
+                                <div class="math-block">$$6^2 = 6 \times 6 = 36$$</div>
+                            </li>
+                            <li>Solve the remaining subtraction equation:
+                                <div class="math-block">$$7 + Y = 36 \rightarrow Y = 36 - 7 = 29$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 26</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Draw and shade rectangles to show that \(1\frac{3}{4}\) equals \(\frac{7}{4}\).
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ26" width="320" height="80"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: Visual proof shown in the diagram above</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide two whole shapes into equal sets of 4 (fourths).</li>
+                            <li>Shading one complete shape accounts for 4 blocks (\(\frac{4}{4}\)). Shading 3 extra segments from the next shape yields a total of 7 pieces:
+                                <div class="math-block">$$\frac{4}{4} + \frac{3}{4} = \frac{7}{4} = 1\frac{3}{4}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 27</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    A room is 6 yards long and 5 yards wide. How many square yards of carpeting are needed to cover the floor?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: 30 square yards</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Apply the area formula for rectangular structures (\(\text{Area} = \text{length} \times \text{width}\)):
+                                <div class="math-block">$$\text{Area} = 6 \text{ yards} \times 5 \text{ yards} = 30 \text{ sq yards}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 28</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    The radius of this circle is 25 millimeters. The diameter of the circle is how many centimeters?
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ28" width="150" height="150"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: 5 centimeters</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Double the radius to find the diameter in millimeters:
+                                <div class="math-block">$$\text{Diameter} = 2 \times 25\text{ mm} = 50\text{ mm}$$</div>
+                            </li>
+                            <li>Convert millimeters into centimeter values by dividing by 10 (since \(10\text{ mm} = 1\text{ cm}\)):
+                                <div class="math-block">$$50\text{ mm} \div 10 = 5\text{ cm}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 29</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Which of these upper-case letters has exactly two lines of reflectional symmetry?<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>A&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;&nbsp;N</strong>
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ29" width="300" height="80"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: I</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Letters <strong>A</strong> and <strong>M</strong> have only 1 line of vertical symmetry down their centers.</li>
+                            <li>Letter <strong>B</strong> has only 1 horizontal line of reflectional symmetry.</li>
+                            <li>Letter <strong>N</strong> has rotational symmetry but no reflectional symmetry lines.</li>
+                            <li>Letter <strong>I</strong> can be split evenly along both a <strong>vertical axis</strong> and a <strong>horizontal axis</strong>, giving it exactly 2 lines of reflectional symmetry.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 30</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    The internal corner angle formed inside a standard printed block letter L measures exactly how many degrees?<br>
+                    A. 45° &nbsp;&nbsp;&nbsp;&nbsp; B. 90° &nbsp;&nbsp;&nbsp;&nbsp; C. 135° &nbsp;&nbsp;&nbsp;&nbsp; D. 180°
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: B. 90°</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A corner angle that forms square perpendicular intersection paths is defined as a <strong>right angle</strong>.</li>
+                            <li>All true geometric right angles measure exactly <strong>90°</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Generated for Saxon Math Framework Alignment</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+
+        // --- Q5 Scale Canvas ---
+        var c5 = document.getElementById("canvasQ5").getContext("2d");
+        c5.translate(100, 100);
+        c5.beginPath();
+        c5.arc(0, 0, 70, 0, 2 * Math.PI);
+        c5.stroke();
+        c5.font = "12px sans-serif";
+        c5.textAlign = "center";
+        c5.textBaseline = "middle";
+        c5.fillText("0", 0, -55);
+        c5.fillText("100", 50, -25);
+        c5.fillText("200", 45, 35);
+        c5.fillText("300", -45, 35);
+        c5.fillText("400", -50, -25);
+        c5.fillText("Grams", 0, -20);
+        c5.beginPath();
+        c5.moveTo(0,0);
+        c5.lineTo(0, 50);
+        c5.lineWidth = 3;
+        c5.strokeStyle = "red";
+        c5.stroke();
+
+        // --- Q6 Tallies Canvas ---
+        var c6 = document.getElementById("canvasQ6").getContext("2d");
+        c6.strokeStyle = "#333";
+        c6.lineWidth = 2;
+        function drawTallyGroup(x) {
+            for(let i=0; i<4; i++) {
+                c6.beginPath();
+                c6.moveTo(x + i*10, 10);
+                c6.lineTo(x + i*10, 50);
+                c6.stroke();
+            }
+            c6.beginPath();
+            c6.moveTo(x - 5, 45);
+            c6.lineTo(x + 35, 15);
+            c6.strokeStyle = "red";
+            c6.stroke();
+            c6.strokeStyle = "#333";
+        }
+        drawTallyGroup(20);
+        drawTallyGroup(70);
+        drawTallyGroup(120);
+        for (let i=0; i<3; i++) {
+            c6.beginPath();
+            c6.moveTo(170 + i*10, 10);
+            c6.lineTo(170 + i*10, 50);
+            c6.stroke();
+        }
+
+        // --- Q7 Grid Canvas ---
+        var c7 = document.getElementById("canvasQ7").getContext("2d");
+        for(let r=0; r<10; r++) {
+            for(let col=0; col<10; col++) {
+                if(r === 9 || (r === 8 && col < 3)) {
+                    c7.fillStyle = "#7f8c8d";
+                    c7.fillRect(col*15 + 5, r*15 + 5, 15, 15);
+                }
+                c7.strokeStyle = "#bdc3c7";
+                c7.strokeRect(col*15 + 5, r*15 + 5, 15, 15);
+            }
+        }
+
+        // --- Q9 Horses Diagram ---
+        var c9 = document.getElementById("canvasQ9").getContext("2d");
+        c9.strokeRect(10, 10, 280, 50);
+        c9.beginPath();
+        c9.moveTo(80, 10); c9.lineTo(80, 60);
+        c9.moveTo(150, 10); c9.lineTo(150, 60);
+        c9.moveTo(220, 10); c9.lineTo(220, 60);
+        c9.stroke();
+        c9.font = "12px sans-serif";
+        c9.fillText("8 (Clydesdales)", 12, 90);
+        c9.fillText("8 Horses", 92, 90);
+        c9.fillText("8 Horses", 162, 90);
+        c9.fillText("8 Horses", 232, 90);
+        c9.fillStyle = "#e74c3c";
+        c9.fillRect(10, 10, 70, 50);
+
+        // --- Q26 Fraction Rectangles ---
+        var c26 = document.getElementById("canvasQ26").getContext("2d");
+        c26.fillStyle = "#2ecc71";
+        c26.fillRect(10, 15, 100, 40);
+        c26.fillRect(140, 15, 75, 40);
+        for(let b=0; b<2; b++) {
+            let offset = b * 130 + 10;
+            c26.strokeStyle = "#333";
+            c26.strokeRect(offset, 15, 100, 40);
+            for(let i=1; i<4; i++) {
+                c26.beginPath();
+                c26.moveTo(offset + i*25, 15);
+                c26.lineTo(offset + i*25, 55);
+                c26.stroke();
+            }
+        }
+
+        // --- Q28 Circle Radius ---
+        var c28 = document.getElementById("canvasQ28").getContext("2d");
+        c28.beginPath();
+        c28.arc(75, 75, 50, 0, 2 * Math.PI);
+        c28.stroke();
+        c28.beginPath();
+        c28.moveTo(75, 75);
+        c28.lineTo(125, 75);
+        c28.stroke();
+        c28.font = "12px sans-serif";
+        c28.fillText("25 mm", 80, 70);
+
+        // --- Q29 Reflection Symmetry ---
+        var c29 = document.getElementById("canvasQ29").getContext("2d");
+        c29.font = "bold 28px Georgia";
+        c29.fillText("A     B     I     M     N", 20, 45);
+        c29.strokeStyle = "red";
+        c29.lineWidth = 1;
+        c29.setLineDash([4, 4]);
+        c29.beginPath(); c29.moveTo(103, 10); c29.lineTo(103, 65); c29.stroke();
+        c29.beginPath(); c29.moveTo(85, 36); c29.lineTo(120, 36); c29.stroke();
+    };
+</script>
+
+</body>
+</html>
