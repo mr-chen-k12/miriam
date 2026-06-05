@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 97: Mean, Median, Range, Mode - Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #f1f5f9;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1e293b);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #1d4ed8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .context-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #64748b;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            font-style: italic;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #1e40af;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #bfdbfe;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+
+        canvas {
+            background: #fff;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 97 Complete Solutions</h1>
+        <p>Mean, Median, Range, Mode &amp; Spiral Review (Problems 1–30)</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        
+        <div class="card" style="border-bottom: 3px solid #64748b;">
+            <div class="card-header" style="background-color: #f1f5f9;">
+                <span class="question-num" style="color: #475569;">Reference Material (Problems 1–4)</span>
+            </div>
+            <div class="card-body" style="text-align: center;">
+                <p class="question-text" style="margin-bottom: 10px;">Use the information in this circle graph to answer problems 1–4.</p>
+                <div class="diagram-container">
+                    <canvas id="canvasParkChart" width="340" height="340"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 1</span></div>
+            <div class="card-body">
+                <div class="question-text">Altogether, how many children were at the park?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: 100 children</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The title of the circle graph directly specifies the population size: <strong>"Activities of 100 Children at the Park"</strong>.</li>
+                            <li>Alternatively, sum up all sector values within the dataset to find the collective total:
+                                <div class="math-block">$$18 + 15 + 20 + 15 + 19 + 12 + 1 = 100 \text{ children}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 2</span></div>
+            <div class="card-body">
+                <div class="question-text">How many children were not catching polliwogs?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(2)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-2">
+                    <div class="answer-highlight">Answer: 81 children</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Identify the total number of children at the park: \(100\).</li>
+                            <li>Identify the absolute number of children catching polliwogs from the graph: \(19\).</li>
+                            <li>Subtract the polliwog catchers from the baseline total to isolate the remaining children:
+                                <div class="math-block">$$100 - 19 = 81\text{ children}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 3</span></div>
+            <div class="card-body">
+                <div class="question-text">How many children were either hiking or skating?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: 27 children</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Extract individual subset values from the visual chart layout:
+                                <br>&bull; Hiking = \(12\) children
+                                <br>&bull; Skating = \(15\) children
+                            </li>
+                            <li>Add these mutually exclusive tracking metrics together:
+                                <div class="math-block">$$12 + 15 = 27\text{ children}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 4</span></div>
+            <div class="card-body">
+                <div class="question-text">How many more children were flying kites than were catching polliwogs?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: 1 child</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the specific category values requested:
+                                <br>&bull; Flying kites = \(20\) children
+                                <br>&bull; Catching polliwogs = \(19\) children
+                            </li>
+                            <li>Calculate the variation boundary difference by subtracting:
+                                <div class="math-block">$$20 - 19 = 1\text{ child}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 5</span></div>
+            <div class="card-body">
+                <div class="question-text">Three fourths of the one thousand gold coins were doubloons. How many doubloons were there? Draw a picture to illustrate the problem.</div>
+                <div class="diagram-container">
+                    <canvas id="canvasCoins" width="300" height="110"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 750 doubloons</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the total collection size (\(1000\)) into four identical quarters:
+                                <div class="math-block">$$1000 \div 4 = 250\text{ coins per quadrant}$$</div>
+                            </li>
+                            <li>Multiply this unit baseline step metric by three to determine the target value (\(\frac{3}{4}\)):
+                                <div class="math-block">$$250 \times 3 = 750\text{ doubloons}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 6</span></div>
+            <div class="card-body">
+                <div class="question-text">What percent of the gold coins in problem 5 were doubloons?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: 75%</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Problem 5 explicitly defines the subset representation fraction as three fourths (\(\frac{3}{4}\)).</li>
+                            <li>Convert this benchmark baseline fractional metric into direct percentage form:
+                                <div class="math-block">$$\frac{3}{4} = \frac{75}{100} = 75\%$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 7</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Write each mixed number as a decimal:<br>
+                    <strong>(a)</strong> \(3 \frac{5}{10}\) &nbsp;&nbsp;&nbsp;&nbsp; 
+                    <strong>(b)</strong> \(14 \frac{21}{1000}\) &nbsp;&nbsp;&nbsp;&nbsp; 
+                    <strong>(c)</strong> \(9 \frac{4}{100}\)
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: (a) 3.5 &nbsp;|&nbsp; (b) 14.021 &nbsp;|&nbsp; (c) 9.04</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>(a)</strong> \(3 \frac{5}{10}\): The denominator \(10\) indicates place validation stops at the tenths column: \(3.5\).</li>
+                            <li><strong>(b)</strong> \(14 \frac{21}{1000}\): The denominator \(1000\) indicates place validation stops at the thousandths column: \(14.021\).</li>
+                            <li><strong>(c)</strong> \(9 \frac{4}{100}\): The denominator \(100\) indicates place validation stops at the hundredths column, requiring a placeholder zero: \(9.04\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 8</span></div>
+            <div class="card-body">
+                <div class="question-text">Estimate the product of 39 and 406. Then find the exact product.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(8)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-8">
+                    <div class="answer-highlight">Answer: Estimated = 16,000 &nbsp;|&nbsp; Exact = 15,834</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>Estimation:</strong> Round each value to its nearest clean single leading digit position component:
+                                <br>&bull; \(39 \rightarrow 40\)
+                                <br>&bull; \(406 \rightarrow 400\)
+                                <div class="math-block">$$\text{Estimated Product} = 40 \times 400 = 16,000$$</div>
+                            </li>
+                            <li><strong>Exact Calculation:</strong> Execute long multiplication algorithms directly:
+                                <div class="math-block">$$406 \times 39 = 406 \times (40 - 1) = 16240 - 406 = 15,834$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-bottom: 3px solid #64748b;">
+            <div class="card-header" style="background-color: #f1f5f9;">
+                <span class="question-num" style="color: #475569;">Reference Material (Problems 9–10)</span>
+            </div>
+            <div class="card-body" style="text-align: center;">
+                <p class="question-text" style="margin-bottom: 10px;">Refer to this rectangle to answer problems 9 and 10.</p>
+                <div class="diagram-container">
+                    <canvas id="canvasRectangle" width="240" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 9</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    What is the perimeter of the rectangle:<br>
+                    <strong>(a)</strong> in millimeters?<br>
+                    <strong>(b)</strong> in centimeters?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(9)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-9">
+                    <div class="answer-highlight">Answer: (a) 80 mm &nbsp;|&nbsp; (b) 8 cm</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>(a) Millimeters:</strong> Perimeter is the sum of all external linear side lengths:
+                                <div class="math-block">$$P = 2 \times (\text{length} + \text{width}) = 2 \times (30\text{ mm} + 10\text{ mm}) = 2 \times 40\text{ mm} = 80\text{ mm}$$</div>
+                            </li>
+                            <li><strong>(b) Centimeters:</strong> Convert the scale knowing that \(10\text{ mm} = 1\text{ cm}\):
+                                <div class="math-block">$$80\text{ mm} \div 10 = 8\text{ cm}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 10</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    What is the area of the rectangle:<br>
+                    <strong>(a)</strong> in square millimeters?<br>
+                    <strong>(b)</strong> in square centimeters?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: (a) 300 mm² &nbsp;|&nbsp; (b) 3 cm²</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>(a) Square Millimeters:</strong> Multiply length by width to evaluate interior space grid fields:
+                                <div class="math-block">$$\text{Area} = 30\text{ mm} \times 10\text{ mm} = 300\text{ mm}^2$$</div>
+                            </li>
+                            <li><strong>(b) Square Centimeters:</strong> Convert dimensions into centimeters prior to multiplication:
+                                <br>&bull; \(30\text{ mm} = 3\text{ cm}\)
+                                <br>&bull; \(10\text{ mm} = 1\text{ cm}\)
+                                <div class="math-block">$$\text{Area} = 3\text{ cm} \times 1\text{ cm} = 3\text{ cm}^2$$</div>
+                                <em>(Note: Since \(1\text{ cm}^2 = 100\text{ mm}^2\), \(300\text{ mm}^2 \div 100 = 3\text{ cm}^2\).)</em>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 11</span></div>
+            <div class="card-body">
+                <div class="question-text">Santos figured the trip would take seven and a half hours. He left at 7 a.m. At what time did he think he would arrive?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: 2:30 p.m.</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Break down the planned addition interval time block of 7 hours and 30 minutes starting from 7:00 a.m.</li>
+                            <li>Add the 5 hours needed to reach the midday benchmark boundary line:
+                                <div class="math-block">$$7:00\text{ a.m.} + 5\text{ hours} = 12:00\text{ p.m. (Noon)}$$</div>
+                            </li>
+                            <li>Apply the remaining 2 hours and 30 minutes past noon:
+                                <div class="math-block">$$12:00\text{ p.m.} + 2\text{ hours } 30\text{ minutes} = 2:30\text{ p.m.}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 12</span></div>
+            <div class="card-body">
+                <div class="question-text">What is the average number of days per month in the first three months of a common year?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: 30 days</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>List individual calendar day components for the first three months of a standard non-leap year:
+                                <br>&bull; January = \(31\) days
+                                <br>&bull; February = \(28\) days (common year standard)
+                                <br>&bull; March = \(31\) days
+                            </li>
+                            <li>Calculate the cumulative sum across these tracking fields:
+                                <div class="math-block">$$31 + 28 + 31 = 90\text{ days}$$</div>
+                            </li>
+                            <li>Divide by the total count of track items (\(3\)) to establish the average value metric:
+                                <div class="math-block">$$90 \div 3 = 30\text{ days per month}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 13</span></div>
+            <div class="card-body">
+                <div class="question-text">Multiply: \(25 \times 40\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(13)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-13">
+                    <div class="answer-highlight">Answer: 1,000</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Isolate and process standard algebraic identity properties based on base tens:
+                                <div class="math-block">$$25 \times 4 = 100$$</div>
+                            </li>
+                            <li>Scale up by an additional power of ten to account for the trailing zero:
+                                <div class="math-block">$$25 \times 40 = 1,000$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 14</span></div>
+            <div class="card-body">
+                <div class="question-text">Multiply: \(98\text{¢} \times 7\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(14)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-14">
+                    <div class="answer-highlight">Answer: $6.86 (or 686¢)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate raw numerical evaluation metrics within cent constraints:
+                                <div class="math-block">$$98\text{¢} \times 7 = (100\text{¢} - 2\text{¢}) \times 7 = 700\text{¢} - 14\text{¢} = 686\text{¢}$$</div>
+                            </li>
+                            <li>Convert absolute cent metrics into standard currency format notation:
+                                <div class="math-block">$$686\text{¢} \div 100 = \$6.86$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 15</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\sqrt{36} \times \sqrt{4}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: 12</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Simplify individual radical root operations:
+                                <br>&bull; \(\sqrt{36} = 6\) (since \(6 \times 6 = 36\))
+                                <br>&bull; \(\sqrt{4} = 2\) (since \(2 \times 2 = 4\))
+                            </li>
+                            <li>Multiply the resulting factors together:
+                                <div class="math-block">$$6 \times 2 = 12$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 16</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\frac{3^3}{3}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 9</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the exponential expression in the numerator:
+                                <div class="math-block">$$3^3 = 3 \times 3 \times 3 = 27$$</div>
+                            </li>
+                            <li>Divide the evaluated numerator value by the denominator:
+                                <div class="math-block">$$\frac{27}{3} = 9$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 17</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;36<br>
+                    &nbsp;&times;&nbsp;34<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&mdash;&mdash;
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 1,224</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate individual step levels of partial expansion products:
+                                <div class="math-block">$$36 \times 4 = 144$$</div>
+                                <div class="math-block">$$36 \times 30 = 1,080$$</div>
+                            </li>
+                            <li>Add the partial values together to compute the total product:
+                                <div class="math-block">$$144 + 1080 = 1,224$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 18</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;35<br>
+                    &nbsp;&times;&nbsp;35<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&mdash;&mdash;
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: 1,225</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate individual step levels of partial expansion products:
+                                <div class="math-block">$$35 \times 5 = 175$$</div>
+                                <div class="math-block">$$35 \times 30 = 1,050$$</div>
+                            </li>
+                            <li>Add the partial values together to compute the total product:
+                                <div class="math-block">$$175 + 1050 = 1,225$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 19</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Find the value of \(X\) in this vertical sum sequence:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;4 + 2 + 1 + 3 + 4 + 7 + 2 + 2 + 3 + 4 + X = 42
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: X = 10</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Add all ten known numeric constants in the column:
+                                <div class="math-block">$$(4 + 2 + 1 + 3 + 4) + (7 + 2 + 2 + 3 + 4) = 14 + 18 = 32$$</div>
+                            </li>
+                            <li>Set up the equation with the missing addend:
+                                <div class="math-block">$$32 + X = 42$$</div>
+                            </li>
+                            <li>Isolate variable \(X\) by subtracting the known sum from the target total:
+                                <div class="math-block">$$X = 42 - 32 = 10$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 20</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: \(8 \overline{) \$70.00 }\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: $8.75</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide through standard long division steps, keeping track of place value decimals:
+                                <br>&bull; \(70 \div 8 = 8\) with a remainder of \(6\)
+                                <br>&bull; Bring down the next zero to make \(60\); \(60 \div 8 = 7\) with a remainder of \(4\)
+                                <br>&bull; Bring down the final zero to make \(40\); \(40 \div 8 = 5\) exactly.
+                            </li>
+                            <li>Align the decimal point directly into the quotient to finish: \(\$8.75\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 21</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: \(6 \overline{) 1234 }\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: 205 R 4</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Process using long division from left to right:
+                                <br>&bull; \(12 \div 6 = 2\) with a remainder of \(0\).
+                                <br>&bull; Bring down the \(3\). Since \(3 < 6\), place a \(0\) in the quotient column and bring down the \(4\) to form \(34\).
+                                <br>&bull; \(34 \div 6 = 5\) with a remainder of \(4\).
+                            </li>
+                            <li>Combine the steps to state the final quotient and remainder: <strong>205 R 4</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 22</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: \(800 \div 7\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 114 R 2</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Process using long division steps:
+                                <br>&bull; \(8 \div 7 = 1\) with a remainder of \(1\).
+                                <br>&bull; Bring down the zero to get \(10\); \(10 \div 7 = 1\) with a remainder of \(3\).
+                                <br>&bull; Bring down the second zero to get \(30\); \(30 \div 7 = 4\) with a remainder of \(2\).
+                            </li>
+                            <li>Combine the steps to state the final quotient and remainder: <strong>114 R 2</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 23</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: \(487 \div 3\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 162 R 1</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Process using long division steps:
+                                <br>&bull; \(4 \div 3 = 1\) with a remainder of \(1\).
+                                <br>&bull; Bring down the \(8\) to get \(18\); \(18 \div 3 = 6\) with a remainder of \(0\).
+                                <br>&bull; Bring down the \(7\); \(7 \div 3 = 2\) with a remainder of \(1\).
+                            </li>
+                            <li>Combine the steps to state the final quotient and remainder: <strong>162 R 1</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 24</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$2.74 + \$0.27 + \$6 + 49\text{¢}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: $9.50</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Convert all terms into uniform standard currency decimal form:
+                                <br>&bull; \(\$6 \rightarrow \$6.00\)
+                                <br>&bull; \(49\text{¢} \rightarrow \$0.49\)
+                            </li>
+                            <li>Align the decimal points vertically and add carefully:
+                                <div class="math-block">$$2.74 + 0.27 + 6.00 + 0.49 = 9.50$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 25</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(9.487 - (3.7 + 2.36)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: 3.427</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the operation enclosed within the grouping parentheses first:
+                                <div class="math-block">$$3.70 + 2.36 = 6.06$$</div>
+                            </li>
+                            <li>Subtract that intermediate sum from the initial number, matching place values carefully:
+                                <div class="math-block">$$9.487 - 6.060 = 3.427$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 26</span></div>
+            <div class="card-body">
+                <div class="question-text">Draw and shade circles to show that \(2\frac{1}{3}\) equals \(\frac{7}{3}\).</div>
+                <div class="diagram-container">
+                    <canvas id="canvasCircles" width="360" height="110"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: Shown in the diagram above</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Draw 3 separate circular fraction models, dividing each circle into 3 equal slices (thirds).</li>
+                            <li>Shade two entire circles completely to represent the whole number 2. This accounts for 6 total shaded thirds (\(\frac{6}{3}\)).</li>
+                            <li>Shade exactly 1 individual slice out of the 3 in the final circle (\(\frac{1}{3}\)).</li>
+                            <li>Count the total number of shaded slices across all models to confirm the improper fraction equivalence:
+                                <div class="math-block">$$\frac{3}{3} + \frac{3}{3} + \frac{1}{3} = \frac{7}{3} = 2\frac{1}{3}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-bottom: 3px solid #64748b;">
+            <div class="card-header" style="background-color: #f1f5f9;">
+                <span class="question-num" style="color: #475569;">Reference Material (Problems 27–30)</span>
+            </div>
+            <div class="card-body">
+                <p class="question-text" style="margin-bottom: 10px;">Below are Ian's nine quiz scores, which range from 6 to 10. Refer to these scores to answer problems 27–30.</p>
+                <div class="context-box" style="text-align: center; font-size: 14pt; font-weight: bold; font-style: normal; letter-spacing: 2px;">
+                    8, 7, 7, 8, 6, 10, 9, 10, 7
+                </div>
+                <p style="font-size: 11pt; color: var(--text-muted);"><strong>Tip:</strong> Sorting the data set from lowest to highest values makes statistical analysis much easier:
+                    <br><span style="color: var(--accent); font-weight: bold;">6, 7, 7, 7, 8, 8, 9, 10, 10</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 27</span></div>
+            <div class="card-body">
+                <div class="question-text">What is the mode of the scores?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: 7</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The **mode** is the value that appears most frequently in a dataset.</li>
+                            <li>Count how often each score appears:
+                                <br>&bull; 6 occurs 1 time
+                                <br>&bull; <strong>7 occurs 3 times</strong>
+                                <br>&bull; 8 occurs 2 times
+                                <br>&bull; 9 occurs 1 time
+                                <br>&bull; 10 occurs 2 times
+                            </li>
+                            <li>Because 7 occurs most often, it is the mode.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 28</span></div>
+            <div class="card-body">
+                <div class="question-text">What is the median of the scores?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: 8</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The **median** is the middle value when a data set is ordered from least to greatest.</li>
+                            <li>Arrange the 9 scores in order:
+                                <div class="math-block">$$6, \ 7, \ 7, \ 7, \ \mathbf{[8]}, \ 8, \ 9, \ 10, \ 10$$</div>
+                            </li>
+                            <li>The 5th value is the exact center, leaving 4 scores on either side. That middle value is 8.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 29</span></div>
+            <div class="card-body">
+                <div class="question-text">What is the range of the scores?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: 4</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The **range** is the difference between the highest and lowest values in a data set.</li>
+                            <li>Identify the extremes from the sorted scores:
+                                <br>&bull; Maximum value = \(10\)
+                                <br>&bull; Minimum value = \(6\)
+                            </li>
+                            <li>Subtract the minimum from the maximum:
+                                <div class="math-block">$$\text{Range} = 10 - 6 = 4$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 30</span></div>
+            <div class="card-body">
+                <div class="question-text">What is the mean of the scores?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer &amp; Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: 8</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The **mean** is the average value, calculated by dividing the sum of all elements by the total count of elements.</li>
+                            <li>Find the sum of the 9 scores:
+                                <div class="math-block">$$6 + 7 + 7 + 7 + 8 + 8 + 9 + 10 + 10 = 72$$</div>
+                            </li>
+                            <li>Divide the sum by the total number of quiz items (\(9\)):
+                                <div class="math-block">$$\text{Mean} = 72 \div 9 = 8$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Homework Solutions Guide &bull; Saxon Math Framework Curriculum Alignment</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+
+        // --- P1-P4 Park Activities Circle Chart ---
+        var ctxPark = document.getElementById("canvasParkChart").getContext("2d");
+        var slices = [
+            { label: "Flying kites (20)", val: 20, color: "#3b82f6" },
+            { label: "Catching polliwogs (19)", val: 19, color: "#10b981" },
+            { label: "Playing Ball (18)", val: 18, color: "#f59e0b" },
+            { label: "Eating (15)", val: 15, color: "#ec4899" },
+            { label: "Skating (15)", val: 15, color: "#8b5cf6" },
+            { label: "Hiking (12)", val: 12, color: "#06b6d4" },
+            { label: "Other (1)", val: 1, color: "#64748b" }
+        ];
+        
+        let totalVal = 100;
+        let startAngle = -Math.PI / 2;
+        let centerX = 170, centerY = 150, radius = 100;
+
+        // Draw Pie slices
+        for (let i = 0; i < slices.length; i++) {
+            let sliceAngle = (slices[i].val / totalVal) * (2 * Math.PI);
+            ctxPark.fillStyle = slices[i].color;
+            ctxPark.beginPath();
+            ctxPark.moveTo(centerX, centerY);
+            ctxPark.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+            ctxPark.closePath();
+            ctxPark.fill();
+            ctxPark.strokeStyle = "#ffffff";
+            ctxPark.lineWidth = 1.5;
+            ctxPark.stroke();
+            startAngle += sliceAngle;
+        }
+
+        // Add Graph Title Text
+        ctxPark.font = "bold 13px sans-serif";
+        ctxPark.fillStyle = "#0f172a";
+        ctxPark.textAlign = "center";
+        ctxPark.fillText("Activities of 100 Children at the Park", centerX, 20);
+
+        // Simple grid Legend list layout beneath circle
+        ctxPark.font = "11px sans-serif";
+        ctxPark.textAlign = "left";
+        let legendX = 20, legendY = 270;
+        for (let i = 0; i < slices.length; i++) {
+            let col = i % 2;
+            let row = Math.floor(i / 2);
+            let curX = legendX + (col * 160);
+            let curY = legendY + (row * 18);
+            
+            ctxPark.fillStyle = slices[i].color;
+            ctxPark.fillRect(curX, curY - 9, 12, 12);
+            ctxPark.fillStyle = "#334155";
+            ctxPark.fillText(slices[i].label, curX + 18, curY);
+        }
+
+        // --- P5 Gold Coins Quadrant Fractional Model ---
+        var ctxCoins = document.getElementById("canvasCoins").getContext("2d");
+        ctxCoins.fillStyle = "#fef3c7";
+        ctxCoins.fillRect(10, 15, 210, 50); // Shading 3 quadrants
+        ctxCoins.strokeStyle = "#334155";
+        ctxCoins.lineWidth = 2;
+        ctxCoins.strokeRect(10, 15, 280, 50);
+        
+        // Internal Grid Lines
+        for(let i = 1; i <= 3; i++) {
+            ctxCoins.beginPath();
+            ctxCoins.moveTo(10 + (i * 70), 15);
+            ctxCoins.lineTo(10 + (i * 70), 65);
+            ctxCoins.stroke();
+        }
+        
+        // Labels
+        ctxCoins.font = "12px sans-serif";
+        ctxCoins.fillStyle = "#334155";
+        ctxCoins.textAlign = "center";
+        for(let i = 0; i < 4; i++) {
+            ctxCoins.fillText("250 coins", 45 + (i * 70), 45);
+        }
+        
+        // Bracket indicator label text
+        ctxCoins.font = "bold 11px sans-serif";
+        ctxCoins.fillStyle = "#b45309";
+        ctxCoins.fillText("Total: 1,000 gold coins", 150, 10);
+        ctxCoins.fillText("3/4 are Doubloons (250 × 3 = 750)", 115, 95);
+
+        // --- P9-P10 Dimensions Rectangle Geometric Representation ---
+        var ctxRect = document.getElementById("canvasRectangle").getContext("2d");
+        ctxRect.strokeStyle = "#334155";
+        ctxRect.lineWidth = 2;
+        ctxRect.fillStyle = "#f8fafc";
+        ctxRect.fillRect(40, 30, 150, 50);
+        ctxRect.strokeRect(40, 30, 150, 50);
+        
+        ctxRect.font = "12px sans-serif";
+        ctxRect.fillStyle = "#0f172a";
+        ctxRect.textAlign = "center";
+        ctxRect.fillText("30 mm", 115, 20); // Length
+        ctxRect.textAlign = "left";
+        ctxRect.fillText("10 mm", 200, 60); // Width
+
+        // --- P26 Fraction Circle Models ---
+        var ctxCirc = document.getElementById("canvasCircles").getContext("2d");
+        let cRadius = 30;
+        let cCentersY = 45;
+        let cCentersX = [50, 140, 230];
+
+        function drawFractionCircle(centerX, numShaded) {
+            let sAngle = -Math.PI / 2;
+            for (let i = 0; i < 3; i++) {
+                let slice = (2 * Math.PI) / 3;
+                ctxCirc.fillStyle = (i < numShaded) ? "#dbeafe" : "#ffffff";
+                ctxCirc.beginPath();
+                ctxCirc.moveTo(centerX, cCentersY);
+                ctxCirc.arc(centerX, cCentersY, cRadius, sAngle, sAngle + slice);
+                ctxCirc.closePath();
+                ctxCirc.fill();
+                ctxCirc.strokeStyle = "#334155";
+                ctxCirc.lineWidth = 1.5;
+                ctxCirc.stroke();
+                sAngle += slice;
+            }
+        }
+
+        // Draw 2 completely filled circles, and 1 third filled circle
+        drawFractionCircle(cCentersX[0], 3);
+        drawFractionCircle(cCentersX[1], 3);
+        drawFractionCircle(cCentersX[2], 1);
+
+        // Value text descriptors underneath circles
+        ctxCirc.font = "bold 13px sans-serif";
+        ctxCirc.fillStyle = "#1e40af";
+        ctxCirc.textAlign = "center";
+        ctxCirc.fillText("3/3", cCentersX[0], 100);
+        ctxCirc.fillText("+", 95, 50);
+        ctxCirc.fillText("3/3", cCentersX[1], 100);
+        ctxCirc.fillText("+", 185, 50);
+        ctxCirc.fillText("1/3", cCentersX[2], 100);
+        ctxCirc.fillText("=   7/3   =  2 1/3", 310, 50);
+    };
+</script>
+
+</body>
+</html>
