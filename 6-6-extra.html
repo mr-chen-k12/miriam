@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Targeted Practice: Selected Problems</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+
+        canvas {
+            background: #fff;
+            border: 1px solid #ddd;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Customized Practice Set</h1>
+        <p>Similar questions generated for problems 1, 3, 4, 5, 6, 7, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 28, and 30.</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 1</span></div>
+            <div class="card-body">
+                <div class="question-text">Mark is 4 years older than Lily. Lily is three times as old as Sam. Sam is 4 years old. How old is Mark?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: 16 years old</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, determine Sam's age, which is given as 4.</li>
+                            <li>Lily is three times as old as Sam: $$4 \times 3 = 12 \text{ (Lily's age)}$$</li>
+                            <li>Mark is 4 years older than Lily: $$12 + 4 = 16 \text{ (Mark's age)}$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 3</span></div>
+            <div class="card-body">
+                <div class="question-text">It costs \$3.25 to buy a notebook. John has five 50-cent coins. How much more money does John need to buy the notebook?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: \$0.75 (or 75&cent;)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate the total value of John's coins: $$5 \times \$0.50 = \$2.50$$</li>
+                            <li>Subtract the money he has from the total cost required: $$\$3.25 - \$2.50 = \$0.75$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 4</span></div>
+            <div class="card-body">
+                <div class="question-text">Fifty-two books were placed as equally as possible on 6 shelves.<br>(a) How many shelves had exactly 8 books?<br>(b) How many shelves had 9 books?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: (a) 2 shelves &nbsp;|&nbsp; (b) 4 shelves</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the total number of books by the number of shelves to find the base number: $$52 \div 6 = 8 \text{ with a remainder of } 4$$</li>
+                            <li>The remainder means 4 extra books are distributed one by one to the shelves. So, 4 shelves will have an extra book (making them shelves of 9).</li>
+                            <li>The remaining shelves keep the base number of 8 books: $$6 \text{ total shelves} - 4 \text{ shelves of nine} = 2 \text{ shelves of eight}$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 5</span></div>
+            <div class="card-body">
+                <div class="question-text">Two fifths of the 30 cars in the parking lot are red. How many cars are red? Draw a picture to illustrate the problem.</div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ5" width="270" height="100"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 12 cars</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the total number of cars into 5 equal groups (the denominator): $$30 \div 5 = 6 \text{ cars per group}$$</li>
+                            <li>Because "two fifths" are red, multiply the amount in one group by the numerator (2): $$6 \times 2 = 12 \text{ red cars}$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 6</span></div>
+            <div class="card-body">
+                <div class="question-text">(a) What decimal number names the shaded part of the large square?<br>(b) What decimal number names the part that is not shaded?</div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ6" width="160" height="160"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: (a) 0.24 &nbsp;|&nbsp; (b) 0.76</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The master grid contains 100 small units.</li>
+                            <li>There are 24 small squares shaded (2 full rows of 10, plus 4).</li>
+                            <li>Fraction representation of the shaded part: $\frac{24}{100}$, which as a decimal is 0.24.</li>
+                            <li>The remaining non-shaded squares equal 76. As a decimal, this is 0.76.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 7</span></div>
+            <div class="card-body">
+                <div class="question-text">Each small square in problem 6 is 1% of the large square. What percent of the large square is shaded?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: 24%</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the number of shaded squares (24) by 1%.</li>
+                            <li>24 shaded squares $\times$ 1% = 24%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 10</span></div>
+            <div class="card-body">
+                <div class="question-text">The baker started baking early in the morning and finished just before lunch. According to the clocks below, how much time had gone by?</div>
+                <div class="diagram-container" style="display:flex; gap:30px; text-align:center;">
+                    <div>
+                        <canvas id="canvasQ10a" width="120" height="120"></canvas>
+                        <p style="margin-top:10px; font-weight:bold;">Started</p>
+                    </div>
+                    <div>
+                        <canvas id="canvasQ10b" width="120" height="120"></canvas>
+                        <p style="margin-top:10px; font-weight:bold;">Finished</p>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: 5 hours 30 minutes</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The first clock shows 6:15 (AM).</li>
+                            <li>The second clock shows 11:45 (AM).</li>
+                            <li>Calculate the hours between 6:15 and 11:15, which is exactly 5 hours.</li>
+                            <li>Calculate the remaining minutes from 11:15 to 11:45, which is 30 minutes.</li>
+                            <li>Total elapsed time: 5 hours 30 minutes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 11</span></div>
+            <div class="card-body">
+                <div class="question-text">A basketball player scored the following points in her last five games: 14, 22, 18, 16, and 20. What was her average points per game?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: 18 points</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the sum of all points: $$14 + 22 + 18 + 16 + 20 = 90$$</li>
+                            <li>Divide the sum by the number of games (5): $$90 \div 5 = 18$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 12</span></div>
+            <div class="card-body">
+                <div class="question-text">A train traveled 512 miles in 8 hours. If it traveled the same distance each hour, how far did it travel each hour?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: 64 miles</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide total distance by total time to find miles per hour: $$512 \div 8 = 64$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 15</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Add:<br>
+                    \$14.20<br>
+                    \$3.15<br>
+                    \$1.50<br>
+                    \$0.75<br>
+                    \$0.10<br>
+                    \$0.85<br>
+                    + \$3.40<br>
+                    -------
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: \$23.95</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Carefully align all the decimal points and add the column of numbers: $$14.20 + 3.15 + 1.50 + 0.75 + 0.10 + 0.85 + 3.40 = 23.95$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 16</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;42<br>
+                    &nbsp;&times;&nbsp;23<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;---
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 966</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate partial product components: $$42 \times 3 = 126$$ $$42 \times 20 = 840$$</li>
+                            <li>Sum the partial products together: $$126 + 840 = 966$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 17</span></div>
+            <div class="card-body">
+                <div class="question-text">
+                    Multiply:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;45<br>
+                    &nbsp;&times;&nbsp;45<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;---
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 2,025</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate partial product components: $$45 \times 5 = 225$$ $$45 \times 40 = 1800$$</li>
+                            <li>Sum them together: $$225 + 1800 = 2025$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 18</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: \$38.40 &divide; 8</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: \$4.80</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Place the decimal point directly above its location in the dividend.</li>
+                            <li>Divide 38 by 8 to get 4 (remainder 6).</li>
+                            <li>Bring down the 4 to make 64. Divide 64 by 8 to get 8 (remainder 0).</li>
+                            <li>Bring down the 0. Divide 0 by 8 to get 0. Final answer is \$4.80.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 19</span></div>
+            <div class="card-body">
+                <div class="question-text">Multiply: 70 &times; 400</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: 28,000</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the non-zero digits first: $$7 \times 4 = 28$$</li>
+                            <li>Count the total number of trailing zeros in the factors (one in 70, two in 400 = 3 zeros).</li>
+                            <li>Append the 3 zeros to the product 28 to get 28,000.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 20</span></div>
+            <div class="card-body">
+                <div class="question-text">Multiply: \$7.35 &times; 6</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: \$44.10</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply 735 by 6 as if they were whole numbers: $$735 \times 6 = 4,410$$</li>
+                            <li>Place the decimal point two spaces in from the right to represent dollars and cents: \$44.10.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 21</span></div>
+            <div class="card-body">
+                <div class="question-text">Divide: 862 &divide; 7</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: 123 R 1</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide 8 by 7 = 1 (remainder 1). Bring down the 6 to make 16.</li>
+                            <li>Divide 16 by 7 = 2 (remainder 2). Bring down the 2 to make 22.</li>
+                            <li>Divide 22 by 7 = 3 (remainder 1).</li>
+                            <li>Final quotient is 123 with a remainder of 1.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background-color: var(--primary-light);">
+            <div class="card-body">
+                <p><strong>Note for Problem 28:</strong> Below are David's scores on his latest spelling tests. Refer to these scores to answer problem 28.</p>
+                <p style="font-size:14pt; margin-top:10px; text-align:center;">88, 92, 88, 75, 100, 88, 95</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 28</span></div>
+            <div class="card-body">
+                <div class="question-text">In the list of test scores above, which score occurs most frequently?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: 88</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Count the frequency of each score:
+                                <ul>
+                                    <li>75, 92, 95, and 100 each appear 1 time.</li>
+                                    <li>88 appears 3 times.</li>
+                                </ul>
+                            </li>
+                            <li>The score that appears the most (the mode) is 88.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 30</span></div>
+            <div class="card-body">
+                <div class="question-text">A recipe calls for 48 ounces of chicken broth. If a standard can holds exactly 12 ounces of broth, how many cans are needed for the recipe?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: 4 cans</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide the total ounces needed by the capacity of one can: $$48 \div 12 = 4 \text{ cans}$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Custom Target Practice Set</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+
+        // --- Q5 Red Cars (5 groups, 2 shaded) ---
+        var c5 = document.getElementById("canvasQ5").getContext("2d");
+        c5.strokeStyle = "#333";
+        c5.lineWidth = 2;
+        // Total width 250, divided by 5 = 50 per block
+        c5.strokeRect(10, 10, 250, 50); 
+        c5.beginPath();
+        for(let i=1; i<5; i++){
+            c5.moveTo(10 + i*50, 10);
+            c5.lineTo(10 + i*50, 60);
+        }
+        c5.stroke();
+        
+        // Shade first 2 blocks (width = 100)
+        c5.fillStyle = "#e74c3c";
+        c5.fillRect(10, 10, 100, 50);
+        
+        // Add text labels
+        c5.font = "13px sans-serif";
+        c5.fillStyle = "#333";
+        c5.fillText("12 Cars (Red)", 20, 85);
+        c5.fillText("6 Cars", 115, 85);
+
+        // --- Q6 Grid Canvas (10x10) - Shade 24 blocks ---
+        var c6 = document.getElementById("canvasQ6").getContext("2d");
+        for(let r=0; r<10; r++) {
+            for(let col=0; col<10; col++) {
+                // Color 24 squares: Rows 8 and 9 fully (20), plus last 4 in row 7
+                if(r >= 8 || (r === 7 && col >= 6)) {
+                    c6.fillStyle = "#34495e";
+                    c6.fillRect(col*15 + 5, r*15 + 5, 15, 15);
+                }
+                c6.strokeStyle = "#bdc3c7";
+                c6.strokeRect(col*15 + 5, r*15 + 5, 15, 15);
+            }
+        }
+
+        // --- Q10 Clocks ---
+        function drawClock(ctx, radius, hr, min) {
+            ctx.translate(radius, radius);
+            ctx.beginPath();
+            ctx.arc(0, 0, radius - 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.stroke();
+            
+            // Draw ticks
+            ctx.fillStyle = "#333";
+            for(let i=1; i<=12; i++){
+                ctx.beginPath();
+                ctx.rotate(i * Math.PI / 6);
+                ctx.moveTo(0, -(radius - 15));
+                ctx.lineTo(0, -(radius - 5));
+                ctx.stroke();
+                ctx.rotate(-i * Math.PI / 6);
+            }
+            
+            // Minute Hand
+            let minAngle = (min * Math.PI / 30);
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.moveTo(0,0);
+            ctx.rotate(minAngle);
+            ctx.lineTo(0, -(radius - 20));
+            ctx.stroke();
+            ctx.rotate(-minAngle);
+            
+            // Hour Hand
+            let hrAngle = (hr * Math.PI / 6) + (min * Math.PI / (6 * 60));
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.moveTo(0,0);
+            ctx.rotate(hrAngle);
+            ctx.lineTo(0, -(radius - 35));
+            ctx.stroke();
+            ctx.rotate(-hrAngle);
+            
+            ctx.translate(-radius, -radius);
+        }
+        
+        var c10a = document.getElementById("canvasQ10a").getContext("2d");
+        drawClock(c10a, 60, 6, 15); // 6:15
+        
+        var c10b = document.getElementById("canvasQ10b").getContext("2d");
+        drawClock(c10b, 60, 11, 45); // 11:45
+    };
+</script>
+
+</body>
+</html>
