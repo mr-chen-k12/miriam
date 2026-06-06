@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2: Written Practice - Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .explanation-panel {
+    display: none; /* Change this line */
+    margin-top: 20px;
+    padding: 20px;
+    /* ... */
+}
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+        
+        .column-addition {
+            font-family: monospace;
+            font-size: 14pt;
+            line-height: 1.2;
+            margin-left: 20px;
+            display: inline-block;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 2 Complete Solutions</h1>
+        <p>Written Practice (Problems 1–30)</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 1</span></div>
+            <div class="card-body">
+                <div class="question-text">When the product of 2 and 3 is subtracted from the sum of 4 and 5, what is the difference?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the sum of 4 and 5: <div class="math-block">$$4 + 5 = 9$$</div></li>
+                            <li>Find the product of 2 and 3: <div class="math-block">$$2 \times 3 = 6$$</div></li>
+                            <li>Subtract the product from the sum: <div class="math-block">$$9 - 6 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 2</span></div>
+            <div class="card-body">
+                <div class="question-text">Write 4 cents twice, once with a dollar sign and once with a cent sign.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(2)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-2">
+                    <div class="answer-highlight">Answer: $0.04 and 4¢</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>With a dollar sign, four cents is four hundredths of a dollar: \$0.04</li>
+                            <li>With a cent sign, it is simply 4¢.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 3</span></div>
+            <div class="card-body">
+                <div class="question-text">The sign shown is incorrect. Show two ways to correct the sign. <br><em>(Sign: Fruit 0.75¢ per apple)</em></div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: $0.75 per apple OR 75¢ per apple</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>"0.75¢" literally means less than one penny (three-quarters of a single cent).</li>
+                            <li>To correct it, express it as 75 whole cents (75¢) or as a decimal fraction of a dollar (\$0.75).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 4</span></div>
+            <div class="card-body">
+                <div class="question-text">Which operation of arithmetic is the inverse of addition?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: Subtraction</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Inverse operations "undo" each other. Subtraction reverses the process of addition.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 5</span></div>
+            <div class="card-body">
+                <div class="question-text">If the dividend is 60 and the divisor is 4, what is the quotient?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 15</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Set up the division problem: <div class="math-block">$$60 \div 4 = 15$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 6</span></div>
+            <div class="card-body">
+                <div class="question-text">For the fact family 3, 5, and 15, write two multiplication facts and two division facts.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: 3 × 5 = 15, 5 × 3 = 15, 15 ÷ 3 = 5, 15 ÷ 5 = 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiplication is commutative: <div class="math-block">$$3 \times 5 = 15 \quad \text{and} \quad 5 \times 3 = 15$$</div></li>
+                            <li>Division facts use the product as the dividend: <div class="math-block">$$15 \div 3 = 5 \quad \text{and} \quad 15 \div 5 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 7</span></div>
+            <div class="card-body">
+                <div class="question-text">List the properties used in the first and second steps to simplify the expression \(5 + (27 + 35)\).<br>
+                Step 1: \((27 + 35) + 5\) <br>
+                Step 2: \(27 + (35 + 5)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: a. Commutative property of addition, b. Associative property of addition</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>Step 1:</strong> The order of the addends changed from \(5 + (Group)\) to \((Group) + 5\). This is the Commutative Property.</li>
+                            <li><strong>Step 2:</strong> The grouping parentheses shifted from \((27 + 35)\) to \((35 + 5)\). This is the Associative Property.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 8</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: $20.00 - $14.79</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(8)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-8">
+                    <div class="answer-highlight">Answer: $5.21</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align the decimal points and subtract, borrowing where necessary. <div class="math-block">$$20.00 - 14.79 = 5.21$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 9</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: $1.54 × 7</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(9)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-9">
+                    <div class="answer-highlight">Answer: $10.78</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply 154 by 7: \(154 \times 7 = 1078\).</li>
+                            <li>Since there are two decimal places in \$1.54, put two decimal places in the answer: \$10.78.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 10</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\frac{\$30.00}{8}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: $3.75</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide 30.00 by 8: <div class="math-block">$$30.00 \div 8 = 3.75$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 11</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$4.36 + 75\text{¢} + \$12 + 6\text{¢}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: $17.17</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Convert all amounts to dollars: \$0.75 and \$0.06.</li>
+                            <li>Align the decimals and add: <div class="math-block">$$4.36 + 0.75 + 12.00 + 0.06 = 17.17$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 12</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$10.00 - (\$4.89 + 74\text{¢})\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: $4.37</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First add the amounts in parentheses: <div class="math-block">$$\$4.89 + \$0.74 = \$5.63$$</div></li>
+                            <li>Subtract the sum from \$10.00: <div class="math-block">$$\$10.00 - \$5.63 = \$4.37$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 13</span></div>
+            <div class="card-body">
+                <div class="question-text">Add the column of numbers: 8, 5, 4, 6, 5, 4, 3, 7, 2, 4, 1, 8</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(13)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-13">
+                    <div class="answer-highlight">Answer: 57</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A great strategy is to group numbers that add up to 10 (e.g., 6+4, 5+5, 7+3, 8+2).</li>
+                            <li>Summing straight down: \(8+5=13\), \(13+4=17\), \(17+6=23\), \(23+5=28\), \(28+4=32\), \(32+3=35\), \(35+7=42\), \(42+2=44\), \(44+4=48\), \(48+1=49\), \(49+8=57\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 14</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3105 \div 15\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(14)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-14">
+                    <div class="answer-highlight">Answer: 207</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide left to right: 15 goes into 31 two times (\(2 \times 15 = 30\)).</li>
+                            <li>Bring down 0 to make 10. 15 goes into 10 zero times.</li>
+                            <li>Bring down 5 to make 105. 15 goes into 105 seven times (\(7 \times 15 = 105\)).</li>
+                            <li>The quotient is 207.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 15</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(40 \overline{) 1630}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: 40 R 30 (or 40.75)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>40 goes into 163 four times (\(4 \times 40 = 160\)) with a remainder of 3.</li>
+                            <li>Bring down the 0 to make 30. 40 goes into 30 zero times.</li>
+                            <li>The quotient is 40 with a remainder of 30. (Can also be written as \(40 \frac{30}{40}\) or \(40.75\)).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 16</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(81 \div (9 \div 3)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 27</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate the expression inside the parentheses first: <div class="math-block">$$9 \div 3 = 3$$</div></li>
+                            <li>Divide 81 by the result: <div class="math-block">$$81 \div 3 = 27$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 17</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((81 \div 9) \div 3\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate the expression inside the parentheses first: <div class="math-block">$$81 \div 9 = 9$$</div></li>
+                            <li>Divide the result by 3: <div class="math-block">$$9 \div 3 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 18</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((10)(\$3.75)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: $37.50</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiplying by 10 moves the decimal point one place to the right: <div class="math-block">$$10 \times \$3.75 = \$37.50$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 19</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3167 - (450 - 78)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: 2,795</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Subtract the numbers inside the parentheses first: <div class="math-block">$$450 - 78 = 372$$</div></li>
+                            <li>Subtract that result from the starting number: <div class="math-block">$$3167 - 372 = 2795$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 20</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((3167 - 450) - 78\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: 2,639</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the parentheses first: <div class="math-block">$$3167 - 450 = 2717$$</div></li>
+                            <li>Subtract 78 from the result: <div class="math-block">$$2717 - 78 = 2639$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 21</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$20.00 \div 16\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: $1.25</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide 20.00 by 16: <div class="math-block">$$20.00 \div 16 = 1.25$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 22</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(70 \cdot 800\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 56,000</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the non-zero digits: \(7 \times 8 = 56\).</li>
+                            <li>Count the total zeros in both factors (one in 70, two in 800 = three zeros) and append them: <div class="math-block">$$56,000$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 23</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3714 + 268 + 47 + 9\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 4,038</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align numbers vertically by place value and add:
+                                <div class="math-block">$$3714 + 268 = 3982$$</div>
+                                <div class="math-block">$$3982 + 47 = 4029$$</div>
+                                <div class="math-block">$$4029 + 9 = 4038$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 24</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(5 \cdot 4 \cdot 3 \cdot 2 \cdot 1\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: 120</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply sequentially: <div class="math-block">$$5 \times 4 = 20$$</div></li>
+                            <li><div class="math-block">$$20 \times 3 = 60$$</div></li>
+                            <li><div class="math-block">$$60 \times 2 = 120$$</div></li>
+                            <li><div class="math-block">$$120 \times 1 = 120$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 25</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$20 - (\$1.47 + \$8)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: $10.53</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, add the amounts inside the parentheses: <div class="math-block">$$\$1.47 + \$8.00 = \$9.47$$</div></li>
+                            <li>Subtract the total from \$20.00: <div class="math-block">$$\$20.00 - \$9.47 = \$10.53$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 26</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(30 \times 45\text{¢}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: $13.50 (or 1350¢)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply to find the total cents: <div class="math-block">$$30 \times 45 = 1350\text{¢}$$</div></li>
+                            <li>Convert cents to dollars by dividing by 100: <div class="math-block">$$1350 \div 100 = \$13.50$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 27</span></div>
+            <div class="card-body">
+                <div class="question-text">Which property can we use to find each missing number?<br>
+                <strong>a.</strong> \(10x = 0\) &nbsp;&nbsp; <strong>b.</strong> \(10y = 10\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: a. Property of Zero for Multiplication, b. Identity Property of Multiplication</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>a.</strong> Any number multiplied by 0 equals 0. Therefore, \(x = 0\). This is the Property of Zero for Multiplication.</li>
+                            <li><strong>b.</strong> Any number multiplied by 1 equals itself. Therefore, \(y = 1\). This is the Identity Property of Multiplication.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 28</span></div>
+            <div class="card-body">
+                <div class="question-text">Evaluate each expression for \(x = 18\) and \(y = 3\):<br>
+                <strong>a.</strong> \(x - y\) &nbsp;&nbsp; <strong>b.</strong> \(xy\) &nbsp;&nbsp; <strong>c.</strong> \(\frac{x}{y}\) &nbsp;&nbsp; <strong>d.</strong> \(x + y\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: a. 15 &nbsp; b. 54 &nbsp; c. 6 &nbsp; d. 21</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Substitute 18 for \(x\) and 3 for \(y\) into each expression.</li>
+                            <li><strong>a.</strong> \(18 - 3 = 15\)</li>
+                            <li><strong>b.</strong> \(18 \times 3 = 54\)</li>
+                            <li><strong>c.</strong> \(18 \div 3 = 6\)</li>
+                            <li><strong>d.</strong> \(18 + 3 = 21\)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 29</span></div>
+            <div class="card-body">
+                <div class="question-text">Why is zero called the additive identity?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: Adding zero to any number does not change its value.</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The word "identity" refers to keeping a number's value exactly the same.</li>
+                            <li>Because \(N + 0 = N\) for any number \(N\), zero perfectly preserves the original identity of the number during addition.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 30</span></div>
+            <div class="card-body">
+                <div class="question-text">The equation below shows the relationship of factors and their product: <br>
+                \(\text{factor} \times \text{factor} = \text{product}\)<br>
+                Using the vocabulary we have learned, write a similar equation to show the relationships in division.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: dividend ÷ divisor = quotient</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>In a division equation, the number being divided is the <strong>dividend</strong>.</li>
+                            <li>The number you are dividing by is the <strong>divisor</strong>.</li>
+                            <li>The answer to the division problem is the <strong>quotient</strong>.</li>
+                            <li>Therefore, \(\text{dividend} \div \text{divisor} = \text{quotient}\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Generated for Saxon Math Course 2 Lesson 2 Alignment</p>
+    </footer>
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2: Written Practice - Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+        
+        .column-addition {
+            font-family: monospace;
+            font-size: 14pt;
+            line-height: 1.2;
+            margin-left: 20px;
+            display: inline-block;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 2 Complete Solutions</h1>
+        <p>Written Practice (Problems 1–30)</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 1</span></div>
+            <div class="card-body">
+                <div class="question-text">When the product of 2 and 3 is subtracted from the sum of 4 and 5, what is the difference?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the sum of 4 and 5: <div class="math-block">$$4 + 5 = 9$$</div></li>
+                            <li>Find the product of 2 and 3: <div class="math-block">$$2 \times 3 = 6$$</div></li>
+                            <li>Subtract the product from the sum: <div class="math-block">$$9 - 6 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 2</span></div>
+            <div class="card-body">
+                <div class="question-text">Write 4 cents twice, once with a dollar sign and once with a cent sign.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(2)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-2">
+                    <div class="answer-highlight">Answer: $0.04 and 4¢</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>With a dollar sign, four cents is four hundredths of a dollar: \$0.04</li>
+                            <li>With a cent sign, it is simply 4¢.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 3</span></div>
+            <div class="card-body">
+                <div class="question-text">The sign shown is incorrect. Show two ways to correct the sign. <br><em>(Sign: Fruit 0.75¢ per apple)</em></div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: $0.75 per apple OR 75¢ per apple</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>"0.75¢" literally means less than one penny (three-quarters of a single cent).</li>
+                            <li>To correct it, express it as 75 whole cents (75¢) or as a decimal fraction of a dollar (\$0.75).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 4</span></div>
+            <div class="card-body">
+                <div class="question-text">Which operation of arithmetic is the inverse of addition?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: Subtraction</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Inverse operations "undo" each other. Subtraction reverses the process of addition.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 5</span></div>
+            <div class="card-body">
+                <div class="question-text">If the dividend is 60 and the divisor is 4, what is the quotient?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 15</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Set up the division problem: <div class="math-block">$$60 \div 4 = 15$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 6</span></div>
+            <div class="card-body">
+                <div class="question-text">For the fact family 3, 5, and 15, write two multiplication facts and two division facts.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: 3 × 5 = 15, 5 × 3 = 15, 15 ÷ 3 = 5, 15 ÷ 5 = 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiplication is commutative: <div class="math-block">$$3 \times 5 = 15 \quad \text{and} \quad 5 \times 3 = 15$$</div></li>
+                            <li>Division facts use the product as the dividend: <div class="math-block">$$15 \div 3 = 5 \quad \text{and} \quad 15 \div 5 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 7</span></div>
+            <div class="card-body">
+                <div class="question-text">List the properties used in the first and second steps to simplify the expression \(5 + (27 + 35)\).<br>
+                Step 1: \((27 + 35) + 5\) <br>
+                Step 2: \(27 + (35 + 5)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: a. Commutative property of addition, b. Associative property of addition</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>Step 1:</strong> The order of the addends changed from \(5 + (Group)\) to \((Group) + 5\). This is the Commutative Property.</li>
+                            <li><strong>Step 2:</strong> The grouping parentheses shifted from \((27 + 35)\) to \((35 + 5)\). This is the Associative Property.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 8</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: $20.00 - $14.79</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(8)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-8">
+                    <div class="answer-highlight">Answer: $5.21</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align the decimal points and subtract, borrowing where necessary. <div class="math-block">$$20.00 - 14.79 = 5.21$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 9</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: $1.54 × 7</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(9)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-9">
+                    <div class="answer-highlight">Answer: $10.78</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply 154 by 7: \(154 \times 7 = 1078\).</li>
+                            <li>Since there are two decimal places in \$1.54, put two decimal places in the answer: \$10.78.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 10</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\frac{\$30.00}{8}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: $3.75</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide 30.00 by 8: <div class="math-block">$$30.00 \div 8 = 3.75$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 11</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$4.36 + 75\text{¢} + \$12 + 6\text{¢}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: $17.17</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Convert all amounts to dollars: \$0.75 and \$0.06.</li>
+                            <li>Align the decimals and add: <div class="math-block">$$4.36 + 0.75 + 12.00 + 0.06 = 17.17$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 12</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$10.00 - (\$4.89 + 74\text{¢})\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: $4.37</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First add the amounts in parentheses: <div class="math-block">$$\$4.89 + \$0.74 = \$5.63$$</div></li>
+                            <li>Subtract the sum from \$10.00: <div class="math-block">$$\$10.00 - \$5.63 = \$4.37$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 13</span></div>
+            <div class="card-body">
+                <div class="question-text">Add the column of numbers: 8, 5, 4, 6, 5, 4, 3, 7, 2, 4, 1, 8</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(13)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-13">
+                    <div class="answer-highlight">Answer: 57</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A great strategy is to group numbers that add up to 10 (e.g., 6+4, 5+5, 7+3, 8+2).</li>
+                            <li>Summing straight down: \(8+5=13\), \(13+4=17\), \(17+6=23\), \(23+5=28\), \(28+4=32\), \(32+3=35\), \(35+7=42\), \(42+2=44\), \(44+4=48\), \(48+1=49\), \(49+8=57\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 14</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3105 \div 15\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(14)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-14">
+                    <div class="answer-highlight">Answer: 207</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide left to right: 15 goes into 31 two times (\(2 \times 15 = 30\)).</li>
+                            <li>Bring down 0 to make 10. 15 goes into 10 zero times.</li>
+                            <li>Bring down 5 to make 105. 15 goes into 105 seven times (\(7 \times 15 = 105\)).</li>
+                            <li>The quotient is 207.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 15</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(40 \overline{) 1630}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: 40 R 30 (or 40.75)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>40 goes into 163 four times (\(4 \times 40 = 160\)) with a remainder of 3.</li>
+                            <li>Bring down the 0 to make 30. 40 goes into 30 zero times.</li>
+                            <li>The quotient is 40 with a remainder of 30. (Can also be written as \(40 \frac{30}{40}\) or \(40.75\)).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 16</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(81 \div (9 \div 3)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 27</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate the expression inside the parentheses first: <div class="math-block">$$9 \div 3 = 3$$</div></li>
+                            <li>Divide 81 by the result: <div class="math-block">$$81 \div 3 = 27$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 17</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((81 \div 9) \div 3\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 3</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Calculate the expression inside the parentheses first: <div class="math-block">$$81 \div 9 = 9$$</div></li>
+                            <li>Divide the result by 3: <div class="math-block">$$9 \div 3 = 3$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 18</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((10)(\$3.75)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: $37.50</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiplying by 10 moves the decimal point one place to the right: <div class="math-block">$$10 \times \$3.75 = \$37.50$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 19</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3167 - (450 - 78)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: 2,795</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Subtract the numbers inside the parentheses first: <div class="math-block">$$450 - 78 = 372$$</div></li>
+                            <li>Subtract that result from the starting number: <div class="math-block">$$3167 - 372 = 2795$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 20</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \((3167 - 450) - 78\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: 2,639</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the parentheses first: <div class="math-block">$$3167 - 450 = 2717$$</div></li>
+                            <li>Subtract 78 from the result: <div class="math-block">$$2717 - 78 = 2639$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 21</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$20.00 \div 16\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: $1.25</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Divide 20.00 by 16: <div class="math-block">$$20.00 \div 16 = 1.25$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 22</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(70 \cdot 800\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 56,000</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the non-zero digits: \(7 \times 8 = 56\).</li>
+                            <li>Count the total zeros in both factors (one in 70, two in 800 = three zeros) and append them: <div class="math-block">$$56,000$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 23</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(3714 + 268 + 47 + 9\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 4,038</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align numbers vertically by place value and add:
+                                <div class="math-block">$$3714 + 268 = 3982$$</div>
+                                <div class="math-block">$$3982 + 47 = 4029$$</div>
+                                <div class="math-block">$$4029 + 9 = 4038$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 24</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(5 \cdot 4 \cdot 3 \cdot 2 \cdot 1\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: 120</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply sequentially: <div class="math-block">$$5 \times 4 = 20$$</div></li>
+                            <li><div class="math-block">$$20 \times 3 = 60$$</div></li>
+                            <li><div class="math-block">$$60 \times 2 = 120$$</div></li>
+                            <li><div class="math-block">$$120 \times 1 = 120$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 25</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(\$20 - (\$1.47 + \$8)\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: $10.53</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, add the amounts inside the parentheses: <div class="math-block">$$\$1.47 + \$8.00 = \$9.47$$</div></li>
+                            <li>Subtract the total from \$20.00: <div class="math-block">$$\$20.00 - \$9.47 = \$10.53$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 26</span></div>
+            <div class="card-body">
+                <div class="question-text">Simplify: \(30 \times 45\text{¢}\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: $13.50 (or 1350¢)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply to find the total cents: <div class="math-block">$$30 \times 45 = 1350\text{¢}$$</div></li>
+                            <li>Convert cents to dollars by dividing by 100: <div class="math-block">$$1350 \div 100 = \$13.50$$</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 27</span></div>
+            <div class="card-body">
+                <div class="question-text">Which property can we use to find each missing number?<br>
+                <strong>a.</strong> \(10x = 0\) &nbsp;&nbsp; <strong>b.</strong> \(10y = 10\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: a. Property of Zero for Multiplication, b. Identity Property of Multiplication</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>a.</strong> Any number multiplied by 0 equals 0. Therefore, \(x = 0\). This is the Property of Zero for Multiplication.</li>
+                            <li><strong>b.</strong> Any number multiplied by 1 equals itself. Therefore, \(y = 1\). This is the Identity Property of Multiplication.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 28</span></div>
+            <div class="card-body">
+                <div class="question-text">Evaluate each expression for \(x = 18\) and \(y = 3\):<br>
+                <strong>a.</strong> \(x - y\) &nbsp;&nbsp; <strong>b.</strong> \(xy\) &nbsp;&nbsp; <strong>c.</strong> \(\frac{x}{y}\) &nbsp;&nbsp; <strong>d.</strong> \(x + y\)</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answer: a. 15 &nbsp; b. 54 &nbsp; c. 6 &nbsp; d. 21</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Substitute 18 for \(x\) and 3 for \(y\) into each expression.</li>
+                            <li><strong>a.</strong> \(18 - 3 = 15\)</li>
+                            <li><strong>b.</strong> \(18 \times 3 = 54\)</li>
+                            <li><strong>c.</strong> \(18 \div 3 = 6\)</li>
+                            <li><strong>d.</strong> \(18 + 3 = 21\)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 29</span></div>
+            <div class="card-body">
+                <div class="question-text">Why is zero called the additive identity?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: Adding zero to any number does not change its value.</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The word "identity" refers to keeping a number's value exactly the same.</li>
+                            <li>Because \(N + 0 = N\) for any number \(N\), zero perfectly preserves the original identity of the number during addition.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span class="question-num">Problem 30</span></div>
+            <div class="card-body">
+                <div class="question-text">The equation below shows the relationship of factors and their product: <br>
+                \(\text{factor} \times \text{factor} = \text{product}\)<br>
+                Using the vocabulary we have learned, write a similar equation to show the relationships in division.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answer: dividend ÷ divisor = quotient</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>In a division equation, the number being divided is the <strong>dividend</strong>.</li>
+                            <li>The number you are dividing by is the <strong>divisor</strong>.</li>
+                            <li>The answer to the division problem is the <strong>quotient</strong>.</li>
+                            <li>Therefore, \(\text{dividend} \div \text{divisor} = \text{quotient}\).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Generated for Saxon Math Course 2 Lesson 2 Alignment</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        // Force rendering on mobile browsers with slow connection speeds
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+    };
+</script>
+</body>
+</html>
