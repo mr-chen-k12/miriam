@@ -3,289 +3,542 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Worksheet Lesson 99 Complete Solutions</title>
+    <title>Lesson 99: Decimal Numbers and Money Solutions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 30px;
-            background-color: #f4f7f6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
             color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
         }
         h1 {
-            color: #2c3e50;
             text-align: center;
-            border-bottom: 3px solid #3498db;
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
             padding-bottom: 10px;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .card {
-            background: #ffffff;
+        .question-card {
+            background: #fff;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-        .problem-num {
+        .question-header {
             font-weight: bold;
-            font-size: 1.15em;
+            font-size: 1.1em;
             color: #2980b9;
-            border-bottom: 1px solid #ecf0f1;
-            padding-bottom: 5px;
             margin-bottom: 10px;
         }
-        .question {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 15px;
-            min-height: 40px;
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-        .answer {
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+            background-color: #fdfefe;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            margin-top: 10px;
+            display: block;
+        }
+        .highlight {
             font-weight: bold;
             color: #27ae60;
-            background-color: #e8f8f5;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 5px solid #2cc990;
-        }
-        .work {
-            font-family: 'Courier New', Courier, monospace;
-            white-space: pre;
-            background-color: #f8f9fa;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: #666;
         }
     </style>
 </head>
 <body>
 
-    <h1>Lesson 99: Decimal Numbers and Money - Complete Solutions</h1>
+    <h1>Lesson 99: Decimal Numbers and Money</h1>
 
-    <div class="grid-container">
-
-        <div class="card">
-            <div class="problem-num">Problem 1</div>
-            <div class="question">Susan B. Anthony divided her 53 suffragettes into groups of 6.<br>
-            (a) How many groups of 6 could she make?<br>
-            (b) How many suffragettes were left over?<br>
-            (c) If the remaining suffragettes formed a group, how many groups were there in all?</div>
-            <div class="answer">
-                (a) 8 groups<br>
-                (b) 5 suffragettes<br>
-                (c) 9 groups
-            </div>
-            <div class="work">53 &divide; 6 = 8 remainder 5<br>8 full groups + 1 extra group = 9 groups total</div>
+    <div class="question-card">
+        <div class="question-header">Question 1</div>
+        <p>Susan B. Anthony divided her 53 suffragettes into groups of 6.</p>
+        <p>(a) How many groups of 6 could she make?<br>
+           (b) How many suffragettes were left over?<br>
+           (c) If the remaining suffragettes formed a group, how many groups were there in all?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol1')">Reveal Answer</button>
+        <div id="sol1" class="solution-content">
+            <p>Divide 53 by 6:</p>
+            <p>$$\quad 53 \div 6 = 8 \text{ remainder } 5$$</p>
+            <ul>
+                <li><strong>(a)</strong> She could make <span class="highlight">8 groups</span>.</li>
+                <li><strong>(b)</strong> There were <span class="highlight">5 suffragettes</span> left over.</li>
+                <li><strong>(c)</strong> The 8 original groups plus 1 group formed by the leftover suffragettes equals <span class="highlight">9 groups</span> in all ($8 + 1 = 9$).</li>
+            </ul>
         </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 2</div>
-            <div class="question">Abraham Lincoln was born in 1809 and died in 1865. About how many years did he live?</div>
-            <div class="answer">56 years</div>
-            <div class="work">  1865<br>- 1809<br>------<br>    56</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 3</div>
-            <div class="question">The parking lot charges $1.25 for the first hour. It charges 75&cent; for each additional hour. How much does it cost to park a car in the lot for 3 hours?</div>
-            <div class="answer">$2.75</div>
-            <div class="work">1st hour: $1.25<br>2nd hour: $0.75<br>3rd hour: $0.75<br>Total: 1.25 + 0.75 + 0.75 = $2.75</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 4</div>
-            <div class="question">Two thirds of the team's 45 points were scored in the second half. How many points did the team score in the second half? Draw a picture to illustrate the problem.</div>
-            <div class="answer">30 points</div>
-            <div class="work">45 &divide; 3 = 15 (one third)<br>15 &times; 2 = 30 (two thirds)</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 5</div>
-            <div class="question">Something is wrong with this sign. Draw two different signs that show how to correct the error. [Sign: ICE CREAM BARS 0.75&cent; each]</div>
-            <div class="answer">$0.75 or 75&cent;</div>
-            <div class="work">0.75&cent; means less than one penny. The correction should show either the dollar sign notation or the cent sign notation clearly.</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 6</div>
-            <div class="question">What is the value of 3 ten-dollar bills, 4 one-dollar bills, 5 dimes, and 2 pennies?</div>
-            <div class="answer">$34.52</div>
-            <div class="work">3 &times; $10.00 = $30.00<br>4 &times; $1.00  =  $4.00<br>5 &times; $0.10  =  $0.50<br>2 &times; $0.01  =  $0.02<br>Total = $34.52</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 7</div>
-            <div class="question">Use words to write 6412.5.</div>
-            <div class="answer">Six thousand, four hundred twelve and five tenths</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 8</div>
-            <div class="question">Round 5139 to the nearest thousand. Round 6902 to the nearest thousand. Then add the rounded numbers.</div>
-            <div class="answer">12,000</div>
-            <div class="work">5139 &rarr; 5,000<br>6902 &rarr; 7,000<br>5,000 + 7,000 = 12,000</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 9</div>
-            <div class="question">James opened a 1-gallon bottle of milk and poured out 1 quart. How many quarts of milk were left in the bottle?</div>
-            <div class="answer">3 quarts</div>
-            <div class="work">1 gallon = 4 quarts<br>4 quarts - 1 quart = 3 quarts</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 10</div>
-            <div class="question">What percent of the milk in problem 9 was left in the bottle?</div>
-            <div class="answer">75%</div>
-            <div class="work">3 out of 4 quarts remaining = 3/4 = 75%</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 11</div>
-            <div class="question">Estimate the product of 39 and 41. Then find the exact product.</div>
-            <div class="answer">Estimate: 1,600<br>Exact: 1,599</div>
-            <div class="work">Estimate: 40 &times; 40 = 1,600<br>Exact: 39 &times; 41 = 1,599</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 12</div>
-            <div class="question">Salma slowly gave the doorknob a quarter turn counterclockwise. How many degrees did she turn the doorknob?</div>
-            <div class="answer">90&deg;</div>
-            <div class="work">Full circle = 360&deg;<br>Quarter turn = 360&deg; &divide; 4 = 90&deg;</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 13</div>
-            <div class="question">Five full buses held 240 students. What was the average number of students per bus?</div>
-            <div class="answer">48 students</div>
-            <div class="work">240 &divide; 5 = 48</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 14</div>
-            <div class="question">Add:<br> $68.57<br>+$36.49</div>
-            <div class="answer">$105.06</div>
-            <div class="work">  $68.57<br>+ $36.49<br>--------<br> $105.06</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 15</div>
-            <div class="question">Subtract:<br> $100.00<br>-  $5.43</div>
-            <div class="answer">$94.57</div>
-            <div class="work"> $100.00<br>-  $5.43<br>--------<br>  $94.57</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 16</div>
-            <div class="question">Add the column of numbers:<br>15, 24, 36, 75, 21, 8, 36, + 420</div>
-            <div class="answer">635</div>
-            <div class="work">15+24+36+75+21+8+36+420 = 635</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 17</div>
-            <div class="question">Multiply:<br> 12<br>&times;12</div>
-            <div class="answer">144</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 18</div>
-            <div class="question">Multiply:<br> $5.08<br>&times;   7</div>
-            <div class="answer">$35.56</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 19</div>
-            <div class="question">Simplify: 50<sup>2</sup></div>
-            <div class="answer">2,500</div>
-            <div class="work">50 &times; 50 = 2,500</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 20</div>
-            <div class="question">Find the square root: &radic;144</div>
-            <div class="answer">12</div>
-            <div class="work">12 &times; 12 = 144</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 21</div>
-            <div class="question">Simplify: 12.08 - (9.61 - 2.4)</div>
-            <div class="answer">4.87</div>
-            <div class="work">Parentheses first: 9.61 - 2.4 = 7.21<br>Then: 12.08 - 7.21 = 4.87</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 22</div>
-            <div class="question">Multiply: 49 &times; 51</div>
-            <div class="answer">2,499</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 23</div>
-            <div class="question">Multiply: 33 &times; 25</div>
-            <div class="answer">825</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 24</div>
-            <div class="question">Divide: 848 / 8</div>
-            <div class="answer">106</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 25</div>
-            <div class="question">Divide: 9 ) 6300 </div>
-            <div class="answer">700</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 26</div>
-            <div class="question">Draw and shade circles to show that 2<sup>2</sup>&frasl;<sub>3</sub> equals <sup>8</sup>&frasl;<sub>3</sub>.</div>
-            <div class="answer">Visual Description</div>
-            <div class="work">Draw three complete circles divided into 3 equal parts (thirds) each. Shade two whole circles completely (6 thirds) and shade two parts of the third circle (2 thirds). Counted together, there are 8 total shaded thirds.</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 27</div>
-            <div class="question">Draw a rectangle that is three inches long and one inch wide.</div>
-            <div class="answer">Visual Representation</div>
-            <div class="work">Draw a horizontal box where the length is exactly 3 times greater than its height/width.</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 28</div>
-            <div class="question">What is the perimeter and area of the rectangle you drew in problem 27?</div>
-            <div class="answer">Perimeter: 8 inches<br>Area: 3 square inches</div>
-            <div class="work">Perimeter: 3 + 1 + 3 + 1 = 8 in.<br>Area: 3 &times; 1 = 3 sq. in.</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 29</div>
-            <div class="question">This rectangular solid is made up of how many small cubes?</div>
-            <div class="answer">8 small cubes</div>
-            <div class="work">Dimensions are 2 cubes wide, 2 cubes deep, and 2 cubes high.<br>Volume = 2 &times; 2 &times; 2 = 8</div>
-        </div>
-
-        <div class="card">
-            <div class="problem-num">Problem 30</div>
-            <div class="question">This pyramid has a square base. How many vertices does the pyramid have?</div>
-            <div class="answer">5 vertices</div>
-            <div class="work">4 corners on the square bottom base + 1 peak apex top corner = 5 corners total.</div>
-        </div>
-
     </div>
 
+    <div class="question-card">
+        <div class="question-header">Question 2</div>
+        <p>Abraham Lincoln was born in 1809 and died in 1865. About how many years did he live?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol2')">Reveal Answer</button>
+        <div id="sol2" class="solution-content">
+            <p>To find the estimated lifespan, round the years to the nearest ten or find the exact difference and round:</p>
+            <p>$$\text{Exact: } 1865 - 1809 = 56 \text{ years}$$</p>
+            <p>$$\text{Estimated: } 1870 - 1810 = 60 \text{ years}$$</p>
+            <p><strong>Answer:</strong> He lived <span class="highlight">56 years</span> (or about <span class="highlight">60 years</span> if using standard rounding estimation).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 3</div>
+        <p>The parking lot charges \$1.25 for the first hour. It charges 75¢ for each additional hour. How much does it cost to park a car in the lot for 3 hours?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol3')">Reveal Answer</button>
+        <div id="sol3" class="solution-content">
+            <p>Calculate the cost for each component of the 3 hours:</p>
+            <ul>
+                <li>First hour: \$1.25</li>
+                <li>Remaining hours: \(3 - 1 = 2\) hours</li>
+                <li>Cost for remaining hours: \(2 \times \$0.75 = \$1.50\)</li>
+            </ul>
+            <p>$$\text{Total Cost} = \$1.25 + \$1.50 = \$2.75$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$2.75</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 4</div>
+        <p>Two thirds of the team's 45 points were scored in the second half. How many points did the team score in the second half? Draw a picture to illustrate the problem.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol4')">Reveal Answer</button>
+        <div id="sol4" class="solution-content">
+            <p>First, divide the total points by 3 to find the value of one-third:</p>
+            <p>$$45 \div 3 = 15 \text{ points per third}$$</p>
+            <p>Then, multiply by 2 to find two-thirds:</p>
+            <p>$$2 \times 15 = 30 \text{ points}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">30 points</span></p>
+            <canvas id="canvas4" width="320" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 5</div>
+        <p>Something is wrong with this sign: [ICE CREAM BARS 0.75¢ each]. Draw two different signs that show how to correct the error.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol5')">Reveal Answer</button>
+        <div id="sol5" class="solution-content">
+            <p>The original sign states "0.75¢", which means seventy-five hundredths of one cent (less than a penny). It should write either seventy-five cents or seventy-five hundredths of a dollar.</p>
+            <p><strong>Correct Formats:</strong> <span class="highlight">\$0.75</span> or <span class="highlight">75¢</span></p>
+            <canvas id="canvas5" width="320" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 6</div>
+        <p>What is the value of 3 ten-dollar bills, 4 one-dollar bills, 5 dimes, and 2 pennies?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol6')">Reveal Answer</button>
+        <div id="sol6" class="solution-content">
+            <p>Add the values together:</p>
+            <p>$$3 \times \$10.00 = \$30.00$$</p>
+            <p>$$4 \times \$1.00 = \$4.00$$</p>
+            <p>$$5 \times \$0.10 = \$0.50$$</p>
+            <p>$$2 \times \$0.01 = \$0.02$$</p>
+            <p>$$\text{Total} = \$30.00 + \$4.00 + \$0.50 + \$0.02 = \$34.52$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$34.52</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 7</div>
+        <p>Use words to write 6412.5.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol7')">Reveal Answer</button>
+        <div id="sol7" class="solution-content">
+            <p><strong>Answer:</strong> <span class="highlight">Six thousand, four hundred twelve and five tenths</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 8</div>
+        <p>Round 5139 to the nearest thousand. Round 6902 to the nearest thousand. Then add the rounded numbers.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol8')">Reveal Answer</button>
+        <div id="sol8" class="solution-content">
+            <p>$$5139 \rightarrow 5000$$</p>
+            <p>$$6902 \rightarrow 7000$$</p>
+            <p>$$5000 + 7000 = 12000$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">12,000</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 9</div>
+        <p>James opened a 1-gallon bottle of milk and poured out 1 quart. How many quarts of milk were left in the bottle?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol9')">Reveal Answer</button>
+        <div id="sol9" class="solution-content">
+            <p>Since \(1 \text{ gallon} = 4 \text{ quarts}\):</p>
+            <p>$$4 \text{ quarts} - 1 \text{ quart} = 3 \text{ quarts}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">3 quarts</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 10</div>
+        <p>What percent of the milk in problem 9 was left in the bottle?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol10')">Reveal Answer</button>
+        <div id="sol10" class="solution-content">
+            <p>$$\frac{3 \text{ quarts left}}{4 \text{ quarts total}} = \frac{3}{4} = 75\%$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">75%</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 11</div>
+        <p>Estimate the product of 39 and 41. Then find the exact product.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol11')">Reveal Answer</button>
+        <div id="sol11" class="solution-content">
+            <p><strong>Estimation:</strong> Round both numbers to the nearest ten:</p>
+            <p>$$40 \times 40 = 1600$$</p>
+            <p><strong>Exact Product:</strong></p>
+            <p>$$39 \times 41 = 1639$$</p>
+            <p><strong>Answer:</strong> Estimate: <span class="highlight">1600</span>; Exact: <span class="highlight">1639</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 12</div>
+        <p>Salma slowly gave the doorknob a quarter turn counterclockwise. How many degrees did she turn the doorknob?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol12')">Reveal Answer</button>
+        <div id="sol12" class="solution-content">
+            <p>A full circle turn is \(360^\circ\). A quarter turn is:</p>
+            <p>$$\frac{1}{4} \times 360^\circ = 90^\circ$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">90°</span></p>
+            <canvas id="canvas12" width="150" height="150"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 13</div>
+        <p>Five full buses held 240 students. What was the average number of students per bus?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol13')">Reveal Answer</button>
+        <div id="sol13" class="solution-content">
+            <p>$$240 \div 5 = 48 \text{ students per bus}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">48 students</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 14</div>
+        <p>$$\begin{array}{r} \$68.57 \\ + \ \ \$36.49 \\ \hline \end{array}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol14')">Reveal Answer</button>
+        <div id="sol14" class="solution-content">
+            <p>$$\begin{array}{r} \small{1}\small{1}\small{1}\quad \\ \$68.57 \\ + \ \ \$36.49 \\ \hline \mathbf{\$105.06} \end{array}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$105.06</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 15</div>
+        <p>$$\begin{array}{r} \$100.00 \\ - \ \ \ \ \ \$5.43 \\ \hline \end{array}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol15')">Reveal Answer</button>
+        <div id="sol15" class="solution-content">
+            <p>$$\begin{array}{r} \small{0}\small{9}\small{9}\small{9}\small{10} \\ \$100.00 \\ - \ \ \ \ \ \$5.43 \\ \hline \mathbf{\$94.57} \end{array}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$94.57</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 16</div>
+        <p>Add: \(15 + 24 + 36 + 75 + 21 + 8 + 36 + 420\)</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol16')">Reveal Answer</button>
+        <div id="sol16" class="solution-content">
+            <p>Summing step-by-step:</p>
+            <p>$$15 + 24 = 39$$</p>
+            <p>$$39 + 36 = 75$$</p>
+            <p>$$75 + 75 = 150$$</p>
+            <p>$$150 + 21 = 171$$</p>
+            <p>$$171 + 8 = 179$$</p>
+            <p>$$179 + 36 = 215$$</p>
+            <p>$$215 + 420 = 635$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">635</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 17</div>
+        <p>$$\begin{array}{r} 12 \\ \times \ 12 \\ \hline \end{array}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol17')">Reveal Answer</button>
+        <div id="sol17" class="solution-content">
+            <p>$$12 \times 12 = 144$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">144</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 18</div>
+        <p>$$\begin{array}{r} \$5.08 \\ \times \ \ \ \ \ \ \ 7 \\ \hline \end{array}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol18')">Reveal Answer</button>
+        <div id="sol18" class="solution-content">
+            <p>$$7 \times 8 = 56$$</p>
+            <p>$$7 \times 5 = 35$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$35.56</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 19</div>
+        <p>$$50^2$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol19')">Reveal Answer</button>
+        <div id="sol19" class="solution-content">
+            <p>$$50 \times 50 = 2500$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">2500</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 20</div>
+        <p>$$\sqrt{144}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol20')">Reveal Answer</button>
+        <div id="sol20" class="solution-content">
+            <p>Since \(12 \times 12 = 144\):</p>
+            <p>$$\sqrt{144} = 12$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">12</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 21</div>
+        <p>$$12.08 - (9.61 - 2.4)$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol21')">Reveal Answer</button>
+        <div id="sol21" class="solution-content">
+            <p>Evaluate the operations inside parenthesis first:</p>
+            <p>$$9.61 - 2.40 = 7.21$$</p>
+            <p>Now perform the outer subtraction:</p>
+            <p>$$12.08 - 7.21 = 4.87$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">4.87</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 22</div>
+        <p>$$49 \times 51$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol22')">Reveal Answer</button>
+        <div id="sol22" class="solution-content">
+            <p>Using the difference of squares strategy: \((50 - 1)(50 + 1) = 50^2 - 1^2\)</p>
+            <p>$$2500 - 1 = 2499$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">2499</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 23</div>
+        <p>$$33 \times 25$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol23')">Reveal Answer</button>
+        <div id="sol23" class="solution-content">
+            <p>$$33 \times 25 = 825$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">825</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 24</div>
+        <p>$$\frac{848}{8}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol24')">Reveal Answer</button>
+        <div id="sol24" class="solution-content">
+            <p>$$848 \div 8 = 106$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">106</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 25</div>
+        <p>$$9 \overline{) 6300}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol25')">Reveal Answer</button>
+        <div id="sol25" class="solution-content">
+            <p>Since \(63 \div 9 = 7\):</p>
+            <p>$$6300 \div 9 = 700$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">700</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 26</div>
+        <p>Draw and shade circles to show that \(2\frac{2}{3}\) equals \(\frac{8}{3}\).</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol26')">Reveal Answer</button>
+        <div id="sol26" class="solution-content">
+            <p>Each full circle represents \(\frac{3}{3}\). Two full circles and two-thirds of another circle total eight \(\frac{1}{3}\) units:</p>
+            <p>$$\frac{3}{3} + \frac{3}{3} + \frac{2}{3} = \frac{8}{3}$$</p>
+            <canvas id="canvas26" width="300" height="110"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 27</div>
+        <p>Draw a rectangle that is three inches long and one inch wide.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol27')">Reveal Answer</button>
+        <div id="sol27" class="solution-content">
+            <p>Below is a scale representation maintaining a 3:1 aspect ratio.</p>
+            <canvas id="canvas27" width="320" height="120"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 28</div>
+        <p>What is the perimeter and area of the rectangle you drew in problem 27?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol28')">Reveal Answer</button>
+        <div id="sol28" class="solution-content">
+            <p><strong>Perimeter:</strong> sum of all four sides</p>
+            <p>$$P = 3\text{ in} + 1\text{ in} + 3\text{ in} + 1\text{ in} = 8\text{ inches}$$</p>
+            <p><strong>Area:</strong> length multiplied by width</p>
+            <p>$$A = 3\text{ in} \times 1\text{ in} = 3\text{ square inches}$$</p>
+            <p><strong>Answer:</strong> Perimeter = <span class="highlight">8 inches</span>; Area = <span class="highlight">3 sq. inches</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 29</div>
+        <p>This rectangular solid is made up of how many small cubes?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol29')">Reveal Answer</button>
+        <div id="sol29" class="solution-content">
+            <p>Count dimensions along length, width, and height:</p>
+            <ul>
+                <li>Length = 2 cubes</li>
+                <li>Width = 2 cubes</li>
+                <li>Height = 2 cubes</li>
+            </ul>
+            <p>$$\text{Total Cubes} = 2 \times 2 \times 2 = 8\text{ cubes}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">8 cubes</span></p>
+            <canvas id="canvas29" width="200" height="150"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 30</div>
+        <p>This pyramid has a square base. How many vertices does the pyramid have?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol30')">Reveal Answer</button>
+        <div id="sol30" class="solution-content">
+            <p>A square base pyramid contains 4 vertices on the flat base and 1 vertex at the top peak (apex).</p>
+            <p>$$4 + 1 = 5\text{ vertices}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">5 vertices</span></p>
+            <canvas id="canvas30" width="200" height="150"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+                // Trigger dynamic canvas rendering when section opens
+                renderCanvas(id);
+            }
+        }
+
+        function renderCanvas(id) {
+            if (id === 'sol4') {
+                let ctx = document.getElementById('canvas4').getContext('2d');
+                ctx.clearRect(0,0,320,100);
+                ctx.fillStyle = '#e8f8f5'; ctx.fillRect(10, 20, 300, 50);
+                ctx.fillStyle = '#2ecc71'; ctx.fillRect(10, 20, 200, 50);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
+                ctx.strokeRect(10, 20, 300, 50);
+                ctx.beginPath(); ctx.moveTo(110, 20); ctx.lineTo(110, 70); ctx.moveTo(210, 20); ctx.lineTo(210, 70); ctx.stroke();
+                ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 14px sans-serif';
+                ctx.fillText('15 pts', 40, 50); ctx.fillText('15 pts', 140, 50); ctx.fillText('15 pts', 240, 50);
+                ctx.font = '12px sans-serif'; ctx.fillText('Second Half (2/3 = 30 pts)', 60, 90);
+            }
+            if (id === 'sol5') {
+                let ctx = document.getElementById('canvas5').getContext('2d');
+                ctx.clearRect(0,0,320,100);
+                ctx.strokeStyle = '#34495e'; ctx.lineWidth = 2;
+                ctx.strokeRect(20, 20, 120, 60); ctx.strokeRect(180, 20, 120, 60);
+                ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 20px sans-serif';
+                ctx.fillText('$0.75', 50, 55); ctx.fillText('75¢', 220, 55);
+            }
+            if (id === 'sol12') {
+                let ctx = document.getElementById('canvas12').getContext('2d');
+                ctx.clearRect(0,0,150,150);
+                ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(75, 75, 50, 0, 2 * Math.PI); ctx.stroke();
+                ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(75, 75); ctx.lineTo(125, 75); ctx.moveTo(75, 75); ctx.lineTo(75, 25); ctx.stroke();
+                ctx.beginPath(); ctx.arc(75, 75, 20, 0, -Math.PI / 2, true); ctx.stroke();
+                ctx.fillStyle = '#e74c3c'; ctx.font = '12px sans-serif'; ctx.fillText('90° CCW', 85, 50);
+            }
+            if (id === 'sol26') {
+                let ctx = document.getElementById('canvas26').getContext('2d');
+                ctx.clearRect(0,0,300,110);
+                function drawThirdsCircle(ctx, x, y, r, fillCount) {
+                    for (let i = 0; i < 3; i++) {
+                        ctx.beginPath(); ctx.moveTo(x, y);
+                        ctx.arc(x, y, r, i * 2 * Math.PI / 3 - Math.PI/2, (i + 1) * 2 * Math.PI / 3 - Math.PI/2);
+                        ctx.closePath();
+                        if (fillCount > i) { ctx.fillStyle = '#f39c12'; ctx.fill(); }
+                        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5; ctx.stroke();
+                    }
+                }
+                drawThirdsCircle(ctx, 50, 50, 35, 3);
+                drawThirdsCircle(ctx, 140, 50, 35, 3);
+                drawThirdsCircle(ctx, 230, 50, 35, 2);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('1', 47, 100); ctx.fillText('1', 137, 100); ctx.fillText('2/3', 222, 100);
+            }
+            if (id === 'sol27') {
+                let ctx = document.getElementById('canvas27').getContext('2d');
+                ctx.clearRect(0,0,320,120);
+                ctx.fillStyle = '#f8f9fa'; ctx.fillRect(30, 30, 240, 60);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2; ctx.strokeRect(30, 30, 240, 60);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('3 inches', 120, 20); ctx.fillText('1 inch', 275, 65);
+            }
+            if (id === 'sol29') {
+                let ctx = document.getElementById('canvas29').getContext('2d');
+                ctx.clearRect(0,0,200,150);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
+                function drawIsoBlock(xo, yo, x, y, z) {
+                    let px = xo + (x - y) * 20;
+                    let py = yo + (x + y) * 10 - z * 24;
+                    ctx.fillStyle = '#bdc3c7';
+                    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px+20, py+10); ctx.lineTo(px, py+20); ctx.lineTo(px-20, py+10); ctx.closePath(); ctx.fill(); ctx.stroke();
+                    ctx.fillStyle = '#95a5a6';
+                    ctx.beginPath(); ctx.moveTo(px-20, py+10); ctx.lineTo(px, py+20); ctx.lineTo(px, py+44); ctx.lineTo(px-20, py+34); ctx.closePath(); ctx.fill(); ctx.stroke();
+                    ctx.fillStyle = '#7f8c8d';
+                    ctx.beginPath(); ctx.moveTo(px, py+20); ctx.lineTo(px+20, py+10); ctx.lineTo(px+20, py+34); ctx.lineTo(px, py+44); ctx.closePath(); ctx.fill(); ctx.stroke();
+                }
+                for(let z=0; z<2; z++) {
+                    for(let x=0; x<2; x++) {
+                        for(let y=0; y<2; y++) {
+                            drawIsoBlock(100, 50, x, y, z);
+                        }
+                    }
+                }
+            }
+            if (id === 'sol30') {
+                let ctx = document.getElementById('canvas30').getContext('2d');
+                ctx.clearRect(0,0,200,150);
+                ctx.fillStyle = '#eaecee'; ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
+                let apex = {x: 100, y: 20}, b1 = {x: 40, y: 110}, b2 = {x: 120, y: 120}, b3 = {x: 160, y: 90}, b4 = {x: 80, y: 80};
+                ctx.beginPath(); ctx.moveTo(b1.x, b1.y); ctx.lineTo(b2.x, b2.y); ctx.lineTo(b3.x, b3.y); ctx.lineTo(apex.x, apex.y); ctx.closePath(); ctx.fill(); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(b1.x, b1.y); ctx.lineTo(apex.x, apex.y); ctx.lineTo(b2.x, b2.y); ctx.stroke();
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath(); ctx.moveTo(b1.x, b1.y); ctx.lineTo(b4.x, b4.y); ctx.lineTo(b3.x, b3.y); ctx.moveTo(b4.x, b4.y); ctx.lineTo(apex.x, apex.y); ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#e74c3c';
+                [apex, b1, b2, b3, b4].forEach(p => {
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, 2*Math.PI); ctx.fill();
+                });
+            }
+        }
+    </script>
 </body>
 </html>
