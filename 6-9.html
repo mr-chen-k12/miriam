@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 99: Volume & Written Practice - Complete Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 12pt;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11pt;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #b45309;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-num {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 13pt;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .question-text {
+            font-size: 12pt;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .context-box {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #334155;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .explanation-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-highlight {
+            background-color: var(--accent-light);
+            color: #78350f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 11pt;
+            border: 1px solid #fde68a;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .math-block {
+            margin: 15px 0;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            border-top: 1px solid var(--border);
+        }
+
+        canvas {
+            background: #fff;
+            border: 1px solid #ddd;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container tex2jax_process">
+    <header>
+        <h1>Lesson 99 Practice Set & Written Practice</h1>
+        <p>Complete Solutions for Problems 1&ndash;30</p>
+    </header>
+
+    <div class="controls">
+        <button class="btn" onclick="toggleAll(true)">Show All Answers</button>
+        <button class="btn btn-secondary" onclick="toggleAll(false)">Hide All Answers</button>
+    </div>
+
+    <div class="grid">
+        
+        <div class="context-box">
+            <strong>Use this information to answer problems 1-2:</strong><br>
+            Five eighths of the 40 answers were correct.
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 1</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">How many answers were correct? Draw a picture to illustrate the problem.</div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ1" width="340" height="125"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-1">
+                    <div class="answer-highlight">Answer: 25 answers</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, find the size of one eighth by dividing the total number of answers by 8:
+                                <div class="math-block">$$40 \div 8 = 5 \text{ answers per eighth}$$</div>
+                            </li>
+                            <li>The problem states that five eighths ($\frac{5}{8}$) were correct. Multiply the value of one eighth by 5:
+                                <div class="math-block">$$5 \times 5 = 25 \text{ correct answers}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 2</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">What percent of the answers were correct?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(2)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-2">
+                    <div class="answer-highlight">Answer: $62\frac{1}{2}\%$ (or $62.5\%$)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>To find the percentage corresponding to $\frac{5}{8}$, multiply the fraction by $100\%$:
+                                <div class="math-block">$$\frac{5}{8} \times 100\% = \frac{500\%}{8}$$</div>
+                            </li>
+                            <li>Divide 500 by 8:
+                                <div class="math-block">$$500 \div 8 = 62.5\% = 62\frac{1}{2}\%$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 3</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">The grocery bill was $12.45. Tax was 60¢. What was the total bill?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-3">
+                    <div class="answer-highlight">Answer: $13.05</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align the decimal values properly before adding. Note that $60\text{¢} = \$0.60$:
+                                <div class="math-block">$$\begin{array}{r} \$12.45 \\ +\quad \$0.60 \\ \hline \$13.05 \end{array}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 4</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Write the decimal number twelve and three hundredths.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-4">
+                    <div class="answer-highlight">Answer: 12.03</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The whole number before the word "and" is twelve (12).</li>
+                            <li>The word "and" indicates the position of the decimal point.</li>
+                            <li>The phrase "three hundredths" places the digit 3 in the second space after the decimal point (the hundredths column), requiring a placeholder zero in the tenths column: <strong>12.03</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 5</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Which digit in 123.456 is in the hundredths place?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-5">
+                    <div class="answer-highlight">Answer: 5</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Analyze the decimal place values starting to the right of the decimal point:
+                                <ul>
+                                    <li>4 is in the tenths place.</li>
+                                    <li><strong>5</strong> is in the hundredths place.</li>
+                                    <li>6 is in the thousandths place.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 6</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">The perimeter of a square is 24 inches. What is its area?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-6">
+                    <div class="answer-highlight">Answer: 36 sq. in.</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A square has 4 equal sides. Find the length of one side by dividing the total perimeter by 4:
+                                <div class="math-block">$$\text{Side} = 24 \text{ in.} \div 4 = 6 \text{ in.}$$</div>
+                            </li>
+                            <li>Calculate area by squaring the side length ($A = s^2$):
+                                <div class="math-block">$$\text{Area} = 6 \text{ in.} \times 6 \text{ in.} = 36 \text{ sq. in.}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 7</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">What is the volume of a cube with edges 3 inches long?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-7">
+                    <div class="answer-highlight">Answer: 27 cu. in. (or $\text{in.}^3$)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The formula for the volume of a cube is $V = s^3$, where $s$ represents the length of an edge.</li>
+                            <li>Multiply the edge measurement three times over:
+                                <div class="math-block">$$V = 3 \text{ in.} \times 3 \text{ in.} \times 3 \text{ in.} = 27 \text{ cu. in.}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 8</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">List the factors of 15.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(8)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-8">
+                    <div class="answer-highlight">Answer: 1, 3, 5, 15</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find all whole numbers that divide evenly into 15 by identifying factor pairs:
+                                <ul>
+                                    <li>$1 \times 15 = 15$</li>
+                                    <li>$3 \times 5 = 15$</li>
+                                </ul>
+                            </li>
+                            <li>Arranged in numerical order, the unique factors are <strong>1, 3, 5, 15</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 9</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    The length of segment $AB$ is $3.4\text{ cm}$. The length of segment $BC$ is $4.8\text{ cm}$. What is the length of segment $AC$?
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ9" width="360" height="70"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(9)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-9">
+                    <div class="answer-highlight">Answer: 8.2 cm</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Segment $AC$ is made up of segments $AB$ and $BC$ connected end-to-end ($\overline{AC} = \overline{AB} + \overline{BC}$).</li>
+                            <li>Add the values together, aligning the decimal point:
+                                <div class="math-block">$$3.4\text{ cm} + 4.8\text{ cm} = 8.2\text{ cm}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 10</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Round 12.345 to the nearest whole number.</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-10">
+                    <div class="answer-highlight">Answer: 12</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Look at the first digit to the right of the decimal point (the tenths place), which is 3.</li>
+                            <li>Since 3 is less than 5, leave the whole number component unchanged and drop the decimal digits: <strong>12</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 11</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">What is the probability of rolling a 6 with a single dot cube?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-11">
+                    <div class="answer-highlight">Answer: $\frac{1}{6}$</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>A standard dot cube (die) contains 6 total faces, numbered 1 through 6.</li>
+                            <li>There is exactly one face with a value of 6.</li>
+                            <li>Probability is defined as the number of favorable outcomes divided by total outcomes: $\frac{1}{6}$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 12</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Add: $3.45 + 12.6 + 0.78$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-12">
+                    <div class="answer-highlight">Answer: 16.83</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Write the numbers vertically while keeping the decimals aligned, adding a trailing zero to 12.6 to make calculation simpler:
+                                <div class="math-block">$$\begin{array}{r} 3.45 \\ 12.60 \\ +\quad 0.78 \\ \hline 16.83 \end{array}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 13</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Subtract: $12.34 - 5.67$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(13)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-13">
+                    <div class="answer-highlight">Answer: 6.67</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Align the decimal points vertically and perform regrouping across values:
+                                <div class="math-block">$$\begin{array}{r} 12.34 \\ -\quad 5.67 \\ \hline 6.67 \end{array}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 14</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Multiply: $0.12 \times 0.15$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(14)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-14">
+                    <div class="answer-highlight">Answer: 0.018</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the values as if they were whole numbers:
+                                <div class="math-block">$$12 \times 15 = 180$$</div>
+                            </li>
+                            <li>Count the total number of decimal positions in the original factors. Both $0.12$ and $0.15$ have 2 places, for a total of 4 decimal places.</li>
+                            <li>Shift the decimal point to the left 4 steps starting from the end of 180, adding a placeholder zero: <strong>0.0180 = 0.018</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 15</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Multiply: $1.2 \times 3.4$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-15">
+                    <div class="answer-highlight">Answer: 4.08</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply without matching decimals initially:
+                                <div class="math-block">$$12 \times 34 = 408$$</div>
+                            </li>
+                            <li>Count the total number of decimal places in the factors: $1.2$ has one and $3.4$ has one, meaning the final product requires 2 decimal places.</li>
+                            <li>Position the decimal to get <strong>4.08</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 16</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Divide: $0.24 \div 6$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-16">
+                    <div class="answer-highlight">Answer: 0.04</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Set up long division, keeping the decimal point in the quotient directly above its position in the dividend:
+                                <div class="math-block">$$6 \overline{) 0.24 }$$</div>
+                            </li>
+                            <li>$0 \div 6 = 0$; $2 \div 6 = 0$. Carry the 2 to the next place value, making 24.</li>
+                            <li>$24 \div 6 = 4$. This results in a final quotient of <strong>0.04</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 17</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Divide: $3.6 \div 0.06$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-17">
+                    <div class="answer-highlight">Answer: 60</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>To divide by a decimal, shift the decimal point in the divisor 2 steps to the right to make it a whole number ($0.06 \rightarrow 6$).</li>
+                            <li>Shift the decimal point in the dividend the same number of spaces to the right, adding a trailing zero ($3.6 \rightarrow 360$).</li>
+                            <li>Complete the whole number division step:
+                                <div class="math-block">$$360 \div 6 = 60$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 18</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Multiply: $\frac{3}{4} \times \frac{4}{5}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-18">
+                    <div class="answer-highlight">Answer: $\frac{3}{5}$</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Multiply the numerators and the denominators across:
+                                <div class="math-block">$$\frac{3 \times 4}{4 \times 5} = \frac{12}{20}$$</div>
+                            </li>
+                            <li>Simplify the resulting fraction by dividing the numerator and denominator by their greatest common factor, 4:
+                                <div class="math-block">$$\frac{12 \div 4}{20 \div 4} = \frac{3}{5}$$</div>
+                            </li>
+                            <li><em>Alternative Method:</em> Cancel out the 4 from the numerator and denominator before multiplying directly to get $\frac{3}{5}$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 19</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Divide: $\frac{2}{3} \div \frac{1}{2}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-19">
+                    <div class="answer-highlight">Answer: $1\frac{1}{3}$</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>To divide by a fraction, multiply by its reciprocal (invert the second fraction):
+                                <div class="math-block">$$\frac{2}{3} \times \frac{2}{1} = \frac{4}{3}$$</div>
+                            </li>
+                            <li>Convert the improper fraction into a mixed number:
+                                <div class="math-block">$$\frac{4}{3} = 1\frac{1}{3}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 20</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Add: $3\frac{1}{3} + 1\frac{2}{3}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-20">
+                    <div class="answer-highlight">Answer: 5</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Add the whole numbers and fractional components separately:
+                                <div class="math-block">$$\text{Whole numbers: } 3 + 1 = 4$$</div>
+                                <div class="math-block">$$\text{Fractions: } \frac{1}{3} + \frac{2}{3} = \frac{3}{3} = 1$$</div>
+                            </li>
+                            <li>Combine the sums together:
+                                <div class="math-block">$$4 + 1 = 5$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 21</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Subtract: $4\frac{1}{4} - 1\frac{3}{4}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(21)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-21">
+                    <div class="answer-highlight">Answer: $2\frac{1}{2}$</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Since you cannot subtract $\frac{3}{4}$ from $\frac{1}{4}$, regroup 1 from the whole number 4:
+                                <div class="math-block">$$4\frac{1}{4} = 3 + 1 + \frac{1}{4} = 3 + \frac{4}{4} + \frac{1}{4} = 3\frac{5}{4}$$</div>
+                            </li>
+                            <li>Perform the subtraction using the regrouped fraction:
+                                <div class="math-block">$$3\frac{5}{4} - 1\frac{3}{4} = 2\frac{2}{4}$$</div>
+                            </li>
+                            <li>Reduce the fractional component to simplest terms:
+                                <div class="math-block">$$2\frac{2}{4} = 2\frac{1}{2}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 22</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Simplify: $2^3 + \sqrt{16}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(22)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-22">
+                    <div class="answer-highlight">Answer: 12</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Evaluate the exponent term ($2^3$ means $2 \times 2 \times 2$):
+                                <div class="math-block">$$2^3 = 8$$</div>
+                            </li>
+                            <li>Evaluate the radical term (find the non-negative number that multiplied by itself equals 16):
+                                <div class="math-block">$$\sqrt{16} = 4$$</div>
+                            </li>
+                            <li>Add the simplified expressions together:
+                                <div class="math-block">$$8 + 4 = 12$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 23</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Solve for $x$: $6x = 4.2$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(23)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-23">
+                    <div class="answer-highlight">Answer: 0.7</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Isolate the variable $x$ by dividing both sides of the equation by 6:
+                                <div class="math-block">$$x = \frac{4.2}{6}$$</div>
+                            </li>
+                            <li>Perform the decimal division steps:
+                                <div class="math-block">$$4.2 \div 6 = 0.7$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 24</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Solve for $w$: $\frac{w}{4} = 1.2$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(24)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-24">
+                    <div class="answer-highlight">Answer: 4.8</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Isolate the variable $w$ by multiplying both sides of the equation by 4:
+                                <div class="math-block">$$w = 1.2 \times 4$$</div>
+                            </li>
+                            <li>Calculate the final value:
+                                <div class="math-block">$$1.2 \times 4 = 4.8$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 25</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">Reduce: $\frac{12}{16}$</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(25)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-25">
+                    <div class="answer-highlight">Answer: $\frac{3}{4}$</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Find the greatest common factor (GCF) of 12 and 16, which is 4.</li>
+                            <li>Divide both numbers by 4 to reduce the fraction to lowest terms:
+                                <div class="math-block">$$\frac{12 \div 4}{16 \div 4} = \frac{3}{4}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 26</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">The diameter of a bicycle tire is 24 inches. What is its radius?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(26)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-26">
+                    <div class="answer-highlight">Answer: 12 inches</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>The radius of a circle is exactly half the length of its diameter ($r = \frac{d}{2}$).</li>
+                            <li>Divide the diameter by 2:
+                                <div class="math-block">$$24 \text{ in.} \div 2 = 12 \text{ in.}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 27</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">What geometric solid is an unsharpened pencil?</div>
+                <button class="btn btn-accent" onclick="toggleExplanation(27)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-27">
+                    <div class="answer-highlight">Answer: Cylinder (or hexagonal prism)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>An unsharpened round pencil has two parallel circular bases and a smooth curved side, which fits the definition of a <strong>cylinder</strong>.</li>
+                            <li><em>Note:</em> Many standard wooden pencils feature flat sides, making them a hexagonal prism, but in basic geometry instruction, they are typically used to model a <strong>cylinder</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 28</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    This rectangular prism is constructed of 1-inch cubes.
+                    <div class="diagram-container" style="display:block; margin-top:10px;">
+                        <canvas id="canvasQ28" width="260" height="150"></canvas>
+                    </div>
+                    (a) How many cubes are in each layer?<br>
+                    (b) How many layers are there?<br>
+                    (c) What is the volume of the prism?
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(28)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-28">
+                    <div class="answer-highlight">Answers: (a) 12 cubes &nbsp;|&nbsp; (b) 2 layers &nbsp;|&nbsp; (c) 24 cubic inches</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li><strong>(a)</strong> Count or calculate the surface base dimension of a single layer. The block is 4 cubes long and 3 cubes wide:
+                                <div class="math-block">$$4 \times 3 = 12 \text{ cubes per layer}$$</div>
+                            </li>
+                            <li><strong>(b)</strong> Look at the vertical height of the prism structure. It stands <strong>2 layers</strong> tall.</li>
+                            <li><strong>(c)</strong> Multiply the number of blocks per layer by the total number of layers to find volume ($V = l \times w \times h$):
+                                <div class="math-block">$$12 \times 2 = 24 \text{ cubic inches (or in.}^3\text{)}$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 29</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    The coordinates of three vertices of a rectangle are $(0,0)$, $(4,0)$, and $(0,3)$. What are the coordinates of the fourth vertex?
+                </div>
+                <div class="diagram-container">
+                    <canvas id="canvasQ29" width="220" height="180"></canvas>
+                </div>
+                <br>
+                <button class="btn btn-accent" onclick="toggleExplanation(29)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-29">
+                    <div class="answer-highlight">Answer: (4,3)</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>Plotting the three known coordinate pairs shows:
+                                <ul>
+                                    <li>$(0,0)$ sits directly at the origin point.</li>
+                                    <li>$(4,0)$ is located 4 units out along the horizontal x-axis.</li>
+                                    <li>$(0,3)$ is located 3 units straight up along the vertical y-axis.</li>
+                                </ul>
+                            </li>
+                            <li>To form a true rectangle with perpendicular lines, the final missing corner must align horizontally with $(0,3)$ and vertically with $(4,0)$. This intersects directly at coordinate <strong>$(4,3)$</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="question-num">Problem 30</span>
+            </div>
+            <div class="card-body">
+                <div class="question-text">
+                    Find the mean, median, mode, and range of this set of scores:<br>
+                    80, 90, 100, 80, 100, 80, 70
+                </div>
+                <button class="btn btn-accent" onclick="toggleExplanation(30)">Review Answer & Explanation</button>
+                <div class="explanation-panel" id="exp-30">
+                    <div class="answer-highlight">Answers: Mean = $85\frac{5}{7}$ &nbsp;|&nbsp; Median = 80 &nbsp;|&nbsp; Mode = 80 &nbsp;|&nbsp; Range = 30</div>
+                    <div>
+                        <strong>Step-by-Step Explanation:</strong>
+                        <ul class="step-list">
+                            <li>First, arrange the 7 scores in order from smallest to largest:
+                                <div class="math-block">$$\mathbf{70, 80, 80, 80, 90, 100, 100}$$</div>
+                            </li>
+                            <li><strong>Mean:</strong> Add all values together and divide by the total count (7):
+                                <div class="math-block">$$70 + 80 + 80 + 80 + 90 + 100 + 100 = 600$$</div>
+                                <div class="math-block">$$600 \div 7 = 85\frac{5}{7} \approx 85.71$$</div>
+                            </li>
+                            <li><strong>Median:</strong> The middle score in the ordered list of 7 items is the 4th value: <strong>80</strong>.</li>
+                            <li><strong>Mode:</strong> The value that appears most often is <strong>80</strong> (it occurs 3 times).</li>
+                            <li><strong>Range:</strong> Compute the difference between the highest and lowest scores:
+                                <div class="math-block">$$100 - 70 = 30$$</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Interactive Solutions Guide &bull; Saxon Math Course Practice Layout</p>
+    </footer>
+</div>
+
+<script>
+    function toggleExplanation(num) {
+        var panel = document.getElementById('exp-' + num);
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+        }
+    }
+
+    function toggleAll(show) {
+        var panels = document.getElementsByClassName('explanation-panel');
+        for (var i = 0; i < panels.length; i++) {
+            panels[i].style.display = show ? 'block' : 'none';
+        }
+    }
+
+    window.onload = function() {
+        if (window.MathJax && window.MathJax.typeset) {
+            window.MathJax.typeset();
+        }
+
+        // --- Q1 Fraction Diagram Canvas ---
+        var c1 = document.getElementById("canvasQ1").getContext("2d");
+        c1.fillStyle = "#eff6ff";
+        c1.fillRect(20, 20, 187.5, 40); // Shade 5 blocks out of 8 (5 * 37.5)
+        
+        c1.strokeStyle = "#1e293b";
+        c1.lineWidth = 2;
+        c1.strokeRect(20, 20, 300, 40);
+        
+        for(let i = 1; i < 8; i++) {
+            c1.beginPath();
+            c1.moveTo(20 + i * 37.5, 20);
+            c1.lineTo(20 + i * 37.5, 60);
+            c1.stroke();
+        }
+        
+        c1.font = "13px Arial";
+        c1.fillStyle = "#1e293b";
+        c1.textAlign = "center";
+        for(let i = 0; i < 8; i++) {
+            c1.fillText("5", 38.75 + i * 37.5, 45);
+        }
+        
+        // Brackets / Side labels
+        c1.beginPath();
+        c1.moveTo(20, 75); c1.lineTo(320, 75);
+        c1.moveTo(20, 70); c1.lineTo(20, 80);
+        c1.moveTo(320, 70); c1.lineTo(320, 80);
+        c1.stroke();
+        c1.fillText("Total = 40 answers", 170, 95);
+        
+        // --- Q9 Segment Line Canvas ---
+        var c9 = document.getElementById("canvasQ9").getContext("2d");
+        c9.strokeStyle = "#1e293b";
+        c9.lineWidth = 2;
+        c9.beginPath();
+        c9.moveTo(30, 35);
+        c9.lineTo(330, 35);
+        c9.stroke();
+        
+        var points = [{x: 30, l: "A"}, {x: 155, l: "B"}, {x: 330, l: "C"}];
+        c9.font = "bold 13px Arial";
+        c9.fillStyle = "#1e293b";
+        c9.textAlign = "center";
+        
+        points.forEach(p => {
+            c9.beginPath();
+            c9.moveTo(p.x, 28);
+            c9.lineTo(p.x, 42);
+            c9.stroke();
+            c9.fillText(p.l, p.x, 20);
+        });
+        
+        c9.font = "12px Arial";
+        c9.fillText("3.4 cm", 92, 53);
+        c9.fillText("4.8 cm", 242, 53);
+
+        // --- Q28 Isometric 3D Blocks ---
+        var c28 = document.getElementById("canvasQ28").getContext("2d");
+        
+        function drawCube(x, y, size) {
+            var isoX = x - y;
+            var isoY = (x + y) * 0.5;
+            
+            c28.save();
+            c28.translate(isoX, isoY);
+            
+            // Top face
+            c28.fillStyle = "#eff6ff";
+            c28.beginPath();
+            c28.moveTo(0, 0);
+            c28.lineTo(size, -size * 0.5);
+            c28.lineTo(0, -size);
+            c28.lineTo(-size, -size * 0.5);
+            c28.closePath();
+            c28.fill();
+            c28.stroke();
+            
+            // Left face
+            c28.fillStyle = "#bfdbfe";
+            c28.beginPath();
+            c28.moveTo(-size, -size * 0.5);
+            c28.lineTo(0, 0);
+            c28.lineTo(0, size);
+            c28.lineTo(-size, size * 0.5);
+            c28.closePath();
+            c28.fill();
+            c28.stroke();
+            
+            // Right face
+            c28.fillStyle = "#3b82f6";
+            c28.beginPath();
+            c28.moveTo(0, 0);
+            c28.lineTo(size, -size * 0.5);
+            c28.lineTo(size, size * 0.5);
+            c28.lineTo(0, size);
+            c28.closePath();
+            c28.fill();
+            c28.stroke();
+            
+            c28.restore();
+        }
+        
+        c28.strokeStyle = "#1e3a8a";
+        c28.lineWidth = 1;
+        
+        // Base structure dimensions logic: 4x3x2
+        // Nested loop from back right to front left to draw layers properly
+        for (var z = 0; z < 2; z++) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 4; x++) {
+                    // Position offsets calculated for isometric view rendering
+                    var cx = 110 + x * 26;
+                    var cy = 40 + y * 26 - z * 26;
+                    drawCube(cx, cy, 15);
+                }
+            }
+        }
+
+        // --- Q29 Graph Grid Canvas ---
+        var c29 = document.getElementById("canvasQ29").getContext("2d");
+        var ox = 40, oy = 140;
+        var scale = 30;
+        
+        // Grid background lines
+        c29.strokeStyle = "#e2e8f0";
+        c29.lineWidth = 1;
+        for(let i=0; i<=5; i++) {
+            c29.beginPath(); c29.moveTo(ox + i*scale, oy); c29.lineTo(ox + i*scale, oy - 4*scale); c29.stroke();
+            c29.beginPath(); c29.moveTo(ox, oy - i*scale); c29.lineTo(ox + 5*scale, oy - i*scale); c29.stroke();
+        }
+        
+        // Main Axis lines
+        c29.strokeStyle = "#475569";
+        c29.lineWidth = 2;
+        c29.beginPath(); c29.moveTo(ox - 10, oy); c29.lineTo(ox + 160, oy); c29.stroke();
+        c29.beginPath(); c29.moveTo(ox, oy + 10); c29.lineTo(ox, oy - 130); c29.stroke();
+        
+        // Target shape outline dashed
+        c29.strokeStyle = "#d97706";
+        c29.lineWidth = 2;
+        c29.setLineDash([4, 4]);
+        c29.strokeRect(ox, oy - 3*scale, 4*scale, 3*scale);
+        c29.setLineDash([]);
+        
+        // Vertices markers
+        var dots = [
+            {x: 0, y: 0, label: "(0,0)"},
+            {x: 4, y: 0, label: "(4,0)"},
+            {x: 0, y: 3, label: "(0,3)"},
+            {x: 4, y: 3, label: "(4,3)", color: "#16a34a"}
+        ];
+        
+        dots.forEach(d => {
+            c29.fillStyle = d.color || "#1e3a8a";
+            c29.beginPath();
+            c29.arc(ox + d.x*scale, oy - d.y*scale, 5, 0, 2*Math.PI);
+            c29.fill();
+            c29.font = "bold 11px Arial";
+            c29.fillText(d.label, ox + d.x*scale + 8, oy - d.y*scale - 5);
+        });
+    };
+</script>
+
+</body>
+</html>
