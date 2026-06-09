@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Math Variations</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 3px solid #1abc9c;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-top: 40px;
+            font-size: 1.2em;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            font-weight: bold;
+            font-size: 1.05em;
+            color: #16a085;
+            margin-bottom: 10px;
+        }
+        .btn-toggle {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
+        }
+        .btn-toggle:hover {
+            background-color: #16a085;
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+            background-color: #fafdfb;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            margin-top: 12px;
+            display: block;
+            border-radius: 4px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 99 Practice Variations</h1>
+
+    <div class="section-title">Question 1c Variations: Division with Extra Remainder Group</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 1c - Variation 1</div>
+        <p>A tour guide has 34 tourists and can fit up to 6 people in each van. If all the remaining tourists form a final smaller group, how many vans are needed in all?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol1c_1')">Reveal Answer</button>
+        <div id="sol1c_1" class="solution-content">
+            <p>Divide the total number of tourists by the capacity of each van:</p>
+            <p>$$34 \div 6 = 5 \text{ full vans remainder } 4 \text{ tourists}$$</p>
+            <p>The 4 remaining tourists require 1 extra van. Therefore: $$5 + 1 = 6$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">6 vans</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 1c - Variation 2</div>
+        <p>An organizer places 75 books onto shelves that hold exactly 8 books each. If the leftover books are placed on a final shelf, how many shelves are used in total?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol1c_2')">Reveal Answer</button>
+        <div id="sol1c_2" class="solution-content">
+            <p>Divide the total books by shelf capacity:</p>
+            <p>$$75 \div 8 = 9 \text{ full shelves remainder } 3 \text{ books}$$</p>
+            <p>The 3 leftover books use 1 additional shelf. Therefore: $$9 + 1 = 10$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">10 shelves</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 1c - Variation 3</div>
+        <p>A camp counselor divides 47 campers into teams of 5. If the remaining campers form their own separate team, how many teams are there in total?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol1c_3')">Reveal Answer</button>
+        <div id="sol1c_3" class="solution-content">
+            <p>Divide the total campers by team size:</p>
+            <p>$$47 \div 5 = 9 \text{ teams remainder } 2 \text{ campers}$$</p>
+            <p>The 2 leftover campers form 1 extra team. Therefore: $$9 + 1 = 10$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">10 teams</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 3 Variations: Base Fee Plus Additional Hourly Rate</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 3 - Variation 1</div>
+        <p>A bike rental shop charges \$5.00 for the first hour and \$2.50 for each additional hour. How much does it cost to rent a bike for 4 hours?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol3_1')">Reveal Answer</button>
+        <div id="sol3_1" class="solution-content">
+            <p>Calculate the breakdown for 4 hours:</p>
+            <ul>
+                <li>First hour: \$5.00</li>
+                <li>Remaining hours: \(4 - 1 = 3\) hours</li>
+                <li>Cost for remaining hours: \(3 \times \$2.50 = \$7.50\)</li>
+            </ul>
+            <p>$$\text{Total Cost} = \$5.00 + \$7.50 = \$12.50$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$12.50</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 3 - Variation 2</div>
+        <p>A boat rental costs \$15.00 for the first hour and \$10.00 for each additional hour. What is the total cost for a 5-hour rental?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol3_2')">Reveal Answer</button>
+        <div id="sol3_2" class="solution-content">
+            <p>Calculate the breakdown for 5 hours:</p>
+            <ul>
+                <li>First hour: \$15.00</li>
+                <li>Remaining hours: \(5 - 1 = 4\) hours</li>
+                <li>Cost for remaining hours: \(4 \times \$10.00 = \$40.00\)</li>
+            </ul>
+            <p>$$\text{Total Cost} = \$15.00 + \$40.00 = \$55.00$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$55.00</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 3 - Variation 3</div>
+        <p>An internet cafe charges \$2.00 for the first hour and \$1.20 for each additional hour. How much does it cost to use a computer for 3 hours?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol3_3')">Reveal Answer</button>
+        <div id="sol3_3" class="solution-content">
+            <p>Calculate the breakdown for 3 hours:</p>
+            <ul>
+                <li>First hour: \$2.00</li>
+                <li>Remaining hours: \(3 - 1 = 2\) hours</li>
+                <li>Cost for remaining hours: \(2 \times \$1.20 = \$2.40\)</li>
+            </ul>
+            <p>$$\text{Total Cost} = \$2.00 + \$2.40 = \$4.40$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">\$4.40</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 12 Variations: Fractional Turns in Degrees</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 12 - Variation 1</div>
+        <p>A dial is given a half turn clockwise. How many degrees was the dial turned?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol12_1')">Reveal Answer</button>
+        <div id="sol12_1" class="solution-content">
+            <p>A full circle turn is \(360^\circ\). A half turn is:</p>
+            <p>$$\frac{1}{2} \times 360^\circ = 180^\circ$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">180°</span></p>
+            <canvas id="canvas12_1" width="150" height="150"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 12 - Variation 2</div>
+        <p>A wheel makes a three-quarter turn counterclockwise. How many degrees did it turn?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol12_2')">Reveal Answer</button>
+        <div id="sol12_2" class="solution-content">
+            <p>A three-quarter turn is calculated as:</p>
+            <p>$$\frac{3}{4} \times 360^\circ = 270^\circ$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">270°</span></p>
+            <canvas id="canvas12_2" width="150" height="150"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 12 - Variation 3</div>
+        <p>An arrow on a game spinner makes a one-third turn clockwise. How many degrees did it turn?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol12_3')">Reveal Answer</button>
+        <div id="sol12_3" class="solution-content">
+            <p>A one-third turn is calculated as:</p>
+            <p>$$\frac{1}{3} \times 360^\circ = 120^\circ$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">120°</span></p>
+            <canvas id="canvas12_3" width="150" height="150"></canvas>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 19 Variations: Squaring Multiples of 10</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 19 - Variation 1</div>
+        <p>Evaluate: $$40^2$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol19_1')">Reveal Answer</button>
+        <div id="sol19_1" class="solution-content">
+            <p>$$40 \times 40 = 1600$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">1600</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 19 - Variation 2</div>
+        <p>Evaluate: $$70^2$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol19_2')">Reveal Answer</button>
+        <div id="sol19_2" class="solution-content">
+            <p>$$70 \times 70 = 4900$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">4900</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 19 - Variation 3</div>
+        <p>Evaluate: $$90^2$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol19_3')">Reveal Answer</button>
+        <div id="sol19_3" class="solution-content">
+            <p>$$90 \times 90 = 8100$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">8100</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 21 Variations: Decimal Order of Operations \(A - (B - C)\)</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 21 - Variation 1</div>
+        <p>Simplify: $$15.05 - (8.42 - 3.1)$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol21_1')">Reveal Answer</button>
+        <div id="sol21_1" class="solution-content">
+            <p>First solve inside the parentheses:</p>
+            <p>$$8.42 - 3.10 = 5.32$$</p>
+            <p>Next, perform the outer subtraction:</p>
+            <p>$$15.05 - 5.32 = 9.73$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">9.73</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 21 - Variation 2</div>
+        <p>Simplify: $$20.09 - (12.55 - 4.2)$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol21_2')">Reveal Answer</button>
+        <div id="sol21_2" class="solution-content">
+            <p>First solve inside the parentheses:</p>
+            <p>$$12.55 - 4.20 = 8.35$$</p>
+            <p>Next, perform the outer subtraction:</p>
+            <p>$$20.09 - 8.35 = 11.74$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">11.74</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 21 - Variation 3</div>
+        <p>Simplify: $$10.04 - (6.73 - 1.5)$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol21_3')">Reveal Answer</button>
+        <div id="sol21_3" class="solution-content">
+            <p>First solve inside the parentheses:</p>
+            <p>$$6.73 - 1.50 = 5.23$$</p>
+            <p>Next, perform the outer subtraction:</p>
+            <p>$$10.04 - 5.23 = 4.81$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">4.81</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 22 Variations: Mental Product Trick \((X-1)(X+1) = X^2 - 1\)</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 22 - Variation 1</div>
+        <p>Multiply: $$29 \times 31$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol22_1')">Reveal Answer</button>
+        <div id="sol22_1" class="solution-content">
+            <p>Use the difference of squares strategy: \((30 - 1)(30 + 1) = 30^2 - 1^2\)</p>
+            <p>$$30^2 - 1 = 900 - 1 = 899$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">899</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 22 - Variation 2</div>
+        <p>Multiply: $$59 \times 61$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol22_2')">Reveal Answer</button>
+        <div id="sol22_2" class="solution-content">
+            <p>Use the difference of squares strategy: \((60 - 1)(60 + 1) = 60^2 - 1^2\)</p>
+            <p>$$60^2 - 1 = 3600 - 1 = 3599$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">3599</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 22 - Variation 3</div>
+        <p>Multiply: $$79 \times 81$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol22_3')">Reveal Answer</button>
+        <div id="sol22_3" class="solution-content">
+            <p>Use the difference of squares strategy: \((80 - 1)(80 + 1) = 80^2 - 1^2\)</p>
+            <p>$$80^2 - 1 = 6400 - 1 = 6399$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">6399</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 23 Variations: Quick Multiplication by 25</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 23 - Variation 1</div>
+        <p>Multiply: $$21 \times 25$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol23_1')">Reveal Answer</button>
+        <div id="sol23_1" class="solution-content">
+            <p>$$21 \times 25 = 525$$</p>
+            <p><em>Tip: Think of 21 quarters. 20 quarters is \$5.00, plus 1 more quarter is \$5.25.</em></p>
+            <p><strong>Answer:</strong> <span class="highlight">525</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 23 - Variation 2</div>
+        <p>Multiply: $$45 \times 25$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol23_2')">Reveal Answer</button>
+        <div id="sol23_2" class="solution-content">
+            <p>$$45 \times 25 = 1125$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">1125</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 23 - Variation 3</div>
+        <p>Multiply: $$17 \times 25$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol23_3')">Reveal Answer</button>
+        <div id="sol23_3" class="solution-content">
+            <p>$$17 \times 25 = 425$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">425</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 24 Variations: Division Resulting in Middle Zero Quotients</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 24 - Variation 1</div>
+        <p>Divide: $$\frac{612}{6}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol24_1')">Reveal Answer</button>
+        <div id="sol24_1" class="solution-content">
+            <p>Break it down by long division steps:</p>
+            <p>$$6 \text{ goes into } 6 \text{ one time (1).}$$</p>
+            <p>$$6 \text{ goes into } 1 \text{ zero times (0).}$$</p>
+            <p>$$6 \text{ goes into } 12 \text{ two times (2).}$$</p>
+            <p>$$\frac{612}{6} = 102$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">102</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 24 - Variation 2</div>
+        <p>Divide: $$\frac{927}{9}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol24_2')">Reveal Answer</button>
+        <div id="sol24_2" class="solution-content">
+            <p>$$948 \div 9 \rightarrow 927 \div 9 = 103$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">103</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 24 - Variation 3</div>
+        <p>Divide: $$\frac{520}{5}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol24_3')">Reveal Answer</button>
+        <div id="sol24_3" class="solution-content">
+            <p>$$520 \div 5 = 104$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">104</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 25 Variations: Multiples of 100 Long Division</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 25 - Variation 1</div>
+        <p>Evaluate: $$7 \overline{) 4200}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol25_1')">Reveal Answer</button>
+        <div id="sol25_1" class="solution-content">
+            <p>Since \(42 \div 7 = 6\):</p>
+            <p>$$4200 \div 7 = 600$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">600</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 25 - Variation 2</div>
+        <p>Evaluate: $$6 \overline{) 5400}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol25_2')">Reveal Answer</button>
+        <div id="sol25_2" class="solution-content">
+            <p>Since \(54 \div 6 = 9\):</p>
+            <p>$$5400 \div 6 = 900$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">900</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 25 - Variation 3</div>
+        <p>Evaluate: $$4 \overline{) 3200}$$</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol25_3')">Reveal Answer</button>
+        <div id="sol25_3" class="solution-content">
+            <p>Since \(32 \div 4 = 8\):</p>
+            <p>$$3200 \div 4 = 800$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">800</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 26 Variations: Visualizing Mixed Numbers and Improper Fractions</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 26 - Variation 1</div>
+        <p>Draw and shade circles to visually demonstrate that \(1\frac{3}{4}\) equals \(\frac{7}{4}\).</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol26_1')">Reveal Answer</button>
+        <div id="sol26_1" class="solution-content">
+            <p>Each circle is split into 4 equal quarters. Shading 1 full circle (\(\frac{4}{4}\)) and 3 quarters (\(\frac{3}{4}\)) yields 7 quarters total:</p>
+            <p>$$\frac{4}{4} + \frac{3}{4} = \frac{7}{4}$$</p>
+            <canvas id="canvas26_1" width="300" height="110"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 26 - Variation 2</div>
+        <p>Draw and shade shapes to visually demonstrate that \(2\frac{1}{2}\) equals \(\frac{5}{2}\).</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol26_2')">Reveal Answer</button>
+        <div id="sol26_2" class="solution-content">
+            <p>Each box is split into 2 halves. Shading 2 complete boxes (\(\frac{4}{2}\)) and 1 half (\(\frac{1}{2}\)) yields 5 halves total:</p>
+            <p>$$\frac{2}{2} + \frac{2}{2} + \frac{1}{2} = \frac{5}{2}$$</p>
+            <canvas id="canvas26_2" width="300" height="110"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 26 - Variation 3</div>
+        <p>Draw and shade circles to visually demonstrate that \(1\frac{2}{5}\) equals \(\frac{7}{5}\).</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol26_3')">Reveal Answer</button>
+        <div id="sol26_3" class="solution-content">
+            <p>Each circle is split into 5 fifths. Shading 1 whole circle (\(\frac{5}{5}\)) and 2 fifths (\(\frac{2}{5}\)) yields 7 fifths total:</p>
+            <p>$$\frac{5}{5} + \frac{2}{5} = \frac{7}{5}$$</p>
+            <canvas id="canvas26_3" width="300" height="110"></canvas>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 27 & 28 Variations: Rectangle Dimensions, Perimeter, and Area</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 27 & 28 - Variation 1</div>
+        <p><strong>(27)</strong> Draw a rectangle that is 4 inches long and 2 inches wide.<br>
+           <strong>(28)</strong> Find the perimeter and area of this 4 in. by 2 in. rectangle.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol27_1')">Reveal Answer</button>
+        <div id="sol27_1" class="solution-content">
+            <canvas id="canvas27_1" width="320" height="140"></canvas>
+            <p><strong>Perimeter:</strong> Sum of all sides</p>
+            <p>$$P = 4\text{ in} + 2\text{ in} + 4\text{ in} + 2\text{ in} = 12\text{ inches}$$</p>
+            <p><strong>Area:</strong> Length \(\times\) Width</p>
+            <p>$$A = 4\text{ in} \times 2\text{ in} = 8\text{ square inches}$$</p>
+            <p><strong>Answer:</strong> Perimeter = <span class="highlight">12 inches</span>; Area = <span class="highlight">8 sq. inches</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 27 & 28 - Variation 2</div>
+        <p><strong>(27)</strong> Draw a rectangle that is 2 inches long and 1 inch wide.<br>
+           <strong>(28)</strong> Find the perimeter and area of this 2 in. by 1 in. rectangle.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol27_2')">Reveal Answer</button>
+        <div id="sol27_2" class="solution-content">
+            <canvas id="canvas27_2" width="320" height="120"></canvas>
+            <p><strong>Perimeter:</strong> Sum of all sides</p>
+            <p>$$P = 2\text{ in} + 1\text{ in} + 2\text{ in} + 1\text{ in} = 6\text{ inches}$$</p>
+            <p><strong>Area:</strong> Length \(\times\) Width</p>
+            <p>$$A = 2\text{ in} \times 1\text{ in} = 2\text{ square inches}$$</p>
+            <p><strong>Answer:</strong> Perimeter = <span class="highlight">6 inches</span>; Area = <span class="highlight">2 sq. inches</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 27 & 28 - Variation 3</div>
+        <p><strong>(27)</strong> Draw a rectangle that is 5 inches long and 3 inches wide.<br>
+           <strong>(28)</strong> Find the perimeter and area of this 5 in. by 3 in. rectangle.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol27_3')">Reveal Answer</button>
+        <div id="sol27_3" class="solution-content">
+            <canvas id="canvas27_3" width="320" height="160"></canvas>
+            <p><strong>Perimeter:</strong> Sum of all sides</p>
+            <p>$$P = 5\text{ in} + 3\text{ in} + 5\text{ in} + 3\text{ in} = 16\text{ inches}$$</p>
+            <p><strong>Area:</strong> Length \(\times\) Width</p>
+            <p>$$A = 5\text{ in} \times 3\text{ in} = 15\text{ square inches}$$</p>
+            <p><strong>Answer:</strong> Perimeter = <span class="highlight">16 inches</span>; Area = <span class="highlight">15 sq. inches</span></p>
+        </div>
+    </div>
+
+
+    <div class="section-title">Question 29 Variations: Volume Cube Counting</div>
+    
+    <div class="question-card">
+        <div class="question-header">Question 29 - Variation 1</div>
+        <p>A rectangular solid structure is constructed 3 cubes long, 2 cubes wide, and 2 cubes high. How many total small cubes make up this solid?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol29_1')">Reveal Answer</button>
+        <div id="sol29_1" class="solution-content">
+            <p>Multiply the three dimensions (Length \(\times\) Width \(\times\) Height):</p>
+            <p>$$\text{Total Cubes} = 3 \times 2 \times 2 = 12\text{ cubes}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">12 cubes</span></p>
+            <canvas id="canvas29_1" width="220" height="160"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 29 - Variation 2</div>
+        <p>A rectangular solid structure is constructed 4 cubes long, 2 cubes wide, and 3 cubes high. How many total small cubes make up this solid?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol29_2')">Reveal Answer</button>
+        <div id="sol29_2" class="solution-content">
+            <p>Multiply the three dimensions (Length \(\times\) Width \(\times\) Height):</p>
+            <p>$$\text{Total Cubes} = 4 \times 2 \times 3 = 24\text{ cubes}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">24 cubes</span></p>
+            <canvas id="canvas29_2" width="260" height="180"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 29 - Variation 3</div>
+        <p>A rectangular solid structure is constructed 3 cubes long, 3 cubes wide, and 2 cubes high. How many total small cubes make up this solid?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol29_3')">Reveal Answer</button>
+        <div id="sol29_3" class="solution-content">
+            <p>Multiply the three dimensions (Length \(\times\) Width \(\times\) Height):</p>
+            <p>$$\text{Total Cubes} = 3 \times 3 \times 2 = 18\text{ cubes}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">18 cubes</span></p>
+            <canvas id="canvas29_3" width="240" height="180"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+                renderCanvas(id);
+            }
+        }
+
+        // Shared isometric drawing engine for Q29 Variations
+        function drawIsoBlock(ctx, xo, yo, x, y, z) {
+            let px = xo + (x - y) * 20;
+            let py = yo + (x + y) * 10 - z * 24;
+            
+            // Top face
+            ctx.fillStyle = '#bdc3c7';
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px+20, py+10); ctx.lineTo(px, py+20); ctx.lineTo(px-20, py+10); ctx.closePath(); ctx.fill(); ctx.stroke();
+            // Left face
+            ctx.fillStyle = '#95a5a6';
+            ctx.beginPath(); ctx.moveTo(px-20, py+10); ctx.lineTo(px, py+20); ctx.lineTo(px, py+44); ctx.lineTo(px-20, py+34); ctx.closePath(); ctx.fill(); ctx.stroke();
+            // Right face
+            ctx.fillStyle = '#7f8c8d';
+            ctx.beginPath(); ctx.moveTo(px, py+20); ctx.lineTo(px+20, py+10); ctx.lineTo(px+20, py+34); ctx.lineTo(px, py+44); ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+
+        function renderCanvas(id) {
+            // Q12.1: 180 degree turn
+            if (id === 'sol12_1') {
+                let ctx = document.getElementById('canvas12_1').getContext('2d');
+                ctx.clearRect(0,0,150,150);
+                ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(75, 75, 50, 0, 2 * Math.PI); ctx.stroke();
+                ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(75, 75); ctx.lineTo(125, 75); ctx.moveTo(75, 75); ctx.lineTo(25, 75); ctx.stroke();
+                ctx.beginPath(); ctx.arc(75, 75, 20, 0, Math.PI, false); ctx.stroke();
+                ctx.fillStyle = '#e74c3c'; ctx.font = '12px sans-serif'; ctx.fillText('180°', 70, 115);
+            }
+            // Q12.2: 270 degree counterclockwise turn
+            if (id === 'sol12_2') {
+                let ctx = document.getElementById('canvas12_2').getContext('2d');
+                ctx.clearRect(0,0,150,150);
+                ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(75, 75, 50, 0, 2 * Math.PI); ctx.stroke();
+                ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(75, 75); ctx.lineTo(125, 75); ctx.moveTo(75, 75); ctx.lineTo(75, 125); ctx.stroke();
+                ctx.beginPath(); ctx.arc(75, 75, 20, 0, Math.PI / 2, false); ctx.stroke();
+                ctx.fillStyle = '#e74c3c'; ctx.font = '12px sans-serif'; ctx.fillText('270° CCW', 85, 110);
+            }
+            // Q12.3: 120 degree turn
+            if (id === 'sol12_3') {
+                let ctx = document.getElementById('canvas12_3').getContext('2d');
+                ctx.clearRect(0,0,150,150);
+                ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(75, 75, 50, 0, 2 * Math.PI); ctx.stroke();
+                ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 3;
+                ctx.beginPath(); ctx.moveTo(75, 75); ctx.lineTo(125, 75); 
+                ctx.moveTo(75, 75); ctx.lineTo(75 - 25, 75 + 43.3); ctx.stroke();
+                ctx.beginPath(); ctx.arc(75, 75, 20, 0, 2 * Math.PI / 3, false); ctx.stroke();
+                ctx.fillStyle = '#e74c3c'; ctx.font = '12px sans-serif'; ctx.fillText('120°', 45, 110);
+            }
+
+            // Q26.1: 1 and 3/4
+            if (id === 'sol26_1') {
+                let ctx = document.getElementById('canvas26_1').getContext('2d');
+                ctx.clearRect(0,0,300,110);
+                function drawFourths(ctx, x, y, r, fillCount) {
+                    for (let i = 0; i < 4; i++) {
+                        ctx.beginPath(); ctx.moveTo(x, y);
+                        ctx.arc(x, y, r, i * Math.PI/2, (i + 1) * Math.PI/2);
+                        ctx.closePath();
+                        if (fillCount > i) { ctx.fillStyle = '#3498db'; ctx.fill(); }
+                        ctx.strokeStyle = '#2c3e50'; ctx.stroke();
+                    }
+                }
+                drawFourths(ctx, 60, 50, 35, 4); drawFourths(ctx, 180, 50, 35, 3);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('1 Whole (4/4)', 25, 100); ctx.fillText('3/4 Filled', 155, 100);
+            }
+            // Q26.2: 2 and 1/2
+            if (id === 'sol26_2') {
+                let ctx = document.getElementById('canvas26_2').getContext('2d');
+                ctx.clearRect(0,0,300,110);
+                function drawHalvesBox(ctx, x, y, w, h, fillCount) {
+                    ctx.fillStyle = '#f1c40f';
+                    if(fillCount >= 1) ctx.fillRect(x, y, w/2, h);
+                    if(fillCount === 2) ctx.fillRect(x + w/2, y, w/2, h);
+                    ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5;
+                    ctx.strokeRect(x, y, w, h);
+                    ctx.beginPath(); ctx.moveTo(x + w/2, y); ctx.lineTo(x + w/2, y + h); ctx.stroke();
+                }
+                drawHalvesBox(ctx, 20, 30, 70, 40, 2);
+                drawHalvesBox(ctx, 110, 30, 70, 40, 2);
+                drawHalvesBox(ctx, 200, 30, 70, 40, 1);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('1', 50, 90); ctx.fillText('1', 140, 90); ctx.fillText('1/2', 225, 90);
+            }
+            // Q26.3: 1 and 2/5
+            if (id === 'sol26_3') {
+                let ctx = document.getElementById('canvas26_3').getContext('2d');
+                ctx.clearRect(0,0,300,110);
+                function drawFifths(ctx, x, y, r, fillCount) {
+                    for (let i = 0; i < 5; i++) {
+                        ctx.beginPath(); ctx.moveTo(x, y);
+                        ctx.arc(x, y, r, i * 2 * Math.PI / 5 - Math.PI/2, (i + 1) * 2 * Math.PI / 5 - Math.PI/2);
+                        ctx.closePath();
+                        if (fillCount > i) { ctx.fillStyle = '#9b59b6'; ctx.fill(); }
+                        ctx.strokeStyle = '#2c3e50'; ctx.stroke();
+                    }
+                }
+                drawFifths(ctx, 70, 50, 35, 5); drawFifths(ctx, 190, 50, 35, 2);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('5/5', 60, 100); ctx.fillText('2/5', 180, 100);
+            }
+
+            // Q27.1: 4x2 Rectangle
+            if (id === 'sol27_1') {
+                let ctx = document.getElementById('canvas27_1').getContext('2d');
+                ctx.clearRect(0,0,320,140);
+                ctx.fillStyle = '#e8f4f8'; ctx.fillRect(30, 30, 240, 70);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2; ctx.strokeRect(30, 30, 240, 70);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('4 inches', 120, 20); ctx.fillText('2 in', 275, 70);
+            }
+            // Q27.2: 2x1 Rectangle
+            if (id === 'sol27_2') {
+                let ctx = document.getElementById('canvas27_2').getContext('2d');
+                ctx.clearRect(0,0,320,120);
+                ctx.fillStyle = '#e8f4f8'; ctx.fillRect(30, 30, 160, 50);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2; ctx.strokeRect(30, 30, 160, 50);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('2 inches', 85, 20); ctx.fillText('1 in', 200, 60);
+            }
+            // Q27.3: 5x3 Rectangle
+            if (id === 'sol27_3') {
+                let ctx = document.getElementById('canvas27_3').getContext('2d');
+                ctx.clearRect(0,0,320,160);
+                ctx.fillStyle = '#e8f4f8'; ctx.fillRect(30, 30, 250, 95);
+                ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2; ctx.strokeRect(30, 30, 250, 95);
+                ctx.fillStyle = '#2c3e50'; ctx.font = '14px sans-serif';
+                ctx.fillText('5 inches', 130, 20); ctx.fillText('3 in', 285, 80);
+            }
+
+            // Q29.1: 3x2x2 Structure
+            if (id === 'sol29_1') {
+                let ctx = document.getElementById('canvas29_1').getContext('2d');
+                ctx.clearRect(0,0,220,160); ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5;
+                for(let z=0; z<2; z++) {
+                    for(let x=0; x<3; x++) {
+                        for(let y=0; y<2; y++) { drawIsoBlock(100, 50, x, y, z); }
+                    }
+                }
+            }
+            // Q29.2: 4x2x3 Structure
+            if (id === 'sol29_2') {
+                let ctx = document.getElementById('canvas29_2').getContext('2d');
+                ctx.clearRect(0,0,260,180); ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5;
+                for(let z=0; z<3; z++) {
+                    for(let x=0; x<4; x++) {
+                        for(let y=0; y<2; y++) { drawIsoBlock(100, 70, x, y, z); }
+                    }
+                }
+            }
+            // Q29.3: 3x3x2 Structure
+            if (id === 'sol29_3') {
+                let ctx = document.getElementById('canvas29_3').getContext('2d');
+                ctx.clearRect(0,0,240,180); ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5;
+                for(let z=0; z<2; z++) {
+                    for(let x=0; x<3; x++) {
+                        for(let y=0; y<3; y++) { drawIsoBlock(120, 50, x, y, z); }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
