@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Variants - Interactive Worksheet</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --accent-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h1 {
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            color: #1e3a8a;
+            border-bottom: 2px solid #bfdbfe;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #334155;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .q-number {
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .reveal-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .reveal-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .answer-container {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .answer-container.visible {
+            display: block;
+        }
+
+        .solution-step {
+            background-color: var(--accent-bg);
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+        }
+
+        .final-answer {
+            font-weight: 700;
+            color: #16a34a;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Custom Math Practice Worksheets</h1>
+        <p style="color: #64748b;">3 Targeted Variants for Questions 4, 11, 12, 14, 15, 17, and 20</p>
+    </header>
+
+    <h2 class="section-title">Variants for Question 4 (Equal Distribution with Remainders)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q4.1</span> Variant 1</div>
+        <div class="question-text">
+            Forty-five books were arranged on 7 shelves as evenly as possible.<br>
+            <strong>a.</strong> How many shelves had exactly 6 books?<br>
+            <strong>b.</strong> How many shelves had 7 books?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('4-1')">Reveal Answer</button>
+        <div id="answer-4-1" class="answer-container">
+            <div class="solution-step">
+                Divide total books by shelves: $45 \div 7 = 6 \text{ remainder } 3$.<br>
+                Every shelf gets at least 6 books. The 3 remaining books are given to 3 separate shelves, making them have 7 books. The rest ($7 - 3 = 4$) keep exactly 6 books.
+            </div>
+            <div class="final-answer">Answer: a. 4 shelves &nbsp;|&nbsp; b. 3 shelves</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q4.2</span> Variant 2</div>
+        <div class="question-text">
+            Twenty-nine students were split into 4 team groups as evenly as possible.<br>
+            <strong>a.</strong> How many teams had exactly 7 students?<br>
+            <strong>b.</strong> How many teams had 8 students?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('4-2')">Reveal Answer</button>
+        <div id="answer-4-2" class="answer-container">
+            <div class="solution-step">
+                Divide students by teams: $29 \div 4 = 7 \text{ remainder } 1$.<br>
+                Every team gets 7 students. The remaining 1 student joins one team, boosting its size to 8. The other 3 teams stay at 7.
+            </div>
+            <div class="final-answer">Answer: a. 3 teams &nbsp;|&nbsp; b. 1 team</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q4.3</span> Variant 3</div>
+        <div class="question-text">
+            Fifty-eight cookies were packed into 8 gift bags as evenly as possible.<br>
+            <strong>a.</strong> How many bags had exactly 7 cookies?<br>
+            <strong>b.</strong> How many bags had 8 cookies?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('4-3')">Reveal Answer</button>
+        <div id="answer-4-3" class="answer-container">
+            <div class="solution-step">
+                Divide cookies by bags: $58 \div 8 = 7 \text{ remainder } 2$.<br>
+                Every bag gets 7 cookies. 2 bags get an extra cookie to make 8. The remaining $8 - 2 = 6$ bags have exactly 7.
+            </div>
+            <div class="final-answer">Answer: a. 6 bags &nbsp;|&nbsp; b. 2 bags</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 11 (Fraction of a Group)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q11.1</span> Variant 1</div>
+        <div class="question-text">
+            There are 30 apples in a large basket. Three fifths ($\frac{3}{5}$) of them are red. How many apples are red?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('11-1')">Reveal Answer</button>
+        <div id="answer-11-1" class="answer-container">
+            <div class="solution-step">
+                1. Find $\frac{1}{5}$ of 30: $30 \div 5 = 6$.<br>
+                2. Multiply by the numerator (3): $6 \times 3 = 18$.
+            </div>
+            <div class="final-answer">Answer: 18 red apples</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q11.2</span> Variant 2</div>
+        <div class="question-text">
+            An art gallery has 36 paintings on display. Three fourths ($\frac{3}{4}$) of them are landscape scenes. How many paintings are landscape scenes?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('11-2')">Reveal Answer</button>
+        <div id="answer-11-2" class="answer-container">
+            <div class="solution-step">
+                1. Find $\frac{1}{4}$ of 36: $36 \div 4 = 9$.<br>
+                2. Multiply by the numerator (3): $9 \times 3 = 27$.
+            </div>
+            <div class="final-answer">Answer: 27 landscape paintings</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q11.3</span> Variant 3</div>
+        <div class="question-text">
+            There are 42 cars parked in a local lot. Two sevenths ($\frac{2}{7}$) of them are completely electric. How many cars are electric?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('11-3')">Reveal Answer</button>
+        <div id="answer-11-3" class="answer-container">
+            <div class="solution-step">
+                1. Find $\frac{1}{7}$ of 42: $42 \div 7 = 6$.<br>
+                2. Multiply by the numerator (2): $6 \times 2 = 12$.
+            </div>
+            <div class="final-answer">Answer: 12 electric cars</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 12 (Rate Word Problems)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q12.1</span> Variant 1</div>
+        <div class="question-text">
+            Maya typed 432 words in 8 minutes. If she typed at a steady speed, how many words did she type in one minute?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('12-1')">Reveal Answer</button>
+        <div id="answer-12-1" class="answer-container">
+            <div class="solution-step">
+                Divide total words by total minutes to find the rate per minute:<br>
+                $$432 \div 8 = 54$$
+            </div>
+            <div class="final-answer">Answer: 54 words per minute</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q12.2</span> Variant 2</div>
+        <div class="question-text">
+            A baker managed to make 252 donuts over a 6-hour shift. On average, how many donuts did the baker make per hour?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('12-2')">Reveal Answer</button>
+        <div id="answer-12-2" class="answer-container">
+            <div class="solution-step">
+                Divide total donuts by total hours:<br>
+                $$252 \div 6 = 42$$
+            </div>
+            <div class="final-answer">Answer: 42 donuts per hour</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q12.3</span> Variant 3</div>
+        <div class="question-text">
+            A cross-country train traveled 585 miles in 9 hours at a constant speed. How many miles did it travel in one single hour?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('12-3')">Reveal Answer</button>
+        <div id="answer-12-3" class="answer-container">
+            <div class="solution-step">
+                Divide total miles by total hours:<br>
+                $$585 \div 9 = 65$$
+            </div>
+            <div class="final-answer">Answer: 65 miles per hour</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 14 (Decimal Subtraction Alignment)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q14.1</span> Variant 1</div>
+        <div class="question-text">
+            Find: $5.2 - 0.45$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('14-1')">Reveal Answer</button>
+        <div id="answer-14-1" class="answer-container">
+            <div class="solution-step">
+                Align decimal positions and add a placeholder zero to subtract correctly:<br>
+                $$ \begin{array}{r} 5.20 \\ - 0.45 \\ \hline 4.75 \end{array} $$
+            </div>
+            <div class="final-answer">Answer: 4.75</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q14.2</span> Variant 2</div>
+        <div class="question-text">
+            Find: $7.1 - 0.63$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('14-2')">Reveal Answer</button>
+        <div id="answer-14-2" class="answer-container">
+            <div class="solution-step">
+                Align decimal positions and borrow across columns:<br>
+                $$ \begin{array}{r} 7.10 \\ - 0.63 \\ \hline 6.47 \end{array} $$
+            </div>
+            <div class="final-answer">Answer: 6.47</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q14.3</span> Variant 3</div>
+        <div class="question-text">
+            Find: $4.6 - 0.28$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('14-3')">Reveal Answer</button>
+        <div id="answer-14-3" class="answer-container">
+            <div class="solution-step">
+                Align decimal positions and subtract:<br>
+                $$ \begin{array}{r} 4.60 \\ - 0.28 \\ \hline 4.32 \end{array} $$
+            </div>
+            <div class="final-answer">Answer: 4.32</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 15 (Multiplication with Trailing Zeros)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q15.1</span> Variant 1</div>
+        <div class="question-text">
+            Find: $40 \times 600$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('15-1')">Reveal Answer</button>
+        <div id="answer-15-1" class="answer-container">
+            <div class="solution-step">
+                Multiply the front digits ($4 \times 6 = 24$) and append the total number of zeros (one zero from 40, two zeros from 600 = three zeros total):<br>
+                $$24,000$$
+            </div>
+            <div class="final-answer">Answer: 24,000</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q15.2</span> Variant 2</div>
+        <div class="question-text">
+            Find: $80 \times 900$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('15-2')">Reveal Answer</button>
+        <div id="answer-15-2" class="answer-container">
+            <div class="solution-step">
+                Multiply front digits ($8 \times 9 = 72$) and append three trailing zeros:<br>
+                $$72,000$$
+            </div>
+            <div class="final-answer">Answer: 72,000</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q15.3</span> Variant 3</div>
+        <div class="question-text">
+            Find: $50 \times 400$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('15-3')">Reveal Answer</button>
+        <div id="answer-15-3" class="answer-container">
+            <div class="solution-step">
+                Multiply front digits ($5 \times 4 = 20$) and append three trailing zeros from the problem inputs:<br>
+                $$20,000$$
+            </div>
+            <div class="final-answer">Answer: 20,000</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 17 (2-Digit by 2-Digit Multiplication)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q17.1</span> Variant 1</div>
+        <div class="question-text">
+            Find the product:<br>
+            $$ \begin{array}{r} 34 \\ \times 16 \\ \hline \end{array} $$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('17-1')">Reveal Answer</button>
+        <div id="answer-17-1" class="answer-container">
+            <div class="solution-step">
+                Multiply using partial products:<br>
+                - $34 \times 6 = 204$<br>
+                - $34 \times 10 = 340$<br>
+                Add them together: $204 + 340 = 544$.
+            </div>
+            <div class="final-answer">Answer: 544</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q17.2</span> Variant 2</div>
+        <div class="question-text">
+            Find the product:<br>
+            $$ \begin{array}{r} 42 \\ \times 25 \\ \hline \end{array} $$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('17-2')">Reveal Answer</button>
+        <div id="answer-17-2" class="answer-container">
+            <div class="solution-step">
+                Multiply using partial products:<br>
+                - $42 \times 5 = 210$<br>
+                - $42 \times 20 = 840$<br>
+                Add them together: $210 + 840 = 1,050$.
+            </div>
+            <div class="final-answer">Answer: 1,050</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q17.3</span> Variant 3</div>
+        <div class="question-text">
+            Find the product:<br>
+            $$ \begin{array}{r} 19 \\ \times 32 \\ \hline \end{array} $$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('17-3')">Reveal Answer</button>
+        <div id="answer-17-3" class="answer-container">
+            <div class="solution-step">
+                Multiply using partial products:<br>
+                - $19 \times 2 = 38$<br>
+                - $19 \times 30 = 570$<br>
+                Add them together: $38 + 570 = 608$.
+            </div>
+            <div class="final-answer">Answer: 608</div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Variants for Question 20 (Missing Addend Equation Strings)</h2>
+    
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q20.1</span> Variant 1</div>
+        <div class="question-text">
+            Find the missing addend $x$:<br>
+            $$3 + 4 + 7 + 8 + x + 6 + 1 + 4 = 42$$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('20-1')">Reveal Answer</button>
+        <div id="answer-20-1" class="answer-container">
+            <div class="solution-step">
+                1. Combine all known values: $3 + 4 + 7 + 8 + 6 + 1 + 4 = 33$.<br>
+                2. Set up equation: $33 + x = 42$.<br>
+                3. Subtract to solve: $x = 42 - 33 = 9$.
+            </div>
+            <div class="final-answer">Answer: x = 9</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q20.2</span> Variant 2</div>
+        <div class="question-text">
+            Find the missing addend $m$:<br>
+            $$5 + 9 + 2 + 6 + m + 7 + 3 + 4 + 2 = 55$$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('20-2')">Reveal Answer</button>
+        <div id="answer-20-2" class="answer-container">
+            <div class="solution-step">
+                1. Combine all known values: $5 + 9 + 2 + 6 + 7 + 3 + 4 + 2 = 38$.<br>
+                2. Set up equation: $38 + m = 55$.<br>
+                3. Subtract to solve: $m = 55 - 38 = 17$.
+            </div>
+            <div class="final-answer">Answer: m = 17</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q20.3</span> Variant 3</div>
+        <div class="question-text">
+            Find the missing addend $y$:<br>
+            $$1 + 8 + 5 + 7 + y + 3 + 6 + 2 = 39$$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer('20-3')">Reveal Answer</button>
+        <div id="answer-20-3" class="answer-container">
+            <div class="solution-step">
+                1. Combine all known values: $1 + 8 + 5 + 7 + 3 + 6 + 2 = 32$.<br>
+                2. Set up equation: $32 + y = 39$.<br>
+                3. Subtract to solve: $y = 39 - 32 = 7$.
+            </div>
+            <div class="final-answer">Answer: y = 7</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAnswer(id) {
+        const target = document.getElementById(`answer-${id}`);
+        const btn = target.previousElementSibling;
+        
+        if (target.classList.contains('visible')) {
+            target.classList.remove('visible');
+            btn.textContent = "Reveal Answer";
+        } else {
+            target.classList.add('visible');
+            btn.textContent = "Hide Answer";
+        }
+    }
+</script>
+
+</body>
+</html>
