@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing Division: Books on Shelves</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --wood: #b45309;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-statement {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        #reset-btn {
+            background-color: #64748b;
+        }
+        #reset-btn:hover {
+            background-color: #475569;
+        }
+
+        .counter-box {
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: #f1f5f9;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Layout Grid */
+        .simulation-area {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+            min-height: 500px;
+        }
+
+        /* Left side: Pile of unassigned books */
+        .book-pile-container {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pile-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #475569;
+            text-align: center;
+        }
+
+        .book-pile {
+            position: relative;
+            width: 100%;
+            height: 450px;
+        }
+
+        /* Right side: Shelves */
+        .bookcase {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            border: 4px solid #475569;
+        }
+
+        .shelf-row {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            height: 55px;
+            border-bottom: 8px solid var(--wood);
+            padding-left: 80px;
+            padding-right: 40px;
+        }
+
+        .shelf-label {
+            position: absolute;
+            left: 10px;
+            bottom: 12px;
+            font-weight: bold;
+            color: #1e293b;
+            font-size: 0.9rem;
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .shelf-count {
+            position: absolute;
+            right: 10px;
+            bottom: 12px;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        /* Book Styling */
+        .book {
+            width: 16px;
+            height: 45px;
+            background-color: #ef4444;
+            border: 1px solid #b91c1c;
+            border-radius: 2px;
+            margin-right: 3px;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), cubic-bezier(0.25, 1, 0.5, 1);
+            display: inline-block;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+        }
+
+        /* Pile specific absolute positions to stack them visually */
+        .pile-book {
+            position: absolute;
+            height: 12px;
+            width: 120px;
+            border-radius: 3px;
+            left: 25px;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Educational explanation summary block */
+        .explanation-card {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .explanation-card.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Interactive Math Concept Simulator</h2>
+    <div class="problem-statement">
+        <strong>Question 4.1:</strong> Forty-five books were arranged on seven shelves as evenly as possible. <br>
+        <strong>a.</strong> How many shelves had exactly 6 books? <br>
+        <strong>b.</strong> How many shelves had 7 books?
+    </div>
+
+    <div class="controls">
+        <button id="start-btn" onclick="startDistribution()">Animate Distribution</button>
+        <button id="reset-btn" onclick="resetSimulation()">Reset</button>
+        <div class="counter-box">Remaining Books: <span id="books-left-count">45</span></div>
+    </div>
+
+    <div class="simulation-area">
+        <div class="book-pile-container">
+            <div class="pile-title">Unassigned Stack<br>(45 Books)</div>
+            <div class="book-pile" id="main-pile">
+                </div>
+        </div>
+
+        <div class="bookcase" id="bookcase">
+            </div>
+    </div>
+
+    <div class="explanation-card" id="explanation">
+        <h3>The Math Explained Visually:</h3>
+        <p>When you divide 45 books evenly among 7 shelves, you are calculating: 
+           $$\mathbf{45 \div 7 = 6 \text{ remainder } 3}$$
+        </p>
+        <ul>
+            <li><strong>Round 1 through 6:</strong> Every single shelf gets an equal base share of <strong>6 books</strong> ($7 \times 6 = 42$ books placed).</li>
+            <li><strong>The Remainder:</strong> You are left with a remainder of <strong>3 extra books</strong>. Because we must distribute as evenly as possible, these 3 books are placed one-by-one onto Shelves 1, 2, and 3.</li>
+        </ul>
+        <p class="final-answer" style="color: #16a34a; font-weight: bold; font-size: 1.1rem;">
+            Final Answer:<br>
+            • (a) Shelves with exactly 6 books: 4 shelves (Shelves 4, 5, 6, and 7)<br>
+            • (b) Shelves with 7 books: 3 shelves (Shelves 1, 2, and 3)
+        </p>
+    </div>
+</div>
+
+<script>
+    const TOTAL_BOOKS = 45;
+    const TOTAL_SHELVES = 7;
+    let booksLeft = TOTAL_BOOKS;
+    let isRunning = false;
+    let timeouts = [];
+
+    // Array of beautiful warm colors for the book objects
+    const bookColors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6', '#6366f1'];
+
+    function initSimulation() {
+        // Clear old setup
+        document.getElementById('main-pile').innerHTML = '';
+        document.getElementById('bookcase').innerHTML = '';
+        document.getElementById('explanation').classList.remove('visible');
+        booksLeft = TOTAL_BOOKS;
+        document.getElementById('books-left-count').textContent = booksLeft;
+        document.getElementById('start-btn').disabled = false;
+        timeouts.forEach(clearTimeout);
+        timeouts = [];
+
+        // Generate the unassigned vertical pile stack on the left
+        const mainPile = document.getElementById('main-pile');
+        for (let i = 0; i < TOTAL_BOOKS; i++) {
+            const book = document.createElement('div');
+            book.className = 'book pile-book';
+            book.id = `book-${i}`;
+            // Offset positioning to mimic a real life 3D neat stack
+            book.style.bottom = `${i * 9}px`;
+            book.style.backgroundColor = bookColors[i % bookColors.length];
+            book.style.borderColor = 'rgba(0,0,0,0.2)';
+            mainPile.appendChild(book);
+        }
+
+        // Generate the 7 empty shelves on the right
+        const bookcase = document.getElementById('bookcase');
+        for (let s = 1; s <= TOTAL_SHELVES; s++) {
+            const row = document.createElement('div');
+            row.className = 'shelf-row';
+            row.id = `shelf-${s}`;
+            row.innerHTML = `
+                <div class="shelf-label">Shelf ${s}</div>
+                <div class="shelf-count" id="shelf-count-${s}">0 books</div>
+            `;
+            bookcase.appendChild(row);
+        }
+    }
+
+    function startDistribution() {
+        if (isRunning || booksLeft === 0) return;
+        isRunning = true;
+        document.getElementById('start-btn').disabled = true;
+
+        let currentBookIndex = TOTAL_BOOKS - 1; 
+        let currentShelf = 1;
+        let delay = 150; // Speed of book distribution movement (ms per item)
+
+        while (currentBookIndex >= 0) {
+            const targetShelfNum = currentShelf;
+            const bookIdToMove = currentBookIndex;
+            const stepCount = TOTAL_BOOKS - currentBookIndex;
+
+            let t = setTimeout(() => {
+                moveBookToShelf(bookIdToMove, targetShelfNum);
+            }, stepCount * delay);
+            
+            timeouts.push(t);
+
+            // Cycle loop step to distribute item across shelves 1 through 7 evenly
+            currentShelf++;
+            if (currentShelf > TOTAL_SHELVES) {
+                currentShelf = 1;
+            }
+            currentBookIndex--;
+        }
+    }
+
+    function moveBookToShelf(bookId, shelfNum) {
+        const bookElement = document.getElementById(`book-${bookId}`);
+        const shelfElement = document.getElementById(`shelf-${shelfNum}`);
+        const countLabel = document.getElementById(`shelf-count-${shelfNum}`);
+        
+        if (!bookElement || !shelfElement) return;
+
+        // Calculate location coordinates relative to screen window to safely hop boundaries
+        const bookRect = bookElement.getBoundingClientRect();
+        const shelfRect = shelfElement.getBoundingClientRect();
+
+        // Count how many books are already physically resting on this shelf
+        const existingBooksCount = shelfElement.getElementsByClassName('book').length;
+        
+        // Transform the book element into a vertical block configuration for the bookshelf
+        bookElement.classList.remove('pile-book');
+        bookElement.style.position = 'static';
+        bookElement.style.height = '45px';
+        bookElement.style.width = '16px';
+        bookElement.style.marginRight = '4px';
+
+        // Append to shelf grid box container
+        // Insert right before the dynamic label readouts
+        shelfElement.insertBefore(bookElement, countLabel);
+
+        // Update counts live
+        booksLeft--;
+        document.getElementById('books-left-count').textContent = booksLeft;
+        countLabel.textContent = `${existingBooksCount + 1} books`;
+
+        // Check if last book landed to show comprehensive explanation
+        if (booksLeft === 0) {
+            isRunning = false;
+            setTimeout(() => {
+                document.getElementById('explanation').classList.add('visible');
+                // Re-trigger mathjax formatting parsing on new injected HTML blocks
+                MathJax.typeset();
+            }, 500);
+        }
+    }
+
+    function resetSimulation() {
+        isRunning = false;
+        initSimulation();
+    }
+
+    // Fire initialization on screen page load
+    window.onload = initSimulation;
+</script>
+
+</body>
+</html>
