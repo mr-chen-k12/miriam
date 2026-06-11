@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saxon Math 4 - Cumulative Test 19B Solutions</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --accent-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h1 {
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #334155;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .q-number {
+            background-color: var(--accent-bg);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .reveal-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .reveal-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .answer-container {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .answer-container.visible {
+            display: block;
+        }
+
+        .solution-step {
+            background-color: var(--accent-bg);
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+        }
+
+        .final-answer {
+            font-weight: 700;
+            color: #16a34a;
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        canvas {
+            background-color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 12px;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Saxon Math 4</h1>
+        <div class="subtitle">Cumulative Test 19B Solutions</div>
+    </header>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q1</span> Age Word Problem</div>
+        <div class="question-text">
+            Fran is four years older than Eloise. Eloise is twice as old as Hector. If Hector is 5 years old, how old is Fran?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(1)">Reveal Answer</button>
+        <div id="answer-1" class="answer-container">
+            <div class="solution-step">
+                1. Start with Hector's age: <strong>5 years old</strong>.<br>
+                2. Find Eloise's age (twice Hector's age): $5 \times 2 = 10\text{ years old}$.<br>
+                3. Find Fran's age (four years older than Eloise): $10 + 4 = 14\text{ years old}$.
+            </div>
+            <div class="final-answer">Answer: 14 years old</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q2</span> Geometry Drawing</div>
+        <div class="question-text">Draw a trapezoid.</div>
+        <button class="reveal-btn" onclick="toggleAnswer(2, drawTrapezoid)">Reveal Answer</button>
+        <div id="answer-2" class="answer-container">
+            <div class="solution-step">
+                A trapezoid is a quadrilateral (4-sided shape) with exactly one pair of parallel sides.
+            </div>
+            <canvas id="canvas-q2" width="240" height="140"></canvas>
+            <div class="final-answer">Answer: (See geometric drawing above)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q3</span> Money / Stamps</div>
+        <div class="question-text">
+            It will cost $1.83 to mail the package. Maura put three 39-cent stamps on the package. How much more postage does the package need?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(3)">Reveal Answer</button>
+        <div id="answer-3" class="answer-container">
+            <div class="solution-step">
+                1. Calculate current postage cost: $3 \times 0.39 = \$1.17$.<br>
+                2. Subtract current value from total required cost: $\$1.83 - \$1.17 = \$0.66$.
+            </div>
+            <div class="final-answer">Answer: $0.66 (or 66¢)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q4</span> Division with Remainders</div>
+        <div class="question-text">
+            Thirty-three desks were arranged in 6 rows as evenly as possible.<br>
+            <strong>a.</strong> How many rows had exactly 5 desks?<br>
+            <strong>b.</strong> How many rows had 6 desks?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(4)">Reveal Answer</button>
+        <div id="answer-4" class="answer-container">
+            <div class="solution-step">
+                1. Divide total desks by rows: $33 \div 6 = 5 \text{ R } 3$.<br>
+                2. Base amount per row is 5 desks. The remainder of 3 means 3 rows get 1 extra desk ($5 + 1 = 6$).<br>
+                3. Total rows with 6 desks = 3. Remaining rows ($6 - 3 = 3$) stay with 5 desks.
+            </div>
+            <div class="final-answer">
+                Answer:<br>
+                a. 3 rows<br>
+                b. 3 rows
+            </div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q5</span> Shading Fractions / Percentages</div>
+        <div class="question-text">Draw a circle and shade 75% of it.</div>
+        <button class="reveal-btn" onclick="toggleAnswer(5, drawCircle75)">Reveal Answer</button>
+        <div id="answer-5" class="answer-container">
+            <div class="solution-step">
+                75% is equal to three-quarters ($\frac{3}{4}$) of the circle.
+            </div>
+            <canvas id="canvas-q5" width="200" height="200"></canvas>
+            <div class="final-answer">Answer: (See shaded illustration above)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q6</span> Grid Decimals</div>
+        <div class="question-text">
+            <strong>a.</strong> What decimal number names the shaded part of this square?<br>
+            <strong>b.</strong> What decimal number names the part that is not shaded?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(6, drawGridQ6)">Reveal Answer</button>
+        <div id="answer-6" class="answer-container">
+            <div class="solution-step">
+                The grid consists of 100 total small squares.<br>
+                1. Counting from the visual, 4 full rows and 7 additional blocks are shaded gray: $40 + 7 = 47$ out of 100.<br>
+                2. Unshaded portion is $100 - 47 = 53$ out of 100.
+            </div>
+            <canvas id="canvas-q6" width="220" height="220"></canvas>
+            <div class="final-answer">
+                Answer:<br>
+                a. 0.47<br>
+                b. 0.53
+            </div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q7</span> Place Value</div>
+        <div class="question-text">Which digit in 14.375 is in the hundredths place?</div>
+        <button class="reveal-btn" onclick="toggleAnswer(7)">Reveal Answer</button>
+        <div id="answer-7" class="answer-container">
+            <div class="solution-step">
+                Breaking down place values for 14.375:<br>
+                - 1 : Tens place<br>
+                - 4 : Ones place<br>
+                - 3 : Tenths place<br>
+                - <strong>7 : Hundredths place</strong><br>
+                - 5 : Thousandths place
+            </div>
+            <div class="final-answer">Answer: 7</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q8</span> Estimation & Multiplication</div>
+        <div class="question-text">Estimate the product of 37 and 51. Then find the exact product.</div>
+        <button class="reveal-btn" onclick="toggleAnswer(8)">Reveal Answer</button>
+        <div id="answer-8" class="answer-container">
+            <div class="solution-step">
+                <strong>Estimation:</strong> Round 37 to 40, and round 51 to 50.<br>
+                $$40 \times 50 = 2,000$$<br>
+                <strong>Exact Product:</strong> Multiply values directly.<br>
+                $$37 \times 51 = 1,887$$
+            </div>
+            <div class="final-answer">Answer: Estimate: 2,000; Exact: 1,887</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q9</span> Metric Conversions</div>
+        <div class="question-text">
+            Beth bought a meter of ribbon and used about one fourth of it to make a bow. About how many millimeters of ribbon did Beth use to make the bow?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(9)">Reveal Answer</button>
+        <div id="answer-9" class="answer-container">
+            <div class="solution-step">
+                1. 1 meter is exactly equivalent to 1,000 millimeters.<br>
+                2. Find one-fourth ($\frac{1}{4}$) of 1,000 mm:
+                $$1,000 \div 4 = 250 \text{ mm}$$
+            </div>
+            <div class="final-answer">Answer: About 250 mm</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q10</span> Area of a Rectangle</div>
+        <div class="question-text">
+            What is the area of this rectangle? (Dimensions: 80 ft by 50 ft)
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(10, drawRectangleQ10)">Reveal Answer</button>
+        <div id="answer-10" class="answer-container">
+            <div class="solution-step">
+                $$\text{Area} = \text{length} \times \text{width}$$
+                $$\text{Area} = 80\text{ ft} \times 50\text{ ft} = 4,000\text{ sq ft}$$
+            </div>
+            <canvas id="canvas-q10" width="240" height="160"></canvas>
+            <div class="final-answer">Answer: 4,000 sq ft (or 4,000 ft²)</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q11</span> Fractions of a Group</div>
+        <div class="question-text">
+            There are 24 students in the class. Two thirds of them are reading books. How many students are reading books?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(11)">Reveal Answer</button>
+        <div id="answer-11" class="answer-container">
+            <div class="solution-step">
+                1. Find one-third ($\frac{1}{3}$) of 24 first: $24 \div 3 = 8$.<br>
+                2. Double that amount to find two-thirds ($\frac{2}{3}$): $8 \times 2 = 16$.
+            </div>
+            <div class="final-answer">Answer: 16 students</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q12</span> Rate Word Problem</div>
+        <div class="question-text">
+            Cedric drove 364 miles in 7 hours. If Cedric drove at a steady speed, how far did he drive in one hour?
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(12)">Reveal Answer</button>
+        <div id="answer-12" class="answer-container">
+            <div class="solution-step">
+                Divide total miles by total hours to compute unit speed:<br>
+                $$364 \div 7 = 52$$
+            </div>
+            <div class="final-answer">Answer: 52 miles</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q13</span> Fraction to Decimal</div>
+        <div class="question-text">Write $\frac{67}{100}$ as a decimal number.</div>
+        <button class="reveal-btn" onclick="toggleAnswer(13)">Reveal Answer</button>
+        <div id="answer-13" class="answer-container">
+            <div class="solution-step">
+                A fraction over 100 represents hundredths in decimal configuration:
+                $$\frac{67}{100} = 0.67$$
+            </div>
+            <div class="final-answer">Answer: 0.67</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q14</span> Decimal Subtraction</div>
+        <div class="question-text">Find: $3.4 - 0.34$</div>
+        <button class="reveal-btn" onclick="toggleAnswer(14)">Reveal Answer</button>
+        <div id="answer-14" class="answer-container">
+            <div class="solution-step">
+                Align decimal points, adding a placeholder zero:
+                $$ \begin{array}{r} 3.40 \\ - 0.34 \\ \hline 3.06 \end{array} $$
+            </div>
+            <div class="final-answer">Answer: 3.06</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q15</span> Multiplication with Zeros</div>
+        <div class="question-text">Find: $30 \times 700$</div>
+        <button class="reveal-btn" onclick="toggleAnswer(15)">Reveal Answer</button>
+        <div id="answer-15" class="answer-container">
+            <div class="solution-step">
+                Multiply the non-zero digits ($3 \times 7 = 21$) and append the total number of zeros (three zeros):
+                $$21,000$$
+            </div>
+            <div class="final-answer">Answer: 21,000</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q16</span> Money Multiplication</div>
+        <div class="question-text">Find: $\$8.16 \times 9$</div>
+        <button class="reveal-btn" onclick="toggleAnswer(16)">Reveal Answer</button>
+        <div id="answer-16" class="answer-container">
+            <div class="solution-step">
+                $$ \begin{array}{r} \$8.16 \\ \times \quad 9 \\ \hline \$73.44 \end{array} $$
+            </div>
+            <div class="final-answer">Answer: $73.44</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q17</span> Long Multiplication</div>
+        <div class="question-text">
+            Find the product:<br>
+            $$ \begin{array}{r} 27 \\ \times 24 \\ \hline \end{array} $$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(17)">Reveal Answer</button>
+        <div id="answer-17" class="answer-container">
+            <div class="solution-step">
+                Multiply by parts:<br>
+                - $27 \times 4 = 108$<br>
+                - $27 \times 20 = 540$<br>
+                Add the partial products: $108 + 540 = 648$.
+            </div>
+            <div class="final-answer">Answer: 648</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q18</span> Division</div>
+        <div class="question-text">Find: $8 \overline{) 1000 }$</div>
+        <button class="reveal-btn" onclick="toggleAnswer(18)">Reveal Answer</button>
+        <div id="answer-18" class="answer-container">
+            <div class="solution-step">
+                $$1000 \div 8 = 125$$
+            </div>
+            <div class="final-answer">Answer: 125</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q19</span> Fraction Division</div>
+        <div class="question-text">Simplify: $\frac{732}{4}$</div>
+        <button class="reveal-btn" onclick="toggleAnswer(19)">Reveal Answer</button>
+        <div id="answer-19" class="answer-container">
+            <div class="solution-step">
+                Divide 732 by 4:<br>
+                - $700 \div 4 = 175$<br>
+                - $32 \div 4 = 8$<br>
+                - Total = $175 + 8 = 183$.
+            </div>
+            <div class="final-answer">Answer: 183</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header"><span class="q-number">Q20</span> Missing Addend Equation</div>
+        <div class="question-text">
+            Find the missing addend:<br>
+            $$2 + 5 + 6 + 9 + n + 5 + 2 + 2 + 1 = 49$$
+        </div>
+        <button class="reveal-btn" onclick="toggleAnswer(20)">Reveal Answer</button>
+        <div id="answer-20" class="answer-container">
+            <div class="solution-step">
+                1. Combine all known numbers:
+                $$2 + 5 + 6 + 9 + 5 + 2 + 2 + 1 = 32$$
+                2. Set up the simplified algebra equation:
+                $$32 + n = 49$$
+                3. Solve for $n$:
+                $$n = 49 - 32 = 17$$
+            </div>
+            <div class="final-answer">Answer: n = 17</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAnswer(qNum, drawCallback = null) {
+        const answerDiv = document.getElementById(`answer-${qNum}`);
+        const button = answerDiv.previousElementSibling;
+        
+        if (answerDiv.classList.contains('visible')) {
+            answerDiv.classList.remove('visible');
+            button.textContent = "Reveal Answer";
+        } else {
+            answerDiv.classList.add('visible');
+            button.textContent = "Hide Answer";
+            if (drawCallback) {
+                // Short timeout guarantees canvas elements render in layout before context calls
+                setTimeout(drawCallback, 20);
+            }
+        }
+    }
+
+    // --- CANVAS GRAPHICS FUNCTIONS ---
+
+    function drawTrapezoid() {
+        const canvas = document.getElementById('canvas-q2');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.beginPath();
+        ctx.moveTo(40, 110);
+        ctx.lineTo(80, 40);
+        ctx.lineTo(160, 40);
+        ctx.lineTo(200, 110);
+        ctx.closePath();
+        
+        ctx.fillStyle = '#e0f2fe';
+        ctx.fill();
+        ctx.strokeStyle = '#2563eb';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    }
+
+    function drawCircle75() {
+        const canvas = document.getElementById('canvas-q5');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const cx = 100, cy = 100, r = 70;
+        
+        // Shaded Portion (3/4 = 75%)
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, 0, 1.5 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = '#bbf7d0';
+        ctx.fill();
+        ctx.strokeStyle = '#16a34a';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Unshaded Portion (1/4)
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, 1.5 * Math.PI, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = '#f8fafc';
+        ctx.fill();
+        ctx.stroke();
+
+        // Internal dividing cross hair lines
+        ctx.beginPath();
+        ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy);
+        ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r);
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    function drawGridQ6() {
+        const canvas = document.getElementById('canvas-q6');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const size = 20;
+        const offset = 10;
+        
+        for (let r = 0; r < 10; r++) {
+            for (let c = 0; c < 10; c++) {
+                let isShaded = false;
+                // Bottom 4 rows (6,7,8,9) are completely shaded. Row index 5 contains 7 shaded blocks.
+                if (r >= 6) {
+                    isShaded = true;
+                } else if (r === 5 && c < 7) {
+                    isShaded = true;
+                }
+                
+                ctx.fillStyle = isShaded ? '#cbd5e1' : '#ffffff';
+                ctx.fillRect(offset + c * size, offset + r * size, size, size);
+                
+                ctx.strokeStyle = '#64748b';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(offset + c * size, offset + r * size, size, size);
+            }
+        }
+    }
+
+    function drawRectangleQ10() {
+        const canvas = document.getElementById('canvas-q10');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#fef3c7';
+        ctx.fillRect(40, 40, 160, 90);
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(40, 40, 160, 90);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('80 ft', 120, 30);
+        
+        ctx.textAlign = 'right';
+        ctx.fillText('50 ft', 32, 90);
+        
+        ctx.textAlign = 'center';
+        ctx.fillText('Area = 4,000 sq ft', 120, 90);
+    }
+</script>
+
+</body>
+</html>
