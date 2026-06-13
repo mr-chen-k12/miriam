@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Sheets - Set 2 (Printer Friendly)</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Global & Screen Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.5;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px double #000000;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: #555555;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* Toolbar for interactive controls */
+        .utility-bar {
+            background-color: #f8fafc;
+            border: 1px solid #ccd0d4;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: #2271b1;
+            color: #ffffff;
+            border: 1px solid #0a4b78;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #135e96;
+        }
+
+        .btn-print {
+            background-color: #135e96;
+        }
+
+        /* Question Categories */
+        .section-heading {
+            font-size: 1.3rem;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 3px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #dddddd;
+            page-break-inside: avoid; /* Prevents split mid-question when printing */
+        }
+
+        .question-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-left: 5px;
+        }
+
+        /* Answers styling */
+        .answer-zone {
+            display: none; /* Hidden by default on screen */
+            margin-top: 12px;
+            padding: 10px;
+            background-color: #fdfdfd;
+            border-left: 3px solid #000000;
+        }
+
+        .answer-zone.visible {
+            display: block;
+        }
+
+        .solution-math {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .final-line {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        /* PRINT STYLESHEET CONFIGURATION */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+                color: #000000;
+                background-color: #ffffff;
+            }
+
+            .utility-bar, .btn, .reveal-btn {
+                display: none !important; /* Strips controls out of printed document */
+            }
+
+            .question-block {
+                border-bottom: 1px solid #000000;
+                margin-bottom: 30px;
+                page-break-inside: avoid;
+            }
+
+            /* Automatically force answers to reveal themselves on paper if needed, 
+               or keep hidden if printing a blank test sheet. Controlled via the setup script below. */
+            .answer-zone {
+                border-left: 2px dashed #000000;
+                background-color: transparent;
+            }
+            
+            .answer-zone.hide-on-print {
+                display: none !important;
+            }
+            
+            .answer-zone.show-on-print {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Mathematics Supplement Worksheet</h1>
+        <div class="subtitle">Extra Practice Set — Fully Printer Optimized</div>
+    </header>
+
+    <div class="utility-bar">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print Document</button>
+        <button class="btn" onclick="toggleAllAnswers(true)">Show All Solutions</button>
+        <button class="btn" onclick="toggleAllAnswers(false)">Hide All Solutions</button>
+        <label style="font-size: 0.9rem; font-weight: bold; cursor: pointer;">
+            <input type="checkbox" id="print-answers-toggle" checked onchange="updatePrintPreference()"> 
+            Include Answer Key on printout
+        </label>
+    </div>
+
+    <div class="section-heading">Equal Group Distributions (Concept 4)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 4.A</div>
+        <div class="question-text">
+            Thirty-eight pencils were distributed into 5 supply boxes as evenly as possible.<br>
+            <strong>a.</strong> How many boxes had exactly 7 pencils?<br>
+            <strong>b.</strong> How many boxes had 8 pencils?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide total units: $38 \div 5 = 7 \text{ remainder } 3$.<br>
+                Every supply box receives a baseline of 7 pencils. The 3 remaining pencils are distributed one-by-one into 3 boxes, bringing their counts up to 8. The remaining boxes ($5 - 3 = 2$) keep exactly 7.
+            </div>
+            <div class="final-line">Answer: a. 2 boxes &nbsp;|&nbsp; b. 3 boxes</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 4.B</div>
+        <div class="question-text">
+            Fifty-two chairs were arranged into 6 study rows as evenly as possible.<br>
+            <strong>a.</strong> How many rows had exactly 8 chairs?<br>
+            <strong>b.</strong> How many rows had 9 chairs?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide total units: $52 \div 6 = 8 \text{ remainder } 4$.<br>
+                Every row receives a base layout of 8 chairs. The 4 remaining chairs are added to 4 rows to make sets of 9. The other rows ($6 - 4 = 2$) remain with exactly 8.
+            </div>
+            <div class="final-line">Answer: a. 2 rows &nbsp;|&nbsp; b. 4 rows</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 4.C</div>
+        <div class="question-text">
+            Twenty-three tennis balls were placed into 4 training cans as evenly as possible.<br>
+            <strong>a.</strong> How many cans had exactly 5 tennis balls?<br>
+            <strong>b.</strong> How many cans had 6 tennis balls?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide total units: $23 \div 4 = 5 \text{ remainder } 3$.<br>
+                Every can gets 5 tennis balls. 3 cans receive an extra remainder ball to total 6. The remaining ($4 - 3 = 1$) can has exactly 5.
+            </div>
+            <div class="final-line">Answer: a. 1 can &nbsp;|&nbsp; b. 3 cans</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Fractions of a Set (Concept 11)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 11.A</div>
+        <div class="question-text">
+            There are 40 marbles in a bag. Two fifths ($\frac{2}{5}$) of them are solid blue. How many marbles are solid blue?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Calculate value of $\frac{1}{5}$ unit size: $40 \div 5 = 8$.<br>
+                2. Scale value by numerator ($2$): $8 \times 2 = 16$.
+            </div>
+            <div class="final-line">Answer: 16 blue marbles</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 11.B</div>
+        <div class="question-text">
+            A bakery batch contained 24 total muffins. Five sixths ($\frac{5}{6}$) of them have fresh blueberry toppings. How many muffins have blueberry toppings?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Calculate value of $\frac{1}{6}$ unit size: $24 \div 6 = 4$.<br>
+                2. Scale value by numerator ($5$): $4 \times 5 = 20$.
+            </div>
+            <div class="final-line">Answer: 20 muffins</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 11.C</div>
+        <div class="question-text">
+            There are 45 trees growing in an orchard grid. Two thirds ($\frac{2}{3}$) of them are apple trees. How many apple trees are there?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Calculate value of $\frac{1}{3}$ unit size: $45 \div 3 = 15$.<br>
+                2. Scale value by numerator ($2$): $15 \times 2 = 30$.
+            </div>
+            <div class="final-line">Answer: 30 apple trees</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Rate and Speed Unit Operations (Concept 12)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 12.A</div>
+        <div class="question-text">
+            An airplane traveled 840 miles in 3 hours at a constant speed. How far did it travel in one hour?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide total mileage rate scalar by time duration parameter:<br>
+                $$840 \div 3 = 280$$
+            </div>
+            <div class="final-line">Answer: 280 miles</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 12.B</div>
+        <div class="question-text">
+            A factory assembly machine produced 315 water bottles in 5 minutes. If it runs at a steady rate, how many bottles does it produce in one minute?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide structural production yield by tracking time variable:<br>
+                $$315 \div 5 = 63$$
+            </div>
+            <div class="final-line">Answer: 63 bottles per minute</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 12.C</div>
+        <div class="question-text">
+            An athlete completed 112 kilometers of distance training across 7 days. If she ran the exact same distance each day, how many kilometers did she run in one day?
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Divide collective kilometer progress metric evenly across the daily frame:<br>
+                $$112 \div 7 = 16$$
+            </div>
+            <div class="final-line">Answer: 16 kilometers</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Decimal Column Subtraction (Concept 14)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 14.A</div>
+        <div class="question-text">
+            Find the difference: $6.3 - 0.57$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Introduce tracking trailing placeholder zero and align position metrics:<br>
+                $$ \begin{array}{r} 6.30 \\ - 0.57 \\ \hline 5.73 \end{array} $$
+            </div>
+            <div class="final-line">Answer: 5.73</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 14.B</div>
+        <div class="question-text">
+            Find the difference: $8.2 - 0.46$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Align precision place values carefully and subtract:<br>
+                $$ \begin{array}{r} 8.20 \\ - 0.46 \\ \hline 7.74 \end{array} $$
+            </div>
+            <div class="final-line">Answer: 7.74</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 14.C</div>
+        <div class="question-text">
+            Find the difference: $2.5 - 0.19$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Align precision place values carefully and subtract:<br>
+                $$ \begin{array}{r} 2.50 \\ - 0.19 \\ \hline 2.31 \end{array} $$
+            </div>
+            <div class="final-line">Answer: 2.31</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Multiplication with Extended Zero Values (Concept 15)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 15.A</div>
+        <div class="question-text">
+            Find the product: $20 \times 800$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Isolate coefficients ($2 \times 8 = 16$) and scale with aggregate factor placeholders (3 zeros):<br>
+                $$16,000$$
+            </div>
+            <div class="final-line">Answer: 16,000</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 15.B</div>
+        <div class="question-text">
+            Find the product: $70 \times 500$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Isolate coefficients ($7 \times 5 = 35$) and scale with aggregate factor placeholders (3 zeros):<br>
+                $$35,000$$
+            </div>
+            <div class="final-line">Answer: 35,000</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 15.C</div>
+        <div class="question-text">
+            Find the product: $60 \times 300$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Isolate coefficients ($6 \times 3 = 18$) and scale with aggregate factor placeholders (3 zeros):<br>
+                $$18,000$$
+            </div>
+            <div class="final-line">Answer: 18,000</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Two-Digit Product Algorithmic Extensions (Concept 17)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 17.A</div>
+        <div class="question-text">
+            Calculate the structural evaluation matrix value:<br>
+            $$ \begin{array}{r} 36 \\ \times 15 \\ \hline \end{array} $$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Evaluate using components sum:<br>
+                - Part 1: $36 \times 5 = 180$<br>
+                - Part 2: $36 \times 10 = 360$<br>
+                Summing components: $180 + 360 = 540$.
+            </div>
+            <div class="final-line">Answer: 540</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 17.B</div>
+        <div class="question-text">
+            Calculate the structural evaluation matrix value:<br>
+            $$ \begin{array}{r} 23 \\ \times 28 \\ \hline \end{array} $$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Evaluate using components sum:<br>
+                - Part 1: $23 \times 8 = 184$<br>
+                - Part 2: $23 \times 20 = 460$<br>
+                Summing components: $184 + 460 = 644$.
+            </div>
+            <div class="final-line">Answer: 644</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 17.C</div>
+        <div class="question-text">
+            Calculate the structural evaluation matrix value:<br>
+            $$ \begin{array}{r} 45 \\ \times 13 \\ \hline \end{array} $$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                Evaluate using components sum:<br>
+                - Part 1: $45 \times 3 = 135$<br>
+                - Part 2: $45 \times 10 = 450$<br>
+                Summing components: $135 + 450 = 585$.
+            </div>
+            <div class="final-line">Answer: 585</div>
+        </div>
+    </div>
+
+    <div class="section-heading">Missing Addend Linear Equivalence Strings (Concept 20)</div>
+    
+    <div class="question-block">
+        <div class="question-label">Question 20.A</div>
+        <div class="question-text">
+            Isolate variable parameter $n$ to solve the expression balance:<br>
+            $$4 + 8 + 2 + 9 + n + 3 + 7 + 1 = 45$$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Combine known values: $4 + 8 + 2 + 9 + 3 + 7 + 1 = 34$.<br>
+                2. Set up equivalence: $34 + n = 45$.<br>
+                3. Isolate value: $n = 45 - 34 = 11$.
+            </div>
+            <div class="final-line">Answer: n = 11</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 20.B</div>
+        <div class="question-text">
+            Isolate variable parameter $p$ to solve the expression balance:<br>
+            $$6 + 5 + 8 + 4 + p + 9 + 2 + 5 + 3 = 50$$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Combine known values: $6 + 5 + 8 + 4 + 9 + 2 + 5 + 3 = 42$.<br>
+                2. Set up equivalence: $42 + p = 50$.<br>
+                3. Isolate value: $p = 50 - 42 = 8$.
+            </div>
+            <div class="final-line">Answer: p = 8</div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question-label">Question 20.C</div>
+        <div class="question-text">
+            Isolate variable parameter $w$ to solve the expression balance:<br>
+            $$7 + 1 + 9 + 3 + w + 8 + 4 + 6 = 48$$
+        </div>
+        <button class="btn reveal-btn" onclick="toggleSingle(this)">Reveal Solution</button>
+        <div class="answer-zone show-on-print">
+            <div class="solution-math">
+                1. Combine known values: $7 + 1 + 9 + 3 + 8 + 4 + 6 = 38$.<br>
+                2. Set up equivalence: $38 + w = 48$.<br>
+                3. Isolate value: $w = 48 - 38 = 10$.
+            </div>
+            <div class="final-line">Answer: w = 10</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Toggle displaying individual answers on-screen
+    function toggleSingle(buttonElem) {
+        const answerBox = buttonElem.nextElementSibling;
+        if (answerBox.classList.contains('visible')) {
+            answerBox.classList.remove('visible');
+            buttonElem.textContent = "Reveal Solution";
+        } else {
+            answerBox.classList.add('visible');
+            buttonElem.textContent = "Hide Solution";
+        }
+    }
+
+    // Interactive button controls to show/hide all items on-screen
+    function toggleAllAnswers(shouldShow) {
+        const answers = document.querySelectorAll('.answer-zone');
+        const buttons = document.querySelectorAll('.reveal-btn');
+        
+        answers.forEach(ans => {
+            if (shouldShow) {
+                ans.classList.add('visible');
+            } else {
+                ans.classList.remove('visible');
+            }
+        });
+
+        buttons.forEach(btn => {
+            btn.textContent = shouldShow ? "Hide Solution" : "Reveal Solution";
+        });
+    }
+
+    // Dynamically update printing properties via CSS class overrides based on user check state
+    function updatePrintPreference() {
+        const checkState = document.getElementById('print-answers-toggle').checked;
+        const answers = document.querySelectorAll('.answer-zone');
+        
+        answers.forEach(ans => {
+            if (checkState) {
+                ans.classList.remove('hide-on-print');
+                ans.classList.add('show-on-print');
+            } else {
+                ans.classList.remove('show-on-print');
+                ans.classList.add('hide-on-print');
+            }
+        });
+    }
+
+    // Set initial custom print layout state on load
+    window.onload = function() {
+        updatePrintPreference();
+    };
+</script>
+
+</body>
+</html>
