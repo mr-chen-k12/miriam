@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 1</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e8f4f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+        border: 3px solid #3498db;
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fcfcfc;
+        padding: 20px;
+        border-left: 5px solid #3498db;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #dcdde1;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #e1f5fe;
+        border-color: #b3e5fc;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #34495e;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2c3e50; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #e67e22; }
+    .check-btn:hover { background-color: #d35400; }
+    
+    .submit-btn { background-color: #2ecc71; }
+    .submit-btn:hover { background-color: #27ae60; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #e8f8f5;
+        border: 3px solid #2ecc71;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #16a085;"></p>
+        <p>Scroll down to look over your answers and explanations.</p>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although Tommy’s painting looked like a giant mess of blue and gray streaks at first, he explained that his choice of colors was completely ______; he wanted the painting to look exactly like a rainy, windy storm.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["accidental", "planned", "boring", "scary"],
+            correctAnswer: 1,
+            explanation: "'Planned' means done on purpose. Because Tommy explained that he specifically wanted the painting to look like a storm, his choice of colors was intentional, not an accident."
+        },
+        {
+            passage: "In nature, animals must constantly change and adapt just to survive against predators. For example, snowshoe hares change their fur from brown in the summer to white in the winter. This helps them hide in the snow. Scientists found that hares that did not change color were easily caught by hawks, while the changing hares stayed safe and healthy.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Hawks are the fastest birds in the forest.",
+                "Snowshoe hares like the summer more than the winter.",
+                "Changing fur color helps snowshoe hares survive against predators.",
+                "Animals prefer to live in places where it never snows."
+            ],
+            correctAnswer: 2,
+            explanation: "The text talks about how animals change to survive predators and uses the snowshoe hare's color-changing fur as an example of how adaptation keeps them safe."
+        },
+        {
+            passage: "Mia’s teacher, Mrs. Green, says that in the story 'The New Kid', the author uses the big, empty playground to show how lonely Mia feels, but also how brave she is.",
+            prompt: "Which sentence from 'The New Kid' best supports Mrs. Green's idea?",
+            options: [
+                "\"The school bell rang loudly at exactly eight o'clock in the morning.\"",
+                "\"Mia ate a turkey sandwich and drank a small carton of milk for lunch.\"",
+                "\"Looking at the giant, empty blacktop made Mia feel totally alone, but she took a deep breath and smiled anyway.\"",
+                "\"The playground had three red slides and a row of shiny silver swings.\""
+            ],
+            correctAnswer: 2,
+            explanation: "This sentence directly shows both parts of Mrs. Green's idea: feeling alone ('feel totally alone') and being brave ('took a deep breath and smiled anyway')."
+        },
+        {
+            passage: "New rubber boots are great because they keep your feet completely dry in giant puddles. However, the rubber is very stiff and can split or crack if you run too fast in them. Therefore, for these boots to be perfect for recess, the makers must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "make the boots out of thin paper instead of rubber.",
+                "find a way to make the rubber flexible so it does not crack.",
+                "tell children they are never allowed to run outside.",
+                "make the boots in bright colors like pink and yellow."
+            ],
+            correctAnswer: 1,
+            explanation: "The text states that the boots keep feet dry but crack because they are too stiff. To fix this specific problem, the manufacturers need to find a way to make the material flexible so it can handle running."
+        },
+        {
+            passage: "Although the art room was a complete disaster area after the painting project, Lily's cleaning methods were incredibly ______; in just five minutes, she washed all the brushes, wiped the tables clean, and stacked the papers neatly.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["slow", "effective", "messy", "quiet"],
+            correctAnswer: 1,
+            explanation: "'Effective' means getting a job done successfully. Since Lily cleaned up a massive mess perfectly in only five minutes, her methods worked very well."
+        },
+        {
+            passage: "For a long time, people believed that bats were a type of bird because they have wings and can fly. However, scientists later discovered that bats are actually mammals that feed their babies milk. This new discovery completely changed how we think about flying animals. Today, we know that bats are more closely related to mice than to robins.",
+            prompt: "Which choice best describes what the second sentence ('However, scientists... milk.') does in the story?",
+            options: [
+                "It introduces a new fact that proves the old belief was wrong.",
+                "It explains why birds like to fly at night.",
+                "It lists the favorite foods of different kinds of bats.",
+                "It shows that scientists do not like birds."
+            ],
+            correctAnswer: 0,
+            explanation: "The first sentence tells us what people used to believe (that bats are birds). The second sentence uses the word 'However' to share a scientific breakthrough showing that the old belief was incorrect."
+        },
+        {
+            passage: "Text 1<br>Getting a class hamster is a wonderful idea because it teaches students how to be responsible. By taking turns feeding the hamster and cleaning its cage, children learn how to care for another living creature.<br><br>Text 2<br>Having a class hamster causes too many problems. The cage smells bad very quickly, and cleaning it takes up valuable time that students should spend playing at recess or reading books.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's idea that a hamster 'teaches students how to be responsible'?",
+            options: [
+                "By agreeing that a hamster is the cleanest animal you can buy.",
+                "By arguing that the bad smell and lost recess time are not worth it.",
+                "By suggesting that the hamster should live outside in the school garden.",
+                "By saying that students already know everything about animals."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 1 says cleaning the cage teaches responsibility. Text 2 focuses entirely on the negative parts of cleaning the cage (bad smells and losing free time), showing they believe these problems outweigh any lessons learned."
+        },
+        {
+            passage: "Honeybees find flowers by following their sweet smell across long distances. This special skill helps them gather nectar to make honey. However, experiments show that when bees are around strong artificial perfumes, they lose the scent trail and fly around in circles. Because busy city neighborhoods have a lot of strong artificial smells from stores and cars, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "honeybees will stop making honey and start eating fruit instead.",
+                "cities will build giant flower gardens on top of every building.",
+                "big cities can make it harder for honeybees to find the flowers they need.",
+                "bees will only look for flowers during heavy rainstorms."
+            ],
+            correctAnswer: 2,
+            explanation: "The text explains that fake perfumes confuse bees and cause them to lose their way. Since cities are full of these artificial smells, it makes sense that cities would disrupt a bee's ability to locate flowers."
+        },
+        {
+            passage: "To see how a fun box changes what kids think of snacks, researchers gave students identical apple slices. When the apples were in a plain brown lunch bag, kids said they tasted just okay. But when the exact same apples were served inside a shiny pirate treasure chest, kids said they were the sweetest apples ever and wanted to eat them every day.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a story about a pirate captain looking for treasure on an island.",
+                "It describes a test, compares how kids reacted to two different boxes, and shows that presentation matters.",
+                "It explains the history of growing apples in different parts of the world.",
+                "It gives a recipe for making apple pie at home with your family."
+            ],
+            correctAnswer: 1,
+            explanation: "The text outlines a simple experiment where kids tried the same food in two different containers (plain bag vs. treasure chest) and compares their reactions to show how packaging changes their opinion."
+        },
+        {
+            passage: "While Coach Sam’s speech before the big game was loud and full of yelling to get the team excited, his later talk during halftime was remarkably ______; he sat down quietly and carefully drew a step-by-step plan on the whiteboard to show the players how to score.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["angry", "organized", "noisy", "silly"],
+            correctAnswer: 1,
+            explanation: "'Organized' means neat, clear, and well-planned. The description of the coach sitting down quietly and drawing a 'step-by-step plan' fits perfectly, especially in contrast to his loud, shouting speech earlier."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        // Lock the choices immediately upon checking answer
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Stars for you! ⭐</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            // Show all questions for final evaluation review
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                // Lock any remaining unchecked questions automatically on submit
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
