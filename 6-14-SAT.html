@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 2</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcefe3;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+        border: 3px solid #e67e22;
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fdfefe;
+        padding: 20px;
+        border-left: 5px solid #e67e22;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fdfbf7;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6d3;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #fdf2e9;
+        border-color: #fadbd8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #34495e;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2c3e50; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #9b59b6; }
+    .check-btn:hover { background-color: #8e44ad; }
+    
+    .submit-btn { background-color: #2ecc71; }
+    .submit-btn:hover { background-color: #27ae60; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #e8f8f5;
+        border: 3px solid #2ecc71;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 2</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #16a085;"></p>
+        <p>Scroll down to look over your answers and explanations.</p>
+    </div>
+
+    <div id="questions-wrapper">
+        </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Maya loved visiting the school library because the librarian, Mr. Davis, was always so ______; he would smile warmly, ask about her day, and help her find the perfect book about space exploration.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["grumpy", "welcoming", "quiet", "fast"],
+            correctAnswer: 1,
+            explanation: "'Welcoming' means friendly and polite to incoming guests. Because Mr. Davis smiled warmly and spent time helping Maya kindly, he was behaving in a welcoming way."
+        },
+        {
+            passage: "Beavers are excellent builders that change their environment to stay safe. They cut down trees with their sharp teeth to build dams across streams. These dams block the water and create deep, calm ponds. In the middle of the pond, beavers build a safe home called a lodge. Wolves and bears cannot easily swim across the deep water to reach the lodge, keeping the beaver family safe all year long.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Wolves are better swimmers than black bears.",
+                "Beavers cut down trees because they like the taste of wood pulp.",
+                "Building dams and ponds helps beavers stay safe from predators.",
+                "Beavers prefer to live in fast-moving rivers rather than ponds."
+            ],
+            correctAnswer: 2,
+            explanation: "The text focuses on how a beaver's building habits (dams and ponds) protect its family by stopping predators like wolves and bears from reaching them."
+        },
+        {
+            passage: "In the story 'The Giant Pumpkin', Leo's grandfather claims that hard work and patience are much more important than pure luck when growing a successful garden.",
+            prompt: "Which sentence from 'The Giant Pumpkin' best supports Leo's grandfather's claim?",
+            options: [
+                "\"Leo found a shiny lucky penny in the dirt right next to the garden gate.\"",
+                "\"Grandfather spent three hours every single afternoon pulling weeds and watering the soil, even when his back ached.\"",
+                "\"The neighbor's dog ran through the yard and barked at a small brown rabbit.\"",
+                "\"The pumpkin grew so big that it looked like a giant orange basketball sitting in the grass.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This sentence describes actual effort and time spent working ('pulling weeds and watering the soil'), which matches the idea of hard work and patience over luck."
+        },
+        {
+            passage: "Toy cars powered by small solar panels are great because they never need batteries and run on clean energy from the sun. However, these solar panels cannot store electricity for later, meaning the car stops moving as soon as a dark cloud blocks the sunlight. Therefore, to make these toy cars fun to play with even on cloudy days, toy inventors must ______",
+            options: [
+                "make the cars much heavier so they slide down hills faster.",
+                "find a way to attach a small rechargeable battery to save extra power.",
+                "paint the cars bright yellow to trick them into thinking it is sunny.",
+                "tell kids to only play with the cars inside a dark bedroom closet."
+            ],
+            correctAnswer: 1,
+            explanation: "The problem is that the cars stop because panels can't store power for cloudy moments. Adding a rechargeable battery to save extra power directly solves this limitation."
+        },
+        {
+            passage: "Even though the instructions for building the science model seemed incredibly confusing at first, Sarah's diagram was remarkably ______; by looking at her clear drawings and labeled arrows, the whole group knew exactly what to do next.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["difficult", "clear", "silly", "boring"],
+            correctAnswer: 1,
+            explanation: "'Clear' means easy to perceive, see, or understand. Since the labeled drawings allowed the group to understand the project perfectly, the diagram was clear."
+        },
+        {
+            passage: "Long ago, people in ancient Egypt wrote important messages on paper made from a river plant called papyrus. However, hundreds of years later, inventors created modern paper made from wood pulp, which was much cheaper and easier to make in huge amounts. This new invention allowed schools around the world to buy notebooks and textbooks for all children. Today, almost all the paper we use in class comes from this wood pulp method.",
+            prompt: "Which choice best describes what the second sentence ('However, hundreds... amounts.') does in the story?",
+            options: [
+                "It explains why papyrus plants only grow along river banks.",
+                "It introduces an improvement that made paper easier for everyone to get.",
+                "It shows that ancient people did not like writing down information.",
+                "It describes step-by-step how to build a heavy wooden notebook."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence uses 'However' to switch from papyrus to modern wood-pulp paper, explaining that it was cheaper and easier to produce for global use."
+        },
+        {
+            passage: "Text 1<br>Playing video games is a great hobby because it helps children learn how to solve tricky puzzles. By figuring out how to get through difficult mazes and complete levels, players train their brains to think fast.<br><br>Text 2<br>Spending too much time playing video games can be bad for kids. Staring at a screen for hours makes your eyes tired, and it takes away time that should be spent running outside, riding bikes, or playing sports with friends.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's idea about video games training your brain?",
+            options: [
+                "By agreeing that video games are the best way to get daily physical exercise.",
+                "By arguing that the physical health risks and lost outdoor time are more important than solving puzzles.",
+                "By suggesting that kids should only play video games while riding a real bicycle.",
+                "By proving that video games do not actually have any levels or mazes to complete."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 2 focuses completely on the negative physical effects (tired eyes, lost outdoor activity time), indicating that these concerns outweigh Text 1's mental benefits."
+        },
+        {
+            passage: "Baby sea turtles hatch from eggs buried in the sand at night. To find the ocean, they look for the bright, natural light of the moon reflecting on the water. However, when beachfront hotels leave bright artificial lights on all night, the baby turtles get confused and crawl toward the buildings instead of the sea. Because many coastal towns are building more hotels with bright lights, scientists are worried that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "baby sea turtles will learn how to swim in hotel pools instead of the ocean.",
+                "more baby sea turtles will lose their way and fail to reach the ocean safely.",
+                "the moon will stop shining brightly over sandy beaches.",
+                "adult turtles will start laying their eggs inside the hotel lobbies."
+            ],
+            correctAnswer: 1,
+            explanation: "The text explains that hotel lights confuse turtles, driving them away from the sea. More hotels with bright lights logically leads to more turtles losing their way."
+        },
+        {
+            passage: "To find out which color bird feeder local birds like best, a science class hung two identical feeders in the schoolyard. One feeder was painted bright red, and the other was painted dull gray. The students counted how many birds visited each feeder over one week. They discovered that birds visited the red feeder four times more often than the gray one, showing that bright colors attract birds.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a story about a bird that lost its way during a rainstorm.",
+                "It describes an experiment, compares how birds reacted to two different feeders, and shares the final result.",
+                "It gives step-by-step instructions on how to bake birdseed cookies at home.",
+                "It argues that all wild birds should be kept as pets inside a classroom."
+            ],
+            correctAnswer: 1,
+            explanation: "The text systematically walks through a science project setup (two different colored feeders), tracks the results, and draws a conclusion based on bird choices."
+        },
+        {
+            passage: "While the team's first attempt to pass the soccer ball was very sloppy and caused them to lose possession, their next play was beautifully ______; every player ran to the right spot, watched their teammates, and passed the ball perfectly into the goal.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["clumsy", "organized", "loud", "slow"],
+            correctAnswer: 1,
+            explanation: "'Organized' means well-planned, orderly, and coordinated. The description of players running to specific correct spots and executing clean teamwork fits perfectly as an opposite to 'sloppy'."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Great job! 🎉</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
