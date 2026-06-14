@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 103: Grading & Solutions Sheet (Printer Friendly)</title>
+    <title>Lesson 103: Student Test Sheet (Printer Friendly)</title>
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -86,24 +86,24 @@
             display: block;
         }
 
-        /* PRINTER OPTIMIZATIONS */
+        /* PRINTER OPTIMIZATIONS 
+           Hides buttons and completely strips out answer sheets/solutions 
+           so only clean questions print out for students.
+        */
         @media print {
             body {
                 padding: 0;
                 font-size: 12pt;
             }
             .btn-action {
-                display: none !important;
+                display: none !important; /* Strip interactive buttons */
             }
             .solution-box {
-                display: block !important;
-                border: none;
-                padding: 5px 0 0 0;
-                margin-top: 5px;
-                background-color: transparent;
+                display: none !important; /* Force solutions hidden during printing */
             }
             .problem-card {
                 border-bottom: 1px solid #666666;
+                padding-bottom: 40px; /* Provides space for student written work */
             }
         }
     </style>
@@ -112,7 +112,7 @@
 
 <div class="header-area">
     <h1>Lesson 103: Evaluation Matrix</h1>
-    <p>Master Reference Keys & Solutions Pipeline</p>
+    <p>Student Examination Sheet</p>
 </div>
 
 <div class="container">
