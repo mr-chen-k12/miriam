@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 3</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e8f8f5;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+        border: 3px solid #1abc9c;
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9fbfb;
+        padding: 20px;
+        border-left: 5px solid #1abc9c;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f4fbf9;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d1f2eb;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #e8f8f5;
+        border-color: #a3e4d7;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #34495e;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2c3e50; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #16a085; }
+    .check-btn:hover { background-color: #117a65; }
+    
+    .submit-btn { background-color: #2ecc71; }
+    .submit-btn:hover { background-color: #27ae60; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #e8f8f5;
+        border: 3px solid #2ecc71;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 3</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #16a085;"></p>
+        <p>Scroll down to look over your answers and explanations.</p>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although Leo usually zoomed down the sidewalk on his skateboard without looking, he was surprisingly ______ when crossing the busy intersection near the grocery store; he stopped completely, looked both ways twice, and waited for the crossing guard to wave him across.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["reckless", "cautious", "excited", "lazy"],
+            correctAnswer: 1,
+            explanation: "'Cautious' means being careful to avoid danger. Because Leo stopped completely, looked both ways, and waited for safety signals, he was acting in a very cautious way."
+        },
+        {
+            passage: "Plants have unique ways to protect themselves from hungry animals. For instance, desert cacti are covered in sharp, pointy thorns. These thorns make it painful for animals like deer or rabbits to take a bite. Some cacti even have a bitter juice inside that tastes terrible. Because of these defenses, animals learn to leave cacti alone and look for other things to eat.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Thorns help cacti collect rainwater from the sky.",
+                "Deer and rabbits prefer eating desert plants over forest plants.",
+                "Cacti have special defenses that protect them from being eaten.",
+                "All plants in the desert contain a bitter juice."
+            ],
+            correctAnswer: 2,
+            explanation: "The text explains how things like sharp thorns and bitter juices serve as special defenses that prevent desert animals from eating the cacti."
+        },
+        {
+            passage: "In the book 'The Secret Treehouse', Sophia's teacher explains that the author uses the shared lunchbox to show that making a true friend requires sharing what you have, even when it is hard.",
+            prompt: "Which sentence from 'The Secret Treehouse' best supports the teacher's idea?",
+            options: [
+                "\"The treehouse had five wooden steps leading up to a small blue door.\"",
+                "\"Sophia stared at her delicious homemade chocolate chip cookie and decided to split it right down the middle to give half to the crying boy.\"",
+                "\"The afternoon sun was very hot, so the children decided to sit in the shade.\"",
+                "\"Sophia wore her favorite bright blue sneakers to school on Tuesday.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This sentence directly shows sharing something special ('split it right down the middle to give half') to comfort another person, matching the theme of true friendship."
+        },
+        {
+            passage: "Astronaut spacesuits are designed to keep humans safe from the freezing temperatures of outer space. However, when astronauts work hard and move around outside the space station, their bodies create a lot of body heat, making the inside of the suit dangerously hot and sweaty. Therefore, to keep astronauts comfortable during long space walks, engineers must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "make the spacesuits out of thick wool blankets.",
+                "find a way to build a tiny cooling system inside the suit.",
+                "tell astronauts to stop moving around completely while they are in space.",
+                "paint the spacesuits bright purple to block out the cold."
+            ],
+            correctAnswer: 1,
+            explanation: "The text identifies that moving around inside a sealed suit creates dangerous trapped heat. Designing a cooling system inside the suit directly solves this specific issue."
+        },
+        {
+            passage: "Even though Mark only had a tiny box of colored pencils for his art project, his behavior was incredibly ______; he happily let three classmates borrow his favorite colors, even when it meant he had to wait to finish his own drawing.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["selfish", "generous", "greedy", "noisy"],
+            correctAnswer: 1,
+            explanation: "'Generous' means happy to share unselfishly with others. Mark demonstrated generosity by sharing his limited supply of pencils with multiple classmates."
+        },
+        {
+            passage: "Long ago, people used sundials to tell time by tracking the shadow cast by the sun. However, sundials were completely useless at night or during cloudy days when the sun was hidden. To fix this problem, ancient inventors created water clocks, which measured time by dripping water out of a small bowl at a steady speed. This allowed people to track hours no matter the weather.",
+            prompt: "Which choice best describes what the second sentence ('However, sundials... hidden.') does in the story?",
+            options: [
+                "It explains why the sun shines brighter during the summer season.",
+                "It introduces a problem with sundials that led to a new invention.",
+                "It proves that ancient people did not care about what time it was.",
+                "It lists step-by-step instructions on how to fill a water bowl properly."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence uses 'However' to point out a major flaw in sundials (they don't work in the dark/clouds), which directly motivated inventors to create the water clock."
+        },
+        {
+            passage: "Text 1<br>Wearing school uniforms is excellent because it helps students focus entirely on their schoolwork. When everyone wears the exact same clothes, nobody worries about who has the coolest shirt or the most expensive shoes.<br><br>Text 2<br>School uniforms are a bad idea. Children use their clothes to express who they are, and forcing everyone to dress identically stops creativity and makes kids feel bored and unhappy at school.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's idea that uniforms 'help students focus'?",
+            options: [
+                "By agreeing that uniforms make children feel very creative in class.",
+                "By arguing that stopping creativity and making kids unhappy is worse than worrying about cool clothes.",
+                "By suggesting that teachers should also wear identical shoes every day.",
+                "By proving that expensive clothes make students get better grades."
+            ],
+            correctAnswer: 1,
+            explanation: "The author of Text 2 argues that uniforms damage creativity and happiness, meaning they believe these negative emotional impacts are worse than the wardrobe distractions mentioned in Text 1."
+        },
+        {
+            passage: "Male fireflies flash bright yellow lights from their bodies at night to talk to female fireflies and find each other in the dark. However, scientists discovered that when neighborhoods are flooded with bright streetlights and porch lights, the fireflies can no longer see each other's faint glows and get lost. Because cities are replacing dark fields with brightly lit roads, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "fireflies will start flashing their lights during the day instead.",
+                "it will become much harder for fireflies to find partners and survive in bright areas.",
+                "female fireflies will learn how to turn off the city streetlights.",
+                "fireflies will move inside houses to look for living room lamps."
+            ],
+            correctAnswer: 1,
+            explanation: "The text explains that artificial neighborhood lights disrupt the fireflies' ability to see each other and navigate. More development with bright lights logically implies that firefly reproduction and survival will drop."
+        },
+        {
+            passage: "To see how plants protect soil from heavy rain, students filled two trays with dirt. One tray had green grass growing in it, while the other tray had only bare dirt. The students poured water over both trays to simulate a storm. They saw that the bare dirt washed away instantly, but the grass roots held the other soil tightly in place, proving that plants prevent erosion.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a funny story about worms living deep inside the mud.",
+                "It describes a test, compares how two different dirt trays reacted to water, and shares the discovery.",
+                "It gives a recipe for growing a giant vegetable garden in your backyard.",
+                "It argues that people should stop using water during heavy rainstorms."
+            ],
+            correctAnswer: 1,
+            explanation: "The text details an experimental setup (grass tray vs. bare dirt tray), compares the physical reactions when water is added, and explains the final scientific takeaway."
+        },
+        {
+            passage: "While the puppy's first attempt to run across the icy patch on the deck was clumsy and caused him to slide into a lawn chair, his next steps were surprisingly ______; he balanced carefully on his paws, stepped lightly over the slick spots, and made it to the yard without slipping once.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["noisy", "graceful", "clumsy", "heavy"],
+            correctAnswer: 1,
+            explanation: "'Graceful' means moving in a smooth, beautiful, and controlled way. This fits perfectly as an opposite contrast to his initial 'clumsy' slide."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Fantastic! 🌟</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
