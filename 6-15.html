@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 104: Student Test Sheet (Printer Friendly)</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Base Styling optimized for both clean screen reading and printing */
+        body {
+            font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.1s;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Interactive mode default */
+            margin-top: 12px;
+            background-color: #fcfcfc;
+            border: 1px solid #999999;
+            padding: 12px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            border: 1px solid #000000;
+            padding: 1px 6px;
+            margin-bottom: 8px;
+        }
+        canvas {
+            background: #ffffff;
+            border: 1px solid #333333;
+            margin: 10px 0;
+            display: block;
+        }
+
+        /* PRINTER OPTIMIZATIONS 
+           Hides buttons and completely strips out answer sheets/solutions 
+           so only clean questions print out for students.
+        */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Strip interactive buttons */
+            }
+            .solution-box {
+                display: none !important; /* Force solutions hidden during printing */
+            }
+            .problem-card {
+                border-bottom: 1px solid #666666;
+                padding-bottom: 40px; /* Provides space for student written work */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-area">
+    <h1>Lesson 104: Evaluation Matrix</h1>
+    <p>Student Examination Sheet</p>
+</div>
+
+<div class="container">
+
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Four gallons equals how many pints?</p>
+        <button class="btn-action" onclick="toggleDisplay(1)">Toggle Answer Sheet</button>
+        <div id="sol-1" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Identify intermediate baseline scale transformations:</p>
+            $$1 \text{ gallon} = 4 \text{ quarts}$$
+            $$1 \text{ quart} = 2 \text{ pints} \implies 1 \text{ gallon} = 8 \text{ pints}$$
+            <p>2. Multiply by target quantity:</p>
+            $$4 \text{ gallons} \times 8 \text{ pints} = 32 \text{ pints}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Liam gave the cashier a $20 bill to pay for a new notebook. He received $3.50 in change. If the sales tax was $1.20, what was the pre-tax base price of the notebook?</p>
+        <button class="btn-action" onclick="toggleDisplay(2)">Toggle Answer Sheet</button>
+        <div id="sol-2" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Calculate total out-of-pocket ledger costs:</p>
+            $$\$20.00 - \$3.50 = \$16.50$$
+            <p>2. Isolate net item value by extracting standard sales tax metrics:</p>
+            $$\$16.50 - \$1.20 = \$15.30$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Elena is 5 years older than Leo. Leo is three times as old as Sophia. Elena is 17 years old. How old is Sophia?</p>
+        <button class="btn-action" onclick="toggleDisplay(3)">Toggle Answer Sheet</button>
+        <div id="sol-3" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Determine Leo's absolute age marker from Elena's base tracking line:</p>
+            $$\text{Leo} = 17 - 5 = 12 \text{ years old}$$
+            <p>2. Extract Sophia's scalar metrics based on proportional aging ratios:</p>
+            $$\text{Sophia} = 12 \div 3 = 4 \text{ years old}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Write each decimal configuration as a simplified mixed number or fraction: (a) 4.25 &nbsp; (b) 12.75 &nbsp; (c) 0.375</p>
+        <button class="btn-action" onclick="toggleDisplay(4)">Toggle Answer Sheet</button>
+        <div id="sol-4" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>(a) $$4.25 = 4\frac{25}{100} = 4\frac{1}{4}$$</p>
+            <p>(b) $$12.75 = 12\frac{75}{100} = 12\frac{3}{4}$$</p>
+            <p>(c) $$0.375 = \frac{375}{1000} = \frac{3}{8}$$</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>Two-thirds of the 36 students voted to watch a documentary. How many students voted to watch the documentary?</p>
+        <button class="btn-action" onclick="toggleDisplay(5)">Toggle Answer Sheet</button>
+        <div id="sol-5" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Evaluate one base fraction index step:</p>
+            $$36 \div 3 = 12$$
+            <p>2. Compound via targeted numerator parameters:</p>
+            $$12 \times 2 = 24 \text{ students}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>What percent of the students in problem 5 did <strong>not</strong> vote to watch the documentary?</p>
+        <button class="btn-action" onclick="toggleDisplay(6)">Toggle Answer Sheet</button>
+        <div id="sol-6" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>If \(\frac{2}{3}\) voted for the documentary, the remaining subset represents exactly \(\frac{1}{3}\):</p>
+            $$\frac{1}{3} = 33\frac{1}{3}\%$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <p>Find the total perimeter boundary tracking for this geometric plane profile:</p>
+        <canvas id="canvas-q7" width="280" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(7)">Toggle Answer Sheet</button>
+        <div id="sol-7" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>Combine parallel dimensional components across bounding lines:</p>
+            $$\text{Perimeter} = 15\text{ cm} + 8\text{ cm} + 15\text{ cm} + 8\text{ cm} = 46\text{ cm}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <p>Use structural word notation to transcribe the numerical value 36.045.</p>
+        <button class="btn-action" onclick="toggleDisplay(8)">Toggle Answer Sheet</button>
+        <div id="sol-8" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong></p>
+            <p>The three placement tracking windows right of the decimal point map explicitly to the thousandths location scale indices.</p>
+            <p><strong>Transcription:</strong> "thirty-six and forty-five thousandths"</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <p>Estimate the product of 71 and 38. Then find the actual product.</p>
+        <button class="btn-action" onclick="toggleDisplay(9)">Toggle Answer Sheet</button>
+        <div id="sol-9" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. <strong>Estimation:</strong> Scale to nearest base-10 coordinates:</p>
+            $$71 \approx 70, \quad 38 \approx 40 \implies 70 \times 40 = 2800$$
+            <p>2. <strong>Actual Product:</strong> Execute precise multiplication logic:</p>
+            $$71 \times 38 = 2698$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <p>Find the mean, median, and mode of this data set: 4, 8, 5, 8, 10.</p>
+        <button class="btn-action" onclick="toggleDisplay(10)">Toggle Answer Sheet</button>
+        <div id="sol-10" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>• <strong>Mean:</strong> $$\frac{4 + 8 + 5 + 8 + 10}{5} = \frac{35}{5} = 7$$</p>
+            <p>• <strong>Median:</strong> Sort chronological index patterns to isolate structural midpoint:</p>
+            $$[4, 5, \mathbf{8}, 8, 10] \implies \text{Median} = 8$$
+            <p>• <strong>Mode:</strong> Most frequently observed repeating integer value = 8</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <p>What three-dimensional geometric shape is a standard uncarved aluminum soup can?</p>
+        <button class="btn-action" onclick="toggleDisplay(11)">Toggle Answer Sheet</button>
+        <div id="sol-11" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> A solid three-dimensional configuration featuring two parallel circular bases connected by a curved surface forms a <strong>cylinder</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <p>Identify which of the following canvas angle profiles is classified as an <strong>obtuse angle</strong>:</p>
+        <canvas id="canvas-q12" width="400" height="100"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(12)">Toggle Answer Sheet</button>
+        <div id="sol-12" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> Angle C displays a spatial vector divergence mapping strictly wider than a standard \(90^\circ\) perpendicular axis intersection, confirming an obtuse orientation.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <p>Calculate: \(\$40.00 - (\$18.35 + \$4.65)\)</p>
+        <button class="btn-action" onclick="toggleDisplay(13)">Toggle Answer Sheet</button>
+        <div id="sol-13" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Evaluate priority operations grouped within parentheses first:</p>
+            $$\$18.35 + \$4.65 = \$23.00$$
+            <p>2. Execute remaining linear matrix difference calculations:</p>
+            $$\$40.00 - \$23.00 = \$17.00$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 14</div>
+        <p>Calculate: \(4 \times 9 \times 25\)</p>
+        <button class="btn-action" onclick="toggleDisplay(14)">Toggle Answer Sheet</button>
+        <div id="sol-14" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>Apply associative grouping properties to optimize tracking sequences:</p>
+            $$(4 \times 25) \times 9 = 100 \times 9 = 900$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 15</div>
+        <p>Calculate: \(\$6.45 \times 8\)</p>
+        <button class="btn-action" onclick="toggleDisplay(15)">Toggle Answer Sheet</button>
+        <div id="sol-15" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$\begin{array}{r} 6.45 \\ \times \quad 8 \\ \hline 51.60 \end{array}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 16</div>
+        <p>Calculate: \(725 \times 100\)</p>
+        <button class="btn-action" onclick="toggleDisplay(16)">Toggle Answer Sheet</button>
+        <div id="sol-16" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> Shifting the baseline integer properties two places to the right along decimal units constructs exactly 72,500.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 17</div>
+        <p>Calculate: \(36 \times 24\)</p>
+        <button class="btn-action" onclick="toggleDisplay(17)">Toggle Answer Sheet</button>
+        <div id="sol-17" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$\begin{array}{r} 36 \\ \times \, 24 \\ \hline 144 \\ + 720 \\ \hline 864 \end{array}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 18</div>
+        <p>Calculate: \(43 \times 30\)</p>
+        <button class="btn-action" onclick="toggleDisplay(18)">Toggle Answer Sheet</button>
+        <div id="sol-18" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$43 \times 3 = 129 \implies 129 \times 10 = 1290$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 19</div>
+        <p>Calculate: \(15 \times 15\)</p>
+        <button class="btn-action" onclick="toggleDisplay(19)">Toggle Answer Sheet</button>
+        <div id="sol-19" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$15^2 = 225$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 20</div>
+        <p>Calculate: \(3521 \div 7\)</p>
+        <button class="btn-action" onclick="toggleDisplay(20)">Toggle Answer Sheet</button>
+        <div id="sol-20" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>• \(35 \div 7 = 5\)</p>
+            <p>• Bring down 2; \(2 \div 7 = 0\) remainder 2</p>
+            <p>• Bring down 1 to form 21; \(21 \div 7 = 3\)</p>
+            $$\text{Quotient: } 503$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 21</div>
+        <p>Calculate: \(9000 \div 15\)</p>
+        <button class="btn-action" onclick="toggleDisplay(21)">Toggle Answer Sheet</button>
+        <div id="sol-21" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$90 \div 15 = 6 \implies 9000 \div 15 = 600$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 22</div>
+        <p>Calculate: \(852 \div 3\)</p>
+        <button class="btn-action" onclick="toggleDisplay(22)">Toggle Answer Sheet</button>
+        <div id="sol-22" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>• \(8 \div 3 = 2\) R 2</p>
+            <p>• \(25 \div 3 = 8\) R 1</p>
+            <p>• \(12 \div 3 = 4\)</p>
+            $$\text{Result: } 284$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 23</div>
+        <p>Evaluate the expression: \(\frac{5^3}{\sqrt{25}}\)</p>
+        <button class="btn-action" onclick="toggleDisplay(23)">Toggle Answer Sheet</button>
+        <div id="sol-23" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Evaluate exponential values:</p>
+            $$5^3 = 5 \times 5 \times 5 = 125$$
+            <p>2. Resolve radical tracking fields:</p>
+            $$\sqrt{25} = 5$$
+            <p>3. Complete remaining division parsing steps:</p>
+            $$\frac{125}{5} = 25$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 24</div>
+        <p>Calculate: \(\$34.50 \div 6\)</p>
+        <button class="btn-action" onclick="toggleDisplay(24)">Toggle Answer Sheet</button>
+        <div id="sol-24" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$\begin{array}{r} 5.75 \\ 6 \overline{\smash{)} 34.50 } \end{array}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 25</div>
+        <p>Calculate: \(\frac{431}{5}\)</p>
+        <button class="btn-action" onclick="toggleDisplay(25)">Toggle Answer Sheet</button>
+        <div id="sol-25" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            $$431 \div 5 = 86 \text{ with a remainder of 1, or } 86\frac{1}{5}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 26</div>
+        <p>Analyze the shaded visual area row sequence. What distinct numerical fraction value is indicated?</p>
+        <canvas id="canvas-q26" width="240" height="60"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(26)">Toggle Answer Sheet</button>
+        <div id="sol-26" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> The tracking structure maps 3 fully populated segments out of 5 total identical structural elements, defining the fractional property value \(\frac{3}{5}\).</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 27</div>
+        <p>The total area value enclosed inside a perfect flat square geometry measures 64 sq cm. What is the total perimeter boundary distance tracking for this square?</p>
+        <button class="btn-action" onclick="toggleDisplay(27)">Toggle Answer Sheet</button>
+        <div id="sol-27" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>1. Extract the length parameter of an edge side boundary using area formulas (\(\text{Side}^2 = \text{Area}\)):</p>
+            $$\text{Side} = \sqrt{64} = 8 \text{ cm}$$
+            <p>2. Calculate perimeter parameters combining all 4 identical outer profiles:</p>
+            $$\text{Perimeter} = 8 \text{ cm} \times 4 = 32 \text{ cm}$$
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 28</div>
+        <p>Examine the canvas layout mapping spatial reflection properties across a central structural axis vector line:</p>
+        <canvas id="canvas-q28" width="260" height="120"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(28)">Toggle Answer Sheet</button>
+        <div id="sol-28" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> Coordinates tracked on the right panel mirror corresponding Cartesian metrics from the left geometric shape across the vertical separation boundary.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 29</div>
+        <p>Compute values to insert appropriate evaluation operator logic (\(&gt;\), \(&lt;\), or \(=\)): <br>
+        (a) 0.83 [ ] 0.830 &nbsp;&nbsp;&nbsp;&nbsp; (b) \(\frac{1}{4}\) [ ] 0.22</p>
+        <button class="btn-action" onclick="toggleDisplay(29)">Toggle Answer Sheet</button>
+        <div id="sol-29" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Step-by-Step Proof:</strong></p>
+            <p>(a) Trailing placeholders behind active decimals do not alter core magnitude values: \(0.83 = 0.830\)</p>
+            <p>(b) Normalize structures to matching decimal format types: \(\frac{1}{4} = 0.25 \implies 0.25 &gt; 0.22\)</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 30</div>
+        <p>Which net template layout can be folded along interior line intersections to assemble a closed 6-sided solid cube structure?</p>
+        <canvas id="canvas-q30" width="400" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(30)">Toggle Answer Sheet</button>
+        <div id="sol-30" class="solution-box">
+            <span class="badge">Verified Solution</span>
+            <p><strong>Analysis:</strong> <strong>Map A</strong> represents a standard valid cross-shaped unfolding net pattern for a cube. Map B contains structural space allocations that create overlapping colliding walls, preventing uniform closure.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleDisplay(id) {
+        var el = document.getElementById('sol-' + id);
+        if (el.style.display === 'block') {
+            el.style.display = 'none';
+        } else {
+            el.style.display = 'block';
+        }
+    }
+
+    window.onload = function() {
+        // Q7 Plane Profile Rendering
+        var c7 = document.getElementById('canvas-q7');
+        var ctx7 = c7.getContext('2d');
+        ctx7.lineWidth = 2;
+        ctx7.strokeStyle = "#000000";
+        ctx7.strokeRect(40, 30, 180, 80);
+        ctx7.font = "13px Arial";
+        ctx7.fillStyle = "#000000";
+        ctx7.fillText("15 cm", 112, 23);
+        ctx7.fillText("8 cm", 228, 75);
+
+        // Q12 Vector Angle Identification Models
+        var c12 = document.getElementById('canvas-q12');
+        var ctx12 = c12.getContext('2d');
+        ctx12.lineWidth = 2;
+        ctx12.strokeStyle = "#000000";
+        ctx12.font = "13px Arial";
+        ctx12.fillStyle = "#000000";
+        
+        // Right Angle (A)
+        ctx12.beginPath(); ctx12.moveTo(40,70); ctx12.lineTo(90,70); ctx12.moveTo(40,70); ctx12.lineTo(40,25); ctx12.stroke();
+        ctx12.strokeRect(40,62,8,8);
+        ctx12.fillText("A", 62, 88);
+        // Acute Angle (B)
+        ctx12.beginPath(); ctx12.moveTo(150,70); ctx12.lineTo(200,70); ctx12.moveTo(150,70); ctx12.lineTo(185,35); ctx12.stroke();
+        ctx12.fillText("B", 170, 88);
+        // Obtuse Angle (C)
+        ctx12.beginPath(); ctx12.moveTo(270,70); ctx12.lineTo(330,70); ctx12.moveTo(270,70); ctx12.lineTo(230,35); ctx12.stroke();
+        ctx12.fillText("C", 290, 88);
+
+        // Q26 Shaded Matrix Grid Tracking
+        var c26 = document.getElementById('canvas-q26');
+        var ctx26 = c26.getContext('2d');
+        var w = 35;
+        ctx26.lineWidth = 2;
+        ctx26.strokeStyle = "#000000";
+        for(var g=0; g<5; g++) {
+            if(g < 3) {
+                ctx26.fillStyle = "#dddddd"; // High-contrast print gray fills
+                ctx26.fillRect(15 + (g*w), 15, w, 30);
+            }
+            ctx26.strokeRect(15 + (g*w), 15, w, 30);
+        }
+
+        // Q28 Symmetrical Transformation Matrix Lines
+        var c28 = document.getElementById('canvas-q28');
+        var ctx28 = c28.getContext('2d');
+        ctx28.lineWidth = 2;
+        ctx28.strokeStyle = "#000000";
+        // Vertical dashed reflection line
+        ctx28.setLineDash([4, 4]);
+        ctx28.beginPath(); ctx28.moveTo(130, 10); ctx28.lineTo(130, 110); ctx28.stroke();
+        ctx28.setLineDash([]);
+        // Left profile shape
+        ctx28.beginPath(); ctx28.moveTo(110,90); ctx28.lineTo(50,90); ctx28.lineTo(110,25); ctx28.closePath(); ctx28.stroke();
+        // Right reflected transformation profile
+        ctx28.beginPath(); ctx28.moveTo(150,90); ctx28.lineTo(210,90); ctx28.lineTo(150,25); ctx28.closePath(); ctx28.stroke();
+
+        // Q30 Spatial Geometry Flat Layout Patterns (Map A vs Map B)
+        var c30 = document.getElementById('canvas-q30');
+        var ctx30 = c30.getContext('2d');
+        ctx30.font = "13px Arial";
+        ctx30.fillStyle = "#000000";
+        ctx30.lineWidth = 1.5;
+        var s = 16;
+        
+        // Map A standard functional layout pattern
+        var ax = 40, ay = 25;
+        ctx30.strokeRect(ax+s, ay, s, s);
+        ctx30.strokeRect(ax, ay+s, s, s); ctx30.strokeRect(ax+s, ay+s, s, s); ctx30.strokeRect(ax+2*s, ay+s, s, s); ctx30.strokeRect(ax+3*s, ay+s, s, s);
+        ctx30.strokeRect(ax+s, ay+2*s, s, s);
+        ctx30.fillText("Map A", ax+10, ay+4*s+8);
+
+        // Map B structural collision flat design layout
+        var bx = 240, by = 25;
+        ctx30.strokeRect(bx, by, s, s); ctx30.strokeRect(bx+s, by, s, s); ctx30.strokeRect(bx+2*s, by, s, s); ctx30.strokeRect(bx+3*s, by, s, s);
+        ctx30.strokeRect(bx, by+s, s, s); ctx30.strokeRect(bx+s, by+s, s, s);
+        ctx30.fillText("Map B", bx+10, by+3*s+12);
+    }
+</script>
+
+</body>
+</html>
