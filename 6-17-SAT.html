@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3rd Grade Reading Practice - Set 5</title>
+<title>3rd Grade Reading Practice - Set 6 (Harvard Challenge)</title>
 <style>
-    /* General Styles */
+    /* General Styles - Harvard Crimson Theme */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f3f0fa;
+        background-color: #fcf8f8;
         color: #333;
         line-height: 1.6;
         margin: 0;
@@ -20,13 +20,13 @@
         background: #fff;
         padding: 30px;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
         position: relative;
-        border: 3px solid #8e44ad;
+        border: 3px solid #a51c30;
     }
     h1 {
         text-align: center;
-        color: #2c3e50;
+        color: #a51c30;
         margin-top: 0;
     }
     
@@ -39,9 +39,9 @@
     }
     .passage {
         font-family: Georgia, serif;
-        background-color: #fafafb;
+        background-color: #fffafb;
         padding: 20px;
-        border-left: 5px solid #8e44ad;
+        border-left: 5px solid #a51c30;
         margin-bottom: 20px;
         font-size: 1.15em;
         border-radius: 4px;
@@ -63,17 +63,17 @@
     .options label {
         display: flex;
         align-items: baseline;
-        background: #fdfbfd;
+        background: #fffcfc;
         padding: 12px 15px;
         border-radius: 6px;
         cursor: pointer;
         transition: background 0.2s;
-        border: 1px solid #f0edf5;
+        border: 1px solid #f5e6e8;
         font-size: 1.05em;
     }
     .options label:hover {
-        background: #f5eef8;
-        border-color: #e8daef;
+        background: #f9e8ea;
+        border-color: #e2b3b8;
     }
     .options label.disabled {
         cursor: not-allowed;
@@ -126,25 +126,25 @@
         border: none;
         border-radius: 6px;
         cursor: pointer;
-        background-color: #34495e;
+        background-color: #4a5568;
         color: white;
         transition: background 0.3s;
     }
-    button:hover { background-color: #2c3e50; }
+    button:hover { background-color: #2d3748; }
     button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
     
-    .check-btn { background-color: #8e44ad; }
-    .check-btn:hover { background-color: #7d3c98; }
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
     
-    .submit-btn { background-color: #2ecc71; }
-    .submit-btn:hover { background-color: #27ae60; }
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
     
     #results {
         display: none;
         text-align: center;
         padding: 25px;
-        background: #eafaf1;
-        border: 3px solid #2ecc71;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
         border-radius: 10px;
         margin-bottom: 30px;
     }
@@ -160,13 +160,14 @@
 <body>
 
 <div id="quiz-container">
-    <h1>3rd Grade Reading Practice - Set 5</h1>
+    <h1>3rd Grade Reading Practice - Set 6</h1>
     <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
     
     <div id="results">
         <h2>🎉 Quiz Complete! 🎉</h2>
-        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #16a085;"></p>
-        <p>Scroll down to look over your answers and explanations.</p>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
     </div>
 
     <div id="questions-wrapper">
@@ -184,109 +185,109 @@
 <script>
     const quizData = [
         {
-            passage: "Although the classroom was usually very noisy during afternoon group projects, it became remarkably ______ during the spelling test; you could hear nothing but the soft clicking of pencils on paper.",
+            passage: "Although the cheetah is famous for being incredibly fast when chasing prey across the open savanna, it can be surprisingly ______ when stalking through tall grass; it moves centimeter by centimeter, freezes completely when a deer looks up, and makes absolutely no sound.",
             prompt: "Which choice completes the text with the most logical word?",
-            options: ["loud", "quiet", "messy", "dark"],
+            options: ["reckless", "patient", "noisy", "scared"],
             correctAnswer: 1,
-            explanation: "'Quiet' means making very little noise. Because the text states that you could hear nothing but a pencil clicking, the room became quiet during the test, contrasting with its usual noise."
+            explanation: "'Patient' means able to wait quietly or move calmly without rushing. Because the cheetah moves centimeter by centimeter and freezes to avoid being caught, it is acting in a patient way."
         },
         {
-            passage: "Ants are tiny insects that are capable of lifting objects much heavier than their own bodies, but only when they work together as a team. When an individual ant finds a giant piece of fruit, it cannot drag it back to the colony alone. However, it quickly signals other ants for help. Together, dozens of ants pull from different sides to slide the heavy food easily down the trail.",
+            passage: "Honeybees have a fascinating way of telling their hive members where to find the best flowers. When a scout bee finds a patch of sweet clover, it flies back home and performs a special 'waggle dance.' The direction and length of the dance tell the other bees exactly how far to fly and which way to turn. By watching this dance, the hive can gather food quickly without wasting time searching.",
             prompt: "Which choice best states the main idea of the text?",
             options: [
-                "Ants love to eat sweet fruit more than anything else.",
-                "Working together allows ants to move large and heavy food pieces.",
-                "Individual ants prefer to carry objects completely on their own.",
-                "Ants build their colonies close to fruit trees."
-            ],
-            correctAnswer: 1,
-            explanation: "The passage outlines how ants use teamwork to accomplish a goal (moving heavy items) that single ants are unable to perform on their own."
-        },
-        {
-            passage: "In the story 'The Brave Little Tree', Leo’s teacher explains that the author uses the oak tree's deep, hidden roots to show that true strength comes from inner confidence, not just from having pretty leaves.",
-            prompt: "Which sentence from 'The Brave Little Tree' best supports the teacher's idea?",
-            options: [
-                "\"The little oak tree grew right next to a small wooden bench in the park.\"",
-                "\"In the middle of spring, bright green leaves sprouted all over the branches.\"",
-                "\"Even though the fierce mountain winds ripped away its beautiful branches, the tree stood proud because its strong roots held tight deep under the soil.\"",
-                "\"A small gray squirrel dug a hole near the tree to hide its acorns.\""
+                "Honeybees prefer sweet clover over all other types of desert flowers.",
+                "Scout bees enjoy dancing alone inside the dark hive.",
+                "Honeybees use a special dance to share directions to food sources.",
+                "All insects know how to fly in perfectly straight lines."
             ],
             correctAnswer: 2,
-            explanation: "This sentence directly shows the tree utilizing its hidden roots to stand proud and stay secure against a storm, supporting the concept of inner strength over outer appearance."
+            explanation: "The text focuses on how the 'waggle dance' communicates specific instructions (distance and direction) to help the rest of the hive find food efficiently."
         },
         {
-            passage: "Glow-in-the-dark stickers are popular because they light up beautifully in a dark bedroom. However, standard glow material loses its brightness within twenty minutes after the bedroom lamps are turned off. Therefore, to make these stickers useful for kids who need light all night long, creators must ______",
-            prompt: "Which choice most logically completes the text?",
+            passage: "In the book 'The Midnight Eclipse', Maya's grandfather explains that trying new things can be scary at first, but facing your fears often reveals a beautiful surprise you would have missed otherwise.",
+            prompt: "Which sentence from 'The Midnight Eclipse' best supports the grandfather's idea?",
             options: [
-                "tell children they must sleep with all the bright bedroom lights turned on.",
-                "find a way to make the glow material store light energy for many hours.",
-                "make the stickers much smaller so they are harder to see in the dark.",
-                "paint the stickers a dark color like black or brown instead."
+                "\"The old wooden map hung on the living room wall right above the television.\"",
+                "\"Even though Maya's knees shook as she stepped into the pitch-black cave, she took a deep breath and looked up to see thousands of glowing blue crystals covering the ceiling.\"",
+                "\"Grandfather wore a heavy wool coat with silver buttons to keep out the night chill.\"",
+                "\"The path outside was covered in smooth gray gravel and tiny green moss patches.\""
             ],
             correctAnswer: 1,
-            explanation: "The issue is that the stickers lose their brightness too quickly. Finding a method to extend how long the glow material stores energy fixes the specific problem mentioned."
+            explanation: "This sentence directly shows Maya overcoming her initial fear ('knees shook', 'pitch-black cave') and discovering an amazing, hidden reward ('glowing blue crystals'), which matches the grandfather's theme."
         },
         {
-            passage: "Even though the new baking recipe appeared very complicated at first glance, the chef’s written instructions were extremely ______; by following his numbered steps, even beginner bakers could create a perfect cake.",
+            passage: "Polar bears have thick layers of fat and heavy fur coats to survive freezing Arctic blizzards. However, during the summer, when they must walk long distances across dry land to look for food, their heavy coats trap too much heat, causing them to overheat dangerously. Therefore, to cool their bodies down on warm summer days, polar bears will often ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "run as fast as they can across hot sandy beaches.",
+                "jump into the icy ocean water for a long swim.",
+                "grow a new coat of feathers like an Arctic bird.",
+                "hide underneath thick blankets inside a snow cave."
+            ],
+            correctAnswer: 1,
+            explanation: "The text explains that polar bears get dangerously hot in summer due to their fur. Jumping into cold ocean water is the most logical way for an Arctic animal to lower its body temperature."
+        },
+        {
+            passage: "Even though Uncle Larry usually kept his backyard garden messy with wild weeds and untrimmed bushes, his front porch was remarkably ______; every single flower pot was lined up straight, the welcome mat was perfectly clean, and not a single stray leaf was in sight.",
             prompt: "Which choice completes the text with the most logical word?",
-            options: ["confusing", "simple", "slow", "salty"],
+            options: ["untidy", "organized", "dark", "crowded"],
             correctAnswer: 1,
-            explanation: "'Simple' means easy to understand or do. Since beginners were able to make a perfect cake easily by following the steps, the instructions were simple, which contrasts with the 'complicated' look of the recipe."
+            explanation: "'Organized' means arranged in an orderly, neat way. The description of straight flower pots, a clean mat, and no mess contrasts directly with his 'messy' backyard."
         },
         {
-            passage: "For a long time, people believed that chameleons changed their skin color solely to blend into their backgrounds and hide from dangerous predators. However, scientists recently discovered that chameleons actually alter their colors to talk to other chameleons and show their emotions. This discovery helped change how we view animal traits. Today, we know that bright colors usually mean a chameleon is excited or angry.",
-            prompt: "Which choice best describes what the second sentence ('However, scientists... emotions.') does in the story?",
+            passage: "Long ago, sailors used the North Star to steer their ships at night because it always stays in the exact same spot in the sky. However, if a thick fog rolled in or heavy storm clouds covered the stars, sailors would become completely lost in the middle of the ocean. To solve this dangerous problem, ancient inventors created the magnetic compass, which points north no matter how cloudy the weather is.",
+            prompt: "Which choice best describes what the second sentence ('However, if... ocean.') does in the text?",
             options: [
-                "It explains exactly how chameleons are able to climb up tall trees.",
-                "It introduces a new discovery that corrects an old belief about chameleon color changes.",
-                "It lists all the different places chameleons like to hunt for bugs.",
-                "It argues that chameleons are the friendliest pets you can own."
+                "It explains why some stars look brighter during the winter months.",
+                "It introduces a major flaw with using stars that led to a new invention.",
+                "It proves that ancient sailors did not like to travel at night.",
+                "It gives instructions on how to steer a large wooden ship through a storm."
             ],
             correctAnswer: 1,
-            explanation: "The first sentence notes what people used to believe (color changes are for hiding). The second sentence uses 'However' to present a new scientific explanation regarding social signals and feelings."
+            explanation: "The second sentence highlights the main limitation of relying on the North Star (clouds block it, causing ships to get lost), which directly motivated the creation of the compass."
         },
         {
-            passage: "Text 1<br>Completing homework every afternoon is highly beneficial because it reinforces what you learned in class. By practicing math problems and reading chapters at home, students remember their school lessons much better.<br><br>Text 2<br>Giving children homework after a long school day is bad. Kids need time to rest their minds, play outside with neighbors, and have fun with family members, and extra worksheets take away those important parts of childhood.",
-            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that homework 'reinforces what you learned'?",
+            passage: "Text 1<br>Learning to play a musical instrument like the piano is wonderful because it teaches children how to focus deeply. Practicing scales every single afternoon trains your brain to pay close attention to small details and builds excellent study habits.<br><br>Text 2<br>Forcing children to practice musical instruments for hours after school is a major mistake. Kids need unstructured free time to play outside, rest, and relax, and sitting on a piano bench making repetitive noises just makes kids resent music altogether.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that piano practice 'teaches children how to focus'?",
             options: [
-                "By agreeing that playing outside helps children solve difficult math equations.",
-                "By arguing that resting, playing, and family time are more important for kids than extra school practice.",
-                "By suggesting that all students should do their homework while riding bicycles.",
-                "By showing that reading books at home is much easier than doing math worksheets."
+                "By agreeing that kids focus best when they are listening to loud piano music.",
+                "By arguing that free time and outdoor play are more valuable for kids than forced, repetitive practice.",
+                "By suggesting that piano teachers should move their instruments out into the grass.",
+                "By showing that playing sports is the only way to build good study habits."
             ],
             correctAnswer: 1,
-            explanation: "Text 2 emphasizes that children need playtime, rest, and family interaction, signaling that the author believes these lifestyle elements are more critical than extra homework drills."
+            explanation: "Text 2 emphasizes the necessity of play, relaxation, and free time, showing that the author values these experiences far more than the rigid, focused repetition highlighted in Text 1."
         },
         {
-            passage: "Wild salmon swim up long rivers to lay their eggs in calm mountain streams where they were born. However, when humans build giant concrete dams across rivers, the fish cannot jump past them and get blocked from reaching their homes. Because a local town just built a special 'fish ladder' pool system that lets salmon easily jump over their dam, scientists believe that ______",
+            passage: "Sea turtles lay their eggs in dry sand on ocean beaches. When the baby turtles hatch at night, they look for the brightest light to find their way to the water, which is normally the moonlight reflecting off the ocean. However, when beachfront hotels leave bright stadium lights on all night, the confused babies crawl toward the buildings instead of the sea. Because a coastal city just passed a law turning off all hotel lights during hatching season, scientists believe that ______",
             prompt: "Which choice most logically completes the text?",
             options: [
-                "the salmon will decide to live on land instead of in the river water.",
-                "many more salmon will reach their mountain streams to lay eggs safely.",
-                "the river will stop flowing down toward the ocean completely.",
-                "town residents will have to teach the fish how to climb metal ladders."
+                "baby turtles will start hatching during the middle of the day instead.",
+                "many more baby turtles will successfully find their way into the ocean.",
+                "hotels will have to build indoor swimming pools for the turtles.",
+                "the moon will shine much brighter over the ocean water."
             ],
             correctAnswer: 1,
-            explanation: "Dams block fish from completing their migration path. Installing a special system that lets fish jump past the obstacle means more fish will succeed in reaching their destination."
+            explanation: "Hotel lights confuse the baby turtles and lead them away from the sea. Eliminating those distracting lights means the turtles can follow the natural moonlight safely back to the ocean."
         },
         {
-            passage: "To see if music changes how fast plants grow, a class put identical bean seeds into two pots with the same soil. One pot was kept in a room where classical music played all day, while the other pot was kept in a completely silent room. After two weeks, the students measured the sprouts. They discovered that both plants grew to the exact same height, proving that music does not alter plant growth.",
+            passage: "To figure out whether birds prefer eating sunflower seeds or corn kernels, students set up two identical bird feeders in the school courtyard. One feeder was filled with black sunflower seeds, while the other held yellow corn. For one week, the students counted every bird that visited. They observed that forty birds ate the sunflower seeds while only five ate the corn, proving that local birds prefer sunflower seeds.",
             prompt: "Which choice best describes how this text is organized?",
             options: [
-                "It tells a creative story about a musical bean plant that learned to sing.",
-                "It describes a test, compares how plants grew under two different sound conditions, and shares the result.",
-                "It outlines step-by-step instructions for picking the best song to play on a piano.",
-                "It argues that classical music is better than modern pop music for studying."
+                "It tells a creative story about a bird that got lost while looking for its nest.",
+                "It describes an experiment, compares how birds reacted to two types of food, and shares the result.",
+                "It lists step-by-step assembly instructions for building a wooden birdhouse.",
+                "It argues that humans should never feed wild animals in public parks."
             ],
             correctAnswer: 1,
-            explanation: "The text traces a science experiment (pots with music vs. silence), compares the final heights of the bean plants, and presents the resulting takeaway."
+            explanation: "The text systematically walks through an experimental test (two feeders with different foods), compares the resulting bird counts, and finishes with the scientific takeaway."
         },
         {
-            passage: "While the first movie in the superhero series was incredibly boring and made most of the audience fall asleep, the new sequel was remarkably ______; it featured non-stop action, flying spaceships, and funny characters that kept everyone cheering.",
+            passage: "While the first half of the soccer match was incredibly tense and close, with both teams locked in a fierce 0-0 tie, the second half was remarkably ______; our team scored five easy goals in a row while the other team grew tired and stopped running completely.",
             prompt: "Which choice completes the text with the most logical word?",
-            options: ["dull", "exciting", "quiet", "scary"],
+            options: ["fair", "lopsided", "stressful", "boring"],
             correctAnswer: 1,
-            explanation: "'Exciting' means causing great interest or enthusiasm. The description of fast action, spaceships, and cheering audiences shows the sequel was exciting, directly contrasting with the boring first movie."
+            explanation: "'Lopsided' means heavily unbalanced or unequal. Because one team completely dominated by scoring five straight goals against an exhausted opponent, the game became lopsided, contrasting with the 'close' first half."
         }
     ];
 
@@ -352,10 +353,10 @@
         lockQuestion(currentQuestion);
 
         if (selected === q.correctAnswer) {
-            feedbackDiv.innerHTML = `<strong>Correct! Way to shine! 🌈</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.innerHTML = `<strong>Correct! Exceptional reading! 🌟</strong><br><br><em>Why?</em> ${q.explanation}`;
             feedbackDiv.className = "feedback correct";
         } else {
-            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
             feedbackDiv.className = "feedback incorrect";
         }
     }
@@ -424,8 +425,25 @@
         document.getElementById('progress-tracker').style.display = 'none';
         
         const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
         resultsDiv.style.display = 'block';
-        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${(score/quizData.length)*100}%)`;
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Incredible performance! Review your perfect work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Review your answers and explanations below. Try again to get a perfect 10/10 score and unlock the Harvard badge reward!";
+        }
         
         window.scrollTo(0, 0);
     }
