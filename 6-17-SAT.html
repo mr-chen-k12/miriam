@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 5</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f3f0fa;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+        border: 3px solid #8e44ad;
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fafafb;
+        padding: 20px;
+        border-left: 5px solid #8e44ad;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fdfbfd;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f0edf5;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f5eef8;
+        border-color: #e8daef;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #34495e;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2c3e50; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #8e44ad; }
+    .check-btn:hover { background-color: #7d3c98; }
+    
+    .submit-btn { background-color: #2ecc71; }
+    .submit-btn:hover { background-color: #27ae60; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #eafaf1;
+        border: 3px solid #2ecc71;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 5</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #16a085;"></p>
+        <p>Scroll down to look over your answers and explanations.</p>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although the classroom was usually very noisy during afternoon group projects, it became remarkably ______ during the spelling test; you could hear nothing but the soft clicking of pencils on paper.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["loud", "quiet", "messy", "dark"],
+            correctAnswer: 1,
+            explanation: "'Quiet' means making very little noise. Because the text states that you could hear nothing but a pencil clicking, the room became quiet during the test, contrasting with its usual noise."
+        },
+        {
+            passage: "Ants are tiny insects that are capable of lifting objects much heavier than their own bodies, but only when they work together as a team. When an individual ant finds a giant piece of fruit, it cannot drag it back to the colony alone. However, it quickly signals other ants for help. Together, dozens of ants pull from different sides to slide the heavy food easily down the trail.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Ants love to eat sweet fruit more than anything else.",
+                "Working together allows ants to move large and heavy food pieces.",
+                "Individual ants prefer to carry objects completely on their own.",
+                "Ants build their colonies close to fruit trees."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage outlines how ants use teamwork to accomplish a goal (moving heavy items) that single ants are unable to perform on their own."
+        },
+        {
+            passage: "In the story 'The Brave Little Tree', Leo’s teacher explains that the author uses the oak tree's deep, hidden roots to show that true strength comes from inner confidence, not just from having pretty leaves.",
+            prompt: "Which sentence from 'The Brave Little Tree' best supports the teacher's idea?",
+            options: [
+                "\"The little oak tree grew right next to a small wooden bench in the park.\"",
+                "\"In the middle of spring, bright green leaves sprouted all over the branches.\"",
+                "\"Even though the fierce mountain winds ripped away its beautiful branches, the tree stood proud because its strong roots held tight deep under the soil.\"",
+                "\"A small gray squirrel dug a hole near the tree to hide its acorns.\""
+            ],
+            correctAnswer: 2,
+            explanation: "This sentence directly shows the tree utilizing its hidden roots to stand proud and stay secure against a storm, supporting the concept of inner strength over outer appearance."
+        },
+        {
+            passage: "Glow-in-the-dark stickers are popular because they light up beautifully in a dark bedroom. However, standard glow material loses its brightness within twenty minutes after the bedroom lamps are turned off. Therefore, to make these stickers useful for kids who need light all night long, creators must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "tell children they must sleep with all the bright bedroom lights turned on.",
+                "find a way to make the glow material store light energy for many hours.",
+                "make the stickers much smaller so they are harder to see in the dark.",
+                "paint the stickers a dark color like black or brown instead."
+            ],
+            correctAnswer: 1,
+            explanation: "The issue is that the stickers lose their brightness too quickly. Finding a method to extend how long the glow material stores energy fixes the specific problem mentioned."
+        },
+        {
+            passage: "Even though the new baking recipe appeared very complicated at first glance, the chef’s written instructions were extremely ______; by following his numbered steps, even beginner bakers could create a perfect cake.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["confusing", "simple", "slow", "salty"],
+            correctAnswer: 1,
+            explanation: "'Simple' means easy to understand or do. Since beginners were able to make a perfect cake easily by following the steps, the instructions were simple, which contrasts with the 'complicated' look of the recipe."
+        },
+        {
+            passage: "For a long time, people believed that chameleons changed their skin color solely to blend into their backgrounds and hide from dangerous predators. However, scientists recently discovered that chameleons actually alter their colors to talk to other chameleons and show their emotions. This discovery helped change how we view animal traits. Today, we know that bright colors usually mean a chameleon is excited or angry.",
+            prompt: "Which choice best describes what the second sentence ('However, scientists... emotions.') does in the story?",
+            options: [
+                "It explains exactly how chameleons are able to climb up tall trees.",
+                "It introduces a new discovery that corrects an old belief about chameleon color changes.",
+                "It lists all the different places chameleons like to hunt for bugs.",
+                "It argues that chameleons are the friendliest pets you can own."
+            ],
+            correctAnswer: 1,
+            explanation: "The first sentence notes what people used to believe (color changes are for hiding). The second sentence uses 'However' to present a new scientific explanation regarding social signals and feelings."
+        },
+        {
+            passage: "Text 1<br>Completing homework every afternoon is highly beneficial because it reinforces what you learned in class. By practicing math problems and reading chapters at home, students remember their school lessons much better.<br><br>Text 2<br>Giving children homework after a long school day is bad. Kids need time to rest their minds, play outside with neighbors, and have fun with family members, and extra worksheets take away those important parts of childhood.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that homework 'reinforces what you learned'?",
+            options: [
+                "By agreeing that playing outside helps children solve difficult math equations.",
+                "By arguing that resting, playing, and family time are more important for kids than extra school practice.",
+                "By suggesting that all students should do their homework while riding bicycles.",
+                "By showing that reading books at home is much easier than doing math worksheets."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 2 emphasizes that children need playtime, rest, and family interaction, signaling that the author believes these lifestyle elements are more critical than extra homework drills."
+        },
+        {
+            passage: "Wild salmon swim up long rivers to lay their eggs in calm mountain streams where they were born. However, when humans build giant concrete dams across rivers, the fish cannot jump past them and get blocked from reaching their homes. Because a local town just built a special 'fish ladder' pool system that lets salmon easily jump over their dam, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "the salmon will decide to live on land instead of in the river water.",
+                "many more salmon will reach their mountain streams to lay eggs safely.",
+                "the river will stop flowing down toward the ocean completely.",
+                "town residents will have to teach the fish how to climb metal ladders."
+            ],
+            correctAnswer: 1,
+            explanation: "Dams block fish from completing their migration path. Installing a special system that lets fish jump past the obstacle means more fish will succeed in reaching their destination."
+        },
+        {
+            passage: "To see if music changes how fast plants grow, a class put identical bean seeds into two pots with the same soil. One pot was kept in a room where classical music played all day, while the other pot was kept in a completely silent room. After two weeks, the students measured the sprouts. They discovered that both plants grew to the exact same height, proving that music does not alter plant growth.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a creative story about a musical bean plant that learned to sing.",
+                "It describes a test, compares how plants grew under two different sound conditions, and shares the result.",
+                "It outlines step-by-step instructions for picking the best song to play on a piano.",
+                "It argues that classical music is better than modern pop music for studying."
+            ],
+            correctAnswer: 1,
+            explanation: "The text traces a science experiment (pots with music vs. silence), compares the final heights of the bean plants, and presents the resulting takeaway."
+        },
+        {
+            passage: "While the first movie in the superhero series was incredibly boring and made most of the audience fall asleep, the new sequel was remarkably ______; it featured non-stop action, flying spaceships, and funny characters that kept everyone cheering.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["dull", "exciting", "quiet", "scary"],
+            correctAnswer: 1,
+            explanation: "'Exciting' means causing great interest or enthusiasm. The description of fast action, spaceships, and cheering audiences shows the sequel was exciting, directly contrasting with the boring first movie."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Way to shine! 🌈</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
