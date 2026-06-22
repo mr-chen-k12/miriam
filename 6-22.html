@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 104: Grade 3 Math Challenge (Printer Friendly)</title>
+    
+    <style>
+        /* Clean, kid-friendly typography optimized for reading and printing */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            font-style: italic;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 20px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.1s;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Hidden by default on-screen */
+            margin-top: 15px;
+            background-color: #fafafa;
+            border: 1px dashed #666666;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            border: 1px solid #000000;
+            background-color: #eeeeee;
+            padding: 2px 6px;
+            margin-bottom: 10px;
+        }
+        canvas {
+            background: #ffffff;
+            border: 1px solid #666666;
+            margin: 15px 0;
+            display: block;
+        }
+
+        /* PRINTER OPTIMIZATIONS */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Hide answer buttons when printing */
+            }
+            .solution-box {
+                display: none !important; /* Ensure answers never print for students */
+            }
+            .problem-card {
+                border-bottom: 1px solid #444444;
+                padding-bottom: 60px; /* Gives kids plenty of room to write out their work */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-area">
+    <h1>Lesson 104: Math Challenge</h1>
+    <p>Student Test Sheet</p>
+</div>
+
+<div class="container">
+
+    <!-- Question 1 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Five gallons equals how many quarts? <strong>(Hint: 1 gallon = 4 quarts)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(1)">Toggle Answer Sheet</button>
+        <div id="sol-1" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Know the rule: 1 gallon = 4 quarts.</p>
+            <p>2. Multiply the number of gallons by 4:</p>
+            <p><strong>5 gallons × 4 quarts = 20 quarts</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Liam gave the cashier a $20 bill to buy a new toy model car. He received $4.50 back in change. How much did the toy car cost?</p>
+        <button class="btn-action" onclick="toggleDisplay(2)">Toggle Answer Sheet</button>
+        <div id="sol-2" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the change from the money Liam gave the cashier:</p>
+            <p><strong>$20.00 − $4.50 = $15.50</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Amy is 4 years older than Ben. Ben is two times as old as Cody. If Amy is 12 years old, how old is Cody?</p>
+        <button class="btn-action" onclick="toggleDisplay(3)">Toggle Answer Sheet</button>
+        <div id="sol-3" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Find Ben's age first: Amy is 12 and she is 4 years older than Ben. So, Ben is 12 − 4 = 8 years old.</p>
+            <p>2. Find Cody's age: Ben is 2 times as old as Cody. So, divide Ben's age by 2:</p>
+            <p><strong>8 ÷ 2 = 4 years old</strong> (Cody is 4 years old).</p>
+        </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Write a fraction to show each of the following descriptions:</p>
+        <p>(a) 1 out of 4 equal slices of a pizza eaten.</p>
+        <p>(b) 3 out of 5 pieces of candy shared.</p>
+        <p>(c) 5 out of 8 colored pencils used.</p>
+        <button class="btn-action" onclick="toggleDisplay(4)">Toggle Answer Sheet</button>
+        <div id="sol-4" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>1/4</strong></p>
+            <p>(b) <strong>3/5</strong></p>
+            <p>(c) <strong>5/8</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>One-third of the 27 students in Mr. Smith's class voted to play kickball at recess. How many students voted to play kickball?</p>
+        <button class="btn-action" onclick="toggleDisplay(5)">Toggle Answer Sheet</button>
+        <div id="sol-5" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>To find one-third of a group, divide the total number of students by 3:</p>
+            <p><strong>27 ÷ 3 = 9 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>Looking back at <strong>Question 5</strong>, how many students did <strong>not</strong> vote to play kickball?</p>
+        <button class="btn-action" onclick="toggleDisplay(6)">Toggle Answer Sheet</button>
+        <div id="sol-6" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the students who voted for kickball from the total class size:</p>
+            <p><strong>27 − 9 = 18 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <p>Find the total <strong>perimeter</strong> (the distance all the way around) of this rectangular playground:</p>
+        <canvas id="canvas-q7" width="280" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(7)">Toggle Answer Sheet</button>
+        <div id="sol-7" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>A rectangle has opposite sides that are equal. Add all 4 sides together:</p>
+            <p><strong>12 m + 6 m + 12 m + 6 m = 36 meters</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <p>Write out the whole number <strong>7,403</strong> using words.</p>
+        <button class="btn-action" onclick="toggleDisplay(8)">Toggle Answer Sheet</button>
+        <div id="sol-8" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>"seven thousand, four hundred three"</strong> (or "seven thousand, four hundred and three")</p>
+        </div>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <p>Estimate the sum of <strong>57</strong> and <strong>34</strong> by rounding each number to the nearest ten. Then, find the exact sum.</p>
+        <button class="btn-action" onclick="toggleDisplay(9)">Toggle Answer Sheet</button>
+        <div id="sol-9" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. <strong>Estimate:</strong> Round 57 up to 60. Round 34 down to 30. Add them up: 60 + 30 = <strong>90</strong>.</p>
+            <p>2. <strong>Exact Sum:</strong> Add the original numbers together: 57 + 34 = <strong>91</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <p>Maya tracked the number of books she read over the last few months: <strong>4, 3, 5, 3, 6</strong>.</p>
+        <p>(a) Which number of books shows up the most often (the <strong>mode</strong>)?</p>
+        <p>(b) How many books did she read in all?</p>
+        <button class="btn-action" onclick="toggleDisplay(10)">Toggle Answer Sheet</button>
+        <div id="sol-10" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) Mode: <strong>3</strong> (It appears twice, which is more than any other number).</p>
+            <p>(b) Total: 4 + 3 + 5 + 3 + 6 = <strong>21 books</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 11 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <p>What solid three-dimensional geometric shape is a standard birthday party hat?</p>
+        <button class="btn-action" onclick="toggleDisplay(11)">Toggle Answer Sheet</button>
+        <div id="sol-11" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p>A <strong>cone</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <p>Look at the angles drawn below. Identify which angle is an <strong>obtuse angle</strong> (an angle that opens wider than a sharp square corner):</p>
+        <canvas id="canvas-q12" width="400" height="100"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(12)">Toggle Answer Sheet</button>
+        <div id="sol-12" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Angle C</strong> is the obtuse angle because it is wider than 90 degrees (a square corner).</p>
+        </div>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <p>Calculate: <strong>$30.00 − ($12.50 + $4.50)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(13)">Toggle Answer Sheet</button>
+        <div id="sol-13" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Always solve the numbers inside the parentheses first: $12.50 + $4.50 = $17.00.</p>
+            <p>2. Subtract that amount from $30.00:</p>
+            <p><strong>$30.00 − $17.00 = $13.00</strong></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Simple, clean on-screen interaction logic
+    function toggleDisplay(probNum) {
+        var box = document.getElementById("sol-" + probNum);
+        if (box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+        }
+    }
+
+    // Dynamic Canvas Drawings (Generates sharp graphics for printing)
+    window.onload = function() {
+        // Draw Rectangle for Question 7
+        const ctx7 = document.getElementById('canvas-q7').getContext('2d');
+        ctx7.strokeStyle = '#000000';
+        ctx7.lineWidth = 2;
+        ctx7.strokeRect(40, 30, 200, 80);
+        ctx7.font = 'bold 14px Arial';
+        ctx7.fillStyle = '#000000';
+        ctx7.fillText('12 m', 120, 23);
+        ctx7.fillText('6 m', 248, 75);
+
+        // Draw Angles for Question 12
+        const ctx12 = document.getElementById('canvas-q12').getContext('2d');
+        ctx12.strokeStyle = '#000000';
+        ctx12.lineWidth = 2;
+        ctx12.font = 'bold 14px Arial';
+        ctx12.fillStyle = '#000000';
+
+        // Angle A: Acute (45 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(30, 70);
+        ctx12.lineTo(90, 70);
+        ctx12.moveTo(30, 70);
+        ctx12.lineTo(75, 25);
+        ctx12.stroke();
+        ctx12.fillText('Angle A', 35, 92);
+
+        // Angle B: Right Angle (90 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(160, 70);
+        ctx12.lineTo(220, 70);
+        ctx12.moveTo(160, 70);
+        ctx12.lineTo(160, 15);
+        ctx12.stroke();
+        ctx12.strokeRect(160, 60, 10, 10); // Square corner box
+        ctx12.fillText('Angle B', 165, 92);
+
+        // Angle C: Obtuse (135 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(390, 70);
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(290, 30);
+        ctx12.stroke();
+        ctx12.fillText('Angle C', 325, 92);
+    };
+</script>
+
+</body>
+</html>
