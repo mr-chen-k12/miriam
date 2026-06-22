@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 7 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 7</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although the massive elephant usually crashes through the thick jungle branches making a loud racket, it can be surprisingly ______ when moving past a sleeping lion cub; it lifts its huge feet gently, steps over dry leaves, and walks without making a sound.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["clumsy", "silent", "angry", "heavy"],
+            correctAnswer: 1,
+            explanation: "'Silent' means completely quiet. Because the text explains that the elephant lifts its feet gently and walks without making a sound to avoid waking the lion cub, it is acting in a silent way."
+        },
+        {
+            passage: "Beavers are master builders of the animal world. They use their sharp front teeth to cut down trees and gather thick branches. Then, they pile mud, stones, and sticks together in the middle of a river to build a sturdy dam. This dam blocks the running water and creates a deep, safe pond where the beavers can construct their underwater homes.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Beavers have sharp teeth that never stop growing.",
+                "Beavers build strong dams to create safe ponds for their homes.",
+                "Running water in a river can be very dangerous for small animals.",
+                "Cutting down large trees takes a very long time."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage focuses entirely on how beavers cut down resources and assemble dams to transform running rivers into safe, calm ponds for their living spaces."
+        },
+        {
+            passage: "In the book 'The Whispering Mountain', Oliver's grandmother explains that practicing an art or skill every single day is how someone achieves greatness, even if they don't see results right away.",
+            prompt: "Which sentence from 'The Whispering Mountain' best supports the grandmother's idea?",
+            options: [
+                "\"The mountain trail was lined with tall pine trees and smooth gray stones.\"",
+                "\"Oliver painted a tiny red bird sitting on the branch of an old oak tree.\"",
+                "\"Even though his first forty sketches looked like messy scribbles, Oliver sat at his desk every afternoon for a year until his drawings looked incredibly real.\"",
+                "\"The art studio had three large windows that let in the warm morning sunlight.\""
+            ],
+            correctAnswer: 2,
+            explanation: "This sentence directly shows Oliver dedicating time every afternoon for a full year despite starting with poor results ('messy scribbles'), perfectly reinforcing the theme of daily practice leading to skill mastery."
+        },
+        {
+            passage: "Solar panels are wonderful inventions because they trap clean energy directly from sunlight to power household appliances. However, during long winter storms when thick, dark clouds block the sky for days, the panels cannot collect enough light to keep the house warm. Therefore, to ensure families have electricity during stormy weather, engineers must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "paint the solar panels bright yellow so they look like the sun.",
+                "design large, powerful batteries that can store extra energy for cloudy days.",
+                "tell people to only use electricity when it is raining outside.",
+                "build solar panels that are made out of heavy wool blankets."
+            ],
+            correctAnswer: 1,
+            explanation: "The problem mentioned is that solar panels cannot collect energy during cloudy storms. Building large batteries to store extra power collected on sunny days directly resolves the storage and supply issue."
+        },
+        {
+            passage: "Even though the math puzzle seemed completely confusing at first glance, the teacher's explanation was extremely ______; after she drew a simple diagram on the board, every student immediately understood how to solve the problem.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["clear", "loud", "difficult", "long"],
+            correctAnswer: 0,
+            explanation: "'Clear' means easy to understand. Since drawing a simple diagram helped every single student immediately understand the solution, the teacher's explanation was clear, contrasting with the 'confusing' puzzle."
+        },
+        {
+            passage: "Long ago, people used heavy ice blocks wrapped in thick straw to keep their milk cold during hot summer days. However, the ice blocks would always melt completely within a single day, causing the milk to spoil quickly. To fix this frustrating problem, inventors eventually created the modern refrigerator, which uses electricity to keep food chilly all day and night.",
+            prompt: "Which choice best describes what the second sentence ('However, the ice... quickly.') does in the text?",
+            options: [
+                "It explains why milk is a healthy drink for growing children.",
+                "It introduces a major problem with using ice blocks that led to a new invention.",
+                "It proves that ancient people did not like to drink cold milk.",
+                "It lists step-by-step instructions on how to build a wooden ice box."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence uses 'However' to identify a significant limitation of using ice blocks (they melt too fast and let milk spoil), which served as the core reason inventors engineered the refrigerator."
+        },
+        {
+            passage: "Text 1<br>Playing video games is fantastic because it helps children develop quick problem-solving skills. Navigating tricky mazes and solving puzzles in games trains the brain to think fast and react to challenges creatively.<br><br>Text 2<br>Spending hours playing video games is harmful to young children. Sitting in front of a bright screen for too long hurts a child's eyes, stops them from playing outside, and makes them skip reading books, which are much better for their education.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that video games 'develop quick problem-solving skills'?",
+            options: [
+                "By agreeing that children should play video games all day long to get smart.",
+                "By arguing that eye strain and missing out on reading books are worse than any quick brain skills games might give.",
+                "By suggesting that authors should write books inside video games.",
+                "By proving that playing outside makes children bad at solving puzzles."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 2 focuses on negative physical and academic outcomes (eye strain, less outdoor time, missing out on reading). This implies that the author considers these issues more serious than the minor cognitive benefits highlighted in Text 1."
+        },
+        {
+            passage: "Emperor penguins lay their single egg on the freezing Antarctic ice during the coldest months of winter. To keep the egg from freezing, the father penguin balances it carefully on top of his feet and tucks it under a warm flap of skin called a brood pouch. However, if the father accidentally drops the egg onto the bare ice for more than a few seconds, the freezing wind will crack it. Because a clumsy penguin just slipped and let his egg roll away onto the bare ice, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "the egg will quickly freeze and fail to hatch safely.",
+                "the father penguin will grow wings and fly to a warmer beach.",
+                "the egg will instantly turn into a small gray stone.",
+                "another penguin will teach the egg how to swim in the ocean."
+            ],
+            correctAnswer: 0,
+            explanation: "The text establishes a clear rule: dropping the egg onto bare ice for more than a few seconds allows the freezing wind to crack and ruin it. Thus, rolling away onto bare ice logically means it will freeze and fail to hatch."
+        },
+        {
+            passage: "To see if warm water or cold water dissolves sugar faster, students placed one sugar cube into a glass of hot tea and another sugar cube into a glass of iced lemonade. They stirred both glasses at the same time. They observed that the sugar in the hot tea vanished in ten seconds, while the sugar in the cold lemonade took two minutes to disappear, proving that heat speeds up dissolving.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a funny story about a chef who put salt into a batch of sweet cookies.",
+                "It describes an experiment, compares how sugar reacted to two different temperatures, and shares the result.",
+                "It lists step-by-step instructions for making a fresh pitcher of lemonade.",
+                "It argues that children should never drink sweet beverages."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage sets up a science trial (testing sugar cubes in hot tea vs. cold lemonade), compares the exact time differences measured, and concludes with the final discovery rule."
+        },
+        {
+            passage: "While the morning practice session was incredibly disorganized, with players running to the wrong fields and dropping their water bottles, the afternoon scrimmage was remarkably ______; every player knew their exact position, the plays were executed flawlessly, and the coach didn't have to stop the game once.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["messy", "orderly", "loud", "slow"],
+            correctAnswer: 1,
+            explanation: "'Orderly' means clean, neat, and well-behaved. The description of players knowing their jobs and executed plays working flawlessly shows that the session was orderly, contrasting with the 'disorganized' morning."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Brilliantly read! 🌟</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Outstanding academic achievement! Check over your perfect work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Review your choices and historical takeaways below. Practice again to land a spotless 10/10 score and secure your Harvard badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
