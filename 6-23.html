@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 104: Student Test Sheet (Printer Friendly Variant)</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Base Styling optimized for both clean screen reading and printing */
+        body {
+            font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.1s;
+            margin-top: 10px;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Interactive mode default */
+            margin-top: 12px;
+            background-color: #fcfcfc;
+            border: 1px solid #999999;
+            padding: 12px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            border: 1px solid #000000;
+            padding: 1px 6px;
+            margin-bottom: 8px;
+        }
+        .sub-problem {
+            margin-left: 20px;
+            margin-top: 15px;
+            padding-left: 10px;
+            border-left: 2px dashed #999999;
+        }
+        .options-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 8px 0;
+        }
+        .options-list li {
+            margin-bottom: 4px;
+        }
+
+        /* PRINTER OPTIMIZATIONS */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Strip interactive buttons */
+            }
+            .solution-box {
+                display: none !important; /* Force solutions hidden during printing */
+            }
+            .problem-card {
+                border-bottom: 1px solid #666666;
+                padding-bottom: 40px; /* Provides space for student written work */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-area">
+        <h1>Lesson 104: Assessment Sheet</h1>
+        <p>Student Name: ___________________________ &nbsp;&nbsp;&nbsp;&nbsp; Date: ___________________</p>
+    </div>
+
+    <div class="problem-card">
+        <div class="badge">Problem 1</div>
+        <div class="problem-header">Liquid Measurement Equivalences</div>
+        <p>Complete the following liquid measurement conversion chain using standard rules: <br>
+        $$\text{2 gallons} = \text{\_\_\_\_\_ quarts} = \text{\_\_\_\_\_ pints} = \text{\_\_\_\_\_ cups}$$</p>
+        
+        <button class="btn-action" onclick="toggleSolution('sol-1')">Toggle Solution</button>
+        <div id="sol-1" class="solution-box">
+            <strong>Solution:</strong><br>
+            • \(2 \text{ gallons} \times 4 = \mathbf{8} \text{ quarts}\)<br>
+            • \(8 \text{ quarts} \times 2 = \mathbf{16} \text{ pints}\)<br>
+            • \(16 \text{ pints} \times 2 = \mathbf{32} \text{ cups}\)<br>
+            <strong>Final answer chain:</strong> \(2 \text{ gal} = 8 \text{ qt} = 16 \text{ pt} = 32 \text{ c}\).
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="badge">Problem 2</div>
+        <div class="problem-header">Algebraic Word Problem: Scaffolded Building Blocks</div>
+        <p><strong>Scenario:</strong> Liam is $y$ years old. His older sister, Maya, is $4$ years older than twice Liam's age. The sum of their ages is $31$ years. Let's break down how to represent this scenario mathematically.</p>
+
+        <div class="sub-problem">
+            <strong>Part A:</strong> Which algebraic expression properly represents Maya's age in terms of Liam's age $y$?
+            <ul class="options-list">
+                <li><input type="radio" name="q2a" id="q2a-1"> A) \(4y + 2\)</li>
+                <li><input type="radio" name="q2a" id="q2a-2"> B) \(2y + 4\)</li>
+                <li><input type="radio" name="q2a" id="q2a-3"> C) \(2(y + 4)\)</li>
+                <li><input type="radio" name="q2a" id="q2a-4"> D) \(y + 4\)</li>
+            </ul>
+        </div>
+
+        <div class="sub-problem">
+            <strong>Part B:</strong> Which expression correctly represents the <strong>sum</strong> of Liam's age and Maya's age combined before simplifying?
+            <ul class="options-list">
+                <li><input type="radio" name="q2b" id="q2b-1"> A) \(y + (2y + 4)\)</li>
+                <li><input type="radio" name="q2b" id="q2b-2"> B) \(y + (4y + 2)\)</li>
+                <li><input type="radio" name="q2b" id="q2b-3"> C) \(2y + 4\)</li>
+                <li><input type="radio" name="q2b" id="q2b-4"> D) \(y + 31\)</li>
+            </ul>
+        </div>
+
+        <div class="sub-problem">
+            <strong>Part C:</strong> Write and solve the complete equation to find Liam's current age (\(y\)), and then determine Maya's age.
+        </div>
+
+        <button class="btn-action" onclick="toggleSolution('sol-2')">Toggle Solution</button>
+        <div id="sol-2" class="solution-box">
+            <strong>Solution & Grading Key:</strong><br>
+            • <strong>Part A:</strong> The correct choice is <strong>B) \(2y + 4\)</strong> ("4 years older than [\(+4\)] twice Liam's age [\(2y\)]").<br>
+            • <strong>Part B:</strong> The correct choice is <strong>A) \(y + (2y + 4)\)</strong> (Liam's age \(y\) plus Maya's age \(2y + 4\)).<br>
+            • <strong>Part C Calculation:</strong><br>
+            $$\text{Sum Equation: } y + 2y + 4 = 31$$<br>
+            $$3y + 4 = 31$$<br>
+            $$3y = 27 \implies y = 9$$<br>
+            • <strong>Final Ages:</strong> Liam is <strong>9 years old</strong>, and Maya is \(2(9) + 4 = \mathbf{22}\) years old.
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="badge">Problem 3</div>
+        <div class="problem-header">Percent Discounts and Final Cost</div>
+        <p>A video game console normally costs $250. This week, the store is running a promotion offering a $15\%$ discount off its original price. What is the sales price of the console before tax?</p>
+        
+        <button class="btn-action" onclick="toggleSolution('sol-3')">Toggle Solution</button>
+        <div id="sol-3" class="solution-box">
+            <strong>Solution:</strong><br>
+            • Calculate the discount amount: \(250 \times 0.15 = \$37.50\).<br>
+            • Subtract the discount from the baseline total: \(250 - 37.50 = \$212.50\).<br>
+            <strong>Final Sale Price:</strong> $212.50.
+        </div>
+    </div>
+</div>
+
+<script>
+    // Universal visibility switcher for interactive review mode
+    function toggleSolution(id) {
+        var box = document.getElementById(id);
+        if (box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>
