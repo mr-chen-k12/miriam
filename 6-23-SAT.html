@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 8 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 8</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although most modern household cats are known for being completely lazy and sleeping up to sixteen hours a day on comfortable couches, they can be remarkably ______ when they spot a stray mouse; they crouch low, spring into action with explosive power, and catch their target instantly.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["sleepy", "active", "careless", "gentle"],
+            correctAnswer: 1,
+            explanation: "'Active' means moving quickly or doing things with lots of energy. Since the text describes the cat crouching low, springing into action, and catching a target instantly, it contrasts with being 'lazy'."
+        },
+        {
+            passage: "Desert camels have unique features that help them walk across vast sand dunes without sinking. They have very wide, soft feet that spread out every time they step on the loose ground. This design acts just like a pair of snowshoes, distributing their heavy body weight evenly across the surface. Because of these special feet, camels can trek effortlessly for miles across shifting sands.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Camels prefer traveling through deep winter snow instead of dry sand.",
+                "Camels have wide feet that prevent them from sinking into desert sand.",
+                "The desert is filled with heavy sand dunes that can trap large animals.",
+                "Snowshoes are tools that humans invented after watching desert wildlife."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage centers entirely on how a camel's wide feet spread out its body weight, specifically preventing it from sinking down while traveling through loose sand."
+        },
+        {
+            passage: "In the book 'The Inventor's Journal', Dr. Bell notes that the most brilliant solutions often come after a series of mistakes, because each error tells you exactly what to fix next.",
+            prompt: "Which sentence from 'The Inventor's Journal' best supports Dr. Bell's idea?",
+            options: [
+                "\"The metal workspace was organized with small plastic jars holding shiny brass gears.\"",
+                "\"Leo felt incredibly discouraged when his first three mechanical toys burst apart, but studying the broken pieces showed him how to strengthen the springs for his next build, which worked perfectly.\"",
+                "\"He wore a pair of clear safety goggles to protect his eyes from stray flying sparks.\"",
+                "\"The instruction manual was printed on thick blue paper with bright white letters.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This option directly shows an individual learning from initial failures ('broken pieces') and using that feedback to create a successful, working machine, matching Dr. Bell's point."
+        },
+        {
+            passage: "Plants need sunlight to create their own food through a process called photosynthesis. Deep inside thick rainforests, towering trees grow massive leaves that block out nearly all sunlight from reaching the dirt below. Therefore, to capture enough light to grow big and healthy, smaller plants growing on the forest floor must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "climb up the trunks of larger trees to reach the bright canopy above.",
+                "learn to grow without needing any water or rich soil.",
+                "turn their leaves upside down so they stay completely dark.",
+                "stop making food and wait for the winter snow to fall."
+            ],
+            correctAnswer: 0,
+            explanation: "Since the tall trees block light from reaching the ground, climbing up the tree trunks to access the upper canopy is the most logical way for a smaller plant to find the sunlight it needs to survive."
+        },
+        {
+            passage: "Even though the winter storm outside brought freezing temperatures and icy winds, the inside of the log cabin was remarkably ______; a crackling fire blazed in the stone hearth, thick wool blankets covered the chairs, and a pot of sweet hot cocoa bubbled on the stove.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["chilly", "cozy", "empty", "dark"],
+            correctAnswer: 1,
+            explanation: "'Cozy' means warm, comfortable, and inviting. The presence of a blazing fire, wool blankets, and hot cocoa directly counters the freezing, icy storm outside."
+        },
+        {
+            passage: "Early humans used hollowed-out tree logs as canoes to carry goods across wide rivers. However, if they tried to pack too many heavy fishing nets or clay pots inside, these simple wooden logs would instantly tip over and sink to the bottom. To resolve this frustrating issue, ancient builders started tying multiple logs flat together side-by-side, creating the very first stable rafts.",
+            prompt: "Which choice best describes what the second sentence ('However, if... bottom.') does in the text?",
+            options: [
+                "It describes what kinds of fish ancient humans liked to catch for dinner.",
+                "It introduces a major design problem with log canoes that led to a better option.",
+                "It proves that early humans preferred walking over traveling across rivers.",
+                "It lists step-by-step assembly directions for carving a wooden canoe."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence introduces a critical limitation of single log canoes (they easily roll over and sink under heavy loads), which directly prompted the construction of wide, stable rafts."
+        },
+        {
+            passage: "Text 1<br>Allowing children to choose their own books at the public library is wonderful because it makes them love reading. When a child picks out a book about space monsters or magic castles on their own, they get excited to read every single page.<br><br>Text 2<br>Parents should always choose the books their children read. Left on their own, kids will only select simple comic books with silly pictures instead of picking challenging history books that teach important vocabulary words and facts.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that choosing books 'makes them love reading'?",
+            options: [
+                "By agreeing that space monsters are the most important topic for kids to study.",
+                "By arguing that reading easy, silly books is less valuable than learning real history facts from books picked by parents.",
+                "By suggesting that libraries should stop buying books with words altogether.",
+                "By proving that children never look at pictures when they read comics."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 2 emphasizes that children left to their own choices will select low-value material rather than educational texts, showing that the author prioritizes educational progress over raw entertainment value."
+        },
+        {
+            passage: "Woodpeckers use their hard, pointed beaks to drill holes into tree bark to find insects hiding inside. To protect their heads from the rapid, forceful pounding, they have thick, spongy skulls that act like internal helmets to absorb the shock. However, if a woodpecker attempts to drill directly into solid sheet metal or hard steel poles, the extreme force will stun its brain. Because a bird just tried to peck repeatedly at a metal street sign, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "the bird will easily find hundreds of juicy bugs inside the sign.",
+                "the impact will hurt the bird's head and force it to stop.",
+                "the metal sign will instantly grow soft like tree bark.",
+                "the woodpecker will build an underwater nest inside a river."
+            ],
+            correctAnswer: 1,
+            explanation: "The text explains that drilling into solid metal overrides the bird's natural shock protection and stuns its brain. Therefore, pecking a metal sign would logically injure or daze the bird, stopping it."
+        },
+        {
+            passage: "To determine if plants grow taller when listening to classical music, students placed two matching bean plants in separate rooms with the same sunlight and water. In one room, they played soft classical piano music all day long, while the other room remained completely silent. After a month, they measured both plants and found they were exactly the same height, proving that music does not alter plant growth.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells an entertaining story about a bean plant that learned how to play a musical instrument.",
+                "It outlines a scientific experiment, compares two different plant conditions, and delivers the conclusion.",
+                "It provides step-by-step planting directions for growing a backyard vegetable garden.",
+                "It argues that classical music is the best study tool for school students."
+            ],
+            correctAnswer: 1,
+            explanation: "The text outlines an experimental process (comparing a music environment against a quiet one), tracks the physical height measurements, and closes with the definitive takeaway."
+        },
+        {
+            passage: "While the western side of the mountain ridge was completely barren, featuring only dry rocks, gray gravel, and zero plant life, the eastern side was remarkably ______; it was blanketed in thick green moss, filled with wild colorful flowers, and covered by a dense forest.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["lush", "windy", "empty", "steep"],
+            correctAnswer: 0,
+            explanation: "'Lush' means covered with thick, healthy, growing plants. The description of moss, wild flowers, and dense forests directly contrasts with the 'barren' and plant-free western slope."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Sensational reading! 🌟</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Magnificent work! Review your perfect answers below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Take a close look at the details and explanations below. Try again to lock down a flawless 10/10 and claim your Harvard reward badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
