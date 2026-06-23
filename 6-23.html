@@ -1,97 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 104: Student Test Sheet (Printer Friendly Variant)</title>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 105: Grade 3 Math Challenge (Printer Friendly)</title>
+    
     <style>
-        /* Base Styling optimized for both clean screen reading and printing */
+        :root {
+            --ink: #1b1b1b;
+            --paper: #fffdf8;
+            --sky: #d9f0ff;
+            --mint: #dcf8e8;
+            --sun: #fff1a8;
+            --peach: #ffe0d1;
+            --purple: #eadfff;
+            --blue: #1976d2;
+            --green: #2e7d32;
+            --orange: #ef6c00;
+            --border: #2b2b2b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
-            line-height: 1.5;
-            background-color: #ffffff;
-            color: #000000;
+            font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+            line-height: 1.65;
+            background:
+                radial-gradient(circle at 12px 12px, rgba(25, 118, 210, 0.08) 0 3px, transparent 4px),
+                linear-gradient(135deg, #f7fbff 0%, #fffaf1 100%);
+            background-size: 34px 34px, auto;
+            color: var(--ink);
             margin: 0;
-            padding: 20px;
+            padding: 22px;
         }
-        .header-area {
-            border-bottom: 3px double #000000;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .header-area h1 {
-            margin: 0;
-            font-size: 26px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .header-area p {
-            margin: 5px 0 0 0;
-            font-size: 16px;
-        }
+
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
         }
+
+        .header-area {
+            max-width: 900px;
+            margin: 0 auto 28px auto;
+            padding: 22px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            border: 3px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.14);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-area::before,
+        .header-area::after {
+            content: "★";
+            position: absolute;
+            font-size: 42px;
+            color: rgba(255, 193, 7, 0.85);
+            top: 14px;
+        }
+
+        .header-area::before { left: 22px; }
+        .header-area::after { right: 22px; }
+
+        .header-area h1 {
+            margin: 0;
+            font-size: 34px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-area p {
+            margin: 6px 0 0 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 18px;
+            text-align: left;
+        }
+
+        .student-line {
+            background: rgba(255, 255, 255, 0.78);
+            border: 2px dashed rgba(0, 0, 0, 0.45);
+            border-radius: 14px;
+            padding: 9px 12px;
+            font-weight: 700;
+        }
+
+        .directions-box {
+            margin-top: 16px;
+            background: #ffffff;
+            border: 2px solid rgba(0, 0, 0, 0.65);
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .directions-box strong {
+            color: var(--blue);
+        }
+
         .problem-card {
             page-break-inside: avoid;
-            border-bottom: 1px solid #cccccc;
-            padding: 15px 0;
-            margin-bottom: 15px;
+            background: var(--paper);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 22px 24px 26px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+            position: relative;
         }
+
+        .problem-card:nth-of-type(4n + 1) { border-left: 12px solid var(--blue); }
+        .problem-card:nth-of-type(4n + 2) { border-left: 12px solid var(--green); }
+        .problem-card:nth-of-type(4n + 3) { border-left: 12px solid var(--orange); }
+        .problem-card:nth-of-type(4n + 4) { border-left: 12px solid #7b1fa2; }
+
         .problem-header {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
-        .btn-action {
-            background-color: #ffffff;
+            display: inline-block;
+            font-weight: 900;
+            font-size: 18px;
+            margin-bottom: 12px;
+            padding: 6px 14px;
             color: #000000;
-            border: 1px solid #000000;
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: bold;
+            background: var(--sun);
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.22);
+        }
+
+        .problem-card p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .problem-card strong {
+            color: #0d47a1;
+        }
+
+        .btn-action {
+            background: linear-gradient(180deg, #ffffff, #e8f4ff);
+            color: #0d47a1;
+            border: 2px solid #0d47a1;
+            padding: 9px 16px;
+            font-size: 14px;
+            font-weight: 900;
             cursor: pointer;
-            border-radius: 3px;
-            transition: background-color 0.1s;
-            margin-top: 10px;
+            border-radius: 999px;
+            margin-top: 14px;
+            box-shadow: 0 3px 0 rgba(13, 71, 161, 0.35);
         }
+
         .btn-action:hover {
-            background-color: #eeeeee;
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 rgba(13, 71, 161, 0.35);
+            background: #ffffff;
         }
+
         .solution-box {
-            display: none; /* Interactive mode default */
-            margin-top: 12px;
-            background-color: #fcfcfc;
-            border: 1px solid #999999;
-            padding: 12px;
+            display: none;
+            margin-top: 18px;
+            background: #f5fff7;
+            border: 2px dashed var(--green);
+            padding: 16px;
+            border-radius: 16px;
         }
+
         .badge {
             display: inline-block;
-            font-weight: bold;
+            font-weight: 900;
             text-transform: uppercase;
             font-size: 12px;
-            border: 1px solid #000000;
-            padding: 1px 6px;
-            margin-bottom: 8px;
+            border: 2px solid var(--green);
+            background-color: #dff4e4;
+            padding: 4px 9px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            color: #1b5e20;
         }
-        .sub-problem {
-            margin-left: 20px;
-            margin-top: 15px;
-            padding-left: 10px;
-            border-left: 2px dashed #999999;
+
+        .choice-list {
+            margin: 10px 0 16px 8px;
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 2px solid #d6d6d6;
+            border-radius: 16px;
         }
-        .options-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 8px 0;
+
+        .choice-list label {
+            display: block;
+            margin: 9px 0;
+            font-size: 17px;
+            cursor: pointer;
         }
-        .options-list li {
-            margin-bottom: 4px;
+
+        .choice-list input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 8px;
+            accent-color: var(--blue);
+        }
+
+        canvas {
+            background: #ffffff;
+            border: 2px solid #555555;
+            border-radius: 16px;
+            margin: 16px 0;
+            display: block;
+            max-width: 100%;
+            box-shadow: inset 0 0 0 4px #f7f7f7;
+        }
+
+        .work-reminder {
+            margin-top: 14px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: #fff8dc;
+            border: 2px dashed #d6a300;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 12px; }
+            .header-area h1 { font-size: 26px; }
+            .header-area::before,
+            .header-area::after { display: none; }
+            .student-info { grid-template-columns: 1fr; }
+            .problem-card { padding: 18px; }
+            .problem-card p { font-size: 16px; }
         }
 
         /* PRINTER OPTIMIZATIONS */
@@ -99,112 +245,342 @@
             body {
                 padding: 0;
                 font-size: 12pt;
+                background: #ffffff !important;
+                color: #000000;
+            }
+            .header-area {
+                background: #ffffff !important;
+                box-shadow: none;
+                border-radius: 0;
+                border: 2px solid #000000;
+                margin-bottom: 18px;
+                padding: 12px;
+            }
+            .header-area::before,
+            .header-area::after {
+                display: none;
+            }
+            .directions-box,
+            .student-line {
+                background: #ffffff !important;
             }
             .btn-action {
-                display: none !important; /* Strip interactive buttons */
+                display: none !important;
             }
             .solution-box {
-                display: none !important; /* Force solutions hidden during printing */
+                display: none !important;
             }
             .problem-card {
-                border-bottom: 1px solid #666666;
-                padding-bottom: 40px; /* Provides space for student written work */
+                box-shadow: none;
+                border: 1.5px solid #000000;
+                border-left: 8px solid #000000 !important;
+                border-radius: 0;
+                padding: 16px 16px 56px;
+                margin-bottom: 16px;
+                background: #ffffff !important;
+            }
+            .problem-header {
+                box-shadow: none;
+                border: 1.5px solid #000000;
+                background: #ffffff !important;
+            }
+            .work-reminder {
+                background: #ffffff !important;
+                border: 1px dashed #000000;
+            }
+            canvas {
+                box-shadow: none;
+                border: 1px solid #000000;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-area">
-        <h1>Lesson 104: Assessment Sheet</h1>
-        <p>Student Name: ___________________________ &nbsp;&nbsp;&nbsp;&nbsp; Date: ___________________</p>
+<div class="header-area">
+    <h1>Lesson 105: Math Challenge</h1>
+    <p>Think carefully. Show your strategy. Check your work.</p>
+    <div class="student-info">
+        <div class="student-line">Name: __________________________</div>
+        <div class="student-line">Date: __________________________</div>
     </div>
-
-    <div class="problem-card">
-        <div class="badge">Problem 1</div>
-        <div class="problem-header">Liquid Measurement Equivalences</div>
-        <p>Complete the following liquid measurement conversion chain using standard rules: <br>
-        $$\text{2 gallons} = \text{\_\_\_\_\_ quarts} = \text{\_\_\_\_\_ pints} = \text{\_\_\_\_\_ cups}$$</p>
-        
-        <button class="btn-action" onclick="toggleSolution('sol-1')">Toggle Solution</button>
-        <div id="sol-1" class="solution-box">
-            <strong>Solution:</strong><br>
-            • \(2 \text{ gallons} \times 4 = \mathbf{8} \text{ quarts}\)<br>
-            • \(8 \text{ quarts} \times 2 = \mathbf{16} \text{ pints}\)<br>
-            • \(16 \text{ pints} \times 2 = \mathbf{32} \text{ cups}\)<br>
-            <strong>Final answer chain:</strong> \(2 \text{ gal} = 8 \text{ qt} = 16 \text{ pt} = 32 \text{ c}\).
-        </div>
-    </div>
-
-    <div class="problem-card">
-        <div class="badge">Problem 2</div>
-        <div class="problem-header">Algebraic Word Problem: Scaffolded Building Blocks</div>
-        <p><strong>Scenario:</strong> Liam is $y$ years old. His older sister, Maya, is $4$ years older than twice Liam's age. The sum of their ages is $31$ years. Let's break down how to represent this scenario mathematically.</p>
-
-        <div class="sub-problem">
-            <strong>Part A:</strong> Which algebraic expression properly represents Maya's age in terms of Liam's age $y$?
-            <ul class="options-list">
-                <li><input type="radio" name="q2a" id="q2a-1"> A) \(4y + 2\)</li>
-                <li><input type="radio" name="q2a" id="q2a-2"> B) \(2y + 4\)</li>
-                <li><input type="radio" name="q2a" id="q2a-3"> C) \(2(y + 4)\)</li>
-                <li><input type="radio" name="q2a" id="q2a-4"> D) \(y + 4\)</li>
-            </ul>
-        </div>
-
-        <div class="sub-problem">
-            <strong>Part B:</strong> Which expression correctly represents the <strong>sum</strong> of Liam's age and Maya's age combined before simplifying?
-            <ul class="options-list">
-                <li><input type="radio" name="q2b" id="q2b-1"> A) \(y + (2y + 4)\)</li>
-                <li><input type="radio" name="q2b" id="q2b-2"> B) \(y + (4y + 2)\)</li>
-                <li><input type="radio" name="q2b" id="q2b-3"> C) \(2y + 4\)</li>
-                <li><input type="radio" name="q2b" id="q2b-4"> D) \(y + 31\)</li>
-            </ul>
-        </div>
-
-        <div class="sub-problem">
-            <strong>Part C:</strong> Write and solve the complete equation to find Liam's current age (\(y\)), and then determine Maya's age.
-        </div>
-
-        <button class="btn-action" onclick="toggleSolution('sol-2')">Toggle Solution</button>
-        <div id="sol-2" class="solution-box">
-            <strong>Solution & Grading Key:</strong><br>
-            • <strong>Part A:</strong> The correct choice is <strong>B) \(2y + 4\)</strong> ("4 years older than [\(+4\)] twice Liam's age [\(2y\)]").<br>
-            • <strong>Part B:</strong> The correct choice is <strong>A) \(y + (2y + 4)\)</strong> (Liam's age \(y\) plus Maya's age \(2y + 4\)).<br>
-            • <strong>Part C Calculation:</strong><br>
-            $$\text{Sum Equation: } y + 2y + 4 = 31$$<br>
-            $$3y + 4 = 31$$<br>
-            $$3y = 27 \implies y = 9$$<br>
-            • <strong>Final Ages:</strong> Liam is <strong>9 years old</strong>, and Maya is \(2(9) + 4 = \mathbf{22}\) years old.
-        </div>
-    </div>
-
-    <div class="problem-card">
-        <div class="badge">Problem 3</div>
-        <div class="problem-header">Percent Discounts and Final Cost</div>
-        <p>A video game console normally costs $250. This week, the store is running a promotion offering a $15\%$ discount off its original price. What is the sales price of the console before tax?</p>
-        
-        <button class="btn-action" onclick="toggleSolution('sol-3')">Toggle Solution</button>
-        <div id="sol-3" class="solution-box">
-            <strong>Solution:</strong><br>
-            • Calculate the discount amount: \(250 \times 0.15 = \$37.50\).<br>
-            • Subtract the discount from the baseline total: \(250 - 37.50 = \$212.50\).<br>
-            <strong>Final Sale Price:</strong> $212.50.
-        </div>
+    <div class="directions-box">
+        <strong>Directions:</strong> Read each question. Circle or check choices when asked. Use the space under each problem to show your thinking.
     </div>
 </div>
 
+<div class="container">
+
+    <!-- Question 1 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Three gallons equals how many quarts? <strong>(Hint: 1 gallon = 4 quarts)</strong></p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(1, this)">Show / Hide Answer Key</button>
+        <div id="sol-1" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Know the rule: 1 gallon = 4 quarts.</p>
+            <p>2. Multiply the number of gallons by 4:</p>
+            <p><strong>3 gallons × 4 quarts = 12 quarts</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Sofia gave the cashier a $10 bill to buy a pack of markers. She received $2.75 back in change. How much did the markers cost?</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(2, this)">Show / Hide Answer Key</button>
+        <div id="sol-2" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the change from the money Sofia gave the cashier:</p>
+            <p><strong>$10.00 − $2.75 = $7.25</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Mia is 3 years younger than Jordan. Jordan is 4 times as old as Leo. If Mia is 13 years old, how old is Leo?</p>
+        <p><strong>(a)</strong> Choose the expression that can help you find Jordan's age.</p>
+        <div class="choice-list">
+            <label><input type="checkbox"> 13 + 3</label>
+            <label><input type="checkbox"> 13 − 3</label>
+            <label><input type="checkbox"> 13 × 3</label>
+        </div>
+        <p><strong>(b)</strong> After finding Jordan's age, choose the expression that can help you find Leo's age.</p>
+        <div class="choice-list">
+            <label><input type="checkbox"> 16 + 4</label>
+            <label><input type="checkbox"> 16 × 4</label>
+            <label><input type="checkbox"> 16 ÷ 4</label>
+        </div>
+        <p><strong>(c)</strong> How old is Leo? Show or explain your thinking.</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(3, this)">Show / Hide Answer Key</button>
+        <div id="sol-3" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p><strong>(a)</strong> Mia is 3 years younger than Jordan, so Jordan is 3 years older than Mia. The helpful expression is <strong>13 + 3</strong>.</p>
+            <p>13 + 3 = <strong>16</strong>, so Jordan is 16 years old.</p>
+            <p><strong>(b)</strong> Jordan is 4 times as old as Leo, so divide Jordan's age by 4. The helpful expression is <strong>16 ÷ 4</strong>.</p>
+            <p><strong>(c)</strong> 16 ÷ 4 = <strong>4</strong>, so Leo is <strong>4 years old</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Write a fraction to show each of the following descriptions:</p>
+        <p>(a) 2 out of 6 equal parts of a granola bar eaten.</p>
+        <p>(b) 4 out of 7 stickers used.</p>
+        <p>(c) 3 out of 10 crayons sharpened.</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(4, this)">Show / Hide Answer Key</button>
+        <div id="sol-4" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>2/6</strong></p>
+            <p>(b) <strong>4/7</strong></p>
+            <p>(c) <strong>3/10</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>One-fourth of the 32 students in Ms. Rivera's class voted to play dodgeball at recess. How many students voted to play dodgeball?</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(5, this)">Show / Hide Answer Key</button>
+        <div id="sol-5" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>To find one-fourth of a group, divide the total number of students by 4:</p>
+            <p><strong>32 ÷ 4 = 8 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>Looking back at <strong>Question 5</strong>, how many students did <strong>not</strong> vote to play dodgeball?</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(6, this)">Show / Hide Answer Key</button>
+        <div id="sol-6" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the students who voted for dodgeball from the total class size:</p>
+            <p><strong>32 − 8 = 24 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <p>Find the total <strong>perimeter</strong> (the distance all the way around) of this rectangular garden:</p>
+        <canvas id="canvas-q7" width="280" height="140"></canvas>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(7, this)">Show / Hide Answer Key</button>
+        <div id="sol-7" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>A rectangle has opposite sides that are equal. Add all 4 sides together:</p>
+            <p><strong>15 ft + 7 ft + 15 ft + 7 ft = 44 feet</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <p>Write out the whole number <strong>8,206</strong> using words.</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(8, this)">Show / Hide Answer Key</button>
+        <div id="sol-8" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>"eight thousand, two hundred six"</strong> (or "eight thousand, two hundred and six")</p>
+        </div>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <p>Estimate the sum of <strong>68</strong> and <strong>47</strong> by rounding each number to the nearest ten. Then, find the exact sum.</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(9, this)">Show / Hide Answer Key</button>
+        <div id="sol-9" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. <strong>Estimate:</strong> Round 68 up to 70. Round 47 up to 50. Add them up: 70 + 50 = <strong>120</strong>.</p>
+            <p>2. <strong>Exact Sum:</strong> Add the original numbers together: 68 + 47 = <strong>115</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <p>Noah tracked the number of laps he ran over the last few gym classes: <strong>5, 7, 5, 8, 6</strong>.</p>
+        <p>(a) Which number of laps shows up the most often (the <strong>mode</strong>)?</p>
+        <p>(b) How many laps did he run in all?</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(10, this)">Show / Hide Answer Key</button>
+        <div id="sol-10" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) Mode: <strong>5</strong> (It appears twice, which is more than any other number).</p>
+            <p>(b) Total: 5 + 7 + 5 + 8 + 6 = <strong>31 laps</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 11 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <p>What solid three-dimensional geometric shape is a standard soup can?</p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(11, this)">Show / Hide Answer Key</button>
+        <div id="sol-11" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p>A <strong>cylinder</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <p>Look at the angles drawn below. Identify which angle is an <strong>acute angle</strong> (an angle that opens less than a square corner):</p>
+        <canvas id="canvas-q12" width="400" height="100"></canvas>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(12, this)">Show / Hide Answer Key</button>
+        <div id="sol-12" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Angle B</strong> is the acute angle because it is less than 90 degrees (less than a square corner).</p>
+        </div>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <p>Calculate: <strong>$40.00 − ($15.25 + $6.75)</strong></p>
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+        <button class="btn-action" onclick="toggleDisplay(13, this)">Show / Hide Answer Key</button>
+        <div id="sol-13" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Always solve the numbers inside the parentheses first: $15.25 + $6.75 = $22.00.</p>
+            <p>2. Subtract that amount from $40.00:</p>
+            <p><strong>$40.00 − $22.00 = $18.00</strong></p>
+        </div>
+    </div>
+
+</div>
+
+<div class="container" style="text-align:center; font-weight:800; margin: 10px auto 30px; color:#0d47a1;">
+    You are a math thinker. Use pictures, numbers, or words to explain.
+</div>
+
 <script>
-    // Universal visibility switcher for interactive review mode
-    function toggleSolution(id) {
-        var box = document.getElementById(id);
+    // Simple, clean on-screen interaction logic
+    function toggleDisplay(probNum, btn) {
+        var box = document.getElementById("sol-" + probNum);
         if (box.style.display === "block") {
             box.style.display = "none";
+            if (btn) btn.textContent = "Show / Hide Answer Key";
         } else {
             box.style.display = "block";
+            if (btn) btn.textContent = "Hide Answer Key";
         }
     }
+
+    // Dynamic Canvas Drawings (Generates sharp graphics for printing)
+    window.onload = function() {
+        // Draw Rectangle for Question 7
+        const ctx7 = document.getElementById('canvas-q7').getContext('2d');
+        ctx7.strokeStyle = '#000000';
+        ctx7.lineWidth = 2;
+        ctx7.strokeRect(40, 30, 200, 80);
+        ctx7.font = 'bold 14px Arial';
+        ctx7.fillStyle = '#000000';
+        ctx7.fillText('15 ft', 118, 23);
+        ctx7.fillText('7 ft', 248, 75);
+
+        // Draw Angles for Question 12
+        const ctx12 = document.getElementById('canvas-q12').getContext('2d');
+        ctx12.strokeStyle = '#000000';
+        ctx12.lineWidth = 2;
+        ctx12.font = 'bold 14px Arial';
+        ctx12.fillStyle = '#000000';
+
+        // Angle A: Obtuse (about 135 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(80, 70);
+        ctx12.lineTo(140, 70);
+        ctx12.moveTo(80, 70);
+        ctx12.lineTo(35, 25);
+        ctx12.stroke();
+        ctx12.fillText('Angle A', 55, 92);
+
+        // Angle B: Acute (about 35 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(185, 70);
+        ctx12.lineTo(245, 70);
+        ctx12.moveTo(185, 70);
+        ctx12.lineTo(235, 38);
+        ctx12.stroke();
+        ctx12.fillText('Angle B', 190, 92);
+
+        // Angle C: Right Angle (90 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(390, 70);
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(330, 15);
+        ctx12.stroke();
+        ctx12.strokeRect(330, 60, 10, 10); // Square corner box
+        ctx12.fillText('Angle C', 325, 92);
+    };
 </script>
 
-</body>
-</html>
+</body></html>
