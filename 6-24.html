@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 106: Grade 3 Math Challenge (Printer Friendly Variant)</title>
+    <title>Lesson 106: Grade 3 Math Challenge (Fixed Toggles)</title>
     
     <style>
         :root {
@@ -166,6 +166,7 @@
             background: #ffffff;
         }
 
+        /* HIDING AND SHOWING WITH CLASSES (FIXED INTERACTION BUG) */
         .solution-box {
             display: none;
             margin-top: 18px;
@@ -173,6 +174,10 @@
             border: 2px dashed var(--green);
             padding: 16px;
             border-radius: 16px;
+        }
+
+        .solution-box.show {
+            display: block; /* Overrides default layout state safely */
         }
 
         .badge {
@@ -258,19 +263,9 @@
                 padding: 12px;
             }
             .header-area::before,
-            .header-area::after {
-                display: none;
-            }
-            .directions-box,
-            .student-line {
-                background: #ffffff !important;
-            }
-            .btn-action {
-                display: none !important;
-            }
-            .solution-box {
-                display: none !important;
-            }
+            .header-area::after { display: none; }
+            .directions-box, .student-line { background: #ffffff !important; }
+            .btn-action, .solution-box, .solution-box.show { display: none !important; }
             .problem-card {
                 box-shadow: none;
                 border: 1.5px solid #000000;
@@ -285,14 +280,8 @@
                 border: 1.5px solid #000000;
                 background: #ffffff !important;
             }
-            .work-reminder {
-                background: #ffffff !important;
-                border: 1px dashed #000000;
-            }
-            canvas {
-                box-shadow: none;
-                border: 1px solid #000000;
-            }
+            .work-reminder { background: #ffffff !important; border: 1px dashed #000000; }
+            canvas { box-shadow: none; border: 1px solid #000000; }
         }
     </style>
 </head>
@@ -510,64 +499,72 @@
 </div>
 
 <script>
-    // Simple, clean on-screen interaction logic
+    // Bulletproof Class-based visibility toggle logic
     function toggleDisplay(probNum, btn) {
         var box = document.getElementById("sol-" + probNum);
-        if (box.style.display === "block") {
-            box.style.display = "none";
-            if (btn) btn.textContent = "Show / Hide Answer Key";
-        } else {
-            box.style.display = "block";
-            if (btn) btn.textContent = "Hide Answer Key";
+        if (!box) return;
+        
+        // Safely toggle the 'show' class name
+        var isShown = box.classList.toggle("show");
+        
+        // Update corresponding button layout label text
+        if (btn) {
+            btn.textContent = isShown ? "Hide Answer Key" : "Show / Hide Answer Key";
         }
     }
 
-    // Dynamic Canvas Drawings (Generates sharp graphics for printing)
+    // Dynamic Canvas Drawings (Generates crisp graphics for paper copies)
     window.onload = function() {
         // Draw Rectangle for Question 7
-        const ctx7 = document.getElementById('canvas-q7').getContext('2d');
-        ctx7.strokeStyle = '#000000';
-        ctx7.lineWidth = 2;
-        ctx7.strokeRect(40, 30, 200, 80);
-        ctx7.font = 'bold 14px Arial';
-        ctx7.fillStyle = '#000000';
-        ctx7.fillText('12 ft', 118, 23);
-        ctx7.fillText('8 ft', 248, 75);
+        const c7 = document.getElementById('canvas-q7');
+        if (c7) {
+            const ctx7 = c7.getContext('2d');
+            ctx7.strokeStyle = '#000000';
+            ctx7.lineWidth = 2;
+            ctx7.strokeRect(40, 30, 200, 80);
+            ctx7.font = 'bold 14px Arial';
+            ctx7.fillStyle = '#000000';
+            ctx7.fillText('12 ft', 118, 23);
+            ctx7.fillText('8 ft', 248, 75);
+        }
 
         // Draw Angles for Question 12
-        const ctx12 = document.getElementById('canvas-q12').getContext('2d');
-        ctx12.strokeStyle = '#000000';
-        ctx12.lineWidth = 2;
-        ctx12.font = 'bold 14px Arial';
-        ctx12.fillStyle = '#000000';
+        const c12 = document.getElementById('canvas-q12');
+        if (c12) {
+            const ctx12 = c12.getContext('2d');
+            ctx12.strokeStyle = '#000000';
+            ctx12.lineWidth = 2;
+            ctx12.font = 'bold 14px Arial';
+            ctx12.fillStyle = '#000000';
 
-        // Angle A: Acute (about 40 degrees)
-        ctx12.beginPath();
-        ctx12.moveTo(40, 70);
-        ctx12.lineTo(100, 70);
-        ctx12.moveTo(40, 70);
-        ctx12.lineTo(85, 32);
-        ctx12.stroke();
-        ctx12.fillText('Angle A', 45, 92);
+            // Angle A: Acute (about 40 degrees)
+            ctx12.beginPath();
+            ctx12.moveTo(40, 70);
+            ctx12.lineTo(100, 70);
+            ctx12.moveTo(40, 70);
+            ctx12.lineTo(85, 32);
+            ctx12.stroke();
+            ctx12.fillText('Angle A', 45, 92);
 
-        // Angle B: Right Angle (90 degrees)
-        ctx12.beginPath();
-        ctx12.moveTo(185, 70);
-        ctx12.lineTo(245, 70);
-        ctx12.moveTo(185, 70);
-        ctx12.lineTo(185, 15);
-        ctx12.stroke();
-        ctx12.strokeRect(185, 60, 10, 10); // Square corner box
-        ctx12.fillText('Angle B', 190, 92);
+            // Angle B: Right Angle (90 degrees)
+            ctx12.beginPath();
+            ctx12.moveTo(185, 70);
+            ctx12.lineTo(245, 70);
+            ctx12.moveTo(185, 70);
+            ctx12.lineTo(185, 15);
+            ctx12.stroke();
+            ctx12.strokeRect(185, 60, 10, 10); // Square corner box
+            ctx12.fillText('Angle B', 190, 92);
 
-        // Angle C: Obtuse (about 135 degrees)
-        ctx12.beginPath();
-        ctx12.moveTo(330, 70);
-        ctx12.lineTo(390, 70);
-        ctx12.moveTo(330, 70);
-        ctx12.lineTo(285, 25);
-        ctx12.stroke();
-        ctx12.fillText('Angle C', 325, 92);
+            // Angle C: Obtuse (about 135 degrees)
+            ctx12.beginPath();
+            ctx12.moveTo(330, 70);
+            ctx12.lineTo(390, 70);
+            ctx12.moveTo(330, 70);
+            ctx12.lineTo(285, 25);
+            ctx12.stroke();
+            ctx12.fillText('Angle C', 325, 92);
+        }
     };
 </script>
 
