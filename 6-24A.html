@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 106: Grade 3 Math Challenge</title>
+
+    <style>
+        :root {
+            --ink: #1b1b1b;
+            --paper: #fffdf8;
+            --sky: #e3f2fd;
+            --mint: #e8f5e9;
+            --sun: #fff9c4;
+            --peach: #fbe9e7;
+            --purple: #f3e5f5;
+            --blue: #1565c0;
+            --green: #2e7d32;
+            --orange: #e65100;
+            --border: #2b2b2b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+            line-height: 1.65;
+            background:
+                radial-gradient(circle at 12px 12px, rgba(21, 101, 192, 0.06) 0 3px, transparent 4px),
+                linear-gradient(135deg, #f4f9fe 0%, #fffbf5 100%);
+            background-size: 34px 34px, auto;
+            color: var(--ink);
+            margin: 0;
+            padding: 22px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-area {
+            max-width: 900px;
+            margin: 0 auto 28px auto;
+            padding: 22px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            border: 3px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.14);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-area::before,
+        .header-area::after {
+            content: "✦";
+            position: absolute;
+            font-size: 42px;
+            color: rgba(255, 152, 0, 0.85);
+            top: 14px;
+        }
+
+        .header-area::before {
+            left: 22px;
+        }
+
+        .header-area::after {
+            right: 22px;
+        }
+
+        .header-area h1 {
+            margin: 0;
+            font-size: 34px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-area p {
+            margin: 6px 0 0 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 18px;
+            text-align: left;
+        }
+
+        .student-line {
+            background: rgba(255, 255, 255, 0.78);
+            border: 2px dashed rgba(0, 0, 0, 0.45);
+            border-radius: 14px;
+            padding: 9px 12px;
+            font-weight: 700;
+        }
+
+        .directions-box {
+            margin-top: 16px;
+            background: #ffffff;
+            border: 2px solid rgba(0, 0, 0, 0.65);
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .directions-box strong {
+            color: var(--blue);
+        }
+
+        .problem-card {
+            page-break-inside: avoid;
+            background: var(--paper);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 22px 24px 26px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+            position: relative;
+        }
+
+        .problem-card:nth-of-type(4n + 1) {
+            border-left: 12px solid var(--blue);
+        }
+
+        .problem-card:nth-of-type(4n + 2) {
+            border-left: 12px solid var(--green);
+        }
+
+        .problem-card:nth-of-type(4n + 3) {
+            border-left: 12px solid var(--orange);
+        }
+
+        .problem-card:nth-of-type(4n + 4) {
+            border-left: 12px solid #6a1b9a;
+        }
+
+        .problem-header {
+            display: inline-block;
+            font-weight: 900;
+            font-size: 18px;
+            margin-bottom: 12px;
+            padding: 6px 14px;
+            color: #000000;
+            background: var(--sun);
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.22);
+        }
+
+        .problem-card p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .problem-card strong {
+            color: #0d47a1;
+        }
+
+        .btn-action {
+            background: linear-gradient(180deg, #ffffff, #e8f4ff);
+            color: #0d47a1;
+            border: 2px solid #0d47a1;
+            padding: 9px 16px;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            border-radius: 999px;
+            margin-top: 14px;
+            box-shadow: 0 3px 0 rgba(13, 71, 161, 0.35);
+        }
+
+        .btn-action:hover {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 rgba(13, 71, 161, 0.35);
+            background: #ffffff;
+        }
+
+        .solution-box {
+            display: none;
+            margin-top: 18px;
+            background: #f5fff7;
+            border: 2px dashed var(--green);
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .solution-box.show {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 12px;
+            border: 2px solid var(--green);
+            background-color: #dff4e4;
+            padding: 4px 9px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            color: #1b5e20;
+        }
+
+        .choice-list {
+            margin: 10px 0 16px 8px;
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 2px solid #d6d6d6;
+            border-radius: 16px;
+        }
+
+        .choice-list label {
+            display: block;
+            margin: 9px 0;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .choice-list input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 8px;
+            accent-color: var(--blue);
+        }
+
+        canvas {
+            background: #ffffff;
+            border: 2px solid #555555;
+            border-radius: 16px;
+            margin: 16px 0;
+            display: block;
+            max-width: 100%;
+            box-shadow: inset 0 0 0 4px #f7f7f7;
+        }
+
+        .work-reminder {
+            margin-top: 14px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: #fff8dc;
+            border: 2px dashed #d6a300;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .footer-message {
+            text-align: center;
+            font-weight: 800;
+            margin: 10px auto 30px;
+            color: #0d47a1;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 12px;
+            }
+
+            .header-area h1 {
+                font-size: 26px;
+            }
+
+            .header-area::before,
+            .header-area::after {
+                display: none;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-card {
+                padding: 18px;
+            }
+
+            .problem-card p {
+                font-size: 16px;
+            }
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+                background: #ffffff !important;
+                color: #000000;
+            }
+
+            .header-area {
+                background: #ffffff !important;
+                box-shadow: none;
+                border-radius: 0;
+                border: 2px solid #000000;
+                margin-bottom: 18px;
+                padding: 12px;
+            }
+
+            .header-area::before,
+            .header-area::after {
+                display: none;
+            }
+
+            .directions-box,
+            .student-line {
+                background: #ffffff !important;
+            }
+
+            .btn-action,
+            .solution-box,
+            .solution-box.show {
+                display: none !important;
+            }
+
+            .problem-card {
+                box-shadow: none;
+                border: 1.5px solid #000000;
+                border-left: 8px solid #000000 !important;
+                border-radius: 0;
+                padding: 16px 16px 56px;
+                margin-bottom: 16px;
+                background: #ffffff !important;
+            }
+
+            .problem-header {
+                box-shadow: none;
+                border: 1.5px solid #000000;
+                background: #ffffff !important;
+            }
+
+            .work-reminder {
+                background: #ffffff !important;
+                border: 1px dashed #000000;
+            }
+
+            canvas {
+                box-shadow: none;
+                border: 1px solid #000000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header-area">
+    <h1>Lesson 106: Math Challenge</h1>
+    <p>Think carefully. Show your strategy. Check your work.</p>
+
+    <div class="student-info">
+        <div class="student-line">Name: __________________________</div>
+        <div class="student-line">Date: __________________________</div>
+    </div>
+
+    <div class="directions-box">
+        <strong>Directions:</strong> Read each question. Circle or check choices when asked. Use the space under each problem to show your thinking.
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Six gallons equals how many quarts? <strong>(Hint: 1 gallon = 4 quarts)</strong></p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Know the rule: 1 gallon = 4 quarts.</p>
+            <p>2. Multiply the number of gallons by 4:</p>
+            <p><strong>6 gallons × 4 quarts = 24 quarts</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Jackson gave the cashier a $20 bill to buy a new reading book. He received $5.40 back in change. How much did the book cost?</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the change from the money Jackson gave the cashier:</p>
+            <p><strong>$20.00 − $5.40 = $14.60</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Chloe is 5 years older than Lucas. Lucas is 3 times as old as Ryan. If Chloe is 14 years old, how old is Ryan?</p>
+
+        <p><strong>(a)</strong> Choose the expression that can help you find Lucas's age.</p>
+        <div class="choice-list">
+            <label><input type="checkbox"> 14 + 5</label>
+            <label><input type="checkbox"> 14 − 5</label>
+            <label><input type="checkbox"> 14 ÷ 5</label>
+        </div>
+
+        <p><strong>(b)</strong> After finding Lucas's age, choose the expression that can help you find Ryan's age.</p>
+        <div class="choice-list">
+            <label><input type="checkbox"> 9 + 3</label>
+            <label><input type="checkbox"> 9 × 3</label>
+            <label><input type="checkbox"> 9 ÷ 3</label>
+        </div>
+
+        <p><strong>(c)</strong> How old is Ryan? Show or explain your thinking.</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p><strong>(a)</strong> Chloe is 5 years older than Lucas, which means Lucas is 5 years younger than Chloe. The helpful expression is <strong>14 − 5</strong>.</p>
+            <p>14 − 5 = <strong>9</strong>, so Lucas is 9 years old.</p>
+            <p><strong>(b)</strong> Lucas is 3 times as old as Ryan, which means we divide Lucas's age by 3 to find Ryan's age. The helpful expression is <strong>9 ÷ 3</strong>.</p>
+            <p><strong>(c)</strong> 9 ÷ 3 = <strong>3</strong>, so Ryan is <strong>3 years old</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Write a fraction to show each of the following descriptions:</p>
+        <p>(a) 3 out of 8 equal parts of a chocolate bar eaten.</p>
+        <p>(b) 2 out of 5 shiny stickers used.</p>
+        <p>(c) 7 out of 10 colored pencils sharpened.</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>3/8</strong></p>
+            <p>(b) <strong>2/5</strong></p>
+            <p>(c) <strong>7/10</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>One-third of the 30 students in Mr. Davis's class voted to play kickball at recess. How many students voted to play kickball?</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>To find one-third of a group, divide the total number of students by 3:</p>
+            <p><strong>30 ÷ 3 = 10 students</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>Looking back at <strong>Question 5</strong>, how many students did <strong>not</strong> vote to play kickball?</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the students who voted for kickball from the total class size:</p>
+            <p><strong>30 − 10 = 20 students</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <p>Find the total <strong>perimeter</strong> of this rectangular playground sandbox. Perimeter means the distance all the way around.</p>
+
+        <canvas id="canvas-q7" width="280" height="140"></canvas>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>A rectangle has opposite sides that are equal. Add all 4 sides together:</p>
+            <p><strong>12 ft + 8 ft + 12 ft + 8 ft = 40 feet</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <p>Write out the whole number <strong>4,730</strong> using words.</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>four thousand, seven hundred thirty</strong></p>
+            <p>Also acceptable: <strong>four thousand, seven hundred and thirty</strong></p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <p>Estimate the sum of <strong>53</strong> and <strong>38</strong> by rounding each number to the nearest ten. Then, find the exact sum.</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. <strong>Estimate:</strong> Round 53 down to 50. Round 38 up to 40. Add them: 50 + 40 = <strong>90</strong>.</p>
+            <p>2. <strong>Exact Sum:</strong> Add the original numbers together: 53 + 38 = <strong>91</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <p>Ella tracked the number of books she checked out from the library over the last few weeks: <strong>6, 4, 6, 9, 5</strong>.</p>
+        <p>(a) Which number of books shows up the most often? This is called the <strong>mode</strong>.</p>
+        <p>(b) How many books did she check out in all?</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) Mode: <strong>6</strong>. It appears twice, which is more than any other number.</p>
+            <p>(b) Total: 6 + 4 + 6 + 9 + 5 = <strong>30 books</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <p>What solid three-dimensional geometric shape is a rectangular tissue box?</p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p>A <strong>rectangular prism</strong>.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <p>Look at the angles drawn below. Identify which angle is an <strong>obtuse angle</strong>. An obtuse angle opens wider than a perfect square corner.</p>
+
+        <canvas id="canvas-q12" width="400" height="100"></canvas>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Angle C</strong> is the obtuse angle because it is greater than 90 degrees.</p>
+        </div>
+    </div>
+
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <p>Calculate: <strong>$50.00 − ($22.40 + $7.60)</strong></p>
+
+        <div class="work-reminder">✏️ Show your work or explain your thinking here.</div>
+
+        <button class="btn-action" type="button">Show Answer Key</button>
+
+        <div class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Always solve the numbers inside the parentheses first: $22.40 + $7.60 = $30.00.</p>
+            <p>2. Subtract that amount from $50.00:</p>
+            <p><strong>$50.00 − $30.00 = $20.00</strong></p>
+        </div>
+    </div>
+
+</div>
+
+<div class="container footer-message">
+    You are a math thinker. Use pictures, numbers, or words to explain.
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Attach answer-key toggles without inline onclick.
+    // This works better in places that block or sanitize inline JavaScript.
+    document.querySelectorAll(".problem-card .btn-action").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const card = btn.closest(".problem-card");
+            const box = card.querySelector(".solution-box");
+
+            if (!box) return;
+
+            const isShown = box.classList.toggle("show");
+            btn.textContent = isShown ? "Hide Answer Key" : "Show Answer Key";
+        });
+    });
+
+    // Draw Rectangle for Question 7
+    const c7 = document.getElementById("canvas-q7");
+    if (c7) {
+        const ctx7 = c7.getContext("2d");
+
+        ctx7.clearRect(0, 0, c7.width, c7.height);
+
+        ctx7.strokeStyle = "#000000";
+        ctx7.lineWidth = 2;
+        ctx7.strokeRect(40, 30, 200, 80);
+
+        ctx7.font = "bold 14px Arial";
+        ctx7.fillStyle = "#000000";
+        ctx7.textAlign = "center";
+
+        ctx7.fillText("12 ft", 140, 23);
+        ctx7.fillText("12 ft", 140, 128);
+
+        ctx7.save();
+        ctx7.translate(260, 72);
+        ctx7.rotate(Math.PI / 2);
+        ctx7.fillText("8 ft", 0, 0);
+        ctx7.restore();
+
+        ctx7.save();
+        ctx7.translate(20, 72);
+        ctx7.rotate(-Math.PI / 2);
+        ctx7.fillText("8 ft", 0, 0);
+        ctx7.restore();
+    }
+
+    // Draw Angles for Question 12
+    const c12 = document.getElementById("canvas-q12");
+    if (c12) {
+        const ctx12 = c12.getContext("2d");
+
+        ctx12.clearRect(0, 0, c12.width, c12.height);
+
+        ctx12.strokeStyle = "#000000";
+        ctx12.lineWidth = 2;
+        ctx12.font = "bold 14px Arial";
+        ctx12.fillStyle = "#000000";
+
+        // Angle A: Acute
+        ctx12.beginPath();
+        ctx12.moveTo(40, 70);
+        ctx12.lineTo(100, 70);
+        ctx12.moveTo(40, 70);
+        ctx12.lineTo(85, 32);
+        ctx12.stroke();
+        ctx12.fillText("Angle A", 45, 92);
+
+        // Angle B: Right Angle
+        ctx12.beginPath();
+        ctx12.moveTo(185, 70);
+        ctx12.lineTo(245, 70);
+        ctx12.moveTo(185, 70);
+        ctx12.lineTo(185, 15);
+        ctx12.stroke();
+        ctx12.strokeRect(185, 60, 10, 10);
+        ctx12.fillText("Angle B", 190, 92);
+
+        // Angle C: Obtuse
+        ctx12.beginPath();
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(390, 70);
+        ctx12.moveTo(330, 70);
+        ctx12.lineTo(285, 25);
+        ctx12.stroke();
+        ctx12.fillText("Angle C", 325, 92);
+    }
+});
+</script>
+
+</body>
+</html>
