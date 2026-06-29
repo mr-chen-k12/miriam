@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3rd Grade Reading Practice - Set 11 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>3rd Grade Reading Practice - Set 11</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although the massive blue whale usually glides through the wide ocean at a slow, peaceful pace, it can turn remarkably ______ when it senses a pod of hunting orcas nearby; it twists its giant tail forcefully, accelerates through the waves, and shifts directions in the blink of an eye to get away.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["heavy", "clumsy", "agile", "lazy"],
+            correctAnswer: 2,
+            explanation: "'Agile' means able to move quickly and easily. Because the whale twists forcefully, speeds up, and changes directions in the blink of an eye to escape danger, it is acting in an agile way, which contrasts with its usual 'slow' pace."
+        },
+        {
+            passage: "The honey badger is famed for its incredible armor. It has loose, exceptionally thick skin that protects it from the sharp teeth of larger predators like leopards. Even more surprising, this tough hide is so durable that angry honeybees cannot pierce it with their stingers, and sharp porcupine quills simply bend right off. This unique physical shield allows the badger to raid hives and hunt for food without fear of injury.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Honey badgers prefer eating sweet honey over hunting wild animals.",
+                "The thick, tough skin of a honey badger protects it from stings, bites, and quills.",
+                "Leopards are the most dangerous predators living in the African grasslands.",
+                "Porcupine quills are sharper and more dangerous than honeybee stingers."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage focuses entirely on how the honey badger's thick, durable skin acts as armor against various natural threats like predators, bee stings, and quills."
+        },
+        {
+            passage: "In the book 'The Backyard Treehouse', Maya's grandfather points out that true craftsmanship requires slowing down and measuring twice, because hurrying through a project only leads to wobbly walls and wasted wood.",
+            prompt: "Which sentence from 'The Backyard Treehouse' best supports the grandfather's idea?",
+            options: [
+                "\"The green tool box contained two heavy steel hammers and a box of shiny silver nails.\"",
+                "\"Maya saw a small bluebird flying over the tall wooden fence behind the garden.\"",
+                "\"Instead of rushing to slap the roof boards together in ten minutes, Leo spent an hour checking every single angle with his level until the beams matched perfectly, creating a frame that never shook.\"",
+                "\"The sun was starting to set behind the hills, casting long shadows across the grass.\""
+            ],
+            correctAnswer: 2,
+            explanation: "This option directly shows Leo choosing not to rush, spending extra time checking his work carefully, and achieving a sturdy result, which perfectly supports the grandfather's stance against hurrying."
+        },
+        {
+            passage: "Desert mesquite plants are remarkable survivors. Because rain rarely falls on the dry sand dunes, the topsoil remains parched and empty of moisture for most of the year. However, deep underground, massive hidden water tables exist far beneath the surface. Therefore, to find enough water to keep its green leaves alive during long droughts, the mesquite plant must ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "grow incredibly long roots that travel straight down into the deep earth.",
+                "stop growing leaves and turn into a smooth gray stone.",
+                "soak up sunlight until its branches break apart.",
+                "wait for a heavy winter snowstorm to cover the desert floor."
+            ],
+            correctAnswer: 0,
+            explanation: "Since the passage states that moisture is only found far underground in deep water tables, growing long roots down into the earth is the most logical way for the plant to tap into that water supply."
+        },
+        {
+            passage: "Even though the history documentary started off looking incredibly boring to the students, the middle segment was remarkably ______; it featured exciting underwater footage of divers discovering a sunken pirate ship filled with gold coins.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["tiring", "captivating", "long", "simple"],
+            correctAnswer: 1,
+            explanation: "'Captivating' means holding your interest completely. The description of exciting underwater diving and finding pirate gold explains why the video was captivating, contrasting it with the 'boring' start."
+        },
+        {
+            passage: "Long ago, castle guards carried massive iron keys that were over a foot long to lock up heavy wooden fortress gates. However, if a guard accidentally dropped the heavy keys into the deep castle moat, the keys would instantly sink out of sight, leaving everyone locked outside for days. To eliminate this stressful problem, modern buildings use electronic keypads that open doors instantly with a simple digital button code.",
+            prompt: "Which choice best describes what the second sentence ('However, if a... days.') does in the text?",
+            options: [
+                "It describes what kinds of modern buildings use digital security systems.",
+                "It introduces a major problem with old iron keys that eventually led to a better solution.",
+                "It lists step-by-step instructions for swimming across a castle moat.",
+                "It proves that ancient guards preferred heavy gates over wooden doors."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence uses 'However' to point out a serious risk and inconvenience of traditional iron keys (losing them in the moat locked people out), showing the exact problem that modern keypads solved."
+        },
+        {
+            passage: "Text 1<br>Zoos play an essential role in saving endangered animals. By providing safe enclosures, expert medical care, and specialized breeding programs, zoos protect rare creatures like pandas and tigers from going extinct due to habitat loss in the wild.<br><br>Text 2<br>Keeping wild animals locked behind bars in zoos is harmful. No matter how large a zoo enclosure is, it can never replicate the vast, open spaces of a natural forest or savannah. Animals in captivity often become stressed and depressed because they cannot roam freely or hunt naturally.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's praise of zoo enclosures and specialized care?",
+            options: [
+                "By agreeing that tigers are much happier living in small spaces with doctors.",
+                "By arguing that artificial enclosures cannot match vast natural habitats and cause animals harmful stress.",
+                "By suggesting that all wild forests should be replaced with large city zoos.",
+                "By proving that pandas enjoy learning how to paint pictures for zoo visitors."
+            ],
+            correctAnswer: 1,
+            explanation: "Text 2 focuses on how captive environments fail to mimic natural spaces and lead to stress and depression, highlighting that the author sees these spaces as harmful cages rather than safe havens."
+        },
+        {
+            passage: "Polar bears depend heavily on solid platforms of Arctic sea ice to hunt for seals, which are their primary source of food. The bears sit patiently on the edges of ice sheets for hours, waiting for seals to surface for air. However, warm summer weather is causing the sea ice to melt much earlier each year, forcing the bears to swim miles through open water without finding a place to rest or hunt. Because the ice near a northern bay has melted completely this month, scientists believe that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "polar bears will easily catch twice as many seals as before.",
+                "the bears will experience a very difficult time finding food.",
+                "the seals will learn how to build nests out of warm green moss.",
+                "the bears will instantly grow wings to fly across the open water."
+            ],
+            correctAnswer: 1,
+            explanation: "The text sets up a rule: polar bears need sea ice to catch seals. If the sea ice melts completely, they lose their hunting platform, making it logical that they will struggle to find food."
+        },
+        {
+            passage: "A monarch butterfly goes through an amazing transformation during its lifecycle. First, an adult butterfly lays a tiny egg on a milkweed leaf. Next, a striped caterpillar hatches and eats the leaves until it grows large. Then, the caterpillar spins a hard green shell called a chrysalis around its body. Finally, after two weeks, the shell cracks open, and a beautiful orange-and-black butterfly emerges into the sky.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It tells a funny story about a caterpillar that wanted to be a bird.",
+                "It lists the sequence of steps that explain how a butterfly grows and changes over time.",
+                "It compares the wing sizes of different kinds of forest insects.",
+                "It argues that milkweed leaves are the healthiest food in nature."
+            ],
+            correctAnswer: 1,
+            explanation: "The text relies on sequential milestones ('First,' 'Next,' 'Then,' 'Finally') to lay out the chronological order of the butterfly's growth stages."
+        },
+        {
+            passage: "While the first half of the school basketball game was incredibly quiet, with few parents in the bleachers and no music playing, the second half was remarkably ______; the school band marched in playing loud drums, hundreds of fans cheered, and the crowd roared every time a basket was made.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["slow", "orderly", "boisterous", "silent"],
+            correctAnswer: 2,
+            explanation: "'Boisterous' means noisy, energetic, and cheerful. The description of loud drums, hundreds of cheering fans, and a roaring crowd shows that the second half was boisterous, contrasting directly with the 'quiet' first half."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Elite reading comprehension! 🌟</strong><br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Why?</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Exceptional performance! You read every single passage with precision. Inspect your perfect work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Great effort! Examine the detailed reasoning and explanations below. Give it another try to secure a perfect 10/10 and claim your Harvard reward badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
