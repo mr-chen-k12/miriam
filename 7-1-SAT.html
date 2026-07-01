@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th Grade Reading Practice - Set 12 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>4th Grade Reading Practice - Set 12</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Timber wolves are highly cooperative pack animals, relying on complex group coordination to track and hunt large prey. However, a solitary wolf must alter its strategies, becoming exceptionally ______ to survive alone in territory occupied by rival packs; it must move silently across ridgelines, mask its scent, and avoid any direct confrontation.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["aggressive", "conspicuous", "cautious", "gregarious"],
+            correctAnswer: 2,
+            explanation: "'Cautious' means being careful to avoid danger or mistakes. Because the passage describes the lone wolf moving silently, masking its scent, and avoiding confrontations with rival packs, it is taking careful, guarded actions.",
+        },
+        {
+            passage: "Mangrove forests, found along tropical coastlines, serve as crucial ecological buffers. Their complex, interlocking root systems trap heavy sediment, which stabilizes the shoreline against severe erosion caused by violent waves and storm surges. Additionally, these dense underwater root tangles create a protected nursery for young marine life, shielding small fish and crabs from larger open-ocean predators.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Mangroves grow only in tropical regions with warm, sunny climates.",
+                "Violent storm surges can cause severe and permanent coastal erosion.",
+                "Mangrove root systems stabilize coastlines and protect young marine animals.",
+                "Large open-ocean predators rely on coastal vegetation to find food."
+            ],
+            correctAnswer: 2,
+            explanation: "The passage focuses primarily on the dual ecological benefits of mangrove roots: stabilizing the shoreline against erosion and creating a protected nursery habitat for young marine animals.",
+        },
+        {
+            passage: "In the historical novel *The Midnight Rider*, the author illustrates that true courage is not the total absence of fear, but rather the internal determination to act responsibly despite being absolutely terrified.",
+            prompt: "Which sentence from *The Midnight Rider* best supports this idea?",
+            options: [
+                "\"The leather saddle was worn completely smooth from years of long-distance travel.\"",
+                "\"Although his hands trembled violently and his heart hammered against his ribs, Silas gripped the horse's reins tightly and rode directly toward the enemy camp to deliver the warning.\"",
+                "\"The full moon cast a pale silver glow across the empty, winding cobblestone streets.\"",
+                "\"Silas wore a heavy wool cloak to shield himself from the bitter midnight wind.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This sentence describes an individual showing fear ('hands trembled violently', 'heart hammered') but acting anyway ('rode directly toward the enemy camp to deliver the warning'), which aligns perfectly with the definition of courage provided.",
+        },
+        {
+            passage: "Deep-sea hydrothermal vents release superheated, mineral-rich water onto the pitch-black ocean floor where sunlight cannot penetrate. Lacking solar energy, specialized bacteria utilize a process called chemosynthesis, converting these harsh minerals into chemical energy. Because these bacteria form the absolute base of the local ecosystem, providing sustenance for unique tube worms and ghost crabs, any sudden blockage of the vent's mineral flow would mean that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "the local animals would migrate to shallow coral reefs near the ocean surface.",
+                "the entire deep-sea ecosystem around that vent would collapse from a lack of food.",
+                "the specialized bacteria would immediately begin using solar energy instead.",
+                "the ocean floor would become brightly illuminated by the sudden chemical changes."
+            ],
+            correctAnswer: 1,
+            explanation: "Since the bacteria rely on the vent's minerals to produce energy and form the base of the food web, blocking the mineral flow would destroy the food source, leading to the collapse of the dependent ecosystem.",
+        },
+        {
+            passage: "While the initial draft of the engineering team's bridge blueprint was highly **flawed**, containing major structural miscalculations that threatened its stability, the finalized design was thoroughly ______; every mathematical equation had been cross-checked, and the reinforced steel pillars were guaranteed to withstand extreme seismic activity.",
+            prompt: "Which choice completes the text with the word that is the most logical *opposite* of **flawed**?",
+            options: ["elaborate", "defective", "sound", "temporary"],
+            correctAnswer: 2,
+            explanation: "In engineering and construction, 'sound' means stable, safe, and free from defects. This directly contrasts with the 'flawed' and unstable initial draft described in the first half of the sentence.",
+        },
+        {
+            passage: "Early long-distance communication relied heavily on the telegraph system, which transmitted electrical pulses over copper wires using Morse code. However, this system possessed a significant vulnerability: if severe winter ice storms or falling trees snapped a single physical wire, entire cities were instantly cut off from vital news. To overcome this dangerous limitation, inventors developed wireless radio telegraphy, allowing signals to travel invisibly through the air without physical constraints.",
+            prompt: "Which choice best describes the function of the second sentence (*'However, this system... news.'*) in the text?",
+            options: [
+                "It explains the step-by-step process of translating Morse code into English.",
+                "It highlights a critical vulnerability of the telegraph system that prompted new technology.",
+                "It argues that wireless radios are more expensive to construct than copper wires.",
+                "It details how meteorologists predict severe winter ice storms."
+            ],
+            correctAnswer: 1,
+            explanation: "The second sentence identifies a major weakness (wires snapping and cutting off communication), which explains the problem that motivated inventors to design wireless radio communication.",
+        },
+        {
+            passage: "Text 1<br>Switching school districts to a modern four-day school week is an excellent strategy. By extending the school day by just one hour from Monday through Thursday, schools can close entirely on Fridays, saving thousands of dollars on transportation and heating costs while giving students a valuable extra day to rest.<br><br>Text 2<br>The implementation of a four-day school week creates significant, hidden hardships. Working parents face unexpected childcare expenses on Fridays, and younger students often become completely exhausted during the longer, high-pressure school days, which severely diminishes their ability to retain complex academic information.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that a four-day week gives students a 'valuable extra day to rest'?",
+            options: [
+                "By arguing that the longer school days cause exhaustion that hurts a student's learning before the weekend even arrives.",
+                "By agreeing that saving money on transportation is the primary goal of any school district.",
+                "By suggesting that schools should remain open on Saturdays and Sundays to maximize learning time.",
+                "By proving that elementary students prefer to spend more time completing homework assignments."
+            ],
+            correctAnswer: 0,
+            explanation: "Text 2 explicitly states that the extended hours during the week leave students 'completely exhausted' and harm their memory retention, directly challenging the idea that the schedule changes are restful or beneficial for learning.",
+        },
+        {
+            passage: "Peregrine falcons are renowned as the fastest animals on Earth, reaching diving speeds of over 200 miles per hour when striking prey from above. To breathe safely at these extreme speeds, they possess unique, cone-shaped structures inside their nostrils that slow down the rushing air pressure, protecting their delicate lungs from bursting. However, if a falcon's nostrils become entirely blocked by heavy mud or debris, it cannot regulate this intense air pressure during a high-speed descent. Therefore, if a falcon attempts a steep dive with obstructed nostrils, scientists predict that ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "it will fly twice as fast as its normal diving speed to clear the blockage.",
+                "it will experience severe respiratory injury or be forced to abort the dive.",
+                "the mud inside its nostrils will instantly turn into a solid, protective shield.",
+                "it will easily catch larger birds mid-air without using its sharp talons."
+            ],
+            correctAnswer: 1,
+            explanation: "The text states that the cone structures protect the lungs from bursting due to high air pressure, and that blocked nostrils mean the falcon cannot regulate this pressure. Diving while blocked would logically result in a lung/respiratory injury or force the bird to stop.",
+        },
+        {
+            passage: "Creating a fossil cast is a meticulous, multi-step process that paleontologists use to study ancient organisms safely. First, a scientist carefully cleans the original fossilized bone to remove dirt and rock debris. Next, they coat the specimen with a liquid rubber compound, which cures to form a highly detailed, flexible mold. Then, once the mold is carefully peeled away, plaster of Paris is poured into the hollow cavity. Finally, after the plaster hardens completely, it is extracted and painted to match the original bone, producing an exact replica for museum display.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It presents a historical argument about why genuine fossils are difficult to find.",
+                "It details a chronological sequence of steps required to produce a replica fossil cast.",
+                "It compares the physical differences between plaster of Paris and rubber molds.",
+                "It explains the environmental causes of prehistoric animal extinction events."
+            ],
+            correctAnswer: 1,
+            explanation: "The text is structured chronologically using process transition words ('First,' 'Next,' 'Then,' 'Finally') to explain the step-by-step production of a replica fossil cast.",
+        },
+        {
+            passage: "While the arctic tundra is universally recognized for its harsh, frigid winter climate, the brief summer season brings a remarkably ______ transformation; the permafrost softens slightly, vast fields of vibrant wildflowers erupt in color, and millions of migratory birds arrive to nest in the lush wetlands.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["subtle", "desolate", "dramatic", "gradual"],
+            correctAnswer: 2,
+            explanation: "'Dramatic' means striking, sudden, and highly noticeable. The transition from a harsh, icy environment to colorful wildflower fields and millions of active birds represents a major, vivid transformation.",
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Exemplary analytical reading! 🌟</strong><br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Spectacular! You evaluated advanced textual context with perfect accuracy. Inspect your work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Great job tackling these 4th-grade passages! Review the rationales below, discover what missed the mark, and try again to hit that perfect 10/10 and claim your Harvard reward badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
