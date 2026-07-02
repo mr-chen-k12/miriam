@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th Grade Reading Practice - Set 14 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>4th Grade Reading Practice - Set 14</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Although coral reef structures appear exceptionally delicate and easily fractured by human contact, they are remarkably ______ when confronting natural elements; their dense calcium carbonate skeletons absorb up to ninety-seven percent of the energy from crashing ocean waves, protecting coastlines from tropical storms.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["fragile", "resilient", "transparent", "hazardous"],
+            correctAnswer: 1,
+            explanation: "'Resilient' means able to withstand or recover quickly from difficult conditions. The text explains that despite appearing 'delicate,' the reefs successfully absorb massive amounts of wave energy and protect coastlines, showing their structural strength against storms.",
+        },
+        {
+            passage: "Honeybees rely on a highly complex messaging system known as the 'waggle dance' to keep their colony thriving. When a foraging bee discovers a rich patch of clover flowers, she returns to the dark hive and runs in a precise figure-eight pattern on the honeycomb. The angle of her run tells the other bees the exact direction of the food relative to the sun, while the duration of her abdomen-shaking reveals the precise distance. This detailed dance allows the entire hive to harvest resources efficiently without wasting energy searching blindly.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Foraging honeybees prefer searching for clover flowers over other plant species.",
+                "Honeybees use a specialized figure-eight dance to communicate the exact location of food.",
+                "The duration of a honeybee's life depends on how much energy it spends flying.",
+                "Dark beehives protect honeybee colonies from being discovered by predators."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage is entirely dedicated to describing the 'waggle dance' and explaining how it serves as a precise communication method for sharing the direction and distance of food resources.",
+        },
+        {
+            passage: "In the mystery novel *The Echoing Cave*, the author demonstrates that true panic can cloud a person's logic, whereas remaining calm enables an individual to think clearly and solve dangerous dilemmas.",
+            prompt: "Which sentence from *The Echoing Cave* best supports this idea?",
+            options: [
+                "\"The damp cave floor was covered in tiny, smooth gray pebbles that crunched underfoot.\"",
+                "\"Instead of screaming frantically when his lantern flickered out, Leo took three slow, deliberate breaths, reached into his backpack to locate his backup compass, and used his memory of the cave's layout to navigate safely back to the exit.\"",
+                "\"A cold gust of subterranean wind blew from the deep chasms hidden far below the rocks.\"",
+                "\"Leo wore heavy leather boots that kept his ankles stable as he climbed up the steep ledge.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This sentence directly shows a character actively choosing not to panic ('Instead of screaming frantically') and instead using calm, deliberate actions to solve a dangerous situation, which perfectly mirrors the author's message.",
+        },
+        {
+            passage: "Deciduous trees lose their broad leaves every autumn as a protective mechanism to conserve water during the cold winter months. Because leaves constantly release moisture into the atmosphere through tiny pores, maintaining them during freezing weather—when the ground is frozen solid and roots cannot absorb liquid water—would result in the tree dehydrating. Therefore, if an unseasonable summer drought severely reduces the water available in the soil early in the year, scientists predict that the trees will ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "grow much wider and thinner leaves to trap more passing rainwater.",
+                "begin dropping their leaves early to minimize their moisture loss.",
+                "absorb frozen ice directly through their bark to stay hydrated.",
+                "produce twice as many seeds to protect their root systems."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage establishes that trees drop leaves to prevent moisture loss when water is unavailable. If a severe drought occurs during the summer (making soil water unavailable), the logical response based on the text is that they will drop their leaves early to save water.",
+        },
+        {
+            passage: "While the initial clues uncovered by the archaeological team were highly **ambiguous**, leaving researchers deeply divided and confused about which ancient civilization built the temple, the discovery of the royal limestone tablet was completely ______; it contained a clearly preserved inscription naming the king and the exact year of construction.",
+            prompt: "Which choice completes the text with the word that is the most logical *opposite* of **ambiguous**?",
+            options: ["misleading", "conclusive", "ancient", "tedious"],
+            correctAnswer: 1,
+            explanation: "'Conclusive' means settling an issue or proving a point beyond doubt. This is the exact opposite of 'ambiguous' (unclear/open to multiple interpretations) and fits the description of a clearly preserved inscription that provided exact facts.",
+        },
+        {
+            passage: "Residential solar energy systems rely heavily on photovoltaic panels to convert ambient sunlight into usable household electricity. However, this technology possesses a significant weather-dependent limitation: dense cloud layers or extended periods of heavy rainfall drastically reduce electrical output, occasionally leaving homes short of power during storms. To mitigate this vulnerability, modern green engineers designed advanced lithium backup batteries that store excess solar energy gathered during clear days for use when conditions deteriorate.",
+            prompt: "Which choice best describes the function of the second sentence (*'However, this technology... storms.'*) in the text?",
+            options: [
+                "It outlines the specific chemical components found inside a photovoltaic solar cell.",
+                "It presents a critical weakness of solar panels that motivated the development of backup batteries.",
+                "It argues that traditional electricity sources are safer than residential solar energy systems.",
+                "It provides step-by-step instructions for installing solar tracking equipment on a roof."
+            ],
+            correctAnswer: 2,
+            explanation: "The second sentence explicitly points out a weather-dependent flaw of solar panels (clouds/rain reducing output), which provides the context and reason for why engineers had to invent backup batteries, mentioned in the third sentence.",
+        },
+        {
+            passage: "Text 1<br>Enacting strict citywide bans on lightweight plastic bags is an incredible environmental victory. By eliminating these non-biodegradable items from grocery stores, cities can instantly prevent millions of bags from drifting into local waterways, saving marine animals from accidental ingestion.<br><br>Text 2<br>The widespread implementation of plastic bag bans frequently yields unintended environmental drawbacks. When lightweight grocery bags are prohibited, consumers simply purchase thicker, heavier plastic trash liners for their household waste, which actually increases the total weight of plastic material destined for local landfills.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's enthusiastic praise of plastic bag bans?",
+            options: [
+                "By arguing that bans can cause an unintended increase in the total amount of plastic waste because consumers buy heavier replacement bags.",
+                "By agreeing that grocery store plastic bags are the sole cause of marine life endangerment.",
+                "By proposing that all grocery stores should be closed down to eliminate plastic packaging entirely.",
+                "By demonstrating that paper bags require far more water to manufacture than thick plastic liners."
+            ],
+            correctAnswer: 0,
+            explanation: "Text 2 explicitly states that bans have an unintended negative side effect: they cause people to buy thicker, heavier plastic bags for trash, which increases the total weight of plastic trash sent to landfills.",
+        },
+        {
+            passage: "Insect-eating bats rely on echolocation to navigate dark skies and capture tiny prey mid-air. While flying, the bat emits high-frequency sound waves that bounce off nearby objects, returning as echoes that reveal the exact size, speed, and trajectory of an insect. However, certain species of tiger moths have evolved a unique defensive mechanism: they emit ultra-fast acoustic clicking sounds that intentionally jam the bat's sonar signals, making the moth appear invisible. Consequently, when a bat encounters a clicking tiger moth in total darkness, the bat will ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "easily track the moth by using its sharp sense of biological vision.",
+                "struggle to accurately pinpoint the moth's precise location.",
+                "instantly modify its diet to eat sweet flower nectar instead.",
+                "fly much slower to prevent its sound waves from bouncing."
+            ],
+            correctAnswer: 1,
+            explanation: "The text explains that the moth's clicking sounds 'jam' the bat's sonar signals and make the moth appear 'invisible.' Therefore, in total darkness (where sight is useless), the bat will struggle to locate the moth accurately.",
+        },
+        {
+            passage: "Recycling a discarded glass container into a brand-new bottle is a highly precise, multi-stage industrial process. First, automated sorting machinery separates gathered glass by color and cleans away paper labels. Next, heavy metal crushing rollers smash the clean glass into tiny fragments known as cullet. Then, industrial furnaces heat the cullet to a staggering 2,700 degrees Fahrenheit until it liquefies completely. Finally, automated molding machines inject air into the molten glass paste, shaping it into pristine jars ready for distribution.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It argues that glass recycling centers are too expensive for small towns to operate.",
+                "It details a chronological sequence of physical steps used to transform old glass into new bottles.",
+                "It compares the thermal melting points of glass containers to aluminum cans.",
+                "It explains the environmental history of glass manufacturing in early industrial factories."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage relies on sequential transition words ('First,' 'Next,' 'Then,' 'Finally') to trace the step-by-step chronological stages of recycling glass.",
+        },
+        {
+            passage: "While the first half of the mountain wilderness marathon was incredibly **grueling**, forcing runners to battle steep gravel inclines, freezing rain, and dense muddy bogs, the second half of the course was remarkably ______; it followed a perfectly flat, paved pathway that descended gently through a sunny valley.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["hazardous", "effortless", "tedious", "competitive"],
+            correctAnswer: 1,
+            explanation: "'Effortless' means requiring no mental or physical exertion. The text describes the second half of the race as being perfectly flat, paved, and descending gently in pleasant weather, which directly contrasts with the 'grueling' and muddy first half.",
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Exceptional analytical processing! 🌟</strong><br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const resultsFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Congratulations! You have earned the Harvard Logo:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            resultsFooter.textContent = "Phenomenal mastery! You decoded every stylistic device and structural transition perfectly. Review your flawless work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            resultsFooter.textContent = "Terrific try! Carefully evaluate the text analyses and rationale explanations below. Attempt the practice test again to lock down a 10/10 and secure your Harvard reward badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
