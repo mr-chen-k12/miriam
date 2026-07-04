@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th Grade Reading Practice - Set 16 (Harvard Challenge)</title>
+<style>
+    /* General Styles - Harvard Crimson Theme */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fcf8f8;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        position: relative;
+        border: 3px solid #a51c30;
+    }
+    h1 {
+        text-align: center;
+        color: #a51c30;
+        margin-top: 0;
+    }
+    
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #fffafb;
+        padding: 20px;
+        border-left: 5px solid #a51c30;
+        margin-bottom: 20px;
+        font-size: 1.15em;
+        border-radius: 4px;
+        line-height: 1.7;
+    }
+    .prompt {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 12px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #fffcfc;
+        padding: 12px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #f5e6e8;
+        font-size: 1.05em;
+    }
+    .options label:hover {
+        background: #f9e8ea;
+        border-color: #e2b3b8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background: #f1f2f6;
+        border-color: #dcdde1;
+    }
+    .options input {
+        margin-right: 15px;
+        transform: scale(1.2);
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 6px;
+        display: none;
+        border-left: 5px solid;
+        font-size: 1.05em;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #27ae60;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #e74c3c;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #f1f2f6;
+        padding-top: 20px;
+    }
+    button {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #4a5568;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #2d3748; }
+    button:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+    
+    .check-btn { background-color: #a51c30; }
+    .check-btn:hover { background-color: #821424; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #219653; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 25px;
+        background: #fffdf9;
+        border: 3px dashed #bc9b6a;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>4th Grade Reading Practice - Set 16</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>🎉 Quiz Complete! 🎉</h2>
+        <p id="score-display" style="font-size: 1.6em; font-weight: bold; color: #a51c30; margin: 10px 0;"></p>
+        <div id="reward-container"></div>
+        <p id="results-footer" style="font-size: 1.1em; color: #4a5568;"></p>
+    </div>
+
+    <div id="questions-wrapper">
+        </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Test</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            passage: "While most typical garden flowers require daily watering and constant attention to survive the intense summer heat, the desert cactus is incredibly ______; it can store moisture inside its thick, fleshy stems and thrive for months without a single drop of rain.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["fragile", "hardy", "dependent", "colorful"],
+            correctAnswer: 1,
+            explanation: "'Hardy' means strong and able to survive harsh or difficult conditions. The passage explains that the cactus stores its own water and thrives for months without rain, contrasting it directly with delicate garden flowers that need constant care.",
+        },
+        {
+            passage: "Emperor penguins have developed incredible group adaptations to survive the freezing Antarctic winters. To protect themselves from biting winds and temperatures that drop far below zero, hundreds of penguins pack tightly together in a massive, circular huddle. The penguins on the inside stay warm and safe, and they slowly rotate positions so that the freezing penguins on the outside get a turn in the warm center. This cooperative behavior allows the entire colony to stay alive during the harshest polar storms.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Emperor penguins prefer to live completely alone during the warm summer months.",
+                "The Antarctic winter features the coldest and windiest environments on Earth.",
+                "Huddling together and rotating positions helps emperor penguins survive freezing temperatures.",
+                "Penguins on the outside of a winter huddle are much stronger than penguins on the inside."
+            ],
+            correctAnswer: 2,
+            explanation: "The text focuses entirely on how penguins use a collective huddling behavior and rotate positions to generate heat and preserve the lives of all members in the colony during extreme winters.",
+        },
+        {
+            passage: "In the historical adventure *The Secret Compass*, the author demonstrates that true leadership is not about ordering others around, but about making personal sacrifices to ensure the safety of the entire team.",
+            prompt: "Which sentence from *The Secret Compass* best supports this idea?",
+            options: [
+                "\"The antique brass compass was scratched and worn from many years of sea travel.\"",
+                "\"Even though he was exhausted and hungry, Captain Thomas gave his own small water canteen to a struggling teammate and stayed behind to guard the rear path while the others escaped safely.\"",
+                "\"The dense green jungle canopy blocked the bright afternoon sun, making it difficult to read the map.\"",
+                "\"Thomas wore a thick leather jacket to protect himself from sharp thorns along the narrow trail.\""
+            ],
+            correctAnswer: 1,
+            explanation: "This sentence perfectly mirrors the concept of leadership through sacrifice by showing the captain giving away his water and putting himself in danger to protect his team.",
+        },
+        {
+            passage: "Polar bears rely entirely on Arctic sea ice to hunt their primary food source: ringed seals. The bears use the solid ice as a platform to stalk seals near their breathing holes. Because rising global temperatures are causing the Arctic sea ice to melt much earlier each spring, the polar bears have significantly less time to hunt and build up the vital fat reserves they need to survive the summer. Therefore, if the sea ice continues to disappear rapidly, scientists predict that the polar bears will ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "easily learn to hunt land animals like deer and forest rabbits instead.",
+                "experience a dangerous drop in population due to malnutrition and hunger.",
+                "migrate to tropical rainforests to find new winter food sources.",
+                "grow thicker fur to help them swim faster in warm, open oceans."
+            ],
+            correctAnswer: 1,
+            explanation: "Since polar bears depend directly on sea ice to hunt their primary food source (seals), a continuous loss of that ice limits their ability to eat, logically leading to a threat to their survival from hunger.",
+        },
+        {
+            passage: "While the first draft of the student's essay was incredibly **verbose**, filled with repetitive sentences and unnecessary words that made it tedious to read, the edited version was wonderfully ______; every sentence was short, sharp, and got straight to the point.",
+            prompt: "Which choice completes the text with the word that is the most logical *opposite* of **verbose**?",
+            options: ["lengthy", "concise", "confusing", "boring"],
+            correctAnswer: 1,
+            explanation: "'Concise' means giving a lot of information clearly and in a few words. This is the exact opposite of 'verbose' (wordy) and matches the description of text that is short, sharp, and straight to the point.",
+        },
+        {
+            passage: "Early deep-sea divers relied on heavy copper helmets connected to a long rubber hose that pumped air down from a surface ship. However, this system had a dangerous limitation: if the air hose became tangled or snagged on a sharp rock, the diver's oxygen supply was instantly cut off. To fix this deadly hazard, inventors later created the SCUBA tank, which allowed divers to carry their own air securely on their backs without any physical connection to the surface.",
+            prompt: "Which choice best describes the function of the second sentence (*'However, this system... off.'*) in the text?",
+            options: [
+                "It explains the exact chemical breakdown of underwater oxygen supplies.",
+                "It describes how SCUBA tanks are manufactured in modern industrial factories.",
+                "It highlights a critical vulnerability of the older diving system that motivated a new invention.",
+                "It argues that copper helmets are safer than modern diving equipment options."
+            ],
+            correctAnswer: 2,
+            explanation: "The second sentence identifies the dangerous weakness of the old hose system, establishing the exact problem that inspired inventors to design the independent SCUBA tank.",
+        },
+        {
+            passage: "Text 1<br>Zoos play a vital role in global wildlife conservation. By providing a safe environment free from hunters and habitat destruction, zoos allow endangered animals like pandas and tigers to reproduce safely, ensuring these vulnerable species do not go extinct.<br><br>Text 2<br>Keeping wild animals in zoos causes them severe emotional distress. Large predators like lions and polar bears are meant to roam across miles of open wilderness, and locking them inside small concrete enclosures limits their natural instincts, leading to profound boredom and sadness.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1's claim that zoos are 'vital' for protecting animals?",
+            options: [
+                "By arguing that zoos cause psychological harm to wild animals by locking them in small, unnatural spaces.",
+                "By agreeing that concrete enclosures are the best way to recreate a wild animal's natural habitat.",
+                "By suggesting that wild lions should be trained to live peacefully in suburban neighborhoods.",
+                "By proving that endangered animals prefer to live in zoos rather than the open wilderness."
+            ],
+            correctAnswer: 0,
+            explanation: "Text 2 explicitly attacks the zoo environment, stating that locking wild animals in enclosures limits their instincts and causes 'emotional distress' and 'sadness,' directly opposing the positive view in Text 1.",
+        },
+        {
+            passage: "Fireflies use flashes of light from their abdomens to attract mates and communicate in the dark. Each species of firefly has its own unique rhythm and pattern of flashing. However, bright artificial lights from streetlamps, houses, and car headlights create massive light pollution that makes it nearly impossible for fireflies to see each other's subtle signals. Consequently, if a large neighborhood installs hundreds of bright, glowing streetlights along a woodland area, scientists predict that the local fireflies will ______",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "start flashing twice as bright to easily overpower the new streetlights.",
+                "struggle to find mates and experience a decline in population.",
+                "instantly change their diet to eat insects attracted to the streetlights.",
+                "begin flying only during the brightest parts of the sunny day."
+            ],
+            correctAnswer: 1,
+            explanation: "The passage notes that light pollution makes it 'nearly impossible' for fireflies to see the signals used to attract mates. If they cannot communicate to find mates, their population will logically drop.",
+        },
+        {
+            passage: "Making clean sheets of paper from a tree involves a precise, multi-step factory process. First, large machines strip the bark off logs and chop the wood into tiny chips. Next, the wood chips are cooked with water and chemicals to create a mushy paste called pulp. Then, the pulp is bleached white, spread onto large screens, and pressed through heavy rollers to squeeze out all the water. Finally, the dried sheets are smoothed, cut to size, and packed into boxes for schools.",
+            prompt: "Which choice best describes how this text is organized?",
+            options: [
+                "It explains the historical reasons why trees grow so tall in managed forests.",
+                "It details a chronological sequence of physical steps used to manufacture paper from wood.",
+                "It compares the durability of paper to plastic and heavy cardboard options.",
+                "It presents an argument against using chemicals in modern processing factories."
+            ],
+            correctAnswer: 1,
+            explanation: "The text traces a manufacturing process step-by-step using clear sequence markers ('First,' 'Next,' 'Then,' 'Finally'), making it a chronological/sequential organization.",
+        },
+        {
+            passage: "While the old, neglected wooden bridge across the creek had become completely **decrepit**, with rotting planks and loose railings that made it hazardous to cross, the newly constructed steel bridge was remarkably ______; its solid beams were securely bolted into bedrock, guaranteeing it could support heavy trucks for decades.",
+            prompt: "Which choice completes the text with the most logical word?",
+            options: ["unstable", "sturdy", "ancient", "narrow"],
+            correctAnswer: 1,
+            explanation: "'Sturdy' means strongly and solidly built. The text describes the new bridge's solid steel beams bolted into bedrock to support heavy trucks, which stands as a clear opposite to the 'decrepit' and rotting old wooden bridge.",
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please pick an answer before checking!";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        lockQuestion(currentQuestion);
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct! Sensational text evaluation! 🌟</strong><br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Not quite!</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function lockQuestion(qIndex) {
+        isLocked[qIndex] = true;
+        const radios = document.getElementsByName(`q${qIndex}`);
+        radios.forEach(r => r.disabled = true);
+        quizData[qIndex].options.forEach((_, optIndex) => {
+            document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('disabled');
+        });
+        updateNav();
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Locked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                lockQuestion(index);
+                feedbackDiv.innerHTML = `<strong>Not Answered or Checked.</strong> The right answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Rationale:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        const rewardContainer = document.getElementById('reward-container');
+        const NavFooter = document.getElementById('results-footer');
+        
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Final Score: ${score} / ${quizData.length} (${(score/quizData.length)*100}%)`;
+        
+        if (score === quizData.length) {
+            rewardContainer.innerHTML = `
+                <div style="margin: 20px auto; padding: 20px; background-color: #fff9f9; border: 2px solid #a51c30; border-radius: 8px; max-width: 400px;">
+                    <h3 style="color: #a51c30; margin-top: 0; font-size: 1.4em;">🏆 Flawless 10/10 Score! 🏆</h3>
+                    <p style="font-weight: bold; color: #2c3e50; margin-bottom: 15px;">Exceptional! You have officially won the Harvard Logo Badge:</p>
+                    <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard Logo" style="max-width: 220px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                </div>
+            `;
+            NavFooter.textContent = "Unparalleled reading mastery! You integrated every contextual element perfectly. Review your flawless work below.";
+        } else {
+            rewardContainer.innerHTML = "";
+            NavFooter.textContent = "Fantastic effort on this set! Carefully examine the systematic breakdowns below to polish your reasoning skills, clear the test again, and earn your 10/10 Harvard badge!";
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
