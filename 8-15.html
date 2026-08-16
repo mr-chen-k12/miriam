@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 99: Decimal Numbers and Money Solutions</title>
+    <!-- MathJax CDN for dynamic TeX math rendering -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 10px;
+        }
+        .question-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        .btn-toggle {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-toggle:hover {
+            background-color: #2980b9;
+        }
+        .solution-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e0e0e0;
+            background-color: #fdfefe;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            margin-top: 10px;
+            display: block;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lesson 99: Decimal Numbers and Money</h1>
+
+    <div class="question-card">
+        <div class="question-header">Question 1</div>
+        <p>Susan B. Anthony divided her 53 suffragettes into groups of 6.</p>
+        <p>(a) How many groups of 6 could she make?<br>
+           (b) How many suffragettes were left over?<br>
+           (c) If the remaining suffragettes formed a group, how many groups were there in all?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol1')">Reveal Answer</button>
+        <div id="sol1" class="solution-content">
+            <p>Divide 53 by 6:</p>
+            <p>$$53 \div 6 = 8 \text{ remainder } 5$$</p>
+            <ul>
+                <li><strong>(a)</strong> She could make <span class="highlight">8 groups</span>.</li>
+                <li><strong>(b)</strong> There were <span class="highlight">5 suffragettes</span> left over.</li>
+                <li><strong>(c)</strong> The 8 original groups plus 1 group formed by the leftover suffragettes equals <span class="highlight">9 groups</span> in all ($8 + 1 = 9$).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 2</div>
+        <p>Abraham Lincoln was born in 1809 and died in 1865. About how many years did he live?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol2')">Reveal Answer</button>
+        <div id="sol2" class="solution-content">
+            <p>To find the estimated lifespan, round the years to the nearest ten or find the exact difference and round:</p>
+            <p>$$\text{Exact: } 1865 - 1809 = 56 \text{ years}$$</p>
+            <p>$$\text{Estimated: } 1870 - 1810 = 60 \text{ years}$$</p>
+            <p><strong>Answer:</strong> He lived <span class="highlight">56 years</span> (or about <span class="highlight">60 years</span> if using standard rounding estimation).</p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 3</div>
+        <p>The parking lot charges $1.25 for the first hour. It charges 75¢ for each additional hour. How much does it cost to park a car in the lot for 3 hours?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol3')">Reveal Answer</button>
+        <div id="sol3" class="solution-content">
+            <p>Calculate the cost for each component of the 3 hours:</p>
+            <ul>
+                <li>First hour: $1.25</li>
+                <li>Remaining hours: $3 - 1 = 2$ hours</li>
+                <li>Cost for remaining hours: $2 \times \$0.75 = \$1.50$</li>
+            </ul>
+            <p>$$\text{Total Cost} = \$1.25 + \$1.50 = \$2.75$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">$2.75</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 4</div>
+        <p>Two thirds of the team's 45 points were scored in the second half. How many points did the team score in the second half? Draw a picture to illustrate the problem.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol4')">Reveal Answer</button>
+        <div id="sol4" class="solution-content">
+            <p>First, divide the total points by 3 to find the value of one-third:</p>
+            <p>$$45 \div 3 = 15 \text{ points per third}$$</p>
+            <p>Then, multiply by 2 to find two-thirds:</p>
+            <p>$$2 \times 15 = 30 \text{ points}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">30 points</span></p>
+            <canvas id="canvas4" width="320" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 5</div>
+        <p>Something is wrong with this sign: [ICE CREAM BARS 0.75¢ each]. Draw two different signs that show how to correct the error.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol5')">Reveal Answer</button>
+        <div id="sol5" class="solution-content">
+            <p>The original sign states "0.75¢", which means seventy-five hundredths of one cent (less than a penny). It should write either seventy-five cents or seventy-five hundredths of a dollar.</p>
+            <p><strong>Correct Formats:</strong> <span class="highlight">$0.75</span> or <span class="highlight">75¢</span></p>
+            <canvas id="canvas5" width="320" height="100"></canvas>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 6</div>
+        <p>What is the value of 3 ten-dollar bills, 4 one-dollar bills, 5 dimes, and 2 pennies?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol6')">Reveal Answer</button>
+        <div id="sol6" class="solution-content">
+            <p>Add the values together:</p>
+            <p>$$3 \times \$10.00 = \$30.00$$</p>
+            <p>$$4 \times \$1.00 = \$4.00$$</p>
+            <p>$$5 \times \$0.10 = \$0.50$$</p>
+            <p>$$2 \times \$0.01 = \$0.02$$</p>
+            <p>$$\text{Total} = \$30.00 + \$4.00 + \$0.50 + \$0.02 = \$34.52$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">$34.52</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 7</div>
+        <p>Use words to write 6412.5.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol7')">Reveal Answer</button>
+        <div id="sol7" class="solution-content">
+            <p><strong>Answer:</strong> <span class="highlight">Six thousand, four hundred twelve and five tenths</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 8</div>
+        <p>Round 5139 to the nearest thousand. Round 6902 to the nearest thousand. Then add the rounded numbers.</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol8')">Reveal Answer</button>
+        <div id="sol8" class="solution-content">
+            <p>$$5139 \rightarrow 5000$$</p>
+            <p>$$6902 \rightarrow 7000$$</p>
+            <p>$$5000 + 7000 = 12000$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">12,000</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 9</div>
+        <p>James opened a 1-gallon bottle of milk and poured out 1 quart. How many quarts of milk were left in the bottle?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol9')">Reveal Answer</button>
+        <div id="sol9" class="solution-content">
+            <p>Since $1 \text{ gallon} = 4 \text{ quarts}$:</p>
+            <p>$$4 \text{ quarts} - 1 \text{ quart} = 3 \text{ quarts}$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">3 quarts</span></p>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">Question 10</div>
+        <p>What percent of the milk in problem 9 was left in the bottle?</p>
+        <button class="btn-toggle" onclick="toggleSolution('sol10')">Reveal Answer</button>
+        <div id="sol10" class="solution-content">
+            <p>Find the fraction left and convert to a percentage:</p>
+            <p>$$\frac{3 \text{ quarts left}}{4 \text{ quarts total}} = \frac{3}{4} = 75\%$$</p>
+            <p><strong>Answer:</strong> <span class="highlight">75%</span></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution(solId) {
+            var sol = document.getElementById(solId);
+            if (sol.style.display === "block") {
+                sol.style.display = "none";
+            } else {
+                sol.style.display = "block";
+                if (solId === 'sol4') drawCanvas4();
+                if (solId === 'sol5') drawCanvas5();
+            }
+        }
+
+        function drawCanvas4() {
+            var canvas = document.getElementById('canvas4');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = '13px sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.fillText('Total = 45 points (divided into 3 equal parts)', 10, 20);
+            
+            var boxW = 85;
+            var boxH = 35;
+            var startX = 10;
+            var startY = 30;
+            
+            for (var i = 0; i < 3; i++) {
+                var x = startX + i * boxW;
+                ctx.strokeStyle = '#2c3e50';
+                ctx.lineWidth = 1.5;
+                if (i < 2) {
+                    ctx.fillStyle = '#d5f5e3'; // shaded green for 2/3
+                    ctx.fillRect(x, startY, boxW, boxH);
+                } else {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(x, startY, boxW, boxH);
+                }
+                ctx.strokeRect(x, startY, boxW, boxH);
+                
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 13px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('15 pts', x + boxW / 2, startY + 22);
+            }
+            
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#27ae60';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillText('2/3 scored in 2nd half = 15 + 15 = 30 points', startX, startY + boxH + 20);
+        }
+
+        function drawCanvas5() {
+            var canvas = document.getElementById('canvas5');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Sign 1
+            ctx.fillStyle = '#fef9e7';
+            ctx.fillRect(10, 15, 135, 65);
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(10, 15, 135, 65);
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('ICE CREAM BARS', 77, 35);
+            ctx.font = 'bold 15px sans-serif';
+            ctx.fillStyle = '#27ae60';
+            ctx.fillText('$0.75 each', 77, 60);
+            
+            // Sign 2
+            ctx.fillStyle = '#fef9e7';
+            ctx.fillRect(165, 15, 135, 65);
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(165, 15, 135, 65);
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.fillText('ICE CREAM BARS', 232, 35);
+            ctx.font = 'bold 15px sans-serif';
+            ctx.fillStyle = '#27ae60';
+            ctx.fillText('75¢ each', 232, 60);
+        }
+
+        window.onload = function() {
+            drawCanvas4();
+            drawCanvas5();
+        };
+    </script>
+</body>
+</html>
