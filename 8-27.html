@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 111: Grade 5/6 Math Challenge (Printer Friendly)</title>
+    
+    <style>
+        /* Clean, kid-friendly typography optimized for reading and printing */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            font-style: italic;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 20px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.1s;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Hidden by default on-screen */
+            margin-top: 15px;
+            background-color: #fafafa;
+            border: 1px dashed #666666;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            border: 1px solid #000000;
+            background-color: #eeeeee;
+            padding: 2px 6px;
+            margin-bottom: 10px;
+        }
+        canvas {
+            background: #ffffff;
+            border: 1px solid #666666;
+            margin: 15px 0;
+            display: block;
+        }
+
+        /* PRINTER OPTIMIZATIONS */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Hide answer buttons when printing */
+            }
+            .solution-box {
+                display: none !important; /* Ensure answers never print for students */
+            }
+            .problem-card {
+                border-bottom: 1px solid #444444;
+                padding-bottom: 60px; /* Gives kids plenty of room to write out their work */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-area">
+    <h1>Lesson 111: Advanced Math Challenge</h1>
+    <p>Student Test Sheet</p>
+</div>
+
+<div class="container">
+
+    <!-- Question 1: Terminating Decimal Division -->
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Perform the long division calculation: <strong>14.25 ÷ 4</strong></p>
+        <p><em>(Work out the decimal division until it terminates cleanly with no remainder.)</em></p>
+        <button class="btn-action" onclick="toggleDisplay(1)">Toggle Answer Sheet</button>
+        <div id="sol-1" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. 14 ÷ 4 = 3 with a remainder of 2. Place decimal point after 3.</p>
+            <p>2. Bring down 2 → 22 ÷ 4 = 5 (20) with a remainder of 2.</p>
+            <p>3. Bring down 5 → 25 ÷ 4 = 6 (24) with a remainder of 1.</p>
+            <p>4. Add zero and bring down → 10 ÷ 4 = 2 (8) with a remainder of 2.</p>
+            <p>5. Add another zero and bring down → 20 ÷ 4 = 5 (20) with 0 remainder.</p>
+            <p><strong>14.25 ÷ 4 = 3.5625</strong> (Terminating decimal)</p>
+        </div>
+    </div>
+
+    <!-- Question 2: Repeating Decimal Division -->
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Perform the long division calculation: <strong>17 ÷ 3</strong></p>
+        <p><em>(Express your answer using repeating decimal notation or showing the infinitely repeating digit.)</em></p>
+        <button class="btn-action" onclick="toggleDisplay(2)">Toggle Answer Sheet</button>
+        <div id="sol-2" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. 17 ÷ 3 = 5 with a remainder of 2.</p>
+            <p>2. Add decimal point and trailing zero: 20 ÷ 3 = 6 (18) with a remainder of 2.</p>
+            <p>3. Add another zero: 20 ÷ 3 = 6 (18) with a remainder of 2.</p>
+            <p>4. The remainder 2 repeats endlessly, producing a repeating 6.</p>
+            <p><strong>17 ÷ 3 = 5.666... or 5.6̄</strong> (Repeating decimal)</p>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Find the area of a right triangle with a base of <strong>12 cm</strong> and a height of <strong>7 cm</strong>. <strong>(Hint: Area = ½ × Base × Height)</strong></p>
+        <canvas id="canvas-q3" width="280" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(3)">Toggle Answer Sheet</button>
+        <div id="sol-3" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Multiply base × height: 12 cm × 7 cm = 84 sq cm.</p>
+            <p>2. Divide by 2: 84 ÷ 2 = <strong>42 sq cm</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Evaluate the expression using the correct order of operations (PEMDAS):</p>
+        <p><strong>(18 + 6) ÷ 3 + 4 × 5</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(4)">Toggle Answer Sheet</button>
+        <div id="sol-4" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Parentheses first: 18 + 6 = 24.</p>
+            <p>2. Division and Multiplication from left to right: 24 ÷ 3 = 8, and 4 × 5 = 20.</p>
+            <p>3. Addition: 8 + 20 = <strong>28</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>A recipe requires <strong>¾ cup</strong> of sugar. If you are making <strong>3 batches</strong> of the recipe, how many cups of sugar do you need in total?</p>
+        <button class="btn-action" onclick="toggleDisplay(5)">Toggle Answer Sheet</button>
+        <div id="sol-5" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Multiply 3 × (3/4) = 9/4 cups.</p>
+            <p>2. Convert to a mixed number: 9 ÷ 4 = <strong>2 ¼ cups</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>Classify each of the following angle measures as <strong>Acute</strong>, <strong>Right</strong>, <strong>Obtuse</strong>, or <strong>Straight</strong>:</p>
+        <p>(a) 45°</p>
+        <p>(b) 90°</p>
+        <p>(c) 135°</p>
+        <p>(d) 180°</p>
+        <button class="btn-action" onclick="toggleDisplay(6)">Toggle Answer Sheet</button>
+        <div id="sol-6" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) 45° = <strong>Acute</strong></p>
+            <p>(b) 90° = <strong>Right</strong></p>
+            <p>(c) 135° = <strong>Obtuse</strong></p>
+            <p>(d) 180° = <strong>Straight</strong></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Simple, clean on-screen interaction logic
+    function toggleDisplay(probNum) {
+        var box = document.getElementById("sol-" + probNum);
+        if (box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+        }
+    }
+
+    // Dynamic Canvas Drawing
+    window.onload = function() {
+        // Draw Right Triangle for Question 3
+        const ctx3 = document.getElementById('canvas-q3').getContext('2d');
+        ctx3.strokeStyle = '#000000';
+        ctx3.lineWidth = 2;
+        ctx3.beginPath();
+        ctx3.moveTo(40, 110);
+        ctx3.lineTo(220, 110);
+        ctx3.lineTo(40, 20);
+        ctx3.closePath();
+        ctx3.stroke();
+
+        // Right angle marker
+        ctx3.strokeRect(40, 95, 15, 15);
+
+        ctx3.font = 'bold 14px Arial';
+        ctx3.fillStyle = '#000000';
+        ctx3.fillText('12 cm', 120, 128);
+        ctx3.fillText('7 cm', 5, 70);
+    };
+</script>
+
+</body>
+</html>
