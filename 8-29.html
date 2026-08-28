@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+
+<!-- saved from url=(0046)https://mr-chen-k12.github.io/miriam/8-27.html -->
+<html lang="en"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lesson 111: Grade 3 Math Challenge (Printer Friendly)</title>
+<style>
+        /* Clean, kid-friendly typography optimized for reading and printing */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            font-style: italic;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 20px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.1s;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Hidden by default on-screen */
+            margin-top: 15px;
+            background-color: #fafafa;
+            border: 1px dashed #666666;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            border: 1px solid #000000;
+            background-color: #eeeeee;
+            padding: 2px 6px;
+            margin-bottom: 10px;
+        }
+        canvas {
+            background: #ffffff;
+            border: 1px solid #666666;
+            margin: 15px 0;
+            display: block;
+        }
+
+
+
+        /* LONG DIVISION REVEAL */
+        .division-work {
+            margin: 14px 0 10px;
+            padding: 14px;
+            background: #ffffff;
+            border: 1px solid #cfcfcf;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .division-note {
+            margin: 0 0 10px;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .division-note strong { color: #1f618d; }
+        .long-division-grid {
+            --cell-size: 29px;
+            display: grid;
+            width: max-content;
+            min-width: max-content;
+            margin: 8px auto 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: var(--cell-size);
+        }
+        .long-division-grid .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .long-division-grid .txt-q { color: #155a9c; }
+        .long-division-grid .txt-sub { color: #b03a2e; }
+        .long-division-grid .txt-std { color: #222; }
+        .long-division-grid .border-right { border-right: 2px solid #222; }
+        .long-division-grid .border-top { border-top: 2px solid #222; }
+        .long-division-grid .border-bottom { border-bottom: 1px solid #222; }
+        .repeat-digit {
+            text-decoration: overline;
+            text-decoration-thickness: 1.4px;
+        }
+        @media (max-width: 520px) {
+            .long-division-grid { --cell-size: 26px; font-size: 17px; }
+            .division-work { padding: 10px 6px; }
+        }
+
+        /* PRINTER OPTIMIZATIONS */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Hide answer buttons when printing */
+            }
+            .solution-box {
+                display: none !important; /* Ensure answers never print for students */
+            }
+            .problem-card {
+                border-bottom: 1px solid #444444;
+                padding-bottom: 60px; /* Gives kids plenty of room to write out their work */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="header-area">
+<h1>Lesson 111: Math Challenge</h1>
+<p>Student Test Sheet — 8-29</p>
+</div>
+<div class="container">
+<!-- Question 1 -->
+<div class="problem-card"><div class="problem-header">Question 1</div>
+<p>Eight feet equals how many inches? <strong>(Hint: 1 foot = 12 inches)</strong></p>
+<button class="btn-action" onclick="toggleDisplay(1)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-1"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>1. Rule: 1 foot = 12 inches.</p><p>2. Multiply the number of feet by 12:</p><p><strong>8 feet × 12 inches = 96 inches</strong></p></div></div>
+<!-- Question 2 -->
+<div class="problem-card"><div class="problem-header">Question 2</div>
+<p>Maya handed the cashier a $50 bill to buy a backpack that cost $31.65. How much change did she receive back?</p>
+<button class="btn-action" onclick="toggleDisplay(2)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-2"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>Subtract the cost of the backpack from $50.00:</p><p><strong>$50.00 − $31.65 = $18.35</strong></p></div></div>
+<!-- Question 3 -->
+<div class="problem-card"><div class="problem-header">Question 3</div>
+<p>Olivia is 7 years younger than Ethan. Ethan is six times as old as Noah. If Ethan is 30 years old, how old are Olivia and Noah?</p>
+<button class="btn-action" onclick="toggleDisplay(3)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-3"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>1. Olivia: 30 − 7 = <strong>23 years old</strong>.</p><p>2. Noah: 30 ÷ 6 = <strong>5 years old</strong>.</p><p><strong>Olivia is 23 and Noah is 5.</strong></p></div></div>
+<!-- Question 4 -->
+<div class="problem-card"><div class="problem-header">Question 4</div>
+<p>Write a fraction to show each description:</p><p>(a) 4 out of 9 slices of orange were eaten.</p><p>(b) 6 out of 10 pencils are sharpened.</p><p>(c) 3 out of 8 students chose apples.</p>
+<button class="btn-action" onclick="toggleDisplay(4)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-4"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) <strong>4/9</strong></p><p>(b) <strong>6/10</strong> (or 3/5)</p><p>(c) <strong>3/8</strong></p></div></div>
+<!-- Question 5 -->
+<div class="problem-card"><div class="problem-header">Question 5</div>
+<p>One-fourth of the 36 students in Ms. Lee's class brought lunch from home. How many students brought lunch?</p>
+<button class="btn-action" onclick="toggleDisplay(5)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-5"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>Divide the total by 4:</p><p><strong>36 ÷ 4 = 9 students</strong></p></div></div>
+<!-- Question 6 -->
+<div class="problem-card"><div class="problem-header">Question 6</div>
+<p>Looking back at <strong>Question 5</strong>, how many students did <strong>not</strong> bring lunch from home?</p>
+<button class="btn-action" onclick="toggleDisplay(6)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-6"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>Subtract the 9 students from the total:</p><p><strong>36 − 9 = 27 students</strong></p></div></div>
+<!-- Question 7 -->
+<div class="problem-card"><div class="problem-header">Question 7</div>
+<p>Find the total <strong>perimeter</strong> of this rectangular garden:</p><canvas height="140" id="canvas-q7" width="280"></canvas>
+<button class="btn-action" onclick="toggleDisplay(7)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-7"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>Add all 4 sides:</p><p><strong>28 ft + 19 ft + 28 ft + 19 ft = 94 feet</strong></p></div></div>
+<!-- Question 8 -->
+<div class="problem-card"><div class="problem-header">Question 8</div>
+<p>Write out the whole number <strong>6,905</strong> using words.</p>
+<button class="btn-action" onclick="toggleDisplay(8)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-8"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p><strong>"six thousand, nine hundred five"</strong> (or "six thousand, nine hundred and five")</p></div></div>
+<!-- Question 9 -->
+<div class="problem-card"><div class="problem-header">Question 9</div>
+<p>Estimate the difference between <strong>93</strong> and <strong>46</strong> by rounding each number to the nearest ten. Then find the exact difference.</p>
+<button class="btn-action" onclick="toggleDisplay(9)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-9"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>1. Estimate: 93 → 90 and 46 → 50, so 90 − 50 = <strong>40</strong>.</p><p>2. Exact: 93 − 46 = <strong>47</strong>.</p></div></div>
+<!-- Question 10 -->
+<div class="problem-card"><div class="problem-header">Question 10</div>
+<p>Jordan tracked reading minutes for five days: <strong>11, 14, 11, 7, 11</strong>.</p><p>(a) What is the <strong>mode</strong>?</p><p>(b) How many minutes did Jordan read in total?</p>
+<button class="btn-action" onclick="toggleDisplay(10)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-10"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) Mode: <strong>11 minutes</strong>.</p><p>(b) 11 + 14 + 11 + 7 + 11 = <strong>54 minutes</strong>.</p></div></div>
+<!-- Question 11 -->
+<div class="problem-card"><div class="problem-header">Question 11</div>
+<p>What solid three-dimensional geometric shape is a die or a cube-shaped block?</p>
+<button class="btn-action" onclick="toggleDisplay(11)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-11"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p>A <strong>cube</strong>.</p></div></div>
+<!-- Question 12 -->
+<div class="problem-card"><div class="problem-header">Question 12</div>
+<p>Look at the angles drawn below. Which angle is an <strong>acute angle</strong> (less than 90°)?</p><canvas height="100" id="canvas-q12" width="400"></canvas>
+<button class="btn-action" onclick="toggleDisplay(12)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-12"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p><strong>Angle B</strong> is acute because it measures less than 90°.</p></div></div>
+<!-- Question 13 -->
+<div class="problem-card"><div class="problem-header">Question 13</div>
+<p>Calculate: <strong>$100.00 − ($36.40 + $28.60)</strong></p>
+<button class="btn-action" onclick="toggleDisplay(13)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-13"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>1. $36.40 + $28.60 = $65.00.</p><p>2. $100.00 − $65.00 = <strong>$35.00</strong>.</p></div></div>
+<!-- Question 14 -->
+<div class="problem-card"><div class="problem-header">Question 14</div>
+<p>A field trip started at <strong>10:25 AM</strong> and ended at <strong>12:55 PM</strong>. How long did it last?</p>
+<button class="btn-action" onclick="toggleDisplay(14)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-14"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>10:25 AM to 12:25 PM is 2 hours, then 30 more minutes to 12:55 PM.</p><p>Total time: <strong>2 hours 30 minutes</strong>.</p></div></div>
+<!-- Question 15 -->
+<div class="problem-card"><div class="problem-header">Question 15</div>
+<p>Find the missing number in each equation:</p><p>(a) 7 × ___ = 56</p><p>(b) 63 ÷ ___ = 9</p><p>(c) ___ × 6 = 54</p>
+<button class="btn-action" onclick="toggleDisplay(15)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-15"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) <strong>8</strong></p><p>(b) <strong>7</strong></p><p>(c) <strong>9</strong></p></div></div>
+<!-- Question 16 -->
+<div class="problem-card"><div class="problem-header">Question 16</div>
+<p>Look at the number <strong>8,647</strong>:</p><p>(a) Which digit is in the tens place?</p><p>(b) What is the value of the digit 6?</p>
+<button class="btn-action" onclick="toggleDisplay(16)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-16"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) Tens place: <strong>4</strong></p><p>(b) Value of 6: <strong>600</strong></p></div></div>
+<!-- Question 17 -->
+<div class="problem-card"><div class="problem-header">Question 17</div>
+<p>Is the sum of <strong>326 + 459</strong> even or odd? Explain using the ones digits.</p>
+<button class="btn-action" onclick="toggleDisplay(17)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-17"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>6 + 9 = 15, which is odd.</p><p>326 + 459 = <strong>785</strong>, so the sum is <strong>odd</strong>.</p></div></div>
+<!-- Question 18 -->
+<div class="problem-card"><div class="problem-header">Question 18</div>
+<p>How many quarts are in <strong>7 gallons</strong>? <strong>(Hint: 1 gallon = 4 quarts)</strong></p>
+<button class="btn-action" onclick="toggleDisplay(18)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-18"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p><strong>7 × 4 = 28 quarts</strong></p></div></div>
+<!-- Question 19 -->
+<div class="problem-card"><div class="problem-header">Question 19</div>
+<p>Find the <strong>area</strong> of this rectangle in square feet:</p><canvas height="140" id="canvas-q19" width="280"></canvas>
+<button class="btn-action" onclick="toggleDisplay(19)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-19"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p><strong>13 ft × 9 ft = 117 square feet</strong></p></div></div>
+<!-- Question 20 -->
+<div class="problem-card"><div class="problem-header">Question 20</div>
+<p>Ava has <strong>4 one-dollar bills, 2 quarters, 3 dimes, 1 nickel, and 7 pennies</strong>. What is the total amount?</p>
+<button class="btn-action" onclick="toggleDisplay(20)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-20"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>$4.00 + $0.50 + $0.30 + $0.05 + $0.07 = <strong>$4.92</strong></p></div></div>
+<!-- Question 21 -->
+<div class="problem-card"><div class="problem-header">Question 21</div>
+<p>Compare each pair using <strong>&lt;</strong>, <strong>&gt;</strong>, or <strong>=</strong>:</p><p>(a) 8 × 6 _____ 7 × 7</p><p>(b) 5,060 _____ 5,006</p><p>(c) $40.00 − $18.75 _____ $12.50 + $8.75</p>
+<button class="btn-action" onclick="toggleDisplay(21)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-21"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) 48 &lt; 49 → <strong>&lt;</strong></p><p>(b) <strong>&gt;</strong></p><p>(c) $21.25 = $21.25 → <strong>=</strong></p></div></div>
+<!-- Question 22 -->
+<div class="problem-card"><div class="problem-header">Question 22</div>
+<p>Look at the pairs of lines below. Which pair shows <strong>parallel lines</strong>?</p><canvas height="110" id="canvas-q22" width="400"></canvas>
+<button class="btn-action" onclick="toggleDisplay(22)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-22"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p><strong>Pair C</strong> shows parallel lines because they stay the same distance apart and never meet.</p></div></div>
+<!-- Question 23 -->
+<div class="problem-card"><div class="problem-header">Question 23</div>
+<p>Write <strong>7,305</strong> in expanded form.</p>
+<button class="btn-action" onclick="toggleDisplay(23)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-23"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p><strong>7,000 + 300 + 5</strong></p></div></div>
+<!-- Question 24 -->
+<div class="problem-card"><div class="problem-header">Question 24</div>
+<p>A garden has <strong>6 rows</strong> of flowers with <strong>8 flowers</strong> in each row. How many flowers are there?</p>
+<button class="btn-action" onclick="toggleDisplay(24)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-24"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p><strong>6 × 8 = 48 flowers</strong></p></div></div>
+<!-- Question 25 -->
+<div class="problem-card"><div class="problem-header">Question 25</div>
+<p>A teacher shares <strong>58 stickers</strong> equally among <strong>7 students</strong>.</p><p>(a) How many stickers does each student get?</p><p>(b) How many are left over?</p>
+<button class="btn-action" onclick="toggleDisplay(25)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-25"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>7 × 8 = 56, with 2 left.</p><p>(a) <strong>8 stickers each</strong></p><p>(b) <strong>2 left over</strong></p></div></div>
+<!-- Question 26 -->
+<div class="problem-card"><div class="problem-header">Question 26</div>
+<p>Write the standard number for each Roman numeral:</p><p>(a) XVI</p><p>(b) XXVII</p><p>(c) LXIV</p>
+<button class="btn-action" onclick="toggleDisplay(26)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-26"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) <strong>16</strong></p><p>(b) <strong>27</strong></p><p>(c) <strong>64</strong></p></div></div>
+<!-- Question 27 -->
+<div class="problem-card"><div class="problem-header">Question 27</div>
+<p>A snack bag has <strong>15 pieces</strong>: 7 crackers, 5 pretzels, and 3 raisins.</p><p>(a) Which snack are you most likely to pick?</p><p>(b) What fraction represents the chance of picking a pretzel?</p>
+<button class="btn-action" onclick="toggleDisplay(27)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-27"><span class="badge">Teacher Answer Key</span><p><strong>Answers:</strong></p><p>(a) <strong>Cracker</strong></p><p>(b) <strong>5/15</strong> (or 1/3)</p></div></div>
+<!-- Question 28 -->
+<div class="problem-card"><div class="problem-header">Question 28</div>
+<p>A bag of rice weighs <strong>4 pounds and 9 ounces</strong>. What is its total weight in ounces? <strong>(Hint: 1 pound = 16 ounces)</strong></p>
+<button class="btn-action" onclick="toggleDisplay(28)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-28"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>4 × 16 = 64 ounces.</p><p>64 + 9 = <strong>73 ounces</strong>.</p></div></div>
+<!-- Question 29 -->
+<div class="problem-card"><div class="problem-header">Question 29</div>
+<p>An aquarium had <strong>480 visitors</strong> in the morning. Then <strong>135 visitors</strong> left, and later <strong>120 visitors</strong> entered. How many visitors were there at the end?</p>
+<button class="btn-action" onclick="toggleDisplay(29)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-29"><span class="badge">Teacher Answer Key</span><p><strong>Step-by-Step Solution:</strong></p><p>480 − 135 = 345.</p><p>345 + 120 = <strong>465 visitors</strong>.</p></div></div>
+<!-- Question 30 -->
+<div class="problem-card"><div class="problem-header">Question 30</div>
+<p>Look at the shapes below. Which shape has <strong>exactly one line of symmetry</strong>?</p><canvas height="110" id="canvas-q30" width="400"></canvas>
+<button class="btn-action" onclick="toggleDisplay(30)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-30"><span class="badge">Teacher Answer Key</span><p><strong>Answer:</strong></p><p><strong>Shape B</strong>, the isosceles trapezoid, has exactly one line of symmetry.</p></div></div>
+<!-- Question 31: Terminating Decimal Long Division -->
+<div class="problem-card"><div class="problem-header">Question 31</div>
+<p>Perform the long division calculation: <strong>7.35 ÷ 0.5</strong></p><p><em>(Move the decimal so the divisor becomes a whole number, then divide until the answer terminates.)</em></p>
+<button class="btn-action" onclick="toggleDisplay(31)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-31"><span class="badge">Teacher Answer Key</span><p><strong>Long Division:</strong></p><div class="division-work" id="division-q31"></div><p><strong>Answer: 7.35 ÷ 0.5 = 14.7</strong> (terminating decimal)</p></div></div>
+<!-- Question 32: Repeating Decimal Long Division -->
+<div class="problem-card"><div class="problem-header">Question 32</div>
+<p>Perform the long division calculation: <strong>4 ÷ 0.6</strong></p><p><em>(Move the decimal so the divisor becomes a whole number. Continue with zeros until you can identify the repeating pattern.)</em></p>
+<button class="btn-action" onclick="toggleDisplay(32)">Toggle Answer Sheet</button>
+<div class="solution-box" id="sol-32"><span class="badge">Teacher Answer Key</span><p><strong>Long Division:</strong></p><div class="division-work" id="division-q32"></div><p><strong>Answer: 4 ÷ 0.6 = 6.<span class="repeat-digit">6</span></strong> (repeating decimal)</p></div></div>
+</div>
+<script>
+    // Simple, clean on-screen interaction logic
+    const divisionProblems = {
+        31: {
+            target: "division-q31",
+            divisor: 5,
+            dividend: "73.5",
+            answer: "14.7",
+            note: "Move the decimal point <strong>1 place to the right</strong> in both numbers: 7.35 ÷ 0.5 → <strong>73.5 ÷ 5</strong>. The quotient terminates at 14.7."
+        },
+        32: {
+            target: "division-q32",
+            divisor: 6,
+            dividend: "40.0000",
+            answer: '6.<span class="repeat-digit">6</span>',
+            note: "Move the decimal point <strong>1 place to the right</strong> in both numbers: 4 ÷ 0.6 → <strong>40 ÷ 6</strong>. Add zeros to make the repeating 6 pattern visible."
+        }
+    };
+
+    function toggleDisplay(probNum) {
+        var box = document.getElementById("sol-" + probNum);
+        if (box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+            if (divisionProblems[probNum]) {
+                const d = divisionProblems[probNum];
+                renderLongDivision(d.target, d.divisor, d.dividend, d.answer, d.note);
+            }
+        }
+    }
+
+    function renderLongDivision(targetId, divisor, dividendString, answerText, noteText) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        target.innerHTML = "";
+
+        const note = document.createElement("p");
+        note.className = "division-note";
+        note.innerHTML = noteText;
+        target.appendChild(note);
+
+        const grid = document.createElement("div");
+        grid.className = "long-division-grid";
+        target.appendChild(grid);
+
+        const sDiv = String(divisor);
+        const sDend = String(dividendString);
+        const divStartCol = sDiv.length + 1;
+        const colMap = [];
+        for (let i = 0; i < sDend.length; i++) colMap.push(divStartCol + i);
+
+        const totalCols = divStartCol + sDend.length;
+        grid.style.gridTemplateColumns = `repeat(${totalCols}, var(--cell-size))`;
+
+        const vGrid = {};
+        function plot(r, c, text, cls = "", bdr = "") {
+            vGrid[`${r},${c}`] = { text: text == null ? "" : String(text), cls, bdr };
+        }
+
+        // Divisor and dividend setup
+        for (let i = 0; i < sDiv.length; i++) plot(1, i, sDiv[i], "txt-std");
+        plot(1, sDiv.length, "", "", "border-right");
+        for (let i = 0; i < sDend.length; i++) {
+            plot(1, colMap[i], sDend[i], "txt-std", "border-top");
+        }
+
+        // Preserve the dividend decimal as a true alignment column.
+        const rawDividend = sDend.replace(".", "");
+        const mathCols = [];
+        for (let i = 0; i < sDend.length; i++) {
+            if (sDend[i] !== ".") mathCols.push(colMap[i]);
+        }
+        const dotIndex = sDend.indexOf(".");
+        if (dotIndex !== -1) plot(0, colMap[dotIndex], ".", "txt-q");
+
+        let workingValue = 0;
+        let row = 2;
+        let started = false;
+
+        for (let i = 0; i < rawDividend.length; i++) {
+            workingValue = workingValue * 10 + Number(rawDividend[i]);
+            const q = Math.floor(workingValue / divisor);
+            const qCol = mathCols[i];
+
+            if (q > 0 || started || i === rawDividend.length - 1) {
+                started = true;
+                plot(0, qCol, q, "txt-q");
+            }
+
+            if (started) {
+                const product = q * divisor;
+                const remainder = workingValue - product;
+                const sProd = String(product);
+
+                for (let p = 0; p < sProd.length; p++) {
+                    const idx = i - p;
+                    if (idx >= 0) {
+                        plot(row, mathCols[idx], sProd[sProd.length - 1 - p], "txt-sub", "border-bottom");
+                    }
+                }
+                row++;
+
+                const sRem = String(remainder);
+                if (sRem !== "0" || i === rawDividend.length - 1) {
+                    for (let r = 0; r < sRem.length; r++) {
+                        const idx = i - r;
+                        if (idx >= 0) plot(row, mathCols[idx], sRem[sRem.length - 1 - r], "txt-std");
+                    }
+                }
+
+                if (i < rawDividend.length - 1) {
+                    plot(row, mathCols[i + 1], rawDividend[i + 1], "txt-std");
+                    row++;
+                }
+
+                workingValue = remainder;
+            }
+        }
+
+        for (let r = 0; r <= row; r++) {
+            for (let c = 0; c < totalCols; c++) {
+                const data = vGrid[`${r},${c}`];
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                cell.style.gridRow = r + 1;
+                cell.style.gridColumn = c + 1;
+                if (data) {
+                    cell.textContent = data.text;
+                    cell.className += ` ${data.cls} ${data.bdr}`;
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        const result = document.createElement("p");
+        result.className = "division-note";
+        result.style.marginTop = "12px";
+        result.innerHTML = `<strong>Quotient: ${answerText}</strong>`;
+        target.appendChild(result);
+    }
+
+    // Dynamic Canvas Drawings (Generates sharp graphics for printing)
+    window.onload = function() {
+        // Draw Rectangle for Question 7 (Perimeter)
+        const ctx7 = document.getElementById('canvas-q7').getContext('2d');
+        ctx7.strokeStyle = '#000000';
+        ctx7.lineWidth = 2;
+        ctx7.strokeRect(35, 30, 210, 75);
+        ctx7.font = 'bold 14px Arial';
+        ctx7.fillStyle = '#000000';
+        ctx7.fillText('28 ft', 125, 22);
+        ctx7.fillText('19 ft', 252, 72);
+
+        // Draw Angles for Question 12
+        const ctx12 = document.getElementById('canvas-q12').getContext('2d');
+        ctx12.strokeStyle = '#000000';
+        ctx12.lineWidth = 2;
+        ctx12.font = 'bold 14px Arial';
+        ctx12.fillStyle = '#000000';
+
+        // Angle A: Obtuse (130 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(40, 75);
+        ctx12.lineTo(100, 75);
+        ctx12.moveTo(40, 75);
+        ctx12.lineTo(5, 30);
+        ctx12.stroke();
+        ctx12.fillText('Angle A', 35, 95);
+
+        // Angle B: Acute (45 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(170, 75);
+        ctx12.lineTo(230, 75);
+        ctx12.moveTo(170, 75);
+        ctx12.lineTo(215, 30);
+        ctx12.stroke();
+        ctx12.fillText('Angle B', 175, 95);
+
+        // Angle C: Right Angle (90 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(310, 75);
+        ctx12.lineTo(370, 75);
+        ctx12.moveTo(310, 75);
+        ctx12.lineTo(310, 15);
+        ctx12.stroke();
+        ctx12.strokeRect(310, 65, 10, 10);
+        ctx12.fillText('Angle C', 320, 95);
+
+        // Draw Rectangle for Question 19 (Area)
+        const ctx19 = document.getElementById('canvas-q19').getContext('2d');
+        ctx19.strokeStyle = '#000000';
+        ctx19.lineWidth = 2;
+        ctx19.strokeRect(40, 30, 190, 80);
+        ctx19.font = 'bold 14px Arial';
+        ctx19.fillStyle = '#000000';
+        ctx19.fillText('13 ft', 125, 23);
+        ctx19.fillText('9 ft', 238, 75);
+
+        // Draw Lines for Question 22 (Perpendicular, Intersecting, Parallel)
+        const ctx22 = document.getElementById('canvas-q22').getContext('2d');
+        ctx22.strokeStyle = '#000000';
+        ctx22.lineWidth = 2;
+        ctx22.font = 'bold 14px Arial';
+        ctx22.fillStyle = '#000000';
+
+        // Pair A: Perpendicular lines
+        ctx22.beginPath();
+        ctx22.moveTo(25, 50);
+        ctx22.lineTo(95, 50);
+        ctx22.moveTo(60, 15);
+        ctx22.lineTo(60, 80);
+        ctx22.stroke();
+        ctx22.strokeRect(60, 40, 10, 10);
+        ctx22.fillText('Pair A', 45, 95);
+
+        // Pair B: Oblique Intersecting lines
+        ctx22.beginPath();
+        ctx22.moveTo(160, 20);
+        ctx22.lineTo(225, 80);
+        ctx22.moveTo(160, 75);
+        ctx22.lineTo(225, 25);
+        ctx22.stroke();
+        ctx22.fillText('Pair B', 175, 95);
+
+        // Pair C: Parallel lines
+        ctx22.beginPath();
+        ctx22.moveTo(295, 35);
+        ctx22.lineTo(365, 35);
+        ctx22.moveTo(295, 65);
+        ctx22.lineTo(365, 65);
+        ctx22.stroke();
+        ctx22.fillText('Pair C', 310, 95);
+
+        // Draw Shapes for Question 30 (Lines of Symmetry)
+        const ctx30 = document.getElementById('canvas-q30').getContext('2d');
+        ctx30.strokeStyle = '#000000';
+        ctx30.lineWidth = 2;
+        ctx30.font = 'bold 14px Arial';
+        ctx30.fillStyle = '#000000';
+
+        // Shape A: Equilateral Triangle (3 lines of symmetry)
+        ctx30.beginPath();
+        ctx30.moveTo(60, 20);
+        ctx30.lineTo(30, 75);
+        ctx30.lineTo(90, 75);
+        ctx30.closePath();
+        ctx30.stroke();
+        ctx30.fillText('Shape A', 38, 95);
+
+        // Shape B: Isosceles Trapezoid (1 line of symmetry)
+        ctx30.beginPath();
+        ctx30.moveTo(165, 30);
+        ctx30.lineTo(215, 30);
+        ctx30.lineTo(230, 75);
+        ctx30.lineTo(150, 75);
+        ctx30.closePath();
+        ctx30.stroke();
+        ctx30.fillText('Shape B', 165, 95);
+
+        // Shape C: Parallelogram (0 lines of symmetry)
+        ctx30.beginPath();
+        ctx30.moveTo(315, 30);
+        ctx30.lineTo(365, 30);
+        ctx30.lineTo(345, 75);
+        ctx30.lineTo(295, 75);
+        ctx30.closePath();
+        ctx30.stroke();
+        ctx30.fillText('Shape C', 305, 95);
+    };
+</script>
+</body></html>
