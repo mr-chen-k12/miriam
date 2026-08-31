@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saxon Math Grade 4 - Lesson 24 Practice</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      color: #1e293b;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #1e3a8a;
+      margin: 0 0 5px 0;
+    }
+    .subtitle {
+      color: #64748b;
+      font-size: 1.05em;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-left: 5px solid #2563eb;
+    }
+    .q-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .q-number {
+      font-weight: bold;
+      color: #2563eb;
+      font-size: 1.1em;
+      margin-right: 10px;
+    }
+    .q-tag {
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.85em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .q-text {
+      font-size: 1.05em;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .btn-toggle {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95em;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .btn-toggle:hover {
+      background-color: #1d4ed8;
+    }
+    .answer-box {
+      display: none;
+      margin-top: 15px;
+      padding: 15px 18px;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+    .answer-title {
+      font-weight: bold;
+      color: #166534;
+      margin-bottom: 5px;
+    }
+    .diagram {
+      margin: 15px 0;
+      text-align: center;
+    }
+    .options-list {
+      list-style-type: none;
+      padding-left: 0;
+      display: flex;
+      gap: 20px;
+    }
+    .options-list li {
+      font-weight: 600;
+    }
+    .math-expr {
+      font-size: 1.1em;
+    }
+  </style>
+  <script>
+    function toggleAnswer(id) {
+      var box = document.getElementById('ans-' + id);
+      var btn = document.getElementById('btn-' + id);
+      if (box.style.display === "none" || box.style.display === "") {
+        box.style.display = "block";
+        btn.innerText = "Hide Answer & Explanation";
+      } else {
+        box.style.display = "none";
+        btn.innerText = "Review Answer & Explanation";
+      }
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Saxon Math Grade 4</h1>
+    <div class="subtitle">Lesson 24 — Written Practice (Questions 1–30)</div>
+  </header>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">1.</span>
+    </div>
+    <div class="q-text">
+      Rafael placed two 1-foot rulers end to end. What was the total length of the two rulers in inches?
+    </div>
+    <button class="btn-toggle" id="btn-1" onclick="toggleAnswer(1)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-1">
+      <div class="answer-title">Answer: 24 inches</div>
+      <strong>Explanation:</strong><br>
+      One foot equals \(12\text{ inches}\).<br>
+      Since there are two 1-foot rulers placed end to end:
+      \[ 12\text{ inches} + 12\text{ inches} = 24\text{ inches} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">2.</span>
+    </div>
+    <div class="q-text">
+      During the one-hour television show, there were 12 minutes of commercials. How many minutes of the hour were not commercials? Write an equation.
+    </div>
+    <button class="btn-toggle" id="btn-2" onclick="toggleAnswer(2)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-2">
+      <div class="answer-title">Answer: Equation: \(60 - 12 = m\); \(48\text{ minutes}\)</div>
+      <strong>Explanation:</strong><br>
+      There are \(60\text{ minutes}\) in 1 hour.<br>
+      Subtracting the commercial time yields:
+      \[ 60 - 12 = 48\text{ minutes} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">3.</span>
+      <span class="q-tag">Multiple Choice</span>
+    </div>
+    <div class="q-text">
+      All the students lined up in two equal rows. Which could <em>not</em> be the total number of students?
+      <ul class="options-list">
+        <li>A. 36</li>
+        <li>B. 45</li>
+        <li>C. 60</li>
+        <li>D. 24</li>
+      </ul>
+    </div>
+    <button class="btn-toggle" id="btn-3" onclick="toggleAnswer(3)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-3">
+      <div class="answer-title">Answer: B. 45</div>
+      <strong>Explanation:</strong><br>
+      If students form two equal rows, the total number of students must be an even number (divisible by 2).<br>
+      36, 60, and 24 are even numbers, but \(45\) is an odd number.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">4.</span>
+      <span class="q-tag">Connect</span>
+    </div>
+    <div class="q-text">
+      Find the missing numbers in this counting sequence:
+      <p style="text-align: center; font-size: 1.1em;">..., 9, 18, ___, ___, 45, ___, ...</p>
+    </div>
+    <button class="btn-toggle" id="btn-4" onclick="toggleAnswer(4)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-4">
+      <div class="answer-title">Answer: 27, 36, 54</div>
+      <strong>Explanation:</strong><br>
+      The sequence counts by \(9\)s (\(9 \times 1 = 9\), \(9 \times 2 = 18\), etc.):
+      \[ 9, 18, \mathbf{27}, \mathbf{36}, 45, \mathbf{54} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">5.</span>
+      <span class="q-tag">Predict</span>
+    </div>
+    <div class="q-text">
+      Find the sixth number in this counting sequence:
+      <p style="text-align: center; font-size: 1.1em;">7, 14, 21, ...</p>
+    </div>
+    <button class="btn-toggle" id="btn-5" onclick="toggleAnswer(5)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-5">
+      <div class="answer-title">Answer: 42</div>
+      <strong>Explanation:</strong><br>
+      The sequence counts by \(7\)s. Multiply the 6th position by \(7\):
+      \[ 7 \times 6 = 42 \]
+      Sequence: \(7, 14, 21, 28, 35, \mathbf{42}\).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">6.</span>
+    </div>
+    <div class="q-text">
+      Compare: \(15 - 9 \bigcirc 13 - 8\)
+    </div>
+    <button class="btn-toggle" id="btn-6" onclick="toggleAnswer(6)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-6">
+      <div class="answer-title">Answer: \(15 - 9 > 13 - 8\)</div>
+      <strong>Explanation:</strong><br>
+      Calculate both sides first:
+      \[ 15 - 9 = 6 \]
+      \[ 13 - 8 = 5 \]
+      Since \(6 > 5\), \(15 - 9 > 13 - 8\).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">7.</span>
+    </div>
+    <div class="q-text">
+      <p><strong>a.</strong> Round 77 to the nearest ten.</p>
+      <p><strong>b.</strong> Round $29.39 to the nearest dollar.</p>
+      <p><strong>c.</strong> Round $9.19 to the nearest 25 cents.</p>
+    </div>
+    <button class="btn-toggle" id="btn-7" onclick="toggleAnswer(7)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-7">
+      <div class="answer-title">Answer: a. 80 | b. $29 | c. $9.25</div>
+      <strong>Explanation:</strong><br>
+      <strong>a.</strong> The ones digit of \(77\) is 7 (\(\ge 5\)), so round up to \(80\).<br>
+      <strong>b.</strong> The cents part is \(39\text{ cents}\), which is less than \(50\text{ cents}\), so round down to \(\$29\).<br>
+      <strong>c.</strong> \(19\text{ cents}\) is closer to \(25\text{ cents}\) (difference of \(6\text{ cents}\)) than to \(0\text{ cents}\) (difference of \(19\text{ cents}\)), so round to \(\$9.25\).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">8.</span>
+      <span class="q-tag">Estimate</span>
+    </div>
+    <div class="q-text">
+      A professional basketball player might be about how many meters tall?
+    </div>
+    <button class="btn-toggle" id="btn-8" onclick="toggleAnswer(8)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-8">
+      <div class="answer-title">Answer: About 2 meters tall</div>
+      <strong>Explanation:</strong><br>
+      \(1\text{ meter} \approx 3.28\text{ feet}\). A height of \(2\text{ meters}\) is approximately \(6\text{ feet } 7\text{ inches}\), which is a typical height for a professional basketball player.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">9.</span>
+    </div>
+    <div class="q-text">
+      Jeong and her friends attended an evening movie that began at the time shown on the clock. The movie ended at 9:05 p.m. How long was the movie?
+      <div class="diagram">
+        <svg width="140" height="140" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="3" fill="#ffffff"/>
+          <text x="50" y="18" font-size="8" text-anchor="middle" font-weight="bold">12</text>
+          <text x="82" y="53" font-size="8" text-anchor="middle" font-weight="bold">3</text>
+          <text x="50" y="88" font-size="8" text-anchor="middle" font-weight="bold">6</text>
+          <text x="18" y="53" font-size="8" text-anchor="middle" font-weight="bold">9</text>
+          <line x1="50" y1="50" x2="50" y2="12" stroke="#cbd5e1" stroke-width="1"/>
+          <line x1="50" y1="50" x2="30" y2="62" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="50" y1="50" x2="80" y2="50" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="3" fill="#1e293b"/>
+        </svg>
+      </div>
+    </div>
+    <button class="btn-toggle" id="btn-9" onclick="toggleAnswer(9)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-9">
+      <div class="answer-title">Answer: 1 hour 50 minutes (or 110 minutes)</div>
+      <strong>Explanation:</strong><br>
+      The clock shows start time: **7:15 p.m.**<br>
+      From 7:15 p.m. to 9:15 p.m. is \(2\text{ hours}\) (\(120\text{ minutes}\)).<br>
+      9:05 p.m. is \(10\text{ minutes}\) before 9:15 p.m.:
+      \[ 120\text{ minutes} - 10\text{ minutes} = 110\text{ minutes} = 1\text{ hour } 50\text{ minutes} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">10.</span>
+      <span class="q-tag">Conclude</span>
+    </div>
+    <div class="q-text">
+      Which street is parallel to Elm?
+      <div class="diagram">
+        <svg width="250" height="130" viewBox="0 0 250 130">
+          <rect x="5" y="5" width="240" height="120" stroke="#1e293b" stroke-width="1.5" fill="none"/>
+          <line x1="20" y1="30" x2="160" y2="30" stroke="#1e293b" stroke-width="2"/>
+          <text x="70" y="24" font-size="12" text-anchor="middle">Elm</text>
+          <line x1="20" y1="65" x2="160" y2="65" stroke="#1e293b" stroke-width="2"/>
+          <text x="70" y="59" font-size="12" text-anchor="middle">Oak</text>
+          <line x1="110" y1="15" x2="110" y2="105" stroke="#1e293b" stroke-width="2"/>
+          <text x="103" y="85" font-size="12" text-anchor="middle" transform="rotate(-90 103 85)">Broadway</text>
+          <line x1="200" y1="40" x2="200" y2="80" stroke="#1e293b" stroke-width="1"/>
+          <line x1="180" y1="60" x2="220" y2="60" stroke="#1e293b" stroke-width="1"/>
+          <text x="200" y="33" font-size="10" text-anchor="middle">N</text>
+          <text x="200" y="92" font-size="10" text-anchor="middle">S</text>
+          <text x="227" y="63" font-size="10" text-anchor="middle">E</text>
+          <text x="173" y="63" font-size="10" text-anchor="middle">W</text>
+        </svg>
+      </div>
+    </div>
+    <button class="btn-toggle" id="btn-10" onclick="toggleAnswer(10)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-10">
+      <div class="answer-title">Answer: Oak (or Oak Street)</div>
+      <strong>Explanation:</strong><br>
+      Parallel lines run in the same direction and never intersect. Elm and Oak both run horizontally, so Oak is parallel to Elm.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">11.</span>
+    </div>
+    <div class="q-text">
+      <p><strong>a.</strong> How many dimes equal one dollar?</p>
+      <p><strong>b.</strong> One dime is what fraction of a dollar?</p>
+      <p><strong>c.</strong> Nine dimes are what fraction of a dollar?</p>
+    </div>
+    <button class="btn-toggle" id="btn-11" onclick="toggleAnswer(11)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-11">
+      <div class="answer-title">Answer: a. 10 | b. \(\frac{1}{10}\) | c. \(\frac{9}{10}\)</div>
+      <strong>Explanation:</strong><br>
+      <strong>a.</strong> Since \(1\text{ dime} = 10\text{ cents}\) and \(\$1 = 100\text{ cents}\), it takes \(10\text{ dimes}\) to make a dollar.<br>
+      <strong>b.</strong> One dime out of 10 dimes is \(\frac{1}{10}\) of a dollar.<br>
+      <strong>c.</strong> Nine dimes out of 10 dimes is \(\frac{9}{10}\) of a dollar.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">12.</span>
+      <span class="q-tag">Represent</span>
+    </div>
+    <div class="q-text">
+      Draw a rectangle that is 5 centimeters long and 2 centimeters wide. What is the perimeter?
+    </div>
+    <button class="btn-toggle" id="btn-12" onclick="toggleAnswer(12)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-12">
+      <div class="answer-title">Answer: 14 cm</div>
+      <strong>Explanation:</strong><br>
+      The perimeter is the distance all the way around the rectangle:
+      \[ \text{Perimeter} = 5\text{ cm} + 2\text{ cm} + 5\text{ cm} + 2\text{ cm} = 14\text{ cm} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">13.</span>
+      <span class="q-tag">Describe</span>
+    </div>
+    <div class="q-text">
+      Describe each type of angle shown below:
+      <div class="diagram" style="display: flex; justify-content: space-around; max-width: 500px; margin: 15px auto;">
+        <div>
+          <svg width="80" height="70">
+            <polyline points="20,10 20,50 60,50" stroke="#1e293b" stroke-width="2" fill="none"/>
+            <rect x="20" y="40" width="10" height="10" stroke="#1e293b" stroke-width="1" fill="none"/>
+          </svg>
+          <br><strong>a.</strong>
+        </div>
+        <div>
+          <svg width="90" height="70">
+            <polyline points="15,20 40,50 85,50" stroke="#1e293b" stroke-width="2" fill="none"/>
+          </svg>
+          <br><strong>b.</strong>
+        </div>
+        <div>
+          <svg width="80" height="70">
+            <polyline points="60,20 30,50 75,50" stroke="#1e293b" stroke-width="2" fill="none"/>
+          </svg>
+          <br><strong>c.</strong>
+        </div>
+      </div>
+    </div>
+    <button class="btn-toggle" id="btn-13" onclick="toggleAnswer(13)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-13">
+      <div class="answer-title">Answer: a. Right angle | b. Obtuse angle | c. Acute angle</div>
+      <strong>Explanation:</strong><br>
+      <strong>a.</strong> Forms a square corner (\(90^\circ\)): <strong>Right angle</strong>.<br>
+      <strong>b.</strong> Greater than a right angle (\(>90^\circ\)): <strong>Obtuse angle</strong>.<br>
+      <strong>c.</strong> Less than a right angle (\(<90^\circ\)): <strong>Acute angle</strong>.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">14.</span>
+    </div>
+    <div class="q-text">
+      \[ \begin{rarray}{r} \$31 \\ -\ \ \$14 \end{rarray} \]
+    </div>
+    <button class="btn-toggle" id="btn-14" onclick="toggleAnswer(14)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-14">
+      <div class="answer-title">Answer: $17</div>
+      <strong>Explanation:</strong><br>
+      Subtracting: \(31 - 14 = 17\). So, \(\$17\).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">15.</span>
+    </div>
+    <div class="q-text">
+      \[ \$468 + \$247 \]
+    </div>
+    <button class="btn-toggle" id="btn-15" onclick="toggleAnswer(15)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-15">
+      <div class="answer-title">Answer: $715</div>
+      <strong>Explanation:</strong><br>
+      \[ \begin{rarray}{r} 468 \\ +\ 247 \\ \hline 715 \end{rarray} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">16.</span>
+    </div>
+    <div class="q-text">
+      \[ 57 - 37 \]
+    </div>
+    <button class="btn-toggle" id="btn-16" onclick="toggleAnswer(16)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-16">
+      <div class="answer-title">Answer: 20</div>
+      <strong>Explanation:</strong><br>
+      \[ 57 - 37 = 20 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">17.</span>
+    </div>
+    <div class="q-text">
+      \[ \$4.97 + \$2.58 \]
+    </div>
+    <button class="btn-toggle" id="btn-17" onclick="toggleAnswer(17)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-17">
+      <div class="answer-title">Answer: $7.55</div>
+      <strong>Explanation:</strong><br>
+      \[ \begin{rarray}{r} 4.97 \\ +\ 2.58 \\ \hline 7.55 \end{rarray} \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">18.</span>
+    </div>
+    <div class="q-text">
+      Find the missing number: \(36 - c = 19\)
+    </div>
+    <button class="btn-toggle" id="btn-18" onclick="toggleAnswer(18)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-18">
+      <div class="answer-title">Answer: c = 17</div>
+      <strong>Explanation:</strong><br>
+      To find \(c\), subtract 19 from 36:
+      \[ c = 36 - 19 = 17 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">19.</span>
+    </div>
+    <div class="q-text">
+      Find the missing number: \(b + 65 = 82\)
+    </div>
+    <button class="btn-toggle" id="btn-19" onclick="toggleAnswer(19)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-19">
+      <div class="answer-title">Answer: b = 17</div>
+      <strong>Explanation:</strong><br>
+      To find \(b\), subtract 65 from 82:
+      \[ b = 82 - 65 = 17 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">20.</span>
+    </div>
+    <div class="q-text">
+      Find the missing number: \(87 + d = 93\)
+    </div>
+    <button class="btn-toggle" id="btn-20" onclick="toggleAnswer(20)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-20">
+      <div class="answer-title">Answer: d = 6</div>
+      <strong>Explanation:</strong><br>
+      To find \(d\), subtract 87 from 93:
+      \[ d = 93 - 87 = 6 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">21.</span>
+    </div>
+    <div class="q-text">
+      Find the missing number: \(n - 32 = 19\)
+    </div>
+    <button class="btn-toggle" id="btn-21" onclick="toggleAnswer(21)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-21">
+      <div class="answer-title">Answer: n = 51</div>
+      <strong>Explanation:</strong><br>
+      To find \(n\), add 32 to 19:
+      \[ n = 19 + 32 = 51 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">22.</span>
+    </div>
+    <div class="q-text">
+      \[ 48 - 28 \]
+    </div>
+    <button class="btn-toggle" id="btn-22" onclick="toggleAnswer(22)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-22">
+      <div class="answer-title">Answer: 20</div>
+      <strong>Explanation:</strong><br>
+      \[ 48 - 28 = 20 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">23.</span>
+    </div>
+    <div class="q-text">
+      \[ 41 - 32 \]
+    </div>
+    <button class="btn-toggle" id="btn-23" onclick="toggleAnswer(23)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-23">
+      <div class="answer-title">Answer: 9</div>
+      <strong>Explanation:</strong><br>
+      \[ 41 - 32 = 9 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">24.</span>
+    </div>
+    <div class="q-text">
+      \[ 76 - 58 \]
+    </div>
+    <button class="btn-toggle" id="btn-24" onclick="toggleAnswer(24)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-24">
+      <div class="answer-title">Answer: 18</div>
+      <strong>Explanation:</strong><br>
+      \[ 76 - 58 = 18 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">25.</span>
+    </div>
+    <div class="q-text">
+      \[ 416 + 35 + 27 + 43 + 5 \]
+    </div>
+    <button class="btn-toggle" id="btn-25" onclick="toggleAnswer(25)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-25">
+      <div class="answer-title">Answer: 526</div>
+      <strong>Explanation:</strong><br>
+      Grouping numbers for easier mental math:
+      \[ (35 + 5) = 40 \]
+      \[ (27 + 43) = 70 \]
+      \[ 416 + 40 + 70 = 416 + 110 = 526 \]
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">26.</span>
+      <span class="q-tag">Multiple Choice</span>
+    </div>
+    <div class="q-text">
+      Which point on this number line could represent \(-3\)?
+      <div class="diagram">
+        <svg width="320" height="70" viewBox="0 0 320 70">
+          <line x1="20" y1="35" x2="300" y2="35" stroke="#1e293b" stroke-width="2"/>
+          <polyline points="25,30 20,35 25,40" stroke="#1e293b" stroke-width="2" fill="none"/>
+          <polyline points="295,30 300,35 295,40" stroke="#1e293b" stroke-width="2" fill="none"/>
+          
+          <line x1="80" y1="28" x2="80" y2="42" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="80" y="58" font-size="11" text-anchor="middle">-10</text>
+          
+          <line x1="170" y1="28" x2="170" y2="42" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="170" y="58" font-size="11" text-anchor="middle">0</text>
+          
+          <line x1="260" y1="28" x2="260" y2="42" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="260" y="58" font-size="11" text-anchor="middle">10</text>
+
+          <circle cx="55" cy="35" r="3" fill="#1e293b"/>
+          <text x="55" y="23" font-size="11" font-style="italic" text-anchor="middle">w</text>
+
+          <circle cx="140" cy="35" r="3" fill="#1e293b"/>
+          <text x="140" y="23" font-size="11" font-style="italic" text-anchor="middle">x</text>
+
+          <circle cx="185" cy="35" r="3" fill="#1e293b"/>
+          <text x="185" y="23" font-size="11" font-style="italic" text-anchor="middle">y</text>
+
+          <circle cx="210" cy="35" r="3" fill="#1e293b"/>
+          <text x="210" y="23" font-size="11" font-style="italic" text-anchor="middle">z</text>
+        </svg>
+      </div>
+      <ul class="options-list">
+        <li>A. point w</li>
+        <li>B. point x</li>
+        <li>C. point y</li>
+        <li>D. point z</li>
+      </ul>
+    </div>
+    <button class="btn-toggle" id="btn-26" onclick="toggleAnswer(26)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-26">
+      <div class="answer-title">Answer: B. point x</div>
+      <strong>Explanation:</strong><br>
+      The number \(-3\) is negative, so it must be to the left of \(0\). Point \(x\) is between \(0\) and \(-10\), closer to \(0\), making it the correct point for \(-3\).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">27.</span>
+      <span class="q-tag">Explain</span>
+    </div>
+    <div class="q-text">
+      How is a segment different from a line?
+    </div>
+    <button class="btn-toggle" id="btn-27" onclick="toggleAnswer(27)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-27">
+      <div class="answer-title">Answer: A line segment has two distinct endpoints, while a line continues endlessly in both directions.</div>
+      <strong>Explanation:</strong><br>
+      A **line** extends without end in both directions (has no endpoints). A **segment** (or line segment) is part of a line between two specific endpoints.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">28.</span>
+      <span class="q-tag">Estimate</span>
+    </div>
+    <div class="q-text">
+      Concert tickets cost $18 each, not including a $4.25 transaction fee for each ticket. What is a reasonable estimate of the cost to purchase two concert tickets? Explain why your estimate is reasonable.
+    </div>
+    <button class="btn-toggle" id="btn-28" onclick="toggleAnswer(28)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-28">
+      <div class="answer-title">Answer: About $44 (or $48 depending on rounding strategy)</div>
+      <strong>Explanation:</strong><br>
+      * **Method 1:** Round \(\$18\) to \(\$20\) and \(\$4.25\) to \(\$4\). Cost per ticket \(\approx \$24\). Two tickets \(\approx 2 \times \$24 = \$48\).<br>
+      * **Method 2:** Combine ticket + fee \(\$18 + \$4.25 = \$22.25\). Round to \(\$22\). Two tickets \(\approx 2 \times \$22 = \$44\).<br>
+      Both estimates are reasonable because they replace exact values with numbers that are easy to calculate mentally.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">29.</span>
+    </div>
+    <div class="q-text">
+      The thermometer shows the high temperature on an April day in Nashville, Tennessee. What was the high temperature that day?
+      <div class="diagram">
+        <svg width="100" height="150" viewBox="0 0 100 150">
+          <rect x="35" y="10" width="30" height="130" rx="15" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
+          <rect x="44" y="20" width="12" height="100" fill="#ffffff" stroke="#cbd5e1"/>
+          <rect x="44" y="50" width="12" height="70" fill="#1e293b"/>
+          <circle cx="50" cy="120" r="12" fill="#1e293b"/>
+
+          <line x1="56" y1="30" x2="65" y2="30" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="70" y="33" font-size="9" font-weight="bold">70</text>
+
+          <line x1="56" y1="50" x2="65" y2="50" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="70" y="53" font-size="9" font-weight="bold">60</text>
+
+          <line x1="56" y1="70" x2="65" y2="70" stroke="#1e293b" stroke-width="1.5"/>
+          <text x="70" y="73" font-size="9" font-weight="bold">50</text>
+
+          <text x="80" y="130" font-size="10" font-weight="bold">°F</text>
+        </svg>
+      </div>
+    </div>
+    <button class="btn-toggle" id="btn-29" onclick="toggleAnswer(29)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-29">
+      <div class="answer-title">Answer: 60°F</div>
+      <strong>Explanation:</strong><br>
+      The top of the shaded mercury line sits directly on the \(60\) mark on the Fahrenheit scale.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-header">
+      <span class="q-number">30.</span>
+      <span class="q-tag">Formulate</span>
+    </div>
+    <div class="q-text">
+      Write and solve an addition word problem that has a sum of 43.
+    </div>
+    <button class="btn-toggle" id="btn-30" onclick="toggleAnswer(30)">Review Answer & Explanation</button>
+    <div class="answer-box" id="ans-30">
+      <div class="answer-title">Answer: Sample problem provided below</div>
+      <strong>Explanation:</strong><br>
+      **Sample Problem:**<br>
+      "Mia collected 20 red leaves and 23 yellow leaves. How many leaves did she collect in all?"<br>
+      **Solution:**
+      \[ 20 + 23 = 43\text{ leaves} \]
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
