@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saxon Math 5/4 - Test 4B Solutions</title>
+  <!-- MathJax CDN for rendering LaTeX math -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --accent-color: #3498db;
+      --success-color: #27ae60;
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header h1 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      color: #666;
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+    }
+
+    .question-header {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+    }
+
+    .question-content {
+      font-size: 1.05rem;
+      margin-bottom: 15px;
+    }
+
+    .btn-toggle {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-toggle:hover {
+      background-color: #2980b9;
+    }
+
+    .explanation-box {
+      display: none;
+      margin-top: 15px;
+      padding: 15px 18px;
+      background-color: #f8fafc;
+      border-left: 4px solid var(--success-color);
+      border-radius: 4px;
+    }
+
+    .answer-title {
+      font-weight: bold;
+      color: var(--success-color);
+      margin-bottom: 8px;
+    }
+
+    .pattern-box {
+      font-family: monospace;
+      letter-spacing: 4px;
+      line-height: 1.4;
+      background-color: #edf2f7;
+      padding: 8px 12px;
+      display: inline-block;
+      border-radius: 4px;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Saxon Math 5/4 — Test 4B</h1>
+    <p>Interactive Step-by-Step Solutions & Verifications</p>
+  </header>
+
+  <!-- Question 1 -->
+  <div class="question-card">
+    <div class="question-header">Question 1</div>
+    <div class="question-content">
+      On the first day Aaron found thirty-one white rocks. On the second day he found some more white rocks. If Aaron found seventy-three white rocks in the two days, how many did he find on the second day?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(1)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-1">
+      <div class="answer-title">Answer: \(42\text{ white rocks}\)</div>
+      <p><strong>Explanation:</strong> Let \(x\) be the number of rocks found on the second day.</p>
+      \[ 31 + x = 73 \]
+      \[ x = 73 - 31 = 42 \]
+    </div>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="question-card">
+    <div class="question-header">Question 2</div>
+    <div class="question-content">
+      One hundred newts arrived on Tuesday. Three hundred newts arrived on Wednesday. Five hundred newts arrived on Thursday. How many newts arrived in the three days?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(2)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-2">
+      <div class="answer-title">Answer: \(900\text{ newts}\)</div>
+      <p><strong>Explanation:</strong> Add the number of newts arriving across all three days:</p>
+      \[ 100 + 300 + 500 = 900 \]
+    </div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="question-card">
+    <div class="question-header">Question 3</div>
+    <div class="question-content">
+      Lina had \(\$537\). For winning the race, she was paid \(\$200\). Then how much money did Lina have?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(3)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-3">
+      <div class="answer-title">Answer: \(\$737\)</div>
+      <p><strong>Explanation:</strong> Add the prize money to her initial amount:</p>
+      \[ \$537 + \$200 = \$737 \]
+    </div>
+  </div>
+
+  <!-- Question 4 -->
+  <div class="question-card">
+    <div class="question-header">Question 4</div>
+    <div class="question-content">
+      Write \(409\) in expanded form.
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(4)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-4">
+      <div class="answer-title">Answer: \(400 + 9\)</div>
+      <p><strong>Explanation:</strong> Break down \(409\) by place value:</p>
+      \[ 400\text{ (hundreds)} + 0\text{ (tens)} + 9\text{ (ones)} = 400 + 9 \]
+    </div>
+  </div>
+
+  <!-- Question 5 -->
+  <div class="question-card">
+    <div class="question-header">Question 5</div>
+    <div class="question-content">
+      Compare: two hundred twelve \(\bigcirc\) two hundred twenty
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(5)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-5">
+      <div class="answer-title">Answer: \(<\)</div>
+      <p><strong>Explanation:</strong> Convert to digits and compare:</p>
+      \[ 212 < 220 \]
+    </div>
+  </div>
+
+  <!-- Question 6 -->
+  <div class="question-card">
+    <div class="question-header">Question 6</div>
+    <div class="question-content">
+      Compare: \(459 \bigcirc 495\)
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(6)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-6">
+      <div class="answer-title">Answer: \(<\)</div>
+      <p><strong>Explanation:</strong> Comparing tens digits (\(5\) vs \(9\)):</p>
+      \[ 459 < 495 \]
+    </div>
+  </div>
+
+  <!-- Question 7 -->
+  <div class="question-card">
+    <div class="question-header">Question 7</div>
+    <div class="question-content">
+      If it is evening, what time is shown by this clock?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(7)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-7">
+      <div class="answer-title">Answer: \(10:10\text{ p.m.}\)</div>
+      <p><strong>Explanation:</strong> The short (hour) hand points just past \(10\), and the long (minute) hand points at \(2\) (\(10\text{ minutes}\)). Because it is evening, the time is \(10:10\text{ p.m.}\)</p>
+    </div>
+  </div>
+
+  <!-- Question 8 -->
+  <div class="question-card">
+    <div class="question-header">Question 8</div>
+    <div class="question-content">
+      What temperature is shown on this thermometer?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(8)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-8">
+      <div class="answer-title">Answer: \(46^\circ\text{F}\)</div>
+      <p><strong>Explanation:</strong> Each minor mark between \(40^\circ\text{F}\) and \(50^\circ\text{F}\) represents \(2^\circ\text{F}\). The mercury level is \(3\) marks above \(40^\circ\text{F}\):</p>
+      \[ 40 + (3 \times 2) = 46^\circ\text{F} \]
+    </div>
+  </div>
+
+  <!-- Question 9 -->
+  <div class="question-card">
+    <div class="question-header">Question 9</div>
+    <div class="question-content">
+      How long is this pencil?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(9)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-9">
+      <div class="answer-title">Answer: \(9.5\text{ cm}\) (or \(9\frac{1}{2}\text{ cm}\))</div>
+      <p><strong>Explanation:</strong> The pencil starts at the \(1\text{ cm}\) mark and ends at \(10.5\text{ cm}\):</p>
+      \[ 10.5\text{ cm} - 1.0\text{ cm} = 9.5\text{ cm} \]
+    </div>
+  </div>
+
+  <!-- Question 10 -->
+  <div class="question-card">
+    <div class="question-header">Question 10</div>
+    <div class="question-content">
+      Round \(62\) to the nearest ten.
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(10)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-10">
+      <div class="answer-title">Answer: \(60\)</div>
+      <p><strong>Explanation:</strong> The ones digit is \(2\) (\(< 5\)), so round down to \(60\).</p>
+    </div>
+  </div>
+
+  <!-- Question 11 -->
+  <div class="question-card">
+    <div class="question-header">Question 11</div>
+    <div class="question-content">
+      Round \(\$5.89\) to the nearest dollar.
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(11)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-11">
+      <div class="answer-title">Answer: \(\$6.00\)</div>
+      <p><strong>Explanation:</strong> The cents value \(89\text{ cents}\) is \(\ge 50\text{ cents}\), so round up to \(\$6.00\).</p>
+    </div>
+  </div>
+
+  <!-- Question 12 -->
+  <div class="question-card">
+    <div class="question-header">Question 12</div>
+    <div class="question-content">
+      Piper is standing seventh in line. Isabel is thirteenth in the same line. How many people are between Piper and Isabel?
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(12)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-12">
+      <div class="answer-title">Answer: \(5\text{ people}\)</div>
+      <p><strong>Explanation:</strong> List the positions strictly between \(7\) and \(13\): 8th, 9th, 10th, 11th, 12th.</p>
+      \[ 13 - 7 - 1 = 5 \]
+    </div>
+  </div>
+
+  <!-- Question 13 -->
+  <div class="question-card">
+    <div class="question-header">Question 13</div>
+    <div class="question-content">
+      Add:
+      \[ \begin{array}{r} 27 \\ 42 \\ 56 \\ + 14 \\ \hline \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(13)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-13">
+      <div class="answer-title">Answer: \(139\)</div>
+      <p><strong>Explanation:</strong> Sum the numbers step-by-step:</p>
+      \[ (27 + 42) + (56 + 14) = 69 + 70 = 139 \]
+    </div>
+  </div>
+
+  <!-- Question 14 -->
+  <div class="question-card">
+    <div class="question-header">Question 14</div>
+    <div class="question-content">
+      Add:
+      \[ \begin{array}{r} 573 \\ + 296 \\ \hline \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(14)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-14">
+      <div class="answer-title">Answer: \(869\)</div>
+      <p><strong>Explanation:</strong></p>
+      \[ 573 + 296 = 869 \]
+    </div>
+  </div>
+
+  <!-- Question 15 -->
+  <div class="question-card">
+    <div class="question-header">Question 15</div>
+    <div class="question-content">
+      Subtract:
+      \[ \begin{array}{r} \$78 \\ - \$29 \\ \hline \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(15)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-15">
+      <div class="answer-title">Answer: \(\$49\)</div>
+      <p><strong>Explanation:</strong></p>
+      \[ 78 - 29 = 49 \implies \$49 \]
+    </div>
+  </div>
+
+  <!-- Question 16 -->
+  <div class="question-card">
+    <div class="question-header">Question 16</div>
+    <div class="question-content">
+      Find missing number \(A\):
+      \[ \begin{array}{r} A \\ - 23 \\ \hline 56 \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(16)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-16">
+      <div class="answer-title">Answer: \(A = 79\)</div>
+      <p><strong>Explanation:</strong> Add \(23\) to both sides:</p>
+      \[ A = 56 + 23 = 79 \]
+    </div>
+  </div>
+
+  <!-- Question 17 -->
+  <div class="question-card">
+    <div class="question-header">Question 17</div>
+    <div class="question-content">
+      Find missing number \(B\):
+      \[ \begin{array}{r} 40 \\ + B \\ \hline 79 \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(17)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-17">
+      <div class="answer-title">Answer: \(B = 39\)</div>
+      <p><strong>Explanation:</strong> Subtract \(40\) from both sides:</p>
+      \[ B = 79 - 40 = 39 \]
+    </div>
+  </div>
+
+  <!-- Question 18 -->
+  <div class="question-card">
+    <div class="question-header">Question 18</div>
+    <div class="question-content">
+      Find missing number \(E\):
+      \[ \begin{array}{r} 44 \\ - E \\ \hline 24 \end{array} \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(18)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-18">
+      <div class="answer-title">Answer: \(E = 20\)</div>
+      <p><strong>Explanation:</strong> Rearrange to solve for \(E\):</p>
+      \[ E = 44 - 24 = 20 \]
+    </div>
+  </div>
+
+  <!-- Question 19 -->
+  <div class="question-card">
+    <div class="question-header">Question 19</div>
+    <div class="question-content">
+      Find missing number \(F\):
+      \[ 32 + 11 + 23 + 19 + F = 100 \]
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(19)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-19">
+      <div class="answer-title">Answer: \(F = 15\)</div>
+      <p><strong>Explanation:</strong> Add the known values first:</p>
+      \[ 32 + 11 + 23 + 19 = 85 \]
+      \[ 85 + F = 100 \implies F = 100 - 85 = 15 \]
+    </div>
+  </div>
+
+  <!-- Question 20 -->
+  <div class="question-card">
+    <div class="question-header">Question 20</div>
+    <div class="question-content">
+      How many \(\text{X}\)'s are in this pattern? Count by threes.
+      <br>
+      <div class="pattern-box">
+        X X X X X X X X<br>
+        X X X X X X X X<br>
+        X X X X X X X X
+      </div>
+    </div>
+    <button class="btn-toggle" onclick="toggleExplanation(20)">Review Answer & Explanation</button>
+    <div class="explanation-box" id="explanation-20">
+      <div class="answer-title">Answer: \(24\text{ X's}\)</div>
+      <p><strong>Explanation:</strong> There are 8 columns of 3 \(\text{X}\)'s each. Counting by threes:</p>
+      \[ 3, 6, 9, 12, 15, 18, 21, 24 \]
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggleExplanation(qNum) {
+    const box = document.getElementById(`explanation-${qNum}`);
+    const btn = event.target;
+    
+    if (box.style.display === "none" || box.style.display === "") {
+      box.style.display = "block";
+      btn.innerText = "Hide Answer & Explanation";
+      btn.style.backgroundColor = "#e74c3c";
+      if (window.MathJax) {
+        MathJax.typesetPromise([box]);
+      }
+    } else {
+      box.style.display = "none";
+      btn.innerText = "Review Answer & Explanation";
+      btn.style.backgroundColor = "#3498db";
+    }
+  }
+</script>
+
+</body>
+</html>
