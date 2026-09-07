@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th-5th Grade Reading Practice - Set 2</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+    }
+    
+    .print-blank-btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background-color: #7f8c8d;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .print-blank-btn:hover {
+        background-color: #616a6b;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #harvard-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    #harvard-reward img {
+        width: 160px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .harvard-text {
+        color: #a51c30;
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    #print-blank-container {
+        display: none;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Printer Friendly Styles */
+    @media print {
+        body { background-color: white; padding: 0; }
+        
+        #quiz-container { box-shadow: none; max-width: 100%; border: none; padding: 0; }
+        .question-block { 
+            display: block !important; 
+            page-break-inside: avoid; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .nav-buttons, .check-btn, .progress-tracker, button, .print-blank-btn { display: none !important; }
+        .options label { border: none; padding: 5px 0; background: transparent; }
+        .options input { appearance: auto; } 
+
+        #harvard-reward {
+            display: block !important;
+            border: 2px solid #a51c30 !important;
+        }
+
+        /* Override for Blank Print Mode */
+        body.print-blank-mode #quiz-container { display: none !important; }
+        body.print-blank-mode #print-blank-container { display: block !important; }
+    }
+
+    @media screen and (max-width: 600px) {
+        .print-blank-btn {
+            position: relative;
+            top: 0;
+            right: 0;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <button class="print-blank-btn" onclick="printBlankQuiz()">🖨️ Print Blank Quiz</button>
+    <h1>Elementary Reading Practice - Grade 4-5 (Set 2)</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>Quiz Complete</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+        
+        <div id="harvard-reward">
+            <div class="harvard-text">★ FLAWLESS ACADEMIC EXCELLENCE ★</div>
+            <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard University Crest">
+            <p style="color: #555; font-style: italic; font-weight: bold; margin-top: 5px;">You have successfully earned the Harvard University verification crest for achieving a perfect 10/10 score.</p>
+        </div>
+
+        <button onclick="window.print()" style="margin-top: 15px;">🖨️ Print Results</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit for Review</button>
+    </div>
+</div>
+
+<div id="print-blank-container"></div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Desert tortoises survive in harsh, hot environments by digging underground burrows to escape the sun. During the hottest summer months, they spend most of their time underground resting in a state similar to deep sleep. This special behavior allows them to _______ precious water and stay safe from extreme heat.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["conserve", "waste", "forget", "ignore"],
+            correctAnswer: 0,
+            explanation: "'Conserve' means to protect or save something from being wasted. Resting underground helps the tortoise save water in hot environments."
+        },
+        {
+            passage: "Many young trees in thick forests struggle to grow because tall adult trees block most of the sunlight. To survive, some saplings grow wider leaves to catch as much faint light as possible. Over time, when an older tree eventually falls and creates an opening in the forest roof, the small trees quickly use the new sunlight to grow tall.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Older trees in the forest lose their leaves every single winter season.",
+                "Deep forest soil is too dry for small plants and trees to grow roots.",
+                "Forest animals prefer hiding inside fallen trees during heavy rainstorms.",
+                "Young trees use special adaptations and new sunlight openings to grow in shady forests."
+            ],
+            correctAnswer: 3,
+            explanation: "The passage explains how saplings adapt to low light and take advantage of canopy openings to grow."
+        },
+        {
+            passage: "Before modern clocks were invented, people used sundials to tell time by tracking the position of the sun. A sundial has a raised pointer that casts a shadow onto a flat plate marked with hours. As the sun moves across the sky throughout the day, the shadow shifts to point to different numbers. However, on cloudy days or after sunset, a sundial becomes completely ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "more accurate than atomic clocks.",
+                "useless because there is no sun to cast a shadow.",
+                "bright enough to light up an entire room.",
+                "popular among modern watchmakers."
+            ],
+            correctAnswer: 1,
+            explanation: "Since sundials rely on the sun to cast a shadow, they cannot work without direct sunlight on cloudy days or at night."
+        },
+        {
+            passage: "In 1925, a team of sled dogs traveled over 600 miles through freezing snowstorms to deliver life-saving medicine to the town of Nome, Alaska. The lead dog, Togo, ran more than 260 miles through treacherous ice, far more than any other dog on the journey. Togo's courage and endurance helped save hundreds of lives during the severe health emergency.",
+            prompt: "Which detail from the text best supports the idea that Togo played a crucial role in the rescue mission?",
+            options: [
+                "The town of Nome is located near the freezing coast of Alaska.",
+                "Sled dogs were commonly used for transportation in the 1920s.",
+                "Togo ran over 260 miles through dangerous ice to carry the medicine.",
+                "Freezing snowstorms occur frequently during Alaskan winters."
+            ],
+            correctAnswer: 2,
+            explanation: "Togo running over 260 miles through ice specifically demonstrates his massive individual contribution to getting the medicine delivered."
+        },
+        {
+            passage: "Electric eels are famous for their ability to generate strong electrical shocks. They use small electric charges like a radar system to locate prey in muddy water where visibility is poor. Once they detect a nearby fish, they emit a much stronger shock to stun it instantly. Thus, electricity serves as both a tool for navigation and a powerful ________ for hunting.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["weapon", "toy", "shield", "obstacle"],
+            correctAnswer: 0,
+            explanation: "A 'weapon' is a tool used to attack or stun prey, which fits how the eel uses its strong shock to hunt fish."
+        },
+        {
+            passage: "Text 1\nSchool gardens are wonderful teaching tools. When students plant seeds and care for vegetables, they learn about biology while developing healthy eating habits.\n\nText 2\nWhile school gardens offer fun outdoors, they require constant maintenance during summer breaks when students are away. Without dedicated volunteers to weed and water, many school plots dry up and go to waste before harvest time.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+            options: [
+                "By claiming that children should never be allowed to eat vegetables grown at school.",
+                "By arguing that biology is the easiest subject taught in elementary schools.",
+                "By pointing out that school gardens can easily fail without summer maintenance plans.",
+                "By stating that seeds grow faster inside indoor classrooms than outside."
+            ],
+            correctAnswer: 2,
+            explanation: "Text 2 highlights that school gardens often dry up and fail during summer break if nobody is available to weed and water them."
+        },
+        {
+            passage: "Sea otters play a key role in protecting ocean ecosystems. They feed on sea urchins, small spiky creatures that eat kelp. **If otters disappear, the sea urchin population grows rapidly and devours entire kelp forests, leaving fish without food or shelter.** By keeping urchin numbers under control, otters ensure that underwater marine forests stay healthy and full of life.",
+            prompt: "Which choice best describes the function of the bold sentence in the text?",
+            options: [
+                "It explains how sea urchins construct nests out of kelp leaves.",
+                "It describes what happens to the ecosystem when sea otters are not present.",
+                "It proves that kelp forests grow best in freezing Arctic waters.",
+                "It gives examples of different predators that hunt sea otters."
+            ],
+            correctAnswer: 1,
+            explanation: "The bold sentence explicitly describes the negative chain reaction (urchins multiplying and destroying kelp) that occurs if otters disappear."
+        },
+        {
+            passage: "The invention of the printing press in the 1440s changed human history forever. Before the press, books had to be copied by hand, making them rare and expensive. With the press, thousands of pages could be printed quickly, making books cheaper and accessible to everyday people. This dramatic change caused literacy rates to ________ across Europe.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["drop", "disappear", "freeze", "soar"],
+            correctAnswer: 3,
+            explanation: "'Soar' means to rise rapidly. Because books became cheap and widely available, more everyday people learned to read, causing literacy rates to increase rapidly."
+        },
+        {
+            passage: "Recycling aluminum cans uses 95% less energy than manufacturing brand-new cans from mined raw materials. Additionally, aluminum can be recycled repeatedly without losing its strength or quality. Recycling just one can saves enough energy to run a television for three hours, demonstrating how simple recycling habits can conserve massive amounts of resources.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Recycling aluminum cans saves significant energy and protects natural resources.",
+                "Television screens require more energy today than they did in past decades.",
+                "Mining raw materials is the safest occupation for workers in modern factories.",
+                "Aluminum is the only material that can be recycled inside home kitchens."
+            ],
+            correctAnswer: 0,
+            explanation: "The passage centers on how recycling aluminum uses vastly less energy than making new cans and conserves energy and resources effectively."
+        },
+        {
+            passage: "Venus is the hottest planet in our solar system, even though Mercury is closer to the Sun. Venus is covered by a thick layer of clouds made of carbon dioxide that traps heat like a giant blanket. This extreme greenhouse effect drives surface temperatures up to 900°F. Because this trapped heat never escapes, future space probes sent to land on Venus must be built with ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "light cloth sails to catch solar wind currents.",
+                "glass windows to cool down internal computers.",
+                "heavy heat shielding to protect delicate instruments.",
+                "wooden hulls to keep the lander lightweight."
+            ],
+            correctAnswer: 2,
+            explanation: "Because temperatures reach 900°F and heat cannot escape, probes landing on Venus must have heavy heat protection so their equipment doesn't melt or break."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Build Interactive Web Quiz
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        // Build Hidden "Blank Print" Version
+        let printHTML = '<h1 style="text-align: center; color: #1a5276; margin-bottom: 5px;">4th-5th Grade Reading Practice - Set 2</h1><h3 style="text-align: center; margin-top: 0; margin-bottom: 30px; color: #555;">Blank Copy</h3><hr style="margin-bottom:30px; border: 0; border-top: 1px solid #ccc;">';
+        
+        quizData.forEach((q, index) => {
+            let printOptionsHTML = '';
+            q.options.forEach(opt => {
+                printOptionsHTML += `
+                    <li style="margin-bottom: 12px; display: flex; align-items: baseline;">
+                        <div style="display:inline-block; width:14px; height:14px; border:2px solid #555; border-radius:50%; margin-right:12px; position:relative; top: 2px; flex-shrink: 0;"></div>
+                        <span>${opt}</span>
+                    </li>
+                `;
+            });
+            
+            printHTML += `
+                <div style="margin-bottom: 45px; page-break-inside: avoid;">
+                    <p style="font-weight: bold; font-size: 1.1em; color: #333;">Question ${index + 1}</p>
+                    <div style="font-family: Georgia, serif; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #ccc; margin-bottom: 15px;">${q.passage.replace(/\n/g, '<br>')}</div>
+                    <p style="font-weight: bold; margin-bottom: 15px;">${q.prompt}</p>
+                    <ul style="list-style-type: none; padding: 0;">${printOptionsHTML}</ul>
+                </div>
+            `;
+        });
+        document.getElementById('print-blank-container').innerHTML = printHTML;
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestion] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestion}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestion}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                const radios = document.getElementsByName(`q${index}`);
+                radios.forEach(r => r.disabled = true);
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        document.querySelector('.print-blank-btn').style.display = 'none'; 
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${Math.round((score/quizData.length)*100)}%)`;
+        
+        if (score === quizData.length) {
+            document.getElementById('harvard-reward').style.display = 'block';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function printBlankQuiz() {
+        document.body.classList.add('print-blank-mode');
+        window.print();
+        document.body.classList.remove('print-blank-mode');
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
