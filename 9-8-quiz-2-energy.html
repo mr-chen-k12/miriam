@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Study Guide - Smart Index Cards</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --error: #ef4444;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 5px 0;
+      color: #1e3a8a;
+    }
+
+    header p {
+      margin: 0;
+      color: #64748b;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 2px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+    }
+
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.active {
+      display: block;
+    }
+
+    /* Shared Controls */
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #64748b;
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    /* --- FLASHCARD STYLES --- */
+    .card-scene {
+      width: 100%;
+      max-width: 550px;
+      height: 320px;
+      margin: 0 auto 20px auto;
+      perspective: 1000px;
+    }
+
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .flashcard.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .card-face-back {
+      transform: rotateY(180deg);
+      background: #f8fafc;
+      border-color: var(--primary);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+    }
+
+    .card-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    .swap-toggle {
+      background: #e2e8f0;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* --- FILL IN THE BLANK STYLES --- */
+    .fill-card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .fill-prompt {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .fill-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .fill-input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .fill-input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .feedback-msg {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    .feedback-msg.correct { color: var(--success); }
+    .feedback-msg.incorrect { color: var(--error); }
+
+    /* --- DRAG TO MATCH STYLES --- */
+    .match-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .match-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .match-item {
+      background: white;
+      border: 2px solid var(--border);
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .match-item.selected {
+      border-color: var(--primary);
+      background-color: #eff6ff;
+    }
+
+    .match-target {
+      background: #f8fafc;
+      border: 2px dashed var(--border);
+      padding: 14px;
+      border-radius: 10px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .match-target.highlight {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .match-target.matched {
+      border-style: solid;
+      border-color: var(--success);
+      background-color: #ecfdf5;
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .score-banner {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 600px) {
+      .match-container {
+        grid-template-columns: 1fr;
+      }
+      .card-scene {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <header>
+    <h1>⚡ Energy Transfer & Transformation</h1>
+    <p>Smart Index Cards & Interactive Practice</p>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('flashcards')">🎴 Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('fill')">✍️ Fill in the Blank</button>
+    <button class="tab-btn" onclick="switchTab('match')">🧩 Drag to Match</button>
+  </div>
+
+  <!-- TAB 1: FLASHCARDS -->
+  <div id="tab-flashcards" class="view-panel active">
+    <div style="text-align: center; margin-bottom: 10px;">
+      <button class="swap-toggle" onclick="toggleFrontBackSwap()">
+        🔄 Mode: <span id="swap-mode-label">Front = Term, Back = Definition</span>
+      </button>
+    </div>
+
+    <div class="card-scene">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="card-face">
+          <span class="card-tag" id="card-tag-front">Term</span>
+          <div class="card-text" id="card-text-front">Loading...</div>
+          <span style="position: absolute; bottom: 15px; font-size: 0.8rem; color: #94a3b8;">Click card to flip 🔄</span>
+        </div>
+        <div class="card-face card-face-back">
+          <span class="card-tag" id="card-tag-back">Definition / Concept</span>
+          <div class="card-text" id="card-text-back">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <button class="btn btn-secondary" onclick="prevCard()">← Previous</button>
+      <span style="font-weight: bold;" id="card-counter">1 / 10</span>
+      <button class="btn" onclick="nextCard()">Next →</button>
+    </div>
+  </div>
+
+  <!-- TAB 2: FILL IN THE BLANK -->
+  <div id="tab-fill" class="view-panel">
+    <div class="fill-card">
+      <div style="font-size:0.85rem; font-weight:bold; color:var(--primary); margin-bottom:10px;" id="fill-counter">
+        Question 1 of 10
+      </div>
+      <div class="fill-prompt" id="fill-prompt-text">
+        Prompt sentence goes here...
+      </div>
+      
+      <div class="fill-input-group">
+        <input type="text" class="fill-input" id="fill-answer-input" placeholder="Type missing word(s)..." onkeydown="if(event.key==='Enter') checkFillAnswer()">
+        <button class="btn" onclick="checkFillAnswer()">Check</button>
+      </div>
+
+      <div class="feedback-msg" id="fill-feedback"></div>
+
+      <div style="display:flex; justify-content:space-between; margin-top:25px;">
+        <button class="btn btn-secondary" onclick="prevFill()">Back</button>
+        <button class="btn btn-secondary" onclick="revealFillAnswer()">Show Answer</button>
+        <button class="btn" onclick="nextFill()">Next Prompt →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: DRAG TO MATCH -->
+  <div id="tab-match" class="view-panel">
+    <div class="score-banner">
+      Matched: <span id="match-score">0</span> / 6
+      <button class="btn btn-secondary" style="margin-left: 15px; padding: 4px 10px; font-size: 0.85rem;" onclick="initMatchGame()">Reset Game</button>
+    </div>
+    
+    <p style="text-align: center; font-size: 0.9rem; color: #64748b; margin-top: -5px; margin-bottom: 20px;">
+      💡 Drag terms on the left to matching definitions on the right (or tap a term, then tap its match).
+    </p>
+
+    <div class="match-container">
+      <div class="match-column" id="terms-column">
+        <!-- Draggable Terms -->
+      </div>
+      <div class="match-column" id="defs-column">
+        <!-- Target Definitions -->
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Comprehensive Deck Data (Energy Transfer & Transformation)
+  const deck = [
+    {
+      id: "1",
+      term: "Energy",
+      definition: "The ability to cause change.",
+      fillPrompt: "_______ is defined as the ability to cause change.",
+      answer: "Energy"
+    },
+    {
+      id: "2",
+      term: "Stored Energy",
+      definition: "Energy that has the ability to cause change at a later time (e.g. batteries, solar panels, apple on a branch).",
+      fillPrompt: "Energy stored in batteries or an apple on a tree branch is called _______ energy.",
+      answer: "Stored"
+    },
+    {
+      id: "3",
+      term: "Energy of Motion",
+      definition: "The energy an object possesses while it is moving.",
+      fillPrompt: "A rolling bowling ball or a moving car possesses energy of _______.",
+      answer: "motion"
+    },
+    {
+      id: "4",
+      term: "Speed & Energy Rule",
+      definition: "Slower moving objects = less energy; Faster moving objects = more energy.",
+      fillPrompt: "Faster moving objects have _______ energy than slower moving objects.",
+      answer: "more"
+    },
+    {
+      id: "5",
+      term: "Energy Transfer",
+      definition: "Movement of energy from one object to another or from one place to another.",
+      fillPrompt: "When heat moves from a campfire to your hands, this is an example of energy _______.",
+      answer: "transfer"
+    },
+    {
+      id: "6",
+      term: "Energy Transformation",
+      definition: "The change of one form of energy into another form of energy.",
+      fillPrompt: "Converting hydroelectric power into light inside a lightbulb is energy _______.",
+      answer: "transformation"
+    },
+    {
+      id: "7",
+      term: "Thomas A. Edison",
+      definition: "Redesigned existing lightbulb models; famous quote: 'I haven't failed. I've just found 10,000 ways that won't work.'",
+      fillPrompt: "Thomas Edison did not invent the first lightbulb, but used earlier models to _______ it.",
+      answer: "redesign"
+    },
+    {
+      id: "8",
+      term: "Lewis Howard Latimer",
+      definition: "Worked for Edison; secured 2 patents to improve filament wire attachment and filament durability.",
+      fillPrompt: "Lewis Latimer patented a design to improve the strength and durability of the lightbulb _______.",
+      answer: "filament"
+    },
+    {
+      id: "9",
+      term: "Sound Energy",
+      definition: "A form of energy that comes from a vibrating object.",
+      fillPrompt: "Sound energy is created whenever an object is _______.",
+      answer: "vibrating"
+    },
+    {
+      id: "10",
+      term: "Electrical Energy",
+      definition: "Energy transferred via electrical currents that can be converted into sound, light, or heat.",
+      fillPrompt: "Hydroelectric power plants convert moving water into _______ energy to send over long distances.",
+      answer: "electrical"
+    }
+  ];
+
+  // --- TAB SWITCHING ---
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+
+    event.target.classList.add('active');
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+
+    if (tabName === 'match') {
+      initMatchGame();
+    }
+  }
+
+  // --- FLASHCARD MODE LOGIC ---
+  let currentCardIdx = 0;
+  let isSwapped = false; // False = Front: Term, Back: Def | True = Front: Def, Back: Term
+
+  function renderCard() {
+    const cardEl = document.getElementById('flashcard');
+    cardEl.classList.remove('is-flipped');
+
+    const item = deck[currentCardIdx];
+    const frontTag = document.getElementById('card-tag-front');
+    const backTag = document.getElementById('card-tag-back');
+    const frontText = document.getElementById('card-text-front');
+    const backText = document.getElementById('card-text-back');
+
+    if (!isSwapped) {
+      frontTag.innerText = "Term";
+      frontText.innerText = item.term;
+      backTag.innerText = "Definition / Concept";
+      backText.innerText = item.definition;
+    } else {
+      frontTag.innerText = "Definition / Concept";
+      frontText.innerText = item.definition;
+      backTag.innerText = "Term";
+      backText.innerText = item.term;
+    }
+
+    document.getElementById('card-counter').innerText = `${currentCardIdx + 1} / ${deck.length}`;
+  }
+
+  function flipCard() {
+    document.getElementById('flashcard').classList.toggle('is-flipped');
+  }
+
+  function toggleFrontBackSwap() {
+    isSwapped = !isSwapped;
+    document.getElementById('swap-mode-label').innerText = isSwapped 
+      ? "Front = Definition, Back = Term" 
+      : "Front = Term, Back = Definition";
+    renderCard();
+  }
+
+  function nextCard() {
+    currentCardIdx = (currentCardIdx + 1) % deck.length;
+    renderCard();
+  }
+
+  function prevCard() {
+    currentCardIdx = (currentCardIdx - 1 + deck.length) % deck.length;
+    renderCard();
+  }
+
+  // --- FILL IN THE BLANK LOGIC ---
+  let fillIdx = 0;
+
+  function renderFill() {
+    const item = deck[fillIdx];
+    document.getElementById('fill-counter').innerText = `Prompt ${fillIdx + 1} of ${deck.length}`;
+    document.getElementById('fill-prompt-text').innerText = item.fillPrompt;
+    document.getElementById('fill-answer-input').value = '';
+    const feedback = document.getElementById('fill-feedback');
+    feedback.innerText = '';
+    feedback.className = 'feedback-msg';
+  }
+
+  function checkFillAnswer() {
+    const userAns = document.getElementById('fill-answer-input').value.trim().toLowerCase();
+    const correctAns = deck[fillIdx].answer.toLowerCase();
+    const feedback = document.getElementById('fill-feedback');
+
+    if (userAns === correctAns) {
+      feedback.innerText = '✓ Excellent! That is correct.';
+      feedback.className = 'feedback-msg correct';
+    } else {
+      feedback.innerText = '✗ Not quite. Try again or click "Show Answer".';
+      feedback.className = 'feedback-msg incorrect';
+    }
+  }
+
+  function revealFillAnswer() {
+    const feedback = document.getElementById('fill-feedback');
+    feedback.innerText = `💡 Answer: "${deck[fillIdx].answer}"`;
+    feedback.className = 'feedback-msg correct';
+  }
+
+  function nextFill() {
+    fillIdx = (fillIdx + 1) % deck.length;
+    renderFill();
+  }
+
+  function prevFill() {
+    fillIdx = (fillIdx - 1 + deck.length) % deck.length;
+    renderFill();
+  }
+
+  // --- DRAG TO MATCH LOGIC ---
+  let selectedMatchTerm = null;
+  let matchesCount = 0;
+
+  function initMatchGame() {
+    matchesCount = 0;
+    document.getElementById('match-score').innerText = matchesCount;
+    selectedMatchTerm = null;
+
+    // Pick 6 random items for matching round
+    const shuffledDeck = [...deck].sort(() => 0.5 - Math.random()).slice(0, 6);
+    const termsList = [...shuffledDeck].sort(() => 0.5 - Math.random());
+    const defsList = [...shuffledDeck].sort(() => 0.5 - Math.random());
+
+    const termsCol = document.getElementById('terms-column');
+    const defsCol = document.getElementById('defs-column');
+    termsCol.innerHTML = '';
+    defsCol.innerHTML = '';
+
+    termsList.forEach(item => {
+      const termEl = document.createElement('div');
+      termEl.className = 'match-item';
+      termEl.draggable = true;
+      termEl.innerText = item.term;
+      termEl.dataset.id = item.id;
+
+      termEl.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', item.id);
+      });
+
+      // Tap selection for mobile
+      termEl.addEventListener('click', () => {
+        document.querySelectorAll('.match-item').forEach(i => i.classList.remove('selected'));
+        if (selectedMatchTerm === termEl) {
+          selectedMatchTerm = null;
+        } else {
+          selectedMatchTerm = termEl;
+          termEl.classList.add('selected');
+        }
+      });
+
+      termsCol.appendChild(termEl);
+    });
+
+    defsList.forEach(item => {
+      const targetEl = document.createElement('div');
+      targetEl.className = 'match-target';
+      targetEl.innerText = item.definition;
+      targetEl.dataset.id = item.id;
+
+      targetEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        targetEl.classList.add('highlight');
+      });
+
+      targetEl.addEventListener('dragleave', () => {
+        targetEl.classList.remove('highlight');
+      });
+
+      targetEl.addEventListener('drop', (e) => {
+        e.preventDefault();
+        targetEl.classList.remove('highlight');
+        const draggedId = e.dataTransfer.getData('text/plain');
+        validateMatch(draggedId, targetEl);
+      });
+
+      // Mobile tap target match
+      targetEl.addEventListener('click', () => {
+        if (selectedMatchTerm) {
+          validateMatch(selectedMatchTerm.dataset.id, targetEl);
+        }
+      });
+
+      defsCol.appendChild(targetEl);
+    });
+  }
+
+  function validateMatch(termId, targetEl) {
+    if (targetEl.classList.contains('matched')) return;
+
+    if (termId === targetEl.dataset.id) {
+      targetEl.classList.add('matched');
+      targetEl.innerHTML = `✓ ${targetEl.innerText}`;
+
+      // Disable term tile
+      const termTile = document.querySelector(`.match-item[data-id="${termId}"]`);
+      if (termTile) {
+        termTile.style.visibility = 'hidden';
+      }
+
+      matchesCount++;
+      document.getElementById('match-score').innerText = matchesCount;
+      selectedMatchTerm = null;
+
+      if (matchesCount === 6) {
+        setTimeout(() => alert('🎉 Fantastic job! All matches complete!'), 200);
+      }
+    } else {
+      targetEl.style.borderColor = 'var(--error)';
+      setTimeout(() => {
+        if (!targetEl.classList.contains('matched')) {
+          targetEl.style.borderColor = 'var(--border)';
+        }
+      }, 800);
+    }
+  }
+
+  // Initialize view
+  window.onload = () => {
+    renderCard();
+    renderFill();
+  };
+</script>
+
+</body>
+</html>
