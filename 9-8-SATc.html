@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th-5th Grade Reading Practice - Set 5</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+    }
+    
+    .print-blank-btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background-color: #7f8c8d;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .print-blank-btn:hover {
+        background-color: #616a6b;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #harvard-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    #harvard-reward img {
+        width: 160px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .harvard-text {
+        color: #a51c30;
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    #print-blank-container {
+        display: none;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Printer Friendly Styles */
+    @media print {
+        body { background-color: white; padding: 0; }
+        
+        #quiz-container { box-shadow: none; max-width: 100%; border: none; padding: 0; }
+        .question-block { 
+            display: block !important; 
+            page-break-inside: avoid; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .nav-buttons, .check-btn, .progress-tracker, button, .print-blank-btn { display: none !important; }
+        .options label { border: none; padding: 5px 0; background: transparent; }
+        .options input { appearance: auto; } 
+
+        #harvard-reward {
+            display: block !important;
+            border: 2px solid #a51c30 !important;
+        }
+
+        /* Override for Blank Print Mode */
+        body.print-blank-mode #quiz-container { display: none !important; }
+        body.print-blank-mode #print-blank-container { display: block !important; }
+    }
+
+    @media screen and (max-width: 600px) {
+        .print-blank-btn {
+            position: relative;
+            top: 0;
+            right: 0;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <button class="print-blank-btn" onclick="printBlankQuiz()">🖨️ Print Blank Quiz</button>
+    <h1>Elementary Reading Practice - Grade 4-5 (Set 5)</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>Quiz Complete</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+        
+        <div id="harvard-reward">
+            <div class="harvard-text">★ FLAWLESS ACADEMIC EXCELLENCE ★</div>
+            <img src="https://mr-chen-k12.github.io/math/IMG_0232.png" alt="Harvard University Crest">
+            <p style="color: #555; font-style: italic; font-weight: bold; margin-top: 5px;">You have successfully earned the Harvard University verification crest for achieving a perfect 10/10 score.</p>
+        </div>
+
+        <button onclick="window.print()" style="margin-top: 15px;">🖨️ Print Results</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit for Review</button>
+    </div>
+</div>
+
+<div id="print-blank-container"></div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Monarch butterflies migrate thousands of miles south to warmer climates each autumn. To complete this long journey without tiring out, they ride warm rising air currents called thermals. By soaring on these air currents rather than flapping constantly, butterflies can ________ vital energy for their flight.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["conserve", "spend", "waste", "ignore"],
+            correctAnswer: 0,
+            explanation: "'Conserve' means to save or protect something from being wasted. Gliding on air currents helps butterflies save energy during migration."
+        },
+        {
+            passage: "Beaver dams create rich wetland habitats that benefit many animals. By building wooden barriers across streams, beavers slow down water flow and form calm ponds. These ponds provide homes for fish, frogs, and birds, while filtering sediment out of the water to keep downstream ecosystems clean.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Beaver dams slow down stream water to create thriving habitats and improve water quality.",
+                "Beavers cut down too many trees and harm surrounding forest animals.",
+                "Frogs and fish are the only creatures capable of surviving in mountain streams.",
+                "Water quality downstream is unaffected by beaver activity."
+            ],
+            correctAnswer: 0,
+            explanation: "The passage centers on how beaver dams slow down water to create essential pond habitats and filter water for downstream ecosystems."
+        },
+        {
+            passage: "Lightning is a sudden discharge of electricity caused by positive and negative charges building up inside storm clouds. As these charges grow stronger, electricity jumps between clouds or toward the ground, superheating the air in a fraction of a second. The rapid expansion of this hot air creates a powerful shockwave that human ears hear as ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "a loud clap of thunder.",
+                "a gentle breeze.",
+                "falling hail.",
+                "a steady drizzle of rain."
+            ],
+            correctAnswer: 0,
+            explanation: "Thunder is the sound wave created by the rapid expansion of air superheated by lightning."
+        },
+        {
+            passage: "The Rosetta Stone, discovered in 1799, contained the exact same message written in three different scripts: Ancient Greek, Demotic, and Egyptian hieroglyphics. Because scholars already knew how to read Ancient Greek, they were able to use it as a key to translate the hieroglyphics for the first time in over a thousand years.",
+            prompt: "Which detail from the text best supports the idea that the Rosetta Stone helped scholars understand ancient Egyptian writing?",
+            options: [
+                "The stone was discovered by soldiers in the year 1799.",
+                "Scholars used their existing knowledge of Ancient Greek to decode the hieroglyphics.",
+                "Ancient Greek was spoken across many countries in the Mediterranean.",
+                "The Rosetta Stone was carved from a large block of dark granite."
+            ],
+            correctAnswer: 1,
+            explanation: "Using Ancient Greek as a translation key directly explains how scholars were able to decode Egyptian hieroglyphics."
+        },
+        {
+            passage: "Venus flytraps capture insects using specialized leaves that snap shut when tiny trigger hairs are touched. To avoid wasting energy on falling raindrops or blown debris, the trap only closes if two hairs are touched within twenty seconds. This clever mechanism ensures the plant only consumes ________ food sources.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["genuine", "artificial", "poisonous", "invisible"],
+            correctAnswer: 0,
+            explanation: "'Genuine' means real or actual. The mechanism ensures the plant doesn't waste energy on raindrops and only traps actual, real prey."
+        },
+        {
+            passage: "Text 1\nWind turbines are a clean, renewable energy source that generates electricity without burning fossil fuels or creating air pollution. Expanding wind farms helps protect our planet's environment.\n\nText 2\nWhile wind power generates clean electricity, giant wind turbines can endanger birds and bats that collide with the spinning blades. Additionally, turbines require large amounts of land and can create noisy conditions for neighboring homes.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+            options: [
+                "By pointing out that wind energy has notable drawbacks despite its environmental benefits.",
+                "By arguing that fossil fuels produce less air pollution than wind turbines.",
+                "By claiming that birds and bats easily avoid wind turbines at night.",
+                "By suggesting that wind turbines should be placed inside crowded city parks."
+            ],
+            correctAnswer: 0,
+            explanation: "Text 2 acknowledges wind power is clean, but highlights drawbacks like animal collisions, land usage, and noise."
+        },
+        {
+            passage: "Deep under the ocean floor, hydrothermal vents spew superheated, mineral-rich water into pitch-black trenches. **Because no sunlight reaches these deep waters, specialized bacteria absorb chemical energy from the minerals to make food through chemosynthesis.** This process forms the base of an ecosystem that thrives completely without sunlight.",
+            prompt: "Which choice best describes the function of the bold sentence in the text?",
+            options: [
+                "It explains how deep-sea bacteria produce food without relying on sunlight.",
+                "It describes how shallow-water fish swim to ocean trenches during winter.",
+                "It proves that sunlight can penetrate deep into ocean trenches.",
+                "It details how scientists measure water temperature near underwater volcanoes."
+            ],
+            correctAnswer: 0,
+            explanation: "The bold sentence explicitly describes the process (chemosynthesis) that allows deep-sea bacteria to make food using chemical energy rather than sunlight."
+        },
+        {
+            passage: "During the 1930s Dust Bowl, severe droughts and poor farming methods stripped topsoil from Midwestern fields. High winds blew huge dust storms across the region, destroying farmland and forcing thousands of families to ________ their homes in search of work elsewhere.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["abandon", "protect", "rebuild", "purchase"],
+            correctAnswer: 0,
+            explanation: "'Abandon' means to leave behind permanently. Families were forced to leave their ruined homes and move away to find work."
+        },
+        {
+            passage: "Woodpeckers have remarkable physical features that protect them while hammering tree trunks. Their skulls are made of thick, spongy bone that cushions shocks, and their brains fit snugly to limit movement. Additionally, specialized inner eyelids close right before each strike to keep flying wood chips out of their eyes.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Woodpeckers possess specialized anatomical features that protect them from injury while pecking.",
+                "Flying wood chips are collected by woodpeckers to insulate their nests.",
+                "Woodpeckers eat small insects hidden beneath the outer bark of trees.",
+                "Spongy bones make woodpeckers heavy flyer birds."
+            ],
+            correctAnswer: 0,
+            explanation: "The passage describes multiple physical features (spongy skull, snug brain fit, inner eyelids) that keep woodpeckers safe while hammering."
+        },
+        {
+            passage: "Plants need sunlight to make food through photosynthesis. However, in dense rainforests, the high tree canopy blocks over 98% of sunlight from reaching the ground. To survive in the dim understory, ground plants have evolved broad, extra-large leaves. Having a wider leaf surface area allows these plants to ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "capture as much faint sunlight as possible in the shade.",
+                "reflect sunlight back up toward the upper canopy.",
+                "stop absorbing soil nutrients and water.",
+                "grow roots deep underground during dry seasons."
+            ],
+            correctAnswer: 0,
+            explanation: "Having larger leaves gives shade plants more surface area to absorb low levels of sunlight on the dark forest floor."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Build Interactive Web Quiz
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        // Build Hidden "Blank Print" Version
+        let printHTML = '<h1 style="text-align: center; color: #1a5276; margin-bottom: 5px;">4th-5th Grade Reading Practice - Set 5</h1><h3 style="text-align: center; margin-top: 0; margin-bottom: 30px; color: #555;">Blank Copy</h3><hr style="margin-bottom:30px; border: 0; border-top: 1px solid #ccc;">';
+        
+        quizData.forEach((q, index) => {
+            let printOptionsHTML = '';
+            q.options.forEach(opt => {
+                printOptionsHTML += `
+                    <li style="margin-bottom: 12px; display: flex; align-items: baseline;">
+                        <div style="display:inline-block; width:14px; height:14px; border:2px solid #555; border-radius:50%; margin-right:12px; position:relative; top: 2px; flex-shrink: 0;"></div>
+                        <span>${opt}</span>
+                    </li>
+                `;
+            });
+            
+            printHTML += `
+                <div style="margin-bottom: 45px; page-break-inside: avoid;">
+                    <p style="font-weight: bold; font-size: 1.1em; color: #333;">Question ${index + 1}</p>
+                    <div style="font-family: Georgia, serif; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #ccc; margin-bottom: 15px;">${q.passage.replace(/\n/g, '<br>')}</div>
+                    <p style="font-weight: bold; margin-bottom: 15px;">${q.prompt}</p>
+                    <ul style="list-style-type: none; padding: 0;">${printOptionsHTML}</ul>
+                </div>
+            `;
+        });
+        document.getElementById('print-blank-container').innerHTML = printHTML;
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestion] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestion}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestion}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                const radios = document.getElementsByName(`q${index}`);
+                radios.forEach(r => r.disabled = true);
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        document.querySelector('.print-blank-btn').style.display = 'none'; 
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${Math.round((score/quizData.length)*100)}%)`;
+        
+        if (score === quizData.length) {
+            document.getElementById('harvard-reward').style.display = 'block';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function printBlankQuiz() {
+        document.body.classList.add('print-blank-mode');
+        window.print();
+        document.body.classList.remove('print-blank-mode');
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
