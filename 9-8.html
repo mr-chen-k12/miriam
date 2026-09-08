@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saxon-Style Grade 4 Math Practice Worksheet - Set #3</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- MathJax Configuration & Library -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Print Specific Overrides */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 10.5pt !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .print-header {
+        display: block !important;
+      }
+
+      .container-box {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .question-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        border: 1px solid #94a3b8 !important;
+        box-shadow: none !important;
+        margin-bottom: 0.8rem !important;
+        padding: 0.85rem !important;
+        background-color: #ffffff !important;
+      }
+
+      /* Print Key vs Student View logic */
+      body.print-student .answer-box {
+        display: none !important;
+      }
+
+      body.print-key .answer-box {
+        display: block !important;
+        background-color: #f8fafc !important;
+        border-left: 4px solid #334155 !important;
+        color: #020617 !important;
+      }
+
+      .grid-cols-1, .md\:grid-cols-2, .lg\:grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+
+    @media screen {
+      .print-header {
+        display: none;
+      }
+    }
+
+    /* SVG Diagram Containers */
+    .diagram-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-12 transition-colors duration-200">
+
+  <!-- Toolbar Header -->
+  <header class="no-print bg-slate-900 text-white shadow-lg sticky top-0 z-50 border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-blue-600 rounded-lg shadow-inner">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            Grade 4 Math Practice Worksheet — Set #3
+          </h1>
+          <p class="text-xs text-slate-400">Interactive MathJax Practice Sheet & Instant Answer Verification</p>
+        </div>
+      </div>
+
+      <!-- Action Toolbar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="revealAllAnswers()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs md:text-sm font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Show All Answers
+        </button>
+        <button onclick="hideAllAnswers()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs md:text-sm font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 0110.122 3.937A9.97 9.97 0 0121.542 12c-.52 1.657-1.442 3.123-2.658 4.263M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/></svg>
+          Hide All Answers
+        </button>
+        <button onclick="printWorksheet('student')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs md:text-sm font-medium rounded-lg transition shadow-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print Student Worksheet
+        </button>
+        <button onclick="printWorksheet('key')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs md:text-sm font-medium rounded-lg transition shadow-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Print Answer Key
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Printable Header (Visible only when printed) -->
+  <div class="print-header px-6 py-4 mb-4">
+    <div class="text-center border-b-2 border-slate-900 pb-3">
+      <h1 class="text-2xl font-black tracking-tight text-slate-900">Mathematics Grade 4 Practice Worksheet — Set #3</h1>
+      <p class="text-xs text-slate-600 font-medium mt-1">Problem Solving, Geometric Concepts & Verification</p>
+    </div>
+    <div class="flex justify-between items-center mt-4 text-xs font-semibold text-slate-800">
+      <div>Student Name: ____________________________________</div>
+      <div>Date: __________________</div>
+      <div>Score: ________ / 28</div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-5xl mx-auto px-4 py-6 container-box space-y-5">
+
+    <!-- Q1 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *1. Subtraction Word Problem
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        Mr. Sterling had $142$ science fair project boards. He handed out $88$ boards to 4th grade students. How many project boards does he have left?
+      </p>
+      <button onclick="toggleAnswer('ans1', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans1" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 54 project boards</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> Subtract the number of boards handed out from the initial amount:<br>
+          $$142 - 88 = 54\text{ project boards}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          2. Time & Division
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        A full day has $24$ hours. How many hours are in one-quarter ($\frac{1}{4}$) of a day?
+      </p>
+      <button onclick="toggleAnswer('ans2', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans2" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 6 hours</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> Divide the total number of hours in a day by $4$:<br>
+          $$24 \div 4 = 6\text{ hours}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *3. Patterns & Sequences
+        </span>
+      </div>
+      <div class="text-base text-slate-800 leading-relaxed mb-4">
+        Find the missing numbers in each counting sequence:
+        <ol class="list-alpha list-inside mt-2 space-y-2 pl-2 font-medium">
+          <li>$\dots, 8, 16, \underline{\quad}, 32, \underline{\quad}, 48, \dots$</li>
+          <li>$\dots, 10, 4, \underline{\quad}, -8, \underline{\quad}, -20, \dots$</li>
+        </ol>
+      </div>
+      <button onclick="toggleAnswer('ans3', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans3" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer:</div>
+        <div class="text-sm leading-relaxed space-y-1">
+          <p><strong>a. 24, 40</strong> (Counting up by $8$s: $8, 16, \mathbf{24}, 32, \mathbf{40}, 48$)</p>
+          <p><strong>b. -2, -14</strong> (Counting down by $6$s: $10, 4, \mathbf{-2}, -8, \mathbf{-14}, -20$)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *4. Number Comparison
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        Use digits and a comparison symbol ($>, <, =$ ) to write that <em>eight hundred forty-seven is greater than eight hundred thirty-nine</em>.
+      </p>
+      <button onclick="toggleAnswer('ans4', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans4" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: $847 > 839$</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> "Eight hundred forty-seven" $= 847$, "eight hundred thirty-nine" $= 839$, and the "is greater than" symbol is $>$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *5. Estimation & Rounding
+        </span>
+      </div>
+      <div class="text-base text-slate-800 leading-relaxed mb-4">
+        <ol class="list-alpha list-inside space-y-1.5 pl-2 font-medium">
+          <li>Round $86$ to the nearest ten.</li>
+          <li>Round $\$8.65$ to the nearest dollar.</li>
+          <li>Round $\$8.65$ to the nearest 25 cents.</li>
+        </ol>
+      </div>
+      <button onclick="toggleAnswer('ans5', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans5" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer:</div>
+        <div class="text-sm leading-relaxed space-y-1">
+          <p><strong>a. 90</strong> ($86$ rounds up to $90$)</p>
+          <p><strong>b. $9.00</strong> ($\$8.65$ rounds up to $\$9.00$)</p>
+          <p><strong>c. $8.75</strong> ($\$8.65$ is $10\phi$ away from $\$8.75$ and $15\phi$ away from $\$8.50$)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *6. Geometry - Circles
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        The radius of a circular park fountain is $9$ feet. What is the diameter of the fountain?
+      </p>
+      <button onclick="toggleAnswer('ans6', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans6" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 18 feet</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> The diameter ($d$) is twice the length of the radius ($r$):<br>
+          $$d = 2 \times r = 2 \times 9\text{ ft} = 18\text{ feet}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 Card with SVG Clock -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *7. Time Elapsed & Visual Clock
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-3">
+        An afternoon art class begins at the time shown on the clock below. The art class ends at 3:10 p.m. How long is the art class?
+      </p>
+
+      <!-- SVG Clock Visual Diagram -->
+      <div class="diagram-box my-4">
+        <svg width="150" height="150" viewBox="0 0 100 100" class="drop-shadow-sm">
+          <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+          <!-- Hour Numbers -->
+          <text x="45" y="17" font-size="9" font-weight="bold" fill="#0f172a">12</text>
+          <text x="83" y="53" font-size="9" font-weight="bold" fill="#0f172a">3</text>
+          <text x="47" y="90" font-size="9" font-weight="bold" fill="#0f172a">6</text>
+          <text x="12" y="53" font-size="9" font-weight="bold" fill="#0f172a">9</text>
+          <text x="65" y="26" font-size="8" fill="#64748b">1</text>
+          <text x="77" y="38" font-size="8" fill="#64748b">2</text>
+          <text x="76" y="68" font-size="8" fill="#64748b">4</text>
+          <text x="64" y="80" font-size="8" fill="#64748b">5</text>
+          <text x="31" y="80" font-size="8" fill="#64748b">7</text>
+          <text x="19" y="68" font-size="8" fill="#64748b">8</text>
+          <text x="17" y="38" font-size="8" fill="#64748b">10</text>
+          <text x="29" y="26" font-size="8" fill="#64748b">11</text>
+          
+          <!-- Minute Hand pointing to 4 (20 mins) -->
+          <line x1="50" y1="50" x2="74.2" y2="64" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Hour Hand pointing past 2 towards 3 -->
+          <line x1="50" y1="50" x2="66.9" y2="43.8" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="3.5" fill="#0f172a"/>
+        </svg>
+      </div>
+
+      <button onclick="toggleAnswer('ans7', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans7" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 50 minutes</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> The clock displays 2:20 p.m. <br>
+          From 2:20 p.m. to 3:00 p.m. is $40$ minutes.<br>
+          From 3:00 p.m. to 3:10 p.m. is $10$ minutes.<br>
+          $$40\text{ min} + 10\text{ min} = 50\text{ minutes}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 Card with Street Map SVG -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *8. Geometry - Street Lines
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-3">
+        Refer to the street map diagram below:
+      </p>
+      <ol class="list-alpha list-inside space-y-1 text-slate-800 font-medium mb-3 pl-2">
+        <li>Which street is <strong>parallel</strong> to Maple Avenue?</li>
+        <li>Which street is <strong>perpendicular</strong> to Main Street?</li>
+      </ol>
+
+      <!-- Street Map SVG -->
+      <div class="diagram-box my-4">
+        <svg width="280" height="135" viewBox="0 0 280 135">
+          <!-- Parallel Horizontal Streets -->
+          <line x1="20" y1="30" x2="200" y2="30" stroke="#1e293b" stroke-width="4"/>
+          <line x1="20" y1="100" x2="200" y2="100" stroke="#1e293b" stroke-width="4"/>
+          <!-- Perpendicular Vertical Street -->
+          <line x1="150" y1="10" x2="150" y2="125" stroke="#2563eb" stroke-width="4"/>
+          
+          <!-- Street Labels -->
+          <text x="30" y="22" font-size="11" font-weight="bold" fill="#0f172a">Maple Avenue</text>
+          <text x="30" y="92" font-size="11" font-weight="bold" fill="#0f172a">Pine Street</text>
+          <text x="158" y="70" font-size="11" font-weight="bold" fill="#2563eb">Main Street</text>
+          
+          <!-- Right angle symbol -->
+          <path d="M 138 30 L 138 42 L 150 42" fill="none" stroke="#ef4444" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <button onclick="toggleAnswer('ans8', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans8" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer:</div>
+        <div class="text-sm leading-relaxed space-y-1">
+          <p><strong>a. Pine Street</strong> (Runs in the exact same direction as Maple Avenue and never intersects it)</p>
+          <p><strong>b. Maple Avenue & Pine Street</strong> (Both intersect Main Street at right angles, $90^\circ$)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 Card with Fraction Grid SVG -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *9. Fraction Models
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-3">
+        What fraction of this grid is shaded? State your answer as a fraction.
+      </p>
+
+      <!-- SVG Fraction Grid Diagram (4x4 = 16 squares, 5 shaded) -->
+      <div class="diagram-box my-4">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <!-- Background Grid Border -->
+          <rect x="10" y="10" width="140" height="140" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+          <!-- Grid Cells (16 total: 4x4) -->
+          <!-- Row 1 -->
+          <rect x="10" y="10" width="35" height="35" fill="#2563eb" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="45" y="10" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="80" y="10" width="35" height="35" fill="#2563eb" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="115" y="10" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Row 2 -->
+          <rect x="10" y="45" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="45" y="45" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="80" y="45" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="115" y="45" width="35" height="35" fill="#2563eb" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Row 3 -->
+          <rect x="10" y="80" width="35" height="35" fill="#2563eb" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="45" y="80" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="80" y="80" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="115" y="80" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <!-- Row 4 -->
+          <rect x="10" y="115" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="45" y="115" width="35" height="35" fill="#2563eb" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="80" y="115" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+          <rect x="115" y="115" width="35" height="35" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <button onclick="toggleAnswer('ans9', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans9" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: $\frac{5}{16}$</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> The large square is divided into $16$ equal small squares in total ($4 \times 4$). Exactly $5$ of those squares are shaded blue. Thus, the fraction shaded is $\frac{5}{16}$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *10. Perimeter
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        Calculate the perimeter of a rectangle that is $6\text{ cm}$ long and $3\text{ cm}$ wide. What is its perimeter?
+      </p>
+      <button onclick="toggleAnswer('ans10', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans10" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 18 cm</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> A rectangle has two lengths of $6\text{ cm}$ and two widths of $3\text{ cm}$.<br>
+          $$\text{Perimeter} = 6 + 3 + 6 + 3 = 2 \times (6 + 3) = 18\text{ cm}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 Card with Number Line SVG -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *11. Number Line Point
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-3">
+        To what number is the red arrow pointing on the number line below?
+      </p>
+
+      <!-- SVG Number Line Diagram -->
+      <div class="diagram-box my-4 overflow-x-auto">
+        <svg width="320" height="70" viewBox="0 0 320 70">
+          <!-- Main Line with Arrows -->
+          <line x1="15" y1="42" x2="305" y2="42" stroke="#0f172a" stroke-width="2"/>
+          <polygon points="305,39 315,42 305,45" fill="#0f172a"/>
+          <polygon points="15,39 5,42 15,45" fill="#0f172a"/>
+
+          <!-- Ticks spaced by 25px representing 10 units each from 200 to 300 -->
+          <!-- 200 --> <line x1="30" y1="32" x2="30" y2="52" stroke="#0f172a" stroke-width="2"/>
+          <!-- 210 --> <line x1="55" y1="37" x2="55" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 220 --> <line x1="80" y1="37" x2="80" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 230 --> <line x1="105" y1="37" x2="105" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 240 --> <line x1="130" y1="37" x2="130" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 250 --> <line x1="155" y1="32" x2="155" y2="52" stroke="#0f172a" stroke-width="2"/>
+          <!-- 260 --> <line x1="180" y1="37" x2="180" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 270 --> <line x1="205" y1="35" x2="205" y2="49" stroke="#ef4444" stroke-width="2.5"/> <!-- Arrow Target -->
+          <!-- 280 --> <line x1="230" y1="37" x2="230" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 290 --> <line x1="255" y1="37" x2="255" y2="47" stroke="#64748b" stroke-width="1"/>
+          <!-- 300 --> <line x1="280" y1="32" x2="280" y2="52" stroke="#0f172a" stroke-width="2"/>
+
+          <!-- Numbers below major ticks -->
+          <text x="20" y="64" font-size="11" font-weight="bold" fill="#0f172a">200</text>
+          <text x="145" y="64" font-size="11" font-weight="bold" fill="#0f172a">250</text>
+          <text x="270" y="64" font-size="11" font-weight="bold" fill="#0f172a">300</text>
+
+          <!-- Red Arrow pointing down to 270 (x=205) -->
+          <line x1="205" y1="6" x2="205" y2="30" stroke="#ef4444" stroke-width="2.5"/>
+          <polygon points="200,25 205,32 210,25" fill="#ef4444"/>
+        </svg>
+      </div>
+
+      <button onclick="toggleAnswer('ans11', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans11" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: 270</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> The line is divided into ticks worth $10$ units each. Counting forward from $250$: $260$ ($1$ tick right), $270$ ($2$ ticks right, where the arrow points).
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 - Q23 Computation & Algebra Grid Section -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
+        <h3 class="text-base md:text-lg font-bold text-slate-900">Questions 12 – 23: Computation & Algebraic Equations</h3>
+        <span class="text-xs font-bold px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full">12 Problems</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+        
+        <!-- Q12 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>12.</strong> $64 - 28$</p>
+          <button onclick="toggleAnswer('ans12', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans12" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $36$
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>13.</strong> $385 + 249$</p>
+          <button onclick="toggleAnswer('ans13', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans13" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $634$
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>14.</strong> $91 - 47$</p>
+          <button onclick="toggleAnswer('ans14', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans14" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $44$
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>15.</strong> $\$6.48 + \$3.52$</p>
+          <button onclick="toggleAnswer('ans15', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans15" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $\$10.00$
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>*16.</strong> $45 - m = 18$</p>
+          <button onclick="toggleAnswer('ans16', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans16" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800">
+            <strong>$m = 27$</strong> ($45 - 18 = 27$)
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>*17.</strong> $k + 36 = 72$</p>
+          <button onclick="toggleAnswer('ans17', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans17" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800">
+            <strong>$k = 36$</strong> ($72 - 36 = 36$)
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>*18.</strong> $p - 29 = 54$</p>
+          <button onclick="toggleAnswer('ans18', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans18" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800">
+            <strong>$p = 83$</strong> ($54 + 29 = 83$)
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>*19.</strong> $w + 19 = 45$</p>
+          <button onclick="toggleAnswer('ans19', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans19" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800">
+            <strong>$w = 26$</strong> ($45 - 19 = 26$)
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>20.</strong> $83 - 65$</p>
+          <button onclick="toggleAnswer('ans20', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans20" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $18$
+          </div>
+        </div>
+
+        <!-- Q21 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>21.</strong> $61 - 33$</p>
+          <button onclick="toggleAnswer('ans21', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans21" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $28$
+          </div>
+        </div>
+
+        <!-- Q22 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>22.</strong> $94 - 38$</p>
+          <button onclick="toggleAnswer('ans22', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans22" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $56$
+          </div>
+        </div>
+
+        <!-- Q23 -->
+        <div class="p-3 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between shadow-xs">
+          <p class="font-semibold text-slate-800 mb-2 text-sm"><strong>23.</strong> $800 + 70 + 4$</p>
+          <button onclick="toggleAnswer('ans23', this)" class="no-print toggle-btn text-xs bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded transition text-slate-700 font-medium self-start">
+            <span class="btn-text">Review Answer</span>
+          </button>
+          <div id="ans23" class="answer-box hidden mt-2 text-xs p-2 bg-emerald-50 border-l-2 border-emerald-500 text-slate-800 font-bold">
+            Answer: $874$
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Q24 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *24. Multiple Choice - Metric Conversion
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-3">
+        Which of these measurements is <strong>NOT</strong> equivalent to $1\text{ kilometer}$?
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-slate-800 font-medium mb-4 pl-2 text-sm">
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg"><strong>A</strong> $1,000\text{ m}$</div>
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg"><strong>B</strong> $100,000\text{ cm}$</div>
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg"><strong>C</strong> $1,000,000\text{ mm}$</div>
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg"><strong>D</strong> $100\text{ m}$</div>
+      </div>
+      <button onclick="toggleAnswer('ans24', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans24" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: D ($100\text{ m}$)</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> $1\text{ kilometer} = 1,000\text{ meters} = 100,000\text{ centimeters} = 1,000,000\text{ millimeters}$. $100\text{ m}$ is only equal to $0.1\text{ km}$ (one-tenth of a kilometer).
+        </div>
+      </div>
+    </div>
+
+    <!-- Q25 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+          *25. Geometry Concepts
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        How are <strong>parallel lines</strong> different from <strong>perpendicular lines</strong>?
+      </p>
+      <button onclick="toggleAnswer('ans25', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans25" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: Geometric Difference</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> <strong>Parallel lines</strong> run in the same direction, remain the same distance apart, and never cross or intersect. <strong>Perpendicular lines</strong> intersect or cross each other at right angles ($90^\circ$).
+        </div>
+      </div>
+    </div>
+
+    <!-- Q26 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          26. Multi-Step River Miles Equation
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        The Red River and Blue River have a combined length of $940$ miles. The Red River is $510$ miles long. Write and solve an equation to find the length of the Blue River.
+      </p>
+      <button onclick="toggleAnswer('ans26', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans26" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: Equation: $510 + b = 940$; $b = 430$ miles</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> Let $b$ represent the length of the Blue River.<br>
+          Equation: $$510 + b = 940$$
+          Solve for $b$: $$b = 940 - 510 = 430\text{ miles}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Q27 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          27. Estimation Word Problem
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        At a school bookstore, a notebook costs $\$2.89$ and a pack of pens costs $\$1.19$. What is a reasonable estimate of the total cost? Explain why your estimate is reasonable.
+      </p>
+      <button onclick="toggleAnswer('ans27', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans27" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: About $4.00 to $4.10</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> Rounding $\$2.89$ to the nearest dollar gives $\$3.00$ (or $\$2.90$ to nearest 10 cents), and $\$1.19$ rounds to $\$1.00$ (or $\$1.20$).<br>
+          $$\$3.00 + \$1.00 = \$4.00 \quad \text{or} \quad \$2.90 + \$1.20 = \$4.10$$
+          This estimate is reasonable because each price was rounded to a convenient nearby amount for quick mental calculation.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q28 Card -->
+    <div class="question-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:border-slate-300">
+      <div class="flex justify-between items-start gap-2 mb-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          28. Integers & Temperature Differences
+        </span>
+      </div>
+      <p class="text-base text-slate-800 leading-relaxed mb-4">
+        In Minneapolis, the high temperature on a winter day was $14^\circ\text{F}$ and the low temperature was $-6^\circ\text{F}$. How many degrees warmer was the high temperature than the low temperature?
+      </p>
+      <button onclick="toggleAnswer('ans28', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ans28" class="answer-box hidden mt-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-md text-slate-800">
+        <div class="font-bold text-emerald-800 mb-1">Answer: $20^\circ\text{F}$ warmer</div>
+        <div class="text-sm leading-relaxed">
+          <strong>Explanation:</strong> Subtract the low temperature from the high temperature:<br>
+          $$14 - (-6) = 14 + 6 = 20^\circ\text{F}$$
+          Alternatively, from $-6^\circ\text{F}$ up to $0^\circ\text{F}$ is $6$ degrees, and from $0^\circ\text{F}$ up to $14^\circ\text{F}$ is $14$ degrees. $6 + 14 = 20^\circ\text{F}$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-World Connection Card -->
+    <div class="question-card bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-md text-white">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="p-1.5 bg-blue-500/20 text-blue-400 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+        </span>
+        <h3 class="text-lg font-bold text-white">Real-World Connection</h3>
+      </div>
+      <p class="text-slate-300 text-base leading-relaxed mb-4">
+        Three elementary school classes collected canned food for a food drive. Class A collected $134$ cans, Class B collected $148$ cans, and Class C collected $122$ cans. The school donated $260$ cans to a local shelter. Are there <strong>more cans left over</strong> or <strong>were more cans donated</strong>? How do you know?
+      </p>
+      <button onclick="toggleAnswer('ansRW', this)" class="no-print toggle-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-300 border border-slate-700 text-xs md:text-sm font-medium rounded-md transition">
+        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span class="btn-text">Review Answer & Explanation</span>
+      </button>
+      <div id="ansRW" class="answer-box hidden mt-4 p-4 bg-slate-800 border-l-4 border-emerald-400 rounded-r-md text-slate-100">
+        <div class="font-bold text-emerald-400 mb-1">Answer: More cans were donated ($260$ donated vs $144$ remaining).</div>
+        <div class="text-sm leading-relaxed space-y-2 text-slate-200">
+          <p><strong>Step 1:</strong> Calculate the total number of cans collected:<br>
+          $$134 + 148 + 122 = 404\text{ total cans}$$</p>
+          <p><strong>Step 2:</strong> Subtract the donated cans ($260$) to find how many cans remain:<br>
+          $$404 - 260 = 144\text{ cans remaining}$$</p>
+          <p><strong>Step 3:</strong> Compare the donated cans ($260$) with the remaining cans ($144$):<br>
+          $$260\text{ (donated)} > 144\text{ (remaining)}$$</p>
+          <p>Since $260 > 144$, more cans were donated than left over.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JavaScript Scripting -->
+  <script>
+    // Toggle individual question answer box
+    function toggleAnswer(id, btn) {
+      const box = document.getElementById(id);
+      const textSpan = btn.querySelector('.btn-text');
+      
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        if (textSpan) textSpan.textContent = 'Hide Explanation';
+      } else {
+        box.classList.add('hidden');
+        if (textSpan) textSpan.textContent = 'Review Answer & Explanation';
+      }
+    }
+
+    // Reveal all answer boxes across the page
+    function revealAllAnswers() {
+      const answerBoxes = document.querySelectorAll('.answer-box');
+      answerBoxes.forEach(box => box.classList.remove('hidden'));
+      
+      const buttons = document.querySelectorAll('.toggle-btn .btn-text');
+      buttons.forEach(span => span.textContent = 'Hide Explanation');
+    }
+
+    // Hide all answer boxes
+    function hideAllAnswers() {
+      const answerBoxes = document.querySelectorAll('.answer-box');
+      answerBoxes.forEach(box => box.classList.add('hidden'));
+      
+      const buttons = document.querySelectorAll('.toggle-btn .btn-text');
+      buttons.forEach(span => span.textContent = 'Review Answer & Explanation');
+    }
+
+    // Handle worksheet printing (Student mode vs Answer Key mode)
+    function printWorksheet(type) {
+      const body = document.body;
+      body.classList.remove('print-student', 'print-key');
+
+      if (type === 'student') {
+        body.classList.add('print-student');
+        hideAllAnswers();
+      } else if (type === 'key') {
+        body.classList.add('print-key');
+        revealAllAnswers();
+      }
+
+      // Small delay to ensure MathJax SVGs finish layout rendering before print dialog opens
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
+  </script>
+</body>
+</html>
