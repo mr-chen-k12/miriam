@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 111: Grade 3/4 Math Challenge (9-12-miri.html)</title>
+    
+    <style>
+        /* Clean, kid-friendly typography optimized for reading and printing */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .header-area {
+            border-bottom: 3px double #000000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header-area h1 {
+            margin: 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-area p {
+            margin: 5px 0 0 0;
+            font-size: 18px;
+            font-style: italic;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .problem-card {
+            page-break-inside: avoid;
+            border-bottom: 1px solid #cccccc;
+            padding: 20px 0;
+            margin-bottom: 15px;
+        }
+        .problem-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+        .btn-action {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: background-color 0.1s;
+        }
+        .btn-action:hover {
+            background-color: #eeeeee;
+        }
+        .solution-box {
+            display: none; /* Hidden by default on-screen */
+            margin-top: 15px;
+            background-color: #fafafa;
+            border: 1px dashed #666666;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .badge {
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            border: 1px solid #000000;
+            background-color: #eeeeee;
+            padding: 2px 6px;
+            margin-bottom: 10px;
+        }
+        canvas {
+            background: #ffffff;
+            border: 1px solid #666666;
+            margin: 15px 0;
+            display: block;
+        }
+
+        /* LONG DIVISION REVEAL */
+        .division-work {
+            margin: 14px 0 10px;
+            padding: 14px;
+            background: #ffffff;
+            border: 1px solid #cfcfcf;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .division-note {
+            margin: 0 0 10px;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .division-note strong { color: #1f618d; }
+        .long-division-grid {
+            --cell-size: 29px;
+            display: grid;
+            width: max-content;
+            min-width: max-content;
+            margin: 8px auto 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: var(--cell-size);
+        }
+        .long-division-grid .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .long-division-grid .txt-q { color: #155a9c; }
+        .long-division-grid .txt-sub { color: #b03a2e; }
+        .long-division-grid .txt-std { color: #222; }
+        .long-division-grid .border-right { border-right: 2px solid #222; }
+        .long-division-grid .border-top { border-top: 2px solid #222; }
+        .long-division-grid .border-bottom { border-bottom: 1px solid #222; }
+        .repeat-digit {
+            text-decoration: overline;
+            text-decoration-thickness: 1.4px;
+        }
+        @media (max-width: 520px) {
+            .long-division-grid { --cell-size: 26px; font-size: 17px; }
+            .division-work { padding: 10px 6px; }
+        }
+
+        /* PRINTER OPTIMIZATIONS */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 12pt;
+            }
+            .btn-action {
+                display: none !important; /* Hide answer buttons when printing */
+            }
+            .solution-box {
+                display: none !important; /* Ensure answers never print for students */
+            }
+            .problem-card {
+                border-bottom: 1px solid #444444;
+                padding-bottom: 60px; /* Gives kids plenty of room to write out their work */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-area">
+    <h1>Lesson 111: Math Challenge</h1>
+    <p>Student Practice Sheet</p>
+</div>
+
+<div class="container">
+
+    <!-- Question 1 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 1</div>
+        <p>Eight feet equals how many inches? <strong>(Hint: 1 foot = 12 inches)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(1)">Toggle Answer Sheet</button>
+        <div id="sol-1" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Rule: 1 foot = 12 inches.</p>
+            <p>2. Multiply the number of feet by 12:</p>
+            <p><strong>8 feet × 12 inches = 96 inches</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 2</div>
+        <p>Ethan handed the cashier a $40 bill to buy a board game that cost $23.45. How much change did he receive back?</p>
+        <button class="btn-action" onclick="toggleDisplay(2)">Toggle Answer Sheet</button>
+        <div id="sol-2" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract the cost of the board game from $40.00:</p>
+            <p><strong>$40.00 − $23.45 = $16.55</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 3</div>
+        <p>Lucas is 5 years younger than Sophia. Sophia is twice as old as Liam. If Sophia is 16 years old, how old are Lucas and Liam?</p>
+        <button class="btn-action" onclick="toggleDisplay(3)">Toggle Answer Sheet</button>
+        <div id="sol-3" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Find Lucas's age: Lucas is 5 years younger than Sophia → 16 − 5 = <strong>11 years old</strong>.</p>
+            <p>2. Find Liam's age: Sophia is twice as old as Liam → 16 ÷ 2 = <strong>8 years old</strong>.</p>
+            <p><strong>Lucas is 11 and Liam is 8.</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 4</div>
+        <p>Write a fraction to show each of the following descriptions:</p>
+        <p>(a) 3 out of 10 slices of pizza eaten at a party.</p>
+        <p>(b) 5 out of 12 balloons in a room are blue.</p>
+        <p>(c) 4 out of 8 library books returned on time.</p>
+        <button class="btn-action" onclick="toggleDisplay(4)">Toggle Answer Sheet</button>
+        <div id="sol-4" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>3/10</strong></p>
+            <p>(b) <strong>5/12</strong></p>
+            <p>(c) <strong>4/8</strong> (or simplified to 1/2)</p>
+        </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 5</div>
+        <p>One-fourth of the 36 students in Mrs. Green's class sing in the choir. How many students sing in the choir?</p>
+        <button class="btn-action" onclick="toggleDisplay(5)">Toggle Answer Sheet</button>
+        <div id="sol-5" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>To find one-fourth of a group, divide the total number of students by 4:</p>
+            <p><strong>36 ÷ 4 = 9 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 6</div>
+        <p>Looking back at <strong>Question 5</strong>, how many students do <strong>not</strong> sing in the choir?</p>
+        <button class="btn-action" onclick="toggleDisplay(6)">Toggle Answer Sheet</button>
+        <div id="sol-6" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Subtract choir members from the total class count:</p>
+            <p><strong>36 − 9 = 27 students</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 7</div>
+        <p>Find the total <strong>perimeter</strong> (the distance all the way around) of this rectangular garden:</p>
+        <canvas id="canvas-q7" width="280" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(7)">Toggle Answer Sheet</button>
+        <div id="sol-7" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Add all 4 sides of the rectangle together:</p>
+            <p><strong>25 ft + 15 ft + 25 ft + 15 ft = 80 feet</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 8</div>
+        <p>Write out the whole number <strong>8,047</strong> using words.</p>
+        <button class="btn-action" onclick="toggleDisplay(8)">Toggle Answer Sheet</button>
+        <div id="sol-8" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>"eight thousand, forty-seven"</strong> (or "eight thousand and forty-seven")</p>
+        </div>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 9</div>
+        <p>Estimate the difference between <strong>84</strong> and <strong>37</strong> by rounding each number to the nearest ten. Then, find the exact difference.</p>
+        <button class="btn-action" onclick="toggleDisplay(9)">Toggle Answer Sheet</button>
+        <div id="sol-9" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. <strong>Estimate:</strong> Round 84 down to 80. Round 37 up to 40. Subtract: 80 − 40 = <strong>40</strong>.</p>
+            <p>2. <strong>Exact Difference:</strong> Subtract the original numbers: 84 − 37 = <strong>47</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 10</div>
+        <p>Leo recorded his quiz scores for five weeks: <strong>12, 12, 9, 12, 15</strong>.</p>
+        <p>(a) What is the <strong>mode</strong> (the score that appears most often)?</p>
+        <p>(b) What is the total sum of his scores?</p>
+        <button class="btn-action" onclick="toggleDisplay(10)">Toggle Answer Sheet</button>
+        <div id="sol-10" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) Mode: <strong>12</strong> (It appears three times).</p>
+            <p>(b) Total: 12 + 12 + 9 + 12 + 15 = <strong>60 points</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 11 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 11</div>
+        <p>What solid three-dimensional geometric shape is a soup can or a soda pop can?</p>
+        <button class="btn-action" onclick="toggleDisplay(11)">Toggle Answer Sheet</button>
+        <div id="sol-11" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p>A <strong>cylinder</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 12 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 12</div>
+        <p>Look at the angles drawn below. Identify which angle is a <strong>right angle</strong> (an angle that forms an exact 90° square corner):</p>
+        <canvas id="canvas-q12" width="400" height="100"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(12)">Toggle Answer Sheet</button>
+        <div id="sol-12" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Angle B</strong> is the right angle because it forms a square 90-degree corner.</p>
+        </div>
+    </div>
+
+    <!-- Question 13 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 13</div>
+        <p>Calculate: <strong>$50.00 − ($18.30 + $14.70)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(13)">Toggle Answer Sheet</button>
+        <div id="sol-13" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Solve inside the parentheses first: $18.30 + $14.70 = $33.00.</p>
+            <p>2. Subtract that sum from $50.00:</p>
+            <p><strong>$50.00 − $33.00 = $17.00</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 14 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 14</div>
+        <p>A swim lesson started at <strong>9:30 AM</strong> and finished at <strong>11:15 AM</strong>. How long did the swim lesson last?</p>
+        <button class="btn-action" onclick="toggleDisplay(14)">Toggle Answer Sheet</button>
+        <div id="sol-14" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. From 9:30 AM to 10:30 AM is 1 hour.</p>
+            <p>2. From 10:30 AM to 11:15 AM is 45 minutes.</p>
+            <p>Total time: <strong>1 hour and 45 minutes</strong> (or 105 minutes).</p>
+        </div>
+    </div>
+
+    <!-- Question 15 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 15</div>
+        <p>Find the missing number in each equation:</p>
+        <p>(a) 8 × ___ = 72</p>
+        <p>(b) 56 ÷ ___ = 7</p>
+        <p>(c) ___ × 7 = 42</p>
+        <button class="btn-action" onclick="toggleDisplay(15)">Toggle Answer Sheet</button>
+        <div id="sol-15" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>9</strong> (8 × 9 = 72)</p>
+            <p>(b) <strong>8</strong> (56 ÷ 8 = 7)</p>
+            <p>(c) <strong>6</strong> (6 × 7 = 42)</p>
+        </div>
+    </div>
+
+    <!-- Question 16 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 16</div>
+        <p>Look at the number <strong>7,428</strong>:</p>
+        <p>(a) Which digit is in the tens place?</p>
+        <p>(b) What is the value of the digit 4?</p>
+        <button class="btn-action" onclick="toggleDisplay(16)">Toggle Answer Sheet</button>
+        <div id="sol-16" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) Tens place: <strong>2</strong></p>
+            <p>(b) Value of 4: <strong>400</strong> (four hundred)</p>
+        </div>
+    </div>
+
+    <!-- Question 17 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 17</div>
+        <p>Is the sum of <strong>418 + 235</strong> an even number or an odd number? Explain how you know by looking at the ones digits.</p>
+        <button class="btn-action" onclick="toggleDisplay(17)">Toggle Answer Sheet</button>
+        <div id="sol-17" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Look at the ones digits: 8 (even) + 5 (odd) = 13 (odd).</p>
+            <p>2. An even number plus an odd number always equals an <strong>odd number</strong> (418 + 235 = 653).</p>
+        </div>
+    </div>
+
+    <!-- Question 18 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 18</div>
+        <p>How many quarts are in <strong>7 gallons</strong> of lemonade? <strong>(Hint: 1 gallon = 4 quarts)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(18)">Toggle Answer Sheet</button>
+        <div id="sol-18" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Multiply the number of gallons by 4:</p>
+            <p><strong>7 gallons × 4 quarts = 28 quarts</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 19 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 19</div>
+        <p>Find the <strong>area</strong> of this rectangle in square feet: <strong>(Hint: Area = Length × Width)</strong></p>
+        <canvas id="canvas-q19" width="280" height="140"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(19)">Toggle Answer Sheet</button>
+        <div id="sol-19" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Multiply length by width:</p>
+            <p><strong>16 ft × 9 ft = 144 square feet (sq. ft)</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 20 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 20</div>
+        <p>Chloe has <strong>4 one-dollar bills, 3 quarters, 2 dimes, 3 nickels, and 4 pennies</strong>. What is her total amount of money?</p>
+        <button class="btn-action" onclick="toggleDisplay(20)">Toggle Answer Sheet</button>
+        <div id="sol-20" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>• 4 Dollar Bills = $4.00</p>
+            <p>• 3 Quarters = 3 × 25¢ = 75¢ ($0.75)</p>
+            <p>• 2 Dimes = 2 × 10¢ = 20¢ ($0.20)</p>
+            <p>• 3 Nickels = 3 × 5¢ = 15¢ ($0.15)</p>
+            <p>• 4 Pennies = 4¢ ($0.04)</p>
+            <p>Total: $4.00 + $0.75 + $0.20 + $0.15 + $0.04 = <strong>$5.14</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 21 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 21</div>
+        <p>Compare each pair of expressions using <strong>&lt;</strong>, <strong>&gt;</strong>, or <strong>=</strong> :</p>
+        <p>(a) 8 × 7 _____ 6 × 9</p>
+        <p>(b) 3,080 _____ 3,800</p>
+        <p>(c) $30.00 − $12.50 _____ $10.00 + $7.50</p>
+        <button class="btn-action" onclick="toggleDisplay(21)">Toggle Answer Sheet</button>
+        <div id="sol-21" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) 8 × 7 = 56 and 6 × 9 = 54 → <strong>&gt;</strong></p>
+            <p>(b) 3,080 &lt; 3,800 → <strong>&lt;</strong></p>
+            <p>(c) $17.50 = $17.50 → <strong>=</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 22 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 22</div>
+        <p>Look at the pairs of lines below. Which pair shows <strong>parallel lines</strong> (lines that never cross)?</p>
+        <canvas id="canvas-q22" width="400" height="110"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(22)">Toggle Answer Sheet</button>
+        <div id="sol-22" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Pair B</strong> shows parallel lines that stay equal distance apart and never intersect.</p>
+        </div>
+    </div>
+
+    <!-- Question 23 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 23</div>
+        <p>Write the number <strong>9,204</strong> in <strong>expanded form</strong> (showing the addition of each place value).</p>
+        <button class="btn-action" onclick="toggleDisplay(23)">Toggle Answer Sheet</button>
+        <div id="sol-23" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>9,000 + 200 + 4</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 24 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 24</div>
+        <p>An art teacher packs <strong>7 boxes</strong> of crayons with <strong>12 crayons</strong> in each box. How many crayons are there in total?</p>
+        <button class="btn-action" onclick="toggleDisplay(24)">Toggle Answer Sheet</button>
+        <div id="sol-24" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Multiply boxes by crayons per box:</p>
+            <p><strong>7 × 12 = 84 crayons</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 25 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 25</div>
+        <p>A teacher divides <strong>38 pencils</strong> equally into <strong>6 student pencil cups</strong>.</p>
+        <p>(a) How many pencils go into each cup?</p>
+        <p>(b) How many pencils are left over?</p>
+        <button class="btn-action" onclick="toggleDisplay(25)">Toggle Answer Sheet</button>
+        <div id="sol-25" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>Divide 38 by 6:</p>
+            <p>• 6 × 6 = 36 (with 2 remaining)</p>
+            <p>(a) <strong>6 pencils in each cup</strong></p>
+            <p>(b) <strong>2 pencils left over</strong> (38 ÷ 6 = 6 R 2)</p>
+        </div>
+    </div>
+
+    <!-- Question 26 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 26</div>
+        <p>Write the standard number for each Roman numeral:</p>
+        <p>(a) XIV</p>
+        <p>(b) XXXIV</p>
+        <p>(c) LXVIII</p>
+        <button class="btn-action" onclick="toggleDisplay(26)">Toggle Answer Sheet</button>
+        <div id="sol-26" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) XIV = 10 + (5 − 1) = <strong>14</strong></p>
+            <p>(b) XXXIV = 30 + (5 − 1) = <strong>34</strong></p>
+            <p>(c) LXVIII = 50 + 10 + 5 + 3 = <strong>68</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 27 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 27</div>
+        <p>A marble bag contains <strong>16 marbles</strong>: 8 green, 5 yellow, and 3 red.</p>
+        <p>(a) Which color marble are you most likely to draw without looking?</p>
+        <p>(b) What fraction represents the chance of drawing a yellow marble?</p>
+        <button class="btn-action" onclick="toggleDisplay(27)">Toggle Answer Sheet</button>
+        <div id="sol-27" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answers:</strong></p>
+            <p>(a) <strong>Green</strong> (8 out of 16 is the largest portion).</p>
+            <p>(b) <strong>5/16</strong></p>
+        </div>
+    </div>
+
+    <!-- Question 28 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 28</div>
+        <p>A puppy weighs <strong>5 pounds and 10 ounces</strong>. What is its total weight in ounces? <strong>(Hint: 1 pound = 16 ounces)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(28)">Toggle Answer Sheet</button>
+        <div id="sol-28" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Convert 5 pounds to ounces: 5 × 16 = 80 ounces.</p>
+            <p>2. Add the 10 ounces: 80 + 10 = <strong>90 ounces</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 29 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 29</div>
+        <p>A local library had <strong>520 books</strong> available in the morning. By noon, <strong>180 books</strong> were checked out, and in the afternoon <strong>95 returned books</strong> were placed back on shelves. How many books were available by the end of the day?</p>
+        <button class="btn-action" onclick="toggleDisplay(29)">Toggle Answer Sheet</button>
+        <div id="sol-29" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. Subtract books checked out: 520 − 180 = 340 books.</p>
+            <p>2. Add returned books: 340 + 95 = <strong>435 books</strong>.</p>
+        </div>
+    </div>
+
+    <!-- Question 30 -->
+    <div class="problem-card">
+        <div class="problem-header">Question 30</div>
+        <p>Look at the shapes drawn below. Identify which shape has <strong>no lines of symmetry</strong>:</p>
+        <canvas id="canvas-q30" width="400" height="110"></canvas>
+        <button class="btn-action" onclick="toggleDisplay(30)">Toggle Answer Sheet</button>
+        <div id="sol-30" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Answer:</strong></p>
+            <p><strong>Shape B</strong> (the general parallelogram) has no lines of symmetry.</p>
+        </div>
+    </div>
+
+    <!-- Question 31: Terminating Decimal Long Division -->
+    <div class="problem-card">
+        <div class="problem-header">Question 31</div>
+        <p>Perform the long division calculation: <strong>7.56 ÷ 0.4</strong></p>
+        <p><em>(Move the decimal so the divisor becomes a whole number, then divide until the answer terminates.)</em></p>
+        <button class="btn-action" onclick="toggleDisplay(31)">Toggle Answer Sheet</button>
+        <div id="sol-31" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Long Division:</strong></p>
+            <div id="division-q31" class="division-work"></div>
+            <p><strong>Answer: 7.56 ÷ 0.4 = 18.9</strong> (terminating decimal)</p>
+        </div>
+    </div>
+
+    <!-- Question 32: Repeating Decimal Long Division -->
+    <div class="problem-card">
+        <div class="problem-header">Question 32</div>
+        <p>Perform the long division calculation: <strong>5 ÷ 0.3</strong></p>
+        <p><em>(Move the decimal so the divisor becomes a whole number. Continue with zeros until you can identify the repeating pattern.)</em></p>
+        <button class="btn-action" onclick="toggleDisplay(32)">Toggle Answer Sheet</button>
+        <div id="sol-32" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Long Division:</strong></p>
+            <div id="division-q32" class="division-work"></div>
+            <p><strong>Answer: 5 ÷ 0.3 = 16.<span class="repeat-digit">6</span></strong> (repeating decimal)</p>
+        </div>
+    </div>
+
+    <!-- Question 33: Extra 4th-Grade PEMDAS Challenge Problem -->
+    <div class="problem-card">
+        <div class="problem-header">Question 33 (Bonus PEMDAS Challenge)</div>
+        <p>Solve the following expression using the Order of Operations (PEMDAS):</p>
+        <p style="font-size: 20px; font-weight: bold; text-align: center; margin: 15px 0;">(15 − 7) × 4 + 18 ÷ 3</p>
+        <p><strong>(Hint: Remember PEMDAS! First, solve what is inside the parentheses. Next, do all multiplication and division from left to right. Finally, perform addition and subtraction from left to right.)</strong></p>
+        <button class="btn-action" onclick="toggleDisplay(33)">Toggle Answer Sheet</button>
+        <div id="sol-33" class="solution-box">
+            <span class="badge">Teacher Answer Key</span>
+            <p><strong>Step-by-Step Solution:</strong></p>
+            <p>1. <strong>Parentheses First:</strong> (15 − 7) = 8</p>
+            <p>Rewrite: 8 × 4 + 18 ÷ 3</p>
+            <p>2. <strong>Multiplication &amp; Division (Left to Right):</strong></p>
+            <p>• 8 × 4 = 32</p>
+            <p>• 18 ÷ 3 = 6</p>
+            <p>Rewrite: 32 + 6</p>
+            <p>3. <strong>Addition:</strong> 32 + 6 = <strong>38</strong></p>
+            <p><strong>Final Answer: 38</strong></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Simple, clean on-screen interaction logic
+    const divisionProblems = {
+        31: {
+            target: "division-q31",
+            divisor: 4,
+            dividend: "75.6",
+            answer: "18.9",
+            note: "Move the decimal point <strong>1 place to the right</strong> in both numbers: 7.56 ÷ 0.4 → <strong>75.6 ÷ 4</strong>. The quotient terminates at 18.9."
+        },
+        32: {
+            target: "division-q32",
+            divisor: 3,
+            dividend: "50.0000",
+            answer: '16.<span class="repeat-digit">6</span>',
+            note: "Move the decimal point <strong>1 place to the right</strong> in both numbers: 5 ÷ 0.3 → <strong>50 ÷ 3</strong>. Add zeros to make the repeating 6 pattern visible."
+        }
+    };
+
+    function toggleDisplay(probNum) {
+        var box = document.getElementById("sol-" + probNum);
+        if (box.style.display === "block") {
+            box.style.display = "none";
+        } else {
+            box.style.display = "block";
+            if (divisionProblems[probNum]) {
+                const d = divisionProblems[probNum];
+                renderLongDivision(d.target, d.divisor, d.dividend, d.answer, d.note);
+            }
+        }
+    }
+
+    function renderLongDivision(targetId, divisor, dividendString, answerText, noteText) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        target.innerHTML = "";
+
+        const note = document.createElement("p");
+        note.className = "division-note";
+        note.innerHTML = noteText;
+        target.appendChild(note);
+
+        const grid = document.createElement("div");
+        grid.className = "long-division-grid";
+        target.appendChild(grid);
+
+        const sDiv = String(divisor);
+        const sDend = String(dividendString);
+        const divStartCol = sDiv.length + 1;
+        const colMap = [];
+        for (let i = 0; i < sDend.length; i++) colMap.push(divStartCol + i);
+
+        const totalCols = divStartCol + sDend.length;
+        grid.style.gridTemplateColumns = `repeat(${totalCols}, var(--cell-size))`;
+
+        const vGrid = {};
+        function plot(r, c, text, cls = "", bdr = "") {
+            vGrid[`${r},${c}`] = { text: text == null ? "" : String(text), cls, bdr };
+        }
+
+        // Divisor and dividend setup
+        for (let i = 0; i < sDiv.length; i++) plot(1, i, sDiv[i], "txt-std");
+        plot(1, sDiv.length, "", "", "border-right");
+        for (let i = 0; i < sDend.length; i++) {
+            plot(1, colMap[i], sDend[i], "txt-std", "border-top");
+        }
+
+        // Preserve the dividend decimal as a true alignment column.
+        const rawDividend = sDend.replace(".", "");
+        const mathCols = [];
+        for (let i = 0; i < sDend.length; i++) {
+            if (sDend[i] !== ".") mathCols.push(colMap[i]);
+        }
+        const dotIndex = sDend.indexOf(".");
+        if (dotIndex !== -1) plot(0, colMap[dotIndex], ".", "txt-q");
+
+        let workingValue = 0;
+        let row = 2;
+        let started = false;
+
+        for (let i = 0; i < rawDividend.length; i++) {
+            workingValue = workingValue * 10 + Number(rawDividend[i]);
+            const q = Math.floor(workingValue / divisor);
+            const qCol = mathCols[i];
+
+            if (q > 0 || started || i === rawDividend.length - 1) {
+                started = true;
+                plot(0, qCol, q, "txt-q");
+            }
+
+            if (started) {
+                const product = q * divisor;
+                const remainder = workingValue - product;
+                const sProd = String(product);
+
+                for (let p = 0; p < sProd.length; p++) {
+                    const idx = i - p;
+                    if (idx >= 0) {
+                        plot(row, mathCols[idx], sProd[sProd.length - 1 - p], "txt-sub", "border-bottom");
+                    }
+                }
+                row++;
+
+                const sRem = String(remainder);
+                if (sRem !== "0" || i === rawDividend.length - 1) {
+                    for (let r = 0; r < sRem.length; r++) {
+                        const idx = i - r;
+                        if (idx >= 0) plot(row, mathCols[idx], sRem[sRem.length - 1 - r], "txt-std");
+                    }
+                }
+
+                if (i < rawDividend.length - 1) {
+                    plot(row, mathCols[i + 1], rawDividend[i + 1], "txt-std");
+                    row++;
+                }
+
+                workingValue = remainder;
+            }
+        }
+
+        for (let r = 0; r <= row; r++) {
+            for (let c = 0; c < totalCols; c++) {
+                const data = vGrid[`${r},${c}`];
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                cell.style.gridRow = r + 1;
+                cell.style.gridColumn = c + 1;
+                if (data) {
+                    cell.textContent = data.text;
+                    cell.className += ` ${data.cls} ${data.bdr}`;
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        const result = document.createElement("p");
+        result.className = "division-note";
+        result.style.marginTop = "12px";
+        result.innerHTML = `<strong>Quotient: ${answerText}</strong>`;
+        target.appendChild(result);
+    }
+
+    // Dynamic Canvas Drawings (Generates sharp graphics for printing)
+    window.onload = function() {
+        // Draw Rectangle for Question 7 (Perimeter: 25 ft x 15 ft)
+        const ctx7 = document.getElementById('canvas-q7').getContext('2d');
+        ctx7.strokeStyle = '#000000';
+        ctx7.lineWidth = 2;
+        ctx7.strokeRect(35, 30, 210, 75);
+        ctx7.font = 'bold 14px Arial';
+        ctx7.fillStyle = '#000000';
+        ctx7.fillText('25 ft', 125, 22);
+        ctx7.fillText('15 ft', 252, 72);
+
+        // Draw Angles for Question 12
+        const ctx12 = document.getElementById('canvas-q12').getContext('2d');
+        ctx12.strokeStyle = '#000000';
+        ctx12.lineWidth = 2;
+        ctx12.font = 'bold 14px Arial';
+        ctx12.fillStyle = '#000000';
+
+        // Angle A: Acute (45 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(40, 75);
+        ctx12.lineTo(100, 75);
+        ctx12.moveTo(40, 75);
+        ctx12.lineTo(85, 30);
+        ctx12.stroke();
+        ctx12.fillText('Angle A', 45, 95);
+
+        // Angle B: Right Angle (90 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(170, 75);
+        ctx12.lineTo(230, 75);
+        ctx12.moveTo(170, 75);
+        ctx12.lineTo(170, 15);
+        ctx12.stroke();
+        ctx12.strokeRect(170, 65, 10, 10);
+        ctx12.fillText('Angle B', 175, 95);
+
+        // Angle C: Obtuse (120 degrees)
+        ctx12.beginPath();
+        ctx12.moveTo(310, 75);
+        ctx12.lineTo(370, 75);
+        ctx12.moveTo(310, 75);
+        ctx12.lineTo(275, 30);
+        ctx12.stroke();
+        ctx12.fillText('Angle C', 315, 95);
+
+        // Draw Rectangle for Question 19 (Area: 16 ft x 9 ft)
+        const ctx19 = document.getElementById('canvas-q19').getContext('2d');
+        ctx19.strokeStyle = '#000000';
+        ctx19.lineWidth = 2;
+        ctx19.strokeRect(40, 30, 190, 80);
+        ctx19.font = 'bold 14px Arial';
+        ctx19.fillStyle = '#000000';
+        ctx19.fillText('16 ft', 125, 23);
+        ctx19.fillText('9 ft', 238, 75);
+
+        // Draw Lines for Question 22 (Intersections, Parallel, Perpendicular)
+        const ctx22 = document.getElementById('canvas-q22').getContext('2d');
+        ctx22.strokeStyle = '#000000';
+        ctx22.lineWidth = 2;
+        ctx22.font = 'bold 14px Arial';
+        ctx22.fillStyle = '#000000';
+
+        // Pair A: Oblique Intersecting lines
+        ctx22.beginPath();
+        ctx22.moveTo(25, 20);
+        ctx22.lineTo(90, 80);
+        ctx22.moveTo(25, 75);
+        ctx22.lineTo(90, 25);
+        ctx22.stroke();
+        ctx22.fillText('Pair A', 40, 95);
+
+        // Pair B: Parallel lines
+        ctx22.beginPath();
+        ctx22.moveTo(160, 35);
+        ctx22.lineTo(230, 35);
+        ctx22.moveTo(160, 65);
+        ctx22.lineTo(230, 65);
+        ctx22.stroke();
+        ctx22.fillText('Pair B', 175, 95);
+
+        // Pair C: Perpendicular lines
+        ctx22.beginPath();
+        ctx22.moveTo(295, 50);
+        ctx22.lineTo(365, 50);
+        ctx22.moveTo(330, 15);
+        ctx22.lineTo(330, 80);
+        ctx22.stroke();
+        ctx22.strokeRect(330, 40, 10, 10);
+        ctx22.fillText('Pair C', 315, 95);
+
+        // Draw Shapes for Question 30 (Lines of Symmetry)
+        const ctx30 = document.getElementById('canvas-q30').getContext('2d');
+        ctx30.strokeStyle = '#000000';
+        ctx30.lineWidth = 2;
+        ctx30.font = 'bold 14px Arial';
+        ctx30.fillStyle = '#000000';
+
+        // Shape A: Rectangle (2 lines of symmetry)
+        ctx30.strokeRect(30, 30, 70, 45);
+        ctx30.fillText('Shape A', 38, 95);
+
+        // Shape B: General Parallelogram (0 lines of symmetry)
+        ctx30.beginPath();
+        ctx30.moveTo(175, 30);
+        ctx30.lineTo(225, 30);
+        ctx30.lineTo(205, 75);
+        ctx30.lineTo(155, 75);
+        ctx30.closePath();
+        ctx30.stroke();
+        ctx30.fillText('Shape B', 165, 95);
+
+        // Shape C: Square (4 lines of symmetry)
+        ctx30.strokeRect(310, 25, 50, 50);
+        ctx30.fillText('Shape C', 305, 95);
+    };
+</script>
+
+</body>
+</html>
