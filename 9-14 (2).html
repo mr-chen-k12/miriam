@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Problem Set</title>
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+    <!-- KaTeX Core JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
+    <!-- KaTeX Auto-render Extension -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Base typography and background styling */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin: 0;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #111827;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Modern Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card styling for each problem */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .problem-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 1.25rem;
+            flex-grow: 1; /* Pushes button to bottom if texts vary in height */
+        }
+
+        .problem-number {
+            font-weight: 700;
+            color: #2563eb;
+            margin-right: 0.25rem;
+        }
+
+        /* Button styling */
+        .toggle-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            align-self: flex-start;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2563eb;
+        }
+
+        .toggle-btn:focus {
+            outline: 2px solid #93c5fd;
+            outline-offset: 2px;
+        }
+
+        /* Answer section styling - hidden by default */
+        .answer-section {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #ecfdf5;
+            border-left: 4px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            color: #065f46;
+            font-size: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .math-block {
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Math Problem Set</h1>
+        <div class="grid-container">
+            <!-- Problem 1 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">1.</span> Seventy-two children attend the morning session at a preschool. Forty-two children attend the afternoon session. How many children attend those sessions altogether?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans1', this)">Show Answer</button>
+                <div id="ans1" class="answer-section">
+                    <strong>Answer:</strong> \( 72 + 42 = 114 \)
+                </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">2.</span> Sherri needs \( \$35 \) to buy a baseball glove. She has saved \( \$18 \). How much more does she need?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans2', this)">Show Answer</button>
+                <div id="ans2" class="answer-section">
+                    <strong>Answer:</strong> \( \$35 - \$18 = \$17 \)
+                </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">3.</span> Draw a rectangle that is 4 cm long and 3 cm wide. What is the perimeter of the rectangle?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans3', this)">Show Answer</button>
+                <div id="ans3" class="answer-section">
+                    <strong>Answer:</strong> \( 4 + 3 + 4 + 3 = 14 \text{ cm} \)
+                </div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">4.</span> Find the missing numbers: \( \dots, 12, \dots, \dots, 30, 36, \dots, \dots \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans4', this)">Show Answer</button>
+                <div id="ans4" class="answer-section">
+                    <strong>Answer:</strong> Multiples of 6: \( 6, 12, 18, 24, 30, 36, 42, 48 \)
+                </div>
+            </div>
+
+            <!-- Problem 5 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">5.</span> Find the missing numbers: \( \dots, 36, \dots, \dots, 24, 20, \dots, \dots \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans5', this)">Show Answer</button>
+                <div id="ans5" class="answer-section">
+                    <strong>Answer:</strong> Decreasing by 4: \( 40, 36, 32, 28, 24, 20, 16, 12 \)
+                </div>
+            </div>
+
+            <!-- Problem 6 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">6.</span> Change this addition problem to a multiplication problem: \( 6 + 6 + 6 + 6 + 6 + 6 + 6 \).
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans6', this)">Show Answer</button>
+                <div id="ans6" class="answer-section">
+                    <strong>Answer:</strong> \( 7 \times 6 = 42 \)
+                </div>
+            </div>
+
+            <!-- Problem 7 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">7.</span> a. Round 28 to the nearest ten.<br> b. Round \(\$12.29\) to the nearest dollar.<br> c. Round \(\$12.29\) to the nearest 25 cents.
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans7', this)">Show Answer</button>
+                <div id="ans7" class="answer-section">
+                    <strong>Answer:</strong> a. \(30\), b. \(\$12\), c. \(\$12.25\)
+                </div>
+            </div>
+
+            <!-- Problem 8 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">8.</span> A right triangle has one right angle. Draw a right triangle. Draw the two perpendicular sides 3 cm long and 4 cm long.
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans8', this)">Show Answer</button>
+                <div id="ans8" class="answer-section">
+                    <strong>Answer:</strong> Draw a triangle with a 90-degree angle between a 3cm side and a 4cm side.
+                </div>
+            </div>
+
+            <!-- Problem 9 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">9.</span> On Saturday morning, Mason went to the public library at the time shown on the clock (10:15). He arrived home 90 minutes later. What time did Mason arrive home from the library?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans9', this)">Show Answer</button>
+                <div id="ans9" class="answer-section">
+                    <strong>Answer:</strong> 10:15 + 1 hour 30 mins = \(11:45\)
+                </div>
+            </div>
+
+            <!-- Problem 10 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">10.</span> What fraction of this group is shaded? (5 out of 12 circles)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans10', this)">Show Answer</button>
+                <div id="ans10" class="answer-section">
+                    <strong>Answer:</strong> \( \frac{5}{12} \)
+                </div>
+            </div>
+
+            <!-- Problem 11 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">11.</span> Write 417 in expanded form. Then use words to write the number.
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans11', this)">Show Answer</button>
+                <div id="ans11" class="answer-section">
+                    <strong>Answer:</strong> \( 400 + 10 + 7 \), Four hundred seventeen
+                </div>
+            </div>
+
+            <!-- Problem 12 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">12.</span> What temperature is shown on this thermometer (-8°C)? If it increases by 10 degrees, what will it be?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans12', this)">Show Answer</button>
+                <div id="ans12" class="answer-section">
+                    <strong>Answer:</strong> a. \( -8^\circ\text{C} \), b. \( 2^\circ\text{C} \)
+                </div>
+            </div>
+
+            <!-- Problem 13 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">13.</span> \( 76 - 29 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans13', this)">Show Answer</button>
+                <div id="ans13" class="answer-section">
+                    <strong>Answer:</strong> \( 47 \)
+                </div>
+            </div>
+
+            <!-- Problem 14 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">14.</span> \( \$286 + \$388 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans14', this)">Show Answer</button>
+                <div id="ans14" class="answer-section">
+                    <strong>Answer:</strong> \( \$674 \)
+                </div>
+            </div>
+
+            <!-- Problem 15 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">15.</span> \( \$73 - \$39 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans15', this)">Show Answer</button>
+                <div id="ans15" class="answer-section">
+                    <strong>Answer:</strong> \( \$34 \)
+                </div>
+            </div>
+
+            <!-- Problem 16 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">16.</span> \( \$5.87 + \$2.43 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans16', this)">Show Answer</button>
+                <div id="ans16" class="answer-section">
+                    <strong>Answer:</strong> \( \$8.30 \)
+                </div>
+            </div>
+
+            <!-- Problem 17 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">17.</span> \( 46 - c = 19 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans17', this)">Show Answer</button>
+                <div id="ans17" class="answer-section">
+                    <strong>Answer:</strong> \( c = 27 \)
+                </div>
+            </div>
+
+            <!-- Problem 18 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">18.</span> \( n + 48 = 87 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans18', this)">Show Answer</button>
+                <div id="ans18" class="answer-section">
+                    <strong>Answer:</strong> \( n = 39 \)
+                </div>
+            </div>
+
+            <!-- Problem 19 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">19.</span> \( 29 + y = 57 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans19', this)">Show Answer</button>
+                <div id="ans19" class="answer-section">
+                    <strong>Answer:</strong> \( y = 28 \)
+                </div>
+            </div>
+
+            <!-- Problem 20 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">20.</span> \( d - 14 = 37 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans20', this)">Show Answer</button>
+                <div id="ans20" class="answer-section">
+                    <strong>Answer:</strong> \( d = 51 \)
+                </div>
+            </div>
+
+            <!-- Problem 21 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">21.</span> \( 78 - 43 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans21', this)">Show Answer</button>
+                <div id="ans21" class="answer-section">
+                    <strong>Answer:</strong> \( 35 \)
+                </div>
+            </div>
+
+            <!-- Problem 22 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">22.</span> \( 77 - 17 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans22', this)">Show Answer</button>
+                <div id="ans22" class="answer-section">
+                    <strong>Answer:</strong> \( 60 \)
+                </div>
+            </div>
+
+            <!-- Problem 23 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">23.</span> \( 53 - 19 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans23', this)">Show Answer</button>
+                <div id="ans23" class="answer-section">
+                    <strong>Answer:</strong> \( 34 \)
+                </div>
+            </div>
+
+            <!-- Problem 24 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">24.</span> Find each product:<br> a. \( 8 \times 11 \)<br> b. \( 7 \times 10 \)<br> c. \( 5 \times 12 \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans24', this)">Show Answer</button>
+                <div id="ans24" class="answer-section">
+                    <strong>Answer:</strong> a. \( 88 \), b. \( 70 \), c. \( 60 \)
+                </div>
+            </div>
+
+            <!-- Problem 25 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">25.</span> Compare: 1 yard \( \bigcirc \) 1 meter
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans25', this)">Show Answer</button>
+                <div id="ans25" class="answer-section">
+                    <strong>Answer:</strong> \( 1 \text{ yard} < 1 \text{ meter} \)
+                </div>
+            </div>
+
+            <!-- Problem 26 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">26.</span> Which of the following shows 3 ones and 4 hundreds?<br> A 304<br> B 403<br> C 4003<br> D 3400
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans26', this)">Show Answer</button>
+                <div id="ans26" class="answer-section">
+                    <strong>Answer:</strong> B 403
+                </div>
+            </div>
+
+            <!-- Problem 27 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">27.</span> The product of 9 and 3 is 27. How many times does this product appear in this lesson's multiplication table? What property of multiplication does this show?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans27', this)">Show Answer</button>
+                <div id="ans27" class="answer-section">
+                    <strong>Answer:</strong> Twice. Commutative property
+                </div>
+            </div>
+
+            <!-- Problem 28 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">28.</span> Cheetah runs 70 mph. Elk runs 45 mph. Write and solve a subtraction equation to find the difference.
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans28', this)">Show Answer</button>
+                <div id="ans28" class="answer-section">
+                    <strong>Answer:</strong> \( 70 - 45 = 25 \text{ mph} \)
+                </div>
+            </div>
+
+            <!-- Problem 29 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">29.</span> D'Wayne bid \(\$37\) for one item and \(\$54\) for another. Reasonable estimate of total cost?
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans29', this)">Show Answer</button>
+                <div id="ans29" class="answer-section">
+                    <strong>Answer:</strong> \( \$40 + \$50 = \$90 \). Rounding makes it easy to add mentally.
+                </div>
+            </div>
+
+            <!-- Problem 30 -->
+            <div class="card">
+                <div class="problem-text">
+                    <span class="problem-number">30.</span> What is the tenth number in this counting sequence? \( 90, 80, 70, 60, 50, \dots \)
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans30', this)">Show Answer</button>
+                <div id="ans30" class="answer-section">
+                    <strong>Answer:</strong> \( 0 \)
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * Toggles the display of the answer section and updates button text.
+         */
+        function toggleAnswer(answerId, btn) {
+            const answerDiv = document.getElementById(answerId);
+            
+            if (answerDiv.style.display === "none" || answerDiv.style.display === "") {
+                answerDiv.style.display = "block";
+                btn.textContent = "Hide Answer";
+            } else {
+                answerDiv.style.display = "none";
+                btn.textContent = "Show Answer";
+            }
+        }
+
+        // Wait for DOM to load before configuring and triggering KaTeX auto-render
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+              // Configure delimiters to look for $ ... $ and \( ... \) for inline math
+              delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '\\[', right: '\\]', display: true},
+                  {left: '\\(', right: '\\)', display: false}
+              ],
+              throwOnError: false
+            });
+        });
+    </script>
+</body>
+</html>
