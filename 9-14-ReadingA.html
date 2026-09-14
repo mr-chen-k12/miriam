@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4th-5th Grade Reading Practice - Set 9-14A (Miri)</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+    }
+    
+    .print-blank-btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background-color: #7f8c8d;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .print-blank-btn:hover {
+        background-color: #616a6b;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #university-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    #university-reward img {
+        width: 160px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .university-text {
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    #print-blank-container {
+        display: none;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Printer Friendly Styles */
+    @media print {
+        body { background-color: white; padding: 0; }
+        
+        #quiz-container { box-shadow: none; max-width: 100%; border: none; padding: 0; }
+        .question-block { 
+            display: block !important; 
+            page-break-inside: avoid; 
+            border-bottom: 1px solid #ccc; 
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .nav-buttons, .check-btn, .progress-tracker, button, .print-blank-btn { display: none !important; }
+        .options label { border: none; padding: 5px 0; background: transparent; }
+        .options input { appearance: auto; } 
+
+        #university-reward {
+            display: block !important;
+            border: 2px solid #a51c30 !important;
+        }
+
+        /* Override for Blank Print Mode */
+        body.print-blank-mode #quiz-container { display: none !important; }
+        body.print-blank-mode #print-blank-container { display: block !important; }
+    }
+
+    @media screen and (max-width: 600px) {
+        .print-blank-btn {
+            position: relative;
+            top: 0;
+            right: 0;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <button class="print-blank-btn" onclick="printBlankQuiz()">🖨️ Print Blank Quiz</button>
+    <h1>Elementary Reading Practice - Grade 4-5 (Set 9-14A - Miri)</h1>
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <div id="results">
+        <h2>Quiz Complete</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+        
+        <div id="university-reward">
+            <div class="university-text" id="reward-title">★ FLAWLESS ACADEMIC EXCELLENCE ★</div>
+            <img id="reward-img" src="" alt="University Crest">
+            <p id="reward-desc" style="color: #555; font-style: italic; font-weight: bold; margin-top: 5px;"></p>
+        </div>
+
+        <button onclick="window.print()" style="margin-top: 15px;">🖨️ Print Results</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected here -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit for Review</button>
+    </div>
+</div>
+
+<div id="print-blank-container"></div>
+
+<script>
+    const quizData = [
+        {
+            passage: "Honeybees perform a specialized waggle dance to communicate the location of rich nectar sources to hive mates. By altering the angle and duration of the dance, a returning bee can accurately ________ the exact direction and distance of flowers relative to the sun.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["convey", "conceal", "dismantle", "disregard"],
+            correctAnswer: 0,
+            explanation: "'Convey' means to pass along or communicate information clearly, which fits how the dance delivers directions to hive mates."
+        },
+        {
+            passage: "Sea otters play a critical role in maintaining healthy coastal kelp forests. By consuming large quantities of sea urchins, which graze heavily on kelp stalks, otters prevent urchin populations from multiplying uncontrollably and destroying underwater marine ecosystems.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Sea otters protect kelp forests by controlling the population of kelp-eating sea urchins.",
+                "Kelp forests grow faster in warm tropical waters than in cold coastal currents.",
+                "Sea urchins are the primary food source for major ocean predators like killer whales.",
+                "Coastal ecosystems are damaged whenever sea otter populations grow too quickly."
+            ],
+            correctAnswer: 0,
+            explanation: "The passage centers on how sea otters preserve kelp forest ecosystems by preying on kelp-eating sea urchins."
+        },
+        {
+            passage: "Earth's atmosphere contains several distinct layers, with the troposphere being the lowest layer where almost all weather occurs. As altitude increases within the troposphere, air pressure drops rapidly and temperatures steadily decrease. Consequently, mountaineers climbing high peaks within this layer must ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "prepare for colder temperatures and thinner air as they ascend higher.",
+                "expect air pressure to double as they reach high mountain summits.",
+                "experience warmer tropical weather near icy mountain peaks.",
+                "fly hot air balloons to avoid deep mountain valleys."
+            ],
+            correctAnswer: 0,
+            explanation: "Higher elevations in the troposphere feature lower air pressure (thinner air) and decreasing temperatures."
+        },
+        {
+            passage: "In 1928, scientist Alexander Fleming accidentally discovered penicillin when he noticed that mold growing on an open petri dish killed surrounding bacteria. This unexpected event led to the development of life-saving antibiotic medications that transformed modern medicine by curing previously fatal bacterial infections.",
+            prompt: "Which detail from the text best supports the claim that Fleming's discovery revolutionized medical treatment?",
+            options: [
+                "The discovery led to life-saving antibiotic medications that cured previously fatal bacterial infections.",
+                "Alexander Fleming was working in a laboratory when he noticed mold on a petri dish.",
+                "Petri dishes are commonly used in scientific experiments to grow bacteria cultures.",
+                "Mold spores travel through the air and can settle on exposed laboratory surfaces."
+            ],
+            correctAnswer: 0,
+            explanation: "The detail highlighting life-saving antibiotics that cured previously fatal diseases directly demonstrates a medical revolution."
+        },
+        {
+            passage: "Emperor penguins endure some of the harshest conditions on Earth during Antarctic winters, huddled together in massive colonies to trap body heat against freezing winds. The penguins continuously rotate positions so that individuals on the outer edges can move into the warm center. This collective behavior helps the colony ________ extreme sub-zero temperatures.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["withstand", "avoid", "accelerate", "relinquish"],
+            correctAnswer: 0,
+            explanation: "'Withstand' means to endure or resist harsh conditions successfully, describing how penguins survive freezing Antarctic temperatures."
+        },
+        {
+            passage: "Text 1\nDesalination plants turn ocean seawater into drinking water by removing dissolved salts through filtration systems. This technology provides a dependable supply of fresh water to arid coastal regions suffering from severe droughts.\n\nText 2\nAlthough desalination provides fresh water, the process consumes massive amounts of electricity and generates concentrated brine waste. Discharging this salty brine back into coastal ocean waters lowers oxygen levels and harms local marine life.",
+            prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+            options: [
+                "By emphasizing that desalination carries high energy demands and potential environmental risks to ocean habitats.",
+                "By arguing that coastal regions should rely entirely on rainwater collected in open plastic barrels.",
+                "By stating that ocean brine improves the health of coral reef fish species.",
+                "By claiming that filtration systems remove all mineral nutrients from freshwater reservoirs."
+            ],
+            correctAnswer: 0,
+            explanation: "Text 2 outlines environmental risks and high energy demands associated with ocean desalination."
+        },
+        {
+            passage: "Porcupines possess thousands of sharp quills along their backs and tails for self-defense against predators. **When threatened, a porcupine raises its quills and swings its tail toward the attacker, causing the barbed tips to easily detach and embed into the predator's skin.** Because the barbs push deeper into tissue as the predator moves, attackers quickly retreat.",
+            prompt: "Which choice best describes the function of the bold sentence in the text?",
+            options: [
+                "It describes the physical action a porcupine takes to embed sharp quills into an attacking predator.",
+                "It explains how porcupines build underground dens to protect their offspring during winter.",
+                "It details the diet of quills and tree bark consumed by young porcupines.",
+                "It compares the swimming abilities of porcupines with those of aquatic mammals."
+            ],
+            correctAnswer: 0,
+            explanation: "The bold sentence illustrates the defensive physical movement porcupines use to drive quills into a predator."
+        },
+        {
+            passage: "Fireflies emit soft bursts of light from their abdomens through a chemical reaction known as bioluminescence. By flashing specific light patterns, fireflies attract potential mates and warn predators of their bitter, toxic taste. This luminous signal allows fireflies to ________ vital messages across dark summer fields.",
+            prompt: "Which choice completes the text with the most logical and precise word?",
+            options: ["transmit", "conceal", "dismantle", "suppress"],
+            correctAnswer: 0,
+            explanation: "'Transmit' means to send out signals or messages, fitting how fireflies send optical signals in the dark."
+        },
+        {
+            passage: "Deep-sea hydrothermal vents spew mineral-rich, superheated water from beneath Earth's crust into the dark ocean depths. Instead of using sunlight for photosynthesis, specialized bacteria around these vents turn chemicals like hydrogen sulfide into food through chemosynthesis. These bacteria form the base of a unique ecosystem that thrives without any sunlight.",
+            prompt: "Which choice best states the main idea of the text?",
+            options: [
+                "Hydrothermal vent communities rely on chemical-using bacteria rather than sunlight to sustain life.",
+                "Deep ocean water is usually too cold to support living plant and animal species.",
+                "Hydrogen sulfide gas is dangerous to all forms of marine life in tropical waters.",
+                "Submarine volcanoes created all the volcanic islands currently existing in the Pacific Ocean."
+            ],
+            correctAnswer: 0,
+            explanation: "The text explains how chemosynthetic bacteria create an energy foundation for hydrothermal vent ecosystems in complete darkness."
+        },
+        {
+            passage: "Geckos can climb vertical glass walls and hang from ceilings due to millions of microscopic hair-like structures on their footpads called setae. These tiny structures create weak electrostatic forces that stick firmly to almost any surface without leaving sticky residue. Consequently, these specialized footpads enable geckos to ________",
+            prompt: "Which choice most logically completes the text?",
+            options: [
+                "scamper effortlessly across smooth surfaces in search of insects.",
+                "fly long distances across canopy trees in tropical rainforests.",
+                "burrow deep underground to escape hot afternoon temperatures.",
+                "change their skin color to match different rocks and leaves."
+            ],
+            correctAnswer: 0,
+            explanation: "Setae give geckos incredible adhesive traction on smooth surfaces, allowing them to climb walls and ceilings easily."
+        }
+    ];
+
+    // Rotating award possibilities for 10/10 perfect score
+    const universityRewards = [
+        {
+            name: "Harvard University",
+            img: "https://mr-chen-k12.github.io/math/IMG_0232.png",
+            color: "#a51c30"
+        },
+        {
+            name: "Boston University",
+            img: "https://mr-chen-k12.github.io/books/IMG_0121.png",
+            color: "#CC0000"
+        },
+        {
+            name: "Yale University",
+            img: "https://mr-chen-k12.github.io/books/IMG_0122.png",
+            color: "#00356B"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let isLocked = new Array(quizData.length).fill(false);
+
+    function initQuiz() {
+        const wrapper = document.getElementById('questions-wrapper');
+        
+        // Build Interactive Web Quiz
+        quizData.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+
+        // Build Hidden "Blank Print" Version
+        let printHTML = '<h1 style="text-align: center; color: #1a5276; margin-bottom: 5px;">4th-5th Grade Reading Practice - Set 9-14A (Miri)</h1><h3 style="text-align: center; margin-top: 0; margin-bottom: 30px; color: #555;">Blank Copy</h3><hr style="margin-bottom:30px; border: 0; border-top: 1px solid #ccc;">';
+        
+        quizData.forEach((q, index) => {
+            let printOptionsHTML = '';
+            q.options.forEach(opt => {
+                printOptionsHTML += `
+                    <li style="margin-bottom: 12px; display: flex; align-items: baseline;">
+                        <div style="display:inline-block; width:14px; height:14px; border:2px solid #555; border-radius:50%; margin-right:12px; position:relative; top: 2px; flex-shrink: 0;"></div>
+                        <span>${opt}</span>
+                    </li>
+                `;
+            });
+            
+            printHTML += `
+                <div style="margin-bottom: 45px; page-break-inside: avoid;">
+                    <p style="font-weight: bold; font-size: 1.1em; color: #333;">Question ${index + 1}</p>
+                    <div style="font-family: Georgia, serif; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #ccc; margin-bottom: 15px;">${q.passage.replace(/\n/g, '<br>')}</div>
+                    <p style="font-weight: bold; margin-bottom: 15px;">${q.prompt}</p>
+                    <ul style="list-style-type: none; padding: 0;">${printOptionsHTML}</ul>
+                </div>
+            `;
+        });
+        document.getElementById('print-blank-container').innerHTML = printHTML;
+
+        updateNav();
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestion]) return; 
+
+        const selected = userAnswers[currentQuestion];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestion}`);
+        const q = quizData[currentQuestion];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestion] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestion}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestion}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestion}`).classList.remove('active');
+        currentQuestion += direction;
+        document.getElementById(`question-${currentQuestion}`).classList.add('active');
+        
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        
+        if (currentQuestion === quizData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestion]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            qBlock.classList.add('active');
+            
+            if (!isLocked[index]) {
+                const radios = document.getElementsByName(`q${index}`);
+                radios.forEach(r => r.disabled = true);
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else {
+                if (userAnswers[index] === q.correctAnswer) {
+                    score++;
+                }
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        document.querySelector('.print-blank-btn').style.display = 'none'; 
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `You scored ${score} out of ${quizData.length} (${Math.round((score/quizData.length)*100)}%)`;
+        
+        // Dynamic reward selection (Rotates daily between Harvard, BU, and Yale)
+        if (score === quizData.length) {
+            const todayIndex = new Date().getDate() % universityRewards.length;
+            const selectedReward = universityRewards[todayIndex];
+
+            const rewardContainer = document.getElementById('university-reward');
+            const rewardTitle = document.getElementById('reward-title');
+            const rewardImg = document.getElementById('reward-img');
+            const rewardDesc = document.getElementById('reward-desc');
+
+            rewardContainer.style.borderColor = selectedReward.color;
+            rewardTitle.style.color = selectedReward.color;
+            rewardTitle.textContent = `★ FLAWLESS ACADEMIC EXCELLENCE ★`;
+            rewardImg.src = selectedReward.img;
+            rewardImg.alt = `${selectedReward.name} Crest`;
+            rewardDesc.textContent = `You have successfully earned the ${selectedReward.name} verification crest for achieving a perfect 10/10 score!`;
+
+            rewardContainer.style.display = 'block';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function printBlankQuiz() {
+        document.body.classList.add('print-blank-mode');
+        window.print();
+        document.body.classList.remove('print-blank-mode');
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
