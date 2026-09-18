@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Practice - Multi-Set Collection (Volume 4)</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+        margin-bottom: 10px;
+    }
+
+    /* Set Selection Dropdown Header */
+    .set-selector-container {
+        text-align: center;
+        margin-bottom: 25px;
+        background-color: #ebf5fb;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #aed6f1;
+    }
+    .set-selector-container label {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-right: 10px;
+        color: #1b4f72;
+    }
+    .set-selector-container select {
+        font-size: 1em;
+        padding: 8px 15px;
+        border-radius: 4px;
+        border: 1px solid #2980b9;
+        background-color: #fff;
+        color: #2c3e50;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #university-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    .reward-badge {
+        width: 120px;
+        height: 120px;
+        margin: 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #1a5276;
+        color: #fff;
+        font-size: 48px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #university-reward img {
+        max-width: 150px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .university-text {
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .perfect-banner {
+        background-color: #f1c40f;
+        color: #7d6608;
+        padding: 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: none;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>4th-5th Grade Reading Practice (Volume 4)</h1>
+
+    <!-- Set Selection Dropdown -->
+    <div class="set-selector-container">
+        <label for="set-select">Choose Assignment Set:</label>
+        <select id="set-select" onchange="switchSet(this.value)">
+            <option value="Set A">Set A</option>
+            <option value="Set B">Set B</option>
+            <option value="Set C">Set C</option>
+        </select>
+    </div>
+
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <!-- Results Block -->
+    <div id="results">
+        <h2>Assignment Completed!</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+        
+        <!-- University Logo / Achievement Reward -->
+        <div id="university-reward">
+            <div id="perfect-banner" class="perfect-banner">🌟 PERFECT SCORE! 100% MASTERY 🌟</div>
+            <div class="university-text" id="reward-title">★ ACADEMIC ACHIEVEMENT AWARD ★</div>
+            <div id="reward-badge-container">
+                <img id="reward-img" src="" alt="University Crest" onerror="this.style.display='none'; document.getElementById('fallback-badge').style.display='flex';">
+                <div id="fallback-badge" class="reward-badge" style="display:none;">🎓</div>
+            </div>
+            <p id="reward-desc" style="color: #555; font-style: italic; font-weight: bold; margin-top: 10px;"></p>
+        </div>
+
+        <button onclick="resetCurrentSet()" style="margin-top: 15px;">🔄 Retake This Set</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected dynamically -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Assignment</button>
+    </div>
+</div>
+
+<script>
+    // Master Question Database for Volume 4 (Includes Financial Literacy & Gymnastics)
+    const rawQuizSets = {
+        "Set A": [
+            {
+                passage: "Financial literacy involves understanding how to earn, spend, save, and invest money wisely. One fundamental tool is creating a personal budget, which helps individuals track their income and recurring expenses. By setting aside a portion of earnings into a savings account before spending on non-essential items, people can prepare for emergencies and systematically ________ their long-term financial goals.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["achieve", "postpone", "abandon", "complicate"],
+                correctAnswer: 0,
+                explanation: "'Achieve' means to successfully bring about or reach a desired objective, which fits saving money to reach financial goals."
+            },
+            {
+                passage: "In competitive gymnastics, mastering the balance beam requires exceptional poise, strength, and spatial awareness. Standing only four inches wide and elevated four feet above the mat, the beam leaves almost no room for error. Gymnasts perform acrobatic tumbling passes, turns, and leaps, constantly adjusting their center of gravity to keep from falling. Consequently, remaining on the beam demands total concentration and precise physical ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "equilibrium to maintain stability during difficult maneuvers.",
+                    "distraction to ignore the noise of cheering spectators.",
+                    "hesitation when preparing to leap into the air.",
+                    "unsteadiness throughout the four-minute routine."
+                ],
+                correctAnswer: 0,
+                explanation: "'Equilibrium' refers to physical balance, which is essential for staying stable on a narrow four-inch beam."
+            },
+            {
+                passage: "Deep-sea hydrothermal vents are underwater geysers located miles beneath the ocean surface where sunlight cannot penetrate. Despite total darkness and extreme water pressure, vibrant ecosystems thrive around these vents. Bacteria convert chemicals like hydrogen sulfide from vent fluid into biological energy through chemosynthesis, serving as the base of a food web that supports giant tube worms, blind crabs, and deep-sea shrimp.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Hydrothermal vent ecosystems survive in the dark ocean depths by using chemical energy instead of sunlight.",
+                    "Giant tube worms are the only animals capable of surviving extreme deep-sea ocean water pressure.",
+                    "Photosynthesis is the primary energy source for all living creatures in the open ocean.",
+                    "Deep-sea shrimp migrate to the ocean surface every night to feed on floating plankton."
+                ],
+                correctAnswer: 0,
+                explanation: "The main idea explains how deep-sea vent ecosystems thrive in complete darkness by relying on chemical energy (chemosynthesis)."
+            },
+            {
+                passage: "Launched in 2021, the James Webb Space Telescope (JWST) uses advanced infrared instruments to gaze deeper into space than any previous observatory. Because infrared light passes through dense clouds of cosmic dust, JWST can observe newborn stars forming inside giant interstellar nebulas. These high-resolution images allow astronomers to ________ how early galaxies took shape after the Big Bang.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["investigate", "conceal", "dismantle", "disregard"],
+                correctAnswer: 0,
+                explanation: "'Investigate' means to observe or study closely, fitting how astronomers use new space images to study early galaxies."
+            },
+            {
+                passage: "Text 1\nWind energy is a clean, renewable power source that produces no greenhouse gas emissions during operation. Modern wind turbines convert kinetic air energy into electricity, helping communities reduce reliance on fossil fuels.\n\nText 2\nWhile wind turbines produce clean energy, large wind farms require expansive land areas and can pose risks to local bird and bat populations. Additionally, wind turbines generate electricity only when wind speeds fall within a specific operational range.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By pointing out that wind power has limitations, such as wildlife risks and variable weather conditions.",
+                    "By claiming that fossil fuels produce less pollution than modern wind turbines.",
+                    "By arguing that wind turbines should be built exclusively in deep underground caverns.",
+                    "By stating that wind turbines operate at maximum electrical capacity continuously 24 hours a day."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 balances the praise of clean energy in Text 1 by highlighting limitations like land use, wildlife hazards, and wind dependency."
+            },
+            {
+                passage: "Every autumn, millions of eastern monarch butterflies embark on a 2,500-mile journey from Canada and the northern United States to high-altitude fir forests in central Mexico. **To navigate across such vast distances, monarchs rely on a biological clock combined with the sun's position to maintain a steady southward trajectory.** This remarkable navigational ability enables fragile insects to reach the exact same overwintering trees year after year.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It explains the navigation mechanism monarch butterflies use to stay on course during migration.",
+                    "It compares the flying speed of monarch butterflies with migratory songbirds.",
+                    "It details the diet monarch butterflies consume during winter months in Mexico.",
+                    "It describes how timber logging harms fir trees in Mexican forest reserves."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence explicitly describes how monarchs navigate (using an internal biological clock and the sun's position)."
+            },
+            {
+                passage: "In 1879, Thomas Edison developed a commercially practical incandescent lightbulb utilizing a carbonized bamboo filament inside a vacuum glass bulb. Before Edison's refinement, electric lamps burned out within minutes or drew too much electrical current. By creating a long-lasting filament that glowed efficiently for over 1,200 hours, Edison's laboratory made electric lighting ________ for homes and businesses worldwide.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["feasible", "hazardous", "obsolete", "temporary"],
+                correctAnswer: 0,
+                explanation: "'Feasible' means practical or possible to achieve easily, fitting how Edison made electric lighting practical for everyday use."
+            },
+            {
+                passage: "Bioluminescent fungi growing on decaying forest logs emit a pale green glow known as 'foxfire.' Scientists discovered that this glowing light attracts night-active beetles and flies to the fungus. As insects crawl across the glowing caps, fungal spores adhere to their legs and bodies, allowing the fungus to ________ its offspring across the forest floor.",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "disperse its reproductive spores to new growing locations.",
+                    "absorb additional solar radiation during nighttime hours.",
+                    "prevent all forest insects from feeding on decaying wood.",
+                    "extinguish its light when predatory animals approach."
+                ],
+                correctAnswer: 0,
+                explanation: "Insects carrying spores on their bodies help the fungus scatter (disperse) its spores to new areas."
+            },
+            {
+                passage: "Coral reef restoration projects utilize 'coral gardening' techniques to rebuild damaged reef ecosystems. Marine biologists harvest tiny fragments of healthy coral, nurture them in underwater nurseries until they grow into robust colonies, and then reattach them to degraded ocean reefs using eco-friendly cement.",
+                prompt: "Which detail from the text best supports the claim that coral gardening helps rebuild damaged reefs?",
+                options: [
+                    "Biologists grow harvested coral fragments in nurseries before reattaching them to degraded reefs.",
+                    "Coral reefs are found in warm, shallow ocean waters near tropical islands.",
+                    "Marine nursery workers use diving equipment to inspect wild fish populations.",
+                    "Natural ocean currents transport free-floating coral larvae across open ocean waters."
+                ],
+                correctAnswer: 0,
+                explanation: "Growing fragments in nurseries and reattaching them directly explains how coral gardening restores damaged reefs."
+            },
+            {
+                passage: "Saguaro cacti in the Sonoran Desert are masterfully adapted to survive multi-year droughts. A saguaro's accordion-like pleated trunk expands during rare desert rainstorms, allowing a mature plant to absorb and store up to 200 gallons of water. Furthermore, its outer waxy coating prevents water from evaporating, enabling the cactus to ________ during dry months.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["endure", "perish", "dwindle", "relinquish"],
+                correctAnswer: 0,
+                explanation: "'Endure' means to hold out against hardship or survive, fitting how cacti survive long periods without rainfall."
+            }
+        ],
+        "Set B": [
+            {
+                passage: "Understanding the concept of 'opportunity cost' is essential when making smart financial decisions. Opportunity cost represents the potential benefit a person gives up when choosing one alternative over another. For example, if a student spends $50 earned from a weekend job on video games, the opportunity cost is the value of saving or investing that money for future purchases, such as buying a bicycle or college textbooks.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Opportunity cost is the trade-off or missed benefit experienced when choosing how to spend money.",
+                    "Video games are the most expensive entertainment item teenagers purchase.",
+                    "Investing money in stock markets guarantees immediate high returns without risk.",
+                    "Weekend jobs provide students with unlimited purchasing power for luxury items."
+                ],
+                correctAnswer: 0,
+                explanation: "The text explains opportunity cost as the value or benefit you give up when selecting one financial choice over another."
+            },
+            {
+                passage: "In artistic gymnastics, the vault event showcases explosive power and air control. A gymnast sprints down a 25-meter runway, hits a springy springboard with both feet, and propels themselves onto the vaulting table. By forcefully pushing off the table with their hands, the gymnast gains height to execute complex twists and flips before landing cleanly on the safety mat. Generating maximum forward momentum during the initial runway sprint is crucial because it directly ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "provides the kinetic energy required to achieve height and rotations in the air.",
+                    "causes the gymnast to lose balance before touching the springboard.",
+                    "eliminates the need for hand contact with the vaulting table surface.",
+                    "reduces the total height a gymnast can reach above the mat."
+                ],
+                correctAnswer: 0,
+                explanation: "Sprinting builds kinetic energy and forward momentum, which transforms into upward height and rotation during the vault."
+            },
+            {
+                passage: "Honeybees communicate the location of distant flower patches to their hive mates through a specialized series of movements called the 'waggle dance.' By running in a figure-eight pattern and shaking their abdomens at specific angles relative to gravity, a returning bee conveys both the exact direction and distance of nectar sources. This social communication enables the hive to ________ food gathering.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["optimize", "hinder", "neglect", "prohibit"],
+                correctAnswer: 0,
+                explanation: "'Optimize' means to make as effective or functional as possible, describing how clear communication helps bees gather food efficiently."
+            },
+            {
+                passage: "Volcanic eruptions occur when molten rock called magma rises from Earth's mantle toward the surface. When pressure inside underground magma chambers exceeds the strength of surrounding rock, the volcano erupts, releasing lava, ash, and volcanic gases. Shield volcanoes produce slow-flowing basaltic lava that spreads widely, whereas stratovolcanoes generate explosive eruptions due to trapped high-pressure gases.",
+                prompt: "Which detail from the text best supports the claim that trapped gases cause explosive eruptions in stratovolcanoes?",
+                options: [
+                    "Explosive eruptions are driven by high-pressure gases trapped inside magma chambers.",
+                    "Shield volcanoes produce slow-flowing basaltic lava across broad land areas.",
+                    "Earth's mantle is situated beneath outer crustal rock layers.",
+                    "Lava cools into solid igneous rock after flowing across surface soils."
+                ],
+                correctAnswer: 0,
+                explanation: "The detail that high-pressure trapped gases trigger explosive eruptions directly supports the statement."
+            },
+            {
+                passage: "Text 1\nYear-round schooling replaces traditional three-month summer breaks with shorter, more frequent vacations spread throughout the calendar year. Proponents argue this schedule prevents summer learning loss, keeping students academically engaged continuously.\n\nText 2\nWhile year-round calendars reduce summer learning loss, they complicate family vacation planning and conflict with summer camps and seasonal youth jobs. Moreover, operating school facilities during hot summer months significantly increases building cooling costs for districts.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By highlighting practical drawbacks of year-round schedules, including higher facility cooling costs and family conflicts.",
+                    "By arguing that traditional three-month summer breaks should be extended to five full months.",
+                    "By claiming that year-round schedules completely eliminate the need for classroom teachers.",
+                    "By stating that summer youth jobs provide greater academic value than attending school."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 responds to Text 1's academic arguments by pointing out practical costs, family scheduling issues, and energy expenses."
+            },
+            {
+                passage: "Dolphins utilize echolocation to navigate murky ocean waters and hunt buried fish. **By emitting rapid series of high-pitched clicking sounds that bounce off surrounding underwater objects, dolphins analyze the returning echoes to determine an object's precise size, shape, and distance.** This biological sonar system functions accurately even in total darkness.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It details how dolphins send sound waves and process returning echoes to locate objects.",
+                    "It compares dolphin echolocation with sound navigation used by microbats.",
+                    "It describes how dolphins communicate social greetings across pod members.",
+                    "It explains why ocean water pollution affects dolphin hearing sensitivity."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence describes the physical mechanism of echolocation—emitting clicks and listening to returning echoes."
+            },
+            {
+                passage: "Glaciers are massive rivers of compressed ice that move slowly across land under the immense weight of their own mass. As a glacier moves down a valley, embedded boulders and gravel grind against bedrock like coarse sandpaper, carving deep U-shaped valleys. Through this powerful mechanical force, glaciers ________ surrounding mountain landscapes.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["reshape", "preserve", "elevate", "dismantle"],
+                correctAnswer: 0,
+                explanation: "'Reshape' means to alter the structure or appearance of something, fitting how grinding glaciers carve and change valleys."
+            },
+            {
+                passage: "Venus flytraps inhabit nitrogen-poor soil in coastal bog lands of North and South Carolina. To acquire essential nutrients like nitrogen and phosphorus, the plant evolved specialized leaves lined with sensitive trigger hairs. When an insect touches two trigger hairs within 20 seconds, the leaf trap snaps shut in one-tenth of a second, trapping the prey to be digested by secreted enzymes.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Venus flytraps use rapid-closing trap leaves to catch insects and supply nutrients missing from bog soil.",
+                    "Coastal bog lands contain the richest soil nutrient levels on the North American continent.",
+                    "Insects are attracted to Venus flytraps primarily by sweet floral scents released at night.",
+                    "Enzymes secreted by carnivorous plants are used to synthesize solar energy without sunlight."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains how Venus flytraps use fast-closing leaf traps to catch insects to compensate for poor soil nutrients."
+            },
+            {
+                passage: "Smart power grids integrate digital sensors and automated monitoring technologies to optimize electricity distribution across cities. By detecting power surges or equipment failures instantaneously, smart grids can automatically reroute electrical currents around damaged power lines. Consequently, smart grid technology helps utility providers ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "minimize the duration and geographic spread of electrical power outages.",
+                    "increase total carbon emissions generated by conventional power plants.",
+                    "force consumers to reduce electricity consumption during winter months.",
+                    "eliminate the need for high-voltage power lines in municipal networks."
+                ],
+                correctAnswer: 0,
+                explanation: "Rerouting electricity automatically around damaged lines limits power outages and restores power faster."
+            },
+            {
+                passage: "The Great Wall of China is a series of fortifications constructed across historical northern borders to protect Chinese empires from invasion. Spanning thousands of miles, the wall was constructed using rammed earth, stone, and brick by millions of soldiers and laborers. Beyond defense, the wall served as a border control post, allowing authorities to collect duties on trade goods traveling along the Silk Road.",
+                prompt: "Which detail from the text best supports the claim that the Great Wall served an economic function?",
+                options: [
+                    "It allowed authorities to collect duties on trade goods traveling along the Silk Road.",
+                    "The wall spanned thousands of miles across northern border mountain ranges.",
+                    "Military garrisons used signal fires to communicate defense warnings across distances.",
+                    "Laborers constructed the wall using rammed earth, stone, and baked clay bricks."
+                ],
+                correctAnswer: 0,
+                explanation: "Collecting duties (taxes) on trade goods is a direct economic function supported by the text."
+            }
+        ],
+        "Set C": [
+            {
+                passage: "Compound interest is often called 'interest on interest' and plays a pivotal role in long-term wealth building. When money is deposited into a savings account earning compound interest, interest is calculated on both the initial deposit and the interest accumulated over previous periods. Over several decades, compound interest causes savings balances to ________ dramatically even without additional deposits.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["expand", "diminish", "fluctuate", "stagnate"],
+                correctAnswer: 0,
+                explanation: "'Expand' means to grow larger in size or value, describing how compound interest steadily increases savings over time."
+            },
+            {
+                passage: "During floor exercise routines in gymnastics, athletes perform explosive tumbling passes combining back handsprings, somersaults, and twists. To maximize height, gymnasts punch off the spring floor with powerful leg extension, converting horizontal velocity into vertical lift. While airborne, tucking the body into a tight position speeds up body rotation, whereas extending the body slows it down. This control over rotational speed relies directly on the physical principle of ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "conservation of angular momentum through changes in body posture.",
+                    "magnetic attraction between the gymnast's footwear and the floor mat.",
+                    "gravitational resistance decreasing at higher room temperatures.",
+                    "air friction pushing the gymnast sideways toward the judge panel."
+                ],
+                correctAnswer: 0,
+                explanation: "Tucking tight to rotate faster and opening up to slow down is a classic application of conservation of angular momentum."
+            },
+            {
+                passage: "Chameleons are renowned for changing skin color, but contrary to popular belief, they do so primarily to regulate body temperature and communicate emotions rather than camouflage. Chameleon skin contains specialized cells with tiny pigment granules called chromatophores. By contracting or relaxing these skin cells, chameleons adjust light reflection to express dominance, reduce stress, or absorb solar warmth.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Chameleons alter skin color mainly for thermal regulation and communication rather than camouflage.",
+                    "Chameleons use skin color changes strictly to hide from predatory desert hawks.",
+                    "Chromatophore cells are found exclusively in deep-sea cephalopods like octopuses.",
+                    "Solar warmth causes chameleon skin cells to lose all chemical pigment permanently."
+                ],
+                correctAnswer: 0,
+                explanation: "The main point corrects the common belief by explaining that temperature regulation and communication trigger color shifts."
+            },
+            {
+                passage: "The Silk Road was an ancient network of trade routes connecting China, Central Asia, the Middle East, and the Mediterranean. Caravans transported valuable commodities such as silk, spices, glassware, and paper across thousands of difficult desert and mountain miles. Crucially, the Silk Road facilitated not only economic trade, but also the cultural exchange of ideas, technologies, and artistic traditions across civilizations.",
+                prompt: "Which detail from the text best supports the claim that the Silk Road was more than just a trade route for physical goods?",
+                options: [
+                    "It facilitated the cultural exchange of ideas, technologies, and artistic traditions across civilizations.",
+                    "Caravans carried physical commodities like Chinese silk and Mediterranean glassware.",
+                    "The overland trade routes stretched across thousands of miles of rugged desert terrain.",
+                    "Merchant travel along the route required protection from regional military garrisons."
+                ],
+                correctAnswer: 0,
+                explanation: "Exchanging ideas, technologies, and artistic traditions shows that impact went beyond merely trading physical products."
+            },
+            {
+                passage: "Text 1\nDigital textbooks on tablet computers reduce physical backpack weight for students and allow publishers to update educational content instantly. Interactive digital diagrams and audio features further enhance student engagement.\n\nText 2\nWhile digital textbooks offer convenience, reading on backlit screens for prolonged hours causes eye strain and fatigue. Research also indicates that students retain complex informational text better when reading physical printed books.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By pointing out that reading physical books leads to better comprehension and avoids screen-induced eye strain.",
+                    "By arguing that tablet screens should be banned completely in all public libraries.",
+                    "By claiming that digital textbooks cost twice as much as printed hardcover textbooks.",
+                    "By suggesting that printed books cannot be read under standard room lighting."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 responds by noting drawbacks of digital reading (eye strain) and citing better comprehension from printed books."
+            },
+            {
+                passage: "Humpback whales engage in cooperative bubble-net feeding to hunt massive schools of small fish. **Several whales dive deep beneath a fish school and blow a circular ring of rising air bubbles that forms a visual and physical wall.** Terrified fish cluster tightly together in the center, enabling the whales to swim upward through the middle with mouths open to engulf their prey.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It describes how whales create a bubble barrier to trap and concentrate prey.",
+                    "It compares the vocal songs of humpback whales to killer whale calls.",
+                    "It details the annual migration distances traveled by humpback whale pods.",
+                    "It explains how whale blubber insulates body heat in icy polar waters."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence describes the creation of the bubble wall used to trap fish in a central cluster."
+            },
+            {
+                passage: "Gray wolves were reintroduced to Yellowstone National Park in 1995 after a 70-year absence, triggering a phenomenon known as a 'trophic cascade.' By hunting overabundant elk herds, wolves prevented elk from overgrazing riverbank willow and aspen trees. As trees recovered, songbirds returned, and beavers built dams that created lush wetland habitats for fish, amphibians, and waterfowl.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Reintroducing gray wolves restored ecological balance and created diverse habitats in Yellowstone.",
+                    "Elk populations in Yellowstone feed primarily on aquatic plants found in beaver ponds.",
+                    "Beavers are the largest predatory mammals inhabiting North American national parks.",
+                    "Songbirds migrate south during winter to avoid competition with wolf packs."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage demonstrates how reintroducing wolves restored balance to the food web and created healthier habitats."
+            },
+            {
+                passage: "Artificial intelligence software trained on thousands of medical images is transforming diagnostic radiology. Algorithms can scan X-rays, MRIs, and CT scans in seconds to detect subtle bone fractures or early-stage tumors that might escape human detection. By assisting radiologists in analyzing complex scans quickly, AI technology helps doctors ________",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["diagnose", "complicate", "postpone", "discard"],
+                correctAnswer: 0,
+                explanation: "'Diagnose' means to identify a disease or condition, fitting how AI helps doctors identify health issues rapidly."
+            },
+            {
+                passage: "Vertical hydroponic farming systems grow crops indoors without soil, suspending plant roots in nutrient-rich water solutions under controlled LED lighting. Because water is continuously recirculated within closed systems, vertical farms consume 95% less water than conventional agriculture. Consequently, indoor vertical farms enable urban centers to ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "produce fresh vegetables locally year-round with minimal water consumption.",
+                    "eliminate all municipal electricity usage in city commercial districts.",
+                    "increase reliance on long-distance food transport from rural farms.",
+                    "require outdoor farmland expansion to meet growing urban food demands."
+                ],
+                correctAnswer: 0,
+                explanation: "Indoor vertical farming allows cities to grow fresh produce locally all year while using far less water."
+            },
+            {
+                passage: "The discovery of the Rosetta Stone in 1799 provided the key to deciphering ancient Egyptian hieroglyphics. The stone slab contained a decree written in three distinct scripts: Ancient Egyptian hieroglyphics, Demotic script, and Ancient Greek. Because scholars could already read Ancient Greek, they used it as a translation bridge to decode the meaning of the Egyptian hieroglyphic symbols.",
+                prompt: "Which detail from the text best supports the claim that the Greek inscription was essential to decoding hieroglyphics?",
+                options: [
+                    "Scholars used their knowledge of Ancient Greek as a translation bridge to decipher hieroglyphics.",
+                    "The Rosetta Stone was discovered accidentally in 1799 by French soldiers.",
+                    "Ancient Egyptian scribes carved decrees into heavy granite slabs.",
+                    "Demotic script was commonly used for daily administrative writing in ancient Egypt."
+                ],
+                correctAnswer: 0,
+                explanation: "Using the known Greek language as a translation bridge directly supports why it was essential to decoding hieroglyphics."
+            }
+        ]
+    };
+
+    // Rotating University Logos (MIT, Oxford, Cambridge) with fallback SVG support
+    const universityRewards = [
+        {
+            name: "Massachusetts Institute of Technology (MIT)",
+            img: "https://mr-chen-k12.github.io/math/IMG_0232.png",
+            color: "#A31F34"
+        },
+        {
+            name: "University of Oxford",
+            img: "https://mr-chen-k12.github.io/books/IMG_0121.png",
+            color: "#002147"
+        },
+        {
+            name: "University of Cambridge",
+            img: "https://mr-chen-k12.github.io/books/IMG_0122.png",
+            color: "#003262"
+        }
+    ];
+
+    let currentSetKey = "Set A";
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let isLocked = [];
+
+    // Helper function to shuffle choices dynamically so correct answer position varies
+    function shuffleOptions(question) {
+        let optionsWithInfo = question.options.map((text, originalIndex) => ({
+            text: text,
+            isCorrect: originalIndex === question.correctAnswer
+        }));
+
+        for (let i = optionsWithInfo.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [optionsWithInfo[i], optionsWithInfo[j]] = [optionsWithInfo[j], optionsWithInfo[i]];
+        }
+
+        return {
+            passage: question.passage,
+            prompt: question.prompt,
+            options: optionsWithInfo.map(o => o.text),
+            correctAnswer: optionsWithInfo.findIndex(o => o.isCorrect),
+            explanation: question.explanation
+        };
+    }
+
+    function initQuiz() {
+        switchSet("Set A");
+    }
+
+    function switchSet(setName) {
+        currentSetKey = setName;
+        
+        currentQuestions = rawQuizSets[setName].map(q => shuffleOptions(q));
+        currentQuestionIndex = 0;
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        isLocked = new Array(currentQuestions.length).fill(false);
+
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('nav-buttons').style.display = 'flex';
+        document.getElementById('progress-tracker').style.display = 'block';
+
+        renderQuestions();
+        updateNav();
+    }
+
+    function renderQuestions() {
+        const wrapper = document.getElementById('questions-wrapper');
+        wrapper.innerHTML = '';
+
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestionIndex]) return; 
+
+        const selected = userAnswers[currentQuestionIndex];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestionIndex}`);
+        const q = currentQuestions[currentQuestionIndex];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestionIndex] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestionIndex}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestionIndex}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestionIndex}`).classList.remove('active');
+        currentQuestionIndex += direction;
+        document.getElementById(`question-${currentQuestionIndex}`).classList.add('active');
+        
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length} (${currentSetKey})`;
+
+        if (currentQuestionIndex === currentQuestions.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestionIndex]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    // FIXED SUBMIT & REWARD LOGIC: Ensures 100% scores and passing scores ALWAYS display the reward reliably!
+    function submitQuiz() {
+        let score = 0;
+        
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const selected = userAnswers[index];
+            
+            qBlock.classList.add('active');
+            
+            isLocked[index] = true;
+            const radios = document.getElementsByName(`q${index}`);
+            radios.forEach(r => r.disabled = true);
+            q.options.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-${index}-${optIndex}`);
+                if (label) label.classList.add('disabled');
+            });
+
+            if (selected === null) {
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else if (selected === q.correctAnswer) {
+                score++;
+                feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback correct";
+            } else {
+                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Set Score: ${score} out of ${currentQuestions.length} (${Math.round((score/currentQuestions.length)*100)}%)`;
+        
+        // Reward Logic Fix: Triggers reliably whenever score >= 1 (including 10/10 perfect scores)
+        const rewardContainer = document.getElementById('university-reward');
+        const perfectBanner = document.getElementById('perfect-banner');
+        
+        if (score >= 1) {
+            let rewardIdx = 0;
+            if (currentSetKey === "Set B") rewardIdx = 1;
+            if (currentSetKey === "Set C") rewardIdx = 2;
+
+            const selectedReward = universityRewards[rewardIdx];
+
+            const rewardTitle = document.getElementById('reward-title');
+            const rewardImg = document.getElementById('reward-img');
+            const rewardDesc = document.getElementById('reward-desc');
+            const fallbackBadge = document.getElementById('fallback-badge');
+
+            // Show Perfect Score Banner if 100% correct
+            if (score === currentQuestions.length) {
+                perfectBanner.style.display = 'block';
+            } else {
+                perfectBanner.style.display = 'none';
+            }
+
+            rewardContainer.style.borderColor = selectedReward.color;
+            rewardTitle.style.color = selectedReward.color;
+            rewardTitle.textContent = `★ ACADEMIC ACHIEVEMENT CREST ★`;
+            
+            // Image handling with fallback
+            rewardImg.style.display = 'block';
+            fallbackBadge.style.display = 'none';
+            fallbackBadge.style.backgroundColor = selectedReward.color;
+            rewardImg.src = selectedReward.img;
+            rewardImg.alt = `${selectedReward.name} Crest`;
+
+            rewardDesc.textContent = `Congratulations! You earned the official ${selectedReward.name} academic emblem for your performance on ${currentSetKey}!`;
+
+            rewardContainer.style.display = 'block';
+        } else {
+            rewardContainer.style.display = 'none';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function resetCurrentSet() {
+        switchSet(currentSetKey);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
