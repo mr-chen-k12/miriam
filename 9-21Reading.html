@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-21 Reading Practice - Multi-Set Collection</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+        margin-bottom: 10px;
+    }
+
+    /* Set Selection Dropdown Header */
+    .set-selector-container {
+        text-align: center;
+        margin-bottom: 25px;
+        background-color: #ebf5fb;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #aed6f1;
+    }
+    .set-selector-container label {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-right: 10px;
+        color: #1b4f72;
+    }
+    .set-selector-container select {
+        font-size: 1em;
+        padding: 8px 15px;
+        border-radius: 4px;
+        border: 1px solid #2980b9;
+        background-color: #fff;
+        color: #2c3e50;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #university-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    .reward-badge {
+        width: 120px;
+        height: 120px;
+        margin: 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #1a5276;
+        color: #fff;
+        font-size: 48px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #university-reward img {
+        max-width: 150px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .university-text {
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .perfect-banner {
+        background-color: #f1c40f;
+        color: #7d6608;
+        padding: 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: none;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Reading Comprehension Practice (9-21 Edition)</h1>
+
+    <!-- Set Selection Dropdown -->
+    <div class="set-selector-container">
+        <label for="set-select">Choose Assignment Set:</label>
+        <select id="set-select" onchange="switchSet(this.value)">
+            <option value="Set A">Set A</option>
+            <option value="Set B">Set B</option>
+            <option value="Set C">Set C</option>
+        </select>
+    </div>
+
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <!-- Results Block -->
+    <div id="results">
+        <h2>Assignment Completed!</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+        
+        <!-- University Achievement Reward -->
+        <div id="university-reward">
+            <div id="perfect-banner" class="perfect-banner">🌟 PERFECT SCORE! 100% MASTERY 🌟</div>
+            <div class="university-text" id="reward-title">★ ACADEMIC ACHIEVEMENT AWARD ★</div>
+            <div id="reward-badge-container">
+                <img id="reward-img" src="" alt="University Crest" onerror="this.style.display='none'; document.getElementById('fallback-badge').style.display='flex';">
+                <div id="fallback-badge" class="reward-badge" style="display:none;">🎓</div>
+            </div>
+            <p id="reward-desc" style="color: #555; font-style: italic; font-weight: bold; margin-top: 10px;"></p>
+        </div>
+
+        <button onclick="resetCurrentSet()" style="margin-top: 15px;">🔄 Retake This Set</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected dynamically -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Assignment</button>
+    </div>
+</div>
+
+<script>
+    // Master Question Database for 9-21Reading.html
+    const rawQuizSets = {
+        "Set A": [
+            {
+                passage: "Financial literacy is an essential life skill that empowers individuals to manage their money effectively. A core component of financial literacy is understanding the distinction between fixed expenses, such as rent or mortgage payments, and variable expenses, such as groceries and entertainment. By distinguishing between fixed obligations and adjustable spending, families can establish realistic budgets that ________ long-term financial security.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["promote", "undermine", "delay", "complicate"],
+                correctAnswer: 0,
+                explanation: "'Promote' means to encourage or help advance, which fits creating realistic budgets to foster long-term financial security."
+            },
+            {
+                passage: "In artistic gymnastics, the uneven bars event demands extraordinary upper-body strength, precision, and timing from female athletes. Gymnasts execute fluid transitions between two parallel fiberglass bars positioned at different heights. By performing high-flying release moves where they momentarily let go of a bar, flip in mid-air, and re-grasp the bar, gymnasts demonstrate complete control over their momentum. Therefore, maintaining continuous motion is vital because pausing or swinging erratically can ________ an athlete's total execution score.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["deduct", "maximize", "enhance", "stabilize"],
+                correctAnswer: 0,
+                explanation: "'Deduct' means to subtract points, which aligns with judges penalizing pauses or improper form in gymnastics routines."
+            },
+            {
+                passage: "Giant kelp forests off the coast of California are among the most productive aquatic ecosystems on Earth. These massive marine algae anchored to the ocean floor grow up to two feet per day by absorbing sunlight near the water's surface. The dense kelp canopy offers shelter and nourishment for hundreds of species, including sea otters, garibaldi fish, and sea urchins.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Giant kelp forests provide critical habitat and nutrition for a wide variety of ocean marine life.",
+                    "Sea otters are the primary predators responsible for controlling sea urchin populations.",
+                    "Aquatic plants grow faster in cold ocean waters than in tropical coral reefs.",
+                    "Garibaldi fish rely exclusively on kelp canopy shade to escape warm surface currents."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage highlights how giant kelp forests grow rapidly and serve as vital habitats and food sources for marine species."
+            },
+            {
+                passage: "Solar flares are intense bursts of electromagnetic radiation released from the surface of the Sun due to magnetic energy buildup. When directed toward Earth, these solar emissions can disrupt high-frequency radio communications, satellite navigation signals, and electrical power grids. Space weather forecasting agencies monitor solar activity around the clock to ________ potential satellite and power outages.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["anticipate", "ignore", "accelerate", "conceal"],
+                correctAnswer: 0,
+                explanation: "'Anticipate' means to foresee or prepare for an event before it happens, fitting how scientists monitor space weather to predict disruptions."
+            },
+            {
+                passage: "Text 1\nHydroelectric dams produce clean electricity by harnessing the gravitational energy of falling river water. Because hydro plants release no carbon dioxide during operation, they offer a reliable baseline source of renewable energy for expanding power grids.\n\nText 2\nAlthough hydroelectric power generates emission-free electricity, constructing large reservoirs floods upstream river valleys and alters river habitats. These artificial reservoirs trap natural sediments, prevent salmon from swimming upstream to spawn, and displace surrounding land wildlife.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By pointing out that hydroelectric dams cause environmental harm to river ecosystems and aquatic life.",
+                    "By claiming that hydroelectric power generates more greenhouse gas pollution than burning coal.",
+                    "By proposing that all hydroelectric dams be converted into solar energy farms.",
+                    "By asserting that river water flow cannot be used to turn electrical generator turbines."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 responds to Text 1 by highlighting ecological costs, such as habitat disruption and blockage of migratory salmon routes."
+            },
+            {
+                passage: "During autumn, migratory songbirds cross thousands of miles from North America to wintering grounds in South America. **Scientists discovered that these nocturnal migrants use the patterns of night stars in the sky alongside Earth's magnetic field as compasses.** This dual-navigation system ensures birds maintain correct flight directions even when cloudy weather obscures the stars.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It details the specific navigational tools migratory songbirds use to stay on flight paths.",
+                    "It compares the flight speeds of songbirds during daytime versus nighttime migration.",
+                    "It explains how environmental pollution damages bird nesting habitats in North America.",
+                    "It describes how weather satellites record bird flight patterns across continents."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence identifies the exact tools (stars and magnetic field) songbirds use to navigate during migration."
+            },
+            {
+                passage: "In 1440, Johannes Gutenberg invented the movable type printing press, transforming the production of written books across Europe. Prior to Gutenberg's invention, books were meticulously hand-copied by scribes, making them scarce and expensive luxuries reserved for royalty and monasteries. By enabling rapid mass production of printed text, Gutenberg's press made books accessible and ________ the spread of literacy.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["accelerated", "restricted", "dismantled", "postponed"],
+                correctAnswer: 0,
+                explanation: "'Accelerated' means sped up, which accurately describes how mass-produced books increased literacy rates across society."
+            },
+            {
+                passage: "Anglerfish inhabiting the bathypelagic ocean zone—thousands of meters below the surface—possess a bioluminescent glowing lure attached to their heads. This luminescent organ hosts symbiotic glowing bacteria that emit light in total pitch darkness. Unwary smaller fish and crustaceans swim toward the glowing light, allowing the stationary anglerfish to ________ its prey in a swift gulp.",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "ambush and capture its unsuspecting prey.",
+                    "repel all deep-sea predators from its territory.",
+                    "reflect sunlight downward toward the seafloor.",
+                    "photosynthesize biological energy during deep ocean night."
+                ],
+                correctAnswer: 0,
+                explanation: "The glowing lure attracts unsuspecting prey close to the anglerfish's mouth, enabling a sudden ambush."
+            },
+            {
+                passage: "Tropical rainforest canopies act as dense leafy roofs that absorb up to 95 percent of incoming sunlight. Below the thick canopy, the forest floor receives minimal sunlight, creating a humid, shaded microclimate where shade-tolerant ferns and fungi flourish on nutrient-rich fallen organic matter.",
+                prompt: "Which detail from the text best supports the claim that the forest canopy controls light levels on the ground?",
+                options: [
+                    "The dense leafy roof of the canopy absorbs up to 95 percent of incoming sunlight.",
+                    "Nutrient-rich fallen organic matter covers the tropical rainforest floor.",
+                    "Shade-tolerant ferns and fungi thrive in humid forest microclimates.",
+                    "Tropical rainforests harbor diverse animal species throughout different tree layers."
+                ],
+                correctAnswer: 0,
+                explanation: "The fact that the canopy absorbs 95% of incoming light directly demonstrates its role in reducing ground-level light."
+            },
+            {
+                passage: "Kangaroo rats inhabiting North American desert regions never need to drink free-standing water during their entire lives. They extract essential moisture from the dry seeds they eat through internal metabolic processing. Furthermore, kangaroo rats stay inside underground burrows during hot desert afternoons to reduce water loss from sweating, allowing them to ________ in extreme arid climates.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["thrive", "wither", "perish", "deteriorate"],
+                correctAnswer: 0,
+                explanation: "'Thrive' means to flourish or survive successfully, fitting how kangaroo rats adapt well to harsh desert conditions."
+            }
+        ],
+        "Set B": [
+            {
+                passage: "A credit score is a numerical rating that reflects an individual's financial reliability and history of paying debts. Financial institutions use credit scores to assess the risk of lending money for auto loans, mortgages, or credit cards. Maintaining a high credit score by making timely payments and keeping debt low allows consumers to lock in lower interest rates, thereby ________ thousands of dollars in borrowing costs over time.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["saving", "squandering", "multiplying", "donating"],
+                correctAnswer: 0,
+                explanation: "'Saving' fits the context of reducing long-term borrowing costs due to favorable low interest rates."
+            },
+            {
+                passage: "In gymnastics floor routines, male and female athletes perform complex tumbling passes across a spring-loaded floor mat. A fundamental skill is the roundoff, which converts forward momentum into backward power for high-flying somersaults and twists. By pushing off the floor with powerful arm block mechanics and snapping their legs together at the apex, gymnasts maximize rotational speed. This mechanical technique is essential because higher vertical lift allows athletes to ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "complete multiple airborne flips safely before landing firmly on the mat.",
+                    "eliminate all physical impact absorbed by ankles and knees upon landing.",
+                    "shorten the duration of floor routine music during competition.",
+                    "glide across the mat without making contact with the floor surface."
+                ],
+                correctAnswer: 0,
+                explanation: "Greater height and rotational momentum give the gymnast enough airborne time to complete complex flips before landing."
+            },
+            {
+                passage: "Global ocean currents act as massive conveyor belts that transport warm water from the equator toward the polar regions and return cold water back to the tropics. This global circulation system regulates Earth's climate by redistributing thermal energy across latitudes, preventing equatorial regions from overheating and polar regions from cooling excessively.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Ocean currents regulate global climate by transferring heat between equatorial and polar regions.",
+                    "Cold polar waters contain higher salt concentrations than warm tropical surface currents.",
+                    "Equatorial sea surfaces receive identical amounts of solar radiation throughout the entire year.",
+                    "Ocean conveyor belts are driven exclusively by wind speeds off coastal mountain ranges."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains how ocean currents balance global temperatures by redistributing warm and cold water."
+            },
+            {
+                passage: "Tectonic plates making up Earth's rigid outer crust float upon the hotter, semi-fluid mantle beneath them. Where two tectonic plates collide at convergent boundaries, massive pressure builds until rock layers fold upward to form mountain ranges or slide beneath each other in deep oceanic trenches.",
+                prompt: "Which detail from the text best supports the claim that tectonic plate collisions form mountains?",
+                options: [
+                    "Colliding plates build immense pressure that folds rock layers upward into mountain ranges.",
+                    "Earth's rigid outer crust is broken into several floating tectonic segments.",
+                    "The semi-fluid mantle layer located beneath the crust remains at high temperatures.",
+                    "Deep oceanic trenches form where cold water sinks into ocean abysses."
+                ],
+                correctAnswer: 0,
+                explanation: "The detail explicitly stating that pressure from colliding plates folds rock upward into mountain ranges supports the claim."
+            },
+            {
+                passage: "Text 1\nOnline distance learning provides flexible schedule options and eliminates daily commuting time for students. Virtual educational platforms allow learners to access course lectures, instructional materials, and quizzes anytime from any location with internet access.\n\nText 2\nWhile online learning offers schedule flexibility, it lacks the spontaneous face-to-face social collaboration present in physical classrooms. Studies show that many students experience isolation and struggle with self-motivation without structured in-person classroom routines.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By emphasizing that online learning can lead to social isolation and reduced student self-motivation.",
+                    "By stating that physical school buildings require higher heating and electricity budgets.",
+                    "By arguing that virtual platforms should completely replace traditional physical schools.",
+                    "By claiming that online courses eliminate all need for teacher grading and feedback."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 balances Text 1's benefits by pointing out downsides like social isolation and self-discipline challenges."
+            },
+            {
+                passage: "Microbats hunt flying nocturnal insects using high-frequency ultrasound echolocation calls. **As a bat approaches an insect, it increases its call rate to over 200 pulses per second, creating a high-resolution acoustic picture known as a 'terminal buzz.'** This rapid audio feedback allows the bat to track erratic insect evasive maneuvers in complete darkness.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It describes the specific acoustic acceleration bats use to pinpoint prey just before capture.",
+                    "It compares bat ultrasonic calls to dolphin sonar frequencies in ocean waters.",
+                    "It details how flying insects detect approaching predators using wing vibrations.",
+                    "It explains why bats hibernate inside mountain caves during winter cold snaps."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence explains how bats speed up sound pulses ('terminal buzz') to get accurate feedback right before catching prey."
+            },
+            {
+                passage: "During ice ages, alpine glaciers carved steep valleys across mountainous regions worldwide. As glacier ice melted at the end of the last ice age, it deposited massive piles of unsorted rocky debris called moraines along valley edges. By studying the distribution of ancient moraines, geologists can ________ the maximum geographical boundaries of historical glaciers.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["map", "obliterate", "conceal", "manufacture"],
+                correctAnswer: 0,
+                explanation: "'Map' means to chart or locate geographic boundaries, fitting how geologists use moraines to trace past glacier footprints."
+            },
+            {
+                passage: "Pitcher plants survive in nutrient-deficient bog soils by forming deep, slippery vase-like leaves filled with digestive fluid. Insects attracted by sweet nectar on the plant rim slip on microscopic waxy crystals lining the inner walls and fall into the liquid reservoir, where they are broken down to supply vital nitrogen to the plant.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Pitcher plants trap and digest insects in fluid-filled leaves to obtain essential nitrogen lacking in bog soil.",
+                    "Bog soils contain higher concentrations of nitrogen than typical garden potting soils.",
+                    "Waxy leaf coatings prevent pitcher plants from losing moisture during hot summer droughts.",
+                    "Nectar produced by pitcher plants serves as the primary food source for honeybee colonies."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains how pitcher plants capture insects in specialized pitfall leaves to gain missing soil nitrogen."
+            },
+            {
+                passage: "Modern urban mass transit systems utilize automated train control technology to coordinate subway departure schedules. By using real-time track sensors to maintain optimal spacing between trains, automated transit networks can prevent station congestion and reduce passenger wait times during peak rush hours. Consequently, automated train control enables cities to ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "enhance public transportation efficiency and commuter carrying capacity.",
+                    "eliminate all electrical power usage across underground subway networks.",
+                    "force commuters to switch exclusively to private automobile transportation.",
+                    "reduce the number of passenger cars attached to commuter trains."
+                ],
+                correctAnswer: 0,
+                explanation: "Preventing train delays and optimizing transit spacing directly enhances transit system efficiency and passenger volume."
+            },
+            {
+                passage: "Constructed between 1904 and 1914, the Panama Canal connected the Atlantic and Pacific Oceans across the narrow Isthmus of Panama. Before its completion, cargo ships traveling between North American east and west coasts had to navigate around the treacherous southern tip of South America at Cape Horn. The opening of the canal cut maritime voyage distances by over 8,000 miles, drastically reducing international shipping costs and travel times.",
+                prompt: "Which detail from the text best supports the claim that the Panama Canal revolutionized international shipping?",
+                options: [
+                    "It shortened maritime voyages by over 8,000 miles, cutting shipping costs and time.",
+                    "The canal was constructed across the narrow Isthmus of Panama between 1904 and 1914.",
+                    "Cargo ships previously navigated around the southern tip of South America at Cape Horn.",
+                    "Engineering teams excavated millions of cubic yards of rock during canal excavation."
+                ],
+                correctAnswer: 0,
+                explanation: "Cutting shipping distances by 8,000 miles and lowering costs directly demonstrates its revolutionary impact on shipping."
+            }
+        ],
+        "Set C": [
+            {
+                passage: "Investment diversification is a foundational risk-management strategy in personal finance. Instead of placing all savings into a single company stock, diversified investors spread their funds across asset classes like stocks, bonds, real estate, and index funds. If one industry sector experiences a severe downturn, gains in other assets help balance the portfolio, thereby ________ overall investment volatility.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["reducing", "amplifying", "guaranteeing", "ignoring"],
+                correctAnswer: 0,
+                explanation: "'Reducing' means lessening, fitting how spreading investments across asset classes lowers portfolio volatility and risk."
+            },
+            {
+                passage: "In men's gymnastics, the still rings apparatus requires extreme upper-body isometric strength and torso stability. Suspended nine feet above the landing mat on flexible straps, two wooden rings move independently at the slightest touch. Gymnasts must hold static strength poses, such as the 'Iron Cross'—where the body is held rigid horizontally with arms extended sideways—for at least two full seconds. Maintaining perfect stillness in these demanding positions requires gymnasts to continuously ________ subtle muscle tremors.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["counteract", "magnify", "ignore", "display"],
+                correctAnswer: 0,
+                explanation: "'Counteract' means to act against or neutralize, which describes how gymnasts offset muscle shakes to hold motionless positions."
+            },
+            {
+                passage: "African elephants communicate over vast distances using low-frequency acoustic vibrations known as infrasound. These deep rumbles, which fall below the threshold of human hearing, travel miles through both open air and ground soil. Recipient elephants detect subterranean ground vibrations through sensitive nerve endings in their padded feet and trunk tips, allowing herd members to coordinate movements across dense savannas.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Elephants use low-frequency infrasound ground vibrations to communicate over long distances.",
+                    "Human ears can easily detect all infrasonic communication signals produced by African wildlife.",
+                    "Savanna habitat destruction forces elephant herds to migrate toward coastal mountain forests.",
+                    "Elephant trunks are used exclusively for gathering tree foliage and drinking water."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains how elephants generate and detect infrasound vibrations through ground and air to communicate."
+            },
+            {
+                passage: "The ancient Silk Road trade network relied heavily on desert oases across Central Asia. Oasis towns like Samarkand and Kashgar provided fresh spring water, food supplies, and shelter for merchant caravans crossing the formidable Taklamakan Desert. Without these strategic stopping points, sustained long-distance trans-Eurasian commerce would have been nearly impossible.",
+                prompt: "Which detail from the text best supports the claim that oasis towns were vital to Silk Road trade?",
+                options: [
+                    "They provided essential water, food, and shelter needed to cross dangerous desert stretches.",
+                    "The Silk Road connected merchants across Asia, Europe, and northern coastal Africa.",
+                    "Silk was the most valuable commodity transported by ancient merchant caravans.",
+                    "The Taklamakan Desert is known for high sand dunes and unpredictable weather."
+                ],
+                correctAnswer: 0,
+                explanation: "Providing spring water, food, and shelter in dangerous deserts explains why oasis towns were essential to merchant travel."
+            },
+            {
+                passage: "Text 1\nArtificial intelligence tutoring tools provide customized math practice by adapting problem difficulty to match a student's individual learning pace. Instant feedback on practice problems helps students identify mathematical misconceptions immediately without waiting for teacher grading.\n\nText 2\nWhile AI practice tools offer immediate feedback on math exercises, they cannot replace the empathetic guidance, emotional encouragement, and creative mentoring provided by human teachers. Meaningful learning relies deeply on personal relationships between educators and students.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By emphasizing that human teachers provide vital emotional support and mentorship that AI software cannot replicate.",
+                    "By claiming that computer algorithms make more grading errors than human classroom teachers.",
+                    "By recommending that public schools eliminate all technology devices from classrooms.",
+                    "By stating that adaptive software programs decrease student test performance in mathematics."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 responds by highlighting human attributes (empathy, encouragement, mentoring) that AI tools cannot replace."
+            },
+            {
+                passage: "Humpback whales produce long, complex vocal sequences known as 'whale songs' during breeding seasons. **Marine biologists discovered that all male humpbacks within a ocean region sing identical songs, which gradually evolve over several months as individuals introduce rhythmic variations.** This shared vocal behavior represents one of the most striking examples of cultural transmission in marine mammals.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It explains how humpback whale songs are shared across regional populations and evolve over time.",
+                    "It details the physical anatomy of whale vocal cords and blowhole blowhole mechanics.",
+                    "It compares humpback whale songs with echo signals produced by killer whales.",
+                    "It describes how ocean shipping noise interferes with humpback whale courtship calls."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence describes how male whales in a region share identical songs that evolve collaboratively over time."
+            },
+            {
+                passage: "Salt marshes along coastal estuaries act as natural storm buffers that protect shoreline communities from severe coastal flooding. The dense root networks of marsh grasses trap sediment and absorb violent ocean wave energy during hurricanes. Furthermore, salt marsh vegetation filters land runoff pollutants before water enters coastal bays, helping to ________ estuarine water quality.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["preserve", "degrade", "contaminate", "fluctuate"],
+                correctAnswer: 0,
+                explanation: "'Preserve' means to maintain or protect, fitting how filtering runoff pollutants keeps estuarine water clean and healthy."
+            },
+            {
+                passage: "Engineers designing modern wind turbine blades draw inspiration from the bumpy leading edges of humpback whale flippers. These specialized bumps, called tubercles, reduce aerodynamic drag and increase lift as air flows across turbine surfaces. By applying this biomimetic design to wind power systems, blade manufacturers have succeeded in ________ electrical energy production in low-wind conditions.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["boosting", "curtailing", "halting", "jeopardizing"],
+                correctAnswer: 0,
+                explanation: "'Boosting' means increasing or improving, describing how biomimetic blade designs raise turbine energy production."
+            },
+            {
+                passage: "Indoor vertical hydroponic farms produce leafy greens inside urban warehouses without natural soil or weather constraints. By utilizing energy-efficient LED light spectrums tailored for plant growth and recirculating nutrient-enriched water solutions, vertical farms achieve up to 10 times higher crop yields per square foot than traditional horizontal farming. Consequently, vertical farming allows cities to ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "grow fresh produce locally while dramatically reducing agricultural land footprint.",
+                    "eliminate the need for electricity in commercial indoor growing facilities.",
+                    "rely exclusively on seasonal weather patterns for vegetable cultivation.",
+                    "increase the distance fresh produce must travel from rural farms to city markets."
+                ],
+                correctAnswer: 0,
+                explanation: "High yields in urban warehouse spaces enable growing fresh food locally while conserving farmland footprint."
+            },
+            {
+                passage: "The James Webb Space Telescope's primary mirror consists of 18 hexagonal segments coated in a microscopic layer of pure gold. Gold reflects infrared light far more efficiently than standard optical materials, enabling the space observatory to detect faint infrared radiation emitted by early stars formed over 13 billion years ago.",
+                prompt: "Which detail from the text best supports the claim that gold coatings improve space telescope performance?",
+                options: [
+                    "Gold reflects infrared light far more efficiently than standard telescope mirror materials.",
+                    "The primary mirror consists of 18 hexagonal beryllium segments fitted together.",
+                    "The James Webb Space Telescope was launched into orbit to study deep space objects.",
+                    "Early stars formed over 13 billion years ago following the expansion of the universe."
+                ],
+                correctAnswer: 0,
+                explanation: "The detail that gold reflects infrared light far better directly supports why it improves telescope performance."
+            }
+        ]
+    };
+
+    // Rotating University Achievement Crests (MIT, Oxford, Cambridge)
+    const universityRewards = [
+        {
+            name: "Massachusetts Institute of Technology (MIT)",
+            img: "https://mr-chen-k12.github.io/math/IMG_0232.png",
+            color: "#A31F34"
+        },
+        {
+            name: "University of Oxford",
+            img: "https://mr-chen-k12.github.io/books/IMG_0121.png",
+            color: "#002147"
+        },
+        {
+            name: "University of Cambridge",
+            img: "https://mr-chen-k12.github.io/books/IMG_0122.png",
+            color: "#003262"
+        }
+    ];
+
+    let currentSetKey = "Set A";
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let isLocked = [];
+
+    // Helper function to shuffle choices dynamically so correct answer position varies
+    function shuffleOptions(question) {
+        let optionsWithInfo = question.options.map((text, originalIndex) => ({
+            text: text,
+            isCorrect: originalIndex === question.correctAnswer
+        }));
+
+        for (let i = optionsWithInfo.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [optionsWithInfo[i], optionsWithInfo[j]] = [optionsWithInfo[j], optionsWithInfo[i]];
+        }
+
+        return {
+            passage: question.passage,
+            prompt: question.prompt,
+            options: optionsWithInfo.map(o => o.text),
+            correctAnswer: optionsWithInfo.findIndex(o => o.isCorrect),
+            explanation: question.explanation
+        };
+    }
+
+    function initQuiz() {
+        switchSet("Set A");
+    }
+
+    function switchSet(setName) {
+        currentSetKey = setName;
+        
+        currentQuestions = rawQuizSets[setName].map(q => shuffleOptions(q));
+        currentQuestionIndex = 0;
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        isLocked = new Array(currentQuestions.length).fill(false);
+
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('nav-buttons').style.display = 'flex';
+        document.getElementById('progress-tracker').style.display = 'block';
+
+        renderQuestions();
+        updateNav();
+    }
+
+    function renderQuestions() {
+        const wrapper = document.getElementById('questions-wrapper');
+        wrapper.innerHTML = '';
+
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv && feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestionIndex]) return; 
+
+        const selected = userAnswers[currentQuestionIndex];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestionIndex}`);
+        const q = currentQuestions[currentQuestionIndex];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestionIndex] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestionIndex}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestionIndex}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestionIndex}`).classList.remove('active');
+        currentQuestionIndex += direction;
+        document.getElementById(`question-${currentQuestionIndex}`).classList.add('active');
+        
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length} (${currentSetKey})`;
+
+        if (currentQuestionIndex === currentQuestions.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestionIndex]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const selected = userAnswers[index];
+            
+            qBlock.classList.add('active');
+            
+            isLocked[index] = true;
+            const radios = document.getElementsByName(`q${index}`);
+            radios.forEach(r => r.disabled = true);
+            q.options.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-${index}-${optIndex}`);
+                if (label) label.classList.add('disabled');
+            });
+
+            if (selected === null) {
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else if (selected === q.correctAnswer) {
+                score++;
+                feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback correct";
+            } else {
+                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Set Score: ${score} out of ${currentQuestions.length} (${Math.round((score/currentQuestions.length)*100)}%)`;
+        
+        const rewardContainer = document.getElementById('university-reward');
+        const perfectBanner = document.getElementById('perfect-banner');
+        
+        if (score >= 1) {
+            let rewardIdx = 0;
+            if (currentSetKey === "Set B") rewardIdx = 1;
+            if (currentSetKey === "Set C") rewardIdx = 2;
+
+            const selectedReward = universityRewards[rewardIdx];
+
+            const rewardTitle = document.getElementById('reward-title');
+            const rewardImg = document.getElementById('reward-img');
+            const rewardDesc = document.getElementById('reward-desc');
+            const fallbackBadge = document.getElementById('fallback-badge');
+
+            if (score === currentQuestions.length) {
+                perfectBanner.style.display = 'block';
+            } else {
+                perfectBanner.style.display = 'none';
+            }
+
+            rewardContainer.style.borderColor = selectedReward.color;
+            rewardTitle.style.color = selectedReward.color;
+            rewardTitle.textContent = `★ ACADEMIC ACHIEVEMENT CREST ★`;
+            
+            rewardImg.style.display = 'block';
+            fallbackBadge.style.display = 'none';
+            fallbackBadge.style.backgroundColor = selectedReward.color;
+            rewardImg.src = selectedReward.img;
+            rewardImg.alt = `${selectedReward.name} Crest`;
+
+            rewardDesc.textContent = `Congratulations! You earned the official ${selectedReward.name} academic emblem for your performance on ${currentSetKey}!`;
+
+            rewardContainer.style.display = 'block';
+        } else {
+            rewardContainer.style.display = 'none';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function resetCurrentSet() {
+        switchSet(currentSetKey);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
