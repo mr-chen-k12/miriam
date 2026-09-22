@@ -211,7 +211,15 @@
         border-radius: 4px;
         font-weight: bold;
         margin-bottom: 10px;
-        display: none;
+    }
+    .retry-notice {
+        margin-top: 15px;
+        padding: 12px;
+        background-color: #fef9e7;
+        border: 1px dashed #f39c12;
+        color: #7e5109;
+        border-radius: 6px;
+        font-weight: bold;
     }
 
     @keyframes pullUp {
@@ -242,8 +250,13 @@
         <h2>Assignment Completed!</h2>
         <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
         <p>Review your answers and explanations below.</p>
+
+        <!-- Message shown if score is below 100% -->
+        <div id="retry-notice" class="retry-notice" style="display: none;">
+            🎯 Aim for 100% on this set to unlock its official University Academic Award Crest!
+        </div>
         
-        <!-- University Achievement Reward -->
+        <!-- University Achievement Reward (Only unlocks at 100%) -->
         <div id="university-reward">
             <div id="perfect-banner" class="perfect-banner">🌟 PERFECT SCORE! 100% MASTERY 🌟</div>
             <div class="university-text" id="reward-title">★ ACADEMIC ACHIEVEMENT AWARD ★</div>
@@ -580,7 +593,7 @@
         ]
     };
 
-    // Rotating University Achievement Crests (MIT, Oxford, Cambridge)
+    // University Achievement Crests mapped to sets (MIT for Set A, Oxford for Set B, Cambridge for Set C)
     const universityRewards = [
         {
             name: "Massachusetts Institute of Technology (MIT)",
@@ -788,9 +801,10 @@
         document.getElementById('score-display').textContent = `Set Score: ${score} out of ${currentQuestions.length} (${Math.round((score/currentQuestions.length)*100)}%)`;
         
         const rewardContainer = document.getElementById('university-reward');
-        const perfectBanner = document.getElementById('perfect-banner');
+        const retryNotice = document.getElementById('retry-notice');
         
-        if (score >= 1) {
+        // REWARD LOGIC: Logo is ONLY displayed if score is 100% (score === currentQuestions.length)
+        if (score === currentQuestions.length) {
             let rewardIdx = 0;
             if (currentSetKey === "Set B") rewardIdx = 1;
             if (currentSetKey === "Set C") rewardIdx = 2;
@@ -802,12 +816,6 @@
             const rewardDesc = document.getElementById('reward-desc');
             const fallbackBadge = document.getElementById('fallback-badge');
 
-            if (score === currentQuestions.length) {
-                perfectBanner.style.display = 'block';
-            } else {
-                perfectBanner.style.display = 'none';
-            }
-
             rewardContainer.style.borderColor = selectedReward.color;
             rewardTitle.style.color = selectedReward.color;
             rewardTitle.textContent = `★ ACADEMIC ACHIEVEMENT CREST ★`;
@@ -818,11 +826,13 @@
             rewardImg.src = selectedReward.img;
             rewardImg.alt = `${selectedReward.name} Crest`;
 
-            rewardDesc.textContent = `Congratulations! You earned the official ${selectedReward.name} academic emblem for your performance on ${currentSetKey}!`;
+            rewardDesc.textContent = `Outstanding work! You achieved 100% mastery on ${currentSetKey} and earned the official ${selectedReward.name} emblem!`;
 
             rewardContainer.style.display = 'block';
+            retryNotice.style.display = 'none';
         } else {
             rewardContainer.style.display = 'none';
+            retryNotice.style.display = 'block';
         }
         
         window.scrollTo(0, 0);
