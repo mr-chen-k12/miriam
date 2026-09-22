@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice Worksheet - Saxon Course 2 Style</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --accent-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --success-color: #16a34a;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+        }
+
+        p.subtitle {
+            color: #475569;
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+
+        .print-instructions {
+            font-size: 0.85rem;
+            color: #64748b;
+            background-color: #eff6ff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .section-header {
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-color);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .problem-card:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .problem-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .problem-text {
+            margin-bottom: 12px;
+            font-size: 1.02rem;
+        }
+
+        .reveal-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .reveal-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .solution-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f0fdf4;
+            border-left: 4px solid var(--success-color);
+            border-radius: 4px;
+        }
+
+        .answer {
+            font-weight: bold;
+            color: var(--success-color);
+            margin-bottom: 8px;
+        }
+
+        .explanation {
+            color: #334155;
+        }
+
+        .diagram {
+            background: #fff;
+            border: 1px dashed #94a3b8;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .column-math {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            line-height: 1.25;
+            display: inline-block;
+            text-align: right;
+            margin: 10px 0;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        /* PRINTER FRIENDLY STYLING */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 11pt;
+            }
+
+            .container {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            header {
+                box-shadow: none !important;
+                border: 1px solid #999 !important;
+                margin-bottom: 15px !important;
+                padding: 10px !important;
+            }
+
+            .print-instructions, .reveal-btn, .solution-box {
+                display: none !important;
+            }
+
+            .problem-card {
+                box-shadow: none !important;
+                border: 1px solid #bbb !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin-bottom: 14px !important;
+                padding: 12px 15px !important;
+                background: #ffffff !important;
+            }
+
+            .section-header {
+                page-break-after: avoid;
+                break-after: avoid;
+                margin-top: 20px !important;
+                margin-bottom: 10px !important;
+                border-bottom: 2px solid #000 !important;
+                color: #000 !important;
+            }
+
+            .diagram, .column-math {
+                border: 1px solid #666 !important;
+                background: #ffffff !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Math Practice Worksheet</h1>
+        <p class="subtitle">Comprehensive Problem Set & Solution Guide</p>
+        <div class="print-instructions">🖨️ <strong>Printer Friendly:</strong> Click Print in your browser to print all questions cleanly without answers.</div>
+    </header>
+
+    <!-- LESSON PRACTICE -->
+    <h2 class="section-header">Lesson Practice</h2>
+
+    <!-- Problem a -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem a</span></div>
+        <div class="problem-text">
+            Only $28\%$ of the lights were on. What percent of the lights were off? Include the equation you used to solve the problem.
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-a')">Show Answer & Explanation</button>
+        <div id="sol-a" class="solution-box">
+            <div class="answer">Answer: $72\%$ (Equation: $28\% + p = 100\%$ or $100\% - 28\% = p$)</div>
+            <div class="explanation">
+                The total set of lights represents $100\%$.<br>
+                $$	ext{Equation: } 28\% + p = 100\%$$
+                $$p = 100\% - 28\% = 72\%$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem b -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem b</span></div>
+        <div class="problem-text">
+            Three sevenths of the students did not go to the museum. What fraction of the students did go to the museum? Include the equation you used to solve the problem.
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-b')">Show Answer & Explanation</button>
+        <div id="sol-b" class="solution-box">
+            <div class="answer">Answer: $rac{4}{7}$ (Equation: $rac{3}{7} + f = 1$ or $1 - rac{3}{7} = f$)</div>
+            <div class="explanation">
+                The whole student body represents $1$ whole ($rac{7}{7}$).<br>
+                $$	ext{Equation: } rac{3}{7} + f = 1$$
+                $$f = rac{7}{7} - rac{3}{7} = rac{4}{7}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem c -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem c</span></div>
+        <div class="problem-text">
+            Write a word problem about parts of a whole that fits this equation:
+            $$62\% + g = 100\%$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-c')">Show Answer & Explanation</button>
+        <div id="sol-c" class="solution-box">
+            <div class="answer">Answer: Sample problem provided below ($g = 38\%$)</div>
+            <div class="explanation">
+                <strong>Sample Word Problem:</strong><br>
+                "In a community survey, $62\%$ of residents voted in favor of building a new park, and the rest ($g$) voted against it. What percentage of residents voted against the new park?"
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem d -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem d</span></div>
+        <div class="problem-text">
+            Rolling a standard number cube once, what is the probability of rolling a number less than $3$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-d')">Show Answer & Explanation</button>
+        <div id="sol-d" class="solution-box">
+            <div class="answer">Answer: $rac{1}{3}$</div>
+            <div class="explanation">
+                A standard number cube has $6$ faces: $\{1, 2, 3, 4, 5, 6\}$.<br>
+                Outcomes less than $3$ are $\{1, 2\}$ ($2$ favorable outcomes).
+                $$P(	ext{less than } 3) = rac{2}{6} = rac{1}{3}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem e -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem e</span></div>
+        <div class="problem-text">
+            <em>A spinner is divided into four equal sections labeled 1, 2, 3, and 4.</em><br>
+            What is the probability of this spinner stopping on $2$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-e')">Show Answer & Explanation</button>
+        <div id="sol-e" class="solution-box">
+            <div class="answer">Answer: $rac{1}{4}$</div>
+            <div class="explanation">
+                There are $4$ equal sections in total, and $1$ section is labeled $2$.
+                $$P(2) = rac{1}{4}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem f -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem f</span></div>
+        <div class="problem-text">
+            <em>A spinner is divided into four equal sections labeled 1, 2, 3, and 4.</em><br>
+            What is the probability of this spinner stopping on $6$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-f')">Show Answer & Explanation</button>
+        <div id="sol-f" class="solution-box">
+            <div class="answer">Answer: $0$</div>
+            <div class="explanation">
+                Since $6$ is not on the spinner, there are $0$ favorable outcomes out of $4$.
+                $$P(6) = rac{0}{4} = 0$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem g -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem g</span></div>
+        <div class="problem-text">
+            <em>A spinner is divided into four equal sections labeled 1, 2, 3, and 4.</em><br>
+            What is the probability of this spinner stopping on a number less than $5$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-g')">Show Answer & Explanation</button>
+        <div id="sol-g" class="solution-box">
+            <div class="answer">Answer: $1$</div>
+            <div class="explanation">
+                All $4$ numbers $\{1, 2, 3, 4\}$ are less than $5$.
+                $$P(	ext{less than } 5) = rac{4}{4} = 1$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem h -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem h</span></div>
+        <div class="problem-text">
+            <em>A spinner is divided into one half (section C) and two fourths (sections A and B).</em><br>
+            What is the probability of this spinner stopping on section $B$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-h')">Show Answer & Explanation</button>
+        <div id="sol-h" class="solution-box">
+            <div class="answer">Answer: $rac{1}{4}$</div>
+            <div class="explanation">
+                Section $B$ represents one-fourth of the total circle area.
+                $$P(B) = rac{1}{4}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem i -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem i</span></div>
+        <div class="problem-text">
+            <em>A spinner is divided into one half (section C) and two fourths (sections A and B).</em><br>
+            What is the probability of this spinner <strong>not</strong> stopping on section $A$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-i')">Show Answer & Explanation</button>
+        <div id="sol-i" class="solution-box">
+            <div class="answer">Answer: $rac{3}{4}$</div>
+            <div class="explanation">
+                The probability of stopping on $A$ is $rac{1}{4}$. The probability of NOT stopping on $A$ is:
+                $$P(	ext{not } A) = 1 - P(A) = 1 - rac{1}{4} = rac{3}{4}$$
+            </div>
+        </div>
+    </div>
+
+
+    <!-- WRITTEN PRACTICE -->
+    <h2 class="section-header">Written Practice</h2>
+
+    <!-- Problem 1 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 1</span></div>
+        <div class="problem-text">
+            The USDA recommends that adults drink about $64	ext{ fluid ounces}$ of water each day. Maya drank $42	ext{ fluid ounces}$ today. How many more fluid ounces of water should she drink to meet the recommendation?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-1')">Show Answer & Explanation</button>
+        <div id="sol-1" class="solution-box">
+            <div class="answer">Answer: $22	ext{ fluid ounces}$</div>
+            <div class="explanation">
+                Subtract the amount already consumed from the daily target:
+                $$64 - 42 = 22	ext{ fluid ounces}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 2</span></div>
+        <div class="problem-text">
+            Four ninths of the runners did not complete the marathon. What fraction of the runners did complete the marathon?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-2')">Show Answer & Explanation</button>
+        <div id="sol-2" class="solution-box">
+            <div class="answer">Answer: $rac{5}{9}$</div>
+            <div class="explanation">
+                Subtract the fraction that did not finish from the whole ($1$ or $rac{9}{9}$):
+                $$rac{9}{9} - rac{4}{9} = rac{5}{9}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 3</span></div>
+        <div class="problem-text">
+            The Louisiana Purchase took place in $1803$. The War of $1812$ began in $1812$. How many years passed between these two historical events?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-3')">Show Answer & Explanation</button>
+        <div id="sol-3" class="solution-box">
+            <div class="answer">Answer: $9	ext{ years}$</div>
+            <div class="explanation">
+                Subtract the earlier year from the later year:
+                $$1812 - 1803 = 9	ext{ years}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 4 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 4</span></div>
+        <div class="problem-text">
+            <strong>FORMULATE</strong> Write a word problem that fits this equation:
+            $$15p = \$4.50$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-4')">Show Answer & Explanation</button>
+        <div id="sol-4" class="solution-box">
+            <div class="answer">Answer: Sample problem provided below ($p = \$0.30$)</div>
+            <div class="explanation">
+                <strong>Sample Word Problem:</strong><br>
+                "A package containing $15$ identical erasers costs $\$4.50$. What is the cost of each individual eraser ($p$)?"
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 5 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 5</span></div>
+        <div class="problem-text">
+            In a school parking lot, $23\%$ of the cars were red. What percent of the cars were not red?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-5')">Show Answer & Explanation</button>
+        <div id="sol-5" class="solution-box">
+            <div class="answer">Answer: $77\%$</div>
+            <div class="explanation">
+                Subtract the percentage of red cars from $100\%$:
+                $$100\% - 23\% = 77\%$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 6 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 6</span></div>
+        <div class="problem-text">
+            <strong>MODEL</strong> Draw and shade circles to show that $2rac{3}{4} = rac{11}{4}$.
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-6')">Show Answer & Explanation</button>
+        <div id="sol-6" class="solution-box">
+            <div class="answer">Answer: $3$ circles total: $2$ fully shaded circles and $1$ circle with $3$ of $4$ equal parts shaded.</div>
+            <div class="explanation">
+                Draw $3$ circles, each divided into $4$ equal fourths:<br>
+                • $2$ whole circles fully shaded $= 2 	imes 4 = 8$ fourths.<br>
+                • $1$ circle with $3$ fourths shaded $= 3$ fourths.<br>
+                Total shaded fourths $= 8 + 3 = 11$ fourths, which equals $rac{11}{4}$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 7 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 7</span></div>
+        <div class="problem-text">
+            Use digits to write five hundred twelve million, thirty-six thousand, eight hundred one.
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-7')">Show Answer & Explanation</button>
+        <div id="sol-7" class="solution-box">
+            <div class="answer">Answer: $512,036,801$</div>
+            <div class="explanation">
+                Break down by place values:<br>
+                • Millions period: $512$<br>
+                • Thousands period: $036$<br>
+                • Units period: $801$<br>
+                Combined: $512,036,801$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 8 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 8</span></div>
+        <div class="problem-text">
+            <strong>ANALYZE</strong> What property is illustrated by this equation?
+            $$5 \cdot 4 \cdot 3 \cdot 0 = 0$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-8')">Show Answer & Explanation</button>
+        <div id="sol-8" class="solution-box">
+            <div class="answer">Answer: Zero Property of Multiplication</div>
+            <div class="explanation">
+                The Zero Property of Multiplication states that the product of any number and zero is zero.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 9 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 9</span></div>
+        <div class="problem-text">
+            a. List the common factors of $36$ and $60$.<br>
+            b. What is the greatest common factor (GCF) of $36$ and $60$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-9')">Show Answer & Explanation</button>
+        <div id="sol-9" class="solution-box">
+            <div class="answer">Answer: <br>a. $1, 2, 3, 4, 6, 12$<br>b. $12$</div>
+            <div class="explanation">
+                Factors of $36$: $1, 2, 3, 4, 6, 9, 12, 18, 36$<br>
+                Factors of $60$: $1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60$<br><br>
+                a. Common factors in both lists: $\{1, 2, 3, 4, 6, 12\}$<br>
+                b. The largest common factor is $12$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 10 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 10</span></div>
+        <div class="problem-text">
+            Name three segments in the figure below in order of length from shortest to longest.<br>
+            <div class="diagram">$	ext{Line with points } A, B, C 	ext{ in order}$</div>
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-10')">Show Answer & Explanation</button>
+        <div id="sol-10" class="solution-box">
+            <div class="answer">Answer: $\overline{AB}, \overline{BC}, \overline{AC}$ (or Segment $AB$, Segment $BC$, Segment $AC$)</div>
+            <div class="explanation">
+                The sub-segments $\overline{AB}$ and $\overline{BC}$ are shorter than the total length of segment $\overline{AC}$. In order from shortest to longest: $\overline{AB}$, $\overline{BC}$, then $\overline{AC}$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 11 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 11</span></div>
+        <div class="problem-text">
+            Describe how to find the fraction of the group that is shaded.<br>
+            <div class="diagram">
+                ● ● ● ● ● ● ●<br>
+                ○ ○ ○ ○ ○ ○ ○ ○
+            </div>
+            <em>(7 shaded circles, 8 unshaded circles)</em>
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-11')">Show Answer & Explanation</button>
+        <div id="sol-11" class="solution-box">
+            <div class="answer">Answer: $rac{7}{15}$</div>
+            <div class="explanation">
+                1. Count the total number of items in the group ($7 + 8 = 15$) — this forms the denominator.<br>
+                2. Count the shaded items ($7$) — this forms the numerator.<br>
+                3. The resulting fraction is $rac{7}{15}$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 12 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 12</span></div>
+        <div class="problem-text">
+            Solve: $$b - 358 = 412$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-12')">Show Answer & Explanation</button>
+        <div id="sol-12" class="solution-box">
+            <div class="answer">Answer: $b = 770$</div>
+            <div class="explanation">
+                Add $358$ to both sides of the equation:
+                $$b = 412 + 358 = 770$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 13 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 13</span></div>
+        <div class="problem-text">
+            Solve: $$\$15 - e = \$4.28$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-13')">Show Answer & Explanation</button>
+        <div id="sol-13" class="solution-box">
+            <div class="answer">Answer: $e = \$10.72$</div>
+            <div class="explanation">
+                Subtract $\$4.28$ from $\$15.00$:
+                $$e = \$15.00 - \$4.28 = \$10.72$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 14 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 14</span></div>
+        <div class="problem-text">
+            Solve: $$6 \cdot 4f = 4848$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-14')">Show Answer & Explanation</button>
+        <div id="sol-14" class="solution-box">
+            <div class="answer">Answer: $f = 202$</div>
+            <div class="explanation">
+                Multiply the factors on the left side:
+                $$24f = 4848$$
+                Divide both sides by $24$:
+                $$f = rac{4848}{24} = 202$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 15 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 15</span></div>
+        <div class="problem-text">
+            Solve: $$rac{m}{20} = 35$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-15')">Show Answer & Explanation</button>
+        <div id="sol-15" class="solution-box">
+            <div class="answer">Answer: $m = 700$</div>
+            <div class="explanation">
+                Multiply both sides by $20$:
+                $$m = 35 	imes 20 = 700$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 16 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 16</span></div>
+        <div class="problem-text">
+            Solve for $n$:
+            <div class="column-math">
+  4
+  7
+  6
+  8
+  3
+  9
+  5
+  2
+  7
+  4
+  8
+  6
+  5
+  n
++ 3
+---
+ 85</div>
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-16')">Show Answer & Explanation</button>
+        <div id="sol-16" class="solution-box">
+            <div class="answer">Answer: $n = 8$</div>
+            <div class="explanation">
+                Sum all the known numbers:
+                $$4 + 7 + 6 + 8 + 3 + 9 + 5 + 2 + 7 + 4 + 8 + 6 + 5 + 3 = 77$$
+                Set up equation to find $n$:
+                $$77 + n = 85 \implies n = 85 - 77 = 8$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 17 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 17</span></div>
+        <div class="problem-text">
+            Solve: $$a + 384 = 1000$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-17')">Show Answer & Explanation</button>
+        <div id="sol-17" class="solution-box">
+            <div class="answer">Answer: $a = 616$</div>
+            <div class="explanation">
+                Subtract $384$ from $1000$:
+                $$a = 1000 - 384 = 616$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 18 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 18</span></div>
+        <div class="problem-text">
+            Simplify: $$4rac{2}{7} + 1rac{6}{7}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-18')">Show Answer & Explanation</button>
+        <div id="sol-18" class="solution-box">
+            <div class="answer">Answer: $6rac{1}{7}$</div>
+            <div class="explanation">
+                Add whole numbers and fractions:
+                $$(4 + 1) + \left(rac{2}{7} + rac{6}{7}ight) = 5 + rac{8}{7}$$
+                Convert $rac{8}{7}$ to mixed number $1rac{1}{7}$:
+                $$5 + 1rac{1}{7} = 6rac{1}{7}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 19 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 19</span></div>
+        <div class="problem-text">
+            Simplify: $$rac{7}{3} \cdot rac{4}{3}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-19')">Show Answer & Explanation</button>
+        <div id="sol-19" class="solution-box">
+            <div class="answer">Answer: $rac{28}{9}$ (or $3rac{1}{9}$)</div>
+            <div class="explanation">
+                Multiply numerators together and denominators together:
+                $$rac{7 	imes 4}{3 	imes 3} = rac{28}{9} = 3rac{1}{9}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 20 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 20</span></div>
+        <div class="problem-text">
+            Simplify: $$\$4.25 + \$1.15 + 85	ext{¢}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-20')">Show Answer & Explanation</button>
+        <div id="sol-20" class="solution-box">
+            <div class="answer">Answer: $\$6.25$</div>
+            <div class="explanation">
+                Convert $85	ext{¢}$ to dollars ($\$0.85$) and add:
+                $$\$4.25 + \$1.15 = \$5.40$$
+                $$\$5.40 + \$0.85 = \$6.25$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 21 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 21</span></div>
+        <div class="problem-text">
+            Simplify: $$6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-21')">Show Answer & Explanation</button>
+        <div id="sol-21" class="solution-box">
+            <div class="answer">Answer: $720$</div>
+            <div class="explanation">
+                Multiply step-by-step:
+                $$6 	imes 5 = 30$$
+                $$30 	imes 4 = 120$$
+                $$120 	imes 3 = 360$$
+                $$360 	imes 2 = 720$$
+                $$720 	imes 1 = 720$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 22 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 22</span></div>
+        <div class="problem-text">
+            Simplify: $$rac{3}{4} \cdot rac{3}{4} \cdot rac{3}{4}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-22')">Show Answer & Explanation</button>
+        <div id="sol-22" class="solution-box">
+            <div class="answer">Answer: $rac{27}{64}$</div>
+            <div class="explanation">
+                Multiply numerators and denominators:
+                $$rac{3 	imes 3 	imes 3}{4 	imes 4 	imes 4} = rac{27}{64}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 23 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 23</span></div>
+        <div class="problem-text">
+            Simplify: $$rac{840}{30}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-23')">Show Answer & Explanation</button>
+        <div id="sol-23" class="solution-box">
+            <div class="answer">Answer: $28$</div>
+            <div class="explanation">
+                Simplify by dividing numerator and denominator by $10$:
+                $$rac{840}{30} = rac{84}{3} = 28$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 24 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 24</span></div>
+        <div class="problem-text">
+            Simplify: $$168 	imes 85$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-24')">Show Answer & Explanation</button>
+        <div id="sol-24" class="solution-box">
+            <div class="answer">Answer: $14,280$</div>
+            <div class="explanation">
+                Multiply using standard multiplication:
+                $$168 	imes 5 = 840$$
+                $$168 	imes 80 = 13,440$$
+                $$840 + 13,440 = 14,280$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 25 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 25</span></div>
+        <div class="problem-text">
+            Simplify: $$40(55	ext{¢})$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-25')">Show Answer & Explanation</button>
+        <div id="sol-25" class="solution-box">
+            <div class="answer">Answer: $\$22.00$ (or $2200	ext{¢}$)</div>
+            <div class="explanation">
+                Multiply $40 	imes 55	ext{¢} = 2200	ext{¢}$.<br>
+                Convert cents to dollars:
+                $$rac{2200	ext{¢}}{100} = \$22.00$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 26 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 26</span></div>
+        <div class="problem-text">
+            Simplify: $$(6)(4 + 6)$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-26')">Show Answer & Explanation</button>
+        <div id="sol-26" class="solution-box">
+            <div class="answer">Answer: $60$</div>
+            <div class="explanation">
+                Evaluate inside parentheses first:
+                $$4 + 6 = 10$$
+                Then multiply:
+                $$6 	imes 10 = 60$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 27 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 27</span></div>
+        <div class="problem-text">
+            Simplify: $$15,234 - 8,849$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-27')">Show Answer & Explanation</button>
+        <div id="sol-27" class="solution-box">
+            <div class="answer">Answer: $6,385$</div>
+            <div class="explanation">
+                Perform subtraction:
+                $$15,234 - 8,849 = 6,385$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 28 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 28</span></div>
+        <div class="problem-text">
+            <strong>CLASSIFY</strong> Name each type of angle described:<br>
+            a. An angle measuring exactly $90^\circ$<br>
+            b. An angle measuring less than $90^\circ$<br>
+            c. An angle measuring between $90^\circ$ and $180^\circ$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-28')">Show Answer & Explanation</button>
+        <div id="sol-28" class="solution-box">
+            <div class="answer">Answer: <br>a. Right angle<br>b. Acute angle<br>c. Obtuse angle</div>
+            <div class="explanation">
+                • <strong>Right angle:</strong> Measures exactly $90^\circ$.<br>
+                • <strong>Acute angle:</strong> Measures greater than $0^\circ$ and less than $90^\circ$.<br>
+                • <strong>Obtuse angle:</strong> Measures greater than $90^\circ$ and less than $180^\circ$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 29 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 29</span></div>
+        <div class="problem-text">
+            How many $rac{1}{8}$s are in $1$?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-29')">Show Answer & Explanation</button>
+        <div id="sol-29" class="solution-box">
+            <div class="answer">Answer: $8$</div>
+            <div class="explanation">
+                Divide $1$ by $rac{1}{8}$:
+                $$1 \div rac{1}{8} = 1 	imes 8 = 8$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 30 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 30</span></div>
+        <div class="problem-text">
+            Rolling a standard number cube once, what is the probability of rolling an even number?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-30')">Show Answer & Explanation</button>
+        <div id="sol-30" class="solution-box">
+            <div class="answer">Answer: $rac{1}{2}$</div>
+            <div class="explanation">
+                Possible outcomes on a 6-sided die: $\{1, 2, 3, 4, 5, 6\}$.<br>
+                Even numbers: $\{2, 4, 6\}$ ($3$ favorable outcomes).
+                $$P(	ext{even}) = rac{3}{6} = rac{1}{2}$$
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ADDITIONAL EXTENSION QUESTIONS -->
+    <h2 class="section-header">Additional Extension Practice</h2>
+
+    <!-- Problem 31 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 31 (Terminating Decimal Division)</span></div>
+        <div class="problem-text">
+            Find the quotient as a decimal:
+            $$14.7 \div 6$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-31')">Show Answer & Explanation</button>
+        <div id="sol-31" class="solution-box">
+            <div class="answer">Answer: $2.45$</div>
+            <div class="explanation">
+                Divide $14.7$ by $6$ using long division:<br>
+                • $14 \div 6 = 2$ with a remainder of $2$. Place decimal point.<br>
+                • Bring down $7 \implies 27 \div 6 = 4$ with a remainder of $3$.<br>
+                • Add a trailing zero $\implies 30 \div 6 = 5$ with no remainder.<br>
+                $$14.7 \div 6 = 2.45$$
+                Since the remainder becomes zero, $2.45$ is a terminating decimal.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 32 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 32 (Repeating Decimal Division)</span></div>
+        <div class="problem-text">
+            Find the quotient as a decimal with repeating notation:
+            $$7 \div 3$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-32')">Show Answer & Explanation</button>
+        <div id="sol-32" class="solution-box">
+            <div class="answer">Answer: $2.ar{3}$ (or $2.333\ldots$)</div>
+            <div class="explanation">
+                Divide $7$ by $3$ using long division:<br>
+                • $7 \div 3 = 2$ with remainder $1$. Place decimal point.<br>
+                • Bring down $0 \implies 10 \div 3 = 3$ with remainder $1$.<br>
+                • Bring down $0 \implies 10 \div 3 = 3$ with remainder $1$.<br>
+                The digit $3$ repeats indefinitely:
+                $$7 \div 3 = 2.333\ldots = 2.ar{3}$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 33 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 33 (Order of Operations with Fractions & Decimals)</span></div>
+        <div class="problem-text">
+            Simplify using order of operations (PEMDAS):
+            $$(0.8 + 0.4) 	imes rac{3}{4}$$
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-33')">Show Answer & Explanation</button>
+        <div id="sol-33" class="solution-box">
+            <div class="answer">Answer: $0.9$ (or $rac{9}{10}$)</div>
+            <div class="explanation">
+                <strong>Step 1 (Parentheses):</strong> Perform addition inside parentheses:<br>
+                $$0.8 + 0.4 = 1.2$$
+                <strong>Step 2 (Multiplication):</strong> Multiply $1.2$ by $rac{3}{4}$ ($0.75$):<br>
+                $$1.2 	imes rac{3}{4} = rac{12}{10} 	imes rac{3}{4} = rac{36}{40} = rac{9}{10} = 0.9$$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 34 -->
+    <div class="problem-card">
+        <div class="problem-title"><span>Problem 34 (Percentages & Discounts)</span></div>
+        <div class="problem-text">
+            A jacket originally costs $\$80$. If it is on sale for $25\%$ off, how much money do you save in dollars (what is the discount amount)?
+        </div>
+        <button class="reveal-btn" onclick="toggleSolution('sol-34')">Show Answer & Explanation</button>
+        <div id="sol-34" class="solution-box">
+            <div class="answer">Answer: $\$20$</div>
+            <div class="explanation">
+                Find $25\%$ of $\$80$:<br>
+                Convert $25\%$ to a fraction or decimal: $25\% = rac{1}{4} = 0.25$.<br>
+                $$	ext{Discount} = 0.25 	imes \$80 = \$20$$
+                $$	ext{Alternatively: } rac{1}{4} 	imes 80 = \$20$$
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleSolution(id) {
+        var element = document.getElementById(id);
+        var btn = element.previousElementSibling;
+        if (element.style.display === "none" || element.style.display === "") {
+            element.style.display = "block";
+            btn.textContent = "Hide Answer & Explanation";
+            if (window.MathJax) {
+                MathJax.typesetPromise([element]);
+            }
+        } else {
+            element.style.display = "none";
+            btn.textContent = "Show Answer & Explanation";
+        }
+    }
+</script>
+
+</body>
+</html>
