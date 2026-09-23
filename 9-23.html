@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Written Practice Solutions - 9-23Miri</title>
+    <!-- MathJax for rendering LaTeX equations -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #2980b9;
+            --bg-color: #f4f6f7;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .problem-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .problem-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .problem-text {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-toggle {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-toggle:hover {
+            background-color: #1c5980;
+        }
+
+        .answer-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            color: #555555;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Saxon Math Grade 4 - Written Practice</h1>
+        <p>File: 9-23Miri.html | Interactive Step-by-Step Solutions</p>
+    </header>
+
+    <!-- Problem 1 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 1</div>
+        <div class="problem-text">
+            There were 43 parrots in the flock. Some flew away. Then there were 27 parrots in the flock. How many parrots flew away?
+        </div>
+        <button class="btn-toggle" id="btn-q1" onclick="toggleAnswer('q1')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q1">
+            <div class="answer-title">Answer:</div>
+            <p><strong>16 parrots flew away.</strong></p>
+            <div class="explanation">
+                <strong>Equation:</strong> $43 - p = 27$<br>
+                <strong>Solve:</strong> $p = 43 - 27 = 16$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 2</div>
+        <div class="problem-text">
+            One hundred fifty is how much greater than twenty-three?
+        </div>
+        <button class="btn-toggle" id="btn-q2" onclick="toggleAnswer('q2')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q2">
+            <div class="answer-title">Answer:</div>
+            <p><strong>127</strong></p>
+            <div class="explanation">
+                <strong>Equation:</strong> $150 - 23 = g$<br>
+                <strong>Solve:</strong> $150 - 23 = 127$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 3</div>
+        <div class="problem-text">
+            Twenty-three apples is how many fewer than seventy-five apples?
+        </div>
+        <button class="btn-toggle" id="btn-q3" onclick="toggleAnswer('q3')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q3">
+            <div class="answer-title">Answer:</div>
+            <p><strong>52 apples fewer</strong></p>
+            <div class="explanation">
+                <strong>Equation:</strong> $75 - 23 = a$<br>
+                <strong>Solve:</strong> $75 - 23 = 52$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 4 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 4</div>
+        <div class="problem-text">
+            On Saturday morning, Brady awoke at the time shown on the clock. Three hours later, he left home to go to softball practice. What time did Brady leave home?
+        </div>
+        <button class="btn-toggle" id="btn-q4" onclick="toggleAnswer('q4')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q4">
+            <div class="answer-title">Answer:</div>
+            <p><strong>10:05 a.m.</strong></p>
+            <div class="explanation">
+                1. The clock shows <strong>7:05 a.m.</strong> (hour hand points just past 7, minute hand points to 1).<br>
+                2. Adding 3 hours: $7:05 + 3\text{ hours} = 10:05\text{ a.m.}$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 5 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 5</div>
+        <div class="problem-text">
+            Write 412 in expanded form. Then use words to write the number.
+        </div>
+        <button class="btn-toggle" id="btn-q5" onclick="toggleAnswer('q5')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q5">
+            <div class="answer-title">Answer:</div>
+            <p><strong>Expanded Form:</strong> $400 + 10 + 2$<br>
+            <strong>Words:</strong> Four hundred twelve</p>
+            <div class="explanation">
+                4 represents 4 hundreds ($400$), 1 represents 1 ten ($10$), and 2 represents 2 ones ($2$).
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 6 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 6</div>
+        <div class="problem-text">
+            What fraction of this figure is shaded? (Grid of 2 rows by 5 columns with 4 shaded squares out of 10)
+        </div>
+        <button class="btn-toggle" id="btn-q6" onclick="toggleAnswer('q6')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q6">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$\frac{4}{10}$ (or $\frac{2}{5}$)</strong></p>
+            <div class="explanation">
+                There are 10 equal squares total in the rectangle grid. 4 of those squares are shaded.<br>
+                Fraction = $\frac{4}{10} = \frac{2}{5}$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 7 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 7</div>
+        <div class="problem-text">
+            The rectangle shown at right is 4 cm long and 2 cm wide.<br>
+            a. What is the perimeter?<br>
+            b. What is the area?
+        </div>
+        <button class="btn-toggle" id="btn-q7" onclick="toggleAnswer('q7')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q7">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>12 cm</strong><br>
+            b. <strong>8 sq cm</strong> (or $8\text{ cm}^2$)</p>
+            <div class="explanation">
+                a. $\text{Perimeter} = 4\text{ cm} + 2\text{ cm} + 4\text{ cm} + 2\text{ cm} = 12\text{ cm}$<br>
+                b. $\text{Area} = \text{length} \times \text{width} = 4\text{ cm} \times 2\text{ cm} = 8\text{ sq cm}$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 8 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 8</div>
+        <div class="problem-text">
+            Multiply:<br>
+            a. $2 \times 5$<br>
+            b. $5 \times 7$<br>
+            c. $2 \times 7$<br>
+            d. $4 \times 11$
+        </div>
+        <button class="btn-toggle" id="btn-q8" onclick="toggleAnswer('q8')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q8">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>10</strong><br>
+            b. <strong>35</strong><br>
+            c. <strong>14</strong><br>
+            d. <strong>44</strong></p>
+        </div>
+    </div>
+
+    <!-- Problem 9 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 9</div>
+        <div class="problem-text">
+            Write two addition facts and two subtraction facts using the numbers 20, 30, and 50.
+        </div>
+        <button class="btn-toggle" id="btn-q9" onclick="toggleAnswer('q9')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q9">
+            <div class="answer-title">Answer:</div>
+            <p><strong>Addition Facts:</strong><br>
+            $20 + 30 = 50$<br>
+            $30 + 20 = 50$<br><br>
+            <strong>Subtraction Facts:</strong><br>
+            $50 - 30 = 20$<br>
+            $50 - 20 = 30$</p>
+        </div>
+    </div>
+
+    <!-- Problem 10 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 10</div>
+        <div class="problem-text">
+            At 8 p.m. the temperature was $3^\circ\text{C}$. By 8 a.m. the next morning, the temperature had fallen 8 degrees. What was the temperature at 8 a.m.?
+        </div>
+        <button class="btn-toggle" id="btn-q10" onclick="toggleAnswer('q10')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q10">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$-5^\circ\text{C}$</strong> (or $5^\circ\text{C}$ below zero)</p>
+            <div class="explanation">
+                Subtract 8 degrees from $3^\circ\text{C}$: $3 - 8 = -5^\circ\text{C}$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 11 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 11</div>
+        <div class="problem-text">
+            The number represented by point A is how much less than the number represented by point B?
+        </div>
+        <button class="btn-toggle" id="btn-q11" onclick="toggleAnswer('q11')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q11">
+            <div class="answer-title">Answer:</div>
+            <p><strong>25 less</strong></p>
+            <div class="explanation">
+                1. Each tick mark on the number line represents 5 units (since there are 5 intervals between 75 and 100).<br>
+                2. Point A is at 85 ($75 + 10$).<br>
+                3. Point B is at 110 ($100 + 10$).<br>
+                4. Difference: $110 - 85 = 25$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 12 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 12</div>
+        <div class="problem-text">
+            Multiply:<br>
+            a. $5 \times 8$<br>
+            b. $2 \times 8$<br>
+            c. $5 \times 9$
+        </div>
+        <button class="btn-toggle" id="btn-q12" onclick="toggleAnswer('q12')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q12">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>40</strong><br>
+            b. <strong>16</strong><br>
+            c. <strong>45</strong></p>
+        </div>
+    </div>
+
+    <!-- Problem 13 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 13</div>
+        <div class="problem-text">
+            a. How many quarters equal one dollar?<br>
+            b. A quarter is what fraction of a dollar?<br>
+            c. Three quarters are what fraction of a dollar?
+        </div>
+        <button class="btn-toggle" id="btn-q13" onclick="toggleAnswer('q13')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q13">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>4 quarters</strong><br>
+            b. <strong>$\frac{1}{4}$</strong><br>
+            c. <strong>$\frac{3}{4}$</strong></p>
+        </div>
+    </div>
+
+    <!-- Problem 14 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 14</div>
+        <div class="problem-text">
+            Use digits and symbols to write this comparison:<br>
+            <em>Three hundred nine is less than three hundred ninety.</em>
+        </div>
+        <button class="btn-toggle" id="btn-q14" onclick="toggleAnswer('q14')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q14">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$309 < 390$</strong></p>
+            <div class="explanation">
+                "Three hundred nine" = 309<br>
+                "is less than" = $<$<br>
+                "three hundred ninety" = 390
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 15 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 15</div>
+        <div class="problem-text">
+            Three hundred nine is how much less than 390?
+        </div>
+        <button class="btn-toggle" id="btn-q15" onclick="toggleAnswer('q15')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q15">
+            <div class="answer-title">Answer:</div>
+            <p><strong>81</strong></p>
+            <div class="explanation">
+                $390 - 309 = 81$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 16 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 16</div>
+        <div class="problem-text">
+            $$\begin{array}{r} \$4.22 \\ - \$2.95 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q16" onclick="toggleAnswer('q16')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q16">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$\$1.27$</strong></p>
+            <div class="explanation">
+                Subtract cents first: $22\text{ cents} - 95\text{ cents}$ requires regrouping.<br>
+                $\$4.22 - \$2.95 = \$1.27$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 17 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 17</div>
+        <div class="problem-text">
+            $$\begin{array}{r} 909 \\ - 27 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q17" onclick="toggleAnswer('q17')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q17">
+            <div class="answer-title">Answer:</div>
+            <p><strong>882</strong></p>
+            <div class="explanation">
+                $909 - 27 = 882$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 18 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 18</div>
+        <div class="problem-text">
+            $$\begin{array}{r} \$422 \\ - \$144 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q18" onclick="toggleAnswer('q18')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q18">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$\$278$</strong></p>
+            <div class="explanation">
+                $422 - 144 = 278$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 19 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 19</div>
+        <div class="problem-text">
+            $$\begin{array}{r} 703 \\ - 471 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q19" onclick="toggleAnswer('q19')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q19">
+            <div class="answer-title">Answer:</div>
+            <p><strong>232</strong></p>
+            <div class="explanation">
+                $703 - 471 = 232$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 20 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 20</div>
+        <div class="problem-text">
+            $$\begin{array}{r} \$4.86 \\ + \$2.95 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q20" onclick="toggleAnswer('q20')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q20">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$\$7.81$</strong></p>
+            <div class="explanation">
+                $4.86 + 2.95 = 7.81$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 21 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 21</div>
+        <div class="problem-text">
+            $$\begin{array}{r} 370 \\ - 209 \\ \hline \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q21" onclick="toggleAnswer('q21')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q21">
+            <div class="answer-title">Answer:</div>
+            <p><strong>161</strong></p>
+            <div class="explanation">
+                $370 - 209 = 161$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 22 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 22</div>
+        <div class="problem-text">
+            $$\begin{array}{r} 22 \\ + n \\ \hline 37 \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q22" onclick="toggleAnswer('q22')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q22">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$n = 15$</strong></p>
+            <div class="explanation">
+                Subtract 22 from 37: $n = 37 - 22 = 15$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 23 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 23</div>
+        <div class="problem-text">
+            $$\begin{array}{r} 76 \\ - c \\ \hline 28 \end{array}$$
+        </div>
+        <button class="btn-toggle" id="btn-q23" onclick="toggleAnswer('q23')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q23">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$c = 48$</strong></p>
+            <div class="explanation">
+                Subtract 28 from 76: $c = 76 - 28 = 48$.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 24 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 24</div>
+        <div class="problem-text">
+            What multiplication fact is illustrated by this square? (3 by 3 grid)
+        </div>
+        <button class="btn-toggle" id="btn-q24" onclick="toggleAnswer('q24')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q24">
+            <div class="answer-title">Answer:</div>
+            <p><strong>$3 \times 3 = 9$</strong></p>
+            <div class="explanation">
+                The grid has 3 rows and 3 columns, making a total of 9 small squares.
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 25 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 25</div>
+        <div class="problem-text">
+            Find each square root:<br>
+            a. $\sqrt{9}$<br>
+            b. $\sqrt{25}$
+        </div>
+        <button class="btn-toggle" id="btn-q25" onclick="toggleAnswer('q25')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q25">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>3</strong><br>
+            b. <strong>5</strong></p>
+            <div class="explanation">
+                a. $3 \times 3 = 9$, so $\sqrt{9} = 3$<br>
+                b. $5 \times 5 = 25$, so $\sqrt{25} = 5$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 26 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 26</div>
+        <div class="problem-text">
+            <strong>Multiple Choice:</strong> Which of these does not equal 9?<br>
+            A. 3 squared<br>
+            B. $\sqrt{81}$<br>
+            C. $\sqrt{18}$<br>
+            D. $\sqrt{25} + \sqrt{16}$
+        </div>
+        <button class="btn-toggle" id="btn-q26" onclick="toggleAnswer('q26')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q26">
+            <div class="answer-title">Answer:</div>
+            <p><strong>C ($\sqrt{18}$)</strong></p>
+            <div class="explanation">
+                • A: $3^2 = 9$<br>
+                • B: $\sqrt{81} = 9$<br>
+                • C: $\sqrt{18} \approx 4.24 \neq 9$<br>
+                • D: $\sqrt{25} + \sqrt{16} = 5 + 4 = 9$
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 27 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 27</div>
+        <div class="problem-text">
+            Multiply:<br>
+            a. $1 \times 1$<br>
+            b. $5 \times 5$<br>
+            c. $8 \times 8$<br>
+            d. $9 \times 9$
+        </div>
+        <button class="btn-toggle" id="btn-q27" onclick="toggleAnswer('q27')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q27">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>1</strong><br>
+            b. <strong>25</strong><br>
+            c. <strong>64</strong><br>
+            d. <strong>81</strong></p>
+        </div>
+    </div>
+
+    <!-- Problem 28 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 28</div>
+        <div class="problem-text">
+            Compare. Write $>$, $<$, or $=$:<br>
+            a. $510 \bigcirc 501$<br>
+            b. $722 \bigcirc 976$<br>
+            c. $234 \bigcirc 238$
+        </div>
+        <button class="btn-toggle" id="btn-q28" onclick="toggleAnswer('q28')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q28">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>$510 > 501$</strong><br>
+            b. <strong>$722 < 976$</strong><br>
+            c. <strong>$234 < 238$</strong></p>
+        </div>
+    </div>
+
+    <!-- Problem 29 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 29</div>
+        <div class="problem-text">
+            <strong>Estimate:</strong> The land area of Aztec Ruins National Monument in New Mexico is 318 acres. The land area of Casa Grande Ruins National Monument in Arizona is 473 acres. What is a reasonable estimate of the total acreage of these two national monuments? Explain why your estimate is reasonable.
+        </div>
+        <button class="btn-toggle" id="btn-q29" onclick="toggleAnswer('q29')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q29">
+            <div class="answer-title">Answer:</div>
+            <p><strong>Estimated Total: 800 acres</strong></p>
+            <div class="explanation">
+                <strong>Explanation:</strong><br>
+                Round each number to the nearest hundred:<br>
+                • 318 rounds to 300.<br>
+                • 473 rounds to 500.<br>
+                $300 + 500 = 800\text{ acres}$.<br><br>
+                This estimate is reasonable because 318 is slightly above 300 and 473 is slightly below 500, making 800 a very accurate estimate close to the exact sum ($318 + 473 = 791$).
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem 30 -->
+    <div class="problem-card">
+        <div class="problem-header">Problem 30</div>
+        <div class="problem-text">
+            <strong>Classify:</strong> Name each figure:<br>
+            a. Vertical and horizontal rays forming a square corner.<br>
+            b. Two straight slanted lines with arrows extending side-by-side.<br>
+            c. Horizontal line segment intersecting a vertical line segment forming right angles.<br>
+            d. Angle open wider than a right angle.
+        </div>
+        <button class="btn-toggle" id="btn-q30" onclick="toggleAnswer('q30')">Review Answer & Explanation</button>
+        <div class="answer-box" id="q30">
+            <div class="answer-title">Answer:</div>
+            <p>a. <strong>Right angle</strong><br>
+            b. <strong>Parallel lines</strong><br>
+            c. <strong>Perpendicular line segments</strong><br>
+            d. <strong>Obtuse angle</strong></p>
+            <div class="explanation">
+                • <strong>a:</strong> A $90^\circ$ angle is a right angle.<br>
+                • <strong>b:</strong> Lines that stay equal distance apart and never intersect are parallel.<br>
+                • <strong>c:</strong> Segments that intersect to form square ($90^\circ$) angles are perpendicular.<br>
+                • <strong>d:</strong> An angle measuring greater than $90^\circ$ and less than $180^\circ$ is obtuse.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAnswer(id) {
+        var box = document.getElementById(id);
+        var btn = document.getElementById('btn-' + id);
+        
+        if (box.style.display === "block") {
+            box.style.display = "none";
+            btn.textContent = "Review Answer & Explanation";
+        } else {
+            box.style.display = "block";
+            btn.textContent = "Hide Answer & Explanation";
+        }
+    }
+</script>
+
+</body>
+</html>
