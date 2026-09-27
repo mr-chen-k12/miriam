@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Written Practice - Parallel Problem Set</title>
+  
+  <!-- MathJax Configuration and Script -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #e2e8f0;
+      --answer-bg: #f0fdf4;
+      --answer-border: #bbf7d0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 1.05rem;
+    }
+
+    .problem-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .problem-header {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .problem-text {
+      margin-bottom: 15px;
+    }
+
+    .toggle-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .answer-block {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: var(--answer-bg);
+      border: 1px solid var(--answer-border);
+      border-radius: 6px;
+    }
+
+    .answer-title {
+      font-weight: bold;
+      color: #166534;
+      margin-bottom: 5px;
+    }
+
+    /* Printer-Friendly Rules */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .toggle-btn {
+        display: none !important;
+      }
+
+      .answer-block {
+        display: block !important;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+      }
+
+      .problem-card {
+        border: 1px solid #ccc;
+        box-shadow: none;
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+
+  <script>
+    function toggleAnswer(id) {
+      const element = document.getElementById(id);
+      const btn = document.getElementById('btn-' + id);
+      if (element.style.display === "none" || element.style.display === "") {
+        element.style.display = "block";
+        btn.innerText = "Hide Answer & Explanation";
+      } else {
+        element.style.display = "none";
+        btn.innerText = "Review Answer & Explanation";
+      }
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Written Practice - Parallel Set</h1>
+    <div class="subtitle">30 Practice Problems | Saxon Math Format</div>
+  </header>
+
+  <!-- Problem 1 -->
+  <div class="problem-card">
+    <div class="problem-header">*1. Problem</div>
+    <div class="problem-text">
+      Sophia is reading a novel with $185$ pages. Liam is reading a novel with $312$ pages. How many more pages will Liam read than Sophia? Write and solve an equation.
+    </div>
+    <button id="btn-ans-1" class="toggle-btn" onclick="toggleAnswer('ans-1')">Review Answer & Explanation</button>
+    <div id="ans-1" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Equation: $312 - 185 = p$<br>
+      Solution: $p = 127$ pages
+      <br><br>
+      <strong>Explanation:</strong> Subtract Sophia's page count from Liam's page count: $312 - 185 = 127$.
+    </div>
+  </div>
+
+  <!-- Problem 2 -->
+  <div class="problem-card">
+    <div class="problem-header">*2. Represent</div>
+    <div class="problem-text">
+      Write the number $4682$ in expanded form. Then use words to write the number.
+    </div>
+    <button id="btn-ans-2" class="toggle-btn" onclick="toggleAnswer('ans-2')">Review Answer & Explanation</button>
+    <div id="ans-2" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>Expanded Form:</strong> $4000 + 600 + 80 + 2$<br>
+      <strong>Words:</strong> four thousand, six hundred eighty-two
+    </div>
+  </div>
+
+  <!-- Problem 3 -->
+  <div class="problem-card">
+    <div class="problem-header">*3. Represent</div>
+    <div class="problem-text">
+      Draw two horizontal parallel lines. Then draw a perpendicular line that intersects both, forming right angles.
+    </div>
+    <button id="btn-ans-3" class="toggle-btn" onclick="toggleAnswer('ans-3')">Review Answer & Explanation</button>
+    <div id="ans-3" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Draw two parallel horizontal lines ($\parallel$). Draw a straight vertical line ($\perp$) crossing both lines so that $90^\circ$ right angles are formed at each intersection point.
+    </div>
+  </div>
+
+  <!-- Problem 4 -->
+  <div class="problem-card">
+    <div class="problem-header">*4. Problem</div>
+    <div class="problem-text">
+      The square root of $64$ is how much less than five squared?
+    </div>
+    <button id="btn-ans-4" class="toggle-btn" onclick="toggleAnswer('ans-4')">Review Answer & Explanation</button>
+    <div id="ans-4" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $17$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      1. Square root of $64$: $\sqrt{64} = 8$<br>
+      2. Five squared: $5^2 = 25$<br>
+      3. Difference: $25 - 8 = 17$.
+    </div>
+  </div>
+
+  <!-- Problem 5 -->
+  <div class="problem-card">
+    <div class="problem-header">*5. Represent</div>
+    <div class="problem-text">
+      On $1\text{-cm}$ grid paper, draw a $7\text{ cm}$ by $3\text{ cm}$ rectangle.<br>
+      <strong>a.</strong> What is the perimeter of the rectangle?<br>
+      <strong>b.</strong> What is the area of the rectangle?
+    </div>
+    <button id="btn-ans-5" class="toggle-btn" onclick="toggleAnswer('ans-5')">Review Answer & Explanation</button>
+    <div id="ans-5" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> Perimeter = $20\text{ cm}$<br>
+      <strong>b.</strong> Area = $21\text{ cm}^2$ (or $21\text{ square centimeters}$)
+      <br><br>
+      <strong>Explanation:</strong><br>
+      • Perimeter: $P = 2 \times (\text{length} + \text{width}) = 2 \times (7 + 3) = 2 \times 10 = 20\text{ cm}$.<br>
+      • Area: $A = \text{length} \times \text{width} = 7 \times 3 = 21\text{ cm}^2$.
+    </div>
+  </div>
+
+  <!-- Problem 6 -->
+  <div class="problem-card">
+    <div class="problem-header">*6. Problem</div>
+    <div class="problem-text">
+      Place commas in $480000$. Then use words to write the number.
+    </div>
+    <button id="btn-ans-6" class="toggle-btn" onclick="toggleAnswer('ans-6')">Review Answer & Explanation</button>
+    <div id="ans-6" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>With Commas:</strong> $480,000$<br>
+      <strong>Words:</strong> four hundred eighty thousand
+    </div>
+  </div>
+
+  <!-- Problem 7 -->
+  <div class="problem-card">
+    <div class="problem-header">*7. Conclude</div>
+    <div class="problem-text">
+      What are the next four numbers in this counting sequence?<br>
+      $$\dots, 340, 350, 360, 370, \text{___}, \text{___}, \text{___}, \text{___}, \dots$$
+    </div>
+    <button id="btn-ans-7" class="toggle-btn" onclick="toggleAnswer('ans-7')">Review Answer & Explanation</button>
+    <div id="ans-7" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $380, 390, 400, 410$
+      <br><br>
+      <strong>Explanation:</strong> The sequence counts up by $10$ each step.
+    </div>
+  </div>
+
+  <!-- Problem 8 -->
+  <div class="problem-card">
+    <div class="problem-header">*8. Problem</div>
+    <div class="problem-text">
+      Which digit in $582,194$ is in the ten-thousands place?
+    </div>
+    <button id="btn-ans-8" class="toggle-btn" onclick="toggleAnswer('ans-8')">Review Answer & Explanation</button>
+    <div id="ans-8" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $8$
+      <br><br>
+      <strong>Explanation:</strong> In $582,194$: $4$ is ones, $9$ is tens, $1$ is hundreds, $2$ is thousands, $8$ is ten-thousands, and $5$ is hundred-thousands.
+    </div>
+  </div>
+
+  <!-- Problem 9 -->
+  <div class="problem-card">
+    <div class="problem-header">9. Compare</div>
+    <div class="problem-text">
+      Compare: $8 \times 3 \bigcirc \sqrt{81}$
+    </div>
+    <button id="btn-ans-9" class="toggle-btn" onclick="toggleAnswer('ans-9')">Review Answer & Explanation</button>
+    <div id="ans-9" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $8 \times 3 > \sqrt{81}$
+      <br><br>
+      <strong>Explanation:</strong> $8 \times 3 = 24$ and $\sqrt{81} = 9$. Since $24 > 9$, the correct symbol is $>$.
+    </div>
+  </div>
+
+  <!-- Problem 10 -->
+  <div class="problem-card">
+    <div class="problem-header">*10. Problem</div>
+    <div class="problem-text">
+      After school, Maya began reading at $2:15\text{ p.m.}$ She read for $1\text{ hour } 35\text{ minutes}$. What time did Maya finish reading?
+    </div>
+    <button id="btn-ans-10" class="toggle-btn" onclick="toggleAnswer('ans-10')">Review Answer & Explanation</button>
+    <div id="ans-10" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $3:50\text{ p.m.}$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      Start time: $2:15\text{ p.m. me}$<br>
+      Add $1\text{ hour} \rightarrow 3:15\text{ p.m. me}$<br>
+      Add $35\text{ minutes} \rightarrow 3:50\text{ p.m.}$
+    </div>
+  </div>
+
+  <!-- Problem 11 -->
+  <div class="problem-card">
+    <div class="problem-header">*11. Represent</div>
+    <div class="problem-text">
+      A number line between $3100$ and $3200$ has major intervals of $20$ units each ($3120, 3140, 3160, 3180$). To what number is an arrow pointing if it points to the second tick mark after $3100$?
+    </div>
+    <button id="btn-ans-11" class="toggle-btn" onclick="toggleAnswer('ans-11')">Review Answer & Explanation</button>
+    <div id="ans-11" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $3140$
+      <br><br>
+      <strong>Explanation:</strong> Each tick mark adds $20$ units. Starting at $3100$: two tick marks correspond to $3100 + (2 \times 20) = 3140$.
+    </div>
+  </div>
+
+  <!-- Problem 12 -->
+  <div class="problem-card">
+    <div class="problem-header">*12. Multiply</div>
+    <div class="problem-text">
+      <strong>a.</strong> $6 \times 7$<br>
+      <strong>b.</strong> $5 \times 5$<br>
+      <strong>c.</strong> $9 \times 9$<br>
+      <strong>d.</strong> $11 \times 11$
+    </div>
+    <button id="btn-ans-12" class="toggle-btn" onclick="toggleAnswer('ans-12')">Review Answer & Explanation</button>
+    <div id="ans-12" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> $42$<br>
+      <strong>b.</strong> $25$<br>
+      <strong>c.</strong> $81$<br>
+      <strong>d.</strong> $121$
+    </div>
+  </div>
+
+  <!-- Problem 13 -->
+  <div class="problem-card">
+    <div class="problem-header">*13. Multiply</div>
+    <div class="problem-text">
+      <strong>a.</strong> $8 \times 3$<br>
+      <strong>b.</strong> $8 \times 4$<br>
+      <strong>c.</strong> $8 \times 6$<br>
+      <strong>d.</strong> $8 \times 10$
+    </div>
+    <button id="btn-ans-13" class="toggle-btn" onclick="toggleAnswer('ans-13')">Review Answer & Explanation</button>
+    <div id="ans-13" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> $24$<br>
+      <strong>b.</strong> $32$<br>
+      <strong>c.</strong> $48$<br>
+      <strong>d.</strong> $80$
+    </div>
+  </div>
+
+  <!-- Problem 14 -->
+  <div class="problem-card">
+    <div class="problem-header">*14. Connect</div>
+    <div class="problem-text">
+      Write two addition facts and two subtraction facts using the numbers $30$, $70$, and $100$.
+    </div>
+    <button id="btn-ans-14" class="toggle-btn" onclick="toggleAnswer('ans-14')">Review Answer & Explanation</button>
+    <div id="ans-14" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>Addition Facts:</strong><br>
+      $30 + 70 = 100$<br>
+      $70 + 30 = 100$<br><br>
+      <strong>Subtraction Facts:</strong><br>
+      $100 - 30 = 70$<br>
+      $100 - 70 = 30$
+    </div>
+  </div>
+
+  <!-- Problem 15 -->
+  <div class="problem-card">
+    <div class="problem-header">15. Connect</div>
+    <div class="problem-text">
+      Change this addition problem to a multiplication problem:<br>
+      $$15 + 15 + 15 + 15$$
+    </div>
+    <button id="btn-ans-15" class="toggle-btn" onclick="toggleAnswer('ans-15')">Review Answer & Explanation</button>
+    <div id="ans-15" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $4 \times 15$ (or $15 \times 4$)
+      <br><br>
+      <strong>Explanation:</strong> There are $4$ addends of $15$, which simplifies to $4 \times 15 = 60$.
+    </div>
+  </div>
+
+  <!-- Problem 16 -->
+  <div class="problem-card">
+    <div class="problem-header">*16. Problem</div>
+    <div class="problem-text">
+      Calculate: $\$8.45 - \$3.79$
+    </div>
+    <button id="btn-ans-16" class="toggle-btn" onclick="toggleAnswer('ans-16')">Review Answer & Explanation</button>
+    <div id="ans-16" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $\$4.66$
+      <br><br>
+      <strong>Explanation:</strong> Line up decimals and subtract: $8.45 - 3.79 = 4.66$.
+    </div>
+  </div>
+
+  <!-- Problem 17 -->
+  <div class="problem-card">
+    <div class="problem-header">*17. Problem</div>
+    <div class="problem-text">
+      Calculate: $832 - 67$
+    </div>
+    <button id="btn-ans-17" class="toggle-btn" onclick="toggleAnswer('ans-17')">Review Answer & Explanation</button>
+    <div id="ans-17" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $765$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $67$ from $832$: $832 - 67 = 765$.
+    </div>
+  </div>
+
+  <!-- Problem 18 -->
+  <div class="problem-card">
+    <div class="problem-header">18. Problem</div>
+    <div class="problem-text">
+      Calculate: $538 + 375$
+    </div>
+    <button id="btn-ans-18" class="toggle-btn" onclick="toggleAnswer('ans-18')">Review Answer & Explanation</button>
+    <div id="ans-18" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $913$
+      <br><br>
+      <strong>Explanation:</strong> Add the two numbers: $538 + 375 = 913$.
+    </div>
+  </div>
+
+  <!-- Problem 19 -->
+  <div class="problem-card">
+    <div class="problem-header">*19. Problem</div>
+    <div class="problem-text">
+      Find $w$:<br>
+      $$416 + w = 632$$
+    </div>
+    <button id="btn-ans-19" class="toggle-btn" onclick="toggleAnswer('ans-19')">Review Answer & Explanation</button>
+    <div id="ans-19" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $w = 216$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $416$ from $632$: $w = 632 - 416 = 216$.
+    </div>
+  </div>
+
+  <!-- Problem 20 -->
+  <div class="problem-card">
+    <div class="problem-header">20. Problem</div>
+    <div class="problem-text">
+      Calculate: $\$5.76 + \$3.85$
+    </div>
+    <button id="btn-ans-20" class="toggle-btn" onclick="toggleAnswer('ans-20')">Review Answer & Explanation</button>
+    <div id="ans-20" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $\$9.61$
+      <br><br>
+      <strong>Explanation:</strong> Add the dollar amounts: $5.76 + 3.85 = 9.61$.
+    </div>
+  </div>
+
+  <!-- Problem 21 -->
+  <div class="problem-card">
+    <div class="problem-header">*21. Problem</div>
+    <div class="problem-text">
+      Find $k$:<br>
+      $$666 - k = 333$$
+    </div>
+    <button id="btn-ans-21" class="toggle-btn" onclick="toggleAnswer('ans-21')">Review Answer & Explanation</button>
+    <div id="ans-21" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $k = 333$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $333$ from $666$: $k = 666 - 333 = 333$.
+    </div>
+  </div>
+
+  <!-- Problem 22 -->
+  <div class="problem-card">
+    <div class="problem-header">22. Problem</div>
+    <div class="problem-text">
+      Alex's birthdate is $8/14/02$. In which month was he born?
+    </div>
+    <button id="btn-ans-22" class="toggle-btn" onclick="toggleAnswer('ans-22')">Review Answer & Explanation</button>
+    <div id="ans-22" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      August
+      <br><br>
+      <strong>Explanation:</strong> The first number in a standard numerical date format represents the month. $8$ corresponds to August, the $8\text{th}$ month of the year.
+    </div>
+  </div>
+
+  <!-- Problem 23 -->
+  <div class="problem-card">
+    <div class="problem-header">23. Represent</div>
+    <div class="problem-text">
+      Draw a circle with a radius of $3\text{ inches}$. What is the diameter of the circle? Explain how you know.
+    </div>
+    <button id="btn-ans-23" class="toggle-btn" onclick="toggleAnswer('ans-23')">Review Answer & Explanation</button>
+    <div id="ans-23" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Diameter = $6\text{ inches}$
+      <br><br>
+      <strong>Explanation:</strong> The diameter of a circle is double its radius ($d = 2r$). Since $r = 3\text{ inches}$, $d = 2 \times 3\text{ inches} = 6\text{ inches}$.
+    </div>
+  </div>
+
+  <!-- Problem 24 -->
+  <div class="problem-card">
+    <div class="problem-header">24. Problem</div>
+    <div class="problem-text">
+      Calculate the sum:<br>
+      $$6 + 9 + 15 + 18 + 12 + 24 + 43$$
+    </div>
+    <button id="btn-ans-24" class="toggle-btn" onclick="toggleAnswer('ans-24')">Review Answer & Explanation</button>
+    <div id="ans-24" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $127$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      $6 + 9 = 15$<br>
+      $15 + 15 = 30$<br>
+      $30 + 18 = 48$<br>
+      $48 + 12 = 60$<br>
+      $60 + 24 = 84$<br>
+      $84 + 43 = 127$
+    </div>
+  </div>
+
+  <!-- Problem 25 -->
+  <div class="problem-card">
+    <div class="problem-header">25. Problem</div>
+    <div class="problem-text">
+      Calculate the sum:<br>
+      $$7 + 6 + 9 + 13 + 8 + 22 + 18$$
+    </div>
+    <button id="btn-ans-25" class="toggle-btn" onclick="toggleAnswer('ans-25')">Review Answer & Explanation</button>
+    <div id="ans-25" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $83$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      $7 + 6 = 13$<br>
+      $13 + 9 = 22$<br>
+      $22 + 13 = 35$<br>
+      $35 + 8 = 43$<br>
+      $43 + 22 = 65$<br>
+      $65 + 18 = 83$
+    </div>
+  </div>
+
+  <!-- Problem 26 -->
+  <div class="problem-card">
+    <div class="problem-header">*26. Compare</div>
+    <div class="problem-text">
+      Compare: $42,000 \bigcirc 420,000$
+    </div>
+    <button id="btn-ans-26" class="toggle-btn" onclick="toggleAnswer('ans-26')">Review Answer & Explanation</button>
+    <div id="ans-26" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $42,000 < 420,000$
+      <br><br>
+      <strong>Explanation:</strong> $42,000$ (forty-two thousand) is less than $420,000$ (four hundred twenty thousand).
+    </div>
+  </div>
+
+  <!-- Problem 27 -->
+  <div class="problem-card">
+    <div class="problem-header">*27. Multiple Choice</div>
+    <div class="problem-text">
+      Look at the sequence below. Which of the following numbers is <strong>not</strong> in the sequence?<br>
+      $$1, 4, 9, 16, 25, 36, \dots$$
+      <strong>a.</strong> $49$<br>
+      <strong>b.</strong> $75$<br>
+      <strong>c.</strong> $81$<br>
+      <strong>d.</strong> $100$
+    </div>
+    <button id="btn-ans-27" class="toggle-btn" onclick="toggleAnswer('ans-27')">Review Answer & Explanation</button>
+    <div id="ans-27" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>b.</strong> $75$
+      <br><br>
+      <strong>Explanation:</strong> The sequence consists of perfect squares ($1^2, 2^2, 3^2, 4^2, 5^2, 6^2, \dots$).<br>
+      • $49 = 7^2$<br>
+      • $81 = 9^2$<br>
+      • $100 = 10^2$<br>
+      $75$ is not a perfect square, so it is not part of this sequence.
+    </div>
+  </div>
+
+  <!-- Problem 28 -->
+  <div class="problem-card">
+    <div class="problem-header">*28. Formulate</div>
+    <div class="problem-text">
+      The state of Oregon had $214$ public libraries in a given year. The state of Nevada had $148$ public libraries. Write and solve an equation to find the number of public libraries Oregon and Nevada had altogether.
+    </div>
+    <button id="btn-ans-28" class="toggle-btn" onclick="toggleAnswer('ans-28')">Review Answer & Explanation</button>
+    <div id="ans-28" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Equation: $214 + 148 = L$<br>
+      Solution: $L = 362$ libraries
+      <br><br>
+      <strong>Explanation:</strong> Add Oregon's libraries ($214$) and Nevada's libraries ($148$): $214 + 148 = 362$.
+    </div>
+  </div>
+
+  <!-- Problem 29 -->
+  <div class="problem-card">
+    <div class="problem-header">*29. Problem</div>
+    <div class="problem-text">
+      Six feet is how many inches? Count by $12\text{s}$.
+    </div>
+    <button id="btn-ans-29" class="toggle-btn" onclick="toggleAnswer('ans-29')">Review Answer & Explanation</button>
+    <div id="ans-29" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $72\text{ inches}$
+      <br><br>
+      <strong>Explanation:</strong> Counting by $12\text{s}$ six times: $12, 24, 36, 48, 60, 72$.
+    </div>
+  </div>
+
+  <!-- Problem 30 -->
+  <div class="problem-card">
+    <div class="problem-header">*30. Problem</div>
+    <div class="problem-text">
+      Twelve centimeters is how many millimeters? Count by $10\text{s}$.
+    </div>
+    <button id="btn-ans-30" class="toggle-btn" onclick="toggleAnswer('ans-30')">Review Answer & Explanation</button>
+    <div id="ans-30" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $120\text{ millimeters}$
+      <br><br>
+      <strong>Explanation:</strong> Since $1\text{ cm} = 10\text{ mm}$, count by $10\text{s}$ twelve times: $10, 20, 30, \dots, 120$.
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
