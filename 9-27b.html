@@ -110,7 +110,7 @@
       margin-bottom: 5px;
     }
 
-    /* Printer-Friendly Rules */
+    /* Printer-Friendly Rules: Hide buttons and answers when printing */
     @media print {
       body {
         background-color: white;
@@ -121,15 +121,14 @@
         max-width: 100%;
       }
 
+      /* Hide interactive buttons when printing */
       .toggle-btn {
         display: none !important;
       }
 
+      /* Hide all answers and explanations when printing */
       .answer-block {
-        display: block !important;
-        background-color: #f9f9f9;
-        border: 1px solid #ccc;
-        page-break-inside: avoid;
+        display: none !important;
       }
 
       .problem-card {
