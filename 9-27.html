@@ -1,665 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>9-27Miri.html - Saxon Math Solutions</title>
-    <!-- MathJax for rendering LaTeX -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f6f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
-        h1 {
-            color: #1a365d;
-            border-bottom: 3px solid #3182ce;
-            padding-bottom: 10px;
-            text-align: center;
-        }
-        h2 {
-            color: #2b6cb0;
-            margin-top: 30px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 8px;
-        }
-        .problem-card {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-left: 5px solid #3182ce;
-            border-radius: 8px;
-            padding: 18px;
-            margin-bottom: 20px;
-            transition: all 0.2s ease;
-        }
-        .problem-card:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .problem-title {
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
-        .toggle-btn {
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.9em;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
-        }
-        .toggle-btn:hover {
-            background-color: #2b6cb0;
-        }
-        .answer-box {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #edf2f7;
-            border-radius: 6px;
-            border-left: 4px solid #38a169;
-        }
-        .answer-header {
-            font-weight: bold;
-            color: #276749;
-            margin-bottom: 5px;
-        }
-        .diagram {
-            margin: 15px 0;
-            text-align: center;
-        }
-        ul, ol {
-            margin-top: 5px;
-            padding-left: 20px;
-        }
-        .sub-problem {
-            margin-left: 15px;
-            margin-top: 8px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9-27Miri - Written Practice Solutions</title>
+  
+  <!-- MathJax Configuration and Script -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #e2e8f0;
+      --answer-bg: #f0fdf4;
+      --answer-border: #bbf7d0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 1.05rem;
+    }
+
+    .problem-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .problem-header {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .problem-text {
+      margin-bottom: 15px;
+    }
+
+    .toggle-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .answer-block {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: var(--answer-bg);
+      border: 1px solid var(--answer-border);
+      border-radius: 6px;
+    }
+
+    .answer-title {
+      font-weight: bold;
+      color: #166534;
+      margin-bottom: 5px;
+    }
+
+    /* Printer-Friendly CSS */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .toggle-btn {
+        display: none !important;
+      }
+
+      .answer-block {
+        display: block !important;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+      }
+
+      .problem-card {
+        border: 1px solid #ccc;
+        box-shadow: none;
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+
+  <script>
+    function toggleAnswer(id) {
+      const element = document.getElementById(id);
+      const btn = document.getElementById('btn-' + id);
+      if (element.style.display === "none" || element.style.display === "") {
+        element.style.display = "block";
+        btn.innerText = "Hide Answer & Explanation";
+      } else {
+        element.style.display = "none";
+        btn.innerText = "Review Answer & Explanation";
+      }
+    }
+  </script>
 </head>
 <body>
 
 <div class="container">
-    <h1>Saxon Math Solutions - 9-27Miri.html</h1>
+  <header>
+    <h1>Written Practice Solutions</h1>
+    <div class="subtitle">File: 9-27Miri.html | Saxon Math Lesson 33</div>
+  </header>
 
-    <!-- LESSON PRACTICE -->
-    <h2>Lesson Practice (p. 234)</h2>
-
-    <div class="problem-card">
-        <div class="problem-title">Represent: Use words to write each number:</div>
-        <div class="sub-problem"><strong>a.</strong> \(121,340,000\)</div>
-        <div class="sub-problem"><strong>b.</strong> \(12,507,000\)</div>
-        <div class="sub-problem"><strong>c.</strong> \(5,075,000\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('lp-a-c')">Show Answer & Explanation</button>
-        <div id="lp-a-c" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> One hundred twenty-one million, three hundred forty thousand</li>
-                <li><strong>b.</strong> Twelve million, five hundred seven thousand</li>
-                <li><strong>c.</strong> Five million, seventy-five thousand</li>
-            </ul>
-        </div>
+  <!-- Problem 1 -->
+  <div class="problem-card">
+    <div class="problem-header">*1. Problem</div>
+    <div class="problem-text">
+      Marcos is reading a book with $211$ pages. K'Neesha is reading a book with $272$ pages. How many more pages will K'Neesha read than Marcos? Write and solve an equation.
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">Use digits to write each number:</div>
-        <div class="sub-problem"><strong>d.</strong> twenty-five million</div>
-        <div class="sub-problem"><strong>e.</strong> twelve million, five hundred thousand</div>
-        <div class="sub-problem"><strong>f.</strong> two hundred eighty million</div>
-        <button class="toggle-btn" onclick="toggleAnswer('lp-d-f')">Show Answer & Explanation</button>
-        <div id="lp-d-f" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>d.</strong> \(25,000,000\)</li>
-                <li><strong>e.</strong> \(12,500,000\)</li>
-                <li><strong>f.</strong> \(280,000,000\)</li>
-            </ul>
-        </div>
+    <button id="btn-ans-1" class="toggle-btn" onclick="toggleAnswer('ans-1')">Review Answer & Explanation</button>
+    <div id="ans-1" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Equation: $272 - 211 = p$<br>
+      Solution: $p = 61$ pages
+      <br><br>
+      <strong>Explanation:</strong> To find out how many more pages K'Neesha reads, subtract the number of pages Marcos reads from the number of pages K'Neesha reads: $272 - 211 = 61$.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title"><strong>g. Compare:</strong> \(34\text{ million} \bigcirc 43\text{ million}\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('lp-g')">Show Answer & Explanation</button>
-        <div id="lp-g" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(34\text{ million} < 43\text{ million}\)</p>
-            <p><strong>Explanation:</strong> Comparing the millions digit, \(34 < 43\).</p>
-        </div>
+  <!-- Problem 2 -->
+  <div class="problem-card">
+    <div class="problem-header">*2. Represent</div>
+    <div class="problem-text">
+      Write the number $3425$ in expanded form. Then use words to write the number.
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title"><strong>h.</strong> Arrange these numbers in order from least to greatest: <br> \(5\text{ million}, \quad 25\text{ thousand}, \quad 750\text{ thousand}\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('lp-h')">Show Answer & Explanation</button>
-        <div id="lp-h" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(25\text{ thousand}, \quad 750\text{ thousand}, \quad 5\text{ million}\)</p>
-            <p><strong>Explanation:</strong> \(25,000 < 750,000 < 5,000,000\).</p>
-        </div>
+    <button id="btn-ans-2" class="toggle-btn" onclick="toggleAnswer('ans-2')">Review Answer & Explanation</button>
+    <div id="ans-2" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>Expanded Form:</strong> $3000 + 400 + 20 + 5$<br>
+      <strong>Words:</strong> three thousand, four hundred twenty-five
+      <br><br>
+      <strong>Explanation:</strong> Break down each place value: 3 thousands ($3000$), 4 hundreds ($400$), 2 tens ($20$), and 5 ones ($5$).
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title"><strong>i.</strong> Arrange these numbers in order from least to greatest: <br> \(12,375, \quad 1,000,000, \quad 987,000\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('lp-i')">Show Answer & Explanation</button>
-        <div id="lp-i" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(12,375, \quad 987,000, \quad 1,000,000\)</p>
-            <p><strong>Explanation:</strong> Compare by place value: \(12,375\) (5 digits) \(< 987,000\) (6 digits) \(< 1,000,000\) (7 digits).</p>
-        </div>
+  <!-- Problem 3 -->
+  <div class="problem-card">
+    <div class="problem-header">*3. Represent</div>
+    <div class="problem-text">
+      Draw two parallel lines. Then draw a perpendicular line that makes right angles where it intersects the parallel lines.
     </div>
-
-
-    <!-- WRITTEN PRACTICE -->
-    <h2>Written Practice (p. 234 - 235)</h2>
-
-    <div class="problem-card">
-        <div class="problem-title">*1. Formulate: Four hundred sixty-five is how much greater than twenty-four?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-1')">Show Answer & Explanation</button>
-        <div id="wp-1" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(441\)</p>
-            <p><strong>Explanation:</strong> Write and solve the subtraction equation:</p>
-            <p>\[465 - 24 = 441\]</p>
-        </div>
+    <button id="btn-ans-3" class="toggle-btn" onclick="toggleAnswer('ans-3')">Review Answer & Explanation</button>
+    <div id="ans-3" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Draw two horizontal parallel lines ($\parallel$). Draw a vertical line ($\perp$) passing through both horizontal lines so that $90^\circ$ right angles are formed at both intersections.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*2. Formulate: Marcie had four hundred twenty marbles. Kareem had one hundred twenty-three marbles. How many fewer marbles did Kareem have?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-2')">Show Answer & Explanation</button>
-        <div id="wp-2" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(297\text{ marbles}\)</p>
-            <p><strong>Explanation:</strong> Subtract Kareem's marbles from Marcie's marbles:</p>
-            <p>\[420 - 123 = 297\]</p>
-        </div>
+  <!-- Problem 4 -->
+  <div class="problem-card">
+    <div class="problem-header">*4. Problem</div>
+    <div class="problem-text">
+      The square root of $49$ is how much less than four squared?
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">*3. Represent: On 1-cm grid paper, draw a square that is 4 cm on each side.</div>
-        <div class="sub-problem"><strong>a.</strong> What is the perimeter of the square?</div>
-        <div class="sub-problem"><strong>b.</strong> What is the area of the square?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-3')">Show Answer & Explanation</button>
-        <div id="wp-3" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a. Perimeter:</strong> \(16\text{ cm}\)</li>
-                <li><strong>b. Area:</strong> \(16\text{ sq cm}\) (or \(16\text{ cm}^2\))</li>
-            </ul>
-            <p><strong>Explanation:</strong></p>
-            <p>a. \(\text{Perimeter} = 4 \times 4\text{ cm} = 16\text{ cm}\)</p>
-            <p>b. \(\text{Area} = 4\text{ cm} \times 4\text{ cm} = 16\text{ sq cm}\)</p>
-        </div>
+    <button id="btn-ans-4" class="toggle-btn" onclick="toggleAnswer('ans-4')">Review Answer & Explanation</button>
+    <div id="ans-4" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $9$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      1. Square root of $49$: $\sqrt{49} = 7$<br>
+      2. Four squared: $4^2 = 16$<br>
+      3. Difference: $16 - 7 = 9$.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*4. Represent: Write the number \(25,463\) in expanded form.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-4')">Show Answer & Explanation</button>
-        <div id="wp-4" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[20,000 + 5,000 + 400 + 60 + 3\]</p>
-            <p><strong>Explanation:</strong> Break down the number into the value of each digit based on place value.</p>
-        </div>
+  <!-- Problem 5 -->
+  <div class="problem-card">
+    <div class="problem-header">*5. Represent</div>
+    <div class="problem-text">
+      On $1\text{-cm}$ grid paper, draw a $6\text{ cm}$ by $2\text{ cm}$ rectangle.<br>
+      <strong>a.</strong> What is the perimeter of the rectangle?<br>
+      <strong>b.</strong> What is the area of the rectangle?
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">5. Represent: Draw a circle that has a diameter of 4 centimeters. What is the radius of the circle?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-5')">Show Answer & Explanation</button>
-        <div id="wp-5" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(2\text{ centimeters}\)</p>
-            <p><strong>Explanation:</strong> The radius is half of the diameter.</p>
-            <p>\[\text{Radius} = \frac{\text{Diameter}}{2} = \frac{4\text{ cm}}{2} = 2\text{ cm}\]</p>
-        </div>
+    <button id="btn-ans-5" class="toggle-btn" onclick="toggleAnswer('ans-5')">Review Answer & Explanation</button>
+    <div id="ans-5" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> Perimeter = $16\text{ cm}$<br>
+      <strong>b.</strong> Area = $12\text{ cm}^2$ (or $12\text{ square centimeters}$)
+      <br><br>
+      <strong>Explanation:</strong><br>
+      • Perimeter: $P = 2 \times (\text{length} + \text{width}) = 2 \times (6 + 2) = 2 \times 8 = 16\text{ cm}$.<br>
+      • Area: $A = \text{length} \times \text{width} = 6 \times 2 = 12\text{ cm}^2$.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">6. Jharma arrived home from school at the time shown on the clock and finished her homework 1 hour 35 minutes later. What time did Jharma finish her homework?</div>
-        <div class="diagram">
-            <svg width="120" height="120" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" stroke="#333" stroke-width="3" fill="#fff"/>
-                <text x="45" y="18" font-size="10">12</text>
-                <text x="80" y="54" font-size="10">3</text>
-                <text x="47" y="90" font-size="10">6</text>
-                <text x="14" y="54" font-size="10">9</text>
-                <!-- 3:20 time: Hour hand points near 3, Minute hand points at 4 -->
-                <line x1="50" y1="50" x2="68" y2="58" stroke="#333" stroke-width="3" stroke-linecap="round"/>
-                <line x1="50" y1="50" x2="70" y2="78" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-        </div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-6')">Show Answer & Explanation</button>
-        <div id="wp-6" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\(4:55\text{ PM}\)</p>
-            <p><strong>Explanation:</strong></p>
-            <ol>
-                <li>The clock shows \(3:20\text{ PM}\) (hour hand between 3 and 4, minute hand on 4).</li>
-                <li>Add 1 hour: \(3:20 + 1\text{ hour} = 4:20\).</li>
-                <li>Add 35 minutes: \(4:20 + 35\text{ minutes} = 4:55\text{ PM}\).</li>
-            </ol>
-        </div>
+  <!-- Problem 6 -->
+  <div class="problem-card">
+    <div class="problem-header">*6. Problem</div>
+    <div class="problem-text">
+      Place commas in $250000$. Then use words to write the number.
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">7. Explain: What fraction of the circles is shaded? Describe how you found your answer.</div>
-        <div class="diagram">
-            <svg width="160" height="80" viewBox="0 0 160 80">
-                <!-- Top row: 4 open -->
-                <circle cx="20" cy="20" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="60" cy="20" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="100" cy="20" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="140" cy="20" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <!-- Middle row: 4 shaded -->
-                <circle cx="20" cy="40" r="8" stroke="#333" stroke-width="2" fill="#666"/>
-                <circle cx="60" cy="40" r="8" stroke="#333" stroke-width="2" fill="#666"/>
-                <circle cx="100" cy="40" r="8" stroke="#333" stroke-width="2" fill="#666"/>
-                <circle cx="140" cy="40" r="8" stroke="#333" stroke-width="2" fill="#666"/>
-                <!-- Bottom row: 4 open -->
-                <circle cx="20" cy="60" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="60" cy="60" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="100" cy="60" r="8" stroke="#333" stroke-width="2" fill="none"/>
-                <circle cx="140" cy="60" r="8" stroke="#333" stroke-width="2" fill="none"/>
-            </svg>
-        </div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-7')">Show Answer & Explanation</button>
-        <div id="wp-7" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[\frac{4}{12} \quad \left(\text{or } \frac{1}{3}\right)\]</p>
-            <p><strong>Explanation:</strong> Count the total number of circles (\(12\)) to get the denominator. Count the shaded circles (\(4\)) to get the numerator. Reducing \(\frac{4}{12}\) gives \(\frac{1}{3}\).</p>
-        </div>
+    <button id="btn-ans-6" class="toggle-btn" onclick="toggleAnswer('ans-6')">Review Answer & Explanation</button>
+    <div id="ans-6" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>With Commas:</strong> $250,000$<br>
+      <strong>Words:</strong> two hundred fifty thousand
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">8. Connect: Change this addition problem to a multiplication problem. Then find the product.</div>
-        <p>\[12 + 12 + 12 + 12 + 12\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-8')">Show Answer & Explanation</button>
-        <div id="wp-8" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[5 \times 12 = 60\]</p>
-            <p><strong>Explanation:</strong> The number \(12\) is added \(5\) times, so it can be written as \(5 \times 12\), which equals \(60\).</p>
-        </div>
+  <!-- Problem 7 -->
+  <div class="problem-card">
+    <div class="problem-header">*7. Conclude</div>
+    <div class="problem-text">
+      What are the next four numbers in this counting sequence?<br>
+      $\dots, 230, 240, 250, 260, \text{___}, \text{___}, \text{___}, \text{___}, \dots$
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">*9. Estimate: Round 76 to the nearest ten. Round 59 to the nearest ten. Then add the rounded numbers.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-9')">Show Answer & Explanation</button>
-        <div id="wp-9" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[140\]</p>
-            <p><strong>Explanation:</strong></p>
-            <ul>
-                <li>\(76\) rounded to the nearest ten is \(80\).</li>
-                <li>\(59\) rounded to the nearest ten is \(60\).</li>
-                <li>\(80 + 60 = 140\).</li>
-            </ul>
-        </div>
+    <button id="btn-ans-7" class="toggle-btn" onclick="toggleAnswer('ans-7')">Review Answer & Explanation</button>
+    <div id="ans-7" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $270, 280, 290, 300$
+      <br><br>
+      <strong>Explanation:</strong> The sequence increases by $10$ each step.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">10. Compare:</div>
-        <div class="sub-problem"><strong>a.</strong> \(3 \bigcirc -4\)</div>
-        <div class="sub-problem"><strong>b.</strong> two million \(\bigcirc\) \(200,000\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-10')">Show Answer & Explanation</button>
-        <div id="wp-10" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> \(3 > -4\)</li>
-                <li><strong>b.</strong> \(\text{two million} > 200,000\)</li>
-            </ul>
-            <p><strong>Explanation:</strong></p>
-            <p>a. Any positive number is greater than any negative number.</p>
-            <p>b. Two million is \(2,000,000\), which is greater than \(200,000\).</p>
-        </div>
+  <!-- Problem 8 -->
+  <div class="problem-card">
+    <div class="problem-header">*8. Problem</div>
+    <div class="problem-text">
+      Which digit in $123,456$ is in the ten-thousands place?
     </div>
-
-    <div class="problem-card">
-        <div class="problem-title">*11. The number represented by point A is how much less than the number represented by point B?</div>
-        <div class="diagram">
-            <svg width="350" height="60" viewBox="0 0 350 60">
-                <line x1="20" y1="30" x2="330" y2="30" stroke="#333" stroke-width="2"/>
-                <!-- Hash marks and labels -->
-                <line x1="50" y1="20" x2="50" y2="40" stroke="#333" stroke-width="2"/>
-                <text x="40" y="55" font-size="12">200</text>
-                
-                <line x1="120" y1="20" x2="120" y2="40" stroke="#333" stroke-width="2"/>
-                <text x="110" y="55" font-size="12">210</text>
-                
-                <line x1="190" y1="20" x2="190" y2="40" stroke="#333" stroke-width="2"/>
-                <text x="180" y="55" font-size="12">220</text>
-
-                <line x1="260" y1="20" x2="260" y2="40" stroke="#333" stroke-width="2"/>
-                <text x="250" y="55" font-size="12">230</text>
-
-                <!-- Minor ticks -->
-                <line x1="134" y1="25" x2="134" y2="35" stroke="#333" stroke-width="1.5"/>
-                <circle cx="134" cy="20" r="3" fill="#d9534f"/>
-                <text x="130" y="12" font-size="12" font-weight="bold">A</text>
-
-                <line x1="204" y1="25" x2="204" y2="35" stroke="#333" stroke-width="1.5"/>
-                <circle cx="204" cy="20" r="3" fill="#d9534f"/>
-                <text x="200" y="12" font-size="12" font-weight="bold">B</text>
-            </svg>
-        </div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-11')">Show Answer & Explanation</button>
-        <div id="wp-11" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[10\]</p>
-            <p><strong>Explanation:</strong></p>
-            <p>Each small tick mark represents \(2\) units (since there are 5 subdivisions per 10 units).</p>
-            <ul>
-                <li>Point A is at \(212\).</li>
-                <li>Point B is at \(222\).</li>
-                <li>Difference: \(222 - 212 = 10\).</li>
-            </ul>
-        </div>
+    <button id="btn-ans-8" class="toggle-btn" onclick="toggleAnswer('ans-8')">Review Answer & Explanation</button>
+    <div id="ans-8" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $2$
+      <br><br>
+      <strong>Explanation:</strong> In $123,456$: $6$ is ones, $5$ is tens, $4$ is hundreds, $3$ is thousands, $2$ is ten-thousands, and $1$ is hundred-thousands.
     </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">12. Multiply:</div>
-        <div class="sub-problem"><strong>a.</strong> \(5 \times 7\)</div>
-        <div class="sub-problem"><strong>b.</strong> \(6 \times 6\)</div>
-        <div class="sub-problem"><strong>c.</strong> \(9 \times 9\)</div>
-        <div class="sub-problem"><strong>d.</strong> \(10 \times 10\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-12')">Show Answer & Explanation</button>
-        <div id="wp-12" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> \(35\)</li>
-                <li><strong>b.</strong> \(36\)</li>
-                <li><strong>c.</strong> \(81\)</li>
-                <li><strong>d.</strong> \(100\)</li>
-            </ul>
-        </div>
+  <!-- Problem 9 -->
+  <div class="problem-card">
+    <div class="problem-header">9. Compare</div>
+    <div class="problem-text">
+      Compare: $9 \times 4 \bigcirc \sqrt{36}$
     </div>
+    <button id="btn-ans-9" class="toggle-btn" onclick="toggleAnswer('ans-9')">Review Answer & Explanation</button>
+    <div id="ans-9" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $9 \times 4 > \sqrt{36}$
+      <br><br>
+      <strong>Explanation:</strong> $9 \times 4 = 36$ and $\sqrt{36} = 6$. Since $36 > 6$, the correct symbol is $>$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">13. Multiply:</div>
-        <div class="sub-problem"><strong>a.</strong> \(3 \times 9\)</div>
-        <div class="sub-problem"><strong>b.</strong> \(9 \times 7\)</div>
-        <div class="sub-problem"><strong>c.</strong> \(8 \times 9\)</div>
-        <div class="sub-problem"><strong>d.</strong> \(9 \times 1\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-13')">Show Answer & Explanation</button>
-        <div id="wp-13" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> \(27\)</li>
-                <li><strong>b.</strong> \(63\)</li>
-                <li><strong>c.</strong> \(72\)</li>
-                <li><strong>d.</strong> \(9\)</li>
-            </ul>
-        </div>
+  <!-- Problem 10 -->
+  <div class="problem-card">
+    <div class="problem-header">*10. Problem</div>
+    <div class="problem-text">
+      After school yesterday, Luis began playing outside at the time shown on the clock ($3:10$). He played for $2$ hours $25$ minutes. What time did Luis finish playing outside?
     </div>
+    <button id="btn-ans-10" class="toggle-btn" onclick="toggleAnswer('ans-10')">Review Answer & Explanation</button>
+    <div id="ans-10" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $5:35\text{ p.m.}$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      Start time: $3:10\text{ p.m. me}$<br>
+      Add $2\text{ hours} \rightarrow 5:10\text{ p.m. me}$<br>
+      Add $25\text{ minutes} \rightarrow 5:35\text{ p.m.}$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">14. Multiply:</div>
-        <div class="sub-problem"><strong>a.</strong> \(11 \times 11\)</div>
-        <div class="sub-problem"><strong>b.</strong> \(6 \times 12\)</div>
-        <div class="sub-problem"><strong>c.</strong> \(8 \times 11\)</div>
-        <div class="sub-problem"><strong>d.</strong> \(10 \times 12\)</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-14')">Show Answer & Explanation</button>
-        <div id="wp-14" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> \(121\)</li>
-                <li><strong>b.</strong> \(72\)</li>
-                <li><strong>c.</strong> \(88\)</li>
-                <li><strong>d.</strong> \(120\)</li>
-            </ul>
-        </div>
+  <!-- Problem 11 -->
+  <div class="problem-card">
+    <div class="problem-header">*11. Represent</div>
+    <div class="problem-text">
+      To what number is the arrow pointing on the number line between $2200$ and $2300$?
     </div>
+    <button id="btn-ans-11" class="toggle-btn" onclick="toggleAnswer('ans-11')">Review Answer & Explanation</button>
+    <div id="ans-11" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $2260$
+      <br><br>
+      <strong>Explanation:</strong> The segment between $2200$ and $2300$ is divided into $5$ equal intervals of $20$ units each ($2220, 2240, 2260, 2280$). The arrow points to the third tick mark after $2200$, which corresponds to $2200 + (3 \times 20) = 2260$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*15. Represent:</div>
-        <div class="sub-problem"><strong>a.</strong> Use words to write \(3,500,000\).</div>
-        <div class="sub-problem"><strong>b.</strong> Use digits to write seven hundred fifty thousand.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-15')">Show Answer & Explanation</button>
-        <div id="wp-15" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ul>
-                <li><strong>a.</strong> Three million, five hundred thousand</li>
-                <li><strong>b.</strong> \(750,000\)</li>
-            </ul>
-        </div>
+  <!-- Problem 12 -->
+  <div class="problem-card">
+    <div class="problem-header">*12. Multiply</div>
+    <div class="problem-text">
+      <strong>a.</strong> $5 \times 8$<br>
+      <strong>b.</strong> $4 \times 4$<br>
+      <strong>c.</strong> $8 \times 8$<br>
+      <strong>d.</strong> $12 \times 12$
     </div>
+    <button id="btn-ans-12" class="toggle-btn" onclick="toggleAnswer('ans-12')">Review Answer & Explanation</button>
+    <div id="ans-12" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> $40$<br>
+      <strong>b.</strong> $16$<br>
+      <strong>c.</strong> $64$<br>
+      <strong>d.</strong> $144$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*16. Subtract:</div>
-        <p>\[535 - 268\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-16')">Show Answer & Explanation</button>
-        <div id="wp-16" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[267\]</p>
-            <p><strong>Explanation:</strong> Align place values and subtract with regrouping: \(535 - 268 = 267\).</p>
-        </div>
+  <!-- Problem 13 -->
+  <div class="problem-card">
+    <div class="problem-header">*13. Multiply</div>
+    <div class="problem-text">
+      <strong>a.</strong> $9 \times 3$<br>
+      <strong>b.</strong> $9 \times 4$<br>
+      <strong>c.</strong> $9 \times 5$<br>
+      <strong>d.</strong> $9 \times 10$
     </div>
+    <button id="btn-ans-13" class="toggle-btn" onclick="toggleAnswer('ans-13')">Review Answer & Explanation</button>
+    <div id="ans-13" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>a.</strong> $27$<br>
+      <strong>b.</strong> $36$<br>
+      <strong>c.</strong> $45$<br>
+      <strong>d.</strong> $90$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*17. Subtract:</div>
-        <p>\[908 - 43\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-17')">Show Answer & Explanation</button>
-        <div id="wp-17" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[865\]</p>
-            <p><strong>Explanation:</strong> \(908 - 43 = 865\).</p>
-        </div>
+  <!-- Problem 14 -->
+  <div class="problem-card">
+    <div class="problem-header">*14. Connect</div>
+    <div class="problem-text">
+      Write two addition facts and two subtraction facts using the numbers $40$, $60$, and $100$.
     </div>
+    <button id="btn-ans-14" class="toggle-btn" onclick="toggleAnswer('ans-14')">Review Answer & Explanation</button>
+    <div id="ans-14" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>Addition Facts:</strong><br>
+      $40 + 60 = 100$<br>
+      $60 + 40 = 100$<br><br>
+      <strong>Subtraction Facts:</strong><br>
+      $100 - 40 = 60$<br>
+      $100 - 60 = 40$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*18. Subtract:</div>
-        <p>\[\$471 - \$346\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-18')">Show Answer & Explanation</button>
-        <div id="wp-18" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[\$125\]</p>
-            <p><strong>Explanation:</strong> \(\$471 - \$346 = \$125\).</p>
-        </div>
+  <!-- Problem 15 -->
+  <div class="problem-card">
+    <div class="problem-header">15. Connect</div>
+    <div class="problem-text">
+      Change this addition problem to a multiplication problem:<br>
+      $$20 + 20 + 20 + 20 + 20$$
     </div>
+    <button id="btn-ans-15" class="toggle-btn" onclick="toggleAnswer('ans-15')">Review Answer & Explanation</button>
+    <div id="ans-15" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $5 \times 20$ (or $20 \times 5$)
+      <br><br>
+      <strong>Explanation:</strong> There are $5$ addends of $20$, which simplifies to $5 \times 20 = 100$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*19. Find the missing number:</div>
-        <p>\[c + 329 = 715\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-19')">Show Answer & Explanation</button>
-        <div id="wp-19" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[c = 386\]</p>
-            <p><strong>Explanation:</strong> Subtract \(329\) from \(715\):</p>
-            <p>\[c = 715 - 329 = 386\]</p>
-        </div>
+  <!-- Problem 16 -->
+  <div class="problem-card">
+    <div class="problem-header">*16. Problem</div>
+    <div class="problem-text">
+      $$\begin{rdeduce} \$7.37 - \$2.68 \end{rdeduce}$$
+      Calculate: $\$7.37 - \$2.68$
     </div>
+    <button id="btn-ans-16" class="toggle-btn" onclick="toggleAnswer('ans-16')">Review Answer & Explanation</button>
+    <div id="ans-16" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $\$4.69$
+      <br><br>
+      <strong>Explanation:</strong> Align the decimal points and subtract: $7.37 - 2.68 = 4.69$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">20. Find the missing number:</div>
-        <p>\[c - 127 = 398\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-20')">Show Answer & Explanation</button>
-        <div id="wp-20" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[c = 525\]</p>
-            <p><strong>Explanation:</strong> Add \(127\) to \(398\):</p>
-            <p>\[c = 398 + 127 = 525\]</p>
-        </div>
+  <!-- Problem 17 -->
+  <div class="problem-card">
+    <div class="problem-header">*17. Problem</div>
+    <div class="problem-text">
+      Calculate: $921 - 58$
     </div>
+    <button id="btn-ans-17" class="toggle-btn" onclick="toggleAnswer('ans-17')">Review Answer & Explanation</button>
+    <div id="ans-17" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $863$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $58$ from $921$: $921 - 58 = 863$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">21. If the radius of a circle is 12 inches, then the diameter of the circle is how many feet?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-21')">Show Answer & Explanation</button>
-        <div id="wp-21" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[2\text{ feet}\]</p>
-            <p><strong>Explanation:</strong></p>
-            <ol>
-                <li>\(\text{Diameter} = 2 \times \text{radius} = 2 \times 12\text{ inches} = 24\text{ inches}\).</li>
-                <li>Convert inches to feet: \(24\text{ inches} \div 12 = 2\text{ feet}\).</li>
-            </ol>
-        </div>
+  <!-- Problem 18 -->
+  <div class="problem-card">
+    <div class="problem-header">18. Problem</div>
+    <div class="problem-text">
+      Calculate: $464 + 247$
     </div>
+    <button id="btn-ans-18" class="toggle-btn" onclick="toggleAnswer('ans-18')">Review Answer & Explanation</button>
+    <div id="ans-18" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $711$
+      <br><br>
+      <strong>Explanation:</strong> Add the two numbers: $464 + 247 = 711$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*22. Five squared is how much more than \(5 + 5\)?</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-22')">Show Answer & Explanation</button>
-        <div id="wp-22" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[15\]</p>
-            <p><strong>Explanation:</strong></p>
-            <ul>
-                <li>Five squared (\(5^2\)) \(= 25\).</li>
-                <li>\(5 + 5 = 10\).</li>
-                <li>Difference: \(25 - 10 = 15\).</li>
-            </ul>
-        </div>
+  <!-- Problem 19 -->
+  <div class="problem-card">
+    <div class="problem-header">*19. Problem</div>
+    <div class="problem-text">
+      Find $z$:<br>
+      $$329 + z = 547$$
     </div>
+    <button id="btn-ans-19" class="toggle-btn" onclick="toggleAnswer('ans-19')">Review Answer & Explanation</button>
+    <div id="ans-19" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $z = 218$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $329$ from $547$: $z = 547 - 329 = 218$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*23. Connect: Select two odd numbers and one even number that form an addition/subtraction fact family. Then use the numbers to write two addition facts and two subtraction facts.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-23')">Show Answer & Explanation</button>
-        <div id="wp-23" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p><strong>Example Numbers:</strong> \(3\) (odd), \(5\) (odd), and \(8\) (even)</p>
-            <p><strong>Addition facts:</strong></p>
-            <p>\[3 + 5 = 8\]</p>
-            <p>\[5 + 3 = 8\]</p>
-            <p><strong>Subtraction facts:</strong></p>
-            <p>\[8 - 5 = 3\]</p>
-            <p>\[8 - 3 = 5\]</p>
-        </div>
+  <!-- Problem 20 -->
+  <div class="problem-card">
+    <div class="problem-header">20. Problem</div>
+    <div class="problem-text">
+      Calculate: $\$4.88 + \$2.69$
     </div>
+    <button id="btn-ans-20" class="toggle-btn" onclick="toggleAnswer('ans-20')">Review Answer & Explanation</button>
+    <div id="ans-20" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $\$7.57$
+      <br><br>
+      <strong>Explanation:</strong> Add the dollar amounts: $4.88 + 2.69 = 7.57$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*24. Simplify:</div>
-        <p>\[\sqrt{9} + \sqrt{16}\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-24')">Show Answer & Explanation</button>
-        <div id="wp-24" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[7\]</p>
-            <p><strong>Explanation:</strong></p>
-            <p>\[\sqrt{9} = 3 \quad \text{and} \quad \sqrt{16} = 4\]</p>
-            <p>\[3 + 4 = 7\]</p>
-        </div>
+  <!-- Problem 21 -->
+  <div class="problem-card">
+    <div class="problem-header">*21. Problem</div>
+    <div class="problem-text">
+      Find $c$:<br>
+      $$555 - c = 222$$
     </div>
+    <button id="btn-ans-21" class="toggle-btn" onclick="toggleAnswer('ans-21')">Review Answer & Explanation</button>
+    <div id="ans-21" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $c = 333$
+      <br><br>
+      <strong>Explanation:</strong> Subtract $222$ from $555$: $c = 555 - 222 = 333$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">25. Represent: Draw a triangle that has one obtuse angle.</div>
-        <div class="diagram">
-            <svg width="150" height="80" viewBox="0 0 150 80">
-                <polygon points="10,70 140,70 50,20" fill="none" stroke="#333" stroke-width="2"/>
-            </svg>
-        </div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-25')">Show Answer & Explanation</button>
-        <div id="wp-25" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>An obtuse triangle has one angle that measures greater than \(90^\circ\).</p>
-        </div>
+  <!-- Problem 22 -->
+  <div class="problem-card">
+    <div class="problem-header">22. Problem</div>
+    <div class="problem-text">
+      Judy's birthdate is $5/27/98$. In which month was she born?
     </div>
+    <button id="btn-ans-22" class="toggle-btn" onclick="toggleAnswer('ans-22')">Review Answer & Explanation</button>
+    <div id="ans-22" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      May
+      <br><br>
+      <strong>Explanation:</strong> The first number in a standard date format represents the month. $5$ corresponds to May, the $5\text{th}$ month of the year.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*26. Multiple Choice: Which digit in \(3,756,289\) is in the thousands place?</div>
-        <p>A. 3 &nbsp;&nbsp;&nbsp;&nbsp; B. 7 &nbsp;&nbsp;&nbsp;&nbsp; C. 5 &nbsp;&nbsp;&nbsp;&nbsp; D. 6</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-26')">Show Answer & Explanation</button>
-        <div id="wp-26" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p><strong>D. 6</strong></p>
-            <p><strong>Explanation:</strong> Looking at the place values of \(3,756,289\):</p>
-            <ul>
-                <li>\(9\) = ones</li>
-                <li>\(8\) = tens</li>
-                <li>\(2\) = hundreds</li>
-                <li><strong>\(6\) = thousands</strong></li>
-                <li>\(5\) = ten-thousands</li>
-                <li>\(7\) = hundred-thousands</li>
-                <li>\(3\) = millions</li>
-            </ul>
-        </div>
+  <!-- Problem 23 -->
+  <div class="problem-card">
+    <div class="problem-header">23. Represent</div>
+    <div class="problem-text">
+      Draw a circle with a radius of $1\text{ inch}$. What is the diameter of the circle? Explain how you know.
     </div>
+    <button id="btn-ans-23" class="toggle-btn" onclick="toggleAnswer('ans-23')">Review Answer & Explanation</button>
+    <div id="ans-23" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Diameter = $2\text{ inches}$
+      <br><br>
+      <strong>Explanation:</strong> The diameter of a circle is twice the radius ($d = 2r$). Since $r = 1\text{ inch}$, $d = 2 \times 1\text{ inch} = 2\text{ inches}$.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*27. In the year 2000, the four most populous U.S. states and their populations were:</div>
-        <ul>
-            <li>California: \(33,871,648\)</li>
-            <li>Florida: \(15,982,378\)</li>
-            <li>New York: \(18,976,457\)</li>
-            <li>Texas: \(20,851,820\)</li>
-        </ul>
-        <p>List the names of the states in order of population, beginning with the greatest population.</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-27')">Show Answer & Explanation</button>
-        <div id="wp-27" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <ol>
-                <li>California (\(33,871,648\))</li>
-                <li>Texas (\(20,851,820\))</li>
-                <li>New York (\(18,976,457\))</li>
-                <li>Florida (\(15,982,378\))</li>
-            </ol>
-        </div>
+  <!-- Problem 24 -->
+  <div class="problem-card">
+    <div class="problem-header">24. Problem</div>
+    <div class="problem-text">
+      Calculate the sum:<br>
+      $$4 + 8 + 12 + 16 + 14 + 28 + 37$$
     </div>
+    <button id="btn-ans-24" class="toggle-btn" onclick="toggleAnswer('ans-24')">Review Answer & Explanation</button>
+    <div id="ans-24" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $119$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      $4 + 8 = 12$<br>
+      $12 + 12 = 24$<br>
+      $24 + 16 = 40$<br>
+      $40 + 14 = 54$<br>
+      $54 + 28 = 82$<br>
+      $82 + 37 = 119$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*28. Predict: What is the twelfth term in this counting sequence?</div>
-        <p>\[11, 22, 33, 44, \dots\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-28')">Show Answer & Explanation</button>
-        <div id="wp-28" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[132\]</p>
-            <p><strong>Explanation:</strong> This sequence counts by \(11\)s. The \(12\text{th}\) term is \(11 \times 12 = 132\).</p>
-        </div>
+  <!-- Problem 25 -->
+  <div class="problem-card">
+    <div class="problem-header">25. Problem</div>
+    <div class="problem-text">
+      Calculate the sum:<br>
+      $$5 + 8 + 7 + 14 + 6 + 21 + 15$$
     </div>
+    <button id="btn-ans-25" class="toggle-btn" onclick="toggleAnswer('ans-25')">Review Answer & Explanation</button>
+    <div id="ans-25" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $76$
+      <br><br>
+      <strong>Explanation:</strong><br>
+      $5 + 8 = 13$<br>
+      $13 + 7 = 20$<br>
+      $20 + 14 = 34$<br>
+      $34 + 6 = 40$<br>
+      $40 + 21 = 61$<br>
+      $61 + 15 = 76$
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*29. Predict: What is the eighth term in this counting sequence?</div>
-        <p>\[12, 24, 36, 48, \dots\]</p>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-29')">Show Answer & Explanation</button>
-        <div id="wp-29" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[96\]</p>
-            <p><strong>Explanation:</strong> This sequence counts by \(12\)s. The \(8\text{th}\) term is \(12 \times 8 = 96\).</p>
-        </div>
+  <!-- Problem 26 -->
+  <div class="problem-card">
+    <div class="problem-header">*26. Compare</div>
+    <div class="problem-text">
+      Compare: $25,000 \bigcirc 250,000$
     </div>
+    <button id="btn-ans-26" class="toggle-btn" onclick="toggleAnswer('ans-26')">Review Answer & Explanation</button>
+    <div id="ans-26" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $25,000 < 250,000$
+      <br><br>
+      <strong>Explanation:</strong> $25,000$ is twenty-five thousand, while $250,000$ is two hundred fifty thousand, so $25,000$ is smaller.
+    </div>
+  </div>
 
-    <div class="problem-card">
-        <div class="problem-title">*30. Estimate: M'Lisa would like to purchase about 100 balloons for her birthday party. One bag of 25 balloons costs \$2.49. What is a reasonable estimate of M'Lisa's cost to purchase about 100 balloons? Explain why your estimate is reasonable.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('wp-30')">Show Answer & Explanation</button>
-        <div id="wp-30" class="answer-box">
-            <div class="answer-header">Answer:</div>
-            <p>\[\$10.00\]</p>
-            <p><strong>Explanation:</strong></p>
-            <ol>
-                <li>Find the number of bags needed: \(100 \div 25 = 4\text{ bags}\).</li>
-                <li>Round the cost per bag from \(\$2.49\) to \(\$2.50\).</li>
-                <li>Multiply: \(4 \times \$2.50 = \$10.00\).</li>
-            </ol>
-            <p>This estimate is reasonable because \(\$2.49\) is only one cent away from \(\$2.50\), making the calculation simple and accurate.</p>
-        </div>
+  <!-- Problem 27 -->
+  <div class="problem-card">
+    <div class="problem-header">*27. Multiple Choice</div>
+    <div class="problem-text">
+      Look at the sequence below. Which of the following numbers is <strong>not</strong> in the sequence?<br>
+      $$1, 4, 9, 16, 25, 36, \dots$$
+      <strong>a.</strong> $64$<br>
+      <strong>b.</strong> $49$<br>
+      <strong>c.</strong> $80$<br>
+      <strong>d.</strong> $100$
     </div>
+    <button id="btn-ans-27" class="toggle-btn" onclick="toggleAnswer('ans-27')">Review Answer & Explanation</button>
+    <div id="ans-27" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      <strong>c.</strong> $80$
+      <br><br>
+      <strong>Explanation:</strong> This is a sequence of perfect squares ($1^2, 2^2, 3^2, 4^2, 5^2, 6^2, \dots$).<br>
+      • $49 = 7^2$<br>
+      • $64 = 8^2$<br>
+      • $100 = 10^2$<br>
+      $80$ is not a perfect square integer, so it is not in the sequence.
+    </div>
+  </div>
+
+  <!-- Problem 28 -->
+  <div class="problem-card">
+    <div class="problem-header">*28. Formulate</div>
+    <div class="problem-text">
+      The state of Kentucky had $189$ public libraries in $2006$. The state of Maryland had $176$ public libraries. Write and solve an equation to find the number of public libraries Kentucky and Maryland had altogether.
+    </div>
+    <button id="btn-ans-28" class="toggle-btn" onclick="toggleAnswer('ans-28')">Review Answer & Explanation</button>
+    <div id="ans-28" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      Equation: $189 + 176 = L$<br>
+      Solution: $L = 365$ libraries
+      <br><br>
+      <strong>Explanation:</strong> Add Kentucky's libraries ($189$) and Maryland's libraries ($176$): $189 + 176 = 365$.
+    </div>
+  </div>
+
+  <!-- Problem 29 -->
+  <div class="problem-card">
+    <div class="problem-header">*29. Problem</div>
+    <div class="problem-text">
+      Eight feet is how many inches? Count by $12\text{s}$.
+    </div>
+    <button id="btn-ans-29" class="toggle-btn" onclick="toggleAnswer('ans-29')">Review Answer & Explanation</button>
+    <div id="ans-29" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $96\text{ inches}$
+      <br><br>
+      <strong>Explanation:</strong> Counting by $12\text{s}$ eight times: $12, 24, 36, 48, 60, 72, 84, 96$.
+    </div>
+  </div>
+
+  <!-- Problem 30 -->
+  <div class="problem-card">
+    <div class="problem-header">*30. Problem</div>
+    <div class="problem-text">
+      Nine centimeters is how many millimeters? Count by $10\text{s}$.
+    </div>
+    <button id="btn-ans-30" class="toggle-btn" onclick="toggleAnswer('ans-30')">Review Answer & Explanation</button>
+    <div id="ans-30" class="answer-block">
+      <div class="answer-title">Answer:</div>
+      $90\text{ millimeters}$
+      <br><br>
+      <strong>Explanation:</strong> Since $1\text{ cm} = 10\text{ mm}$, count by $10\text{s}$ nine times: $10, 20, 30, 40, 50, 60, 70, 80, 90$.
+    </div>
+  </div>
 
 </div>
-
-<script>
-    function toggleAnswer(id) {
-        var el = document.getElementById(id);
-        var btn = el.previousElementSibling;
-        if (el.style.display === "none" || el.style.display === "") {
-            el.style.display = "block";
-            btn.innerText = "Hide Answer & Explanation";
-        } else {
-            el.style.display = "none";
-            btn.innerText = "Show Answer & Explanation";
-        }
-    }
-</script>
 
 </body>
 </html>
