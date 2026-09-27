@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-27 Reading Practice - Multi-Set Collection</title>
+<style>
+    /* General Page Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    h1 {
+        text-align: center;
+        color: #1a5276;
+        margin-bottom: 10px;
+    }
+
+    /* Set Selection Dropdown Header */
+    .set-selector-container {
+        text-align: center;
+        margin-bottom: 25px;
+        background-color: #ebf5fb;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #aed6f1;
+    }
+    .set-selector-container label {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-right: 10px;
+        color: #1b4f72;
+    }
+    .set-selector-container select {
+        font-size: 1em;
+        padding: 8px 15px;
+        border-radius: 4px;
+        border: 1px solid #2980b9;
+        background-color: #fff;
+        color: #2c3e50;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .question-block {
+        display: none; 
+        margin-bottom: 20px;
+    }
+    .question-block.active {
+        display: block;
+    }
+    .passage {
+        font-family: Georgia, serif;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-left: 4px solid #1a5276;
+        margin-bottom: 20px;
+        font-size: 1.05em;
+    }
+    .prompt {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+    .options li {
+        margin-bottom: 10px;
+    }
+    .options label {
+        display: flex;
+        align-items: baseline;
+        background: #f0f3f4;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: 1px solid #d5dbdb;
+    }
+    .options label:hover {
+        background: #e5e8e8;
+    }
+    .options label.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+    .options input {
+        margin-right: 15px;
+    }
+    .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 4px;
+        display: none;
+        border-left: 4px solid;
+    }
+    .feedback.correct {
+        background-color: #d4efdf;
+        color: #145a32;
+        border-color: #1e8449;
+        display: block;
+    }
+    .feedback.incorrect {
+        background-color: #fadbd8;
+        color: #7b241c;
+        border-color: #c0392b;
+        display: block;
+    }
+    .feedback.warning {
+        background-color: #fcf3cf;
+        color: #7d6608;
+        border-color: #f1c40f;
+        display: block;
+        font-weight: bold;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1a5276;
+        color: white;
+        transition: background 0.3s;
+    }
+    button:hover { background-color: #154360; }
+    button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+    
+    .check-btn { background-color: #d35400; }
+    .check-btn:hover { background-color: #a04000; }
+    .check-btn:disabled { background-color: #e59866; }
+    
+    .submit-btn { background-color: #27ae60; }
+    .submit-btn:hover { background-color: #1e8449; }
+    
+    #results {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        background: #eafaf1;
+        border: 2px solid #2ecc71;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+    .progress-tracker {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #7f8c8d;
+    }
+
+    #university-reward {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border: 3px double #a51c30;
+        border-radius: 8px;
+        animation: pullUp 0.5s ease-out;
+    }
+    .reward-badge {
+        width: 120px;
+        height: 120px;
+        margin: 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #1a5276;
+        color: #fff;
+        font-size: 48px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #university-reward img {
+        max-width: 150px;
+        height: auto;
+        margin: 15px auto;
+        display: block;
+    }
+    .university-text {
+        font-family: Georgia, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .perfect-banner {
+        background-color: #f1c40f;
+        color: #7d6608;
+        padding: 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .retry-notice {
+        margin-top: 15px;
+        padding: 12px;
+        background-color: #fef9e7;
+        border: 1px dashed #f39c12;
+        color: #7e5109;
+        border-radius: 6px;
+        font-weight: bold;
+    }
+
+    @keyframes pullUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Reading Comprehension Practice (9-27 Edition)</h1>
+
+    <!-- Set Selection Dropdown -->
+    <div class="set-selector-container">
+        <label for="set-select">Choose Assignment Set:</label>
+        <select id="set-select" onchange="switchSet(this.value)">
+            <option value="Set A">Set A</option>
+            <option value="Set B">Set B</option>
+            <option value="Set C">Set C</option>
+        </select>
+    </div>
+
+    <div class="progress-tracker" id="progress-tracker">Question 1 of 10</div>
+    
+    <!-- Results Block -->
+    <div id="results">
+        <h2>Assignment Completed!</h2>
+        <p id="score-display" style="font-size: 1.5em; font-weight: bold;"></p>
+        <p>Review your answers and explanations below.</p>
+
+        <!-- Notice shown if score is below 100% -->
+        <div id="retry-notice" class="retry-notice" style="display: none;">
+            🎯 Aim for 100% on this set to unlock its official University Academic Award Crest!
+        </div>
+        
+        <!-- University Achievement Reward (Only unlocks at 100%) -->
+        <div id="university-reward">
+            <div id="perfect-banner" class="perfect-banner">🌟 PERFECT SCORE! 100% MASTERY 🌟</div>
+            <div class="university-text" id="reward-title">★ ACADEMIC ACHIEVEMENT AWARD ★</div>
+            <div id="reward-badge-container">
+                <img id="reward-img" src="" alt="University Crest" onerror="this.style.display='none'; document.getElementById('fallback-badge').style.display='flex';">
+                <div id="fallback-badge" class="reward-badge" style="display:none;">🎓</div>
+            </div>
+            <p id="reward-desc" style="color: #555; font-style: italic; font-weight: bold; margin-top: 10px;"></p>
+        </div>
+
+        <button onclick="resetCurrentSet()" style="margin-top: 15px;">🔄 Retake This Set</button>
+    </div>
+
+    <div id="questions-wrapper">
+        <!-- Questions injected dynamically -->
+    </div>
+
+    <div class="nav-buttons" id="nav-buttons">
+        <button id="prev-btn" onclick="navigate(-1)" disabled>Previous</button>
+        <button class="check-btn" id="check-btn" onclick="checkAnswer()">Check Answer</button>
+        <button id="next-btn" onclick="navigate(1)">Next</button>
+        <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" style="display:none;">Submit Assignment</button>
+    </div>
+</div>
+
+<script>
+    // Master Question Database for 9-27Reading.html
+    const rawQuizSets = {
+        "Set A": [
+            {
+                passage: "Fluent sight-reading on the piano requires an intricate combination of visual translation and motor memory. As a pianist scans complex musical notation, the brain must instantly decipher pitch, key signatures, and rhythm while projecting spatial finger movement onto eighty-eight weighted keys. Skilled accompanists rely on subtle tactile feedback from key resistance to regulate dynamic volume without looking down at their hands, maintaining continuous visual focal commitment to the sheet music. Consequently, interrupting a performer's tactile sense during a live performance would likely ________ visual fluid reading.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["disrupt", "accelerate", "validate", "simplify"],
+                correctAnswer: 0,
+                explanation: "'Disrupt' fits best because interrupting tactile feedback hinders the performer's ability to maintain smooth visual reading and precise movement."
+            },
+            {
+                passage: "Pediatric obstructive sleep apnea occurs when hypertrophied palatine tonsils collapse into the pharyngeal airway during deep REM sleep, leading to severe oxygen desaturations. To measure sleep architecture and evaluate nocturnal airway patency, pediatricians order an overnight sleep study (polysomnography) to track respiratory effort and pulse oximetry. When persistent mechanical obstruction is confirmed, a surgical tonsillectomy is scheduled to remove the enlarged lymphoid tissue. Follow-up studies demonstrate that surgically eliminating this pharyngeal tissue effectively ________ normal nocturnal oxygen saturation and prevents chronic daytime fatigue.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["restores", "diminishes", "suppresses", "complicates"],
+                correctAnswer: 0,
+                explanation: "'Restores' means to bring back to a former healthy condition, fitting how surgical tonsil removal brings back normal oxygen saturation levels."
+            },
+            {
+                passage: "Performing on the four-inch-wide balance beam in women's gymnastics demands extraordinary spatial coordination and core dynamic stability. Gymnasts execute high-velocity acrobatic series, such as back handsprings to layout step-outs, requiring exact center-of-gravity placement above the narrow beam surface. Upon landing acrobatic skills, subtle foot alignment shifts absorb kinetic energy while preventing precarious wobbles that lead to deduction penalties. Thus, maintaining structural alignment of the hips and shoulders is ________ to executing a flawless beam routine.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["essential", "irrelevant", "detrimental", "superfluous"],
+                correctAnswer: 0,
+                explanation: "'Essential' means absolutely necessary, describing how core body alignment is vital for avoiding falls on the narrow balance beam."
+            },
+            {
+                passage: "Bioluminescent fungi such as *Panellus stipticus* emit a constant greenish glow from their gill structures through an enzymatic reaction involving luciferin and luciferase. Unlike fireflies that use light flashes to attract mates, wood-decaying mushrooms utilize continuous bioluminescence during night hours to attract nocturnal beetles and flies. These insect visitors crawl across the glowing gills, collecting fungal spores on their legs and abdomen, which they subsequently disperse across forest leaf litter. Consequently, fungal bioluminescence serves primarily as an evolutionary adaptative mechanism for ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "facilitating reproductive spore dispersal through insect vectors.",
+                    "absorbing additional solar energy during overcast winter months.",
+                    "repelling herbivorous mammals from consuming fungal mycelium.",
+                    "heating surrounding soil temperatures to promote rapid root growth."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains that insects attracted to the glowing gills transport spores to new forest areas, facilitating spore dispersal."
+            },
+            {
+                passage: "Text 1\nDeploying solar-powered microgrids in remote rural communities provides reliable clean electricity, enabling off-grid health clinics to refrigerate vaccines and schools to operate digital learning resources independently of central power grids.\n\nText 2\nWhile rural solar microgrids deliver clean electricity, maintaining their lithium-ion battery storage banks in harsh desert or tropical climates poses severe challenges. Without trained local technicians to perform routine maintenance and replace degraded inverter circuits, microgrids frequently experience equipment failures within three years of installation.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By emphasizing that long-term success of solar microgrids requires ongoing local technical support and hardware maintenance.",
+                    "By arguing that central electrical power grids should be constructed in all rural isolated regions.",
+                    "By asserting that medical clinics have no genuine need for electrical refrigeration equipment.",
+                    "By denying that solar panels are capable of generating usable electricity in remote areas."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 acknowledges microgrid utility but stresses that hardware failures occur without trained local technicians and maintenance."
+            },
+            {
+                passage: "Deep-ocean hydrothermal vents emit mineral-rich water heated to over 300°C by underlying magma chambers. **Chemoautotrophic bacteria living around these benthic vents absorb dissolved hydrogen sulfide to synthesize organic molecules, establishing a thriving ecosystem entirely independent of sunlight.** Giant tube worms and vent shrimp feed directly on these bacterial mats, forming complex food webs miles below the ocean surface.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It explains the primary biological mechanism that generates organic nutrients at the base of the hydrothermal vent ecosystem.",
+                    "It details how surface photosynthetic algae adapt to extreme water pressure in deep oceanic trenches.",
+                    "It contrasts deep-sea water temperatures with shallow coastal mangrove estuaries.",
+                    "It outlines the industrial process used by commercial deep-sea mining vessels."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence describes how chemoautotrophic bacteria synthesize organic food from chemical compounds, powering the deep-sea ecosystem."
+            },
+            {
+                passage: "In 1799, French soldiers stationed near the Egyptian port of Rashid discovered the Rosetta Stone, a granodiorite stele inscribed with a public decree published in 196 BCE. Because the text was inscribed in three distinct scripts—Egyptian hieroglyphs, Demotic script, and Ancient Greek—linguists used the known Greek text as a translation key. In 1822, Jean-François Champollion deciphered the phonetic structure of hieroglyphs, unlocking centuries of sealed historical records and ________ modern Egyptology.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["inaugurating", "suppressing", "dismantling", "restricting"],
+                correctAnswer: 0,
+                explanation: "'Inaugurating' means initiating or beginning a new era, fitting how deciphering hieroglyphs launched modern Egyptology."
+            },
+            {
+                passage: "Monarch butterflies undertake an extraordinary multi-generational migration each autumn, traveling up to 3,000 miles from Canada to specific oyamel fir forests in central Mexico. Entomologists discovered that monarchs navigate using a specialized solar compass located in their compound eyes, combined with an internal circadian clock in their antennae that adjusts flight orientation as the sun moves across the sky.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Monarch butterflies rely on an antenna-based circadian clock and visual solar compass to guide their long-distance migration.",
+                    "Oyamel fir forests in Mexico provide ideal microclimates for hibernating insect populations during winter.",
+                    "Canada's summer environmental conditions allow monarch butterflies to reproduce rapidly.",
+                    "Insects navigate across open ocean waters exclusively by sensing Earth's magnetic force lines."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage focuses on the biological mechanism (solar compass in eyes + clock in antennae) monarchs use to navigate."
+            },
+            {
+                passage: "Ocean acidification occurs as sea water absorbs excess atmospheric carbon dioxide, forming carbonic acid and lowering ocean pH levels. This chemical shift reduces availability of carbonate ions, which marine organisms like corals and pteropods require to build calcium carbonate skeletons. Consequently, persistent ocean acidification threatens marine food webs by ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "weakening the structural integrity of shell-building organisms.",
+                    "increasing water clarity to promote deep-sea photosynthetic kelp growth.",
+                    "eliminating ocean surface waves and thermal currents.",
+                    "accelerating the rate of oxygen gas production in coastal wetlands."
+                ],
+                correctAnswer: 0,
+                explanation: "Since carbonate ions are crucial for building calcium carbonate structures, fewer ions weaken marine shells and coral structures."
+            },
+            {
+                passage: "NASA's Perseverance rover landed in Mars's Jezero Crater to search for evidence of ancient microbial life. The rover's SHERLOC instrument uses ultraviolet Raman laser spectroscopy to analyze chemical compounds trapped inside fine lakebed sediment layers deposited billions of years ago when liquid water filled the crater.",
+                prompt: "Which detail from the text best supports the claim that Jezero Crater was selected because of its wet geological past?",
+                options: [
+                    "Fine lakebed sediment layers were deposited billions of years ago when liquid water filled Jezero Crater.",
+                    "The Perseverance rover uses solar radiation to charge its onboard electrical batteries.",
+                    "Ultraviolet lasers can detect atomic structures across various volcanic rock samples.",
+                    "Robotic exploration missions require deep space radio communications networks."
+                ],
+                correctAnswer: 0,
+                explanation: "The presence of lakebed sediments deposited by ancient liquid water directly explains why the wet crater was chosen for sampling."
+            }
+        ],
+        "Set B": [
+            {
+                passage: "When playing the piano, proper activation of the damper pedal (sustaining pedal) lifts all felt dampers off the steel strings simultaneously, allowing struck notes to continue vibrating after keys are released. Beyond simply prolonging pitch duration, this un-damping allows un-struck strings to vibrate in sympathetic resonance with the fundamental frequency and harmonic overtones of the played notes. This acoustic phenomenon enriches the instrument's tonal color, transforming dry staccato passages into a expansive, ________ soundscape.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["resonant", "discordant", "muted", "monotonous"],
+                correctAnswer: 0,
+                explanation: "'Resonant' means echoing, full, or deep in sound, fitting how sympathetic string vibration enriches piano tone."
+            },
+            {
+                passage: "Children diagnosed with severe pediatric obstructive sleep apnea often experience frequent nocturnal hypopnea events due to swollen palatine tonsils occluding the upper airway. Clinical sleep specialists conduct a baseline sleep study (polysomnography) to calculate the patient's Apnea-Hypopnea Index (AHI) by monitoring airflow, brainwaves, and blood oxygen levels throughout the night. If severe obstructive events are identified, a surgical tonsillectomy is performed to excise the hypertrophic tissue. Post-surgical evaluations indicate that removing these pharyngeal obstructions causes a dramatic ________ in nocturnal airway resistance, leading to uninterrupted rest.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["reduction", "elevation", "surge", "expansion"],
+                correctAnswer: 0,
+                explanation: "'Reduction' fits best because removing enlarged tonsils reduces airway resistance and allows smooth breathing during sleep."
+            },
+            {
+                passage: "The gymnastics floor exercise routine combines explosive tumbling passes with precise artistic choreography performed across a spring-loaded square mat. Gymnasts generate maximum horizontal velocity during bounding entry runs, converting kinetic energy into vertical elevation to complete multi-twisting somersaults high above the floor. Upon landing, gymnasts must exert eccentric leg muscle strength to stick the landing cleanly without taking extra steps, avoiding immediate execution ________",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["deductions", "rewards", "bonuses", "exemptions"],
+                correctAnswer: 0,
+                explanation: "'Deductions' refers to points subtracted by judges when a gymnast wobbles or takes improper steps upon landing."
+            },
+            {
+                passage: "Giant tube worms (*Riftia pachyptila*) inhabiting deep ocean hydrothermal vents lack a mouth, gut, or digestive tract. Instead, these marine worms rely on a specialized internal organ called a trophosome, which houses billions of endosymbiotic bacteria. These bacteria oxidize toxic hydrogen sulfide compounds emitted by hydrothermal vents to synthesize glucose, sharing energy directly with the host worm. This mutually beneficial relationship illustrates how deep-sea organisms thrive in extreme environments through biological ________",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["symbiosis", "isolation", "competition", "fragmentation"],
+                correctAnswer: 0,
+                explanation: "'Symbiosis' describes the mutually beneficial living relationship between the tube worm and its internal bacteria."
+            },
+            {
+                passage: "Text 1\nControlled Environment Agriculture (CEA) utilizing multi-story vertical farms can produce fresh vegetables year-round in urban centers using 95% less water and zero pesticides compared to conventional soil agriculture.\n\nText 2\nWhile vertical farming conserves water and land, running high-intensity LED grow lights and climate control HVAC systems in indoor facilities consumes substantial electrical power. In regions where electricity is generated primarily from fossil fuels, vertical farms can produce a higher carbon footprint per kilogram of produce than traditional open-field farms.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By pointing out that the environmental benefits of vertical farming are offset by high electrical energy consumption if power comes from fossil fuels.",
+                    "By arguing that indoor plants cannot photosynthesize using artificial LED light spectra.",
+                    "By claiming that open-field conventional farming requires zero land footprint or irrigation water.",
+                    "By recommending that all urban indoor agriculture facilities be immediately closed."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 acknowledges Text 1's points about water efficiency, but emphasizes that high energy demand for lights and cooling can raise total emissions."
+            },
+            {
+                passage: "The James Webb Space Telescope uses infrared spectroscopic sensors to examine light passing through the atmospheres of distant exoplanets. **When an exoplanet transits across the face of its parent star, atmospheric gases absorb specific wavelengths of starlight, leaving distinct spectral absorption fingerprints.** Astronomers analyze these chemical fingerprints to verify the presence of atmospheric water vapor, carbon dioxide, and methane.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It details the optical process scientists use to detect chemical compounds within exoplanet atmospheres.",
+                    "It explains how stellar solar flares damage space telescope optical mirrors.",
+                    "It describes the fuel systems required to keep space telescopes in orbit around the Sun.",
+                    "It contrasts the mass of rocky terrestrial planets with gas giant planets."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence describes transmission spectroscopy—how light filtered through an atmosphere reveals spectral lines."
+            },
+            {
+                passage: "The ancient Greek amphitheater at Epidaurus, constructed in the 4th century BCE, is renowned for its extraordinary acoustic properties. Spectators seated in the highest tier of stone benches can clearly hear a coin dropped at the central performance stage without modern amplification. Acoustic engineers determined that the rows of carved limestone seats filter out low-frequency background noise like wind and rustling leaves while reflecting high-frequency vocal tones, creating natural acoustic ________",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["clarity", "distortion", "muffling", "attenuation"],
+                correctAnswer: 0,
+                explanation: "'Clarity' fits the context of clear sound projection throughout the amphitheater enabled by the acoustic limestone filtering."
+            },
+            {
+                passage: "Arctic foxes (*Vulpes lagopus*) undergo a seasonal physical transformation in response to changing polar photoperiods. During short winter days, the fox grows a thick, pure white coat that provides thermal insulation in sub-zero temperatures and camouflages the predator against snow-covered tundra. As spring daylight lengthens, hormonal shifts trigger molting, replacing the white fur with a brownish-gray coat that blends with summer rocks and lichen.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Arctic foxes alter their coat color seasonally to adapt to temperature and landscape changes.",
+                    "Polar photoperiods determine the exact hunting routes arctic foxes travel across sea ice.",
+                    "Lichen and moss species in arctic tundras grow primarily during winter months.",
+                    "Sub-zero polar temperatures prevent mammalian predators from molting fur coats."
+                ],
+                correctAnswer: 0,
+                explanation: "The main focus is how Arctic foxes change their coat color and thickness in response to seasonal light and landscape shifts."
+            },
+            {
+                passage: "Subterranean cave-dwelling blind cavefish (*Astyanax mexicanus*) evolved in pitch-black underground aquatic networks. Over generations, these fish lost their eyes and pigmentation, conserving biological energy that would otherwise be spent constructing visual organs. Instead, they evolved hyper-sensitive lateral line system organs that detect microscopic water pressure fluctuations caused by surrounding obstacles and swimming prey. Consequently, evolutionary eye loss in cavefish reflects a trade-off that ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "enhances non-visual sensory adaptations suited for dark subterranean habitats.",
+                    "forces the fish to migrate to surface rivers during summer months.",
+                    "prevents cavefish from detecting physical obstacles in total darkness.",
+                    "requires cavefish to consume double the calorie intake of surface fish."
+                ],
+                correctAnswer: 0,
+                explanation: "By reducing eye development energy, cavefish reallocated resources to enhance lateral line pressure-sensitivity for dark environments."
+            },
+            {
+                passage: "Dendrochronology, or tree-ring science, allows climate historians to reconstruct annual precipitation patterns over thousands of years. Rapidly growing trees produce wide annual rings during wet years and narrow rings during severe droughts.",
+                prompt: "Which detail from the text best supports the claim that tree rings reveal historical rainfall levels?",
+                options: [
+                    "Trees form wider annual rings during rainy seasons and narrower rings during drought years.",
+                    "Scientific tree coring tools preserve the internal cellular structure of ancient bark.",
+                    "Deciduous trees shed foliage annually during autumnal temperature drops.",
+                    "Climate historians cross-reference tree ring data with ancient oral folklore traditions."
+                ],
+                correctAnswer: 0,
+                explanation: "The direct variation in ring width based on wet versus drought years provides concrete evidence for rainfall patterns."
+            }
+        ],
+        "Set C": [
+            {
+                passage: "In the mid-20th century, avant-garde composer John Cage revolutionized modern classical music by inventing the 'prepared piano.' By inserting precise objects such as rubber mutes, wood screws, bolts, and weather stripping directly between the instrument's steel strings, Cage dramatically transformed the grand piano's acoustic properties. Striking a key on a prepared piano produces a dry, percussive timbre resembling a gamelan ensemble rather than traditional harmonic ringing. This artistic innovation demonstrated that acoustic instruments possess hidden sonic ________",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["possibilities", "limitations", "defects", "drawbacks"],
+                correctAnswer: 0,
+                explanation: "'Possibilities' fits how altering strings revealed new, creative sonic capabilities within a standard piano."
+            },
+            {
+                passage: "Pediatric patients presenting with chronic obstructive sleep apnea experience recurrent upper airway collapse during rapid eye movement (REM) sleep, resulting in frequent micro-arousals and hypoxemia. To evaluate airway patency and quantify sleep disruption, physicians conduct an overnight sleep study. When diagnostic monitoring reveals that hypertrophied palatine tonsils are physically blocking the pharynx, a surgical tonsillectomy is recommended. Surgical excision of the tissue opens the upper airway, resulting in a dramatic ________ in nocturnal sleep quality.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["improvement", "deterioration", "decline", "stagnation"],
+                correctAnswer: 0,
+                explanation: "'Improvement' fits best because opening the blocked upper airway leads to better, uninterrupted sleep quality."
+            },
+            {
+                passage: "The vault event in artistic gymnastics underwent a major safety revolution with the introduction of the flat, padded vaulting table (pegases) replacing the traditional narrow vaulting horse. The expanded surface area of the modern table provides gymnasts with a larger, safer hand-placement landing target during explosive block-off maneuvers. This structural redesign significantly reduced upper-body entry injuries while encouraging athletes to execute increasingly complex, multi-twisting acrobatic flips, fundamentally ________ vault technique.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["advancing", "hindering", "standardizing", "restricting"],
+                correctAnswer: 0,
+                explanation: "'Advancing' fits how safety improvements enabled gymnasts to push boundaries and develop harder vaulting techniques."
+            },
+            {
+                passage: "Electric eels (*Electrophorus electricus*) generate powerful electric discharges of up to 600 volts to stun prey and deter predators. Their bodies contain thousands of specialized muscle-derived cells called electrocytes stacked in series like batteries. When the eel spots prey, its nervous system triggers ion channels in the electrocytes to open simultaneously, generating a powerful high-voltage shock.",
+                prompt: "Which choice best states the main idea of the text?",
+                options: [
+                    "Electric eels use stacked electrocyte cells to produce strong electrical shocks for hunting and defense.",
+                    "Electrocytes are microscopic muscle tissues found exclusively in freshwater river species.",
+                    "High-voltage electrical shocks allow electric eels to navigate muddy river currents.",
+                    "Nervous system impulses travel faster in aquatic marine life than terrestrial mammals."
+                ],
+                correctAnswer: 0,
+                explanation: "The passage explains how stacked electrocyte cells enable electric eels to generate high-voltage discharges for defense and hunting."
+            },
+            {
+                passage: "Text 1\nCultured meat produced by cultivating animal muscle cells inside bioreactors offers a promising solution to animal welfare concerns and significantly reduces land consumption compared to conventional cattle farming.\n\nText 2\nWhile cultured meat avoids animal slaughter, current cellular cultivation techniques require highly purified nutrient media and energy-intensive industrial bioreactor temperature controls. Life-cycle analyses show that scaling cultured meat production using present industrial energy grids generates substantial carbon emissions.",
+                prompt: "Based on the texts, how would the author of Text 2 most likely respond to Text 1?",
+                options: [
+                    "By pointing out that the environmental benefits of cultured meat may be limited by high energy demands and nutrient production costs.",
+                    "By asserting that cellular cultivation cannot produce genuine biological muscle tissue.",
+                    "By claiming that conventional cattle farming uses less land than bioreactor facilities.",
+                    "By recommending that all research into cultured meat technology be terminated."
+                ],
+                correctAnswer: 0,
+                explanation: "Text 2 acknowledges Text 1's points on land efficiency and animal welfare, but highlights the heavy energy requirements of bioreactors."
+            },
+            {
+                passage: "The Mid-Infrared Instrument (MIRI) on the James Webb Space Telescope operates at cold temperatures near absolute zero to detect mid-infrared light. **By observing infrared wavelengths emitted through dense circumstellar dust envelopes, MIRI allows astronomers to study the ejecta surrounding dying red giant stars.** This data reveals how heavy elements created in stellar cores are dispersed across interstellar space to seed future planetary systems.",
+                prompt: "Which choice best describes the function of the bold sentence in the text?",
+                options: [
+                    "It details how MIRI's mid-infrared observations allow astronomers to study dust layers around dying stars.",
+                    "It describes the chemical synthesis of heavy elements occurring inside living stellar cores.",
+                    "It explains why deep space telescopes must be shielded from solar thermal radiation.",
+                    "It compares red giant star lifespans to young protostars."
+                ],
+                correctAnswer: 0,
+                explanation: "The bold sentence explicitly describes how MIRI's infrared capabilities enable scientists to observe dust envelopes on dying red giant stars."
+            },
+            {
+                passage: "In 1952, architect Michael Ventris deciphered Linear B, an ancient clay tablet script discovered at Knossos and Mycenae. Prior to his discovery, scholars assumed Linear B represented an unknown non-Indo-European language. Ventris proved that Linear B was actually an archaic syllabic script used to write Mycenaean Greek, pushing back written Greek history by five centuries and ________ early Mediterranean history.",
+                prompt: "Which choice completes the text with the most logical and precise word?",
+                options: ["illuminating", "obscuring", "invalidating", "concealing"],
+                correctAnswer: 0,
+                explanation: "'Illuminating' means clarifying or shedding light on, fitting how deciphering Linear B clarified ancient Greek history."
+            },
+            {
+                passage: "Mangrove trees grow along intertidal marine coastlines where soil is waterlogged and severely oxygen-depleted. To survive in anaerobic mud, mangroves possess specialized upward-growing root projections called pneumatophores. These root structures contain spongy tissue and exterior pores (lenticels) exposed to the air during low tide, absorbing atmospheric oxygen and transporting it down to submerged root systems.",
+                prompt: "Which choice best states why mangroves possess pneumatophores?",
+                options: [
+                    "To absorb atmospheric oxygen and transport it to roots submerged in anaerobic soil.",
+                    "To collect rainwater during high tide and store it in underground trunk reservoirs.",
+                    "To filter salt minerals directly out of ocean water before it enters the leaf tissue.",
+                    "To anchor the tree trunk against deep ocean currents during severe tropical hurricanes."
+                ],
+                correctAnswer: 0,
+                explanation: "The text explains that pneumatophores absorb air during low tide to supply oxygen to roots stuck in oxygen-poor (anaerobic) mud."
+            },
+            {
+                passage: "Urban heat islands occur in densely populated cities where dark asphalt and roof surfaces absorb solar radiation, elevating ambient municipal temperatures compared to rural surroundings. Urban planners install highly reflective 'cool roofs' coated with bright white elastomeric materials that reflect shortwave sunlight back into the atmosphere. Consequently, widespread installation of cool roofs reduces urban summer temperatures, thereby ________",
+                prompt: "Which choice most logically completes the text?",
+                options: [
+                    "lowering electrical energy demand for air conditioning systems.",
+                    "increasing the amount of rain absorbed by municipal storm drains.",
+                    "preventing high-altitude clouds from forming over metropolitan areas.",
+                    "eliminating the need for street lighting during nighttime hours."
+                ],
+                correctAnswer: 0,
+                explanation: "Lowering urban ambient temperatures directly reduces the need for electricity to power air conditioning."
+            },
+            {
+                passage: "Archaeologists analyzing microscopic plant fossils known as phytoliths trapped inside calcified dental plaque (dental calculus) of ancient human skeletons reconstruct dietary habits from thousands of years ago. Phytoliths preserve distinct silica shapes unique to specific plant species, revealing what crops ancient populations consumed.",
+                prompt: "Which detail from the text best supports the claim that dental calculus preserves evidence of ancient diets?",
+                options: [
+                    "Phytoliths trapped in calcified plaque preserve distinct silica shapes unique to specific food crops.",
+                    "Ancient human skeletons provide estimates regarding physical stature and age at death.",
+                    "Calcified plaque forms when oral bacteria metabolize simple sugars into acid.",
+                    "Microscopic plant fossils decompose quickly when exposed to open atmospheric oxygen."
+                ],
+                correctAnswer: 0,
+                explanation: "The presence of unique plant phytoliths trapped inside dental calculus directly provides concrete physical evidence of food crops eaten."
+            }
+        ]
+    };
+
+    // University Achievement Crests mapped to sets (MIT for Set A, Oxford for Set B, Cambridge for Set C)
+    const universityRewards = [
+        {
+            name: "Massachusetts Institute of Technology (MIT)",
+            img: "https://mr-chen-k12.github.io/math/IMG_0232.png",
+            color: "#A31F34"
+        },
+        {
+            name: "University of Oxford",
+            img: "https://mr-chen-k12.github.io/books/IMG_0121.png",
+            color: "#002147"
+        },
+        {
+            name: "University of Cambridge",
+            img: "https://mr-chen-k12.github.io/books/IMG_0122.png",
+            color: "#003262"
+        }
+    ];
+
+    let currentSetKey = "Set A";
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let isLocked = [];
+
+    // Helper function to shuffle choices dynamically so correct answer position varies
+    function shuffleOptions(question) {
+        let optionsWithInfo = question.options.map((text, originalIndex) => ({
+            text: text,
+            isCorrect: originalIndex === question.correctAnswer
+        }));
+
+        for (let i = optionsWithInfo.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [optionsWithInfo[i], optionsWithInfo[j]] = [optionsWithInfo[j], optionsWithInfo[i]];
+        }
+
+        return {
+            passage: question.passage,
+            prompt: question.prompt,
+            options: optionsWithInfo.map(o => o.text),
+            correctAnswer: optionsWithInfo.findIndex(o => o.isCorrect),
+            explanation: question.explanation
+        };
+    }
+
+    function initQuiz() {
+        switchSet("Set A");
+    }
+
+    function switchSet(setName) {
+        currentSetKey = setName;
+        
+        currentQuestions = rawQuizSets[setName].map(q => shuffleOptions(q));
+        currentQuestionIndex = 0;
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        isLocked = new Array(currentQuestions.length).fill(false);
+
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('nav-buttons').style.display = 'flex';
+        document.getElementById('progress-tracker').style.display = 'block';
+
+        renderQuestions();
+        updateNav();
+    }
+
+    function renderQuestions() {
+        const wrapper = document.getElementById('questions-wrapper');
+        wrapper.innerHTML = '';
+
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.createElement('div');
+            qBlock.className = `question-block ${index === 0 ? 'active' : ''}`;
+            qBlock.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <li>
+                        <label id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="saveAnswer(${index}, ${optIndex})">
+                            ${opt}
+                        </label>
+                    </li>
+                `;
+            });
+
+            qBlock.innerHTML = `
+                <div class="passage">${q.passage.replace(/\n/g, '<br>')}</div>
+                <div class="prompt">${q.prompt}</div>
+                <ul class="options">${optionsHTML}</ul>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            wrapper.appendChild(qBlock);
+        });
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+        if (!isLocked[qIndex]) {
+            userAnswers[qIndex] = optIndex;
+            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+            if (feedbackDiv && feedbackDiv.classList.contains('warning')) {
+                feedbackDiv.style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        if (isLocked[currentQuestionIndex]) return; 
+
+        const selected = userAnswers[currentQuestionIndex];
+        const feedbackDiv = document.getElementById(`feedback-${currentQuestionIndex}`);
+        const q = currentQuestions[currentQuestionIndex];
+        
+        if (selected === null) {
+            feedbackDiv.innerHTML = "Please select an answer before checking.";
+            feedbackDiv.className = "feedback warning";
+            return;
+        }
+
+        isLocked[currentQuestionIndex] = true;
+        
+        const radios = document.getElementsByName(`q${currentQuestionIndex}`);
+        radios.forEach(r => r.disabled = true);
+        q.options.forEach((_, optIndex) => {
+            document.getElementById(`label-${currentQuestionIndex}-${optIndex}`).classList.add('disabled');
+        });
+
+        updateNav();
+
+        if (selected === q.correctAnswer) {
+            feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+            feedbackDiv.className = "feedback incorrect";
+        }
+    }
+
+    function navigate(direction) {
+        document.getElementById(`question-${currentQuestionIndex}`).classList.remove('active');
+        currentQuestionIndex += direction;
+        document.getElementById(`question-${currentQuestionIndex}`).classList.add('active');
+        
+        updateNav();
+    }
+
+    function updateNav() {
+        document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        document.getElementById('progress-tracker').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length} (${currentSetKey})`;
+
+        if (currentQuestionIndex === currentQuestions.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'block';
+        } else {
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        const checkBtn = document.getElementById('check-btn');
+        if (isLocked[currentQuestionIndex]) {
+            checkBtn.disabled = true;
+            checkBtn.textContent = "Answer Checked";
+        } else {
+            checkBtn.disabled = false;
+            checkBtn.textContent = "Check Answer";
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        
+        currentQuestions.forEach((q, index) => {
+            const qBlock = document.getElementById(`question-${index}`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const selected = userAnswers[index];
+            
+            qBlock.classList.add('active');
+            
+            isLocked[index] = true;
+            const radios = document.getElementsByName(`q${index}`);
+            radios.forEach(r => r.disabled = true);
+            q.options.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-${index}-${optIndex}`);
+                if (label) label.classList.add('disabled');
+            });
+
+            if (selected === null) {
+                feedbackDiv.innerHTML = `<strong>Unanswered / Not Checked.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            } else if (selected === q.correctAnswer) {
+                score++;
+                feedbackDiv.innerHTML = `<strong>Correct!</strong><br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback correct";
+            } else {
+                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> The correct answer was: <strong>${q.options[q.correctAnswer]}</strong>.<br><br><em>Explanation:</em> ${q.explanation}`;
+                feedbackDiv.className = "feedback incorrect";
+            }
+        });
+
+        document.getElementById('nav-buttons').style.display = 'none';
+        document.getElementById('progress-tracker').style.display = 'none';
+        
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        document.getElementById('score-display').textContent = `Set Score: ${score} out of ${currentQuestions.length} (${Math.round((score/currentQuestions.length)*100)}%)`;
+        
+        const rewardContainer = document.getElementById('university-reward');
+        const retryNotice = document.getElementById('retry-notice');
+        
+        // REWARD LOGIC: Logo is ONLY displayed if score is 100% (score === currentQuestions.length)
+        if (score === currentQuestions.length) {
+            let rewardIdx = 0;
+            if (currentSetKey === "Set B") rewardIdx = 1;
+            if (currentSetKey === "Set C") rewardIdx = 2;
+
+            const selectedReward = universityRewards[rewardIdx];
+
+            const rewardTitle = document.getElementById('reward-title');
+            const rewardImg = document.getElementById('reward-img');
+            const rewardDesc = document.getElementById('reward-desc');
+            const fallbackBadge = document.getElementById('fallback-badge');
+
+            rewardContainer.style.borderColor = selectedReward.color;
+            rewardTitle.style.color = selectedReward.color;
+            rewardTitle.textContent = `★ ACADEMIC ACHIEVEMENT CREST ★`;
+            
+            rewardImg.style.display = 'block';
+            fallbackBadge.style.display = 'none';
+            fallbackBadge.style.backgroundColor = selectedReward.color;
+            rewardImg.src = selectedReward.img;
+            rewardImg.alt = `${selectedReward.name} Crest`;
+
+            rewardDesc.textContent = `Outstanding work! You achieved 100% mastery on ${currentSetKey} and earned the official ${selectedReward.name} emblem!`;
+
+            rewardContainer.style.display = 'block';
+            retryNotice.style.display = 'none';
+        } else {
+            rewardContainer.style.display = 'none';
+            retryNotice.style.display = 'block';
+        }
+        
+        window.scrollTo(0, 0);
+    }
+
+    function resetCurrentSet() {
+        switchSet(currentSetKey);
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
