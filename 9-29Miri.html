@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homework Solutions (9/29)</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  body { font-family: Georgia, serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f7f5f0; color: #222; }
+  h1 { text-align: center; }
+  .subtitle { text-align: center; color: #555; margin-bottom: 24px; }
+  .section-title { margin: 28px 0 12px; border-bottom: 2px solid #2a6496; color: #2a6496; padding-bottom: 4px; }
+  .problem { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .problem h3 { margin: 0 0 6px; font-size: 1.05em; }
+  .tag { display: inline-block; background: #2a6496; color: #fff; font-size: 0.65em; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
+  .answer { display: none; margin-top: 10px; padding: 10px; background: #f0f7ff; border-left: 4px solid #2a6496; border-radius: 0 6px 6px 0; }
+  .answer.show { display: block; }
+  button.toggle { background: #2a6496; color: #fff; border: none; border-radius: 5px; padding: 6px 12px; cursor: pointer; font-size: 0.9em; margin-top: 8px; }
+  button.toggle:hover { background: #1d4a73; }
+  .toolbar { text-align: center; margin-bottom: 20px; }
+  .toolbar button { background: #555; color: #fff; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; margin: 0 6px; }
+  .toolbar button:hover { background: #333; }
+</style>
+</head>
+<body>
+<h1>Homework Solutions</h1>
+<p class="subtitle">Saxon Math Course 2 &bull; September 29 &bull; Click "Show Answer" to reveal each solution</p>
+
+<div class="toolbar">
+  <button onclick="showAll()">Show All</button>
+  <button onclick="hideAll()">Hide All</button>
+</div>
+
+<div class="problem" id="p29">
+  <h3>*29. (32) <span class="tag">PREDICT</span></h3>
+  <p>Write the twelfth term of each pattern below:</p>
+  <p><strong>a.</strong> \(11, 22, 33, 44, \ldots\)</p>
+  <p><strong>b.</strong> \(12, 24, 36, 48, \ldots\)</p>
+  <button class="toggle" onclick="toggle('a29')">Show Answer</button>
+  <div class="answer" id="a29">
+    <p><strong>Answer:</strong> <strong>a.</strong> \(132\) &nbsp;&nbsp; <strong>b.</strong> \(144\).</p>
+    <p><strong>Solution:</strong> <strong>a.</strong> Each term is a multiple of 11: the \(n\)th term is \(11n\). The twelfth term is \(11 \times 12 = 132\). <strong>b.</strong> Each term is a multiple of 12: the \(n\)th term is \(12n\). The twelfth term is \(12 \times 12 = 144\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p30">
+  <h3>*30. (23)</h3>
+  <p>Name a real-world example of</p>
+  <p><strong>a.</strong> parallel lines.</p>
+  <p><strong>b.</strong> perpendicular lines.</p>
+  <button class="toggle" onclick="toggle('a30')">Show Answer</button>
+  <div class="answer" id="a30">
+    <p><strong>Answer:</strong> <strong>a.</strong> Railroad tracks (answers may vary). <strong>b.</strong> The corner where a wall meets the floor (answers may vary).</p>
+    <p><strong>Solution:</strong> <strong>a.</strong> Parallel lines never meet — for example, the two rails of a railroad track, the opposite edges of a ruler, or the lane lines on a highway. <strong>b.</strong> Perpendicular lines meet at a right (\(90^\circ\)) angle — for example, where a wall meets the floor, the corner of a door frame, or the lines of a plus sign \(+\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Real-World Connection</h2>
+<p>The school choir is having a car wash to raise money to buy new songbooks. Each car wash will cost \(350\text{¢}\).</p>
+
+<div class="problem" id="prwca">
+  <h3>a.</h3>
+  <p>Write this money amount using a dollar sign and a decimal point.</p>
+  <button class="toggle" onclick="toggle('arwca')">Show Answer</button>
+  <div class="answer" id="arwca">
+    <p><strong>Answer:</strong> \(\$3.50\).</p>
+    <p><strong>Solution:</strong> \(350\) cents \(= \frac{350}{100}\) dollars \(= 3.50\) dollars, written \(\$3.50\).</p>
+  </div>
+</div>
+
+<div class="problem" id="prwcb">
+  <h3>b.</h3>
+  <p>Draw and shade circles to represent \(3\frac{1}{2}\) as a mixed number.</p>
+  <button class="toggle" onclick="toggle('arwcb')">Show Answer</button>
+  <div class="answer" id="arwcb">
+    <p><strong>Answer:</strong> Draw 4 circles; shade 3 completely and shade exactly half of the fourth circle.</p>
+    <p><strong>Solution:</strong> The whole number 3 means 3 fully shaded circles. The fraction \(\frac{1}{2}\) means one more circle with exactly half of it shaded. Altogether the shaded part represents \(3\frac{1}{2}\).</p>
+  </div>
+</div>
+
+<div class="problem" id="prwcc">
+  <h3>c.</h3>
+  <p>Use words to write \(3\frac{50}{100}\).</p>
+  <button class="toggle" onclick="toggle('arwcc')">Show Answer</button>
+  <div class="answer" id="arwcc">
+    <p><strong>Answer:</strong> Three and fifty hundredths.</p>
+    <p><strong>Solution:</strong> The whole-number part 3 is "three," and \(\frac{50}{100}\) is read as "fifty hundredths" (the second decimal place is the hundredths place).</p>
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  var el = document.getElementById(id);
+  var btn = el.previousElementSibling;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+function showAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.add('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Hide Answer'; });
+}
+function hideAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Show Answer'; });
+}
+</script>
+</body>
+</html>
