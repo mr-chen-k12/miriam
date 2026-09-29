@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>4th Grade Public Speaking Kit - Leo's Interactive Edition</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Custom Input Highlighting */
+    .blank-input {
+      background-color: #fef3c7;
+      border-bottom: 3px solid #f59e0b;
+      color: #92400e;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: inline-block;
+      min-width: 90px;
+    }
+    .blank-input:focus {
+      outline: none;
+      background-color: #fde68a;
+      border-color: #d97706;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Dynamic text insertion highlight */
+    .filled-highlight {
+      background-color: #ccfbf1;
+      color: #0f766e;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      border-bottom: 2px solid #14b8a6;
+    }
+
+    /* Teleprompter text formatting */
+    .teleprompter-text {
+      line-height: 1.8;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-teal-200">
+
+  <!-- TOP IPAD NAVIGATION BAR -->
+  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md px-4 py-3 md:px-8">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+      
+      <!-- Title & Student Name -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🏫</span>
+          <div>
+            <h1 class="font-extrabold text-base md:text-lg text-teal-400 leading-tight">Public Speaking Assistant</h1>
+            <p class="text-xs text-slate-400">Topic: If I Were Principal for a Day! (4th Grade)</p>
+          </div>
+        </div>
+
+        <!-- Speaker Name Quick Field -->
+        <div class="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+          <span class="text-xs text-slate-400 font-bold uppercase">Speaker:</span>
+          <input type="text" id="speakerNameInput" value="Leo" placeholder="Your Name" class="bg-transparent text-amber-300 font-bold text-sm w-24 md:w-32 focus:outline-none border-b border-dashed border-amber-400/50">
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-2 w-full md:w-auto justify-center bg-slate-800 p-1 rounded-xl border border-slate-700">
+        <button id="tab-edit" onclick="switchTab('edit')" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-teal-500 text-white shadow-sm flex items-center gap-1.5">
+          <span>✏️</span> Edit &amp; Fill Blanks
+        </button>
+        <button id="tab-present" onclick="switchTab('present')" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-300 hover:text-white hover:bg-slate-700 flex items-center gap-1.5">
+          <span>📺</span> iPad Presenter View
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6">
+
+    <!-- VIEW 1: INTERACTIVE EDIT & PRACTICE CARDS -->
+    <div id="view-edit" class="space-y-6">
+
+      <!-- QUICK SPEAKER TIPS -->
+      <div class="bg-teal-50 border-2 border-teal-200 rounded-2xl p-4 md:p-5 shadow-sm">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
+          <div class="flex items-center gap-2 text-teal-900 font-bold text-base">
+            <span class="text-xl">🚀</span>
+            <span>Leo's Principal Speech Checklist</span>
+          </div>
+          <span class="bg-teal-200 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">
+            Fill in the blanks to build your school vision!
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm text-teal-950">
+          <div class="bg-white p-2.5 rounded-xl border border-teal-100 flex items-center gap-2">
+            <span class="text-lg">📢</span> <strong>Big Energy:</strong> Speak with enthusiasm and excitement.
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-teal-100 flex items-center gap-2">
+            <span class="text-lg">👑</span> <strong>Lead with Confidence:</strong> Stand tall like a true leader!
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-teal-100 flex items-center gap-2">
+            <span class="text-lg">🤝</span> <strong>Include Everyone:</strong> Make your speech fun for all students.
+          </div>
+        </div>
+      </div>
+
+      <!-- PRACTICE MODULE 1 -->
+      <div class="bg-white border-2 border-amber-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-amber-500 text-white px-5 py-3 flex justify-between items-center">
+          <div class="font-bold text-base md:text-lg flex items-center gap-2">
+            <span class="bg-white text-amber-700 w-7 h-7 rounded-full flex items-center justify-center font-black text-sm">1</span>
+            <span>Warm-Up: The Morning Announcement</span>
+          </div>
+          <span class="bg-amber-700 text-amber-100 text-xs px-3 py-1 rounded-full font-semibold">30 Seconds</span>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="bg-slate-50 rounded-xl p-3 text-xs md:text-sm text-slate-600 border border-slate-200">
+            <strong class="text-slate-800 uppercase tracking-wider text-xs block mb-1">Key Points to Remember:</strong>
+            • Grab your audience's attention right away.<br>
+            • Announce a fun morning change to set an exciting mood for the day.
+          </div>
+
+          <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+            <label class="block text-xs font-bold text-amber-900 uppercase">Interactive Blank #1 (Morning Announcement Upgrade):</label>
+            <div class="flex flex-wrap gap-2 items-center">
+              <input type="text" id="morningFunRule" value="playing superhero theme songs over the loudspeakers" class="blank-input text-sm flex-1" placeholder="e.g. superhero entrance music, Pajama Day, a morning dance party">
+              <span class="text-xs text-amber-700">Quick Pick:</span>
+              <button onclick="setField('morningFunRule', 'playing superhero entrance music')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Entrance Music</button>
+              <button onclick="setField('morningFunRule', 'declaring an official Pajama Day')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Pajama Day</button>
+              <button onclick="setField('morningFunRule', 'hosting a 3-minute morning dance party')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Dance Party</button>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/60 border-l-4 border-amber-500 p-4 rounded-r-xl text-base md:text-lg leading-relaxed font-medium text-slate-800">
+            "Good morning, elementary school! My name is <span class="filled-speaker-name filled-highlight">Leo</span>, and today I am Principal for a Day! First thing on my agenda: every morning will kick off by <span class="filled-morningFunRule filled-highlight">playing superhero theme songs over the loudspeakers</span>! Because school should start with big smiles and great energy!"
+          </div>
+
+          <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 pt-1 border-t border-slate-100">
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-amber-600"> Read aloud 2x
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-amber-600"> Used strong voice
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRACTICE MODULE 2 -->
+      <div class="bg-white border-2 border-teal-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-teal-600 text-white px-5 py-3 flex justify-between items-center">
+          <div class="font-bold text-base md:text-lg flex items-center gap-2">
+            <span class="bg-white text-teal-700 w-7 h-7 rounded-full flex items-center justify-center font-black text-sm">2</span>
+            <span>The Big Upgrade: Recess &amp; Lunch</span>
+          </div>
+          <span class="bg-teal-800 text-teal-100 text-xs px-3 py-1 rounded-full font-semibold">45 Seconds</span>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="bg-slate-50 rounded-xl p-3 text-xs md:text-sm text-slate-600 border border-slate-200">
+            <strong class="text-slate-800 uppercase tracking-wider text-xs block mb-1">Key Points to Remember:</strong>
+            • Exercise and healthy fun give students energy to learn.<br>
+            • Propose a creative change that every kid in school will love.
+          </div>
+
+          <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+            <label class="block text-xs font-bold text-amber-900 uppercase">Interactive Blank #2 (Ultimate Playground/Lunch Idea):</label>
+            <div class="flex flex-wrap gap-2 items-center">
+              <input type="text" id="recessUpgrade" value="adding a giant inflatable obstacle course to the field" class="blank-input text-sm flex-1" placeholder="e.g. inflatable obstacle course, taco Tuesday bar, giant gaga pit">
+              <span class="text-xs text-amber-700">Quick Pick:</span>
+              <button onclick="setField('recessUpgrade', 'adding giant inflatable obstacle courses')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Obstacle Course</button>
+              <button onclick="setField('recessUpgrade', 'building a fresh smoothie and taco bar')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Smoothie Bar</button>
+              <button onclick="setField('recessUpgrade', 'doubling recess time for outdoor sports')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Double Recess</button>
+            </div>
+          </div>
+
+          <div class="bg-teal-50/60 border-l-4 border-teal-500 p-4 rounded-r-xl text-base md:text-lg leading-relaxed font-medium text-slate-800">
+            "Next up: lunch and recess! A great school needs great play time. That's why I am <span class="filled-recessUpgrade filled-highlight">adding a giant inflatable obstacle course to the field</span>! When students move their bodies and have fun together, our minds get recharged and ready to tackle hard math and reading lessons!"
+          </div>
+
+          <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 pt-1 border-t border-slate-100">
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-teal-600"> Used hand gestures
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-teal-600"> Paused at full stops
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRACTICE MODULE 3 -->
+      <div class="bg-white border-2 border-indigo-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-indigo-600 text-white px-5 py-3 flex justify-between items-center">
+          <div class="font-bold text-base md:text-lg flex items-center gap-2">
+            <span class="bg-white text-indigo-700 w-7 h-7 rounded-full flex items-center justify-center font-black text-sm">3</span>
+            <span>Creative Learning: Hands-On Classroom Magic</span>
+          </div>
+          <span class="bg-indigo-800 text-indigo-100 text-xs px-3 py-1 rounded-full font-semibold">45 Seconds</span>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="bg-slate-50 rounded-xl p-3 text-xs md:text-sm text-slate-600 border border-slate-200">
+            <strong class="text-slate-800 uppercase tracking-wider text-xs block mb-1">Key Points to Remember:</strong>
+            • Being principal isn't just about fun; it's about making learning exciting.<br>
+            • Share a hands-on subject or project that makes kids curious.
+          </div>
+
+          <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+            <label class="block text-xs font-bold text-amber-900 uppercase">Interactive Blank #3 (Dream Classroom Subject):</label>
+            <div class="flex flex-wrap gap-2 items-center">
+              <input type="text" id="dreamSubject" value="building real robots in science class" class="blank-input text-sm flex-1" placeholder="e.g. building robots, outdoor nature labs, 3D art design">
+              <span class="text-xs text-amber-700">Quick Pick:</span>
+              <button onclick="setField('dreamSubject', 'building real robots in science class')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Robot Science</button>
+              <button onclick="setField('dreamSubject', 'making 3D art and comic books')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Comic Art</button>
+              <button onclick="setField('dreamSubject', 'doing outdoor nature experiments')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Nature Lab</button>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/60 border-l-4 border-indigo-500 p-4 rounded-r-xl text-base md:text-lg leading-relaxed font-medium text-slate-800">
+            "Now let's talk about the classroom! Learning should feel like an adventure. As principal, I am replacing boring worksheets with <span class="filled-dreamSubject filled-highlight">building real robots in science class</span>. When we build, create, and experiment with our hands, we learn much faster and have way more fun!"
+          </div>
+
+          <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 pt-1 border-t border-slate-100">
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-indigo-600"> Spoke clearly
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-indigo-600"> Smiled at audience
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRACTICE MODULE 4 -->
+      <div class="bg-white border-2 border-purple-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-purple-600 text-white px-5 py-3 flex justify-between items-center">
+          <div class="font-bold text-base md:text-lg flex items-center gap-2">
+            <span class="bg-white text-purple-700 w-7 h-7 rounded-full flex items-center justify-center font-black text-sm">4</span>
+            <span>School Culture: Kindness &amp; High Fives</span>
+          </div>
+          <span class="bg-purple-800 text-purple-100 text-xs px-3 py-1 rounded-full font-semibold">45 Seconds</span>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="bg-slate-50 rounded-xl p-3 text-xs md:text-sm text-slate-600 border border-slate-200">
+            <strong class="text-slate-800 uppercase tracking-wider text-xs block mb-1">Key Points to Remember:</strong>
+            • A true leader makes sure every single person feels welcomed and valued.<br>
+            • Introduce a school-wide reward for kindness and teamwork.
+          </div>
+
+          <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 space-y-3">
+            <label class="block text-xs font-bold text-amber-900 uppercase">Interactive Blank #4 (Kindness Reward Idea):</label>
+            <div class="flex flex-wrap gap-2 items-center">
+              <input type="text" id="schoolSpiritIdea" value="handing out Golden High-Five trophies for helping others" class="blank-input text-sm flex-1" placeholder="e.g. Golden High-Five trophies, Kindness Hero badges, ice cream celebrations">
+              <span class="text-xs text-amber-700">Quick Pick:</span>
+              <button onclick="setField('schoolSpiritIdea', 'giving Golden High-Five trophies')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Golden Trophies</button>
+              <button onclick="setField('schoolSpiritIdea', 'awarding Kindness Hero badges')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Hero Badges</button>
+              <button onclick="setField('schoolSpiritIdea', 'hosting Friday ice cream socials')" class="text-xs bg-amber-200 hover:bg-amber-300 text-amber-900 px-2.5 py-1 rounded-lg">Ice Cream Social</button>
+            </div>
+          </div>
+
+          <div class="bg-purple-50/60 border-l-4 border-purple-500 p-4 rounded-r-xl text-base md:text-lg leading-relaxed font-medium text-slate-800">
+            "Finally, the most important rule of all: kindness! A great principal makes sure no student ever sits alone. I am creating a brand-new tradition by <span class="filled-schoolSpiritIdea filled-highlight">handing out Golden High-Five trophies for helping others</span>. When we support each other, our whole school wins!"
+          </div>
+
+          <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 pt-1 border-t border-slate-100">
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-purple-600"> Confident voice
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer hover:text-slate-800">
+              <input type="checkbox" class="w-4 h-4 rounded text-purple-600"> Good eye contact
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRACTICE MODULE 5 (GRAND SPEECH) -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-lg border border-slate-800 space-y-4">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-3">
+          <div>
+            <span class="text-xs font-bold text-teal-400 uppercase tracking-widest">Final Master Speech</span>
+            <h3 class="text-xl font-black text-white">Module #5: Leo's Principal Manifesto</h3>
+          </div>
+          <button onclick="switchTab('present')" class="bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-white text-xs md:text-sm font-bold px-4 py-2 rounded-xl shadow-md flex items-center gap-2">
+            <span>📺</span> Present This Speech on iPad
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-400">All of Leo's custom principal plans are synced directly below!</p>
+
+        <div id="fullSpeechPreview" class="bg-slate-800/80 rounded-xl p-5 border border-slate-700/80 text-base md:text-lg leading-relaxed text-slate-200 font-normal space-y-4">
+          <!-- Dynamic JavaScript Content -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: IPAD PRESENTER TELEPROMPTER VIEW -->
+    <div id="view-present" class="space-y-4 hidden">
+
+      <!-- Presenter Control Bar -->
+      <div class="bg-slate-900 text-white rounded-2xl p-4 shadow-lg border border-slate-800 flex flex-wrap items-center justify-between gap-3 sticky top-16 z-40">
+        
+        <!-- Timer Widget -->
+        <div class="flex items-center gap-3 bg-slate-800 px-4 py-2 rounded-xl border border-slate-700">
+          <span class="text-xs font-bold uppercase text-slate-400">Timer:</span>
+          <span id="presentationTimer" class="font-mono text-xl font-bold text-amber-400">00:00</span>
+          <div class="flex gap-1">
+            <button onclick="toggleTimer()" id="timerToggleBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">Start</button>
+            <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-lg">Reset</button>
+          </div>
+        </div>
+
+        <!-- Font Resizer -->
+        <div class="flex items-center gap-2 bg-slate-800 px-3 py-2 rounded-xl border border-slate-700">
+          <span class="text-xs font-bold uppercase text-slate-400">Text Size:</span>
+          <button onclick="adjustFontSize(-2)" class="bg-slate-700 hover:bg-slate-600 text-white font-bold w-7 h-7 rounded-lg text-sm">-</button>
+          <span id="fontSizeDisplay" class="text-xs font-bold text-teal-400 min-w-[40px] text-center">22px</span>
+          <button onclick="adjustFontSize(2)" class="bg-slate-700 hover:bg-slate-600 text-white font-bold w-7 h-7 rounded-lg text-sm">+</button>
+        </div>
+
+        <!-- Section Selector -->
+        <div class="flex items-center gap-1 bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <button onclick="showPresentSection('all')" id="btn-sec-all" class="px-3 py-1 text-xs font-bold rounded-lg bg-teal-500 text-white">Full Speech</button>
+          <button onclick="showPresentSection('1')" id="btn-sec-1" class="px-2.5 py-1 text-xs font-bold rounded-lg text-slate-400 hover:text-white">Part 1</button>
+          <button onclick="showPresentSection('2')" id="btn-sec-2" class="px-2.5 py-1 text-xs font-bold rounded-lg text-slate-400 hover:text-white">Part 2</button>
+          <button onclick="showPresentSection('3')" id="btn-sec-3" class="px-2.5 py-1 text-xs font-bold rounded-lg text-slate-400 hover:text-white">Part 3</button>
+          <button onclick="showPresentSection('4')" id="btn-sec-4" class="px-2.5 py-1 text-xs font-bold rounded-lg text-slate-400 hover:text-white">Part 4</button>
+        </div>
+
+      </div>
+
+      <!-- Teleprompter Display Box -->
+      <div class="bg-slate-950 text-white rounded-3xl p-6 md:p-10 shadow-2xl border-4 border-slate-800 min-h-[500px] flex flex-col justify-between">
+        
+        <div id="teleprompterContent" class="teleprompter-text font-medium text-slate-100 transition-all duration-200" style="font-size: 22px;">
+          <!-- Content populated via JavaScript -->
+        </div>
+
+        <!-- Bottom Speaker Quick Cue Banner -->
+        <div class="mt-8 pt-4 border-t border-slate-800/80 flex flex-wrap justify-between items-center text-xs text-slate-400 gap-2">
+          <div class="flex items-center gap-4">
+            <span>🗣️ <strong>Voice:</strong> Big &amp; Enthusiastic</span>
+            <span>👀 <strong>Eyes:</strong> Look up at classmates</span>
+            <span>⏸️ <strong>Pause:</strong> At periods</span>
+          </div>
+          <span class="text-teal-400 font-semibold">iPad Teleprompter Mode</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State Variables
+    let currentFontSize = 22;
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let isTimerRunning = false;
+
+    // Helper to fill field value and update live texts
+    function setField(fieldId, value) {
+      const input = document.getElementById(fieldId);
+      if (input) {
+        input.value = value;
+        updateAllFilledTexts();
+      }
+    }
+
+    // Tab Switching
+    function switchTab(tabName) {
+      const editView = document.getElementById('view-edit');
+      const presentView = document.getElementById('view-present');
+      const btnEdit = document.getElementById('tab-edit');
+      const btnPresent = document.getElementById('tab-present');
+
+      if (tabName === 'edit') {
+        editView.classList.remove('hidden');
+        presentView.classList.add('hidden');
+        btnEdit.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-teal-500 text-white shadow-sm flex items-center gap-1.5";
+        btnPresent.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-300 hover:text-white hover:bg-slate-700 flex items-center gap-1.5";
+      } else {
+        editView.classList.add('hidden');
+        presentView.classList.remove('hidden');
+        btnPresent.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-teal-500 text-white shadow-sm flex items-center gap-1.5";
+        btnEdit.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-300 hover:text-white hover:bg-slate-700 flex items-center gap-1.5";
+        renderTeleprompter('all');
+      }
+    }
+
+    // Update all live DOM text references
+    function updateAllFilledTexts() {
+      const nameVal = document.getElementById('speakerNameInput').value || 'Leo';
+      const morningVal = document.getElementById('morningFunRule').value || 'playing music';
+      const recessVal = document.getElementById('recessUpgrade').value || 'adding an obstacle course';
+      const subjectVal = document.getElementById('dreamSubject').value || 'building robots';
+      const spiritVal = document.getElementById('schoolSpiritIdea').value || 'giving high fives';
+
+      // Update in-card inline spans
+      document.querySelectorAll('.filled-speaker-name').forEach(el => el.textContent = nameVal);
+      document.querySelectorAll('.filled-morningFunRule').forEach(el => el.textContent = morningVal);
+      document.querySelectorAll('.filled-recessUpgrade').forEach(el => el.textContent = recessVal);
+      document.querySelectorAll('.filled-dreamSubject').forEach(el => el.textContent = subjectVal);
+      document.querySelectorAll('.filled-schoolSpiritIdea').forEach(el => el.textContent = spiritVal);
+
+      // Render Grand Full Speech Preview in Module 5
+      const grandSpeechBox = document.getElementById('fullSpeechPreview');
+      if (grandSpeechBox) {
+        grandSpeechBox.innerHTML = `
+          <p>
+            <strong class="text-amber-400">[1. Morning Announcement]</strong><br>
+            "Good morning, elementary school! My name is <span class="text-amber-300 font-bold">${escapeHtml(nameVal)}</span>, and today I am Principal for a Day! First thing on my agenda: every morning will kick off by <span class="text-amber-300 font-bold">${escapeHtml(morningVal)}</span>! Because school should start with big smiles!"
+          </p>
+          <p>
+            <strong class="text-teal-400">[2. The Recess & Lunch Upgrade]</strong><br>
+            "Next up: lunch and recess! A great school needs awesome play time. That's why I am <span class="text-amber-300 font-bold">${escapeHtml(recessVal)}</span>! Active bodies lead to focused minds!"
+          </p>
+          <p>
+            <strong class="text-indigo-400">[3. Creative Learning]</strong><br>
+            "Now let's talk learning! Learning should feel like an adventure. As principal, I am replacing boring worksheets with <span class="text-amber-300 font-bold">${escapeHtml(subjectVal)}</span>. Hands-on learning is the best learning!"
+          </p>
+          <p>
+            <strong class="text-purple-400">[4. Kindness Culture]</strong><br>
+            "Finally, the most important rule of all: kindness! A great principal makes sure everyone feels included. I am creating a new tradition by <span class="text-amber-300 font-bold">${escapeHtml(spiritVal)}</span>!"
+          </p>
+          <p>
+            <strong class="text-emerald-300">[5. Closing Vision]</strong><br>
+            "Together, we can make our school the most fun, creative, and welcoming place in the world. Thank you!"
+          </p>
+        `;
+      }
+    }
+
+    // Render Teleprompter Presenter View
+    function renderTeleprompter(sectionKey) {
+      const nameVal = document.getElementById('speakerNameInput').value || 'Leo';
+      const morningVal = document.getElementById('morningFunRule').value || 'playing music';
+      const recessVal = document.getElementById('recessUpgrade').value || 'adding an obstacle course';
+      const subjectVal = document.getElementById('dreamSubject').value || 'building robots';
+      const spiritVal = document.getElementById('schoolSpiritIdea').value || 'giving high fives';
+
+      const contentBox = document.getElementById('teleprompterContent');
+
+      // Update Section active tab styling
+      ['all', '1', '2', '3', '4'].forEach(s => {
+        const btn = document.getElementById('btn-sec-' + s);
+        if (btn) {
+          if (s === sectionKey) {
+            btn.className = "px-3 py-1 text-xs font-bold rounded-lg bg-teal-500 text-white";
+          } else {
+            btn.className = "px-2.5 py-1 text-xs font-bold rounded-lg text-slate-400 hover:text-white";
+          }
+        }
+      });
+
+      let htmlContent = "";
+
+      if (sectionKey === '1' || sectionKey === 'all') {
+        htmlContent += `
+          <div class="mb-6 p-4 rounded-2xl bg-amber-950/40 border border-amber-800/50">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">Part 1: Morning Announcement</span>
+            "Good morning, elementary school! My name is <span class="text-amber-300 font-bold">${escapeHtml(nameVal)}</span>, and today I am Principal for a Day! First thing on my agenda: every morning will kick off by <span class="text-amber-300 font-bold">${escapeHtml(morningVal)}</span>! Because school should start with big smiles!"
+          </div>
+        `;
+      }
+
+      if (sectionKey === '2' || sectionKey === 'all') {
+        htmlContent += `
+          <div class="mb-6 p-4 rounded-2xl bg-teal-950/40 border border-teal-800/50">
+            <span class="text-xs font-bold text-teal-400 uppercase tracking-widest block mb-1">Part 2: Recess & Lunch Upgrade</span>
+            "Next up: lunch and recess! A great school needs awesome play time. That's why I am <span class="text-amber-300 font-bold">${escapeHtml(recessVal)}</span>! Active bodies lead to focused minds!"
+          </div>
+        `;
+      }
+
+      if (sectionKey === '3' || sectionKey === 'all') {
+        htmlContent += `
+          <div class="mb-6 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/50">
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block mb-1">Part 3: Creative Learning</span>
+            "Now let's talk learning! Learning should feel like an adventure. As principal, I am replacing boring worksheets with <span class="text-amber-300 font-bold">${escapeHtml(subjectVal)}</span>. Hands-on learning is the best learning!"
+          </div>
+        `;
+      }
+
+      if (sectionKey === '4' || sectionKey === 'all') {
+        htmlContent += `
+          <div class="mb-6 p-4 rounded-2xl bg-purple-950/40 border border-purple-800/50">
+            <span class="text-xs font-bold text-purple-400 uppercase tracking-widest block mb-1">Part 4: Kindness & Closing</span>
+            "Finally, the most important rule of all: kindness! A great principal makes sure everyone feels included. I am creating a new tradition by <span class="text-amber-300 font-bold">${escapeHtml(spiritVal)}</span>!<br><br>
+            Together, we can make our school the most fun, creative, and welcoming place in the world. Thank you!"
+          </div>
+        `;
+      }
+
+      contentBox.innerHTML = htmlContent;
+    }
+
+    function showPresentSection(secKey) {
+      renderTeleprompter(secKey);
+    }
+
+    // Font size adjuster
+    function adjustFontSize(delta) {
+      currentFontSize = Math.min(Math.max(16, currentFontSize + delta), 36);
+      document.getElementById('fontSizeDisplay').textContent = currentFontSize + "px";
+      document.getElementById('teleprompterContent').style.fontSize = currentFontSize + "px";
+    }
+
+    // Timer Logic
+    function toggleTimer() {
+      const btn = document.getElementById('timerToggleBtn');
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        btn.textContent = "Start";
+        btn.className = "bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg";
+      } else {
+        isTimerRunning = true;
+        btn.textContent = "Pause";
+        btn.className = "bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg";
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+          const secs = String(timerSeconds % 60).padStart(2, '0');
+          document.getElementById('presentationTimer').textContent = `${mins}:${secs}`;
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (isTimerRunning) toggleTimer();
+      timerSeconds = 0;
+      document.getElementById('presentationTimer').textContent = "00:00";
+    }
+
+    // Helper to sanitize HTML input
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Event Listeners for live updating
+    document.addEventListener('DOMContentLoaded', () => {
+      const inputs = ['speakerNameInput', 'morningFunRule', 'recessUpgrade', 'dreamSubject', 'schoolSpiritIdea'];
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateAllFilledTexts);
+        }
+      });
+
+      // Initial Update
+      updateAllFilledTexts();
+    });
+  </script>
+
+</body>
+</html>
