@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice Worksheet (9/30)</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  body { font-family: Georgia, serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f7f5f0; color: #222; }
+  h1 { text-align: center; }
+  .subtitle { text-align: center; color: #555; margin-bottom: 24px; }
+  .problem { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .problem h3 { margin: 0 0 6px; font-size: 1.05em; }
+  .answer { display: none; margin-top: 10px; padding: 10px; background: #f0f7ff; border-left: 4px solid #2a6496; border-radius: 0 6px 6px 0; }
+  .answer.show { display: block; }
+  button.toggle { background: #2a6496; color: #fff; border: none; border-radius: 5px; padding: 6px 12px; cursor: pointer; font-size: 0.9em; margin-top: 8px; }
+  button.toggle:hover { background: #1d4a73; }
+  .toolbar { text-align: center; margin-bottom: 20px; }
+  .toolbar button { background: #555; color: #fff; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; margin: 0 6px; }
+  .toolbar button:hover { background: #333; }
+
+  @media print {
+    body { background: #fff; color: #000; max-width: 100%; padding: 0; font-size: 12pt; }
+    .toolbar { display: none; }
+    button.toggle { display: none; }
+    .answer { display: none !important; }
+    .problem { border: 1px solid #999; border-radius: 0; box-shadow: none; page-break-inside: avoid; margin-bottom: 14px; }
+    .subtitle { color: #000; }
+  }
+</style>
+</head>
+<body>
+<h1>Practice Worksheet</h1>
+<p class="subtitle">Saxon Math &bull; September 30 &bull; Answer each question, then click "Show Answer" to check your work</p>
+
+<div class="toolbar">
+  <button onclick="showAll()">Show All</button>
+  <button onclick="hideAll()">Hide All</button>
+  <button onclick="window.print()">Print Worksheet</button>
+</div>
+
+<div class="problem" id="p1">
+  <h3>1.</h3>
+  <p>Thirty-five boys sat in the first row. Forty-six boys sat in the second row. Ninety boys sat in the third row. Altogether how many boys sat in the first three rows?</p>
+  <button class="toggle" onclick="toggle('a1')">Show Answer</button>
+  <div class="answer" id="a1">
+    <p><strong>Answer:</strong> \(171\) boys.</p>
+    <p><strong>Explanation:</strong> Add the three rows: \(35 + 46 + 90 = 81 + 90 = 171\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p2">
+  <h3>2.</h3>
+  <p>Sixty marbles were in the bag. Mia took some marbles from the bag. Thirty-five marbles were left in the bag. How many marbles did Mia take from the bag?</p>
+  <button class="toggle" onclick="toggle('a2')">Show Answer</button>
+  <div class="answer" id="a2">
+    <p><strong>Answer:</strong> \(25\) marbles.</p>
+    <p><strong>Explanation:</strong> Subtract what is left from what was there: \(60 - 35 = 25\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p3">
+  <h3>3.</h3>
+  <p>The board game costs forty-five dollars. Sofia has saved twenty-seven dollars. How much more money does Sofia need in order to buy the board game?</p>
+  <button class="toggle" onclick="toggle('a3')">Show Answer</button>
+  <div class="answer" id="a3">
+    <p><strong>Answer:</strong> \(\$18\) more.</p>
+    <p><strong>Explanation:</strong> \(45 - 27 = 18\). Sofia needs 18 more dollars.</p>
+  </div>
+</div>
+
+<div class="problem" id="p4">
+  <h3>4.</h3>
+  <p>Write 506 in expanded form. Then use words to write the number.</p>
+  <button class="toggle" onclick="toggle('a4')">Show Answer</button>
+  <div class="answer" id="a4">
+    <p><strong>Answer:</strong> \(500 + 6\); "five hundred six."</p>
+    <p><strong>Explanation:</strong> 506 = 5 hundreds + 0 tens + 6 ones, so expanded form is \(500 + 6\). In words: five hundred six.</p>
+  </div>
+</div>
+
+<div class="problem" id="p5">
+  <h3>5.</h3>
+  <p>Use digits and symbols to write "Nine times four equals six times six."</p>
+  <button class="toggle" onclick="toggle('a5')">Show Answer</button>
+  <div class="answer" id="a5">
+    <p><strong>Answer:</strong> \(9 \times 4 = 6 \times 6\).</p>
+    <p><strong>Explanation:</strong> "Nine" \(= 9\), "times" \(= \times\), "four" \(= 4\), "equals" \(= =\), "six" \(= 6\). (Both sides equal 36.)</p>
+  </div>
+</div>
+
+<div class="problem" id="p6">
+  <h3>6.</h3>
+  <p>A crayon is measured with a centimeter ruler. One end of the crayon is at 0 cm and the other end is at about 9 cm. About how long is the crayon?</p>
+  <button class="toggle" onclick="toggle('a6')">Show Answer</button>
+  <div class="answer" id="a6">
+    <p><strong>Answer:</strong> About \(9\) cm.</p>
+    <p><strong>Explanation:</strong> The crayon spans from 0 to about the 9-cm mark on the ruler, so it is about 9 centimeters long.</p>
+  </div>
+</div>
+
+<div class="problem" id="p7">
+  <h3>7.</h3>
+  <p>Draw a circle and shade \(\frac{1}{3}\) of it.</p>
+  <button class="toggle" onclick="toggle('a7')">Show Answer</button>
+  <div class="answer" id="a7">
+    <p><strong>Answer:</strong> A circle with one third shaded.</p>
+    <p><strong>Explanation:</strong> Draw a circle, divide it into 3 equal parts, and shade exactly 1 of the 3 parts.</p>
+  </div>
+</div>
+
+<div class="problem" id="p8">
+  <h3>8.</h3>
+  <p>Round \(\$24.75\) to the nearest dollar.</p>
+  <button class="toggle" onclick="toggle('a8')">Show Answer</button>
+  <div class="answer" id="a8">
+    <p><strong>Answer:</strong> \(\$25\).</p>
+    <p><strong>Explanation:</strong> \(\$24.75\) is between \(\$24\) and \(\$25\). The cents part, \(75\text{¢}\), is more than \(50\text{¢}\), so round up to \(\$25\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p9">
+  <h3>9.</h3>
+  <p>Find the missing numbers in this counting sequence: \(63, \text{___}, \text{___}, 45, 39, \text{___}, \ldots\)</p>
+  <button class="toggle" onclick="toggle('a9')">Show Answer</button>
+  <div class="answer" id="a9">
+    <p><strong>Answer:</strong> \(63, 57, 51, 45, 39, 33, \ldots\)</p>
+    <p><strong>Explanation:</strong> The pattern counts down by 6: \(63 - 6 = 57\), \(57 - 6 = 51\), \(51 - 6 = 45\), \(45 - 6 = 39\), \(39 - 6 = 33\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p10">
+  <h3>10.</h3>
+  <p>The clock shows 7:25. If it is morning, what time will it be in 2 hours and 50 minutes?</p>
+  <button class="toggle" onclick="toggle('a10')">Show Answer</button>
+  <div class="answer" id="a10">
+    <p><strong>Answer:</strong> 10:15 AM.</p>
+    <p><strong>Explanation:</strong> Start at 7:25 AM. Adding 2 hours gives 9:25 AM; adding 50 more minutes gives 10:15 AM.</p>
+  </div>
+</div>
+
+<div class="problem" id="p11">
+  <h3>11.</h3>
+  <p>What is the perimeter of a triangle with sides 7 cm, 7 cm, and 9 cm?</p>
+  <button class="toggle" onclick="toggle('a11')">Show Answer</button>
+  <div class="answer" id="a11">
+    <p><strong>Answer:</strong> \(23\) cm.</p>
+    <p><strong>Explanation:</strong> Add the three sides: \(7 + 7 + 9 = 23\) cm.</p>
+  </div>
+</div>
+
+<div class="problem" id="p12">
+  <h3>12.</h3>
+  <p>Change this addition problem to a multiplication problem: \(4 + 4 + 4 + 4 + 4 + 4\)</p>
+  <button class="toggle" onclick="toggle('a12')">Show Answer</button>
+  <div class="answer" id="a12">
+    <p><strong>Answer:</strong> \(6 \times 4\) (which equals \(24\)).</p>
+    <p><strong>Explanation:</strong> The number 4 is added 6 times, so the repeated addition becomes the multiplication \(6 \times 4 = 24\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p13">
+  <h3>13.</h3>
+  <p>The rope is eight meters long. How many centimeters is that?</p>
+  <button class="toggle" onclick="toggle('a13')">Show Answer</button>
+  <div class="answer" id="a13">
+    <p><strong>Answer:</strong> \(800\) cm.</p>
+    <p><strong>Explanation:</strong> There are 100 centimeters in a meter, so \(8 \times 100 = 800\) cm.</p>
+  </div>
+</div>
+
+<div class="problem" id="p14">
+  <h3>14.</h3>
+  <p><strong>(a)</strong> \(4 \times 6\) &nbsp;&nbsp; <strong>(b)</strong> \(7 \times 5\) &nbsp;&nbsp; <strong>(c)</strong> \(8 \times 5\)</p>
+  <button class="toggle" onclick="toggle('a14')">Show Answer</button>
+  <div class="answer" id="a14">
+    <p><strong>Answer:</strong> <strong>(a)</strong> \(24\) &nbsp;&nbsp; <strong>(b)</strong> \(35\) &nbsp;&nbsp; <strong>(c)</strong> \(40\).</p>
+    <p><strong>Explanation:</strong> <strong>(a)</strong> \(4 \times 6 = 24\). <strong>(b)</strong> \(7 \times 5 = 35\). <strong>(c)</strong> \(8 \times 5 = 40\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p15">
+  <h3>15.</h3>
+  <p>\(740 - 320\)</p>
+  <button class="toggle" onclick="toggle('a15')">Show Answer</button>
+  <div class="answer" id="a15">
+    <p><strong>Answer:</strong> \(420\).</p>
+    <p><strong>Explanation:</strong> \(740 - 320 = 420\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p16">
+  <h3>16.</h3>
+  <p>\(\begin{array}{r} 95 \\ -\;38 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a16')">Show Answer</button>
+  <div class="answer" id="a16">
+    <p><strong>Answer:</strong> \(57\).</p>
+    <p><strong>Explanation:</strong> \(95 - 38 = 57\) (borrow 1 ten: \(15 - 8 = 7\), \(8 - 3 = 5\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p17">
+  <h3>17.</h3>
+  <p>\(\begin{array}{r} 486 \\ +\;257 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a17')">Show Answer</button>
+  <div class="answer" id="a17">
+    <p><strong>Answer:</strong> \(743\).</p>
+    <p><strong>Explanation:</strong> \(486 + 257 = 743\) (ones: \(6+7=13\), carry 1; tens: \(8+5+1=14\), carry 1; hundreds: \(4+2+1=7\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p18">
+  <h3>Find each missing number:</h3>
+  <p><strong>18.</strong> &nbsp; \(\begin{array}{r} 72 \\ -\;N \\ \hline 45 \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a18')">Show Answer</button>
+  <div class="answer" id="a18">
+    <p><strong>Answer:</strong> \(N = 27\).</p>
+    <p><strong>Explanation:</strong> \(N = 72 - 45 = 27\). Check: \(72 - 27 = 45\) ✓</p>
+  </div>
+</div>
+
+<div class="problem" id="p19">
+  <h3>19.</h3>
+  <p>\(\begin{array}{r} 58 \\ +\;P \\ \hline 96 \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a19')">Show Answer</button>
+  <div class="answer" id="a19">
+    <p><strong>Answer:</strong> \(P = 38\).</p>
+    <p><strong>Explanation:</strong> \(P = 96 - 58 = 38\). Check: \(58 + 38 = 96\) ✓</p>
+  </div>
+</div>
+
+<div class="problem" id="p20">
+  <h3>20.</h3>
+  <p>\(5 + 7 + 2 + 8 + 4 + 6 + 3 + 9 + 5 + 7 + 4 + 3\)</p>
+  <button class="toggle" onclick="toggle('a20')">Show Answer</button>
+  <div class="answer" id="a20">
+    <p><strong>Answer:</strong> \(63\).</p>
+    <p><strong>Explanation:</strong> Add in order: \(5+7=12\), \(+2=14\), \(+8=22\), \(+4=26\), \(+6=32\), \(+3=35\), \(+9=44\), \(+5=49\), \(+7=56\), \(+4=60\), \(+3=63\).</p>
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  var el = document.getElementById(id);
+  var btn = el.previousElementSibling;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+function showAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.add('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Hide Answer'; });
+}
+function hideAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Show Answer'; });
+}
+</script>
+</body>
+</html>
