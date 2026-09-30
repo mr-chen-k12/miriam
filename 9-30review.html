@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test 6 Review — Practice Set (9/30)</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  body { font-family: Georgia, serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f7f5f0; color: #222; }
+  h1 { text-align: center; }
+  .subtitle { text-align: center; color: #555; margin-bottom: 24px; }
+  .section-title { margin: 28px 0 12px; border-bottom: 2px solid #2a6496; color: #2a6496; padding-bottom: 4px; }
+  .problem { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .problem h3 { margin: 0 0 6px; font-size: 1.05em; }
+  .answer { display: none; margin-top: 10px; padding: 10px; background: #f0f7ff; border-left: 4px solid #2a6496; border-radius: 0 6px 6px 0; }
+  .answer.show { display: block; }
+  button.toggle { background: #2a6496; color: #fff; border: none; border-radius: 5px; padding: 6px 12px; cursor: pointer; font-size: 0.9em; margin-top: 8px; }
+  button.toggle:hover { background: #1d4a73; }
+  .toolbar { text-align: center; margin-bottom: 20px; }
+  .toolbar button { background: #555; color: #fff; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; margin: 0 6px; }
+  .toolbar button:hover { background: #333; }
+
+  @media print {
+    body { background: #fff; color: #000; max-width: 100%; padding: 0; font-size: 12pt; }
+    .toolbar { display: none; }
+    button.toggle { display: none; }
+    .answer { display: none !important; }
+    .problem { border: 1px solid #999; border-radius: 0; box-shadow: none; page-break-inside: avoid; margin-bottom: 14px; }
+    .subtitle { color: #000; }
+    .section-title { color: #000; border-bottom-color: #000; page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<h1>Test 6 Review — Practice Set</h1>
+<p class="subtitle">September 30 &bull; Three questions per topic &bull; Click "Show Answer" under each question to check your work</p>
+
+<div class="toolbar">
+  <button onclick="showAll()">Show All</button>
+  <button onclick="hideAll()">Hide All</button>
+  <button onclick="window.print()">Print Worksheet</button>
+</div>
+
+<h2 class="section-title">Addition Word Problems</h2>
+
+<div class="problem" id="p1">
+  <h3>1.</h3>
+  <p>Twenty-eight girls sat in the first row. Thirty-four girls sat in the second row. Fifty girls sat in the third row. Altogether how many girls sat in the first three rows?</p>
+  <button class="toggle" onclick="toggle('a1')">Show Answer</button>
+  <div class="answer" id="a1">
+    <p><strong>Answer:</strong> \(112\) girls.</p>
+    <p><strong>Explanation:</strong> Add the three rows: \(28 + 34 + 50 = 62 + 50 = 112\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p2">
+  <h3>2.</h3>
+  <p>A baker sold 15 loaves of bread on Monday, 26 loaves on Tuesday, and 40 loaves on Wednesday. How many loaves did the baker sell in all three days?</p>
+  <button class="toggle" onclick="toggle('a2')">Show Answer</button>
+  <div class="answer" id="a2">
+    <p><strong>Answer:</strong> \(81\) loaves.</p>
+    <p><strong>Explanation:</strong> \(15 + 26 + 40 = 41 + 40 = 81\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p3">
+  <h3>3.</h3>
+  <p>Luis read 33 pages in the morning, 25 pages in the afternoon, and 60 pages in the evening. How many pages did Luis read altogether?</p>
+  <button class="toggle" onclick="toggle('a3')">Show Answer</button>
+  <div class="answer" id="a3">
+    <p><strong>Answer:</strong> \(118\) pages.</p>
+    <p><strong>Explanation:</strong> \(33 + 25 + 60 = 58 + 60 = 118\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Subtraction Word Problems</h2>
+
+<div class="problem" id="p4">
+  <h3>4.</h3>
+  <p>Fifty-five stickers were in the box. Emma took some out. Now there are 31 stickers in the box. How many stickers did she take out?</p>
+  <button class="toggle" onclick="toggle('a4')">Show Answer</button>
+  <div class="answer" id="a4">
+    <p><strong>Answer:</strong> \(24\) stickers.</p>
+    <p><strong>Explanation:</strong> Subtract what is left from what was there: \(55 - 31 = 24\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p5">
+  <h3>5.</h3>
+  <p>There were 72 marbles in the jar. Ben took some marbles out. Now there are 45 marbles left in the jar. How many marbles did Ben take?</p>
+  <button class="toggle" onclick="toggle('a5')">Show Answer</button>
+  <div class="answer" id="a5">
+    <p><strong>Answer:</strong> \(27\) marbles.</p>
+    <p><strong>Explanation:</strong> \(72 - 45 = 27\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p6">
+  <h3>6.</h3>
+  <p>The library had 90 books on the shelf. Mrs. Clark took some to her classroom. Now there are 64 books on the shelf. How many books did she take?</p>
+  <button class="toggle" onclick="toggle('a6')">Show Answer</button>
+  <div class="answer" id="a6">
+    <p><strong>Answer:</strong> \(26\) books.</p>
+    <p><strong>Explanation:</strong> \(90 - 64 = 26\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Money Word Problems</h2>
+
+<div class="problem" id="p7">
+  <h3>7.</h3>
+  <p>The kite costs thirty-six dollars. I saved twenty dollars. How much more money do I need to buy the kite?</p>
+  <button class="toggle" onclick="toggle('a7')">Show Answer</button>
+  <div class="answer" id="a7">
+    <p><strong>Answer:</strong> \(\$16\) more.</p>
+    <p><strong>Explanation:</strong> \(36 - 20 = 16\). You need 16 more dollars.</p>
+  </div>
+</div>
+
+<div class="problem" id="p8">
+  <h3>8.</h3>
+  <p>The soccer ball costs fifty-two dollars. Noah saved thirty-five dollars. How much more money does Noah need to buy the soccer ball?</p>
+  <button class="toggle" onclick="toggle('a8')">Show Answer</button>
+  <div class="answer" id="a8">
+    <p><strong>Answer:</strong> \(\$17\) more.</p>
+    <p><strong>Explanation:</strong> \(52 - 35 = 17\). Noah needs 17 more dollars.</p>
+  </div>
+</div>
+
+<div class="problem" id="p9">
+  <h3>9.</h3>
+  <p>The book costs forty-one dollars. Lily saved seventeen dollars. How much more money does Lily need to buy the book?</p>
+  <button class="toggle" onclick="toggle('a9')">Show Answer</button>
+  <div class="answer" id="a9">
+    <p><strong>Answer:</strong> \(\$24\) more.</p>
+    <p><strong>Explanation:</strong> \(41 - 17 = 24\). Lily needs 24 more dollars.</p>
+  </div>
+</div>
+
+<h2 class="section-title">Expanded Form and Number Words</h2>
+
+<div class="problem" id="p10">
+  <h3>10.</h3>
+  <p><strong>a.</strong> Write 604 in expanded form. <strong>b.</strong> Use words to write the number.</p>
+  <button class="toggle" onclick="toggle('a10')">Show Answer</button>
+  <div class="answer" id="a10">
+    <p><strong>Answer:</strong> <strong>a.</strong> \(600 + 4\) &nbsp;&nbsp; <strong>b.</strong> "six hundred four."</p>
+    <p><strong>Explanation:</strong> 604 = 6 hundreds + 0 tens + 4 ones, so expanded form is \(600 + 4\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p11">
+  <h3>11.</h3>
+  <p><strong>a.</strong> Write 750 in expanded form. <strong>b.</strong> Use words to write the number.</p>
+  <button class="toggle" onclick="toggle('a11')">Show Answer</button>
+  <div class="answer" id="a11">
+    <p><strong>Answer:</strong> <strong>a.</strong> \(700 + 50\) &nbsp;&nbsp; <strong>b.</strong> "seven hundred fifty."</p>
+    <p><strong>Explanation:</strong> 750 = 7 hundreds + 5 tens + 0 ones, so expanded form is \(700 + 50\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p12">
+  <h3>12.</h3>
+  <p><strong>a.</strong> Write 918 in expanded form. <strong>b.</strong> Use words to write the number.</p>
+  <button class="toggle" onclick="toggle('a12')">Show Answer</button>
+  <div class="answer" id="a12">
+    <p><strong>Answer:</strong> <strong>a.</strong> \(900 + 10 + 8\) &nbsp;&nbsp; <strong>b.</strong> "nine hundred eighteen."</p>
+    <p><strong>Explanation:</strong> 918 = 9 hundreds + 1 ten + 8 ones, so expanded form is \(900 + 10 + 8\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Writing Number Sentences</h2>
+
+<div class="problem" id="p13">
+  <h3>13.</h3>
+  <p>Use digits and symbols to write "Seven times five equals five times seven."</p>
+  <button class="toggle" onclick="toggle('a13')">Show Answer</button>
+  <div class="answer" id="a13">
+    <p><strong>Answer:</strong> \(7 \times 5 = 5 \times 7\).</p>
+    <p><strong>Explanation:</strong> "Seven" \(= 7\), "times" \(= \times\), "five" \(= 5\), "equals" \(= =\). (Both sides equal 35.)</p>
+  </div>
+</div>
+
+<div class="problem" id="p14">
+  <h3>14.</h3>
+  <p>Use digits and symbols to write "Four times zero equals two times zero."</p>
+  <button class="toggle" onclick="toggle('a14')">Show Answer</button>
+  <div class="answer" id="a14">
+    <p><strong>Answer:</strong> \(4 \times 0 = 2 \times 0\).</p>
+    <p><strong>Explanation:</strong> "Four" \(= 4\), "times" \(= \times\), "zero" \(= 0\), "equals" \(= =\), "two" \(= 2\). (Both sides equal 0.)</p>
+  </div>
+</div>
+
+<div class="problem" id="p15">
+  <h3>15.</h3>
+  <p>Use digits and symbols to write "Nine times three equals twenty-seven."</p>
+  <button class="toggle" onclick="toggle('a15')">Show Answer</button>
+  <div class="answer" id="a15">
+    <p><strong>Answer:</strong> \(9 \times 3 = 27\).</p>
+    <p><strong>Explanation:</strong> "Nine" \(= 9\), "times" \(= \times\), "three" \(= 3\), "equals" \(= =\), "twenty-seven" \(= 27\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Fractions: Draw and Shade</h2>
+
+<div class="problem" id="p16">
+  <h3>16.</h3>
+  <p>Draw a square and shade \(\frac{1}{2}\) of it.</p>
+  <button class="toggle" onclick="toggle('a16')">Show Answer</button>
+  <div class="answer" id="a16">
+    <p><strong>Answer:</strong> A square with one half shaded.</p>
+    <p><strong>Explanation:</strong> Draw a square, divide it into 2 equal parts (for example, with a line through the middle), and shade exactly 1 of the 2 parts.</p>
+  </div>
+</div>
+
+<div class="problem" id="p17">
+  <h3>17.</h3>
+  <p>Draw a circle and shade \(\frac{1}{3}\) of it.</p>
+  <button class="toggle" onclick="toggle('a17')">Show Answer</button>
+  <div class="answer" id="a17">
+    <p><strong>Answer:</strong> A circle with one third shaded.</p>
+    <p><strong>Explanation:</strong> Draw a circle, divide it into 3 equal parts, and shade exactly 1 of the 3 parts.</p>
+  </div>
+</div>
+
+<div class="problem" id="p18">
+  <h3>18.</h3>
+  <p>Draw a rectangle and shade \(\frac{3}{4}\) of it.</p>
+  <button class="toggle" onclick="toggle('a18')">Show Answer</button>
+  <div class="answer" id="a18">
+    <p><strong>Answer:</strong> A rectangle with three fourths shaded.</p>
+    <p><strong>Explanation:</strong> Draw a rectangle, divide it into 4 equal parts, and shade exactly 3 of the 4 parts.</p>
+  </div>
+</div>
+
+<h2 class="section-title">Rounding Money</h2>
+
+<div class="problem" id="p19">
+  <h3>19.</h3>
+  <p>Round \(\$12.48\) to the nearest dollar.</p>
+  <button class="toggle" onclick="toggle('a19')">Show Answer</button>
+  <div class="answer" id="a19">
+    <p><strong>Answer:</strong> \(\$12\).</p>
+    <p><strong>Explanation:</strong> \(\$12.48\) is between \(\$12\) and \(\$13\). The cents part, \(48\text{¢}\), is less than \(50\text{¢}\), so round down to \(\$12\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p20">
+  <h3>20.</h3>
+  <p>Round \(\$7.86\) to the nearest dollar.</p>
+  <button class="toggle" onclick="toggle('a20')">Show Answer</button>
+  <div class="answer" id="a20">
+    <p><strong>Answer:</strong> \(\$8\).</p>
+    <p><strong>Explanation:</strong> \(\$7.86\) is between \(\$7\) and \(\$8\). The cents part, \(86\text{¢}\), is more than \(50\text{¢}\), so round up to \(\$8\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p21">
+  <h3>21.</h3>
+  <p>Round \(\$33.62\) to the nearest dollar.</p>
+  <button class="toggle" onclick="toggle('a21')">Show Answer</button>
+  <div class="answer" id="a21">
+    <p><strong>Answer:</strong> \(\$34\).</p>
+    <p><strong>Explanation:</strong> \(\$33.62\) is between \(\$33\) and \(\$34\). The cents part, \(62\text{¢}\), is more than \(50\text{¢}\), so round up to \(\$34\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Counting Sequences</h2>
+
+<div class="problem" id="p22">
+  <h3>22.</h3>
+  <p>Find the missing numbers: \(35, \text{___}, 29, 26, \text{___}, \text{___}, \ldots\)</p>
+  <button class="toggle" onclick="toggle('a22')">Show Answer</button>
+  <div class="answer" id="a22">
+    <p><strong>Answer:</strong> \(35, 32, 29, 26, 23, 20, \ldots\)</p>
+    <p><strong>Explanation:</strong> The pattern counts down by 3: \(35 - 3 = 32\), \(32 - 3 = 29\), \(29 - 3 = 26\), \(26 - 3 = 23\), \(23 - 3 = 20\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p23">
+  <h3>23.</h3>
+  <p>Find the missing numbers: \(50, \text{___}, \text{___}, 38, 34, \text{___}, \ldots\)</p>
+  <button class="toggle" onclick="toggle('a23')">Show Answer</button>
+  <div class="answer" id="a23">
+    <p><strong>Answer:</strong> \(50, 46, 42, 38, 34, 30, \ldots\)</p>
+    <p><strong>Explanation:</strong> The pattern counts down by 4: \(50 - 4 = 46\), \(46 - 4 = 42\), \(42 - 4 = 38\), \(38 - 4 = 34\), \(34 - 4 = 30\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p24">
+  <h3>24.</h3>
+  <p>Find the missing numbers: \(22, \text{___}, 30, 34, \text{___}, \text{___}, \ldots\)</p>
+  <button class="toggle" onclick="toggle('a24')">Show Answer</button>
+  <div class="answer" id="a24">
+    <p><strong>Answer:</strong> \(22, 26, 30, 34, 38, 42, \ldots\)</p>
+    <p><strong>Explanation:</strong> The pattern counts up by 4: \(22 + 4 = 26\), \(26 + 4 = 30\), \(30 + 4 = 34\), \(34 + 4 = 38\), \(38 + 4 = 42\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Elapsed Time</h2>
+
+<div class="problem" id="p25">
+  <h3>25.</h3>
+  <p>The clock shows 6:20. If it is morning, what time will it be in 3 hours and 40 minutes?</p>
+  <button class="toggle" onclick="toggle('a25')">Show Answer</button>
+  <div class="answer" id="a25">
+    <p><strong>Answer:</strong> 10:00 AM.</p>
+    <p><strong>Explanation:</strong> Start at 6:20 AM. Adding 3 hours gives 9:20 AM; adding 40 more minutes gives 10:00 AM.</p>
+  </div>
+</div>
+
+<div class="problem" id="p26">
+  <h3>26.</h3>
+  <p>The clock shows 9:50. If it is morning, what time will it be in 1 hour and 25 minutes?</p>
+  <button class="toggle" onclick="toggle('a26')">Show Answer</button>
+  <div class="answer" id="a26">
+    <p><strong>Answer:</strong> 11:15 AM.</p>
+    <p><strong>Explanation:</strong> Start at 9:50 AM. Adding 1 hour gives 10:50 AM; adding 25 more minutes gives 11:15 AM.</p>
+  </div>
+</div>
+
+<div class="problem" id="p27">
+  <h3>27.</h3>
+  <p>The clock shows 4:15. If it is afternoon, what time will it be in 2 hours and 30 minutes?</p>
+  <button class="toggle" onclick="toggle('a27')">Show Answer</button>
+  <div class="answer" id="a27">
+    <p><strong>Answer:</strong> 6:45 PM.</p>
+    <p><strong>Explanation:</strong> Start at 4:15 PM. Adding 2 hours gives 6:15 PM; adding 30 more minutes gives 6:45 PM.</p>
+  </div>
+</div>
+
+<h2 class="section-title">Repeated Addition to Multiplication</h2>
+
+<div class="problem" id="p28">
+  <h3>28.</h3>
+  <p>Change this addition problem to a multiplication problem: \(5 + 5 + 5 + 5\)</p>
+  <button class="toggle" onclick="toggle('a28')">Show Answer</button>
+  <div class="answer" id="a28">
+    <p><strong>Answer:</strong> \(4 \times 5\) (which equals \(20\)).</p>
+    <p><strong>Explanation:</strong> The number 5 is added 4 times, so the repeated addition becomes the multiplication \(4 \times 5 = 20\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p29">
+  <h3>29.</h3>
+  <p>Change this addition problem to a multiplication problem: \(7 + 7 + 7\)</p>
+  <button class="toggle" onclick="toggle('a29')">Show Answer</button>
+  <div class="answer" id="a29">
+    <p><strong>Answer:</strong> \(3 \times 7\) (which equals \(21\)).</p>
+    <p><strong>Explanation:</strong> The number 7 is added 3 times, so the repeated addition becomes the multiplication \(3 \times 7 = 21\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p30">
+  <h3>30.</h3>
+  <p>Change this addition problem to a multiplication problem: \(2 + 2 + 2 + 2 + 2 + 2\)</p>
+  <button class="toggle" onclick="toggle('a30')">Show Answer</button>
+  <div class="answer" id="a30">
+    <p><strong>Answer:</strong> \(6 \times 2\) (which equals \(12\)).</p>
+    <p><strong>Explanation:</strong> The number 2 is added 6 times, so the repeated addition becomes the multiplication \(6 \times 2 = 12\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Meters and Centimeters</h2>
+
+<div class="problem" id="p31">
+  <h3>31.</h3>
+  <p>How many centimeters is 6 meters?</p>
+  <button class="toggle" onclick="toggle('a31')">Show Answer</button>
+  <div class="answer" id="a31">
+    <p><strong>Answer:</strong> \(600\) cm.</p>
+    <p><strong>Explanation:</strong> There are 100 centimeters in a meter, so \(6 \times 100 = 600\) cm.</p>
+  </div>
+</div>
+
+<div class="problem" id="p32">
+  <h3>32.</h3>
+  <p>How many centimeters is 9 meters?</p>
+  <button class="toggle" onclick="toggle('a32')">Show Answer</button>
+  <div class="answer" id="a32">
+    <p><strong>Answer:</strong> \(900\) cm.</p>
+    <p><strong>Explanation:</strong> There are 100 centimeters in a meter, so \(9 \times 100 = 900\) cm.</p>
+  </div>
+</div>
+
+<div class="problem" id="p33">
+  <h3>33.</h3>
+  <p>How many centimeters is 4 meters?</p>
+  <button class="toggle" onclick="toggle('a33')">Show Answer</button>
+  <div class="answer" id="a33">
+    <p><strong>Answer:</strong> \(400\) cm.</p>
+    <p><strong>Explanation:</strong> There are 100 centimeters in a meter, so \(4 \times 100 = 400\) cm.</p>
+  </div>
+</div>
+
+<h2 class="section-title">Subtracting Hundreds</h2>
+
+<div class="problem" id="p34">
+  <h3>34.</h3>
+  <p>\(840 - 210\)</p>
+  <button class="toggle" onclick="toggle('a34')">Show Answer</button>
+  <div class="answer" id="a34">
+    <p><strong>Answer:</strong> \(630\).</p>
+    <p><strong>Explanation:</strong> Subtract the hundreds and tens: \(840 - 210 = 630\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p35">
+  <h3>35.</h3>
+  <p>\(560 - 330\)</p>
+  <button class="toggle" onclick="toggle('a35')">Show Answer</button>
+  <div class="answer" id="a35">
+    <p><strong>Answer:</strong> \(230\).</p>
+    <p><strong>Explanation:</strong> \(560 - 330 = 230\).</p>
+  </div>
+</div>
+
+<div class="problem" id="p36">
+  <h3>36.</h3>
+  <p>\(975 - 450\)</p>
+  <button class="toggle" onclick="toggle('a36')">Show Answer</button>
+  <div class="answer" id="a36">
+    <p><strong>Answer:</strong> \(525\).</p>
+    <p><strong>Explanation:</strong> \(975 - 450 = 525\).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Two-Digit Subtraction</h2>
+
+<div class="problem" id="p37">
+  <h3>37.</h3>
+  <p>\(\begin{array}{r} 94 \\ -\;57 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a37')">Show Answer</button>
+  <div class="answer" id="a37">
+    <p><strong>Answer:</strong> \(37\).</p>
+    <p><strong>Explanation:</strong> \(94 - 57 = 37\) (borrow 1 ten: \(14 - 7 = 7\), \(8 - 5 = 3\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p38">
+  <h3>38.</h3>
+  <p>\(\begin{array}{r} 72 \\ -\;36 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a38')">Show Answer</button>
+  <div class="answer" id="a38">
+    <p><strong>Answer:</strong> \(36\).</p>
+    <p><strong>Explanation:</strong> \(72 - 36 = 36\) (borrow 1 ten: \(12 - 6 = 6\), \(6 - 3 = 3\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p39">
+  <h3>39.</h3>
+  <p>\(\begin{array}{r} 81 \\ -\;48 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a39')">Show Answer</button>
+  <div class="answer" id="a39">
+    <p><strong>Answer:</strong> \(33\).</p>
+    <p><strong>Explanation:</strong> \(81 - 48 = 33\) (borrow 1 ten: \(11 - 8 = 3\), \(7 - 4 = 3\)).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Three-Digit Addition</h2>
+
+<div class="problem" id="p40">
+  <h3>40.</h3>
+  <p>\(\begin{array}{r} 386 \\ +\;245 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a40')">Show Answer</button>
+  <div class="answer" id="a40">
+    <p><strong>Answer:</strong> \(631\).</p>
+    <p><strong>Explanation:</strong> \(386 + 245 = 631\) (ones: \(6+5=11\), carry 1; tens: \(8+4+1=13\), carry 1; hundreds: \(3+2+1=6\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p41">
+  <h3>41.</h3>
+  <p>\(\begin{array}{r} 174 \\ +\;258 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a41')">Show Answer</button>
+  <div class="answer" id="a41">
+    <p><strong>Answer:</strong> \(432\).</p>
+    <p><strong>Explanation:</strong> \(174 + 258 = 432\) (ones: \(4+8=12\), carry 1; tens: \(7+5+1=13\), carry 1; hundreds: \(1+2+1=4\)).</p>
+  </div>
+</div>
+
+<div class="problem" id="p42">
+  <h3>42.</h3>
+  <p>\(\begin{array}{r} 467 \\ +\;189 \\ \hline \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a42')">Show Answer</button>
+  <div class="answer" id="a42">
+    <p><strong>Answer:</strong> \(656\).</p>
+    <p><strong>Explanation:</strong> \(467 + 189 = 656\) (ones: \(7+9=16\), carry 1; tens: \(6+8+1=15\), carry 1; hundreds: \(4+1+1=6\)).</p>
+  </div>
+</div>
+
+<h2 class="section-title">Missing Numbers</h2>
+
+<div class="problem" id="p43">
+  <h3>43.</h3>
+  <p>Find the missing number: \(\begin{array}{r} 76 \\ -\;M \\ \hline 38 \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a43')">Show Answer</button>
+  <div class="answer" id="a43">
+    <p><strong>Answer:</strong> \(M = 38\).</p>
+    <p><strong>Explanation:</strong> \(M = 76 - 38 = 38\). Check: \(76 - 38 = 38\) ✓</p>
+  </div>
+</div>
+
+<div class="problem" id="p44">
+  <h3>44.</h3>
+  <p>Find the missing number: \(\begin{array}{r} 54 \\ +\;T \\ \hline 83 \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a44')">Show Answer</button>
+  <div class="answer" id="a44">
+    <p><strong>Answer:</strong> \(T = 29\).</p>
+    <p><strong>Explanation:</strong> \(T = 83 - 54 = 29\). Check: \(54 + 29 = 83\) ✓</p>
+  </div>
+</div>
+
+<div class="problem" id="p45">
+  <h3>45.</h3>
+  <p>Find the missing number: \(\begin{array}{r} 88 \\ -\;B \\ \hline 59 \end{array}\)</p>
+  <button class="toggle" onclick="toggle('a45')">Show Answer</button>
+  <div class="answer" id="a45">
+    <p><strong>Answer:</strong> \(B = 29\).</p>
+    <p><strong>Explanation:</strong> \(B = 88 - 59 = 29\). Check: \(88 - 29 = 59\) ✓</p>
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  var el = document.getElementById(id);
+  var btn = el.previousElementSibling;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+function showAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.add('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Hide Answer'; });
+}
+function hideAll() {
+  document.querySelectorAll('.answer').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('button.toggle').forEach(function(b){ b.textContent = 'Show Answer'; });
+}
+</script>
+</body>
+</html>
