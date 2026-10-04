@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>American Revolution — Study Guide &amp; Review</title>
+<style>
+  :root{
+    --parchment:#f6f0df; --paper:#fffdf6; --ink:#2b2118;
+    --red:#7a1f1f; --navy:#1f3a5f; --gold:#b8860b; --green:#2e7d32;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; font-family:Georgia,'Times New Roman',serif; background:var(--parchment); color:var(--ink); line-height:1.5;}
+  header{background:linear-gradient(135deg,var(--navy),#2c4f7c); color:#fff; padding:18px 16px 14px; text-align:center;}
+  header h1{margin:0 0 4px; font-size:1.5em; letter-spacing:.5px;}
+  header p{margin:0; opacity:.85; font-size:.9em;}
+  nav.tabs{display:flex; overflow-x:auto; background:#16283f; position:sticky; top:0; z-index:49;}
+  nav.tabs button{flex:1 0 auto; background:none; border:none; color:#dce6f2; font-family:inherit; font-size:.95em; padding:13px 14px; cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap;}
+  nav.tabs button.active{color:#fff; border-bottom-color:var(--gold); background:#1d3350; font-weight:bold;}
+  main{max-width:900px; margin:0 auto; padding:18px 14px 70px;}
+  .tab{display:none;} .tab.active{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  h2.sec{color:var(--red); border-bottom:2px solid var(--gold); padding-bottom:6px;}
+  details{background:var(--paper); border:1px solid #d8cba6; border-radius:var(--radius); margin:10px 0; overflow:hidden;}
+  details summary{cursor:pointer; padding:13px 15px; font-weight:bold; font-size:1.02em; list-style:none; background:#fbf6e8;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:"▸ "; color:var(--red);}
+  details[open] summary::before{content:"▾ ";}
+  details .body{padding:4px 16px 14px;}
+  details ul{margin:8px 0; padding-left:20px;}
+  details li{margin:6px 0;}
+  .btn{display:inline-block; border:none; border-radius:10px; padding:13px 20px; font-size:1em; font-family:inherit; cursor:pointer; margin:6px 4px; min-height:48px;}
+  .btn-primary{background:var(--navy); color:#fff;}
+  .btn-gold{background:var(--gold); color:#fff;}
+  .btn-red{background:var(--red); color:#fff;}
+  .btn-green{background:var(--green); color:#fff;}
+  .btn-ghost{background:#e9e2cf; color:var(--ink);}
+  .btn:active{transform:scale(.97);}
+  .btn:disabled{opacity:.45; cursor:default; transform:none;}
+  /* Flashcards */
+  .fc-wrap{max-width:620px; margin:0 auto; text-align:center;}
+  .fc-stage{perspective:1200px; margin:14px 0 6px;}
+  .fc-card{position:relative; width:100%; min-height:300px; transform-style:preserve-3d; transition:transform .45s ease; cursor:pointer; touch-action:pan-y; user-select:none; -webkit-user-select:none;}
+  .fc-card.flipped{transform:rotateY(180deg);}
+  .fc-face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:var(--paper); border:2px solid var(--gold); border-radius:18px; box-shadow:0 6px 18px rgba(0,0,0,.14); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px 22px;}
+  .fc-back{transform:rotateY(180deg); background:#fdf8ea;}
+  .fc-kicker{font-size:.8em; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin-bottom:10px;}
+  .fc-term{font-size:1.7em; font-weight:bold; color:var(--navy);}
+  .fc-def{font-size:1.15em;}
+  .fc-hint{font-size:.8em; color:#888; margin-top:14px;}
+  .fc-count{color:#666; margin:8px 0;}
+  .fc-controls{display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap;}
+  .fc-nav{font-size:1.4em; padding:10px 22px;}
+  .flagged{color:var(--gold);}
+  /* Quiz */
+  .q-card{background:var(--paper); border:1px solid #d8cba6; border-radius:var(--radius); padding:20px; margin:12px 0;}
+  .q-text{font-size:1.2em; font-weight:bold; margin-bottom:14px;}
+  .choice{display:block; width:100%; text-align:left; background:#fbf6e8; border:2px solid #d8cba6; border-radius:10px; padding:13px 14px; margin:8px 0; font-size:1em; font-family:inherit; cursor:pointer; min-height:52px;}
+  .choice.correct{background:#dff0d8; border-color:var(--green);}
+  .choice.wrong{background:#f8d7da; border-color:var(--red);}
+  .choice:disabled{cursor:default;}
+  .explain{background:#eef3fa; border-left:4px solid var(--navy); padding:10px 14px; margin-top:12px; border-radius:0 8px 8px 0;}
+  .progress{height:10px; background:#e4dcc3; border-radius:6px; overflow:hidden; margin:10px 0;}
+  .progress>div{height:100%; background:var(--navy); width:0%; transition:width .3s;}
+  .score-big{font-size:2.2em; text-align:center; color:var(--navy); margin:10px 0;}
+  /* Matching */
+  .match-cols{display:flex; gap:14px;}
+  .match-col{flex:1; display:flex; flex-direction:column; gap:10px;}
+  .match-col h3{text-align:center; margin:6px 0; color:var(--red);}
+  .chip{background:#fff; border:2px solid var(--navy); border-radius:10px; padding:12px; font-size:.98em; cursor:grab; min-height:56px; display:flex; align-items:center; touch-action:none; user-select:none; -webkit-user-select:none;}
+  .chip.selected{outline:3px solid var(--gold);}
+  .chip.used{opacity:.35; pointer-events:none;}
+  .slot{background:#fbf6e8; border:2px dashed #b3a67f; border-radius:10px; padding:12px; min-height:56px; display:flex; align-items:center; font-size:.95em;}
+  .slot.filled{border-style:solid; border-color:var(--navy); background:#fff;}
+  .slot.right{border-color:var(--green); background:#dff0d8;}
+  .slot.wrong{border-color:var(--red); animation:shake .3s;}
+  @keyframes shake{25%{transform:translateX(-6px);} 50%{transform:translateX(6px);} 75%{transform:translateX(-4px);}}
+  .drag-ghost{position:fixed; z-index:999; pointer-events:none; opacity:.92; background:#fff; border:2px solid var(--navy); border-radius:10px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25); max-width:42vw;}
+  /* Fill in blank */
+  .fib-sent{font-size:1.25em; background:var(--paper); border:1px solid #d8cba6; border-radius:var(--radius); padding:22px; margin:12px 0;}
+  .blank{display:inline-block; min-width:150px; border-bottom:3px solid var(--red); color:var(--red); font-weight:bold; padding:0 8px; text-align:center;}
+  /* Progress */
+  table.hist{width:100%; border-collapse:collapse; background:var(--paper); border-radius:var(--radius); overflow:hidden;}
+  table.hist th,table.hist td{padding:10px 8px; border-bottom:1px solid #e4dcc3; text-align:left; font-size:.95em;}
+  table.hist th{background:var(--navy); color:#fff;}
+  .pill{display:inline-block; background:#fbf6e8; border:1px solid #d8cba6; border-radius:20px; padding:6px 12px; margin:4px; font-size:.92em;}
+  .pill button{margin-left:8px; border:none; background:none; cursor:pointer; font-size:1em;}
+  .center{text-align:center;}
+  .muted{color:#777; font-size:.9em;}
+  footer{text-align:center; color:#888; font-size:.8em; padding:24px 0;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇺🇸 American Revolution</h1>
+  <p>Study Guide &amp; Smart Review</p>
+</header>
+<nav class="tabs" id="tabs">
+  <button data-tab="guide" class="active">📖 Review Sheet</button>
+  <button data-tab="cards">🃏 Flashcards</button>
+  <button data-tab="quiz">✏️ Quiz</button>
+  <button data-tab="match">🧩 Matching</button>
+  <button data-tab="fib">📝 Fill in Blank</button>
+  <button data-tab="progress">📊 Progress</button>
+</nav>
+<main>
+<!-- ============ REVIEW SHEET ============ -->
+<div class="tab active" id="tab-guide">
+  <h2 class="sec">Review Sheet — American Revolution</h2>
+  <p class="muted">Read through each section, then test yourself with the Flashcards, Quiz, Matching, and Fill-in-the-Blank tabs.</p>
+
+  <details open><summary>Terms &amp; People to Know</summary><div class="body"><ul>
+    <li><b>Repeal</b> — a vote to end a law</li>
+    <li><b>Boycott</b> — an organized campaign where a group of individuals refuse to buy a certain product</li>
+    <li><b>Proclamation</b> — an important official announcement, usually made to the public</li>
+    <li><b>Stamp Act</b> — a tax on all paper goods</li>
+    <li><b>Tea Act of 1773</b> — lowered the price of tea but kept the tax on tea; caused the Boston Tea Party</li>
+    <li><b>Parliament</b> — lawmaking body of England</li>
+    <li><b>Loyalists</b> — people who supported Great Britain</li>
+    <li><b>Common Sense</b> — a pamphlet by Thomas Paine that helped colonists choose independence</li>
+    <li><b>Minutemen</b> — American colonists ready to fight the British at a minute's notice</li>
+    <li><b>George Washington</b> — served as leader of the Continental army</li>
+    <li><b>Molly Pitcher</b> (Mary Hayes) — a woman who helped very thirsty men survive battles</li>
+    <li><b>John Paul Jones</b> — captain of the <i>Bonhomme Richard</i>; known as the father of the American Navy</li>
+    <li><b>Nathan Hale</b> — gave a speech to inspire colonists to keep fighting for independence</li>
+    <li><b>Crispus Attucks</b> — known as the first casualty of the American Revolutionary War</li>
+  </ul></div></details>
+
+  <details><summary>French and Indian War (1756–1763)</summary><div class="body"><ul>
+    <li>British fought against the French and Indians for French territory</li>
+    <li>William Pitt believed the British needed 3 things to win the war:
+      <ul><li>Money, lots of troops, and control of the Niagara River and the St. Lawrence River</li></ul></li>
+  </ul></div></details>
+
+  <details><summary>Rights of the Englishmen</summary><div class="body"><ul>
+    <li>Homes could not be searched without a warrant</li>
+    <li>Right to a speedy trial by jury</li>
+    <li>Right to vote</li>
+    <li>Right to private property</li>
+    <li>Right to gather peaceably to talk about a problem</li>
+  </ul>
+  <p><b>No Taxation without Representation</b> — the colonists' argument: they should not be taxed without a say in government.</p></div></details>
+
+  <details><summary>Road to Revolution</summary><div class="body"><ul>
+    <li><b>Townshend Act</b> — taxes on goods sent to the colonies from Britain (paint, tea, glass, paper goods, lead)</li>
+    <li><b>Boston Tea Party</b> (Dec 16, 1773) — caused by the Tea Act of 1773; patriots dressed as Mohawk Indians dumped <b>342</b> chests of tea into Boston Harbor</li>
+    <li><b>Intolerable Acts</b> — 5 laws passed to punish the colonists of Boston for destroying the British tea</li>
+    <li><b>First Continental Congress</b> — first meeting of colonial representatives (Georgia was not present); voted to cut off all trade with Britain (boycott) until the Intolerable Acts were repealed; issued a declaration of rights; sent petitions to King George III; agreed to meet again if things did not improve</li>
+  </ul></div></details>
+
+  <details><summary>Declaration of Independence</summary><div class="body"><ul>
+    <li>Written by <b>Thomas Jefferson</b></li>
+    <li>Stated 3 unalienable rights: <b>Life, Liberty, and the Pursuit of Happiness</b></li>
+    <li>Signed <b>July 4, 1776</b></li>
+  </ul></div></details>
+
+  <details><summary>Foreign Help During the War</summary><div class="body"><ul>
+    <li><b>France</b> — sent troops, money, supplies, and a navy</li>
+    <li><b>Poland</b> — built forts and defenses for troops</li>
+    <li><b>Germany</b> — trained troops without pay</li>
+    <li><b>Spain and Netherlands</b> — joined the fight against Britain</li>
+  </ul></div></details>
+
+  <details><summary>Key Battles &amp; Events</summary><div class="body"><ul>
+    <li><b>Battle of Saratoga</b> — Britain wanted to capture Saratoga to cut off New England; it finally convinced France to join America as an ally</li>
+    <li><b>Valley Forge</b> — Washington's army spent a very difficult winter here; extremely cold with no supplies</li>
+    <li><b>Battle of Yorktown</b> — final major battle of the American Revolution</li>
+    <li><b>Treaty of Paris</b> — officially ended the Revolutionary War</li>
+  </ul></div></details>
+</div>
+
+<!-- ============ FLASHCARDS ============ -->
+<div class="tab" id="tab-cards">
+  <h2 class="sec">Flashcards</h2>
+  <p class="muted center">Tap the card to flip • <b>Swipe left/right</b> (or use ◀ ▶) to move • Tap ⭐ to flag a card for <b>Smart Review</b></p>
+  <div class="fc-wrap">
+    <div class="fc-count" id="fcCount">Card 1 of 25</div>
+    <div class="fc-stage">
+      <div class="fc-card" id="fcCard">
+        <div class="fc-face fc-front">
+          <div class="fc-kicker">Term</div>
+          <div class="fc-term" id="fcTerm"></div>
+          <div class="fc-hint">tap to flip</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-kicker">Definition</div>
+          <div class="fc-def" id="fcDef"></div>
+          <div class="fc-hint">tap to flip back</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-ghost fc-nav" id="fcPrev">◀</button>
+      <button class="btn btn-ghost" id="fcFlip">🔄 Flip</button>
+      <button class="btn btn-ghost" id="fcFlag">⭐ Review later</button>
+      <button class="btn btn-ghost fc-nav" id="fcNext">▶</button>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-gold" id="fcShuffle">🔀 Shuffle</button>
+      <button class="btn btn-primary" id="fcSmart">🧠 Smart Review: OFF</button>
+    </div>
+    <p class="muted" id="fcSmartMsg"></p>
+  </div>
+</div>
+
+<!-- ============ QUIZ ============ -->
+<div class="tab" id="tab-quiz">
+  <h2 class="sec">Multiple-Choice Quiz</h2>
+  <div id="quizStart" class="center">
+    <p>10 random questions from your study guide. Wrong answers are tracked so <b>Smart Review</b> can quiz you on them later.</p>
+    <button class="btn btn-primary" id="quizBegin">▶ Start Quiz</button>
+  </div>
+  <div id="quizPlay" style="display:none">
+    <div class="progress"><div id="quizBar"></div></div>
+    <div class="muted" id="quizCount"></div>
+    <div class="q-card">
+      <div class="q-text" id="quizQ"></div>
+      <div id="quizChoices"></div>
+      <div id="quizExplain"></div>
+    </div>
+    <div class="center"><button class="btn btn-primary" id="quizNext" style="display:none">Next ▶</button></div>
+  </div>
+  <div id="quizDone" style="display:none" class="center">
+    <h3>Quiz complete!</h3>
+    <div class="score-big" id="quizScore"></div>
+    <p id="quizMsg"></p>
+    <button class="btn btn-primary" id="quizRetry">🔁 Try Again</button>
+  </div>
+</div>
+
+<!-- ============ MATCHING ============ -->
+<div class="tab" id="tab-match">
+  <h2 class="sec">Drag &amp; Drop Matching</h2>
+  <p class="muted center"><b>Drag</b> each term onto its matching definition — or <b>tap</b> a term, then tap a definition.</p>
+  <div class="center"><button class="btn btn-gold" id="matchNew">🔀 New Round (6 pairs)</button></div>
+  <div class="center muted" id="matchScore"></div>
+  <div class="match-cols">
+    <div class="match-col" id="matchTerms"><h3>Terms</h3></div>
+    <div class="match-col" id="matchDefs"><h3>Definitions</h3></div>
+  </div>
+  <div class="center" id="matchDone" style="display:none">
+    <h3 id="matchMsg"></h3>
+    <button class="btn btn-primary" id="matchAgain">▶ Play Again</button>
+  </div>
+</div>
+
+<!-- ============ FILL IN THE BLANK ============ -->
+<div class="tab" id="tab-fib">
+  <h2 class="sec">Fill in the Blank</h2>
+  <div id="fibStart" class="center">
+    <p>Complete each sentence by choosing the correct word or phrase.</p>
+    <button class="btn btn-primary" id="fibBegin">▶ Start</button>
+  </div>
+  <div id="fibPlay" style="display:none">
+    <div class="progress"><div id="fibBar"></div></div>
+    <div class="muted" id="fibCount"></div>
+    <div class="fib-sent" id="fibSent"></div>
+    <div id="fibChoices"></div>
+    <div id="fibExplain"></div>
+    <div class="center"><button class="btn btn-primary" id="fibNext" style="display:none">Next ▶</button></div>
+  </div>
+  <div id="fibDone" style="display:none" class="center">
+    <h3>All done!</h3>
+    <div class="score-big" id="fibScore"></div>
+    <button class="btn btn-primary" id="fibRetry">🔁 Try Again</button>
+  </div>
+</div>
+
+<!-- ============ PROGRESS ============ -->
+<div class="tab" id="tab-progress">
+  <h2 class="sec">📊 My Progress</h2>
+  <p class="muted">Results are saved on this device only (local storage).</p>
+  <h3>Recent Results</h3>
+  <div id="histWrap"></div>
+  <h3>⭐ Flagged for Smart Review</h3>
+  <div id="flagWrap"></div>
+  <h3>❌ Missed in Quizzes</h3>
+  <div id="missWrap"></div>
+  <div class="center" style="margin-top:18px">
+    <button class="btn btn-red" id="clearData">🗑 Clear All Saved Data</button>
+  </div>
+</div>
+
+<footer>Study hard, history buff! 🇺🇸</footer>
+</main>
+<script>
+/* ================= DATA ================= */
+const CARDS = [
+ {id:"repeal", t:"Repeal", d:"A vote to end a law"},
+ {id:"boycott", t:"Boycott", d:"An organized campaign where a group of individuals refuse to buy a certain product"},
+ {id:"proclamation", t:"Proclamation", d:"An important official announcement, usually made to the public"},
+ {id:"stamp", t:"Stamp Act", d:"A tax on all paper goods"},
+ {id:"teaact", t:"Tea Act of 1773", d:"Lowered the price of tea but kept the tax on tea; caused the Boston Tea Party"},
+ {id:"parliament", t:"Parliament", d:"Lawmaking body of England"},
+ {id:"loyalists", t:"Loyalists", d:"People who supported Great Britain"},
+ {id:"commonsense", t:"Common Sense", d:"A pamphlet by Thomas Paine that helped colonists choose independence"},
+ {id:"minutemen", t:"Minutemen", d:"American colonists ready to fight the British at a minute's notice"},
+ {id:"washington", t:"George Washington", d:"Served as leader of the Continental army"},
+ {id:"molly", t:"Molly Pitcher", d:"Mary Hayes — a woman who helped very thirsty men survive battles"},
+ {id:"jones", t:"John Paul Jones", d:"Captain of the Bonhomme Richard; known as the father of the American Navy"},
+ {id:"hale", t:"Nathan Hale", d:"Gave a speech to inspire colonists to keep fighting for independence"},
+ {id:"attucks", t:"Crispus Attucks", d:"Known as the first casualty of the American Revolutionary War"},
+ {id:"townshend", t:"Townshend Act", d:"Taxes on goods sent to the colonies from Britain (paint, tea, glass, paper goods, lead)"},
+ {id:"teaparty", t:"Boston Tea Party", d:"Dec 16, 1773 — patriots dressed as Mohawk Indians dumped 342 chests of tea into Boston Harbor"},
+ {id:"intolerable", t:"Intolerable Acts", d:"5 laws passed to punish the colonists of Boston for destroying the British tea"},
+ {id:"congress", t:"First Continental Congress", d:"First meeting of colonial representatives (Georgia absent); voted to boycott British trade until the Intolerable Acts were repealed"},
+ {id:"doi", t:"Declaration of Independence", d:"Written by Thomas Jefferson; 3 unalienable rights: Life, Liberty, Pursuit of Happiness; signed July 4, 1776"},
+ {id:"saratoga", t:"Battle of Saratoga", d:"Britain tried to cut off New England; convinced France to join America as an ally"},
+ {id:"valleyforge", t:"Valley Forge", d:"Washington's army spent a very difficult winter here — extremely cold with no supplies"},
+ {id:"yorktown", t:"Battle of Yorktown", d:"Final major battle of the American Revolution"},
+ {id:"paris", t:"Treaty of Paris", d:"Officially ended the Revolutionary War"},
+ {id:"notax", t:"No Taxation without Representation", d:"Colonists' argument: they should not be taxed without a say in government"},
+ {id:"fiwar", t:"French and Indian War", d:"1756–1763 — British fought the French and Indians for French territory"}
+];
+
+const QUIZ = [
+ {tag:"stamp", q:"What was the Stamp Act?", c:["A tax on all paper goods","A tax on tea sold in the colonies","A law that closed Boston Harbor","A vote to end a British law"], a:0, e:"The Stamp Act taxed all paper goods — newspapers, legal documents, even playing cards."},
+ {tag:"commonsense", q:"Who wrote the pamphlet “Common Sense”?", c:["Thomas Paine","Thomas Jefferson","George Washington","Nathan Hale"], a:0, e:"Thomas Paine's pamphlet helped convince colonists to choose independence."},
+ {tag:"teaparty", q:"When did the Boston Tea Party happen?", c:["December 16, 1773","July 4, 1776","March 5, 1770","October 19, 1781"], a:0, e:"On December 16, 1773, patriots dumped 342 chests of tea into Boston Harbor."},
+ {tag:"teaparty", q:"How many chests of tea were dumped into Boston Harbor?", c:["342","177","73","500"], a:0, e:"342 chests of tea were dumped by patriots dressed as Mohawk Indians."},
+ {tag:"saratoga", q:"Which battle finally convinced France to join America as an ally?", c:["Battle of Saratoga","Battle of Yorktown","Battle of Bunker Hill","Valley Forge"], a:0, e:"After Saratoga, France sent troops, money, supplies, and a navy."},
+ {tag:"attucks", q:"Who is known as the first casualty of the American Revolutionary War?", c:["Crispus Attucks","Nathan Hale","Molly Pitcher","John Paul Jones"], a:0, e:"Crispus Attucks was the first casualty of the war."},
+ {tag:"doi", q:"Which three rights are called “unalienable” in the Declaration of Independence?", c:["Life, Liberty, and the Pursuit of Happiness","Freedom, Equality, and Brotherhood","Life, Liberty, and Property","Speech, Religion, and Assembly"], a:0, e:"Jefferson wrote: Life, Liberty, and the Pursuit of Happiness."},
+ {tag:"saratoga", q:"Which country sent troops, money, supplies, AND a navy to help America?", c:["France","Spain","Poland","Germany"], a:0, e:"France sent troops, money, supplies, and a navy after the Battle of Saratoga."},
+ {tag:"yorktown", q:"What was the final major battle of the American Revolution?", c:["Battle of Yorktown","Battle of Saratoga","The Boston Tea Party","Valley Forge"], a:0, e:"Yorktown was the final major battle."},
+ {tag:"paris", q:"Which treaty officially ended the Revolutionary War?", c:["Treaty of Paris","Treaty of Versailles","The Proclamation","The Intolerable Acts"], a:0, e:"The Treaty of Paris officially ended the war."},
+ {tag:"repeal", q:"What does “repeal” mean?", c:["A vote to end a law","A tax on paper goods","An organized boycott","A public announcement"], a:0, e:"To repeal is to vote to end a law."},
+ {tag:"washington", q:"Who served as leader of the Continental army?", c:["George Washington","Thomas Jefferson","William Pitt","King George III"], a:0, e:"George Washington led the Continental army."},
+ {tag:"townshend", q:"What did the Townshend Act tax?", c:["Goods shipped to the colonies, like paint, tea, glass, paper, and lead","Only tea sold in Boston","All houses and land","Newspapers printed in London"], a:0, e:"The Townshend Act taxed goods sent to the colonies: paint, tea, glass, paper goods, and lead."},
+ {tag:"notax", q:"Why did colonists argue they should not be taxed?", c:["They had no say in the government (no representation)","They were too poor to pay any taxes","They preferred to pay in tea instead of money","England had promised never to tax them"], a:0, e:"“No Taxation without Representation” — they had no say in Parliament."},
+ {tag:"jones", q:"Who is known as the father of the American Navy?", c:["John Paul Jones","George Washington","Nathan Hale","Crispus Attucks"], a:0, e:"John Paul Jones captained the Bonhomme Richard."},
+ {tag:"valleyforge", q:"What happened at Valley Forge?", c:["Washington's army spent a freezing winter there with almost no supplies","The final battle of the war was fought","Tea was dumped into the harbor","The Declaration was signed"], a:0, e:"Valley Forge was a brutally cold winter with no supplies."}
+];
+
+const FIB = [
+ {tag:"stamp", pre:"The ", post:" was a tax on all paper goods.", c:["Stamp Act","Tea Act","Townshend Act","Intolerable Acts"], a:0},
+ {tag:"doi", pre:"", post:" wrote the Declaration of Independence.", c:["Thomas Jefferson","Thomas Paine","George Washington","John Paul Jones"], a:0, lead:true},
+ {tag:"teaparty", pre:"The Boston Tea Party happened on ", post:" 1773.", c:["December 16","July 4","April 19","October 17"], a:0},
+ {tag:"teaparty", pre:"Patriots dumped ", post:" chests of tea into Boston Harbor.", c:["342","177","73","500"], a:0},
+ {tag:"intolerable", pre:"The ", post:" Acts were 5 laws that punished Boston for the Tea Party.", c:["Intolerable","Townshend","Stamp","Tea"], a:0},
+ {tag:"jones", pre:"", post:" is known as the father of the American Navy.", c:["John Paul Jones","George Washington","Nathan Hale","Crispus Attucks"], a:0, lead:true},
+ {tag:"valleyforge", pre:"Washington's army spent a freezing winter with no supplies at ", post:".", c:["Valley Forge","Saratoga","Yorktown","Boston"], a:0},
+ {tag:"paris", pre:"The ", post:" officially ended the Revolutionary War.", c:["Treaty of Paris","Declaration of Independence","First Continental Congress","Proclamation"], a:0},
+ {tag:"minutemen", pre:"The ", post:" were colonists ready to fight the British at a minute's notice.", c:["Minutemen","Loyalists","Redcoats","Parliament"], a:0},
+ {tag:"boycott", pre:"The First Continental Congress voted to ", post:" British trade until the Intolerable Acts were repealed.", c:["boycott","repeal","proclaim","tax"], a:0}
+];
+
+/* ================= STORAGE ================= */
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const K_FLAGS="amrev_flags_v1", K_MISSED="amrev_missed_v1", K_SCORES="amrev_scores_v1";
+let flags = new Set(LS.get(K_FLAGS, []));
+let missed = new Set(LS.get(K_MISSED, []));
+function saveFlags(){ LS.set(K_FLAGS, [...flags]); }
+function saveMissed(){ LS.set(K_MISSED, [...missed]); }
+function saveScore(mode, score, total){
+  const s = LS.get(K_SCORES, []);
+  s.push({mode, score, total, pct: Math.round(score/total*100), ts: Date.now()});
+  LS.set(K_SCORES, s.slice(-30));
+}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+/* ================= TABS ================= */
+document.querySelectorAll("#tabs button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll("#tabs button").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById("tab-"+b.dataset.tab).classList.add("active");
+    if(b.dataset.tab==="progress") renderProgress();
+    window.scrollTo(0,0);
+  });
+});
+
+/* ================= FLASHCARDS ================= */
+let deck = CARDS.slice(), fIdx = 0, smartMode = false;
+const fcCard = document.getElementById("fcCard");
+function smartPool(){
+  const ids = new Set([...flags, ...missed]);
+  return CARDS.filter(c=>ids.has(c.id));
+}
+function renderCard(){
+  if(deck.length===0){
+    document.getElementById("fcTerm").textContent = "No cards here yet";
+    document.getElementById("fcDef").textContent = "Tap ⭐ on cards to flag them, then turn Smart Review ON.";
+    document.getElementById("fcCount").textContent = "";
+    return;
+  }
+  const c = deck[fIdx];
+  document.getElementById("fcTerm").textContent = c.t;
+  document.getElementById("fcDef").textContent = c.d;
+  document.getElementById("fcCount").textContent = "Card " + (fIdx+1) + " of " + deck.length;
+  const fb = document.getElementById("fcFlag");
+  fb.innerHTML = flags.has(c.id) ? "⭐ Flagged — tap to unflag" : "⭐ Review later";
+  fb.classList.toggle("flagged", flags.has(c.id));
+}
+function fcGo(d){
+  if(!deck.length) return;
+  fIdx = (fIdx + d + deck.length) % deck.length;
+  fcCard.classList.remove("flipped");
+  renderCard();
+}
+document.getElementById("fcNext").addEventListener("click", e=>{e.stopPropagation(); fcGo(1);});
+document.getElementById("fcPrev").addEventListener("click", e=>{e.stopPropagation(); fcGo(-1);});
+document.getElementById("fcFlip").addEventListener("click", e=>{e.stopPropagation(); fcCard.classList.toggle("flipped");});
+document.getElementById("fcFlag").addEventListener("click", e=>{
+  e.stopPropagation();
+  if(!deck.length) return;
+  const id = deck[fIdx].id;
+  flags.has(id) ? flags.delete(id) : flags.add(id);
+  saveFlags(); renderCard();
+});
+document.getElementById("fcShuffle").addEventListener("click", e=>{
+  e.stopPropagation();
+  deck = shuffle(deck); fIdx = 0;
+  fcCard.classList.remove("flipped"); renderCard();
+});
+document.getElementById("fcSmart").addEventListener("click", e=>{
+  e.stopPropagation();
+  smartMode = !smartMode;
+  e.target.textContent = "🧠 Smart Review: " + (smartMode ? "ON" : "OFF");
+  deck = smartMode ? smartPool() : CARDS.slice();
+  fIdx = 0; fcCard.classList.remove("flipped"); renderCard();
+  document.getElementById("fcSmartMsg").textContent = smartMode
+    ? "Showing only ⭐ flagged cards and ❌ missed quiz terms."
+    : "";
+});
+/* swipe + tap-to-flip (works with touch & mouse via Pointer Events) */
+(function(){
+  let sx=0, dx=0, dragging=false, pid=null;
+  fcCard.addEventListener("pointerdown", e=>{
+    if(e.target.closest("button")) return;
+    dragging=true; pid=e.pointerId; sx=e.clientX; dx=0;
+    try{ fcCard.setPointerCapture(pid); }catch(err){}
+  });
+  fcCard.addEventListener("pointermove", e=>{
+    if(!dragging || e.pointerId!==pid) return;
+    dx = e.clientX - sx;
+    fcCard.style.transition="none";
+    fcCard.style.transform = "translateX("+dx+"px) rotate("+(dx/25)+"deg)" + (fcCard.classList.contains("flipped")?" rotateY(180deg)":"");
+  });
+  function end(e){
+    if(!dragging || (pid!==null && e.pointerId!==pid)) return;
+    dragging=false; pid=null;
+    fcCard.style.transition=""; fcCard.style.transform="";
+    if(dx < -70) fcGo(1);
+    else if(dx > 70) fcGo(-1);
+    else if(Math.abs(dx) < 10) fcCard.classList.toggle("flipped");
+  }
+  fcCard.addEventListener("pointerup", end);
+  fcCard.addEventListener("pointercancel", ()=>{dragging=false; fcCard.style.transition=""; fcCard.style.transform="";});
+})();
+renderCard();
+
+/* ================= QUIZ ================= */
+let qList=[], qIdx=0, qScore=0;
+document.getElementById("quizBegin").addEventListener("click", ()=>{
+  qList = shuffle(QUIZ).slice(0,10); qIdx=0; qScore=0;
+  document.getElementById("quizStart").style.display="none";
+  document.getElementById("quizDone").style.display="none";
+  document.getElementById("quizPlay").style.display="block";
+  renderQ();
+});
+function renderQ(){
+  const q = qList[qIdx];
+  document.getElementById("quizBar").style.width = (qIdx/qList.length*100)+"%";
+  document.getElementById("quizCount").textContent = "Question "+(qIdx+1)+" of "+qList.length+" • Score: "+qScore;
+  document.getElementById("quizQ").textContent = q.q;
+  document.getElementById("quizExplain").innerHTML = "";
+  document.getElementById("quizNext").style.display="none";
+  const box = document.getElementById("quizChoices"); box.innerHTML="";
+  const order = shuffle(q.c.map((t,i)=>i));
+  order.forEach(ci=>{
+    const b=document.createElement("button");
+    b.className="choice"; b.textContent=q.c[ci];
+    b.addEventListener("click", ()=>{
+      const kids=[...box.children]; kids.forEach(k=>k.disabled=true);
+      kids[order.indexOf(q.a)].classList.add("correct");
+      if(ci===q.a){ qScore++; }
+      else{
+        b.classList.add("wrong");
+        missed.add(q.tag); saveMissed();
+      }
+      document.getElementById("quizExplain").innerHTML = "<div class='explain'>"+esc(q.e)+"</div>";
+      document.getElementById("quizNext").style.display="inline-block";
+    });
+    box.appendChild(b);
+  });
+}
+document.getElementById("quizNext").addEventListener("click", ()=>{
+  qIdx++;
+  if(qIdx>=qList.length){
+    document.getElementById("quizPlay").style.display="none";
+    document.getElementById("quizDone").style.display="block";
+    document.getElementById("quizScore").textContent = qScore+" / "+qList.length;
+    const pct=qScore/qList.length;
+    document.getElementById("quizMsg").textContent =
+      pct===1 ? "Perfect! 🏆" : pct>=.8 ? "Great job!" : pct>=.6 ? "Good — keep reviewing!" : "Keep studying — try Smart Review! 🧠";
+    saveScore("quiz", qScore, qList.length);
+  } else renderQ();
+});
+document.getElementById("quizRetry").addEventListener("click", ()=>document.getElementById("quizBegin").click());
+
+/* ================= MATCHING (drag & drop + tap) ================= */
+let mPairs=[], mCorrect=0, mTries=0, mSel=null;
+function newMatch(){
+  mPairs = shuffle(CARDS).slice(0,6);
+  mCorrect=0; mTries=0; mSel=null;
+  document.getElementById("matchDone").style.display="none";
+  document.getElementById("matchScore").textContent = "";
+  const tc=document.getElementById("matchTerms"), dc=document.getElementById("matchDefs");
+  tc.innerHTML="<h3>Terms</h3>"; dc.innerHTML="<h3>Definitions</h3>";
+  shuffle(mPairs).forEach(p=>{
+    const el=document.createElement("div");
+    el.className="chip"; el.textContent=p.t; el.dataset.id=p.id;
+    tc.appendChild(el); makeDraggable(el);
+    el.addEventListener("click", ()=>{
+      if(el.classList.contains("used")) return;
+      document.querySelectorAll(".chip").forEach(c=>c.classList.remove("selected"));
+      el.classList.add("selected"); mSel=el;
+    });
+  });
+  shuffle(mPairs).forEach(p=>{
+    const s=document.createElement("div");
+    s.className="slot"; s.dataset.id=p.id;
+    s.innerHTML="<span>"+esc(p.d)+"</span>";
+    dc.appendChild(s);
+    s.addEventListener("click", ()=>{ if(mSel) tryMatch(mSel, s); });
+  });
+}
+function tryMatch(chip, slot){
+  if(slot.classList.contains("filled")) return;
+  mTries++;
+  if(chip.dataset.id===slot.dataset.id){
+    slot.classList.add("filled","right");
+    slot.innerHTML="<b>"+esc(chip.textContent)+"</b> — "+slot.innerHTML;
+    chip.classList.add("used"); chip.classList.remove("selected");
+    mSel=null; mCorrect++;
+    document.getElementById("matchScore").textContent = mCorrect+" of "+mPairs.length+" matched";
+    if(mCorrect===mPairs.length){
+      document.getElementById("matchMsg").textContent =
+        "🎉 All matched in "+mTries+" tries!";
+      document.getElementById("matchDone").style.display="block";
+      saveScore("match", mCorrect, mTries);
+    }
+  } else {
+    slot.classList.add("wrong");
+    setTimeout(()=>slot.classList.remove("wrong"), 350);
+    const card = CARDS.find(c=>c.id===chip.dataset.id);
+    if(card){ missed.add(card.id); saveMissed(); }
+  }
+}
+function makeDraggable(el){
+  let ghost=null, sx=0, sy=0, active=false, pid=null;
+  el.addEventListener("pointerdown", e=>{
+    active=true; pid=e.pointerId; sx=e.clientX; sy=e.clientY;
+    try{ el.setPointerCapture(pid); }catch(err){}
+  });
+  el.addEventListener("pointermove", e=>{
+    if(!active || e.pointerId!==pid) return;
+    if(!ghost && Math.hypot(e.clientX-sx, e.clientY-sy) > 8){
+      ghost=document.createElement("div");
+      ghost.className="drag-ghost"; ghost.textContent=el.textContent;
+      document.body.appendChild(ghost);
+    }
+    if(ghost){ ghost.style.left=(e.clientX-60)+"px"; ghost.style.top=(e.clientY-24)+"px"; }
+  });
+  function drop(e){
+    if(!active || (pid!==null && e.pointerId!==pid)) return;
+    const wasDrag = !!ghost;
+    active=false; pid=null;
+    if(ghost){ ghost.remove(); ghost=null; }
+    if(!wasDrag) return; // it was a tap — click handler deals with it
+    const t=document.elementFromPoint(e.clientX, e.clientY);
+    const slot = t && t.closest ? t.closest(".slot") : null;
+    if(slot) tryMatch(el, slot);
+  }
+  el.addEventListener("pointerup", drop);
+  el.addEventListener("pointercancel", ()=>{ active=false; if(ghost){ghost.remove(); ghost=null;} });
+}
+document.getElementById("matchNew").addEventListener("click", newMatch);
+document.getElementById("matchAgain").addEventListener("click", newMatch);
+newMatch();
+
+/* ================= FILL IN THE BLANK ================= */
+let fList=[], fibIdx=0, fScore=0;
+document.getElementById("fibBegin").addEventListener("click", ()=>{
+  fList = shuffle(FIB); fibIdx=0; fScore=0;
+  document.getElementById("fibStart").style.display="none";
+  document.getElementById("fibDone").style.display="none";
+  document.getElementById("fibPlay").style.display="block";
+  renderFib();
+});
+function renderFib(){
+  const f = fList[fibIdx];
+  document.getElementById("fibBar").style.width=(fibIdx/fList.length*100)+"%";
+  document.getElementById("fibCount").textContent="Sentence "+(fibIdx+1)+" of "+fList.length+" • Score: "+fScore;
+  document.getElementById("fibSent").innerHTML = esc(f.pre) + '<span class="blank" id="fibBlank">&nbsp;&nbsp;?&nbsp;&nbsp;</span>' + esc(f.post);
+  document.getElementById("fibExplain").innerHTML="";
+  document.getElementById("fibNext").style.display="none";
+  const box=document.getElementById("fibChoices"); box.innerHTML="";
+  const order=shuffle(f.c.map((t,i)=>i));
+  order.forEach(ci=>{
+    const b=document.createElement("button");
+    b.className="choice"; b.textContent=f.c[ci];
+    b.addEventListener("click", ()=>{
+      [...box.children].forEach(k=>k.disabled=true);
+      document.getElementById("fibBlank").textContent = f.c[ci];
+      const kids=[...box.children]; kids[order.indexOf(f.a)].classList.add("correct");
+      if(ci===f.a){ fScore++; }
+      else{ b.classList.add("wrong"); missed.add(f.tag); saveMissed(); }
+      document.getElementById("fibNext").style.display="inline-block";
+    });
+    box.appendChild(b);
+  });
+}
+document.getElementById("fibNext").addEventListener("click", ()=>{
+  fibIdx++;
+  if(fibIdx>=fList.length){
+    document.getElementById("fibPlay").style.display="none";
+    document.getElementById("fibDone").style.display="block";
+    document.getElementById("fibScore").textContent=fScore+" / "+fList.length;
+    saveScore("fib", fScore, fList.length);
+  } else renderFib();
+});
+document.getElementById("fibRetry").addEventListener("click", ()=>document.getElementById("fibBegin").click());
+
+/* ================= PROGRESS ================= */
+function fmtDate(ts){
+  const d=new Date(ts);
+  return (d.getMonth()+1)+"/"+d.getDate()+" "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
+}
+function renderProgress(){
+  const s=LS.get(K_SCORES, []).slice().reverse();
+  const hw=document.getElementById("histWrap");
+  if(!s.length){ hw.innerHTML='<p class="muted">No results yet — take a quiz or play a round!</p>'; }
+  else{
+    let h='<table class="hist"><tr><th>Activity</th><th>Score</th><th>When</th></tr>';
+    s.slice(0,10).forEach(r=>{
+      const label = r.mode==="quiz"?"✏️ Quiz":r.mode==="match"?"🧩 Match":"📝 Fill in Blank";
+      h+="<tr><td>"+label+"</td><td>"+r.score+" / "+r.total+" ("+r.pct+"%)</td><td>"+fmtDate(r.ts)+"</td></tr>";
+    });
+    hw.innerHTML=h+"</table>";
+  }
+  const fw=document.getElementById("flagWrap");
+  if(!flags.size){ fw.innerHTML='<p class="muted">None flagged. On a flashcard, tap <b>⭐ Review later</b>.</p>'; }
+  else{
+    fw.innerHTML=[...flags].map(id=>{
+      const c=CARDS.find(x=>x.id===id); if(!c) return "";
+      return '<span class="pill">'+esc(c.t)+'<button data-unflag="'+id+'" title="remove">✖</button></span>';
+    }).join("");
+    fw.querySelectorAll("[data-unflag]").forEach(b=>b.addEventListener("click",()=>{
+      flags.delete(b.dataset.unflag); saveFlags(); renderProgress(); renderCard();
+    }));
+  }
+  const mw=document.getElementById("missWrap");
+  if(!missed.size){ mw.innerHTML='<p class="muted">Nothing missed yet. 🎉</p>'; }
+  else{
+    mw.innerHTML=[...missed].map(id=>{
+      const c=CARDS.find(x=>x.id===id); if(!c) return "";
+      return '<span class="pill">'+esc(c.t)+"</span>";
+    }).join("") + '<p class="muted">These also appear in 🧠 Smart Review on the Flashcards tab.</p>';
+  }
+}
+document.getElementById("clearData").addEventListener("click", ()=>{
+  if(confirm("Clear all saved results, flagged cards, and missed terms?")){
+    localStorage.removeItem(K_FLAGS); localStorage.removeItem(K_MISSED); localStorage.removeItem(K_SCORES);
+    flags.clear(); missed.clear(); renderProgress(); renderCard();
+  }
+});
+</script>
+</body>
+</html>
