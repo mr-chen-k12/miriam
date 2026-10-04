@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 36 — 10-3Miri — Solutions</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  body{font-family:Georgia,serif; max-width:860px; margin:0 auto; padding:20px 16px 60px; background:#faf8f2; color:#222; line-height:1.6;}
+  h1{text-align:center; color:#1a3a5c; border-bottom:3px solid #1a3a5c; padding-bottom:10px;}
+  h2{color:#1a3a5c; margin-top:34px; border-bottom:2px solid #d4c99a; padding-bottom:6px;}
+  .card{background:#fff; border:1px solid #ddd5bd; border-radius:10px; padding:14px 16px; margin:12px 0; box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .q{font-size:1.02em;}
+  .q .num{font-weight:bold; color:#1a3a5c; margin-right:6px;}
+  .tag{background:#e8eef5; color:#1a3a5c; font-size:.78em; border-radius:4px; padding:2px 7px; margin-right:6px; white-space:nowrap;}
+  button{background:#1a3a5c; color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:.95em; cursor:pointer; margin-top:10px; font-family:inherit;}
+  button:hover{background:#2a5a8c;}
+  .a{display:none; margin-top:12px; padding:12px 14px; background:#f2f7ee; border-left:4px solid #3a7d2c; border-radius:0 8px 8px 0;}
+  .ans{font-weight:bold; color:#1a3a5c;}
+  .sol{margin-top:6px;}
+  svg{display:block; margin:10px auto; max-width:100%;}
+  .figcap{text-align:center; font-size:.85em; color:#666; margin-top:-4px;}
+  @media print{
+    button{display:none;}
+    .a{display:none !important;}
+    body{background:#fff;}
+    .card{box-shadow:none; break-inside:avoid;}
+  }
+</style>
+<script>
+function toggle(id){
+  var e=document.getElementById(id);
+  var b=e.previousElementSibling;
+  if(e.style.display==='block'){e.style.display='none'; b.textContent='Show Answer & Solution';}
+  else{e.style.display='block'; b.textContent='Hide Answer & Solution';}
+}
+</script>
+</head>
+<body>
+<h1>Lesson 36 — Homework Solutions</h1>
+<p style="text-align:center;color:#666">Saxon Math Grade 4 &nbsp;•&nbsp; Click <b>Show Answer &amp; Solution</b> to reveal each answer.</p>
+
+<h2>Lesson Practice</h2>
+
+<div class="card" id="q6">
+  <div class="q"><span class="num">6.</span><span class="tag">Represent</span>Use words to write \(2{,}700{,}000\).</div>
+  <button onclick="toggle('a6')">Show Answer &amp; Solution</button>
+  <div class="a" id="a6">
+    <div class="ans">Answer: two million, seven hundred thousand</div>
+    <div class="sol">The digit \(2\) is in the millions place and \(7\) is in the hundred-thousands place, so \(2{,}700{,}000\) = two million, seven hundred thousand.</div>
+  </div>
+</div>
+
+<div class="card" id="q7">
+  <div class="q"><span class="num">7.</span><span class="tag">Represent</span>Use digits to write eighty-two thousand, five hundred.</div>
+  <button onclick="toggle('a7')">Show Answer &amp; Solution</button>
+  <div class="a" id="a7">
+    <div class="ans">Answer: \(82{,}500\)</div>
+    <div class="sol">“Eighty-two thousand” = \(82{,}000\) and “five hundred” = \(500\). \(82{,}000 + 500 = 82{,}500\).</div>
+  </div>
+</div>
+
+<div class="card" id="q8">
+  <div class="q"><span class="num">8.</span>Each day, classes at Kennedy Elementary School end 4 hours 20 minutes later than the time shown on the clock. What time do classes end each day?
+  <svg width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="Clock showing 10:40">
+    <circle cx="110" cy="110" r="100" fill="#fff" stroke="#333" stroke-width="4"/>
+    <circle cx="110" cy="110" r="94" fill="none" stroke="#999" stroke-width="1"/>
+    <g font-family="Georgia" font-size="16" text-anchor="middle" fill="#222">
+      <text x="110" y="34">12</text><text x="152" y="45">1</text><text x="183" y="76">2</text>
+      <text x="194" y="116">3</text><text x="183" y="156">4</text><text x="152" y="187">5</text>
+      <text x="110" y="198">6</text><text x="68" y="187">7</text><text x="37" y="156">8</text>
+      <text x="26" y="116">9</text><text x="37" y="76">10</text><text x="68" y="45">11</text>
+    </g>
+    <g stroke="#333" stroke-width="2">
+      <line x1="110" y1="110" x2="110" y2="22"/><line x1="110" y1="110" x2="198" y2="110"/>
+      <line x1="110" y1="110" x2="110" y2="198"/><line x1="110" y1="110" x2="22" y2="110"/>
+    </g>
+    <g stroke="#333" stroke-width="1">
+      <line x1="110" y1="110" x2="154" y2="34"/><line x1="110" y1="110" x2="186" y2="154"/>
+      <line x1="110" y1="110" x2="66" y2="186"/><line x1="110" y1="110" x2="34" y2="66"/>
+    </g>
+    <!-- hour hand: 10:40 -> 320 deg from 12 -->
+    <line x1="110" y1="110" x2="79" y2="49" stroke="#222" stroke-width="7" stroke-linecap="round"/>
+    <!-- minute hand: 40 min -> 240 deg from 12 -->
+    <line x1="110" y1="110" x2="36" y2="147" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="110" cy="110" r="7" fill="#222"/>
+  </svg>
+  <div class="figcap">The clock shows 10:40.</div></div>
+  <button onclick="toggle('a8')">Show Answer &amp; Solution</button>
+  <div class="a" id="a8">
+    <div class="ans">Answer: 3:00</div>
+    <div class="sol">The clock shows 10:40. Add 4 hours: \(10{:}40 + 4\text{ hr} = 2{:}40\). Add 20 minutes: \(2{:}40 + 20\text{ min} = 3{:}00\).</div>
+  </div>
+</div>
+
+<div class="card" id="q9">
+  <div class="q"><span class="num">9.</span><span class="tag">Connect</span>Change this addition problem to a multiplication problem: \[4+4+4+4+4+4+4+4\]</div>
+  <button onclick="toggle('a9')">Show Answer &amp; Solution</button>
+  <div class="a" id="a9">
+    <div class="ans">Answer: \(8 \times 4 = 32\)</div>
+    <div class="sol">There are eight 4's being added. Repeated addition of the same number is multiplication: \(8 \times 4 = 32\).</div>
+  </div>
+</div>
+
+<div class="card" id="q10">
+  <div class="q"><span class="num">10.</span><b>a.</b> Round \(176\) to the nearest ten.<br><b>b.</b> Round \(\$17.60\) to the nearest dollar.</div>
+  <button onclick="toggle('a10')">Show Answer &amp; Solution</button>
+  <div class="a" id="a10">
+    <div class="ans">Answer: a. \(180\) &nbsp; b. \(\$18\)</div>
+    <div class="sol"><b>a.</b> The ones digit of \(176\) is \(6 \ge 5\), so round the tens place up: \(176 \to 180\).<br><b>b.</b> \(\$17.60\) has \(60¢ \ge 50¢\), so round up to the next whole dollar: \(\$18\).</div>
+  </div>
+</div>
+
+<div class="card" id="q11">
+  <div class="q"><span class="num">11.</span><span class="tag">Represent</span>The number represented by point \(X\) is how much less than the number represented by point \(Y\)?
+  <svg width="520" height="90" viewBox="0 0 520 90" role="img" aria-label="Number line with X at 580 and Y at 680">
+    <line x1="20" y1="45" x2="500" y2="45" stroke="#333" stroke-width="2"/>
+    <polygon points="20,45 34,39 34,51" fill="#333"/><polygon points="500,45 486,39 486,51" fill="#333"/>
+    <g stroke="#333" stroke-width="2">
+      <line x1="60" y1="37" x2="60" y2="53"/><line x1="108" y1="39" x2="108" y2="51"/>
+      <line x1="156" y1="39" x2="156" y2="51"/><line x1="204" y1="39" x2="204" y2="51"/>
+      <line x1="252" y1="37" x2="252" y2="53"/><line x1="300" y1="39" x2="300" y2="51"/>
+      <line x1="348" y1="39" x2="348" y2="51"/><line x1="396" y1="39" x2="396" y2="51"/>
+      <line x1="444" y1="37" x2="444" y2="53"/>
+    </g>
+    <g font-family="Georgia" font-size="17" text-anchor="middle" fill="#222">
+      <text x="60" y="78">500</text><text x="252" y="78">600</text><text x="444" y="78">700</text>
+      <text x="204" y="28">X</text><text x="396" y="28">Y</text>
+    </g>
+    <circle cx="204" cy="45" r="7" fill="#1a3a5c"/><circle cx="396" cy="45" r="7" fill="#1a3a5c"/>
+  </svg></div>
+  <button onclick="toggle('a11')">Show Answer &amp; Solution</button>
+  <div class="a" id="a11">
+    <div class="ans">Answer: \(100\) less</div>
+    <div class="sol">Each tick mark stands for \(20\). Point \(X\) is one tick before \(600\), so \(X = 580\). Point \(Y\) is one tick before \(700\), so \(Y = 680\). \(680 - 580 = 100\).</div>
+  </div>
+</div>
+
+<div class="card" id="q12">
+  <div class="q"><span class="num">12.</span>Multiply: <b>a.</b> \(2 \times 8\) &nbsp; <b>b.</b> \(5 \times 6\) &nbsp; <b>c.</b> \(4 \times 5\) &nbsp; <b>d.</b> \(5 \times 8\)</div>
+  <button onclick="toggle('a12')">Show Answer &amp; Solution</button>
+  <div class="a" id="a12">
+    <div class="ans">Answer: a. \(16\) &nbsp; b. \(30\) &nbsp; c. \(20\) &nbsp; d. \(40\)</div>
+    <div class="sol">\(2 \times 8 = 16\), \(5 \times 6 = 30\), \(4 \times 5 = 20\), \(5 \times 8 = 40\).</div>
+  </div>
+</div>
+
+<div class="card" id="q13">
+  <div class="q"><span class="num">13.</span><b>a.</b> \(3 \times 3\) &nbsp; <b>b.</b> \(5 \times 5\) &nbsp; <b>c.</b> \(9 \times 9\) &nbsp; <b>d.</b> \(10 \times 10\)</div>
+  <button onclick="toggle('a13')">Show Answer &amp; Solution</button>
+  <div class="a" id="a13">
+    <div class="ans">Answer: a. \(9\) &nbsp; b. \(25\) &nbsp; c. \(81\) &nbsp; d. \(100\)</div>
+    <div class="sol">\(3 \times 3 = 9\), \(5 \times 5 = 25\), \(9 \times 9 = 81\), \(10 \times 10 = 100\).</div>
+  </div>
+</div>
+
+<div class="card" id="q14">
+  <div class="q"><span class="num">14.</span><b>a.</b> \(9 \times 7\) &nbsp; <b>b.</b> \(9 \times 4\) &nbsp; <b>c.</b> \(9 \times 8\) &nbsp; <b>d.</b> \(9 \times 12\)</div>
+  <button onclick="toggle('a14')">Show Answer &amp; Solution</button>
+  <div class="a" id="a14">
+    <div class="ans">Answer: a. \(63\) &nbsp; b. \(36\) &nbsp; c. \(72\) &nbsp; d. \(108\)</div>
+    <div class="sol">\(9 \times 7 = 63\), \(9 \times 4 = 36\), \(9 \times 8 = 72\), \(9 \times 12 = 108\).</div>
+  </div>
+</div>
+
+<div class="card" id="q15">
+  <div class="q"><span class="num">15.</span>\[\sqrt{36}+\sqrt{49}\]</div>
+  <button onclick="toggle('a15')">Show Answer &amp; Solution</button>
+  <div class="a" id="a15">
+    <div class="ans">Answer: \(13\)</div>
+    <div class="sol">\(\sqrt{36} = 6\) and \(\sqrt{49} = 7\), so \(6 + 7 = 13\).</div>
+  </div>
+</div>
+
+<div class="card" id="qc">
+  <div class="q"><span class="num">c.</span>Fifty pennies are what fraction of a dollar? Write the value of 50 pennies using a dollar sign and a decimal point.</div>
+  <button onclick="toggle('ac')">Show Answer &amp; Solution</button>
+  <div class="a" id="ac">
+    <div class="ans">Answer: \(\frac{1}{2}\) of a dollar; \(\$0.50\)</div>
+    <div class="sol">50 pennies = 50 cents out of 100 cents = \(\frac{50}{100} = \frac{1}{2}\) of a dollar, which is written \(\$0.50\).</div>
+  </div>
+</div>
+
+<div class="card" id="qd">
+  <div class="q"><span class="num">d.</span>Compare: \(\frac{1}{10}\) of a dollar ○ \(\frac{1}{4}\) of a dollar</div>
+  <button onclick="toggle('ad')">Show Answer &amp; Solution</button>
+  <div class="a" id="ad">
+    <div class="ans">Answer: \(\frac{1}{10} < \frac{1}{4}\)</div>
+    <div class="sol">\(\frac{1}{10}\) of a dollar = \(\$0.10\) and \(\frac{1}{4}\) of a dollar = \(\$0.25\). Since \(\$0.10 < \$0.25\), \(\frac{1}{10} < \frac{1}{4}\).</div>
+  </div>
+</div>
+
+<div class="card" id="qe">
+  <div class="q"><span class="num">e.</span>Compare: \(\frac{1}{2}\) of a dollar ○ \(\$0.25\)</div>
+  <button onclick="toggle('ae')">Show Answer &amp; Solution</button>
+  <div class="a" id="ae">
+    <div class="ans">Answer: \(\frac{1}{2} > \$0.25\)</div>
+    <div class="sol">\(\frac{1}{2}\) of a dollar = \(\$0.50\), and \(\$0.50 > \$0.25\).</div>
+  </div>
+</div>
+
+<div class="card" id="qf">
+  <div class="q"><span class="num">f.</span>Look at these coins: a nickel (5¢), a quarter (25¢), a dime (10¢), and a half-dollar (50¢). List all of the different ways to pair two coins.
+  <svg width="440" height="120" viewBox="0 0 440 120" role="img" aria-label="Four coins: nickel, quarter, dime, half-dollar">
+    <g font-family="Georgia" font-size="15" text-anchor="middle" fill="#222">
+      <circle cx="60" cy="55" r="42" fill="#d9d9d9" stroke="#666" stroke-width="2"/><text x="60" y="52">nickel</text><text x="60" y="72">5¢</text>
+      <circle cx="170" cy="55" r="42" fill="#d9d9d9" stroke="#666" stroke-width="2"/><text x="170" y="52">quarter</text><text x="170" y="72">25¢</text>
+      <circle cx="280" cy="55" r="42" fill="#d9d9d9" stroke="#666" stroke-width="2"/><text x="280" y="52">dime</text><text x="280" y="72">10¢</text>
+      <circle cx="390" cy="55" r="42" fill="#d9d9d9" stroke="#666" stroke-width="2"/><text x="390" y="52">half-$</text><text x="390" y="72">50¢</text>
+    </g>
+  </svg></div>
+  <button onclick="toggle('af')">Show Answer &amp; Solution</button>
+  <div class="a" id="af">
+    <div class="ans">Answer: 6 pairs — nickel+quarter (30¢), nickel+dime (15¢), nickel+half-dollar (55¢), quarter+dime (35¢), quarter+half-dollar (75¢), dime+half-dollar (60¢)</div>
+    <div class="sol">With 4 coins, the number of ways to choose 2 is \(\frac{4 \times 3}{2} = 6\). The pairs are: (5¢, 25¢), (5¢, 10¢), (5¢, 50¢), (25¢, 10¢), (25¢, 50¢), (10¢, 50¢).</div>
+  </div>
+</div>
+
+<h2>Written Practice</h2>
+<p><i>Formulate — Write and solve equations for problems 1–3.</i></p>
+
+<div class="card" id="q1">
+  <div class="q"><span class="num">1.</span>Quinh is 49 inches tall. His dad is 70 inches tall. Quinh is how many inches shorter than his dad?</div>
+  <button onclick="toggle('a1')">Show Answer &amp; Solution</button>
+  <div class="a" id="a1">
+    <div class="ans">Answer: \(21\) inches shorter</div>
+    <div class="sol">\(70 - 49 = 21\). Quinh is 21 inches shorter than his dad.</div>
+  </div>
+</div>
+
+<div class="card" id="q2">
+  <div class="q"><span class="num">2.</span>Smith went into the store with \(\$36.49\). He bought a book and left the store with \(\$11.80\). How much money did Smith spend in the store?</div>
+  <button onclick="toggle('a2')">Show Answer &amp; Solution</button>
+  <div class="a" id="a2">
+    <div class="ans">Answer: \(\$24.69\)</div>
+    <div class="sol">\(\$36.49 - \$11.80 = \$24.69\). Smith spent \(\$24.69\).</div>
+  </div>
+</div>
+
+<div class="card" id="q3">
+  <div class="q"><span class="num">3.</span>Beth answered eleven of the twenty-five questions at school. She answered the rest of the questions as homework. How many questions did Beth answer as homework?</div>
+  <button onclick="toggle('a3')">Show Answer &amp; Solution</button>
+  <div class="a" id="a3">
+    <div class="ans">Answer: \(14\) questions</div>
+    <div class="sol">\(25 - 11 = 14\). Beth answered 14 questions as homework.</div>
+  </div>
+</div>
+
+<div class="card" id="q4">
+  <div class="q"><span class="num">4.</span>Write the number of shaded rectangles shown as a mixed number.
+  <svg width="340" height="130" viewBox="0 0 340 130" role="img" aria-label="Three shaded rectangles and one rectangle with one of six parts shaded">
+    <g stroke="#333" stroke-width="2">
+      <rect x="10" y="10" width="140" height="48" fill="#8fa3b8"/>
+      <rect x="180" y="10" width="140" height="48" fill="#8fa3b8"/>
+      <rect x="10" y="72" width="140" height="48" fill="#8fa3b8"/>
+      <rect x="180" y="72" width="140" height="48" fill="#fff"/>
+      <line x1="226.7" y1="72" x2="226.7" y2="120"/><line x1="273.3" y1="72" x2="273.3" y2="120"/>
+      <line x1="180" y1="96" x2="320" y2="96"/>
+      <rect x="273.3" y="96" width="46.7" height="24" fill="#8fa3b8" stroke="none"/>
+      <rect x="180" y="72" width="140" height="48" fill="none"/>
+    </g>
+  </svg></div>
+  <button onclick="toggle('a4')">Show Answer &amp; Solution</button>
+  <div class="a" id="a4">
+    <div class="ans">Answer: \(3\frac{1}{6}\)</div>
+    <div class="sol">Three whole rectangles are shaded, and the fourth rectangle is divided into 6 equal parts with 1 part shaded, so the mixed number is \(3\frac{1}{6}\).</div>
+  </div>
+</div>
+
+<div class="card" id="q5">
+  <div class="q"><span class="num">5.</span><span class="tag">Verify</span>Which letter below appears to have no right angles?<br><span style="font-size:1.6em; letter-spacing:14px; font-family:Georgia;">THEN</span></div>
+  <button onclick="toggle('a5')">Show Answer &amp; Solution</button>
+  <div class="a" id="a5">
+    <div class="ans">Answer: N</div>
+    <div class="sol">T, H, and E are all made with horizontal and vertical segments that meet at right angles. N has a diagonal segment, so it has no right angles.</div>
+  </div>
+</div>
+
+<div class="card" id="q16">
+  <div class="q"><span class="num">16.</span>\[\begin{array}{r}\$7.32\\-\$3.45\\\hline\end{array}\]</div>
+  <button onclick="toggle('a16')">Show Answer &amp; Solution</button>
+  <div class="a" id="a16">
+    <div class="ans">Answer: \(\$3.87\)</div>
+    <div class="sol">\(\$7.32 - \$3.45 = \$3.87\).</div>
+  </div>
+</div>
+
+<div class="card" id="q17">
+  <div class="q"><span class="num">17.</span>\[\begin{array}{r}\$4.89\\+\$2.57\\\hline\end{array}\]</div>
+  <button onclick="toggle('a17')">Show Answer &amp; Solution</button>
+  <div class="a" id="a17">
+    <div class="ans">Answer: \(\$7.46\)</div>
+    <div class="sol">\(\$4.89 + \$2.57 = \$7.46\).</div>
+  </div>
+</div>
+
+<div class="card" id="q18">
+  <div class="q"><span class="num">18.</span>\[\begin{array}{r}464\\-238\\\hline\end{array}\]</div>
+  <button onclick="toggle('a18')">Show Answer &amp; Solution</button>
+  <div class="a" id="a18">
+    <div class="ans">Answer: \(226\)</div>
+    <div class="sol">\(464 - 238 = 226\).</div>
+  </div>
+</div>
+
+<div class="card" id="q19">
+  <div class="q"><span class="num">19.</span>\[\begin{array}{r}548\\+999\\\hline\end{array}\]</div>
+  <button onclick="toggle('a19')">Show Answer &amp; Solution</button>
+  <div class="a" id="a19">
+    <div class="ans">Answer: \(1{,}547\)</div>
+    <div class="sol">\(548 + 999 = 1{,}547\).</div>
+  </div>
+</div>
+
+<div class="card" id="q20">
+  <div class="q"><span class="num">20.</span>\[\begin{array}{r}487\\+\quad z\\\hline721\end{array}\]</div>
+  <button onclick="toggle('a20')">Show Answer &amp; Solution</button>
+  <div class="a" id="a20">
+    <div class="ans">Answer: \(z = 234\)</div>
+    <div class="sol">\(487 + z = 721\), so \(z = 721 - 487 = 234\).</div>
+  </div>
+</div>
+
+<div class="card" id="q21">
+  <div class="q"><span class="num">21.</span>\[\begin{array}{r}250\\-\quad c\\\hline122\end{array}\]</div>
+  <button onclick="toggle('a21')">Show Answer &amp; Solution</button>
+  <div class="a" id="a21">
+    <div class="ans">Answer: \(c = 128\)</div>
+    <div class="sol">\(250 - c = 122\), so \(c = 250 - 122 = 128\).</div>
+  </div>
+</div>
+
+<div class="card" id="q22">
+  <div class="q"><span class="num">22.</span>\[c - 338 = 238\]</div>
+  <button onclick="toggle('a22')">Show Answer &amp; Solution</button>
+  <div class="a" id="a22">
+    <div class="ans">Answer: \(c = 576\)</div>
+    <div class="sol">\(c = 238 + 338 = 576\).</div>
+  </div>
+</div>
+
+<div class="card" id="q23">
+  <div class="q"><span class="num">23.</span>\[87 - b = 54\]</div>
+  <button onclick="toggle('a23')">Show Answer &amp; Solution</button>
+  <div class="a" id="a23">
+    <div class="ans">Answer: \(b = 33\)</div>
+    <div class="sol">\(b = 87 - 54 = 33\).</div>
+  </div>
+</div>
+
+<div class="card" id="q24">
+  <div class="q"><span class="num">24.</span>Which digit in \(8{,}367{,}254\) is in the ten-thousands place?</div>
+  <button onclick="toggle('a24')">Show Answer &amp; Solution</button>
+  <div class="a" id="a24">
+    <div class="ans">Answer: \(6\)</div>
+    <div class="sol">Reading places from the right: ones \(4\), tens \(5\), hundreds \(2\), thousands \(7\), <b>ten-thousands \(6\)</b>, hundred-thousands \(3\), millions \(8\).</div>
+  </div>
+</div>
+
+<div class="card" id="q25">
+  <div class="q"><span class="num">25.</span><span class="tag">Multiple Choice</span>Which of the money amounts below does <b>not</b> equal one half of a dollar?<br><b>A</b> 2 quarters &nbsp;&nbsp; <b>B</b> 0.50¢ &nbsp;&nbsp; <b>C</b> $0.50 &nbsp;&nbsp; <b>D</b> 50¢</div>
+  <button onclick="toggle('a25')">Show Answer &amp; Solution</button>
+  <div class="a" id="a25">
+    <div class="ans">Answer: B</div>
+    <div class="sol">2 quarters = 50¢, \(\$0.50\) = 50¢, and 50¢ all equal half a dollar. But \(0.50¢\) means half of one <i>cent</i> (\(\$0.005\)), which is not half a dollar.</div>
+  </div>
+</div>
+
+<div class="card" id="q26">
+  <div class="q"><span class="num">26.</span><span class="tag">Multiple Choice</span>If a rectangle is 5 in. long and 4 in. wide, then its area is _______.<br><b>A</b> 9 in. &nbsp;&nbsp; <b>B</b> 18 in. &nbsp;&nbsp; <b>C</b> 20 sq. in. &nbsp;&nbsp; <b>D</b> 18 sq. in.</div>
+  <button onclick="toggle('a26')">Show Answer &amp; Solution</button>
+  <div class="a" id="a26">
+    <div class="ans">Answer: C</div>
+    <div class="sol">Area of a rectangle = length × width = \(5 \times 4 = 20\) square inches.</div>
+  </div>
+</div>
+
+<div class="card" id="q27">
+  <div class="q"><span class="num">27.</span>Compare: <b>a.</b> \(-12\) ○ \(-21\) &nbsp;&nbsp; <b>b.</b> \(\frac{1}{4}\) of a dollar ○ \(\$0.25\)</div>
+  <button onclick="toggle('a27')">Show Answer &amp; Solution</button>
+  <div class="a" id="a27">
+    <div class="ans">Answer: a. \(-12 > -21\) &nbsp; b. \(=\)</div>
+    <div class="sol"><b>a.</b> On the number line \(-12\) is to the right of \(-21\), so \(-12 > -21\).<br><b>b.</b> \(\frac{1}{4}\) of a dollar = \(\$0.25\), so they are equal.</div>
+  </div>
+</div>
+
+<div class="card" id="q28">
+  <div class="q"><span class="num">28.</span><span class="tag">Predict</span>Write the tenth term of each pattern below:<br><b>a.</b> \(12, 24, 36, 48, 60, \dots\)<br><b>b.</b> \(11, 22, 33, 44, 55, \dots\)</div>
+  <button onclick="toggle('a28')">Show Answer &amp; Solution</button>
+  <div class="a" id="a28">
+    <div class="ans">Answer: a. \(120\) &nbsp; b. \(110\)</div>
+    <div class="sol"><b>a.</b> The pattern counts by 12's (multiples of 12). The \(n\)th term is \(12n\), so the 10th term is \(12 \times 10 = 120\).<br><b>b.</b> The pattern counts by 11's. The 10th term is \(11 \times 10 = 110\).</div>
+  </div>
+</div>
+
+<div class="card" id="q29">
+  <div class="q"><span class="num">29.</span>Look at these bills: a \(\$1\) bill, a \(\$5\) bill, a \(\$10\) bill, and a \(\$20\) bill. List all of the different ways to pair two bills.
+  <svg width="460" height="110" viewBox="0 0 460 110" role="img" aria-label="Four bills: $1, $5, $10, $20">
+    <g font-family="Georgia" font-size="17" text-anchor="middle" fill="#222">
+      <rect x="10" y="20" width="100" height="60" fill="#dce8d4" stroke="#3a6b35" stroke-width="2"/><text x="60" y="56">$1</text>
+      <rect x="125" y="20" width="100" height="60" fill="#dce8d4" stroke="#3a6b35" stroke-width="2"/><text x="175" y="56">$5</text>
+      <rect x="240" y="20" width="100" height="60" fill="#dce8d4" stroke="#3a6b35" stroke-width="2"/><text x="290" y="56">$10</text>
+      <rect x="355" y="20" width="100" height="60" fill="#dce8d4" stroke="#3a6b35" stroke-width="2"/><text x="405" y="56">$20</text>
+    </g>
+  </svg></div>
+  <button onclick="toggle('a29')">Show Answer &amp; Solution</button>
+  <div class="a" id="a29">
+    <div class="ans">Answer: 6 pairs — ($1,$5)=$6, ($1,$10)=$11, ($1,$20)=$21, ($5,$10)=$15, ($5,$20)=$25, ($10,$20)=$30</div>
+    <div class="sol">Choosing 2 bills from 4 gives \(\frac{4 \times 3}{2} = 6\) different pairs.</div>
+  </div>
+</div>
+
+<div class="card" id="q30">
+  <div class="q"><span class="num">30.</span><span class="tag">Estimate</span>The state of Louisiana has 397 miles of coastline. The state of Oregon has 296 miles of coastline. What is a reasonable estimate of the combined length of those coastlines? Explain why your estimate is reasonable.</div>
+  <button onclick="toggle('a30')">Show Answer &amp; Solution</button>
+  <div class="a" id="a30">
+    <div class="ans">Answer: About \(700\) miles</div>
+    <div class="sol">Round each to the nearest hundred: \(397 \approx 400\) and \(296 \approx 300\). \(400 + 300 = 700\). This is reasonable because both numbers were rounded to the nearest hundred, and \(397 + 296 = 693\), which is close to \(700\).</div>
+  </div>
+</div>
+
+<h2>Real-World Connection</h2>
+
+<div class="card" id="qrwc">
+  <div class="q">Maria had a quarter, a dime, and a nickel in her pocket. How much money did Maria have in her pocket?<br>
+  <b>a.</b> Write the amount as a fraction of a dollar.<br>
+  <b>b.</b> Write the value of the coins using a dollar sign and a decimal point.<br>
+  <b>c.</b> Compare the amount to \(\frac{1}{2}\) of a dollar.</div>
+  <button onclick="toggle('arwc')">Show Answer &amp; Solution</button>
+  <div class="a" id="arwc">
+    <div class="ans">Answer: a. \(\frac{2}{5}\) of a dollar &nbsp; b. \(\$0.40\) &nbsp; c. \(\$0.40 < \frac{1}{2}\) of a dollar</div>
+    <div class="sol">Quarter + dime + nickel = \(25¢ + 10¢ + 5¢ = 40¢\).<br><b>a.</b> \(\frac{40}{100} = \frac{2}{5}\) of a dollar.<br><b>b.</b> \(\$0.40\).<br><b>c.</b> \(\$0.40 < \$0.50\), so it is less than \(\frac{1}{2}\) of a dollar.</div>
+  </div>
+</div>
+
+<footer style="text-align:center;color:#888;margin-top:30px;font-size:.85em">Lesson 36 • Saxon Math Grade 4 • 10-3Miri</footer>
+</body>
+</html>
