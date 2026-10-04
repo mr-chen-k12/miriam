@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American Revolution Study Guide - 4th Grade</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for friendly typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f8fafc;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+    /* 3D Card Flip Styling */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* Keyframe Animations */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); }
+    }
+    .glow-active {
+      animation: pulseGlow 1.5s infinite;
+    }
+    /* Canvas Overlay */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <header class="bg-white border-b-4 border-amber-400 shadow-md sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Title & Emblem -->
+      <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 rounded-2xl bg-red-500 text-white flex items-center justify-center font-bold text-2xl shadow-md border-2 border-amber-300 transform -rotate-3">
+          🇺🇸
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-slate-800 tracking-wide flex items-center gap-2">
+            American Revolution <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-0.5 rounded-full border border-amber-300 font-semibold">4th Grade Edition</span>
+          </h1>
+          <p class="text-xs text-slate-500 font-semibold">Interactive History Explorer & Study Companion</p>
+        </div>
+      </div>
+
+      <!-- Controls & Mute Button -->
+      <div class="flex items-center space-x-2">
+        <button id="sound-toggle" onclick="toggleAudio()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-300">
+          <span id="sound-icon">🔊</span> <span id="sound-text">Sound ON</span>
+        </button>
+        <div id="badge-display" class="px-3 py-1.5 rounded-xl bg-amber-100 border border-amber-300 text-amber-800 text-xs font-bold flex items-center gap-1 shadow-sm">
+          ⭐ <span id="badge-text">Cadet Historian</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall Mastery Progress Bar -->
+    <div class="bg-slate-200 h-3.5 w-full relative">
+      <div id="mastery-progress-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-blue-500 h-full transition-all duration-500 w-0"></div>
+      <div id="mastery-text" class="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">
+        Mastery: 0% (0 / 31 Concepts Studied)
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-blue-900 text-white shadow-inner">
+    <div class="max-w-6xl mx-auto px-2 flex overflow-x-auto no-scrollbar justify-start sm:justify-center">
+      <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-tab px-4 py-3 font-bold text-sm flex items-center gap-2 border-b-4 border-amber-400 text-amber-300 transition whitespace-nowrap">
+        <span>🎴</span> Index Flashcards
+      </button>
+      <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-tab px-4 py-3 font-bold text-sm flex items-center gap-2 border-b-4 border-transparent text-blue-200 hover:text-white transition whitespace-nowrap">
+        <span>❓</span> Multiple Choice Quiz
+      </button>
+      <button onclick="switchTab('matching')" id="tab-matching" class="nav-tab px-4 py-3 font-bold text-sm flex items-center gap-2 border-b-4 border-transparent text-blue-200 hover:text-white transition whitespace-nowrap">
+        <span>🧩</span> Drag & Drop Matching
+      </button>
+      <button onclick="switchTab('smartreview')" id="tab-smartreview" class="nav-tab px-4 py-3 font-bold text-sm flex items-center gap-2 border-b-4 border-transparent text-blue-200 hover:text-white transition whitespace-nowrap relative">
+        <span>🎯</span> Smart Review
+        <span id="smart-count-badge" class="bg-red-500 text-white text-[11px] font-black rounded-full px-2 py-0.5 ml-1 hidden">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6">
+
+    <!-- MODE 1: INDEX FLASHCARDS -->
+    <section id="mode-flashcards" class="space-y-6">
+      <!-- Flashcard Controls Header -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+        <!-- Category Filter -->
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Category:</label>
+          <select id="card-category-filter" onchange="filterCards()" class="bg-slate-100 border border-slate-300 font-bold text-xs rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto">
+            <option value="all">🌟 All Revolution Topics (31)</option>
+            <option value="people_terms">👤 People & Key Terms</option>
+            <option value="road_acts">📜 Road to Revolution & Acts</option>
+            <option value="war_battles">⚔️ War & Battles</option>
+            <option value="rights_congress">🗽 Rights & Congress</option>
+          </select>
+        </div>
+
+        <!-- Secondary Controls -->
+        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+          <button onclick="shuffleCards()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition flex items-center gap-1">
+            🔀 Shuffle
+          </button>
+          <button onclick="speakCurrentCard()" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl border border-blue-200 transition flex items-center gap-1">
+            🔊 Read Aloud
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center justify-center my-4">
+        <!-- Swipe Hint Badge for Mobile/iPad -->
+        <p class="text-xs text-slate-500 font-semibold mb-2 flex items-center gap-1">
+          <span>👈 Swipe Left/Right or Tap to Flip 👉</span>
+        </p>
+
+        <!-- 3D Card Wrapper -->
+        <div id="flashcard-container" class="perspective-1000 w-full max-w-xl h-80 sm:h-96 cursor-pointer select-none relative touch-none">
+          <div id="flashcard-inner" class="w-full h-full duration-300 transform-style-3d relative rounded-3xl shadow-xl border-4 border-amber-300 bg-white transition-transform">
+            
+            <!-- Card Front -->
+            <div class="absolute inset-0 backface-hidden rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 border-2 border-amber-200">
+              <div class="w-full flex justify-between items-center text-xs font-bold text-amber-700">
+                <span id="card-category-badge" class="bg-amber-200 text-amber-900 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">
+                  Category
+                </span>
+                <span id="card-number-badge" class="bg-white/80 px-2.5 py-1 rounded-full border border-amber-300">
+                  Card 1 of 31
+                </span>
+              </div>
+
+              <div class="my-auto px-2">
+                <h2 id="card-front-title" class="text-2xl sm:text-4xl font-black text-slate-800 mb-3 drop-shadow-sm">
+                  Term Name
+                </h2>
+                <p id="card-hint" class="text-xs sm:text-sm text-slate-500 italic font-semibold">
+                  (Tap to reveal definition)
+                </p>
+              </div>
+
+              <div class="w-full flex justify-center items-center text-xs text-amber-800 font-bold gap-1">
+                <span>🔄 Click or Swipe to Flip</span>
+              </div>
+            </div>
+
+            <!-- Card Back -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 border-2 border-blue-200">
+              <div class="w-full flex justify-between items-center text-xs font-bold text-blue-800">
+                <span class="bg-blue-200 text-blue-900 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">
+                  Definition & Details
+                </span>
+                <span class="bg-white/80 px-2.5 py-1 rounded-full border border-blue-300">
+                  Study Detail
+                </span>
+              </div>
+
+              <div class="my-auto px-2 overflow-y-auto max-h-48">
+                <p id="card-back-text" class="text-base sm:text-xl font-bold text-slate-800 leading-relaxed">
+                  Definition text goes here.
+                </p>
+              </div>
+
+              <div class="w-full flex justify-center items-center text-xs text-blue-700 font-bold gap-1">
+                <span>⭐ Tap button below to flag for Smart Review</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flashcard Navigation & Action Bar -->
+        <div class="w-full max-w-xl flex items-center justify-between gap-3 mt-6">
+          <button onclick="prevCard()" class="px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-700 font-bold text-sm shadow-md transition transform active:scale-95 flex items-center gap-1">
+            ⬅️ Prev
+          </button>
+
+          <!-- Toggle Smart Review Flag -->
+          <button id="card-flag-btn" onclick="toggleCardFlag()" class="px-4 py-3 rounded-2xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 text-amber-900 font-bold text-xs sm:text-sm shadow-md transition transform active:scale-95 flex items-center gap-1">
+            <span id="flag-star">⭐</span> <span id="flag-btn-text">Mark for Review</span>
+          </button>
+
+          <button onclick="nextCard()" class="px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition transform active:scale-95 flex items-center gap-1">
+            Next ➡️
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 2: MULTIPLE CHOICE & FILL-IN-THE-BLANK QUIZ -->
+    <section id="mode-quiz" class="hidden space-y-6">
+      <!-- Quiz Header Banner -->
+      <div class="bg-white p-5 rounded-3xl shadow-md border-2 border-blue-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            ❓ Revolutionary Patriot Quiz
+          </h2>
+          <p class="text-xs text-slate-500 font-semibold">Test your knowledge! Incorrect answers are saved to Smart Review.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="bg-blue-50 border border-blue-200 px-4 py-2 rounded-2xl text-center">
+            <span class="text-[10px] uppercase font-bold text-blue-600 block">Score</span>
+            <span id="quiz-score-display" class="text-xl font-black text-blue-800">0 / 0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-2xl text-center">
+            <span class="text-[10px] uppercase font-bold text-emerald-600 block">Streak</span>
+            <span id="quiz-streak-display" class="text-xl font-black text-emerald-800">🔥 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Question Card -->
+      <div id="quiz-card-container" class="bg-white rounded-3xl shadow-xl border-4 border-blue-300 p-6 sm:p-8 relative overflow-hidden">
+        <!-- Question Badge -->
+        <div class="flex justify-between items-center mb-4">
+          <span id="quiz-question-type" class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full border border-blue-200 uppercase">
+            Fill-in-the-Blank
+          </span>
+          <span id="quiz-progress-text" class="text-xs font-bold text-slate-400">
+            Question 1
+          </span>
+        </div>
+
+        <!-- Question Prompt -->
+        <h3 id="quiz-prompt" class="text-lg sm:text-2xl font-bold text-slate-800 mb-6 leading-relaxed">
+          Prompt text goes here...
+        </h3>
+
+        <!-- Options Grid -->
+        <div id="quiz-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+          <!-- Dynamically populated 4 options -->
+        </div>
+
+        <!-- Explanation / Feedback Banner -->
+        <div id="quiz-feedback-box" class="hidden p-4 rounded-2xl border-2 text-sm font-bold flex flex-col gap-2 transition-all">
+          <div id="quiz-feedback-title" class="flex items-center gap-2 text-base font-extrabold"></div>
+          <p id="quiz-feedback-text" class="text-slate-700 font-medium"></p>
+        </div>
+
+        <!-- Next Question Button -->
+        <div class="mt-6 flex justify-end">
+          <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-500 text-slate-900 font-extrabold text-sm shadow-md transition transform active:scale-95 flex items-center gap-2">
+            Next Question ➔
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 3: DRAG & DROP MATCHING GAME -->
+    <section id="mode-matching" class="hidden space-y-6">
+      <div class="bg-white p-5 rounded-3xl shadow-md border-2 border-emerald-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            🧩 Revolutionary Matchup Challenge
+          </h2>
+          <p class="text-xs text-slate-500 font-semibold">
+            Drag terms to their matching definition (or tap a term then tap a target)!
+          </p>
+        </div>
+        <button onclick="initMatchingRound()" class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-300 transition">
+          🔄 New Matching Set
+        </button>
+      </div>
+
+      <!-- Matching Board Grid -->
+      <div id="matching-board" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Left Column: Term Drag Chips -->
+        <div class="bg-slate-50 p-4 sm:p-5 rounded-3xl border-2 border-slate-200 space-y-3">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+            🏷️ Terms (Drag or Tap First)
+          </h3>
+          <div id="matching-terms-col" class="space-y-3">
+            <!-- Dynamically generated term chips -->
+          </div>
+        </div>
+
+        <!-- Right Column: Definition Target Boxes -->
+        <div class="bg-slate-50 p-4 sm:p-5 rounded-3xl border-2 border-slate-200 space-y-3">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+            🎯 Definitions (Drop or Tap Second)
+          </h3>
+          <div id="matching-defs-col" class="space-y-3">
+            <!-- Dynamically generated definition targets -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 4: SMART REVIEW -->
+    <section id="mode-smartreview" class="hidden space-y-6">
+      <!-- Smart Review Top Banner -->
+      <div class="bg-gradient-to-br from-red-50 to-amber-50 p-6 rounded-3xl shadow-md border-2 border-red-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <h2 class="text-2xl font-bold text-slate-800 flex items-center justify-center sm:justify-start gap-2">
+            🎯 Smart Review Center
+          </h2>
+          <p class="text-xs text-slate-600 font-semibold">
+            Targeted practice for items you flagged (⭐) or got wrong during quizzes!
+          </p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <!-- Reset Button -->
+          <button onclick="resetSmartReview()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-2xl shadow-md transition transform active:scale-95 flex items-center gap-1.5 border border-red-700">
+            🔄 Reset Smart Review
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State or Active Review Container -->
+      <div id="smart-review-content">
+        <!-- Dynamically rendered smart review UI -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-4 px-4 text-center mt-auto">
+    <p class="text-xs text-slate-500 font-bold">
+      🇺🇸 American Revolution 4th Grade Study Companion • Master History through Play! 📜
+    </p>
+  </footer>
+
+  <script>
+    const ALL_TERMS = [
+      {
+        id: 1,
+        term: "Repeal",
+        definition: "A vote to end or cancel a law.",
+        category: "road_acts",
+        hint: "To cancel a law officially."
+      },
+      {
+        id: 2,
+        term: "Boycott",
+        definition: "An organized campaign where a group of individuals refuse to buy a certain product in protest.",
+        category: "road_acts",
+        hint: "Refusing to buy goods in protest."
+      },
+      {
+        id: 3,
+        term: "Proclamation",
+        definition: "An important official announcement that is usually made to the public.",
+        category: "road_acts",
+        hint: "An official public announcement."
+      },
+      {
+        id: 4,
+        term: "Stamp Act",
+        definition: "A tax passed by Parliament on all paper goods in the American colonies.",
+        category: "road_acts",
+        hint: "Tax on newspapers, playing cards, and paper."
+      },
+      {
+        id: 5,
+        term: "Tea Act of 1773",
+        definition: "Lowered the price of tea, but kept the tax on tea, which angered colonists and caused the Boston Tea Party.",
+        category: "road_acts",
+        hint: "Led directly to dumping tea into Boston Harbor."
+      },
+      {
+        id: 6,
+        term: "Parliament",
+        definition: "The lawmaking body of England that made taxes and laws for the colonies.",
+        category: "rights_congress",
+        hint: "England's lawmaking group."
+      },
+      {
+        id: 7,
+        term: "Loyalists",
+        definition: "American colonists who supported Great Britain and King George III.",
+        category: "people_terms",
+        hint: "Colonists loyal to Great Britain."
+      },
+      {
+        id: 8,
+        term: "Common Sense",
+        definition: "A famous pamphlet written by Thomas Paine that helped Colonists choose independence.",
+        category: "road_acts",
+        hint: "Pamphlet by Thomas Paine."
+      },
+      {
+        id: 9,
+        term: "Minutemen",
+        definition: "American colonial militia soldiers ready to fight the British at a minute's notice.",
+        category: "people_terms",
+        hint: "Soldiers ready at a minute's notice."
+      },
+      {
+        id: 10,
+        term: "George Washington",
+        definition: "Served as leader of the Continental Army and led troops through the difficult winter at Valley Forge.",
+        category: "people_terms",hint: "Commander of the Continental Army."
+      },
+      {
+        id: 11,
+        term: "Molly Pitcher",
+        definition: "Mary Hays, a brave woman who helped very thirsty men survive battles by carrying water and firing cannons.",
+        category: "people_terms",
+        hint: "Carried water to thirsty soldiers in battle."
+      },
+      {
+        id: 12,
+        term: "John Paul Jones",
+        definition: "The captain of the Bonhomme Richard, also known as the father of the American Navy.",
+        category: "people_terms",
+        hint: "Father of the American Navy."
+      },
+      {
+        id: 13,
+        term: "Nathan Hale",
+        definition: "An American spy who gave a speech to inspire colonists to keep fighting for independence before his execution.",
+        category: "people_terms",
+        hint: "Inspired colonists to keep fighting for freedom."
+      },
+      {
+        id: 14,
+        term: "Crispus Attucks",
+        definition: "A free Black sailor known as the first casualty of the American Revolutionary War during the Boston Massacre.",
+        category: "people_terms",
+        hint: "First casualty of the Revolutionary War."
+      },
+      {
+        id: 15,
+        term: "French and Indian War (1756 – 1763)",
+        definition: "War where the British fought against the French and Native Americans for territory in North America.",
+        category: "war_battles",
+        hint: "British fought French and Indians for territory."
+      },
+      {
+        id: 16,
+        term: "William Pitt's 3 Things to Win",
+        definition: "William Pitt believed Britain needed 3 things to win: Money, Lots of troops, and Control of the Niagara River and St. Lawrence River.",
+        category: "war_battles",
+        hint: "Money, troops, and control of 2 major rivers."
+      },
+      {
+        id: 17,
+        term: "Rights of the Englishmen",
+        definition: "5 fundamental rights: Homes could not be searched without a warrant, Right to a speedy trial by jury, Right to vote, Right to private property, and Right to gather peaceably.",
+        category: "rights_congress",
+        hint: "Included no warrant-less searches & trial by jury."
+      },
+      {
+        id: 18,
+        term: "No Taxation without Representation",
+        definition: "Colonists' main argument against England—they did not believe they should be taxed without a say in government.",
+        category: "rights_congress",
+        hint: "Colonists' rally cry against unfair taxes."
+      },
+      {
+        id: 19,
+        term: "Townshend Act",
+        definition: "Taxes placed on goods sent to the colonies from Britain, including paint, tea, glass, paper goods, and lead.",
+        category: "road_acts",
+        hint: "Taxes on paint, tea, glass, paper, and lead."
+      },
+      {
+        id: 20,
+        term: "Boston Tea Party",
+        definition: "On Dec 16, 1773, patriots dressed as Mohawk Indians dumped 342 chests of tea into Boston Harbor to protest the Tea Act.",
+        category: "road_acts",
+        hint: "342 chests of tea dumped into Boston Harbor."
+      },
+      {
+        id: 21,
+        term: "Intolerable Acts",
+        definition: "5 harsh laws passed by Parliament to punish the colonists of Boston for destroying British tea.",
+        category: "road_acts",
+        hint: "5 laws passed to punish Boston."
+      },
+      {
+        id: 22,
+        term: "First Continental Congress",
+        definition: "First meeting of colonial representatives (Georgia absent) who voted to cut off trade with Britain until Intolerable Acts were repealed and sent petitions to King George III.",
+        category: "rights_congress",
+        hint: "Meeting of representatives to boycott British trade."
+      },
+      {
+        id: 23,
+        term: "Declaration of Independence",
+        definition: "Written by Thomas Jefferson and signed July 4, 1776; stated 3 unalienable rights: Life, Liberty, and the Pursuit of Happiness.",
+        category: "rights_congress",
+        hint: "Life, Liberty, and the Pursuit of Happiness."
+      },
+      {
+        id: 24,
+        term: "Foreign Help: France",
+        definition: "France helped America during the war by sending troops, money, supplies, and a powerful navy.",
+        category: "war_battles",
+        hint: "Sent troops, money, supplies, and a navy."
+      },
+      {
+        id: 25,
+        term: "Foreign Help: Poland",
+        definition: "Polish military engineers helped the American cause by building key forts and defenses for troops.",
+        category: "war_battles",
+        hint: "Built forts and defenses for American troops."
+      },
+      {
+        id: 26,
+        term: "Foreign Help: Germany",
+        definition: "German military officers trained American Continental troops at Valley Forge without pay.",
+        category: "war_battles",
+        hint: "Trained American troops without pay."
+      },
+      {
+        id: 27,
+        term: "Foreign Help: Spain & Netherlands",
+        definition: "Spain and the Netherlands joined the fight against Britain to support American independence.",
+        category: "war_battles",
+        hint: "Joined the battle against Great Britain."
+      },
+      {
+        id: 28,
+        term: "Battle of Saratoga",
+        definition: "Important battle because American victory cut off British plans and finally convinced France to join America as an ally.",
+        category: "war_battles",
+        hint: "Turning point that convinced France to join as ally."
+      },
+      {
+        id: 29,
+        term: "Valley Forge",
+        definition: "Camp where Washington's army spent a very difficult winter—extremely cold with no supplies, food, or warm clothes.",
+        category: "war_battles",
+        hint: "Extremely cold winter encampment with no supplies."
+      },
+      {
+        id: 30,
+        term: "Battle of Yorktown",
+        definition: "The final major battle of the American Revolution where the British army surrendered.",
+        category: "war_battles",
+        hint: "Final major battle of the Revolutionary War."
+      },
+      {
+        id: 31,
+        term: "Treaty of Paris",
+        definition: "The peace treaty that officially ended the Revolutionary War and recognized American independence.",
+        category: "war_battles",
+        hint: "Officially ended the Revolutionary War."
+      }
+    ];
+
+    let currentCardsList = [...ALL_TERMS];
+    let cardIndex = 0;
+    let cardFlipped = false;
+    let audioEnabled = true;
+
+    // Smart Review tracking sets
+    let flaggedSet = new Set(); // Items manually starred
+    let missedSet = new Set();  // Items missed in quiz or matching
+
+    // Overall Progress Tracking
+    let studiedCardsSet = new Set();
+    let quizCorrectSet = new Set();
+    let matchingCompletedSet = new Set();
+
+    // Quiz Mode State
+    let quizQuestionsList = [];
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let quizTotalAnswered = 0;
+    let quizStreak = 0;
+    let quizAnswered = false;
+
+    // Matching Mode State
+    let currentMatchingSet = [];
+    let selectedTermId = null;
+    let matchedInRound = 0;
+
+    let audioCtx = null;
+
+    function playSound(type) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'correct') {
+          // Cheerful rising synth notes
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+          osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.3); // C6
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.45);
+        } else if (type === 'wrong') {
+          // Low gentle wobble
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.linearRampToValueAtTime(160, now + 0.25);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (type === 'flip') {
+          // Light wooden click
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.exponentialRampToValueAtTime(120, now + 0.08);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'match') {
+          // Happy match pop
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        } else if (type === 'fanfare') {
+          // Mini fanfare for completing set
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.type = 'triangle';
+            o.frequency.setValueAtTime(freq, now + idx * 0.1);
+            g.gain.setValueAtTime(0.25, now + idx * 0.1);
+            g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.1 + 0.3);
+            o.start(now + idx * 0.1);
+            o.stop(now + idx * 0.1 + 0.3);
+          });
+        }
+      } catch (e) {
+        console.log("Audio not allowed yet:", e);
+      }
+    }
+
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const icon = document.getElementById('sound-icon');
+      const text = document.getElementById('sound-text');
+      if (audioEnabled) {
+        icon.textContent = '🔊';
+        text.textContent = 'Sound ON';
+      } else {
+        icon.textContent = 'MUTE';
+        text.textContent = 'Sound OFF';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      }
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('border-amber-400', 'text-amber-300');
+        tab.classList.add('border-transparent', 'text-blue-200');
+      });
+
+      const selectedTab = document.getElementById(`tab-${tabName}`);
+      const selectedSec = document.getElementById(`mode-${tabName}`);
+
+      if (selectedTab && selectedSec) {
+        selectedTab.classList.remove('border-transparent', 'text-blue-200');
+        selectedTab.classList.add('border-amber-400', 'text-amber-300');
+        selectedSec.classList.remove('hidden');
+      }
+
+      if (tabName === 'quiz') {
+        initQuizMode();
+      } else if (tabName === 'matching') {
+        initMatchingRound();
+      } else if (tabName === 'smartreview') {
+        renderSmartReviewUI();
+      }
+    }
+
+    function filterCards() {
+      const category = document.getElementById('card-category-filter').value;
+      if (category === 'all') {
+        currentCardsList = [...ALL_TERMS];
+      } else {
+        currentCardsList = ALL_TERMS.filter(t => t.category === category);
+      }
+      cardIndex = 0;
+      cardFlipped = false;
+      renderCurrentCard();
+    }
+
+    function shuffleCards() {
+      for (let i = currentCardsList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentCardsList[i], currentCardsList[j]] = [currentCardsList[j], currentCardsList[i]];
+      }
+      cardIndex = 0;
+      cardFlipped = false;
+      renderCurrentCard();
+      playSound('flip');
+    }
+
+    function renderCurrentCard() {
+      if (currentCardsList.length === 0) return;
+      const card = currentCardsList[cardIndex];
+      
+      // Update front & back text
+      document.getElementById('card-front-title').textContent = card.term;
+      document.getElementById('card-back-text').textContent = card.definition;
+      document.getElementById('card-category-badge').textContent = getCategoryName(card.category);
+      document.getElementById('card-number-badge').textContent = `Card ${cardIndex + 1} of ${currentCardsList.length}`;
+
+      // Reset flip state
+      const cardInner = document.getElementById('flashcard-inner');
+      cardFlipped = false;
+      cardInner.style.transform = 'rotateY(0deg)';
+
+      // Update flag button state
+      updateFlagButtonState(card.id);
+
+      // Track study progress
+      studiedCardsSet.add(card.id);
+      updateOverallProgress();
+    }
+
+    function getCategoryName(catKey) {
+      switch (catKey) {
+        case 'people_terms': return '👤 People & Terms';
+        case 'road_acts': return '📜 Acts & Causes';
+        case 'war_battles': return '⚔️ Battles & War';
+        case 'rights_congress': return '🗽 Rights & Congress';
+        default: return '🌟 General';
+      }
+    }
+
+    function toggleFlip() {
+      cardFlipped = !cardFlipped;
+      const cardInner = document.getElementById('flashcard-inner');
+      cardInner.style.transform = cardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      playSound('flip');
+    }
+
+    function nextCard() {
+      if (currentCardsList.length === 0) return;
+      cardIndex = (cardIndex + 1) % currentCardsList.length;
+      renderCurrentCard();
+      playSound('flip');
+    }
+
+    function prevCard() {
+      if (currentCardsList.length === 0) return;
+      cardIndex = (cardIndex - 1 + currentCardsList.length) % currentCardsList.length;
+      renderCurrentCard();
+      playSound('flip');
+    }
+
+    function speakCurrentCard() {
+      if (currentCardsList.length === 0) return;
+      const card = currentCardsList[cardIndex];
+      const textToSpeak = cardFlipped ? `${card.term}: ${card.definition}` : card.term;
+      speakText(textToSpeak);
+    }
+
+    function toggleCardFlag() {
+      if (currentCardsList.length === 0) return;
+      const card = currentCardsList[cardIndex];
+      if (flaggedSet.has(card.id)) {
+        flaggedSet.delete(card.id);
+      } else {
+        flaggedSet.add(card.id);
+      }
+      updateFlagButtonState(card.id);
+      updateSmartCountBadge();
+      playSound('match');
+    }
+
+    function updateFlagButtonState(cardId) {
+      const btn = document.getElementById('card-flag-btn');
+      const flagText = document.getElementById('flag-btn-text');
+      const star = document.getElementById('flag-star');
+
+      if (flaggedSet.has(cardId)) {
+        btn.classList.remove('bg-amber-100', 'border-amber-300', 'text-amber-900');
+        btn.classList.add('bg-red-500', 'border-red-600', 'text-white');
+        flagText.textContent = 'Flagged for Review';
+        star.textContent = '⭐';
+      } else {
+        btn.classList.remove('bg-red-500', 'border-red-600', 'text-white');
+        btn.classList.add('bg-amber-100', 'border-amber-300', 'text-amber-900');
+        flagText.textContent = 'Mark for Review';
+        star.textContent = '⭐';
+      }
+    }
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchCurrentX = 0;
+    let isDraggingCard = false;
+    let cardTouchStartTime = 0;
+
+    const cardContainer = document.getElementById('flashcard-container');
+    const cardInner = document.getElementById('flashcard-inner');
+
+    cardContainer.addEventListener('pointerdown', (e) => {
+      isDraggingCard = true;
+      touchStartX = e.clientX;
+      touchStartY = e.clientY;
+      cardTouchStartTime = Date.now();
+      cardInner.style.transition = 'none';
+      cardContainer.setPointerCapture(e.pointerId);
+    });
+
+    cardContainer.addEventListener('pointermove', (e) => {
+      if (!isDraggingCard) return;
+      touchCurrentX = e.clientX;
+      const deltaX = touchCurrentX - touchStartX;
+      const rotateDeg = deltaX * 0.08;
+      const currentRotateY = cardFlipped ? 180 : 0;
+      cardInner.style.transform = `translateX(${deltaX}px) rotate(${rotateDeg}deg) rotateY(${currentRotateY}deg)`;
+    });
+
+    cardContainer.addEventListener('pointerup', (e) => {
+      if (!isDraggingCard) return;
+      isDraggingCard = false;
+      cardInner.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      
+      const deltaX = e.clientX - touchStartX;
+      const deltaY = e.clientY - touchStartY;
+      const duration = Date.now() - cardTouchStartTime;
+
+      // Tap detection (short movement & short duration)
+      if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && duration < 300) {
+        toggleFlip();
+      } else if (deltaX > 80) {
+        // Swipe Right -> Prev Card
+        prevCard();
+      } else if (deltaX < -80) {
+        // Swipe Left -> Next Card
+        nextCard();
+      } else {
+        // Spring back to center
+        cardInner.style.transform = cardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      }
+    });
+
+    cardContainer.addEventListener('pointercancel', () => {
+      isDraggingCard = false;
+      cardInner.style.transition = 'transform 0.3s ease';
+      cardInner.style.transform = cardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+    });
+
+    function initQuizMode() {
+      quizQuestionsList = [...ALL_TERMS].sort(() => Math.random() - 0.5);
+      currentQuizIndex = 0;
+      quizScore = 0;
+      quizTotalAnswered = 0;
+      quizStreak = 0;
+      updateQuizHeaderDisplays();
+      renderQuizQuestion();
+    }
+
+    function updateQuizHeaderDisplays() {
+      document.getElementById('quiz-score-display').textContent = `${quizScore} / ${quizTotalAnswered}`;
+      document.getElementById('quiz-streak-display').textContent = `🔥 ${quizStreak}`;
+    }
+
+    function renderQuizQuestion() {
+      if (currentQuizIndex >= quizQuestionsList.length) {
+        // Reshuffle if reached end of question pool
+        quizQuestionsList = [...ALL_TERMS].sort(() => Math.random() - 0.5);
+        currentQuizIndex = 0;
+      }
+
+      const targetTerm = quizQuestionsList[currentQuizIndex];
+      quizAnswered = false;
+
+      // Randomly select format: Fill in Blank vs Definition Matching
+      const isFillInBlank = Math.random() > 0.4;
+      const typeBadge = document.getElementById('quiz-question-type');
+      const promptEl = document.getElementById('quiz-prompt');
+
+      if (isFillInBlank) {
+        typeBadge.textContent = "✏️ Fill-in-the-Blank";
+        promptEl.innerHTML = `"<span class="underline decoration-amber-400 underline-offset-4 decoration-4">___________</span>: ${targetTerm.definition}"`;
+      } else {
+        typeBadge.textContent = "❓ Multiple Choice";
+        promptEl.textContent = `Which term matches this definition? "${targetTerm.definition}"`;
+      }
+
+      document.getElementById('quiz-progress-text').textContent = `Question ${currentQuizIndex + 1} of ${quizQuestionsList.length}`;
+
+      // Pick 3 distractors
+      const distractors = ALL_TERMS.filter(t => t.id !== targetTerm.id)
+                                  .sort(() => Math.random() - 0.5)
+                                  .slice(0, 3);
+      
+      const options = [targetTerm, ...distractors].sort(() => Math.random() - 0.5);
+
+      const optionsGrid = document.getElementById('quiz-options-grid');
+      optionsGrid.innerHTML = '';
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "quiz-opt-btn w-full p-4 rounded-2xl bg-slate-50 hover:bg-blue-50 border-2 border-slate-200 hover:border-blue-400 text-slate-800 font-bold text-left transition text-sm sm:text-base flex items-center justify-between shadow-sm transform active:scale-98";
+        btn.onclick = () => handleQuizAnswer(opt.id, targetTerm.id, btn);
+        btn.innerHTML = `<span>${opt.term}</span> <span class="opt-icon opacity-0">⚪</span>`;
+        optionsGrid.appendChild(btn);
+      });
+
+      // Reset feedback box & next button
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      feedbackBox.className = "hidden p-4 rounded-2xl border-2 text-sm font-bold flex flex-col gap-2 transition-all";
+      document.getElementById('quiz-next-btn').classList.add('hidden');
+    }
+
+    function handleQuizAnswer(selectedId, correctId, clickedBtn) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      quizTotalAnswered++;
+
+      const correctTerm = ALL_TERMS.find(t => t.id === correctId);
+      const isCorrect = selectedId === correctId;
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      const feedbackTitle = document.getElementById('quiz-feedback-title');
+      const feedbackText = document.getElementById('quiz-feedback-text');
+      const nextBtn = document.getElementById('quiz-next-btn');
+
+      // Disable option buttons
+      document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
+
+      if (isCorrect) {
+        quizScore++;
+        quizStreak++;
+        playSound('correct');
+        clickedBtn.classList.remove('bg-slate-50', 'border-slate-200');
+        clickedBtn.classList.add('bg-emerald-500', 'border-emerald-600', 'text-white');
+        clickedBtn.querySelector('.opt-icon').textContent = '✅';
+        clickedBtn.querySelector('.opt-icon').classList.remove('opacity-0');
+
+        feedbackBox.classList.remove('hidden');
+        feedbackBox.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
+        feedbackTitle.innerHTML = `🎉 Splendid Work! That's Correct!`;
+        feedbackText.textContent = `Great job! "${correctTerm.term}" matches perfectly.`;
+
+        // Mark correct in overall progress
+        quizCorrectSet.add(correctId);
+
+      } else {
+        quizStreak = 0;
+        playSound('wrong');
+        clickedBtn.classList.remove('bg-slate-50', 'border-slate-200');
+        clickedBtn.classList.add('bg-red-500', 'border-red-600', 'text-white', 'animate-shake');
+        clickedBtn.querySelector('.opt-icon').textContent = '❌';
+        clickedBtn.querySelector('.opt-icon').classList.remove('opacity-0');
+
+        // Highlight correct option
+        document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+          if (btn.textContent.includes(correctTerm.term)) {
+            btn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900');
+            btn.querySelector('.opt-icon').textContent = '👈 Right Answer';
+            btn.querySelector('.opt-icon').classList.remove('opacity-0');
+          }
+        });
+
+        // Record missed item for Smart Review
+        missedSet.add(correctId);
+        updateSmartCountBadge();
+
+        feedbackBox.classList.remove('hidden');
+        feedbackBox.classList.add('bg-red-50', 'border-red-300', 'text-red-900');
+        feedbackTitle.innerHTML = `💡 Keep Trying! Saved to Smart Review!`;
+        feedbackText.textContent = `The correct answer was "${correctTerm.term}". We added this item to your Smart Review queue for targeted practice.`;
+      }
+
+      updateQuizHeaderDisplays();
+      updateOverallProgress();
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      currentQuizIndex++;
+      renderQuizQuestion();
+    }
+
+    function initMatchingRound() {
+      // Pick 4 random terms
+      const shuffleAll = [...ALL_TERMS].sort(() => Math.random() - 0.5);
+      currentMatchingSet = shuffleAll.slice(0, 4);
+      matchedInRound = 0;
+      selectedTermId = null;
+
+      const termsCol = document.getElementById('matching-terms-col');
+      const defsCol = document.getElementById('matching-defs-col');
+
+      termsCol.innerHTML = '';
+      defsCol.innerHTML = '';
+
+      // Shuffled definitions
+      const shuffledDefs = [...currentMatchingSet].sort(() => Math.random() - 0.5);
+
+      // Render Terms
+      currentMatchingSet.forEach(item => {
+        const termChip = document.createElement('div');
+        termChip.id = `m-term-${item.id}`;
+        termChip.className = "term-chip bg-white p-4 rounded-2xl border-2 border-amber-300 shadow-sm cursor-pointer hover:border-amber-500 transition flex items-center justify-between text-slate-800 font-bold text-sm sm:text-base active:scale-95";
+        termChip.draggable = true;
+        termChip.dataset.termId = item.id;
+
+        termChip.innerHTML = `<span>${item.term}</span> <span class="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">Drag/Tap</span>`;
+
+        // Click / Tap selection fallback for touch devices
+        termChip.onclick = () => selectMatchingTerm(item.id, termChip);
+
+        // HTML5 Drag Events
+        termChip.ondragstart = (e) => {
+          e.dataTransfer.setData('text/plain', item.id);
+          selectMatchingTerm(item.id, termChip);
+        };
+
+        termsCol.appendChild(termChip);
+      });
+
+      // Render Definitions
+      shuffledDefs.forEach(item => {
+        const defBox = document.createElement('div');
+        defBox.id = `m-def-${item.id}`;
+        defBox.className = "def-target-box bg-white p-4 rounded-2xl border-2 border-dashed border-slate-300 transition flex flex-col justify-between gap-2 text-slate-700 font-semibold text-xs sm:text-sm min-h-[90px]";
+        defBox.dataset.termId = item.id;
+
+        defBox.innerHTML = `
+          <p>${item.definition}</p>
+          <div class="drop-status text-[11px] font-bold text-slate-400 flex items-center gap-1 justify-end">
+            <span>Drop or Tap Target Here 🎯</span>
+          </div>
+        `;
+
+        // Tap match target
+        defBox.onclick = () => handleMatchingDrop(item.id, defBox);
+
+        // HTML5 Drag & Drop handlers
+        defBox.ondragover = (e) => {
+          e.preventDefault();
+          defBox.classList.add('border-blue-400', 'bg-blue-50');
+        };
+        defBox.ondragleave = () => {
+          defBox.classList.remove('border-blue-400', 'bg-blue-50');
+        };
+        defBox.ondrop = (e) => {
+          e.preventDefault();
+          defBox.classList.remove('border-blue-400', 'bg-blue-50');
+          const draggedId = parseInt(e.dataTransfer.getData('text/plain'));
+          handleMatchingDrop(item.id, defBox, draggedId);
+        };
+
+        defsCol.appendChild(defBox);
+      });
+    }
+
+    function selectMatchingTerm(termId, chipEl) {
+      // Clear highlight on all term chips
+      document.querySelectorAll('.term-chip').forEach(c => {
+        c.classList.remove('border-blue-500', 'bg-blue-50', 'ring-4', 'ring-blue-200');
+      });
+      selectedTermId = termId;
+      chipEl.classList.add('border-blue-500', 'bg-blue-50', 'ring-4', 'ring-blue-200');
+      playSound('flip');
+    }
+
+    function handleMatchingDrop(targetDefId, defBoxEl, explicitTermId = null) {
+      const termToMatch = explicitTermId !== null ? explicitTermId : selectedTermId;
+
+      if (!termToMatch) {
+        return; // No term selected yet
+      }
+
+      const termChipEl = document.getElementById(`m-term-${termToMatch}`);
+
+      if (termToMatch === targetDefId) {
+        // Correct Match!
+        playSound('match');
+        matchedInRound++;
+
+        termChipEl.classList.remove('border-amber-300', 'border-blue-500', 'bg-blue-50', 'ring-4', 'ring-blue-200');
+        termChipEl.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900', 'opacity-60', 'pointer-events-none');
+        termChipEl.innerHTML = `<span>${termChipEl.querySelector('span').textContent}</span> <span>✅ Matched</span>`;
+
+        defBoxEl.classList.remove('border-dashed', 'border-slate-300');
+        defBoxEl.classList.add('border-solid', 'border-emerald-400', 'bg-emerald-50');
+        defBoxEl.querySelector('.drop-status').innerHTML = `<span class="text-emerald-700 font-extrabold">✅ Correct Pair!</span>`;
+        defBoxEl.style.pointerEvents = 'none';
+
+        matchingCompletedSet.add(targetDefId);
+        selectedTermId = null;
+        updateOverallProgress();
+
+        if (matchedInRound === currentMatchingSet.length) {
+          // Round completed!
+          playSound('fanfare');
+          launchConfetti();
+        }
+
+      } else {
+        // Incorrect Match!
+        playSound('wrong');
+        defBoxEl.classList.add('animate-shake', 'border-red-400', 'bg-red-50');
+        setTimeout(() => {
+          defBoxEl.classList.remove('animate-shake', 'border-red-400', 'bg-red-50');
+        }, 500);
+
+        // Record missed item for Smart Review
+        missedSet.add(targetDefId);
+        missedSet.add(termToMatch);
+        updateSmartCountBadge();
+      }
+    }
+
+    function updateSmartCountBadge() {
+      const totalSmartItems = new Set([...flaggedSet, ...missedSet]).size;
+      const badge = document.getElementById('smart-count-badge');
+      if (totalSmartItems > 0) {
+        badge.textContent = totalSmartItems;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function renderSmartReviewUI() {
+      const smartReviewContainer = document.getElementById('smart-review-content');
+      const combinedSmartIds = Array.from(new Set([...flaggedSet, ...missedSet]));
+
+      if (combinedSmartIds.length === 0) {
+        smartReviewContainer.innerHTML = `
+          <div class="bg-white rounded-3xl p-8 sm:p-12 text-center border-2 border-slate-200 shadow-sm space-y-4">
+            <div class="text-5xl">🎉</div>
+            <h3 class="text-2xl font-black text-slate-800">Smart Review Queue is Empty!</h3>
+            <p class="text-slate-500 max-w-md mx-auto text-sm font-bold">
+              You're doing fantastic! Star cards (⭐) during flashcard study or make quiz attempts to populate your personal targeted practice bank.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      const smartItems = ALL_TERMS.filter(t => combinedSmartIds.includes(t.id));
+
+      smartReviewContainer.innerHTML = `
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${smartItems.map(item => `
+              <div class="bg-white p-5 rounded-3xl border-2 border-red-200 shadow-sm flex flex-col justify-between space-y-3">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-lg font-black text-slate-800">${item.term}</h4>
+                  <span class="text-[10px] uppercase font-bold px-2.5 py-1 rounded-full ${flaggedSet.has(item.id) ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-red-100 text-red-800 border border-red-200'}">
+                    ${flaggedSet.has(item.id) ? '⭐ Flagged' : '❌ Quiz Missed'}
+                  </span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold text-slate-600 leading-relaxed">${item.definition}</p>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-100 text-xs">
+                  <span class="text-slate-400 font-bold">${getCategoryName(item.category)}</span>
+                  <button onclick="removeFromSmartReview(${item.id})" class="text-red-500 hover:text-red-700 font-extrabold hover:underline">
+                    Remove 🗑️
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function removeFromSmartReview(id) {
+      flaggedSet.delete(id);
+      missedSet.delete(id);
+      updateSmartCountBadge();
+      renderSmartReviewUI();
+      playSound('flip');
+    }
+
+    function resetSmartReview() {
+      if (flaggedSet.size === 0 && missedSet.size === 0) {
+        alert("Smart Review is already clear!");
+        return;
+      }
+      flaggedSet.clear();
+      missedSet.clear();
+      updateSmartCountBadge();
+      renderSmartReviewUI();
+      playSound('fanfare');
+    }
+
+    function updateOverallProgress() {
+      // Each term can earn mastery across Flashcards, Quiz, Matching
+      const totalTerms = ALL_TERMS.length;
+      
+      const flashcardPoints = studiedCardsSet.size;
+      const quizPoints = quizCorrectSet.size;
+      const matchingPoints = matchingCompletedSet.size;
+
+      const totalPossiblePoints = totalTerms * 3;
+      const totalEarnedPoints = flashcardPoints + quizPoints + matchingPoints;
+
+      const masteryPercent = Math.min(100, Math.round((totalEarnedPoints / totalPossiblePoints) * 100));
+
+      const progressBar = document.getElementById('mastery-progress-bar');
+      const progressText = document.getElementById('mastery-text');
+      const badgeText = document.getElementById('badge-text');
+
+      progressBar.style.width = `${masteryPercent}%`;
+      progressText.textContent = `Overall Mastery: ${masteryPercent}% (${totalEarnedPoints} / ${totalPossiblePoints} Points)`;
+
+      // Rank Badges
+      if (masteryPercent >= 90) {
+        badgeText.textContent = "🏆 Liberty Legend";
+      } else if (masteryPercent >= 60) {
+        badgeText.textContent = "📜 Patriot Scholar";
+      } else if (masteryPercent >= 30) {
+        badgeText.textContent = "🎖️ Revolutionary Hero";
+      } else {
+        badgeText.textContent = "⭐ Cadet Historian";
+      }
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#EF4444', '#3B82F6', '#F59E0B', '#10B981', '#8B5CF6'];
+
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: Math.random() * 4 - 2,
+          vy: Math.random() * 5 + 3,
+          rotation: Math.random() * 360,
+          vRot: Math.random() * 10 - 5
+        });
+      }
+
+      let frame = 0;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rotation += p.vRot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frame++;
+        if (frame < 120) {
+          requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      render();
+    }
+
+    window.onload = function() {
+      renderCurrentCard();
+      updateSmartCountBadge();
+      updateOverallProgress();
+    };
+  </script>
+</body>
+</html>
