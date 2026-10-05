@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saxon Math Grade 4 — Lesson 37 Solutions</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  chtml: { scale: 1.05 }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --ink:#1c1c1e; --accent:#0b5fff; --card:#ffffff; --bg:#f4f6fa; --muted:#6b7280; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--ink);
+         margin: 0; padding: 18px; line-height: 1.55; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  header.page { text-align: center; margin-bottom: 18px; }
+  header.page h1 { font-size: 1.5rem; margin: 0.2em 0; }
+  header.page p { color: var(--muted); margin: 0.2em 0; font-size: 0.95rem; }
+  h2.section { font-size: 1.15rem; margin: 26px 0 12px; padding-bottom: 6px;
+               border-bottom: 2px solid var(--accent); color: var(--accent); }
+  .card { background: var(--card); border: 1px solid #dfe3ea; border-radius: 12px;
+          padding: 16px 18px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qnum { font-weight: bold; font-size: 1.05rem; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 0.78rem;
+         font-weight: bold; border-radius: 6px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
+  .question { margin: 6px 0 4px; }
+  .question p { margin: 0.4em 0; }
+  figure.fig { margin: 10px 0 4px; text-align: center; }
+  figure.fig svg { max-width: 100%; height: auto; }
+  .show-btn { display: inline-block; margin-top: 10px; background: var(--accent); color: #fff;
+              border: none; border-radius: 8px; padding: 8px 16px; font-size: 0.95rem;
+              cursor: pointer; font-family: inherit; }
+  .show-btn:hover { background: #0849c4; }
+  .show-btn.open { background: #374151; }
+  .answer { display: none; margin-top: 12px; padding: 12px 14px; background: #f0fdf4;
+            border: 1px solid #bbf7d0; border-radius: 8px; }
+  .answer.show { display: block; }
+  .answer .ans-label { font-weight: bold; color: #166534; }
+  .answer .sol-label { font-weight: bold; }
+  .answer p { margin: 0.45em 0; }
+  ol.choice { list-style: upper-alpha; margin: 0.4em 0 0.4em 1.4em; padding: 0; }
+  .circled { display: inline-block; border: 2px solid #dc2626; border-radius: 50%;
+             padding: 0 6px; color: #dc2626; font-weight: bold; }
+  table.pop { border-collapse: collapse; margin: 8px auto; }
+  table.pop td { padding: 3px 14px; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .show-btn, .answer { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    header.page p.hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="page">
+  <h1>Saxon Math Grade 4 — Lesson 37</h1>
+  <p>Solutions (hidden until you press the button)</p>
+  <p class="hint">Tap <b>Show answer &amp; solution</b> on any problem to reveal it. Printing shows questions only.</p>
+</header>
+
+<h2 class="section">Lesson Practice</h2>
+
+<!-- Q5 -->
+<div class="card">
+  <div class="qnum">5 <span class="tag">Represent</span></div>
+  <div class="question"><p>To what mixed number is the arrow pointing?</p></div>
+  <figure class="fig">
+  <svg width="520" height="105" viewBox="0 0 520 105" role="img" aria-label="Number line from 10 to 12 with arrow at 11 and one half">
+    <line x1="30" y1="55" x2="495" y2="55" stroke="#111" stroke-width="2"/>
+    <polygon points="495,55 483,49 483,61" fill="#111"/>
+    <polygon points="30,55 42,49 42,61" fill="#111"/>
+    <!-- quarter ticks: 10 at 60, 11 at 260, 12 at 460 -->
+    <g stroke="#111" stroke-width="2">
+      <line x1="60" y1="42" x2="60" y2="68"/><line x1="110" y1="48" x2="110" y2="62"/>
+      <line x1="160" y1="48" x2="160" y2="62"/><line x1="210" y1="48" x2="210" y2="62"/>
+      <line x1="260" y1="42" x2="260" y2="68"/><line x1="310" y1="48" x2="310" y2="62"/>
+      <line x1="360" y1="48" x2="360" y2="62"/><line x1="410" y1="48" x2="410" y2="62"/>
+      <line x1="460" y1="42" x2="460" y2="68"/>
+    </g>
+    <g font-family="Georgia,serif" font-size="17" text-anchor="middle" fill="#111">
+      <text x="60" y="92">10</text><text x="260" y="92">11</text><text x="460" y="92">12</text>
+    </g>
+    <line x1="360" y1="10" x2="360" y2="34" stroke="#111" stroke-width="2.5"/>
+    <polygon points="360,44 353,32 367,32" fill="#111"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(11\frac{1}{2}\)</p>
+    <p><span class="sol-label">Solution:</span> Each whole unit on the number line is divided into 4 equal parts, so each small step is \(\frac{1}{4}\). The arrow is 2 quarter-steps past 11: \(11 + \frac{2}{4} = 11\frac{2}{4} = 11\frac{1}{2}\).</p>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="card">
+  <div class="qnum">6 <span class="tag">Represent</span></div>
+  <div class="question"><p>Draw a rectangle whose length is 5 cm and whose width is 3 cm. What is the perimeter of the rectangle?</p></div>
+  <figure class="fig">
+  <svg width="300" height="190" viewBox="0 0 300 190" role="img" aria-label="Rectangle 5 cm by 3 cm">
+    <rect x="50" y="35" width="200" height="120" fill="#eef4ff" stroke="#111" stroke-width="2.5"/>
+    <text x="150" y="25" text-anchor="middle" font-family="Georgia,serif" font-size="16">5 cm</text>
+    <text x="32" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="16">3 cm</text>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 16 cm</p>
+    <p><span class="sol-label">Solution:</span> Perimeter \(= 2 \times (\text{length} + \text{width}) = 2 \times (5 + 3) = 2 \times 8 = 16\) cm. (Equivalently, \(5 + 3 + 5 + 3 = 16\) cm.)</p>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="card">
+  <div class="qnum">7</div>
+  <div class="question"><p>What mixed number is shown by the shaded rectangles?</p></div>
+  <figure class="fig">
+  <svg width="300" height="140" viewBox="0 0 300 140" role="img" aria-label="Five fully shaded rectangles and one half-shaded rectangle">
+    <g stroke="#111" stroke-width="2">
+      <rect x="15" y="15" width="80" height="45" fill="#9db8dd"/>
+      <rect x="110" y="15" width="80" height="45" fill="#9db8dd"/>
+      <rect x="205" y="15" width="80" height="45" fill="#9db8dd"/>
+      <rect x="15" y="75" width="80" height="45" fill="#9db8dd"/>
+      <rect x="110" y="75" width="80" height="45" fill="#9db8dd"/>
+      <rect x="205" y="75" width="80" height="45" fill="#ffffff"/>
+      <polygon points="205,75 285,75 205,120" fill="#9db8dd"/>
+      <line x1="205" y1="75" x2="285" y2="120" stroke="#111" stroke-width="2"/>
+    </g>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(5\frac{1}{2}\)</p>
+    <p><span class="sol-label">Solution:</span> Five whole rectangles are fully shaded, and one more rectangle is half shaded (split on the diagonal). \(5 + \frac{1}{2} = 5\frac{1}{2}\).</p>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="card">
+  <div class="qnum">8 <span class="tag">Represent</span></div>
+  <div class="question"><p>Use words to write \(12\frac{3}{10}\).</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> twelve and three tenths</p>
+    <p><span class="sol-label">Solution:</span> Write the whole-number part in words ("twelve"), then "and" for the fraction bar/decimal point, then the fraction part in words ("three tenths").</p>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="card">
+  <div class="qnum">9 <span class="tag">Represent</span></div>
+  <div class="question"><p>Write 7026 in expanded form. Then use words to write the number.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Expanded form: \(7000 + 20 + 6\). In words: seven thousand, twenty-six.</p>
+    <p><span class="sol-label">Solution:</span> 7026 has 7 thousands, 0 hundreds, 2 tens, and 6 ones, so \(7026 = 7000 + 0 + 20 + 6 = 7000 + 20 + 6\). In words, read the thousands part then the rest: "seven thousand, twenty-six."</p>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="card">
+  <div class="qnum">10</div>
+  <div class="question"><p>On the morning of an important game, Gail woke up at the time shown on the clock. She wanted to wake up 2 hours 35 minutes later. What time did Gail want to wake up?</p></div>
+  <figure class="fig">
+  <svg width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="Clock showing 3:25">
+    <circle cx="110" cy="110" r="95" fill="#fff" stroke="#111" stroke-width="4"/>
+    <circle cx="110" cy="110" r="88" fill="none" stroke="#111" stroke-width="1.5"/>
+    <g stroke="#111" stroke-width="2">
+      <line x1="110" y1="22" x2="110" y2="34"/><line x1="110" y1="186" x2="110" y2="198"/>
+      <line x1="22" y1="110" x2="34" y2="110"/><line x1="186" y1="110" x2="198" y2="110"/>
+    </g>
+    <g stroke="#111" stroke-width="1">
+      <line x1="154" y1="33.8" x2="148" y2="43.9"/><line x1="186.2" y1="66" x2="176.1" y2="72"/>
+      <line x1="186.2" y1="154" x2="176.1" y2="148"/><line x1="154" y1="186.2" x2="148" y2="176.1"/>
+      <line x1="66" y1="186.2" x2="72" y2="176.1"/><line x1="33.8" y1="154" x2="43.9" y2="148"/>
+      <line x1="33.8" y1="66" x2="43.9" y2="72"/><line x1="66" y1="33.8" x2="72" y2="43.9"/>
+    </g>
+    <g font-family="Georgia,serif" font-size="20" text-anchor="middle" fill="#111">
+      <text x="110" y="48">12</text><text x="168" y="68">2</text><text x="188" y="118">3</text>
+      <text x="168" y="168">4</text><text x="110" y="196">6</text><text x="52" y="168">8</text>
+      <text x="32" y="118">9</text><text x="52" y="68">10</text><text x="86" y="44">11</text><text x="134" y="44">1</text>
+      <text x="150" y="192">5</text><text x="70" y="192">7</text>
+    </g>
+    <!-- hour hand: 3:25 -> 102.5 deg ; minute hand: 25 min -> 150 deg -->
+    <line x1="110" y1="110" x2="154" y2="120" stroke="#111" stroke-width="7" stroke-linecap="round"/>
+    <line x1="110" y1="110" x2="145" y2="170" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="110" cy="110" r="6" fill="#111"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 6:00</p>
+    <p><span class="sol-label">Solution:</span> The clock shows 3:25 (hour hand between 3 and 4, minute hand on the 5). Add 2 hours: \(3{:}25 + 2\text{ h} = 5{:}25\). Add 35 minutes: \(5{:}25 + 35\text{ min} = 6{:}00\).</p>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="card">
+  <div class="qnum">11</div>
+  <div class="question">
+    <p><b>a.</b> Three quarters are what fraction of a dollar?</p>
+    <p><b>b.</b> Write the value of three quarters using a dollar sign and a decimal point.</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(\frac{3}{4}\) of a dollar &nbsp; b. $0.75</p>
+    <p><span class="sol-label">Solution:</span> A quarter is \(\frac{1}{4}\) of a dollar, so three quarters are \(3 \times \frac{1}{4} = \frac{3}{4}\) of a dollar. Since one quarter = $0.25, three quarters = \(3 \times \$0.25 = \$0.75\).</p>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="card">
+  <div class="qnum">12 <span class="tag">Connect</span></div>
+  <div class="question"><p>What multiplication fact is illustrated by this rectangle?</p></div>
+  <figure class="fig">
+  <svg width="260" height="170" viewBox="0 0 260 170" role="img" aria-label="Array of 4 rows and 6 columns">
+    <g fill="#ffffff" stroke="#111" stroke-width="2">
+      <rect x="40" y="15" width="30" height="30"/><rect x="70" y="15" width="30" height="30"/><rect x="100" y="15" width="30" height="30"/><rect x="130" y="15" width="30" height="30"/><rect x="160" y="15" width="30" height="30"/><rect x="190" y="15" width="30" height="30"/>
+      <rect x="40" y="45" width="30" height="30"/><rect x="70" y="45" width="30" height="30"/><rect x="100" y="45" width="30" height="30"/><rect x="130" y="45" width="30" height="30"/><rect x="160" y="45" width="30" height="30"/><rect x="190" y="45" width="30" height="30"/>
+      <rect x="40" y="75" width="30" height="30"/><rect x="70" y="75" width="30" height="30"/><rect x="100" y="75" width="30" height="30"/><rect x="130" y="75" width="30" height="30"/><rect x="160" y="75" width="30" height="30"/><rect x="190" y="75" width="30" height="30"/>
+      <rect x="40" y="105" width="30" height="30"/><rect x="70" y="105" width="30" height="30"/><rect x="100" y="105" width="30" height="30"/><rect x="130" y="105" width="30" height="30"/><rect x="160" y="105" width="30" height="30"/><rect x="190" y="105" width="30" height="30"/>
+    </g>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(4 \times 6 = 24\)</p>
+    <p><span class="sol-label">Solution:</span> The rectangle is an array with 4 rows and 6 columns. Multiplying rows by columns: \(4 \times 6 = 24\) small squares in all.</p>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="card">
+  <div class="qnum">13</div>
+  <div class="question"><p>Multiply for problems 13–15.</p>
+    <p><b>a.</b> \(9 \times 6\) &nbsp;&nbsp; <b>b.</b> \(9 \times 5\) &nbsp;&nbsp; <b>c.</b> \(9 \times 0\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 54 &nbsp; b. 45 &nbsp; c. 0</p>
+    <p><span class="sol-label">Solution:</span> \(9 \times 6 = 54\), \(9 \times 5 = 45\), and any number times 0 is 0, so \(9 \times 0 = 0\).</p>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="card">
+  <div class="qnum">14</div>
+  <div class="question"><p><b>a.</b> \(10 \times 10\) &nbsp;&nbsp; <b>b.</b> \(7 \times 7\) &nbsp;&nbsp; <b>c.</b> \(8 \times 8\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 100 &nbsp; b. 49 &nbsp; c. 64</p>
+    <p><span class="sol-label">Solution:</span> \(10 \times 10 = 100\), \(7 \times 7 = 49\), \(8 \times 8 = 64\).</p>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="card">
+  <div class="qnum">15</div>
+  <div class="question"><p><b>a.</b> \(5 \times 7\) &nbsp;&nbsp; <b>b.</b> \(6 \times 5\) &nbsp;&nbsp; <b>c.</b> \(2 \times 8\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 35 &nbsp; b. 30 &nbsp; c. 16</p>
+    <p><span class="sol-label">Solution:</span> \(5 \times 7 = 35\), \(6 \times 5 = 30\), \(2 \times 8 = 16\).</p>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="card">
+  <div class="qnum">16</div>
+  <div class="question"><p>\(\sqrt{81} + \sqrt{49}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 16</p>
+    <p><span class="sol-label">Solution:</span> \(\sqrt{81} = 9\) because \(9 \times 9 = 81\), and \(\sqrt{49} = 7\) because \(7 \times 7 = 49\). So \(9 + 7 = 16\).</p>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="card">
+  <div class="qnum">17</div>
+  <div class="question"><p>\(\$6.63 - \$3.55\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> $3.08</p>
+    <p><span class="sol-label">Solution:</span> Line up the decimal points and subtract:
+    \[\begin{array}{r} 6.63 \\ -\ 3.55 \\ \hline 3.08 \end{array}\]
+    Borrow as needed: \(6.63 - 3.55 = 3.08\).</p>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="card">
+  <div class="qnum">18</div>
+  <div class="question"><p>\(\$4.99 + \$2.88\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> $7.87</p>
+    <p><span class="sol-label">Solution:</span> Line up the decimal points and add:
+    \[\begin{array}{r} 4.99 \\ +\ 2.88 \\ \hline 7.87 \end{array}\]
+    \(9 + 8 = 17\) (write 7, carry 1); \(9 + 8 + 1 = 18\) (write 8, carry 1); \(4 + 2 + 1 = 7\).</p>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="card">
+  <div class="qnum">19</div>
+  <div class="question"><p>\(a - 247 = 321\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(a = 568\)</p>
+    <p><span class="sol-label">Solution:</span> To undo the subtraction, add 247 to both sides: \(a = 321 + 247 = 568\). Check: \(568 - 247 = 321\) ✓</p>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="card">
+  <div class="qnum">20</div>
+  <div class="question"><p>\(z + 296 = 531\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(z = 235\)</p>
+    <p><span class="sol-label">Solution:</span> To undo the addition, subtract 296 from both sides: \(z = 531 - 296 = 235\). Check: \(235 + 296 = 531\) ✓</p>
+  </div>
+</div>
+
+<!-- Q21 -->
+<div class="card">
+  <div class="qnum">21</div>
+  <div class="question"><p>\(523 - z = 145\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(z = 378\)</p>
+    <p><span class="sol-label">Solution:</span> The missing number subtracted from 523 gives 145, so \(z = 523 - 145 = 378\). Check: \(523 - 378 = 145\) ✓</p>
+  </div>
+</div>
+
+<!-- Q22 -->
+<div class="card">
+  <div class="qnum">22</div>
+  <div class="question"><p>\(28 + 46 + 48 + 64 + 32 + 344\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 562</p>
+    <p><span class="sol-label">Solution:</span> Group numbers that make round sums: \((28 + 32) + (46 + 64) + 48 + 344 = 60 + 110 + 48 + 344 = 562\).</p>
+  </div>
+</div>
+
+<!-- Q23 -->
+<div class="card">
+  <div class="qnum">23</div>
+  <div class="question">
+    <p><b>a.</b> <span class="tag">Conclude</span> What are the next three numbers in this counting sequence?</p>
+    <p>\[\ldots, 450,\ 460,\ 470,\ 480,\ \underline{\phantom{000}},\ \underline{\phantom{000}},\ \underline{\phantom{000}},\ \ldots\]</p>
+    <p><b>b.</b> <span class="tag">Generalize</span> What is one rule for this sequence?</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 490, 500, 510 &nbsp; b. Add 10 to each number (count by tens).</p>
+    <p><span class="sol-label">Solution:</span> Each number is 10 more than the one before it: \(460 - 450 = 10\), \(470 - 460 = 10\), \(480 - 470 = 10\). Continuing: \(480 + 10 = 490\), \(490 + 10 = 500\), \(500 + 10 = 510\). One rule: "add 10 each time" (count by 10s).</p>
+  </div>
+</div>
+
+<!-- Q24 -->
+<div class="card">
+  <div class="qnum">24</div>
+  <div class="question"><p>If the diameter of a circle is one foot, then the radius of the circle is how many inches?</p></div>
+  <figure class="fig">
+  <svg width="300" height="200" viewBox="0 0 300 200" role="img" aria-label="Circle with diameter of 1 foot">
+    <circle cx="150" cy="100" r="75" fill="#eef4ff" stroke="#111" stroke-width="2.5"/>
+    <line x1="75" y1="100" x2="225" y2="100" stroke="#111" stroke-width="2"/>
+    <line x1="150" y1="100" x2="225" y2="100" stroke="#dc2626" stroke-width="3"/>
+    <circle cx="150" cy="100" r="4" fill="#111"/>
+    <text x="150" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="14">diameter = 1 ft</text>
+    <text x="188" y="128" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#dc2626">radius = ? in</text>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 6 inches</p>
+    <p><span class="sol-label">Solution:</span> One foot = 12 inches, so the diameter is 12 inches. The radius is half the diameter: \(12 \div 2 = 6\) inches.</p>
+  </div>
+</div>
+
+<!-- Q25 -->
+<div class="card">
+  <div class="qnum">25</div>
+  <div class="question">
+    <p>Compare:</p>
+    <p><b>a.</b> \(\frac{1}{4}\) of a dollar \(\bigcirc\) \(\frac{1}{2}\) of a dollar</p>
+    <p><b>b.</b> \(101{,}010 \bigcirc 110{,}000\)</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(\frac{1}{4} < \frac{1}{2}\) &nbsp; b. \(101{,}010 < 110{,}000\)</p>
+    <p><span class="sol-label">Solution:</span> a. \(\frac{1}{4}\) of a dollar is $0.25 and \(\frac{1}{2}\) of a dollar is $0.50, so \(\frac{1}{4} < \frac{1}{2}\).<br>b. Both numbers have 6 digits; compare the ten-thousands place: 0 ten-thousands vs 1 ten-thousand, so \(101{,}010 < 110{,}000\).</p>
+  </div>
+</div>
+
+<!-- Q26 -->
+<div class="card">
+  <div class="qnum">26 <span class="tag">Multiple Choice</span></div>
+  <div class="question">
+    <p>One yard does <i>not</i> equal which of the following?</p>
+    <ol class="choice">
+      <li>36 in.</li>
+      <li>3 ft</li>
+      <li>1 m</li>
+      <li>2 ft + 12 in.</li>
+    </ol>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> C — 1 m</p>
+    <p><span class="sol-label">Solution:</span> One yard = 36 inches = 3 feet. Check each choice: A. 36 in. = 1 yd ✓; B. 3 ft = 1 yd ✓; D. 2 ft + 12 in. = 24 in. + 12 in. = 36 in. = 1 yd ✓. But C. 1 meter ≈ 39 inches, which is <i>not</i> equal to 1 yard.</p>
+  </div>
+</div>
+
+<!-- Q27 -->
+<div class="card">
+  <div class="qnum">27</div>
+  <div class="question">
+    <p>In the year 2000, the four least populous U.S. states and their populations were as follows:</p>
+    <table class="pop">
+      <tr><td>Alaska</td><td>626,932</td></tr>
+      <tr><td>North Dakota</td><td>642,200</td></tr>
+      <tr><td>Vermont</td><td>608,827</td></tr>
+      <tr><td>Wyoming</td><td>493,782</td></tr>
+    </table>
+    <p>List these states in order of population size, beginning with the least population.</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Wyoming, Vermont, Alaska, North Dakota</p>
+    <p><span class="sol-label">Solution:</span> Compare the populations from least to greatest: 493,782 (Wyoming) &lt; 608,827 (Vermont) &lt; 626,932 (Alaska) &lt; 642,200 (North Dakota).</p>
+  </div>
+</div>
+
+<!-- Q28 -->
+<div class="card">
+  <div class="qnum">28 <span class="tag">Justify</span></div>
+  <div class="question"><p>An adult cheetah weighs about 130 pounds. An adult mountain lion weighs about 170 pounds. A student estimates that a mountain lion weighs about twice as much as a cheetah. Is the estimate reasonable? Explain why or why not.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> No, the estimate is not reasonable.</p>
+    <p><span class="sol-label">Solution:</span> Twice the cheetah's weight is \(2 \times 130 = 260\) pounds, but a mountain lion weighs only about 170 pounds — 90 pounds less than double. The mountain lion weighs only about 40 pounds more than the cheetah, not twice as much, so the estimate is not reasonable.</p>
+  </div>
+</div>
+
+<!-- Q29 -->
+<div class="card">
+  <div class="qnum">29</div>
+  <div class="question"><p>For a very short distance, a world-class sprinter can run at a speed of about 23 miles per hour. Round that speed to the nearest ten miles per hour.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 20 miles per hour</p>
+    <p><span class="sol-label">Solution:</span> 23 is between 20 and 30. The ones digit is 3, which is less than 5, so round down to 20.</p>
+  </div>
+</div>
+
+<!-- Q30 -->
+<div class="card">
+  <div class="qnum">30</div>
+  <div class="question"><p>In Barrow, Alaska, the average maximum temperature in July is 47°F. The average minimum temperature is 34°F. How many degrees cooler is a temperature of 34°F compared to a temperature of 47°F?</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 13°F cooler</p>
+    <p><span class="sol-label">Solution:</span> Subtract the lower temperature from the higher one: \(47 - 34 = 13\). So 34°F is 13 degrees cooler than 47°F.</p>
+  </div>
+</div>
+
+<h2 class="section">Written Practice</h2>
+<p style="color:var(--muted); font-size:0.95rem;"><i><b>Formulate</b> — Write and solve equations for problems 1 and 2.</i></p>
+
+<!-- WP1 -->
+<div class="card">
+  <div class="qnum">1</div>
+  <div class="question"><p>The Pearl River in Mississippi is 411 miles long. The San Juan River in Colorado is 360 miles long. How many miles longer is the Pearl River?</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 51 miles longer</p>
+    <p><span class="sol-label">Solution:</span> Let \(m\) = miles longer. Equation: \(360 + m = 411\), so \(m = 411 - 360 = 51\).</p>
+  </div>
+</div>
+
+<!-- WP2 -->
+<div class="card">
+  <div class="qnum">2</div>
+  <div class="question"><p>If the length of the Sabine River in Texas were 50 miles longer, it would be the same length as the Wisconsin River. The Wisconsin River is 430 miles long. How long is the Sabine River?</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 380 miles</p>
+    <p><span class="sol-label">Solution:</span> Let \(s\) = length of the Sabine River. Equation: \(s + 50 = 430\), so \(s = 430 - 50 = 380\). Check: \(380 + 50 = 430\) ✓</p>
+  </div>
+</div>
+
+<!-- WP3 -->
+<div class="card">
+  <div class="qnum">3 <span class="tag">Represent</span></div>
+  <div class="question"><p>Use digits to write four hundred seventy-five thousand, three hundred forty-two. Then circle the digit in the ten-thousands place.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 4<span class="circled">7</span>5,342 — circle the 7</p>
+    <p><span class="sol-label">Solution:</span> "Four hundred seventy-five thousand, three hundred forty-two" = 475,342. Counting places from the right — ones, tens, hundreds, thousands, <b>ten-thousands</b> — the ten-thousands digit is 7.</p>
+  </div>
+</div>
+
+<!-- WP4 -->
+<div class="card">
+  <div class="qnum">4 <span class="tag">Explain</span></div>
+  <div class="question"><p>Leah wants to put square floor tiles that measure one foot on each side in a room that is 9 feet long and 9 feet wide. How many floor tiles will Leah need? Is your answer reasonable? Explain why.</p></div>
+  <figure class="fig">
+  <svg width="280" height="270" viewBox="0 0 280 270" role="img" aria-label="9 by 9 grid of one-foot tiles">
+    <g fill="#ffffff" stroke="#111" stroke-width="1.2">
+      <rect x="40" y="40" width="22" height="22"/><rect x="62" y="40" width="22" height="22"/><rect x="84" y="40" width="22" height="22"/><rect x="106" y="40" width="22" height="22"/><rect x="128" y="40" width="22" height="22"/><rect x="150" y="40" width="22" height="22"/><rect x="172" y="40" width="22" height="22"/><rect x="194" y="40" width="22" height="22"/><rect x="216" y="40" width="22" height="22"/>
+      <rect x="40" y="62" width="22" height="22"/><rect x="62" y="62" width="22" height="22"/><rect x="84" y="62" width="22" height="22"/><rect x="106" y="62" width="22" height="22"/><rect x="128" y="62" width="22" height="22"/><rect x="150" y="62" width="22" height="22"/><rect x="172" y="62" width="22" height="22"/><rect x="194" y="62" width="22" height="22"/><rect x="216" y="62" width="22" height="22"/>
+      <rect x="40" y="84" width="22" height="22"/><rect x="62" y="84" width="22" height="22"/><rect x="84" y="84" width="22" height="22"/><rect x="106" y="84" width="22" height="22"/><rect x="128" y="84" width="22" height="22"/><rect x="150" y="84" width="22" height="22"/><rect x="172" y="84" width="22" height="22"/><rect x="194" y="84" width="22" height="22"/><rect x="216" y="84" width="22" height="22"/>
+      <rect x="40" y="106" width="22" height="22"/><rect x="62" y="106" width="22" height="22"/><rect x="84" y="106" width="22" height="22"/><rect x="106" y="106" width="22" height="22"/><rect x="128" y="106" width="22" height="22"/><rect x="150" y="106" width="22" height="22"/><rect x="172" y="106" width="22" height="22"/><rect x="194" y="106" width="22" height="22"/><rect x="216" y="106" width="22" height="22"/>
+      <rect x="40" y="128" width="22" height="22"/><rect x="62" y="128" width="22" height="22"/><rect x="84" y="128" width="22" height="22"/><rect x="106" y="128" width="22" height="22"/><rect x="128" y="128" width="22" height="22"/><rect x="150" y="128" width="22" height="22"/><rect x="172" y="128" width="22" height="22"/><rect x="194" y="128" width="22" height="22"/><rect x="216" y="128" width="22" height="22"/>
+      <rect x="40" y="150" width="22" height="22"/><rect x="62" y="150" width="22" height="22"/><rect x="84" y="150" width="22" height="22"/><rect x="106" y="150" width="22" height="22"/><rect x="128" y="150" width="22" height="22"/><rect x="150" y="150" width="22" height="22"/><rect x="172" y="150" width="22" height="22"/><rect x="194" y="150" width="22" height="22"/><rect x="216" y="150" width="22" height="22"/>
+      <rect x="40" y="172" width="22" height="22"/><rect x="62" y="172" width="22" height="22"/><rect x="84" y="172" width="22" height="22"/><rect x="106" y="172" width="22" height="22"/><rect x="128" y="172" width="22" height="22"/><rect x="150" y="172" width="22" height="22"/><rect x="172" y="172" width="22" height="22"/><rect x="194" y="172" width="22" height="22"/><rect x="216" y="172" width="22" height="22"/>
+      <rect x="40" y="194" width="22" height="22"/><rect x="62" y="194" width="22" height="22"/><rect x="84" y="194" width="22" height="22"/><rect x="106" y="194" width="22" height="22"/><rect x="128" y="194" width="22" height="22"/><rect x="150" y="194" width="22" height="22"/><rect x="172" y="194" width="22" height="22"/><rect x="194" y="194" width="22" height="22"/><rect x="216" y="194" width="22" height="22"/>
+      <rect x="40" y="216" width="22" height="22"/><rect x="62" y="216" width="22" height="22"/><rect x="84" y="216" width="22" height="22"/><rect x="106" y="216" width="22" height="22"/><rect x="128" y="216" width="22" height="22"/><rect x="150" y="216" width="22" height="22"/><rect x="172" y="216" width="22" height="22"/><rect x="194" y="216" width="22" height="22"/><rect x="216" y="216" width="22" height="22"/>
+    </g>
+    <text x="139" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="15">9 ft</text>
+    <text x="24" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="15" transform="rotate(-90 24 145)">9 ft</text>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 81 tiles. Yes, this is reasonable.</p>
+    <p><span class="sol-label">Solution:</span> Each tile covers 1 square foot. The floor is a 9 ft × 9 ft square, so the number of tiles is \(9 \times 9 = 81\). This is reasonable because the floor's area is \(9 \times 9 = 81\) square feet, and each 1-foot tile covers exactly 1 square foot — 81 tiles cover the floor exactly with none left over.</p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+function toggleAns(btn) {
+  var ans = btn.nextElementSibling;
+  var open = ans.classList.toggle('show');
+  btn.classList.toggle('open', open);
+  btn.innerHTML = open ? 'Hide answer &amp; solution' : 'Show answer &amp; solution';
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([ans]).catch(function(){});
+  }
+}
+</script>
+</body>
+</html>
