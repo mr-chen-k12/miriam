@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saxon Math Grade 4 — Lesson 38 Solutions</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  chtml: { scale: 1.05 }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --ink:#1c1c1e; --accent:#0b5fff; --card:#ffffff; --bg:#f4f6fa; --muted:#6b7280; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--ink);
+         margin: 0; padding: 18px; line-height: 1.55; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  header.page { text-align: center; margin-bottom: 18px; }
+  header.page h1 { font-size: 1.5rem; margin: 0.2em 0; }
+  header.page p { color: var(--muted); margin: 0.2em 0; font-size: 0.95rem; }
+  h2.section { font-size: 1.15rem; margin: 26px 0 12px; padding-bottom: 6px;
+               border-bottom: 2px solid var(--accent); color: var(--accent); }
+  .card { background: var(--card); border: 1px solid #dfe3ea; border-radius: 12px;
+          padding: 16px 18px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qnum { font-weight: bold; font-size: 1.05rem; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 0.78rem;
+         font-weight: bold; border-radius: 6px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
+  .question { margin: 6px 0 4px; }
+  .question p { margin: 0.4em 0; }
+  figure.fig { margin: 10px 0 4px; text-align: center; }
+  figure.fig svg { max-width: 100%; height: auto; }
+  .show-btn { display: inline-block; margin-top: 10px; background: var(--accent); color: #fff;
+              border: none; border-radius: 8px; padding: 8px 16px; font-size: 0.95rem;
+              cursor: pointer; font-family: inherit; }
+  .show-btn:hover { background: #0849c4; }
+  .show-btn.open { background: #374151; }
+  .answer { display: none; margin-top: 12px; padding: 12px 14px; background: #f0fdf4;
+            border: 1px solid #bbf7d0; border-radius: 8px; }
+  .answer.show { display: block; }
+  .answer .ans-label { font-weight: bold; color: #166534; }
+  .answer .sol-label { font-weight: bold; }
+  .answer p { margin: 0.45em 0; }
+  .answer ul { margin: 0.4em 0 0.4em 1.2em; padding: 0; }
+  ol.choice { list-style: upper-alpha; margin: 0.4em 0 0.4em 1.4em; padding: 0; }
+  table.data { border-collapse: collapse; margin: 8px auto; }
+  table.data th, table.data td { border: 1px solid #111; padding: 4px 12px; text-align: center; }
+  table.data th { background: #dbeafe; }
+  table.mini { border-collapse: collapse; margin: 8px auto; font-size: 0.92rem; }
+  table.mini td, table.mini th { border: 1px solid #9ca3af; padding: 2px 10px; text-align: center; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .show-btn, .answer { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    header.page p.hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="page">
+  <h1>Saxon Math Grade 4 — Lesson 38</h1>
+  <p>Solutions (hidden until you press the button)</p>
+  <p class="hint">Tap <b>Show answer &amp; solution</b> on any problem to reveal it. Printing shows questions only.</p>
+</header>
+
+<h2 class="section">Lesson Practice</h2>
+
+<!-- LPa -->
+<div class="card">
+  <div class="qnum">a.</div>
+  <div class="question"><p>Brainstorm ways to recall the ten memory-group facts. Then complete Power Up F.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Sample recall strategies (any reasonable ideas count):</p>
+    <ul>
+      <li><b>Elevens:</b> \(11 \times 11 = 121\) — the digits double up; \(11 \times 12 = 132\) is just 11 more than 121.</li>
+      <li><b>Break 12 apart:</b> \(12 \times n = (10 \times n) + (2 \times n)\). Example: \(12 \times 7 = 70 + 14 = 84\).</li>
+      <li><b>Dozen facts:</b> \(12 \times 12 = 144\) — "a dozen dozen"; \(12 \times 5 = 60\) — five dozen is 60.</li>
+      <li><b>Tens:</b> multiplying by 10 just tacks on a zero: \(10 \times 12 = 120\).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- LPb -->
+<div class="card">
+  <div class="qnum">b.</div>
+  <div class="question"><p>Find each product: \(\begin{array}{r} 11 \\ \times\ 11 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 121</p>
+    <p><span class="sol-label">Solution:</span> \(11 \times 11 = 121\) (memory-group fact: the digits double).</p>
+  </div>
+</div>
+
+<!-- LPc -->
+<div class="card">
+  <div class="qnum">c.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ 12 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 144</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 12 = 144\) (a dozen dozen).</p>
+  </div>
+</div>
+
+<!-- LPd -->
+<div class="card">
+  <div class="qnum">d.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ \ 9 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 108</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 9 = (10 \times 9) + (2 \times 9) = 90 + 18 = 108\).</p>
+  </div>
+</div>
+
+<!-- LPe -->
+<div class="card">
+  <div class="qnum">e.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ \ 6 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 72</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 6 = (10 \times 6) + (2 \times 6) = 60 + 12 = 72\).</p>
+  </div>
+</div>
+
+<!-- LPf -->
+<div class="card">
+  <div class="qnum">f.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ \ 8 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 96</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 8 = (10 \times 8) + (2 \times 8) = 80 + 16 = 96\).</p>
+  </div>
+</div>
+
+<!-- LPg -->
+<div class="card">
+  <div class="qnum">g.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ \ 7 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 84</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 7 = (10 \times 7) + (2 \times 7) = 70 + 14 = 84\).</p>
+  </div>
+</div>
+
+<!-- LPh -->
+<div class="card">
+  <div class="qnum">h.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ \ 5 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 60</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 5 = 60\) (five dozen).</p>
+  </div>
+</div>
+
+<!-- LPi -->
+<div class="card">
+  <div class="qnum">i.</div>
+  <div class="question"><p>\(\begin{array}{r} 12 \\ \times\ 11 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 132</p>
+    <p><span class="sol-label">Solution:</span> \(12 \times 11 = 132\) (just 11 more than \(11 \times 11 = 121\)).</p>
+  </div>
+</div>
+
+<h2 class="section">Written Practice</h2>
+
+<!-- WP1 -->
+<div class="card">
+  <div class="qnum">1 <span class="tag">Formulate</span></div>
+  <div class="question"><p>There were two hundred twenty boats on the river. There were four hundred five boats in the harbor. How many more boats were in the harbor? Write and solve an equation.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 185 more boats</p>
+    <p><span class="sol-label">Solution:</span> Let \(b\) = boats more in the harbor. Equation: \(220 + b = 405\), so \(b = 405 - 220 = 185\). Check: \(220 + 185 = 405\) ✓</p>
+  </div>
+</div>
+
+<!-- WP2 -->
+<div class="card">
+  <div class="qnum">2 <span class="tag">Represent</span></div>
+  <div class="question"><p>Five hundred seventy-five thousand, five hundred forty-two people lived in the city. Use digits to write that number of people.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 575,542</p>
+    <p><span class="sol-label">Solution:</span> "Five hundred seventy-five thousand" = 575,000; "five hundred forty-two" = 542. Together: 575,542.</p>
+  </div>
+</div>
+
+<!-- WP3 -->
+<div class="card">
+  <div class="qnum">3 <span class="tag">Represent</span></div>
+  <div class="question"><p>Write 2503 in expanded form. Then use words to write the number.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Expanded form: \(2000 + 500 + 3\). In words: two thousand, five hundred three.</p>
+    <p><span class="sol-label">Solution:</span> 2503 has 2 thousands, 5 hundreds, 0 tens, and 3 ones, so \(2503 = 2000 + 500 + 0 + 3 = 2000 + 500 + 3\).</p>
+  </div>
+</div>
+
+<!-- WP4 -->
+<div class="card">
+  <div class="qnum">4 <span class="tag">Model</span></div>
+  <div class="question"><p>On 1-cm grid paper, draw a rectangle 6 cm long and 4 cm wide.</p>
+    <p><b>a.</b> What is the perimeter of the rectangle?</p>
+    <p><b>b.</b> What is the area of the rectangle?</p></div>
+  <figure class="fig">
+  <svg width="340" height="230" viewBox="0 0 340 230" role="img" aria-label="6 cm by 4 cm rectangle on 1 cm grid">
+    <g stroke="#9db8dd" stroke-width="1">
+      <line x1="50" y1="30" x2="50" y2="190"/><line x1="90" y1="30" x2="90" y2="190"/>
+      <line x1="130" y1="30" x2="130" y2="190"/><line x1="170" y1="30" x2="170" y2="190"/>
+      <line x1="210" y1="30" x2="210" y2="190"/><line x1="250" y1="30" x2="250" y2="190"/>
+      <line x1="290" y1="30" x2="290" y2="190"/>
+      <line x1="50" y1="30" x2="290" y2="30"/><line x1="50" y1="70" x2="290" y2="70"/>
+      <line x1="50" y1="110" x2="290" y2="110"/><line x1="50" y1="150" x2="290" y2="150"/>
+      <line x1="50" y1="190" x2="290" y2="190"/>
+    </g>
+    <rect x="50" y="30" width="240" height="160" fill="none" stroke="#111" stroke-width="3"/>
+    <text x="170" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="16">6 cm</text>
+    <text x="34" y="115" text-anchor="middle" font-family="Georgia,serif" font-size="16">4 cm</text>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 20 cm &nbsp; b. 24 square cm</p>
+    <p><span class="sol-label">Solution:</span> a. Perimeter \(= 2 \times (6 + 4) = 2 \times 10 = 20\) cm.<br>b. Area \(= \text{length} \times \text{width} = 6 \times 4 = 24\) square centimeters (count the 24 one-centimeter squares inside).</p>
+  </div>
+</div>
+
+<!-- WP5 -->
+<div class="card">
+  <div class="qnum">5 <span class="tag">Represent</span></div>
+  <div class="question"><p>To what mixed number is the arrow pointing?</p></div>
+  <figure class="fig">
+  <svg width="520" height="105" viewBox="0 0 520 105" role="img" aria-label="Number line from 7 to 10 with arrow at 8 and three fourths">
+    <line x1="30" y1="55" x2="495" y2="55" stroke="#111" stroke-width="2"/>
+    <polygon points="495,55 483,49 483,61" fill="#111"/>
+    <polygon points="30,55 42,49 42,61" fill="#111"/>
+    <g stroke="#111" stroke-width="2">
+      <line x1="100" y1="42" x2="100" y2="68"/><line x1="130" y1="48" x2="130" y2="62"/>
+      <line x1="160" y1="48" x2="160" y2="62"/><line x1="190" y1="48" x2="190" y2="62"/>
+      <line x1="220" y1="42" x2="220" y2="68"/><line x1="250" y1="48" x2="250" y2="62"/>
+      <line x1="280" y1="48" x2="280" y2="62"/><line x1="310" y1="48" x2="310" y2="62"/>
+      <line x1="340" y1="42" x2="340" y2="68"/><line x1="370" y1="48" x2="370" y2="62"/>
+      <line x1="400" y1="48" x2="400" y2="62"/><line x1="430" y1="48" x2="430" y2="62"/>
+      <line x1="460" y1="42" x2="460" y2="68"/>
+    </g>
+    <g font-family="Georgia,serif" font-size="17" text-anchor="middle" fill="#111">
+      <text x="100" y="92">7</text><text x="220" y="92">8</text><text x="340" y="92">9</text><text x="460" y="92">10</text>
+    </g>
+    <line x1="310" y1="10" x2="310" y2="34" stroke="#111" stroke-width="2.5"/>
+    <polygon points="310,44 303,32 317,32" fill="#111"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(8\frac{3}{4}\)</p>
+    <p><span class="sol-label">Solution:</span> Each unit is divided into 4 equal parts, so each small step is \(\frac{1}{4}\). The arrow is 3 quarter-steps past 8: \(8 + \frac{3}{4} = 8\frac{3}{4}\).</p>
+  </div>
+</div>
+
+<!-- WP6 -->
+<div class="card">
+  <div class="qnum">6 <span class="tag">Conclude</span></div>
+  <div class="question"><p>Which street is parallel to Broad Street?</p></div>
+  <figure class="fig">
+  <svg width="360" height="200" viewBox="0 0 360 200" role="img" aria-label="Street map with Broad Street and Main Street running parallel">
+    <line x1="30" y1="60" x2="330" y2="60" stroke="#111" stroke-width="3"/>
+    <text x="180" y="48" text-anchor="middle" font-family="Georgia,serif" font-size="15">BROAD ST.</text>
+    <line x1="30" y1="130" x2="330" y2="130" stroke="#111" stroke-width="3"/>
+    <text x="180" y="118" text-anchor="middle" font-family="Georgia,serif" font-size="15">MAIN ST.</text>
+    <line x1="260" y1="20" x2="260" y2="180" stroke="#111" stroke-width="3"/>
+    <g stroke="#111" stroke-width="2">
+      <line x1="320" y1="150" x2="320" y2="185"/><polygon points="320,145 315,155 325,155" fill="#111"/>
+      <text x="326" y="152" font-family="Georgia,serif" font-size="14">N</text>
+      <line x1="300" y1="168" x2="340" y2="168"/>
+      <text x="292" y="173" font-family="Georgia,serif" font-size="14">W</text>
+      <text x="344" y="173" font-family="Georgia,serif" font-size="14">E</text>
+    </g>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Main Street</p>
+    <p><span class="sol-label">Solution:</span> Parallel streets run in the same direction and never meet. Broad Street and Main Street are both drawn as horizontal lines going the same way, so Main Street is parallel to Broad Street (the cross street runs north–south, perpendicular to both).</p>
+  </div>
+</div>
+
+<!-- WP7 -->
+<div class="card">
+  <div class="qnum">7</div>
+  <div class="question"><p>What mixed number is shown by the shaded circles?</p></div>
+  <figure class="fig">
+  <svg width="380" height="120" viewBox="0 0 380 120" role="img" aria-label="Two fully shaded circles and one circle with one eighth shaded">
+    <circle cx="70" cy="60" r="48" fill="#9db8dd" stroke="#111" stroke-width="2.5"/>
+    <circle cx="190" cy="60" r="48" fill="#9db8dd" stroke="#111" stroke-width="2.5"/>
+    <circle cx="310" cy="60" r="48" fill="#ffffff" stroke="#111" stroke-width="2.5"/>
+    <g stroke="#111" stroke-width="2">
+      <line x1="310" y1="12" x2="310" y2="108"/><line x1="262" y1="60" x2="358" y2="60"/>
+      <line x1="276" y1="26" x2="344" y2="94"/><line x1="344" y1="26" x2="276" y2="94"/>
+    </g>
+    <path d="M 310 60 L 344 94 A 48 48 0 0 1 310 108 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(2\frac{1}{8}\)</p>
+    <p><span class="sol-label">Solution:</span> Two whole circles are fully shaded. The third circle is divided into 8 equal parts with 1 part shaded, so it shows \(\frac{1}{8}\). Together: \(2 + \frac{1}{8} = 2\frac{1}{8}\).</p>
+  </div>
+</div>
+
+<!-- WP8 -->
+<div class="card">
+  <div class="qnum">8</div>
+  <div class="question">
+    <p><b>a.</b> Round 624 to the nearest ten.</p>
+    <p><b>b.</b> Round $6.24 to the nearest dollar.</p>
+    <p><b>c.</b> Round $6.24 to the nearest 25 cents.</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 620 &nbsp; b. $6 &nbsp; c. $6.25</p>
+    <p><span class="sol-label">Solution:</span> a. 624 is between 620 and 630; the ones digit 4 is less than 5, so round down to 620.<br>b. $6.24 is between $6 and $7; the cents (24¢) are less than 50¢, so round down to $6.<br>c. $6.24 is between $6.00 and $6.25; it is only 1¢ away from $6.25, so round up to $6.25.</p>
+  </div>
+</div>
+
+<!-- WP9 -->
+<div class="card">
+  <div class="qnum">9</div>
+  <div class="question"><p>On a school day, Alberto finishes eating breakfast every morning at the time shown on the clock. He starts eating lunch at 12:30 p.m. How long after Alberto finishes eating breakfast does he start eating lunch?</p></div>
+  <figure class="fig">
+  <svg width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="Clock showing 7:25">
+    <circle cx="110" cy="110" r="95" fill="#fff" stroke="#111" stroke-width="4"/>
+    <circle cx="110" cy="110" r="88" fill="none" stroke="#111" stroke-width="1.5"/>
+    <g stroke="#111" stroke-width="2">
+      <line x1="110" y1="22" x2="110" y2="34"/><line x1="110" y1="186" x2="110" y2="198"/>
+      <line x1="22" y1="110" x2="34" y2="110"/><line x1="186" y1="110" x2="198" y2="110"/>
+    </g>
+    <g stroke="#111" stroke-width="1">
+      <line x1="154" y1="33.8" x2="148" y2="43.9"/><line x1="186.2" y1="66" x2="176.1" y2="72"/>
+      <line x1="186.2" y1="154" x2="176.1" y2="148"/><line x1="154" y1="186.2" x2="148" y2="176.1"/>
+      <line x1="66" y1="186.2" x2="72" y2="176.1"/><line x1="33.8" y1="154" x2="43.9" y2="148"/>
+      <line x1="33.8" y1="66" x2="43.9" y2="72"/><line x1="66" y1="33.8" x2="72" y2="43.9"/>
+    </g>
+    <g font-family="Georgia,serif" font-size="20" text-anchor="middle" fill="#111">
+      <text x="110" y="48">12</text><text x="152" y="60">1</text><text x="180" y="90">2</text>
+      <text x="190" y="118">3</text><text x="180" y="150">4</text><text x="150" y="180">5</text>
+      <text x="110" y="196">6</text><text x="70" y="180">7</text><text x="40" y="150">8</text>
+      <text x="30" y="118">9</text><text x="40" y="90">10</text><text x="70" y="60">11</text>
+    </g>
+    <line x1="110" y1="110" x2="80" y2="143" stroke="#111" stroke-width="7" stroke-linecap="round"/>
+    <line x1="110" y1="110" x2="145" y2="171" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="110" cy="110" r="6" fill="#111"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 5 hours 5 minutes</p>
+    <p><span class="sol-label">Solution:</span> The clock shows 7:25 (hour hand between 7 and 8, minute hand on the 5). From 7:25 to 12:25 is 5 hours; from 12:25 to 12:30 is 5 more minutes. Total: 5 hours 5 minutes.</p>
+  </div>
+</div>
+
+<!-- WP10 -->
+<div class="card">
+  <div class="qnum">10</div>
+  <div class="question">
+    <p><b>a.</b> <span class="tag">Connect</span> Fifty cents is what fraction of a dollar?</p>
+    <p><b>b.</b> Write the value of fifty cents using a dollar sign and a decimal point.</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(\frac{1}{2}\) of a dollar &nbsp; b. $0.50</p>
+    <p><span class="sol-label">Solution:</span> Fifty cents is half of 100 cents, so it is \(\frac{1}{2}\) of a dollar. As money with a dollar sign and decimal point: $0.50.</p>
+  </div>
+</div>
+
+<!-- WP11 -->
+<div class="card">
+  <div class="qnum">11 <span class="tag">Represent</span></div>
+  <div class="question"><p>Use words to write \(2\frac{11}{100}\).</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> two and eleven hundredths</p>
+    <p><span class="sol-label">Solution:</span> Write the whole-number part ("two"), then "and", then the fraction part ("eleven hundredths").</p>
+  </div>
+</div>
+
+<!-- WP12 -->
+<div class="card">
+  <div class="qnum">12 <span class="tag">Connect</span></div>
+  <div class="question"><p>This square illustrates six squared. What multiplication fact is illustrated by the square?</p></div>
+  <figure class="fig">
+  <svg width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="6 by 6 square grid">
+    <g fill="#ffffff" stroke="#111" stroke-width="2">
+      <rect x="36" y="16" width="28" height="28"/><rect x="64" y="16" width="28" height="28"/><rect x="92" y="16" width="28" height="28"/><rect x="120" y="16" width="28" height="28"/><rect x="148" y="16" width="28" height="28"/><rect x="176" y="16" width="28" height="28"/>
+      <rect x="36" y="44" width="28" height="28"/><rect x="64" y="44" width="28" height="28"/><rect x="92" y="44" width="28" height="28"/><rect x="120" y="44" width="28" height="28"/><rect x="148" y="44" width="28" height="28"/><rect x="176" y="44" width="28" height="28"/>
+      <rect x="36" y="72" width="28" height="28"/><rect x="64" y="72" width="28" height="28"/><rect x="92" y="72" width="28" height="28"/><rect x="120" y="72" width="28" height="28"/><rect x="148" y="72" width="28" height="28"/><rect x="176" y="72" width="28" height="28"/>
+      <rect x="36" y="100" width="28" height="28"/><rect x="64" y="100" width="28" height="28"/><rect x="92" y="100" width="28" height="28"/><rect x="120" y="100" width="28" height="28"/><rect x="148" y="100" width="28" height="28"/><rect x="176" y="100" width="28" height="28"/>
+      <rect x="36" y="128" width="28" height="28"/><rect x="64" y="128" width="28" height="28"/><rect x="92" y="128" width="28" height="28"/><rect x="120" y="128" width="28" height="28"/><rect x="148" y="128" width="28" height="28"/><rect x="176" y="128" width="28" height="28"/>
+      <rect x="36" y="156" width="28" height="28"/><rect x="64" y="156" width="28" height="28"/><rect x="92" y="156" width="28" height="28"/><rect x="120" y="156" width="28" height="28"/><rect x="148" y="156" width="28" height="28"/><rect x="176" y="156" width="28" height="28"/>
+    </g>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(6 \times 6 = 36\)</p>
+    <p><span class="sol-label">Solution:</span> "Six squared" means \(6^2 = 6 \times 6\). The square is a 6-by-6 array: 6 rows of 6, which is 36 small squares in all.</p>
+  </div>
+</div>
+
+<!-- WP13 -->
+<div class="card">
+  <div class="qnum">13</div>
+  <div class="question"><p>Multiply:</p>
+    <p><b>a.</b> \(3 \times 4\) &nbsp;&nbsp; <b>b.</b> \(3 \times 6\) &nbsp;&nbsp; <b>c.</b> \(3 \times 8\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 12 &nbsp; b. 18 &nbsp; c. 24</p>
+    <p><span class="sol-label">Solution:</span> \(3 \times 4 = 12\), \(3 \times 6 = 18\), \(3 \times 8 = 24\).</p>
+  </div>
+</div>
+
+<!-- WP14 -->
+<div class="card">
+  <div class="qnum">14</div>
+  <div class="question"><p><b>a.</b> \(4 \times 6\) &nbsp;&nbsp; <b>b.</b> \(4 \times 7\) &nbsp;&nbsp; <b>c.</b> \(4 \times 8\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 24 &nbsp; b. 28 &nbsp; c. 32</p>
+    <p><span class="sol-label">Solution:</span> \(4 \times 6 = 24\), \(4 \times 7 = 28\), \(4 \times 8 = 32\).</p>
+  </div>
+</div>
+
+<!-- WP15 -->
+<div class="card">
+  <div class="qnum">15</div>
+  <div class="question"><p><b>a.</b> \(6 \times 7\) &nbsp;&nbsp; <b>b.</b> \(6 \times 8\) &nbsp;&nbsp; <b>c.</b> \(7 \times 8\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 42 &nbsp; b. 48 &nbsp; c. 56</p>
+    <p><span class="sol-label">Solution:</span> \(6 \times 7 = 42\), \(6 \times 8 = 48\), \(7 \times 8 = 56\).</p>
+  </div>
+</div>
+
+<!-- WP16 -->
+<div class="card">
+  <div class="qnum">16</div>
+  <div class="question"><p>Compare: \(\frac{1}{10}\) of a dollar \(\bigcirc\) \(\frac{1}{2}\) of a dollar</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(\frac{1}{10} < \frac{1}{2}\)</p>
+    <p><span class="sol-label">Solution:</span> \(\frac{1}{10}\) of a dollar is $0.10 (a dime) and \(\frac{1}{2}\) of a dollar is $0.50. Since $0.10 &lt; $0.50, \(\frac{1}{10} < \frac{1}{2}\).</p>
+  </div>
+</div>
+
+<!-- WP17 -->
+<div class="card">
+  <div class="qnum">17</div>
+  <div class="question"><p>\(\begin{array}{r} \$7.23 \\ -\ \$2.54 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> $4.69</p>
+    <p><span class="sol-label">Solution:</span> Line up the decimal points and subtract with borrowing:
+    \[\begin{array}{r} 7.23 \\ -\ 2.54 \\ \hline 4.69 \end{array}\]
+    \(3 - 4\) needs a borrow; working through gives \(7.23 - 2.54 = 4.69\).</p>
+  </div>
+</div>
+
+<!-- WP18 -->
+<div class="card">
+  <div class="qnum">18</div>
+  <div class="question"><p>\(\begin{array}{r} \$5.42 \\ +\ \$2.69 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> $8.11</p>
+    <p><span class="sol-label">Solution:</span> Line up the decimal points and add:
+    \[\begin{array}{r} 5.42 \\ +\ 2.69 \\ \hline 8.11 \end{array}\]
+    \(2 + 9 = 11\) (write 1, carry 1); \(4 + 6 + 1 = 11\) (write 1, carry 1); \(5 + 2 + 1 = 8\).</p>
+  </div>
+</div>
+
+<!-- WP19 -->
+<div class="card">
+  <div class="qnum">19</div>
+  <div class="question"><p>\(\begin{array}{r} 943 \\ -\ 276 \\ \hline \end{array}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 667</p>
+    <p><span class="sol-label">Solution:</span> Subtract with borrowing: \(943 - 276 = 667\). Check: \(667 + 276 = 943\) ✓</p>
+  </div>
+</div>
+
+<!-- WP20 -->
+<div class="card">
+  <div class="qnum">20</div>
+  <div class="question"><p>\(z - 581 = 222\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(z = 803\)</p>
+    <p><span class="sol-label">Solution:</span> Undo the subtraction by adding 581 to both sides: \(z = 222 + 581 = 803\). Check: \(803 - 581 = 222\) ✓</p>
+  </div>
+</div>
+
+<!-- WP21 -->
+<div class="card">
+  <div class="qnum">21</div>
+  <div class="question"><p>\(c + 843 = 960\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> \(c = 117\)</p>
+    <p><span class="sol-label">Solution:</span> Undo the addition by subtracting 843 from both sides: \(c = 960 - 843 = 117\). Check: \(117 + 843 = 960\) ✓</p>
+  </div>
+</div>
+
+<!-- WP22 -->
+<div class="card">
+  <div class="qnum">22</div>
+  <div class="question"><p>If the radius of a circle is 100 cm, then the diameter of the circle is how many meters?</p></div>
+  <figure class="fig">
+  <svg width="300" height="200" viewBox="0 0 300 200" role="img" aria-label="Circle with radius 100 cm">
+    <circle cx="150" cy="100" r="75" fill="#eef4ff" stroke="#111" stroke-width="2.5"/>
+    <line x1="75" y1="100" x2="225" y2="100" stroke="#111" stroke-width="2" stroke-dasharray="6,4"/>
+    <line x1="150" y1="100" x2="225" y2="100" stroke="#dc2626" stroke-width="3"/>
+    <circle cx="150" cy="100" r="4" fill="#111"/>
+    <text x="188" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#dc2626">radius = 100 cm</text>
+    <text x="150" y="140" text-anchor="middle" font-family="Georgia,serif" font-size="14">diameter = ? m</text>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 2 meters</p>
+    <p><span class="sol-label">Solution:</span> The diameter is twice the radius: \(2 \times 100 = 200\) cm. Since 100 cm = 1 m, \(200 \text{ cm} = 2\) meters.</p>
+  </div>
+</div>
+
+<!-- WP23 -->
+<div class="card">
+  <div class="qnum">23</div>
+  <div class="question"><p>\(28 + 36 + 78 + \sqrt{49}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 149</p>
+    <p><span class="sol-label">Solution:</span> \(\sqrt{49} = 7\). Then \(28 + 36 + 78 + 7\): \(28 + 36 = 64\); \(64 + 78 = 142\); \(142 + 7 = 149\).</p>
+  </div>
+</div>
+
+<!-- WP24 -->
+<div class="card">
+  <div class="qnum">24</div>
+  <div class="question"><p>\(\sqrt{144} - \sqrt{121}\)</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 1</p>
+    <p><span class="sol-label">Solution:</span> \(\sqrt{144} = 12\) because \(12 \times 12 = 144\), and \(\sqrt{121} = 11\) because \(11 \times 11 = 121\). So \(12 - 11 = 1\).</p>
+  </div>
+</div>
+
+<!-- WP25 -->
+<div class="card">
+  <div class="qnum">25 <span class="tag">Multiple Choice</span></div>
+  <div class="question">
+    <p>Which of the following is <i>not</i> \(\frac{1}{10}\) of a dollar?</p>
+    <ol class="choice">
+      <li>dime</li>
+      <li>0.10¢</li>
+      <li>$0.10</li>
+      <li>10¢</li>
+    </ol>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> B — 0.10¢</p>
+    <p><span class="sol-label">Solution:</span> \(\frac{1}{10}\) of a dollar is 10 cents. A dime = 10¢ ✓, $0.10 = 10¢ ✓, 10¢ ✓. But 0.10¢ means <i>one-tenth of one cent</i> — far less than 10 cents — so B is not \(\frac{1}{10}\) of a dollar.</p>
+  </div>
+</div>
+
+<!-- WP26 -->
+<div class="card">
+  <div class="qnum">26 <span class="tag">Multiple Choice</span></div>
+  <div class="question">
+    <p>Which digit in 457,326,180 is in the hundred-thousands place?</p>
+    <ol class="choice">
+      <li>1</li>
+      <li>6</li>
+      <li>4</li>
+      <li>3</li>
+    </ol>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> D — 3</p>
+    <p><span class="sol-label">Solution:</span> Count places from the right in 457,326,180: ones (0), tens (8), hundreds (1), thousands (6), ten-thousands (2), <b>hundred-thousands (3)</b>, millions (7), ten-millions (5), hundred-millions (4). The hundred-thousands digit is 3.</p>
+  </div>
+</div>
+
+<!-- WP27 -->
+<div class="card">
+  <div class="qnum">27 <span class="tag">Conclude</span></div>
+  <div class="question"><p>Name and describe each angle below.</p></div>
+  <figure class="fig">
+  <svg width="480" height="150" viewBox="0 0 480 150" role="img" aria-label="Three angles: right, obtuse, acute">
+    <text x="20" y="30" font-family="Georgia,serif" font-size="17" font-weight="bold">a.</text>
+    <line x1="90" y1="120" x2="90" y2="50" stroke="#111" stroke-width="3"/>
+    <line x1="90" y1="120" x2="160" y2="120" stroke="#111" stroke-width="3"/>
+    <path d="M 90 104 L 106 104 L 106 120" fill="none" stroke="#111" stroke-width="2"/>
+    <text x="20" y="145" font-family="Georgia,serif" font-size="14" fill="#6b7280">(square corner mark)</text>
+    <text x="200" y="30" font-family="Georgia,serif" font-size="17" font-weight="bold">b.</text>
+    <line x1="280" y1="120" x2="210" y2="120" stroke="#111" stroke-width="3"/>
+    <line x1="280" y1="120" x2="330" y2="70" stroke="#111" stroke-width="3"/>
+    <text x="380" y="30" font-family="Georgia,serif" font-size="17" font-weight="bold">c.</text>
+    <line x1="430" y1="120" x2="470" y2="120" stroke="#111" stroke-width="3"/>
+    <line x1="430" y1="120" x2="465" y2="85" stroke="#111" stroke-width="3"/>
+  </svg>
+  </figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. Right angle &nbsp; b. Obtuse angle &nbsp; c. Acute angle</p>
+    <p><span class="sol-label">Solution:</span> a. The square corner mark means the angle is exactly 90° — a <b>right angle</b>.<br>b. The angle opens wider than 90° — an <b>obtuse angle</b> (greater than 90° but less than 180°).<br>c. The angle opens narrower than 90° — an <b>acute angle</b> (less than 90°).</p>
+  </div>
+</div>
+
+<!-- WP28 -->
+<div class="card">
+  <div class="qnum">28</div>
+  <div class="question">
+    <p>Consider the sequence 12, 24, 36, 48, …</p>
+    <p><b>a.</b> <span class="tag">Generalize</span> Write a rule that describes how to find the next term of the sequence.</p>
+    <p><b>b.</b> <span class="tag">Predict</span> What is the eleventh term of the sequence?</p>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. Add 12 to get the next term (count by 12s). &nbsp; b. 132</p>
+    <p><span class="sol-label">Solution:</span> a. Each term is 12 more than the one before: \(24 - 12 = 12\), \(36 - 24 = 12\), \(48 - 36 = 12\). Rule: add 12.<br>b. The terms are multiples of 12: term 1 = \(12 \times 1\), term 2 = \(12 \times 2\), …, so term 11 = \(12 \times 11 = 132\).</p>
+  </div>
+</div>
+
+<!-- WP29 -->
+<div class="card">
+  <div class="qnum">29 <span class="tag">Estimate</span></div>
+  <div class="question"><p>Mrs. Rojas would like to purchase a CD that costs $14.99 and a DVD that costs $18.95 for the school library. What is a reasonable estimate of the amount of money she will spend? Explain why your estimate is reasonable.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> About $34</p>
+    <p><span class="sol-label">Solution:</span> Round each price to the nearest dollar: $14.99 rounds to $15 and $18.95 rounds to $19. Then \(\$15 + \$19 = \$34\). This is reasonable because each rounded price is within a few cents of the actual price, and the exact total (\$33.94) is very close to $34.</p>
+  </div>
+</div>
+
+<!-- WP30 -->
+<div class="card">
+  <div class="qnum">30</div>
+  <div class="question"><p>The table below shows the cost of tickets to a game. Use the table to help find the cost of tickets for a family of six.</p>
+    <table class="data">
+      <tr><th>Number of Tickets</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th>Cost</th><td>$11</td><td>$22</td><td>$33</td><td>$44</td></tr>
+    </table>
+  </div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> $66</p>
+    <p><span class="sol-label">Solution:</span> Each ticket costs $11 (the cost goes up $11 per ticket). Extend the pattern: 5 tickets → $55, 6 tickets → $66. Or multiply: \(6 \times \$11 = \$66\).</p>
+  </div>
+</div>
+
+<h2 class="section">Real-World Connection</h2>
+
+<!-- RWC -->
+<div class="card">
+  <div class="qnum">Real-World Connection</div>
+  <div class="question"><p>Yolanda planted eleven flowers in each of 12 rows. How many flowers did she plant? Draw a table and complete it to show the number of flowers in 12 rows.</p></div>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> 132 flowers</p>
+    <p><span class="sol-label">Solution:</span> Each row adds 11 flowers: \(11 \times 12 = 132\).</p>
+    <table class="mini">
+      <tr><th>Rows</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+      <tr><th>Flowers</th><td>11</td><td>22</td><td>33</td><td>44</td><td>55</td><td>66</td><td>77</td><td>88</td><td>99</td><td>110</td><td>121</td><td>132</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+function toggleAns(btn) {
+  var ans = btn.nextElementSibling;
+  var open = ans.classList.toggle('show');
+  btn.classList.toggle('open', open);
+  btn.innerHTML = open ? 'Hide answer &amp; solution' : 'Show answer &amp; solution';
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([ans]).catch(function(){});
+  }
+}
+</script>
+</body>
+</html>
