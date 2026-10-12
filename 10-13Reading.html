@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-13 Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-13 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-13, Grade 4) ==================== */
+const SETS = {
+"Set A": { icon:"🔍", tag:"Word Detectives",
+  award:"Vocabulary Star Reader",
+  questions: [
+    { title:"The Marathon Swimmers",
+      passage:"Leatherback sea turtles are the largest turtles on Earth — some weigh as much as a small car! Unlike other sea turtles, they have no hard shell. Instead, their backs are covered with tough, rubbery skin, like leather. Every year, female leatherbacks swim thousands of miles across entire oceans to return to the very beach where they were born. There, they drag their enormous bodies onto the sand at night and dig nests with their flippers. Each mother lays about 100 eggs, covers them with sand, and slips back into the sea, never to see her babies. When the eggs hatch two months later, the tiny turtles scramble to the water, beginning a journey that may carry them around the world.",
+      prompt:"In the passage, the word “enormous” most nearly means…",
+      options:["extremely large","very fast","quite noisy","slightly warm"],
+      correct:0,
+      explanation:"“Enormous bodies” describes turtles as big as a small car — extremely large." },
+    { title:"The Tower That Almost Wasn’t",
+      passage:"When Gustave Eiffel proposed a 1,000-foot iron tower for the 1889 World’s Fair in Paris, many people were outraged. Artists called it ugly and useless, and some demanded it be torn down. But Eiffel finished it on time, and visitors were amazed — for 41 years it was the tallest structure on Earth. The tower was only supposed to stand for 20 years. It survived because it proved useful: its height made it perfect for radio antennas, and during World War I it helped intercept enemy messages. Today, the ‘ugly’ tower is the most visited monument in the world, welcoming nearly 7 million guests a year.",
+      prompt:"In the passage, the word “outraged” most nearly means…",
+      options:["extremely angry and upset","very excited and happy","slightly bored","deeply asleep"],
+      correct:0,
+      explanation:"People were so angry they “demanded it be torn down” — extremely angry and upset." },
+    { title:"Why Does Popcorn Pop?",
+      passage:"Every popcorn kernel is a tiny pressure cooker. Inside its hard outer shell is a drop of water surrounded by soft starch. When the kernel heats up, the water turns to steam and pressure builds — until, at about 400 degrees, the shell can’t hold it anymore. POP! The kernel explodes inside out, and the superheated starch puffs up into the fluffy white snack we eat, expanding to 40 times its original size. Kernels that don’t pop are called ‘old maids.’ They usually fail because their shells have tiny cracks that let the steam escape slowly instead of building pressure. No pressure, no pop!",
+      prompt:"In the passage, the word “expanding” most nearly means…",
+      options:["growing bigger","getting colder","turning brown","making noise"],
+      correct:0,
+      explanation:"The starch puffs up to “40 times its original size” — growing bigger." },
+    { title:"The Grand Canyon",
+      passage:"The Grand Canyon is a mile-deep crack in the Arizona desert, 277 miles long — and it was carved by a river. Over millions of years, the Colorado River wore away layer after layer of rock, like a slow-motion saw. The canyon’s walls are a timeline: the deeper you go, the older the rock, with the bottom layers nearly 2 billion years old. Each layer has its own color — red, orange, pink, chocolate brown — painted by different minerals. Long before tourists arrived, Native American tribes lived in and around the canyon, farming its plateaus and calling it home for thousands of years.",
+      prompt:"In the passage, the word “carved” most nearly means…",
+      options:["cut or worn away","painted quickly","filled with water","covered in snow"],
+      correct:0,
+      explanation:"The river “wore away layer after layer of rock” — it cut the canyon over millions of years." },
+    { title:"Why Do Cats Purr?",
+      passage:"A cat’s purr is one of the most soothing sounds in the world — but why do cats do it? Kittens are born blind and deaf, and they find their mother by feeling her purr’s vibrations. Mother cats purr back, like a lullaby the kittens can feel. Adult cats purr when they’re happy, but also when they’re scared, hurt, or at the vet. Scientists think purring may actually help cats heal: the vibrations fall at frequencies that can strengthen bones and repair muscles. So the next time your cat purrs in your lap, it might be giving itself a tiny dose of medicine — and sharing the comfort with you.",
+      prompt:"In the passage, the word “soothing” most nearly means…",
+      options:["calming and comforting","very loud","extremely fast","quite scary"],
+      correct:0,
+      explanation:"A purr is described as comfort — “like a lullaby” — calming and comforting." },
+    { title:"The Lungs of the Earth",
+      passage:"The Amazon rainforest is so vast that it makes its own weather. Trees release so much water vapor that they create ‘flying rivers’ in the sky — streams of moisture that bring rain to farms hundreds of miles away. The forest holds one in ten of all known species on Earth: jaguars, poison dart frogs, toucans, and millions of insects. Scientists call the Amazon the ‘lungs of the Earth’ because its plants absorb huge amounts of carbon dioxide. But the forest is shrinking as land is cleared for farming and logging. Many scientists warn that if too much is lost, the rainforest could dry out and turn to grassland — a change that would affect the whole planet’s climate.",
+      prompt:"In the passage, the word “vast” most nearly means…",
+      options:["extremely large","very dark","quite cold","slightly damp"],
+      correct:0,
+      explanation:"The forest holds one in ten species and makes its own weather — it is extremely large." },
+    { title:"Max’s Missing Dog",
+      passage:"When Max got home from school, the front gate was open — and Biscuit was gone. Max’s beagle had never run off before. Max grabbed his bike and rode up and down the streets, calling her name until his voice went hoarse. Then he had an idea. He printed ten ‘LOST DOG’ posters with Biscuit’s photo and taped them to every lamppost in the neighborhood. By dinner, his phone rang: Mrs. Alvarez, three blocks over, had found a beagle napping on her porch! Max sprinted over, and Biscuit nearly knocked him down with joy. That night, Max fixed the gate latch himself and hung one poster on his bedroom wall — a reminder that quick thinking brings dogs home.",
+      prompt:"In the passage, the word “hoarse” most nearly means…",
+      options:["rough and scratchy from overuse","very loud and clear","quite musical","extremely fast"],
+      correct:0,
+      explanation:"Max called Biscuit’s name “until his voice went hoarse” — rough and scratchy from shouting." },
+    { title:"The Tiny Farmers",
+      passage:"Leafcutter ants don’t eat the leaves they carry — they farm with them! Long lines of ants march through the rainforest carrying leaf pieces many times their weight, like tiny green umbrellas. Back in the nest, worker ants chew the leaves into a pulp and spread it in underground gardens. On this leaf mulch, they grow a special fungus — and the fungus is what the ants actually eat. The ants weed their gardens, removing mold that could harm the crop, just like human farmers. A single colony can have millions of ants, and their fungus farms have been running for millions of years — far longer than human agriculture!",
+      prompt:"In the passage, the word “colony” most nearly means…",
+      options:["a large group living and working together","a single ant","a type of leaf","a rainy forest"],
+      correct:0,
+      explanation:"“A single colony can have millions of ants” — a large group living and working together." },
+    { title:"Lighting Up the Night",
+      passage:"Before the light bulb, nighttime meant candles, oil lamps, or darkness. Thomas Edison didn’t invent the first electric light, but his team tested thousands of materials to find a filament that would glow for hours without burning out — trying everything from bamboo to beard hair! In 1879, they succeeded with a carbonized bamboo filament that burned for over 1,200 hours. But Edison knew a bulb alone wasn’t enough. He also built the first power station, wiring an entire New York neighborhood so people’s new bulbs would actually light up. Within a few years, electric light spread across cities, and the night was never dark again.",
+      prompt:"In the passage, “filament” most nearly means…",
+      options:["the thin wire inside a bulb that glows","a type of candle","a power station","a city street"],
+      correct:0,
+      explanation:"The team sought a filament that “would glow for hours” — the thin glowing wire inside the bulb." },
+    { title:"Rivers of Ice",
+      passage:"Glaciers are rivers of ice, moving so slowly you can’t see them — some creep just inches a day. They form where more snow falls each winter than melts each summer. Year after year, the snow piles up and squeezes into dense, blue ice under its own weight. As glaciers slide downhill, they bulldoze everything in their path, carving valleys and grinding rocks into powder. When chunks break off into the sea, they become icebergs. Scientists study glaciers closely because they are shrinking: as the planet warms, glaciers melt faster than new snow can replace them, and their meltwater is raising sea levels around the world.",
+      prompt:"In the passage, the word “dense” most nearly means…",
+      options:["tightly packed","brightly colored","very cold","quite old"],
+      correct:0,
+      explanation:"Snow “squeezes into dense, blue ice under its own weight” — packed tight." },
+  ]},
+"Set B": { icon:"💡", tag:"Main Idea Masters",
+  award:"Main Idea Master",
+  questions: [
+    { title:"The Marathon Swimmers",
+      passage:"Leatherback sea turtles are the largest turtles on Earth — some weigh as much as a small car! Unlike other sea turtles, they have no hard shell. Instead, their backs are covered with tough, rubbery skin, like leather. Every year, female leatherbacks swim thousands of miles across entire oceans to return to the very beach where they were born. There, they drag their enormous bodies onto the sand at night and dig nests with their flippers. Each mother lays about 100 eggs, covers them with sand, and slips back into the sea, never to see her babies. When the eggs hatch two months later, the tiny turtles scramble to the water, beginning a journey that may carry them around the world.",
+      prompt:"What is the main idea of the passage?",
+      options:["Leatherback turtles swim thousands of miles to lay eggs on the beaches where they were born.","All sea turtles have hard shells.","Mother turtles stay to raise their babies.","Leatherbacks never leave the beach."],
+      correct:0,
+      explanation:"The passage follows the leatherback’s ocean migration, nesting, and the hatchlings’ journey." },
+    { title:"The Tower That Almost Wasn’t",
+      passage:"When Gustave Eiffel proposed a 1,000-foot iron tower for the 1889 World’s Fair in Paris, many people were outraged. Artists called it ugly and useless, and some demanded it be torn down. But Eiffel finished it on time, and visitors were amazed — for 41 years it was the tallest structure on Earth. The tower was only supposed to stand for 20 years. It survived because it proved useful: its height made it perfect for radio antennas, and during World War I it helped intercept enemy messages. Today, the ‘ugly’ tower is the most visited monument in the world, welcoming nearly 7 million guests a year.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Eiffel Tower was once hated but survived to become the world’s most visited monument.","The Eiffel Tower was built in a single day.","Nobody ever visited the Eiffel Tower.","The tower was torn down after 20 years as planned."],
+      correct:0,
+      explanation:"The passage traces the tower from public outrage to beloved, record-breaking landmark." },
+    { title:"Why Does Popcorn Pop?",
+      passage:"Every popcorn kernel is a tiny pressure cooker. Inside its hard outer shell is a drop of water surrounded by soft starch. When the kernel heats up, the water turns to steam and pressure builds — until, at about 400 degrees, the shell can’t hold it anymore. POP! The kernel explodes inside out, and the superheated starch puffs up into the fluffy white snack we eat, expanding to 40 times its original size. Kernels that don’t pop are called ‘old maids.’ They usually fail because their shells have tiny cracks that let the steam escape slowly instead of building pressure. No pressure, no pop!",
+      prompt:"What is the main idea of the passage?",
+      options:["Popcorn pops when steam pressure inside the kernel explodes the shell and puffs the starch.","Popcorn grows already popped on the plant.","Heating kernels makes them shrink.","All kernels pop no matter what."],
+      correct:0,
+      explanation:"The passage explains the pressure-cooker science behind every pop — and every failure." },
+    { title:"The Grand Canyon",
+      passage:"The Grand Canyon is a mile-deep crack in the Arizona desert, 277 miles long — and it was carved by a river. Over millions of years, the Colorado River wore away layer after layer of rock, like a slow-motion saw. The canyon’s walls are a timeline: the deeper you go, the older the rock, with the bottom layers nearly 2 billion years old. Each layer has its own color — red, orange, pink, chocolate brown — painted by different minerals. Long before tourists arrived, Native American tribes lived in and around the canyon, farming its plateaus and calling it home for thousands of years.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Colorado River carved the Grand Canyon over millions of years, exposing ancient rock layers.","The Grand Canyon was dug by people in a few weeks.","The canyon’s rocks are all the same age.","No one ever lived near the Grand Canyon."],
+      correct:0,
+      explanation:"The passage describes the river’s slow carving, the rock timeline, and the canyon’s early inhabitants." },
+    { title:"Why Do Cats Purr?",
+      passage:"A cat’s purr is one of the most soothing sounds in the world — but why do cats do it? Kittens are born blind and deaf, and they find their mother by feeling her purr’s vibrations. Mother cats purr back, like a lullaby the kittens can feel. Adult cats purr when they’re happy, but also when they’re scared, hurt, or at the vet. Scientists think purring may actually help cats heal: the vibrations fall at frequencies that can strengthen bones and repair muscles. So the next time your cat purrs in your lap, it might be giving itself a tiny dose of medicine — and sharing the comfort with you.",
+      prompt:"What is the main idea of the passage?",
+      options:["Cats purr for many reasons — comfort, communication, and possibly even healing.","Cats only purr when they are happy.","Kittens never purr at all.","Purring is harmful to cats."],
+      correct:0,
+      explanation:"The passage covers purring for kittens, for happiness, for fear — and maybe for healing." },
+    { title:"The Lungs of the Earth",
+      passage:"The Amazon rainforest is so vast that it makes its own weather. Trees release so much water vapor that they create ‘flying rivers’ in the sky — streams of moisture that bring rain to farms hundreds of miles away. The forest holds one in ten of all known species on Earth: jaguars, poison dart frogs, toucans, and millions of insects. Scientists call the Amazon the ‘lungs of the Earth’ because its plants absorb huge amounts of carbon dioxide. But the forest is shrinking as land is cleared for farming and logging. Many scientists warn that if too much is lost, the rainforest could dry out and turn to grassland — a change that would affect the whole planet’s climate.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Amazon is a huge, vital rainforest that affects Earth’s climate but is shrinking.","The Amazon is a small, unimportant forest.","Rainforests have no effect on weather.","The Amazon is growing larger every year."],
+      correct:0,
+      explanation:"The passage describes the Amazon’s size, its role in climate, and the danger of its shrinking." },
+    { title:"Max’s Missing Dog",
+      passage:"When Max got home from school, the front gate was open — and Biscuit was gone. Max’s beagle had never run off before. Max grabbed his bike and rode up and down the streets, calling her name until his voice went hoarse. Then he had an idea. He printed ten ‘LOST DOG’ posters with Biscuit’s photo and taped them to every lamppost in the neighborhood. By dinner, his phone rang: Mrs. Alvarez, three blocks over, had found a beagle napping on her porch! Max sprinted over, and Biscuit nearly knocked him down with joy. That night, Max fixed the gate latch himself and hung one poster on his bedroom wall — a reminder that quick thinking brings dogs home.",
+      prompt:"What is the main idea of the passage?",
+      options:["Max found his lost dog by making posters and acting quickly.","Max never cared about his dog.","Biscuit ran away forever.","Mrs. Alvarez kept the dog for herself."],
+      correct:0,
+      explanation:"The story follows Max from losing Biscuit to bringing her home through quick thinking." },
+    { title:"The Tiny Farmers",
+      passage:"Leafcutter ants don’t eat the leaves they carry — they farm with them! Long lines of ants march through the rainforest carrying leaf pieces many times their weight, like tiny green umbrellas. Back in the nest, worker ants chew the leaves into a pulp and spread it in underground gardens. On this leaf mulch, they grow a special fungus — and the fungus is what the ants actually eat. The ants weed their gardens, removing mold that could harm the crop, just like human farmers. A single colony can have millions of ants, and their fungus farms have been running for millions of years — far longer than human agriculture!",
+      prompt:"What is the main idea of the passage?",
+      options:["Leafcutter ants farm fungus on chewed leaves, like human farmers growing crops.","Leafcutter ants eat leaves directly.","Ants never work together in groups.","Human farming is older than ant farming."],
+      correct:0,
+      explanation:"The passage explains the ants’ fungus gardens and compares them to human farmers." },
+    { title:"Lighting Up the Night",
+      passage:"Before the light bulb, nighttime meant candles, oil lamps, or darkness. Thomas Edison didn’t invent the first electric light, but his team tested thousands of materials to find a filament that would glow for hours without burning out — trying everything from bamboo to beard hair! In 1879, they succeeded with a carbonized bamboo filament that burned for over 1,200 hours. But Edison knew a bulb alone wasn’t enough. He also built the first power station, wiring an entire New York neighborhood so people’s new bulbs would actually light up. Within a few years, electric light spread across cities, and the night was never dark again.",
+      prompt:"What is the main idea of the passage?",
+      options:["Edison’s team made a long-lasting light bulb and built the power system to light up cities.","Edison invented the first electric light ever.","Candles are brighter than light bulbs.","New York never got electric light."],
+      correct:0,
+      explanation:"The passage covers both breakthroughs: the lasting bulb and the power station that made it useful." },
+    { title:"Rivers of Ice",
+      passage:"Glaciers are rivers of ice, moving so slowly you can’t see them — some creep just inches a day. They form where more snow falls each winter than melts each summer. Year after year, the snow piles up and squeezes into dense, blue ice under its own weight. As glaciers slide downhill, they bulldoze everything in their path, carving valleys and grinding rocks into powder. When chunks break off into the sea, they become icebergs. Scientists study glaciers closely because they are shrinking: as the planet warms, glaciers melt faster than new snow can replace them, and their meltwater is raising sea levels around the world.",
+      prompt:"What is the main idea of the passage?",
+      options:["Glaciers are slow-moving rivers of ice that carve the land but are shrinking as Earth warms.","Glaciers move faster than race cars.","Glaciers never change in size.","Icebergs form on mountaintops."],
+      correct:0,
+      explanation:"The passage describes how glaciers form, move, and carve — and why scientists worry they are shrinking." },
+  ]},
+"Set C": { icon:"🧠", tag:"Thinking Readers",
+  award:"Super Sleuth Reader",
+  questions: [
+    { title:"The Marathon Swimmers",
+      passage:"Leatherback sea turtles are the largest turtles on Earth — some weigh as much as a small car! Unlike other sea turtles, they have no hard shell. Instead, their backs are covered with tough, rubbery skin, like leather. Every year, female leatherbacks swim thousands of miles across entire oceans to return to the very beach where they were born. There, they drag their enormous bodies onto the sand at night and dig nests with their flippers. Each mother lays about 100 eggs, covers them with sand, and slips back into the sea, never to see her babies. When the eggs hatch two months later, the tiny turtles scramble to the water, beginning a journey that may carry them around the world.",
+      prompt:"Why must the baby turtles find the sea on their own?",
+      options:["Because their mother leaves right after laying the eggs.","Because baby turtles are afraid of their mothers.","Because the beach has no water at all.","Because the eggs hatch on a different planet."],
+      correct:0,
+      explanation:"The mother “covers them with sand, and slips back into the sea, never to see her babies.”" },
+    { title:"The Tower That Almost Wasn’t",
+      passage:"When Gustave Eiffel proposed a 1,000-foot iron tower for the 1889 World’s Fair in Paris, many people were outraged. Artists called it ugly and useless, and some demanded it be torn down. But Eiffel finished it on time, and visitors were amazed — for 41 years it was the tallest structure on Earth. The tower was only supposed to stand for 20 years. It survived because it proved useful: its height made it perfect for radio antennas, and during World War I it helped intercept enemy messages. Today, the ‘ugly’ tower is the most visited monument in the world, welcoming nearly 7 million guests a year.",
+      prompt:"Why did the tower survive past its planned 20 years?",
+      options:["Because it proved useful for radio antennas and wartime messages.","Because nobody remembered to tear it down.","Because it was invisible to most people.","Because it was made of wood instead of iron."],
+      correct:0,
+      explanation:"The passage says “It survived because it proved useful” — for antennas and intercepting messages." },
+    { title:"Why Does Popcorn Pop?",
+      passage:"Every popcorn kernel is a tiny pressure cooker. Inside its hard outer shell is a drop of water surrounded by soft starch. When the kernel heats up, the water turns to steam and pressure builds — until, at about 400 degrees, the shell can’t hold it anymore. POP! The kernel explodes inside out, and the superheated starch puffs up into the fluffy white snack we eat, expanding to 40 times its original size. Kernels that don’t pop are called ‘old maids.’ They usually fail because their shells have tiny cracks that let the steam escape slowly instead of building pressure. No pressure, no pop!",
+      prompt:"Why don’t cracked kernels pop?",
+      options:["The cracks let steam escape, so pressure never builds up.","Cracked kernels are too cold to heat.","Cracks make the kernels heavier.","The starch inside cracked kernels disappears."],
+      correct:0,
+      explanation:"The passage says cracks “let the steam escape slowly instead of building pressure. No pressure, no pop!”" },
+    { title:"The Grand Canyon",
+      passage:"The Grand Canyon is a mile-deep crack in the Arizona desert, 277 miles long — and it was carved by a river. Over millions of years, the Colorado River wore away layer after layer of rock, like a slow-motion saw. The canyon’s walls are a timeline: the deeper you go, the older the rock, with the bottom layers nearly 2 billion years old. Each layer has its own color — red, orange, pink, chocolate brown — painted by different minerals. Long before tourists arrived, Native American tribes lived in and around the canyon, farming its plateaus and calling it home for thousands of years.",
+      prompt:"Why are the bottom rock layers the oldest?",
+      options:["Because the river cut down through newer layers first, reaching older rock below.","Because the bottom rocks were painted most recently.","Because older rocks float to the bottom.","Because tourists only visit the top."],
+      correct:0,
+      explanation:"The walls are “a timeline: the deeper you go, the older the rock” — the river exposed older layers as it cut deeper." },
+    { title:"Why Do Cats Purr?",
+      passage:"A cat’s purr is one of the most soothing sounds in the world — but why do cats do it? Kittens are born blind and deaf, and they find their mother by feeling her purr’s vibrations. Mother cats purr back, like a lullaby the kittens can feel. Adult cats purr when they’re happy, but also when they’re scared, hurt, or at the vet. Scientists think purring may actually help cats heal: the vibrations fall at frequencies that can strengthen bones and repair muscles. So the next time your cat purrs in your lap, it might be giving itself a tiny dose of medicine — and sharing the comfort with you.",
+      prompt:"Why might a cat purr at the vet even though it is scared?",
+      options:["Because purring may help heal and calm the cat when it is hurt or frightened.","Because the vet gives cats extra food.","Because scared cats cannot make any sound.","Because purring makes the vet leave the room."],
+      correct:0,
+      explanation:"The passage says cats purr when “scared, hurt, or at the vet,” and the vibrations may help them heal." },
+    { title:"The Lungs of the Earth",
+      passage:"The Amazon rainforest is so vast that it makes its own weather. Trees release so much water vapor that they create ‘flying rivers’ in the sky — streams of moisture that bring rain to farms hundreds of miles away. The forest holds one in ten of all known species on Earth: jaguars, poison dart frogs, toucans, and millions of insects. Scientists call the Amazon the ‘lungs of the Earth’ because its plants absorb huge amounts of carbon dioxide. But the forest is shrinking as land is cleared for farming and logging. Many scientists warn that if too much is lost, the rainforest could dry out and turn to grassland — a change that would affect the whole planet’s climate.",
+      prompt:"Why would losing the Amazon affect the whole planet’s climate?",
+      options:["Because its trees absorb carbon dioxide and create rainfall other regions depend on.","Because the Amazon is the only forest on Earth.","Because jaguars would move to other countries.","Because the planet would become colder everywhere."],
+      correct:0,
+      explanation:"The passage links the forest to absorbing carbon dioxide and bringing rain “ hundreds of miles away.”" },
+    { title:"Max’s Missing Dog",
+      passage:"When Max got home from school, the front gate was open — and Biscuit was gone. Max’s beagle had never run off before. Max grabbed his bike and rode up and down the streets, calling her name until his voice went hoarse. Then he had an idea. He printed ten ‘LOST DOG’ posters with Biscuit’s photo and taped them to every lamppost in the neighborhood. By dinner, his phone rang: Mrs. Alvarez, three blocks over, had found a beagle napping on her porch! Max sprinted over, and Biscuit nearly knocked him down with joy. That night, Max fixed the gate latch himself and hung one poster on his bedroom wall — a reminder that quick thinking brings dogs home.",
+      prompt:"Why did Max hang a poster on his bedroom wall?",
+      options:["As a reminder that quick thinking solved the problem.","Because he wanted to lose Biscuit again.","Because his wall needed more decoration.","Because Mrs. Alvarez asked him to."],
+      correct:0,
+      explanation:"The passage says it was “a reminder that quick thinking brings dogs home.”" },
+    { title:"The Tiny Farmers",
+      passage:"Leafcutter ants don’t eat the leaves they carry — they farm with them! Long lines of ants march through the rainforest carrying leaf pieces many times their weight, like tiny green umbrellas. Back in the nest, worker ants chew the leaves into a pulp and spread it in underground gardens. On this leaf mulch, they grow a special fungus — and the fungus is what the ants actually eat. The ants weed their gardens, removing mold that could harm the crop, just like human farmers. A single colony can have millions of ants, and their fungus farms have been running for millions of years — far longer than human agriculture!",
+      prompt:"Why do the ants remove mold from their gardens?",
+      options:["Because the mold could harm the fungus crop they eat.","Because mold tastes better than fungus.","Because the queen ant is allergic to mold.","Because mold makes the nest too bright."],
+      correct:0,
+      explanation:"The ants weed out “mold that could harm the crop” — protecting their food." },
+    { title:"Lighting Up the Night",
+      passage:"Before the light bulb, nighttime meant candles, oil lamps, or darkness. Thomas Edison didn’t invent the first electric light, but his team tested thousands of materials to find a filament that would glow for hours without burning out — trying everything from bamboo to beard hair! In 1879, they succeeded with a carbonized bamboo filament that burned for over 1,200 hours. But Edison knew a bulb alone wasn’t enough. He also built the first power station, wiring an entire New York neighborhood so people’s new bulbs would actually light up. Within a few years, electric light spread across cities, and the night was never dark again.",
+      prompt:"Why did Edison build a power station as well as the bulb?",
+      options:["Because the bulbs were useless without electricity to power them.","Because he wanted to sell candles too.","Because power stations are fun to build.","Because bamboo only grows near power stations."],
+      correct:0,
+      explanation:"The passage says he wired a neighborhood “so people’s new bulbs would actually light up.”" },
+    { title:"Rivers of Ice",
+      passage:"Glaciers are rivers of ice, moving so slowly you can’t see them — some creep just inches a day. They form where more snow falls each winter than melts each summer. Year after year, the snow piles up and squeezes into dense, blue ice under its own weight. As glaciers slide downhill, they bulldoze everything in their path, carving valleys and grinding rocks into powder. When chunks break off into the sea, they become icebergs. Scientists study glaciers closely because they are shrinking: as the planet warms, glaciers melt faster than new snow can replace them, and their meltwater is raising sea levels around the world.",
+      prompt:"Why is glacier meltwater raising sea levels?",
+      options:["Because melting ice flows into the ocean, adding water to it.","Because glaciers drink up the ocean.","Because icebergs float upward into the sky.","Because snow never melts anywhere."],
+      correct:0,
+      explanation:"Meltwater runs off into the sea — more water in the ocean means higher sea levels." },
+  ]},
+};
+
+/* ==================== APP LOGIC ==================== */
+const AUDIT_KEY = "reading_10_13_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-13 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-13 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
