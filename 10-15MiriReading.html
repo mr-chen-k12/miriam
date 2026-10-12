@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-15Miri Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-15Miri · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-15Miri, Grade 4) ==================== */
+const SETS = {
+"Set A": { icon:"🔍", tag:"Word Detectives",
+  award:"Vocabulary Star Reader",
+  questions: [
+    { title:"The Great Butterfly Journey",
+      passage:"Every fall, millions of monarch butterflies leave Canada and the northern United States on one of nature’s most amazing journeys. These fragile insects, weighing less than a paper clip, fly up to 3,000 miles to the mountains of central Mexico — a trip that can take two months! Scientists are puzzled by one mystery: no single butterfly makes the whole round trip. The butterflies that head south each fall are the great-great-grandchildren of the ones that flew north in spring. Yet somehow, without ever being taught the route, each new generation finds the exact same mountain forests where its ancestors wintered.",
+      prompt:"In the passage, the word “fragile” most nearly means…",
+      options:["easily broken or damaged","very colorful","extremely fast","quite noisy"],
+      correct:0,
+      explanation:"The butterflies weigh “less than a paper clip” — delicate and easily damaged." },
+    { title:"The Wall of Concrete",
+      passage:"In the 1930s, during the Great Depression, thousands of workers built one of the greatest engineering marvels in America: the Hoover Dam. Rising 726 feet above the Colorado River — taller than a 60-story building — the dam tamed wild floods, stored water for farms and cities, and generated electricity for millions. Building it was dangerous work in brutal desert heat; workers dangled from cliffs on ropes to clear loose rock. When finished in 1935, the dam created Lake Mead, the largest reservoir in the United States. Nearly a century later, it still holds back the river and powers the Southwest.",
+      prompt:"In the passage, the word “marvels” most nearly means…",
+      options:["amazing achievements","small mistakes","old photographs","loud noises"],
+      correct:0,
+      explanation:"The dam is called “one of the greatest engineering marvels” — an amazing achievement." },
+    { title:"Achoo!",
+      passage:"A sneeze is your body’s security alarm. When dust, pollen, or germs irritate the inside of your nose, tiny hairs send an urgent message to your brain: intruder alert! Your brain responds with a precisely timed chain reaction — you take a deep breath, your chest muscles squeeze, and air explodes out of your nose at up to 100 miles per hour. That blast is designed to eject the irritant. Some people sneeze in threes because one sneeze doesn’t always clear everything out. And the old claim that your heart stops when you sneeze? Pure myth — your heartbeat just changes rhythm for a split second.",
+      prompt:"In the passage, the word “irritate” most nearly means…",
+      options:["annoy or bother","freeze completely solid","paint a new color","sing a song to"],
+      correct:0,
+      explanation:"Dust and germs “irritate the inside of your nose” — bother it, triggering the sneeze." },
+    { title:"The Road of Silk",
+      passage:"For over 1,500 years, camel caravans plodded across deserts and mountains along the Silk Road, a network of trade routes linking China to the Mediterranean Sea. China traded precious silk — so valuable that the secret of making it was guarded for centuries — for horses, spices, glass, and gold. But the road carried more than goods: religions like Buddhism spread along it, along with new foods, inventions like paper, and even diseases. Traveling the full route took months and crossed some of the harshest terrain on Earth. The Silk Road didn’t just move products — it connected civilizations.",
+      prompt:"In the passage, the word “precious” most nearly means…",
+      options:["very valuable","quite heavy","extremely old","slightly damp"],
+      correct:0,
+      explanation:"Silk was “so valuable that the secret of making it was guarded for centuries” — very valuable." },
+    { title:"The Bridge Contest",
+      passage:"The rules were simple: build a bridge from 100 toothpicks and a bottle of glue that could hold the most weight. Leo spent a week sketching triangles — he’d read that triangles make structures strong. His rival, Sam, just started gluing and hoped for the best. On contest day, the judge stacked weights on each bridge. Sam’s collapsed at five pounds. Leo’s held ten... fifteen... twenty! When it finally cracked at twenty-three pounds, the class cheered. Leo grinned at Sam. ‘Want to team up next year?’ Sam nodded. ‘But I’m doing the sketches with you this time.’",
+      prompt:"In the passage, the word “collapsed” most nearly means…",
+      options:["fell down suddenly","stood up tall","floated away","turned blue"],
+      correct:0,
+      explanation:"Sam’s bridge “collapsed at five pounds” under the weights — fell down suddenly." },
+    { title:"The Tallest Trees on Earth",
+      passage:"Coast redwoods are the tallest living things on Earth — the champion, a tree named Hyperion, stands 379 feet tall, taller than the Statue of Liberty! These giants can live more than 2,000 years. Redwoods survive with clever tricks: their bark can be a foot thick, protecting them from fire and insects, and they can sprout new trunks from their roots if the main trunk is damaged. Their tiny seeds are no bigger than a grain of rice, yet they grow into skyscrapers. Redwoods drink fog as well as rain — their needles comb moisture straight out of coastal mist.",
+      prompt:"In the passage, “champion” most nearly means…",
+      options:["the greatest; the record-holder","a sports player","a loud cheer","a tree cutter"],
+      correct:0,
+      explanation:"Hyperion is the “champion” — the tallest at 379 feet — the record-holder." },
+    { title:"The Woman Who Glowed",
+      passage:"Marie Curie carried test tubes of glowing material in her pockets — she didn’t know it was slowly poisoning her. Born in Poland in 1867, Curie moved to Paris to study science at a time when few women could. Working in a leaky shed with her husband Pierre, she discovered two new elements, polonium and radium, and coined the term ‘radioactivity.’ She became the first woman to win a Nobel Prize — then won a second one, the only person ever to win Nobels in two different sciences. Her research laid the foundation for X-rays and cancer treatments that save lives today.",
+      prompt:"In the passage, the word “coined” most nearly means…",
+      options:["invented (a new word)","melted down","spent as money","hid away"],
+      correct:0,
+      explanation:"She “coined the term ‘radioactivity’” — she invented the new word." },
+    { title:"Why Do Zebras Have Stripes?",
+      passage:"Scientists have debated zebra stripes for over a century. The old idea was camouflage — but lions see poorly, and stripes don’t hide a zebra well. Newer research points to a surprising answer: biting flies. Experiments show that horseflies have trouble landing on striped surfaces — the pattern seems to confuse them. Since these flies spread deadly diseases, stripes may literally be lifesavers. Other theories suggest stripes help zebras recognize each other, since every zebra’s pattern is unique, or that the stripes help cool the animals. The truth may be that stripes do several jobs at once.",
+      prompt:"In the passage, the word “unique” most nearly means…",
+      options:["one of a kind","quite smelly","very loud","extremely fast"],
+      correct:0,
+      explanation:"“Every zebra’s pattern is unique” — each one is one of a kind." },
+    { title:"The Shortcut Between Oceans",
+      passage:"Before 1914, ships sailing from New York to San Francisco had to travel all the way around South America — a dangerous 13,000-mile voyage. The Panama Canal cut that trip to about 5,000 miles by slicing through the narrow Isthmus of Panama. Building it was one of the hardest projects in history: workers battled landslides, floods, and malaria-carrying mosquitoes. The canal’s genius is its locks — giant water elevators that lift ships 85 feet up over the mountains and lower them back down on the other side. More than a century later, about 14,000 ships still pass through every year.",
+      prompt:"In the passage, the word “voyage” most nearly means…",
+      options:["a long journey","a short nap","a loud party","a tall building"],
+      correct:0,
+      explanation:"The “dangerous 13,000-mile voyage” around South America — a long journey." },
+    { title:"Your Amazing Heart",
+      passage:"Your heart is a tireless muscle about the size of your fist, and it never gets a day off. Every minute, it beats about 70 to 100 times, pumping roughly 2,000 gallons of blood through your body each day. That blood travels through 60,000 miles of vessels — enough to circle the Earth twice! The heart has its own electrical system that keeps it beating in rhythm without you thinking about it. Exercise makes the heart stronger: athletes’ hearts pump more blood with each beat, so they can beat slower while doing the same work. Take care of your heart, and it will take care of you for around 3 billion beats in a lifetime.",
+      prompt:"In the passage, the word “tireless” most nearly means…",
+      options:["never getting tired","very sleepy","quite small","extremely loud"],
+      correct:0,
+      explanation:"The heart “never gets a day off” — it never gets tired." },
+  ]},
+"Set B": { icon:"💡", tag:"Main Idea Masters",
+  award:"Main Idea Master",
+  questions: [
+    { title:"The Great Butterfly Journey",
+      passage:"Every fall, millions of monarch butterflies leave Canada and the northern United States on one of nature’s most amazing journeys. These fragile insects, weighing less than a paper clip, fly up to 3,000 miles to the mountains of central Mexico — a trip that can take two months! Scientists are puzzled by one mystery: no single butterfly makes the whole round trip. The butterflies that head south each fall are the great-great-grandchildren of the ones that flew north in spring. Yet somehow, without ever being taught the route, each new generation finds the exact same mountain forests where its ancestors wintered.",
+      prompt:"What is the main idea of the passage?",
+      options:["Monarch butterflies migrate thousands of miles to Mexico, with each new generation finding the way.","Monarchs never leave Canada.","One butterfly makes the entire round trip alone.","Butterflies learn the route in school."],
+      correct:0,
+      explanation:"The passage describes the epic migration and the mystery of new generations finding the route." },
+    { title:"The Wall of Concrete",
+      passage:"In the 1930s, during the Great Depression, thousands of workers built one of the greatest engineering marvels in America: the Hoover Dam. Rising 726 feet above the Colorado River — taller than a 60-story building — the dam tamed wild floods, stored water for farms and cities, and generated electricity for millions. Building it was dangerous work in brutal desert heat; workers dangled from cliffs on ropes to clear loose rock. When finished in 1935, the dam created Lake Mead, the largest reservoir in the United States. Nearly a century later, it still holds back the river and powers the Southwest.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Hoover Dam was a daring Depression-era project that tamed the Colorado River and powered the Southwest.","The Hoover Dam was built in a single week.","The dam produces no electricity at all.","Lake Mead is the smallest lake in America."],
+      correct:0,
+      explanation:"The passage covers the dam’s construction, dangers, and lasting benefits." },
+    { title:"Achoo!",
+      passage:"A sneeze is your body’s security alarm. When dust, pollen, or germs irritate the inside of your nose, tiny hairs send an urgent message to your brain: intruder alert! Your brain responds with a precisely timed chain reaction — you take a deep breath, your chest muscles squeeze, and air explodes out of your nose at up to 100 miles per hour. That blast is designed to eject the irritant. Some people sneeze in threes because one sneeze doesn’t always clear everything out. And the old claim that your heart stops when you sneeze? Pure myth — your heartbeat just changes rhythm for a split second.",
+      prompt:"What is the main idea of the passage?",
+      options:["Sneezing is the body’s fast, powerful way of ejecting irritants from the nose.","Sneezing is dangerous and should be avoided.","Your heart stops every time you sneeze.","Sneezes travel slower than a walking pace."],
+      correct:0,
+      explanation:"The passage explains the sneeze’s trigger, mechanics, and purpose — ejecting irritants." },
+    { title:"The Road of Silk",
+      passage:"For over 1,500 years, camel caravans plodded across deserts and mountains along the Silk Road, a network of trade routes linking China to the Mediterranean Sea. China traded precious silk — so valuable that the secret of making it was guarded for centuries — for horses, spices, glass, and gold. But the road carried more than goods: religions like Buddhism spread along it, along with new foods, inventions like paper, and even diseases. Traveling the full route took months and crossed some of the harshest terrain on Earth. The Silk Road didn’t just move products — it connected civilizations.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Silk Road was an ancient trade network that connected civilizations and spread goods, ideas, and inventions.","The Silk Road was a single paved highway.","Only silk was ever traded on the Silk Road.","The Silk Road lasted for just a few years."],
+      correct:0,
+      explanation:"The passage covers the trade, the dangers, and how the road spread religion, foods, and inventions." },
+    { title:"The Bridge Contest",
+      passage:"The rules were simple: build a bridge from 100 toothpicks and a bottle of glue that could hold the most weight. Leo spent a week sketching triangles — he’d read that triangles make structures strong. His rival, Sam, just started gluing and hoped for the best. On contest day, the judge stacked weights on each bridge. Sam’s collapsed at five pounds. Leo’s held ten... fifteen... twenty! When it finally cracked at twenty-three pounds, the class cheered. Leo grinned at Sam. ‘Want to team up next year?’ Sam nodded. ‘But I’m doing the sketches with you this time.’",
+      prompt:"What is the main idea of the passage?",
+      options:["Leo won the bridge contest by planning with triangles, then invited his rival to team up.","Sam won the bridge contest easily.","The contest had no winner.","Leo refused to speak to Sam afterward."],
+      correct:0,
+      explanation:"The story follows Leo’s planning, his victory, and his kind offer to Sam." },
+    { title:"The Tallest Trees on Earth",
+      passage:"Coast redwoods are the tallest living things on Earth — the champion, a tree named Hyperion, stands 379 feet tall, taller than the Statue of Liberty! These giants can live more than 2,000 years. Redwoods survive with clever tricks: their bark can be a foot thick, protecting them from fire and insects, and they can sprout new trunks from their roots if the main trunk is damaged. Their tiny seeds are no bigger than a grain of rice, yet they grow into skyscrapers. Redwoods drink fog as well as rain — their needles comb moisture straight out of coastal mist.",
+      prompt:"What is the main idea of the passage?",
+      options:["Coast redwoods are Earth’s tallest trees, surviving for millennia with remarkable adaptations.","Redwoods are the shortest trees in the forest.","Redwoods live only a few years.","Redwood seeds are enormous."],
+      correct:0,
+      explanation:"The passage describes their record height, long lives, and survival tricks." },
+    { title:"The Woman Who Glowed",
+      passage:"Marie Curie carried test tubes of glowing material in her pockets — she didn’t know it was slowly poisoning her. Born in Poland in 1867, Curie moved to Paris to study science at a time when few women could. Working in a leaky shed with her husband Pierre, she discovered two new elements, polonium and radium, and coined the term ‘radioactivity.’ She became the first woman to win a Nobel Prize — then won a second one, the only person ever to win Nobels in two different sciences. Her research laid the foundation for X-rays and cancer treatments that save lives today.",
+      prompt:"What is the main idea of the passage?",
+      options:["Marie Curie overcame barriers to make groundbreaking discoveries about radioactivity.","Marie Curie avoided science her whole life.","Curie won only one Nobel Prize.","Curie’s research helped no one."],
+      correct:0,
+      explanation:"The passage follows Curie from a student facing barriers to a double Nobel winner whose work saves lives." },
+    { title:"Why Do Zebras Have Stripes?",
+      passage:"Scientists have debated zebra stripes for over a century. The old idea was camouflage — but lions see poorly, and stripes don’t hide a zebra well. Newer research points to a surprising answer: biting flies. Experiments show that horseflies have trouble landing on striped surfaces — the pattern seems to confuse them. Since these flies spread deadly diseases, stripes may literally be lifesavers. Other theories suggest stripes help zebras recognize each other, since every zebra’s pattern is unique, or that the stripes help cool the animals. The truth may be that stripes do several jobs at once.",
+      prompt:"What is the main idea of the passage?",
+      options:["Scientists have several theories for zebra stripes, with fly protection the strongest.","Zebra stripes are only for camouflage.","Scientists agree completely about stripes.","Zebras have no stripes at all."],
+      correct:0,
+      explanation:"The passage reviews the theories — camouflage, flies, recognition, cooling — and favors fly protection." },
+    { title:"The Shortcut Between Oceans",
+      passage:"Before 1914, ships sailing from New York to San Francisco had to travel all the way around South America — a dangerous 13,000-mile voyage. The Panama Canal cut that trip to about 5,000 miles by slicing through the narrow Isthmus of Panama. Building it was one of the hardest projects in history: workers battled landslides, floods, and malaria-carrying mosquitoes. The canal’s genius is its locks — giant water elevators that lift ships 85 feet up over the mountains and lower them back down on the other side. More than a century later, about 14,000 ships still pass through every year.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Panama Canal shortened ocean voyages dramatically using an ingenious lock system.","The Panama Canal made voyages longer.","Ships no longer use the canal.","The canal was easy to build."],
+      correct:0,
+      explanation:"The passage covers the problem, the brutal construction, and the lock solution still in use." },
+    { title:"Your Amazing Heart",
+      passage:"Your heart is a tireless muscle about the size of your fist, and it never gets a day off. Every minute, it beats about 70 to 100 times, pumping roughly 2,000 gallons of blood through your body each day. That blood travels through 60,000 miles of vessels — enough to circle the Earth twice! The heart has its own electrical system that keeps it beating in rhythm without you thinking about it. Exercise makes the heart stronger: athletes’ hearts pump more blood with each beat, so they can beat slower while doing the same work. Take care of your heart, and it will take care of you for around 3 billion beats in a lifetime.",
+      prompt:"What is the main idea of the passage?",
+      options:["The heart is a powerful, nonstop muscle that pumps blood through miles of vessels.","The heart rests for hours every day.","Exercise weakens the heart.","Blood vessels are only a few inches long."],
+      correct:0,
+      explanation:"The passage describes the heart’s nonstop work, its electrical system, and how exercise strengthens it." },
+  ]},
+"Set C": { icon:"🧠", tag:"Thinking Readers",
+  award:"Super Sleuth Reader",
+  questions: [
+    { title:"The Great Butterfly Journey",
+      passage:"Every fall, millions of monarch butterflies leave Canada and the northern United States on one of nature’s most amazing journeys. These fragile insects, weighing less than a paper clip, fly up to 3,000 miles to the mountains of central Mexico — a trip that can take two months! Scientists are puzzled by one mystery: no single butterfly makes the whole round trip. The butterflies that head south each fall are the great-great-grandchildren of the ones that flew north in spring. Yet somehow, without ever being taught the route, each new generation finds the exact same mountain forests where its ancestors wintered.",
+      prompt:"Why is the monarch migration a mystery to scientists?",
+      options:["Because new generations find the route without ever being taught it.","Because butterflies cannot fly.","Because Mexico has no mountains.","Because the trip takes only one day."],
+      correct:0,
+      explanation:"The southbound butterflies are “great-great-grandchildren” of the northbound ones, yet find the same forests “without ever being taught the route.”" },
+    { title:"The Wall of Concrete",
+      passage:"In the 1930s, during the Great Depression, thousands of workers built one of the greatest engineering marvels in America: the Hoover Dam. Rising 726 feet above the Colorado River — taller than a 60-story building — the dam tamed wild floods, stored water for farms and cities, and generated electricity for millions. Building it was dangerous work in brutal desert heat; workers dangled from cliffs on ropes to clear loose rock. When finished in 1935, the dam created Lake Mead, the largest reservoir in the United States. Nearly a century later, it still holds back the river and powers the Southwest.",
+      prompt:"Why was building the dam so dangerous?",
+      options:["Workers labored in brutal desert heat, dangling from cliffs.","The workers were afraid of water.","The dam was built entirely underwater.","Nobody supervised the construction."],
+      correct:0,
+      explanation:"The passage cites “brutal desert heat” and workers who “dangled from cliffs on ropes.”" },
+    { title:"Achoo!",
+      passage:"A sneeze is your body’s security alarm. When dust, pollen, or germs irritate the inside of your nose, tiny hairs send an urgent message to your brain: intruder alert! Your brain responds with a precisely timed chain reaction — you take a deep breath, your chest muscles squeeze, and air explodes out of your nose at up to 100 miles per hour. That blast is designed to eject the irritant. Some people sneeze in threes because one sneeze doesn’t always clear everything out. And the old claim that your heart stops when you sneeze? Pure myth — your heartbeat just changes rhythm for a split second.",
+      prompt:"Why do some people sneeze several times in a row?",
+      options:["Because one sneeze doesn’t always clear out the irritant.","Because they enjoy sneezing.","Because their brains send the wrong message.","Because cold air freezes their noses."],
+      correct:0,
+      explanation:"The passage says “one sneeze doesn’t always clear everything out.”" },
+    { title:"The Road of Silk",
+      passage:"For over 1,500 years, camel caravans plodded across deserts and mountains along the Silk Road, a network of trade routes linking China to the Mediterranean Sea. China traded precious silk — so valuable that the secret of making it was guarded for centuries — for horses, spices, glass, and gold. But the road carried more than goods: religions like Buddhism spread along it, along with new foods, inventions like paper, and even diseases. Traveling the full route took months and crossed some of the harshest terrain on Earth. The Silk Road didn’t just move products — it connected civilizations.",
+      prompt:"Why was the secret of silk-making so closely guarded?",
+      options:["Because silk was extremely valuable, giving China a trade advantage.","Because silk was worthless to everyone.","Because the secret was written on paper.","Because camels refused to carry it otherwise."],
+      correct:0,
+      explanation:"Silk’s great value is why its secret “was guarded for centuries” — protecting China’s advantage." },
+    { title:"The Bridge Contest",
+      passage:"The rules were simple: build a bridge from 100 toothpicks and a bottle of glue that could hold the most weight. Leo spent a week sketching triangles — he’d read that triangles make structures strong. His rival, Sam, just started gluing and hoped for the best. On contest day, the judge stacked weights on each bridge. Sam’s collapsed at five pounds. Leo’s held ten... fifteen... twenty! When it finally cracked at twenty-three pounds, the class cheered. Leo grinned at Sam. ‘Want to team up next year?’ Sam nodded. ‘But I’m doing the sketches with you this time.’",
+      prompt:"Why did Leo’s bridge hold more weight than Sam’s?",
+      options:["Because Leo planned carefully using strong triangle shapes.","Because Leo used more glue than allowed.","Because the judge liked Leo better.","Because Sam’s bridge was never tested."],
+      correct:0,
+      explanation:"Leo “spent a week sketching triangles” because “triangles make structures strong” — planning paid off." },
+    { title:"The Tallest Trees on Earth",
+      passage:"Coast redwoods are the tallest living things on Earth — the champion, a tree named Hyperion, stands 379 feet tall, taller than the Statue of Liberty! These giants can live more than 2,000 years. Redwoods survive with clever tricks: their bark can be a foot thick, protecting them from fire and insects, and they can sprout new trunks from their roots if the main trunk is damaged. Their tiny seeds are no bigger than a grain of rice, yet they grow into skyscrapers. Redwoods drink fog as well as rain — their needles comb moisture straight out of coastal mist.",
+      prompt:"Why is thick bark an advantage for redwoods?",
+      options:["It protects them from fire and insects.","It makes the trees grow faster.","It keeps the fog away.","It makes the wood softer."],
+      correct:0,
+      explanation:"The passage says the foot-thick bark protects “from fire and insects.”" },
+    { title:"The Woman Who Glowed",
+      passage:"Marie Curie carried test tubes of glowing material in her pockets — she didn’t know it was slowly poisoning her. Born in Poland in 1867, Curie moved to Paris to study science at a time when few women could. Working in a leaky shed with her husband Pierre, she discovered two new elements, polonium and radium, and coined the term ‘radioactivity.’ She became the first woman to win a Nobel Prize — then won a second one, the only person ever to win Nobels in two different sciences. Her research laid the foundation for X-rays and cancer treatments that save lives today.",
+      prompt:"Why is Curie’s work still important today?",
+      options:["Because it led to X-rays and cancer treatments.","Because her test tubes are in a museum.","Because she was born in Poland.","Because she worked in a shed."],
+      correct:0,
+      explanation:"Her research “laid the foundation for X-rays and cancer treatments that save lives today.”" },
+    { title:"Why Do Zebras Have Stripes?",
+      passage:"Scientists have debated zebra stripes for over a century. The old idea was camouflage — but lions see poorly, and stripes don’t hide a zebra well. Newer research points to a surprising answer: biting flies. Experiments show that horseflies have trouble landing on striped surfaces — the pattern seems to confuse them. Since these flies spread deadly diseases, stripes may literally be lifesavers. Other theories suggest stripes help zebras recognize each other, since every zebra’s pattern is unique, or that the stripes help cool the animals. The truth may be that stripes do several jobs at once.",
+      prompt:"Why would confusing biting flies help zebras survive?",
+      options:["Because the flies spread deadly diseases.","Because flies are zebra’s favorite food.","Because confused flies become friendly.","Because zebras enjoy watching flies struggle."],
+      correct:0,
+      explanation:"The flies “spread deadly diseases” — dodging them is a matter of survival." },
+    { title:"The Shortcut Between Oceans",
+      passage:"Before 1914, ships sailing from New York to San Francisco had to travel all the way around South America — a dangerous 13,000-mile voyage. The Panama Canal cut that trip to about 5,000 miles by slicing through the narrow Isthmus of Panama. Building it was one of the hardest projects in history: workers battled landslides, floods, and malaria-carrying mosquitoes. The canal’s genius is its locks — giant water elevators that lift ships 85 feet up over the mountains and lower them back down on the other side. More than a century later, about 14,000 ships still pass through every year.",
+      prompt:"Why were locks needed in the canal?",
+      options:["To lift ships up over the mountains and lower them down.","To make ships go faster.","To keep fish out of the canal.","To paint the ships."],
+      correct:0,
+      explanation:"The locks are “giant water elevators that lift ships 85 feet up over the mountains and lower them back down.”" },
+    { title:"Your Amazing Heart",
+      passage:"Your heart is a tireless muscle about the size of your fist, and it never gets a day off. Every minute, it beats about 70 to 100 times, pumping roughly 2,000 gallons of blood through your body each day. That blood travels through 60,000 miles of vessels — enough to circle the Earth twice! The heart has its own electrical system that keeps it beating in rhythm without you thinking about it. Exercise makes the heart stronger: athletes’ hearts pump more blood with each beat, so they can beat slower while doing the same work. Take care of your heart, and it will take care of you for around 3 billion beats in a lifetime.",
+      prompt:"Why can athletes’ hearts beat slower than other people’s?",
+      options:["Because each beat pumps more blood, so fewer beats do the same work.","Because athletes hold their breath.","Because exercise stops the heart.","Because athletes have smaller hearts."],
+      correct:0,
+      explanation:"Athletes’ hearts “pump more blood with each beat, so they can beat slower while doing the same work.”" },
+  ]},
+};
+
+/* ==================== APP LOGIC ==================== */
+const AUDIT_KEY = "reading_10_15_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-15Miri on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-15Miri opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
