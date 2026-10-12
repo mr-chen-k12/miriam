@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-12 Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-12 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-12, Grade 4) ==================== */
+const SETS = {
+"Set A": { icon:"🔍", tag:"Word Detectives",
+  award:"Vocabulary Star Reader",
+  questions: [
+    { title:"The Tiny Helicopter",
+      passage:"A hummingbird is smaller than your thumb, but it flies like no other bird on Earth. Its wings beat up to 80 times every second — so fast they blur into a hum, which is how the bird got its name. Unlike most birds, a hummingbird can hover in one spot, fly backward, and even fly upside down for a short burst. All that flying takes enormous energy. A hummingbird’s heart can beat more than 1,200 times a minute, and it must eat every 10 to 15 minutes during the day, sipping nectar from hundreds of flowers. At night, to save energy, it enters a deep sleep called torpor, slowing its heartbeat to a crawl until morning.",
+      prompt:"In the passage, the word “torpor” most nearly means…",
+      options:["a deep, energy-saving sleep","a type of bright flower","a very fast heartbeat","a loud humming sound"],
+      correct:0,
+      explanation:"“Torpor” is the deep sleep that slows the hummingbird’s heartbeat to save energy overnight." },
+    { title:"A Gift from France",
+      passage:"The Statue of Liberty was a gift from France to the United States, celebrating America’s 100th birthday. Designed by French sculptor Frédéric Bartholdi, the statue was built in France, taken apart into 350 pieces, shipped across the ocean, and rebuilt on an island in New York Harbor in 1886. Lady Liberty holds a torch high in her right hand — a symbol of enlightenment lighting the way — and a tablet in her left hand carved with the date of American independence. For millions of immigrants arriving by ship, the statue was the first sight of their new home and a promise of freedom.",
+      prompt:"In the passage, the word “enlightenment” most nearly means…",
+      options:["knowledge and understanding that lights the way","a heavy stone tablet","a birthday celebration","a fast sailing ship"],
+      correct:0,
+      explanation:"The torch is “a symbol of enlightenment lighting the way” — knowledge guiding people, like light." },
+    { title:"From Bean to Bar",
+      passage:"Chocolate starts as a pod growing on a cacao tree in warm, rainy places near the equator. Inside each pod are 30 to 50 bitter beans. Farmers crack open the pods, scoop out the beans, and let them ferment in the sun for several days — this step creates chocolate’s flavor. Next, the beans are dried, roasted like coffee, and cracked open to release small pieces called nibs. The nibs are ground into a thick paste, mixed with sugar and milk, and smoothed for hours. Finally, the mixture is poured into molds and cooled into the chocolate bars we love. From pod to bar, the journey can take weeks!",
+      prompt:"In the passage, the word “ferment” most nearly means…",
+      options:["to sit and change in a way that develops flavor","to freeze completely solid","to paint bright colors","to fly away in the wind"],
+      correct:0,
+      explanation:"The beans “ferment in the sun for several days — this step creates chocolate’s flavor.”" },
+    { title:"Why Leaves Change Color",
+      passage:"In autumn, green leaves turn gold, orange, and red — but where do those colors come from? All summer, leaves look green because of chlorophyll, the pigment trees use to catch sunlight and make food. When days grow shorter and colder, trees seal off their leaves and stop making chlorophyll. As the green fades, the yellow and orange pigments that were hiding underneath all along finally show through. Red leaves are different: some trees make a red pigment in autumn, possibly to protect the leaf while the tree pulls nutrients back into its branches. Once the job is done, the leaf falls, and the tree rests until spring.",
+      prompt:"In the passage, the word “pigment” most nearly means…",
+      options:["a natural coloring matter","a type of tree root","a cold autumn wind","a falling leaf"],
+      correct:0,
+      explanation:"Chlorophyll is described as “the pigment trees use” — the natural coloring matter in leaves." },
+    { title:"Home Above Earth",
+      passage:"The International Space Station is a science laboratory the size of a football field, orbiting Earth 250 miles up. It was built piece by piece in space by astronauts from many countries, starting in 1998. Up there, astronauts float because they are in constant free fall around the planet — what we call weightlessness. They exercise two hours a day to keep their muscles and bones strong, drink recycled water (yes, even recycled sweat!), and watch 16 sunrises and sunsets every 24 hours as the station races around Earth. Experiments on the station have led to better water filters, new medicines, and clues about how the human body handles long space trips.",
+      prompt:"In the passage, the word “weightlessness” most nearly means…",
+      options:["floating because gravity’s pull feels canceled","being extremely heavy","sleeping very deeply","running very fast"],
+      correct:0,
+      explanation:"Astronauts “float” in “constant free fall” — that floating feeling is weightlessness." },
+    { title:"Dolphins Talk with Sound",
+      passage:"Dolphins can’t see very far in murky water, so they ‘see’ with sound. A dolphin sends out rapid clicks and listens for the echoes bouncing back — a skill called echolocation. The echoes tell the dolphin the size, shape, speed, and even the texture of objects, whether it’s a fish, a rock, or a friend. Dolphins also whistle to each other, and each dolphin has its own signature whistle, like a name. Mothers and calves use these whistles to stay together. Scientists who record dolphin sounds have found that dolphins even copy each other’s whistles, as if calling each other by name.",
+      prompt:"In the passage, “echolocation” means…",
+      options:["finding objects by listening to echoes of sounds","seeing with very sharp eyes","sleeping while swimming","swimming faster than sharks"],
+      correct:0,
+      explanation:"The passage defines it: sending out clicks and listening “for the echoes bouncing back.”" },
+    { title:"The Lost Library Book",
+      passage:"Maya loved the library book about volcanoes so much that she kept renewing it — three times! Then one morning, it was gone. She searched under her bed, in her backpack, behind the couch. Nothing. “I’ll have to pay for it,” she told her mom, feeling sick. That afternoon, her little brother Ben toddled over, dragging something behind him. It was the book — chewed at the corner, but found! Ben had been ‘reading’ it in his blanket fort. Maya laughed with relief, then marched Ben to the library to apologize together. The librarian smiled, waived the fee, and said, “Just promise to keep books away from blanket forts.” Maya promised — and Ben got his own picture book.",
+      prompt:"In the passage, the word “waived” most nearly means…",
+      options:["gave up; decided not to charge","increased to a higher price","painted a bright color","hid under the desk"],
+      correct:0,
+      explanation:"The librarian “waived the fee” — she gave up charging Maya for the chewed book." },
+    { title:"The Giant of the Desert",
+      passage:"The saguaro cactus can grow 40 feet tall and live 200 years, towering over the Arizona desert like a green giant. Its accordion-like ribs expand like a sponge after rare desert rains, storing hundreds of gallons of water in its spongy flesh. A waxy skin seals the water in, and its roots spread wide just under the surface to catch every drop. The saguaro is also an apartment building: Gila woodpeckers drill nest holes in its flesh, and when they move out, elf owls move in. After a saguaro dies, its woody ribs remain standing for years, like the skeleton of the desert.",
+      prompt:"In the passage, “accordion-like” describes ribs that…",
+      options:["expand and fold like the musical instrument","make musical sounds","are sharp and dangerous","grow deep underground"],
+      correct:0,
+      explanation:"The ribs “expand like a sponge after rare desert rains” — folding and unfolding like an accordion." },
+    { title:"Reading with Your Fingers",
+      passage:"Louis Braille was only 15 when he changed reading forever. Blinded in an accident as a small boy, Louis attended a school for blind students in Paris, where books were printed with raised letters — slow and hard to read by touch. Louis had a better idea: a code of six raised dots in different patterns, small enough that a fingertip could read each letter in one touch. He published his system in 1829, but it took years before the world adopted it. Today, braille appears on elevator buttons, medicine bottles, and currency in many countries, giving blind readers independence. All from a teenager’s brilliant dots.",
+      prompt:"In the passage, the word “adopted” most nearly means…",
+      options:["accepted and started to use","gave away for free","argued loudly against","completely forgot about"],
+      correct:0,
+      explanation:"“It took years before the world adopted it” — the world eventually accepted and used braille." },
+    { title:"Dancing Lights in the Sky",
+      passage:"On dark winter nights near the North Pole, the sky can erupt in rippling curtains of green, pink, and purple light — the aurora borealis, or northern lights. The show starts on the sun, which constantly streams tiny charged particles toward Earth. Our planet’s magnetic field funnels these particles toward the poles, where they crash into gases high in the atmosphere. The gases glow when struck, like a neon sign lighting up. Different gases make different colors: oxygen glows green and red, nitrogen glows blue and purple. Astronauts watching from space see the aurora as a glowing ring circling the pole.",
+      prompt:"In the passage, the word “erupt” most nearly means…",
+      options:["burst out suddenly","fall fast asleep","fade slowly away","freeze completely solid"],
+      correct:0,
+      explanation:"The sky “erupt[s] in rippling curtains of light” — the lights burst out suddenly." },
+  ]},
+"Set B": { icon:"💡", tag:"Main Idea Masters",
+  award:"Main Idea Master",
+  questions: [
+    { title:"The Tiny Helicopter",
+      passage:"A hummingbird is smaller than your thumb, but it flies like no other bird on Earth. Its wings beat up to 80 times every second — so fast they blur into a hum, which is how the bird got its name. Unlike most birds, a hummingbird can hover in one spot, fly backward, and even fly upside down for a short burst. All that flying takes enormous energy. A hummingbird’s heart can beat more than 1,200 times a minute, and it must eat every 10 to 15 minutes during the day, sipping nectar from hundreds of flowers. At night, to save energy, it enters a deep sleep called torpor, slowing its heartbeat to a crawl until morning.",
+      prompt:"What is the main idea of the passage?",
+      options:["Hummingbirds are tiny birds with amazing flying skills that need constant food for energy.","Hummingbirds are the largest birds in the world.","Hummingbirds never need to eat or sleep.","All birds can fly backward and upside down."],
+      correct:0,
+      explanation:"The passage is about the hummingbird’s incredible flight and the enormous energy it requires." },
+    { title:"A Gift from France",
+      passage:"The Statue of Liberty was a gift from France to the United States, celebrating America’s 100th birthday. Designed by French sculptor Frédéric Bartholdi, the statue was built in France, taken apart into 350 pieces, shipped across the ocean, and rebuilt on an island in New York Harbor in 1886. Lady Liberty holds a torch high in her right hand — a symbol of enlightenment lighting the way — and a tablet in her left hand carved with the date of American independence. For millions of immigrants arriving by ship, the statue was the first sight of their new home and a promise of freedom.",
+      prompt:"What is the main idea of the passage?",
+      options:["France gave the Statue of Liberty to America as a symbol of freedom that welcomed immigrants.","The Statue of Liberty was built in New York in a single day.","The statue was a gift from the United States to France.","Immigrants were not allowed to see the statue."],
+      correct:0,
+      explanation:"The passage tells how the statue was given, built, and what it meant to arriving immigrants." },
+    { title:"From Bean to Bar",
+      passage:"Chocolate starts as a pod growing on a cacao tree in warm, rainy places near the equator. Inside each pod are 30 to 50 bitter beans. Farmers crack open the pods, scoop out the beans, and let them ferment in the sun for several days — this step creates chocolate’s flavor. Next, the beans are dried, roasted like coffee, and cracked open to release small pieces called nibs. The nibs are ground into a thick paste, mixed with sugar and milk, and smoothed for hours. Finally, the mixture is poured into molds and cooled into the chocolate bars we love. From pod to bar, the journey can take weeks!",
+      prompt:"What is the main idea of the passage?",
+      options:["Chocolate is made from cacao beans through many steps, from fermenting to molding.","Chocolate grows ready to eat on trees.","Only the pods of the cacao tree are used, never the beans.","Chocolate bars are made in a single minute."],
+      correct:0,
+      explanation:"Every sentence describes a step in the long journey from cacao pod to chocolate bar." },
+    { title:"Why Leaves Change Color",
+      passage:"In autumn, green leaves turn gold, orange, and red — but where do those colors come from? All summer, leaves look green because of chlorophyll, the pigment trees use to catch sunlight and make food. When days grow shorter and colder, trees seal off their leaves and stop making chlorophyll. As the green fades, the yellow and orange pigments that were hiding underneath all along finally show through. Red leaves are different: some trees make a red pigment in autumn, possibly to protect the leaf while the tree pulls nutrients back into its branches. Once the job is done, the leaf falls, and the tree rests until spring.",
+      prompt:"What is the main idea of the passage?",
+      options:["Leaves change color in fall when green chlorophyll fades and hidden or new pigments appear.","Leaves are painted by people every autumn.","Trees make extra chlorophyll in the fall.","Leaves only ever turn brown."],
+      correct:0,
+      explanation:"The passage explains the science: fading chlorophyll reveals yellow and orange, and some trees add red." },
+    { title:"Home Above Earth",
+      passage:"The International Space Station is a science laboratory the size of a football field, orbiting Earth 250 miles up. It was built piece by piece in space by astronauts from many countries, starting in 1998. Up there, astronauts float because they are in constant free fall around the planet — what we call weightlessness. They exercise two hours a day to keep their muscles and bones strong, drink recycled water (yes, even recycled sweat!), and watch 16 sunrises and sunsets every 24 hours as the station races around Earth. Experiments on the station have led to better water filters, new medicines, and clues about how the human body handles long space trips.",
+      prompt:"What is the main idea of the passage?",
+      options:["The space station is an orbiting lab where astronauts live, work, and run helpful experiments.","The space station is a hotel for tourists visiting the moon.","Astronauts on the station do no work at all.","The station was built in a single day in 1998."],
+      correct:0,
+      explanation:"The passage describes the station, daily life aboard it, and the experiments that help people on Earth." },
+    { title:"Dolphins Talk with Sound",
+      passage:"Dolphins can’t see very far in murky water, so they ‘see’ with sound. A dolphin sends out rapid clicks and listens for the echoes bouncing back — a skill called echolocation. The echoes tell the dolphin the size, shape, speed, and even the texture of objects, whether it’s a fish, a rock, or a friend. Dolphins also whistle to each other, and each dolphin has its own signature whistle, like a name. Mothers and calves use these whistles to stay together. Scientists who record dolphin sounds have found that dolphins even copy each other’s whistles, as if calling each other by name.",
+      prompt:"What is the main idea of the passage?",
+      options:["Dolphins use echolocation and signature whistles to navigate and communicate.","Dolphins are blind and cannot find food.","Only mother dolphins can make sounds.","Dolphins never communicate with each other."],
+      correct:0,
+      explanation:"The passage covers both skills: echolocation for ‘seeing’ and whistles for talking." },
+    { title:"The Lost Library Book",
+      passage:"Maya loved the library book about volcanoes so much that she kept renewing it — three times! Then one morning, it was gone. She searched under her bed, in her backpack, behind the couch. Nothing. “I’ll have to pay for it,” she told her mom, feeling sick. That afternoon, her little brother Ben toddled over, dragging something behind him. It was the book — chewed at the corner, but found! Ben had been ‘reading’ it in his blanket fort. Maya laughed with relief, then marched Ben to the library to apologize together. The librarian smiled, waived the fee, and said, “Just promise to keep books away from blanket forts.” Maya promised — and Ben got his own picture book.",
+      prompt:"What is the main idea of the passage?",
+      options:["Maya lost her library book, found it, and took responsibility by apologizing.","Maya never liked reading books.","Ben was punished and never allowed in the library.","The librarian kept Maya’s book forever."],
+      correct:0,
+      explanation:"The story follows Maya from losing the book to finding it and making things right." },
+    { title:"The Giant of the Desert",
+      passage:"The saguaro cactus can grow 40 feet tall and live 200 years, towering over the Arizona desert like a green giant. Its accordion-like ribs expand like a sponge after rare desert rains, storing hundreds of gallons of water in its spongy flesh. A waxy skin seals the water in, and its roots spread wide just under the surface to catch every drop. The saguaro is also an apartment building: Gila woodpeckers drill nest holes in its flesh, and when they move out, elf owls move in. After a saguaro dies, its woody ribs remain standing for years, like the skeleton of the desert.",
+      prompt:"What is the main idea of the passage?",
+      options:["The saguaro survives the desert by storing water and shelters many desert animals.","Saguaros grow only in rainy forests.","The saguaro is the smallest cactus in the world.","No animals can live near a saguaro."],
+      correct:0,
+      explanation:"The passage covers both water storage and the cactus as a home for woodpeckers and owls." },
+    { title:"Reading with Your Fingers",
+      passage:"Louis Braille was only 15 when he changed reading forever. Blinded in an accident as a small boy, Louis attended a school for blind students in Paris, where books were printed with raised letters — slow and hard to read by touch. Louis had a better idea: a code of six raised dots in different patterns, small enough that a fingertip could read each letter in one touch. He published his system in 1829, but it took years before the world adopted it. Today, braille appears on elevator buttons, medicine bottles, and currency in many countries, giving blind readers independence. All from a teenager’s brilliant dots.",
+      prompt:"What is the main idea of the passage?",
+      options:["Teenager Louis Braille invented the six-dot touch-reading code now used worldwide.","Louis Braille invented the elevator.","Raised-letter books were faster than braille.","Braille is only used in France."],
+      correct:0,
+      explanation:"The passage tells how a 15-year-old’s dot code became the world’s reading system for the blind." },
+    { title:"Dancing Lights in the Sky",
+      passage:"On dark winter nights near the North Pole, the sky can erupt in rippling curtains of green, pink, and purple light — the aurora borealis, or northern lights. The show starts on the sun, which constantly streams tiny charged particles toward Earth. Our planet’s magnetic field funnels these particles toward the poles, where they crash into gases high in the atmosphere. The gases glow when struck, like a neon sign lighting up. Different gases make different colors: oxygen glows green and red, nitrogen glows blue and purple. Astronauts watching from space see the aurora as a glowing ring circling the pole.",
+      prompt:"What is the main idea of the passage?",
+      options:["The northern lights are caused by solar particles striking atmospheric gases near the poles.","The northern lights are fires burning in the sky.","Astronauts created the northern lights.","The lights appear every night all over the world."],
+      correct:0,
+      explanation:"The passage traces the cause: sun particles, funneled by the magnetic field, striking gases that glow." },
+  ]},
+"Set C": { icon:"🧠", tag:"Thinking Readers",
+  award:"Super Sleuth Reader",
+  questions: [
+    { title:"The Tiny Helicopter",
+      passage:"A hummingbird is smaller than your thumb, but it flies like no other bird on Earth. Its wings beat up to 80 times every second — so fast they blur into a hum, which is how the bird got its name. Unlike most birds, a hummingbird can hover in one spot, fly backward, and even fly upside down for a short burst. All that flying takes enormous energy. A hummingbird’s heart can beat more than 1,200 times a minute, and it must eat every 10 to 15 minutes during the day, sipping nectar from hundreds of flowers. At night, to save energy, it enters a deep sleep called torpor, slowing its heartbeat to a crawl until morning.",
+      prompt:"Why must a hummingbird eat so often during the day?",
+      options:["Because its super-fast wings and heartbeat burn energy very quickly.","Because it stores all its food for the winter.","Because flowers only open for ten minutes.","Because it feeds all the other birds in the forest."],
+      correct:0,
+      explanation:"The passage links the 80-beats-per-second wings and 1,200-beats-per-minute heart to needing food every 10 to 15 minutes." },
+    { title:"A Gift from France",
+      passage:"The Statue of Liberty was a gift from France to the United States, celebrating America’s 100th birthday. Designed by French sculptor Frédéric Bartholdi, the statue was built in France, taken apart into 350 pieces, shipped across the ocean, and rebuilt on an island in New York Harbor in 1886. Lady Liberty holds a torch high in her right hand — a symbol of enlightenment lighting the way — and a tablet in her left hand carved with the date of American independence. For millions of immigrants arriving by ship, the statue was the first sight of their new home and a promise of freedom.",
+      prompt:"Why was the statue built in pieces in France?",
+      options:["So it could be shipped across the ocean and rebuilt in New York.","So each piece could be painted a different color.","So it would be easier to hide from enemies.","So French workers could keep half of it."],
+      correct:0,
+      explanation:"The passage says it was “taken apart into 350 pieces, shipped across the ocean, and rebuilt” — pieces made the voyage possible." },
+    { title:"From Bean to Bar",
+      passage:"Chocolate starts as a pod growing on a cacao tree in warm, rainy places near the equator. Inside each pod are 30 to 50 bitter beans. Farmers crack open the pods, scoop out the beans, and let them ferment in the sun for several days — this step creates chocolate’s flavor. Next, the beans are dried, roasted like coffee, and cracked open to release small pieces called nibs. The nibs are ground into a thick paste, mixed with sugar and milk, and smoothed for hours. Finally, the mixture is poured into molds and cooled into the chocolate bars we love. From pod to bar, the journey can take weeks!",
+      prompt:"Why do farmers let the beans sit in the sun for several days?",
+      options:["Because that step develops the chocolate flavor.","Because the beans need to stay cold.","Because sunlight makes the beans grow bigger.","Because farmers have nothing else to do."],
+      correct:0,
+      explanation:"The passage states it directly: fermenting “creates chocolate’s flavor.”" },
+    { title:"Why Leaves Change Color",
+      passage:"In autumn, green leaves turn gold, orange, and red — but where do those colors come from? All summer, leaves look green because of chlorophyll, the pigment trees use to catch sunlight and make food. When days grow shorter and colder, trees seal off their leaves and stop making chlorophyll. As the green fades, the yellow and orange pigments that were hiding underneath all along finally show through. Red leaves are different: some trees make a red pigment in autumn, possibly to protect the leaf while the tree pulls nutrients back into its branches. Once the job is done, the leaf falls, and the tree rests until spring.",
+      prompt:"Why might a tree make red pigment in its leaves in autumn?",
+      options:["To protect the leaf while the tree pulls nutrients back into its branches.","To make the tree warmer during winter.","To attract birds to build nests.","To stop the leaves from ever falling."],
+      correct:0,
+      explanation:"The passage suggests the red pigment may “protect the leaf while the tree pulls nutrients back.”" },
+    { title:"Home Above Earth",
+      passage:"The International Space Station is a science laboratory the size of a football field, orbiting Earth 250 miles up. It was built piece by piece in space by astronauts from many countries, starting in 1998. Up there, astronauts float because they are in constant free fall around the planet — what we call weightlessness. They exercise two hours a day to keep their muscles and bones strong, drink recycled water (yes, even recycled sweat!), and watch 16 sunrises and sunsets every 24 hours as the station races around Earth. Experiments on the station have led to better water filters, new medicines, and clues about how the human body handles long space trips.",
+      prompt:"Why do astronauts exercise two hours every day?",
+      options:["To keep their muscles and bones strong in weightlessness.","To train for a race around the station.","To stay warm in the cold spacecraft.","To pass the time until dinner."],
+      correct:0,
+      explanation:"The passage states it directly: exercise keeps “their muscles and bones strong.”" },
+    { title:"Dolphins Talk with Sound",
+      passage:"Dolphins can’t see very far in murky water, so they ‘see’ with sound. A dolphin sends out rapid clicks and listens for the echoes bouncing back — a skill called echolocation. The echoes tell the dolphin the size, shape, speed, and even the texture of objects, whether it’s a fish, a rock, or a friend. Dolphins also whistle to each other, and each dolphin has its own signature whistle, like a name. Mothers and calves use these whistles to stay together. Scientists who record dolphin sounds have found that dolphins even copy each other’s whistles, as if calling each other by name.",
+      prompt:"Why would a dolphin copy another dolphin’s whistle?",
+      options:["To call that dolphin by name, the way people call each other.","To confuse sharks swimming nearby.","To make the water warmer.","To practice holding its breath longer."],
+      correct:0,
+      explanation:"The passage says each dolphin’s whistle is “like a name,” and copying is “as if calling each other by name.”" },
+    { title:"The Lost Library Book",
+      passage:"Maya loved the library book about volcanoes so much that she kept renewing it — three times! Then one morning, it was gone. She searched under her bed, in her backpack, behind the couch. Nothing. “I’ll have to pay for it,” she told her mom, feeling sick. That afternoon, her little brother Ben toddled over, dragging something behind him. It was the book — chewed at the corner, but found! Ben had been ‘reading’ it in his blanket fort. Maya laughed with relief, then marched Ben to the library to apologize together. The librarian smiled, waived the fee, and said, “Just promise to keep books away from blanket forts.” Maya promised — and Ben got his own picture book.",
+      prompt:"Why did the librarian waive the fee?",
+      options:["Because Maya was honest, apologized, and brought the book back.","Because the book was brand new.","Because Ben promised to chew more books.","Because the library was closing forever."],
+      correct:0,
+      explanation:"Maya came in person, told the truth, and apologized — the librarian rewarded that honesty." },
+    { title:"The Giant of the Desert",
+      passage:"The saguaro cactus can grow 40 feet tall and live 200 years, towering over the Arizona desert like a green giant. Its accordion-like ribs expand like a sponge after rare desert rains, storing hundreds of gallons of water in its spongy flesh. A waxy skin seals the water in, and its roots spread wide just under the surface to catch every drop. The saguaro is also an apartment building: Gila woodpeckers drill nest holes in its flesh, and when they move out, elf owls move in. After a saguaro dies, its woody ribs remain standing for years, like the skeleton of the desert.",
+      prompt:"Why do the saguaro’s roots spread wide instead of growing deep?",
+      options:["To catch as much rare rainwater as possible near the surface.","To reach water deep underground.","To hold the cactus up in strong winds.","To hide from hungry animals."],
+      correct:0,
+      explanation:"Wide, shallow roots catch “every drop” of rare rain before it soaks away." },
+    { title:"Reading with Your Fingers",
+      passage:"Louis Braille was only 15 when he changed reading forever. Blinded in an accident as a small boy, Louis attended a school for blind students in Paris, where books were printed with raised letters — slow and hard to read by touch. Louis had a better idea: a code of six raised dots in different patterns, small enough that a fingertip could read each letter in one touch. He published his system in 1829, but it took years before the world adopted it. Today, braille appears on elevator buttons, medicine bottles, and currency in many countries, giving blind readers independence. All from a teenager’s brilliant dots.",
+      prompt:"Why was braille faster to read than raised-letter books?",
+      options:["Because each small dot pattern fits under one fingertip touch.","Because the dots were much larger than letters.","Because braille books had no words in them.","Because only teachers were allowed to read braille."],
+      correct:0,
+      explanation:"The passage says each pattern was “small enough that a fingertip could read each letter in one touch.”" },
+    { title:"Dancing Lights in the Sky",
+      passage:"On dark winter nights near the North Pole, the sky can erupt in rippling curtains of green, pink, and purple light — the aurora borealis, or northern lights. The show starts on the sun, which constantly streams tiny charged particles toward Earth. Our planet’s magnetic field funnels these particles toward the poles, where they crash into gases high in the atmosphere. The gases glow when struck, like a neon sign lighting up. Different gases make different colors: oxygen glows green and red, nitrogen glows blue and purple. Astronauts watching from space see the aurora as a glowing ring circling the pole.",
+      prompt:"Why are the northern lights seen near the poles and not at the equator?",
+      options:["Because Earth’s magnetic field funnels the particles toward the poles.","Because the equator is too bright at night.","Because the sun never shines on the equator.","Because gases do not exist at the equator."],
+      correct:0,
+      explanation:"The passage says the magnetic field “funnels these particles toward the poles.”" },
+  ]},
+};
+
+/* ==================== APP LOGIC ==================== */
+const AUDIT_KEY = "reading_10_12_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-12 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-12 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
