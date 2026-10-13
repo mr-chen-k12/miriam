@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saxon Math 5/4 — Test 7B · Practice Set</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  chtml: { scale: 1.05 }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root { --ink:#1c1c1e; --accent:#0b5fff; --card:#ffffff; --bg:#f4f6fa; --muted:#6b7280; }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: var(--ink);
+         margin: 0; padding: 18px; line-height: 1.55; }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header.page { text-align: center; margin-bottom: 18px; }
+  header.page h1 { font-size: 1.5rem; margin: 0.2em 0; }
+  header.page p { color: var(--muted); margin: 0.2em 0; font-size: 0.95rem; }
+  h2.section { font-size: 1.15rem; margin: 26px 0 12px; padding-bottom: 6px;
+               border-bottom: 2px solid var(--accent); color: var(--accent); }
+  .card { background: var(--card); border: 1px solid #dfe3ea; border-radius: 12px;
+          padding: 16px 18px; margin: 12px 0; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qnum { font-weight: bold; font-size: 1.05rem; margin-bottom: 6px; }
+  .question { margin: 6px 0 4px; }
+  .question p { margin: 0.4em 0; }
+  figure.fig { margin: 10px 0 4px; text-align: center; }
+  figure.fig svg { max-width: 100%; height: auto; margin: 4px 8px; vertical-align: top; }
+  .show-btn { display: inline-block; margin-top: 10px; background: var(--accent); color: #fff;
+              border: none; border-radius: 8px; padding: 8px 16px; font-size: 0.95rem;
+              cursor: pointer; font-family: inherit; }
+  .show-btn:hover { background: #0849c4; }
+  .show-btn.open { background: #374151; }
+  .answer { display: none; margin-top: 12px; padding: 12px 14px; background: #f0fdf4;
+            border: 1px solid #bbf7d0; border-radius: 8px; }
+  .answer.show { display: block; }
+  .answer .ans-label { font-weight: bold; color: #166534; }
+  .answer .sol-label { font-weight: bold; }
+  .answer p { margin: 0.45em 0; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .show-btn, .answer { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    header.page p.hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="page">
+  <h1>Saxon Math 5/4 — Test 7B · Practice Set</h1>
+  <p>Three parallel variants (a, b, c) for every question — solutions hidden until you press the button</p>
+  <p class="hint">Tap <b>Show answer &amp; solution</b> on any problem to reveal it. Printing shows questions only.</p>
+</header>
+
+<h2 class="section">Practice Problems</h2>
+<!-- Q1 -->
+<div class="card">
+  <div class="qnum">1 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(11)</span></div>
+  <div class="question"><p><b>a.</b> It is 345 miles from Lillian's house to her grandmother's house. Lillian has already driven 178 of those miles. How many miles does Lillian have left to drive?</p><p><b>b.</b> It is 512 miles from Lillian's house to her grandmother's house. Lillian has already driven 236 of those miles. How many miles does Lillian have left to drive?</p><p><b>c.</b> It is 804 miles from Lillian's house to her grandmother's house. Lillian has already driven 457 of those miles. How many miles does Lillian have left to drive?</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 167 miles &nbsp; b. 276 miles &nbsp; c. 347 miles</p>
+    <p><span class="sol-label">Solution:</span> Subtract miles driven from the total: <b>a.</b> \(345 - 178 = 167\); <b>b.</b> \(512 - 236 = 276\); <b>c.</b> \(804 - 457 = 347\).</p>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="card">
+  <div class="qnum">2 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(10)</span></div>
+  <div class="question"><p>Use the given digits once each to make an even number greater than the target.</p><p><b>a.</b> Digits 3, 9, 6 — make an even number greater than 900.</p><p><b>b.</b> Digits 2, 5, 7 — make an even number greater than 700.</p><p><b>c.</b> Digits 1, 6, 8 — make an even number greater than 800.</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 936 &nbsp; b. 752 &nbsp; c. 816</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> Hundreds digit must be 9 (to top 900); ones digit must be even, so 6; tens digit 3: 936. <b>b.</b> Hundreds digit 7; ones digit 2; tens digit 5: 752. <b>c.</b> Hundreds digit 8; ones digit 6; tens digit 1: 816. Each is the only arrangement that works.</p>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="card">
+  <div class="qnum">3 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 3)</span></div>
+  <div class="question"><p>Draw a pattern of dots to show each multiplication.</p><p><b>a.</b> 2 and 6 &nbsp;&nbsp; <b>b.</b> 3 and 5 &nbsp;&nbsp; <b>c.</b> 4 and 4</p></div>
+  <figure class="fig">
+<svg width="260" height="106" viewBox="0 0 260 106" role="img" aria-label="2 rows of 6 dots"><circle cx="40" cy="35" r="9" fill="#111"/><circle cx="76" cy="35" r="9" fill="#111"/><circle cx="112" cy="35" r="9" fill="#111"/><circle cx="148" cy="35" r="9" fill="#111"/><circle cx="184" cy="35" r="9" fill="#111"/><circle cx="220" cy="35" r="9" fill="#111"/><circle cx="40" cy="71" r="9" fill="#111"/><circle cx="76" cy="71" r="9" fill="#111"/><circle cx="112" cy="71" r="9" fill="#111"/><circle cx="148" cy="71" r="9" fill="#111"/><circle cx="184" cy="71" r="9" fill="#111"/><circle cx="220" cy="71" r="9" fill="#111"/></svg>
+</figure><figure class="fig">
+<svg width="224" height="142" viewBox="0 0 224 142" role="img" aria-label="3 rows of 5 dots"><circle cx="40" cy="35" r="9" fill="#111"/><circle cx="76" cy="35" r="9" fill="#111"/><circle cx="112" cy="35" r="9" fill="#111"/><circle cx="148" cy="35" r="9" fill="#111"/><circle cx="184" cy="35" r="9" fill="#111"/><circle cx="40" cy="71" r="9" fill="#111"/><circle cx="76" cy="71" r="9" fill="#111"/><circle cx="112" cy="71" r="9" fill="#111"/><circle cx="148" cy="71" r="9" fill="#111"/><circle cx="184" cy="71" r="9" fill="#111"/><circle cx="40" cy="107" r="9" fill="#111"/><circle cx="76" cy="107" r="9" fill="#111"/><circle cx="112" cy="107" r="9" fill="#111"/><circle cx="148" cy="107" r="9" fill="#111"/><circle cx="184" cy="107" r="9" fill="#111"/></svg>
+</figure><figure class="fig">
+<svg width="188" height="178" viewBox="0 0 188 178" role="img" aria-label="4 rows of 4 dots"><circle cx="40" cy="35" r="9" fill="#111"/><circle cx="76" cy="35" r="9" fill="#111"/><circle cx="112" cy="35" r="9" fill="#111"/><circle cx="148" cy="35" r="9" fill="#111"/><circle cx="40" cy="71" r="9" fill="#111"/><circle cx="76" cy="71" r="9" fill="#111"/><circle cx="112" cy="71" r="9" fill="#111"/><circle cx="148" cy="71" r="9" fill="#111"/><circle cx="40" cy="107" r="9" fill="#111"/><circle cx="76" cy="107" r="9" fill="#111"/><circle cx="112" cy="107" r="9" fill="#111"/><circle cx="148" cy="107" r="9" fill="#111"/><circle cx="40" cy="143" r="9" fill="#111"/><circle cx="76" cy="143" r="9" fill="#111"/><circle cx="112" cy="143" r="9" fill="#111"/><circle cx="148" cy="143" r="9" fill="#111"/></svg>
+</figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 2 rows of 6 dots (12) &nbsp; b. 3 rows of 5 dots (15) &nbsp; c. 4 rows of 4 dots (16), as drawn</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(2 \times 6 = 12\). <b>b.</b> \(3 \times 5 = 15\). <b>c.</b> \(4 \times 4 = 16\).</p>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="card">
+  <div class="qnum">4 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(5)</span></div>
+  <div class="question"><p>Seth wrote his birth date in month/day/year form.</p><p><b>a.</b> 7/04/08 — (i) In what month was Seth born? (ii) In what year?</p><p><b>b.</b> 11/25/11 — (i) In what month was Seth born? (ii) In what year?</p><p><b>c.</b> 2/14/99 — (i) In what month was Seth born? (ii) In what year?</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. (i) July (ii) 2008 &nbsp; b. (i) November (ii) 2011 &nbsp; c. (i) February (ii) 1999</p>
+    <p><span class="sol-label">Solution:</span> The first number is the month and the last is the year: <b>a.</b> 7 = July, 08 = 2008; <b>b.</b> 11 = November, 11 = 2011; <b>c.</b> 2 = February, 99 = 1999.</p>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="card">
+  <div class="qnum">5 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(23)</span></div>
+  <div class="question"><p>Draw two perpendicular lines.</p></div>
+  <figure class="fig">
+<svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Two perpendicular lines">
+    <line x1="100" y1="20" x2="100" y2="180" stroke="#111" stroke-width="3"/>
+    <line x1="20" y1="100" x2="180" y2="100" stroke="#111" stroke-width="3"/>
+    <rect x="100" y="100" width="16" height="16" fill="none" stroke="#0b5fff" stroke-width="2.5"/>
+  </svg>
+</figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> Two lines that cross at a right angle (90°), as drawn</p>
+    <p><span class="sol-label">Solution:</span> Perpendicular lines meet to form square corners. The small square at the intersection marks the right angle.</p>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="card">
+  <div class="qnum">6 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 3)</span></div>
+  <div class="question"><p>Find the area of each rectangle.</p><p><b>a.</b> 5 cm long and 3 cm wide &nbsp;&nbsp; <b>b.</b> 6 cm long and 4 cm wide &nbsp;&nbsp; <b>c.</b> 7 cm long and 3 cm wide</p></div>
+  <figure class="fig">
+<svg width="320" height="210" viewBox="0 0 320 210" role="img" aria-label="Rectangle 5 cm by 3 cm"><rect x="60" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><text x="160.0" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="16">5 cm</text><text x="272" y="96.0" text-anchor="middle" font-family="Georgia,serif" font-size="16">3 cm</text></svg>
+</figure><figure class="fig">
+<svg width="360" height="250" viewBox="0 0 360 250" role="img" aria-label="Rectangle 6 cm by 4 cm"><rect x="60" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="150" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><text x="180.0" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="16">6 cm</text><text x="312" y="116.0" text-anchor="middle" font-family="Georgia,serif" font-size="16">4 cm</text></svg>
+</figure><figure class="fig">
+<svg width="400" height="210" viewBox="0 0 400 210" role="img" aria-label="Rectangle 7 cm by 3 cm"><rect x="60" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="300" y="30" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="300" y="70" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="60" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="100" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="140" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="180" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="220" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="260" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><rect x="300" y="110" width="40" height="40" fill="#eef4ff" stroke="#111" stroke-width="2"/><text x="200.0" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="16">7 cm</text><text x="352" y="96.0" text-anchor="middle" font-family="Georgia,serif" font-size="16">3 cm</text></svg>
+</figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 15 square centimeters &nbsp; b. 24 square centimeters &nbsp; c. 21 square centimeters</p>
+    <p><span class="sol-label">Solution:</span> Area = length × width: <b>a.</b> \(5 \times 3 = 15\); <b>b.</b> \(6 \times 4 = 24\); <b>c.</b> \(7 \times 3 = 21\).</p>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="card">
+  <div class="qnum">7 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(22)</span></div>
+  <div class="question"><p>What fraction of each circle is shaded? (Give each answer in lowest terms.)</p></div>
+  <figure class="fig">
+<svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="Circle divided into 8, 3 shaded"><path d="M90,90 L90.0,15.0 A75,75 0 0,1 143.0,37.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,37.0 A75,75 0 0,1 165.0,90.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L165.0,90.0 A75,75 0 0,1 143.0,143.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,143.0 A75,75 0 0,1 90.0,165.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L90.0,165.0 A75,75 0 0,1 37.0,143.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,143.0 A75,75 0 0,1 15.0,90.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L15.0,90.0 A75,75 0 0,1 37.0,37.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,37.0 A75,75 0 0,1 90.0,15.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><circle cx="90" cy="90" r="75" fill="none" stroke="#111" stroke-width="2.5"/></svg>
+</figure><figure class="fig">
+<svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="Circle divided into 8, 4 shaded"><path d="M90,90 L90.0,15.0 A75,75 0 0,1 143.0,37.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,37.0 A75,75 0 0,1 165.0,90.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L165.0,90.0 A75,75 0 0,1 143.0,143.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,143.0 A75,75 0 0,1 90.0,165.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L90.0,165.0 A75,75 0 0,1 37.0,143.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,143.0 A75,75 0 0,1 15.0,90.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L15.0,90.0 A75,75 0 0,1 37.0,37.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,37.0 A75,75 0 0,1 90.0,15.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><circle cx="90" cy="90" r="75" fill="none" stroke="#111" stroke-width="2.5"/></svg>
+</figure><figure class="fig">
+<svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-label="Circle divided into 8, 6 shaded"><path d="M90,90 L90.0,15.0 A75,75 0 0,1 143.0,37.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,37.0 A75,75 0 0,1 165.0,90.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L165.0,90.0 A75,75 0 0,1 143.0,143.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L143.0,143.0 A75,75 0 0,1 90.0,165.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L90.0,165.0 A75,75 0 0,1 37.0,143.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,143.0 A75,75 0 0,1 15.0,90.0 Z" fill="#9db8dd" stroke="#111" stroke-width="2"/><path d="M90,90 L15.0,90.0 A75,75 0 0,1 37.0,37.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><path d="M90,90 L37.0,37.0 A75,75 0 0,1 90.0,15.0 Z" fill="#ffffff" stroke="#111" stroke-width="2"/><circle cx="90" cy="90" r="75" fill="none" stroke="#111" stroke-width="2.5"/></svg>
+</figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(\frac{3}{8}\) &nbsp; b. \(\frac{1}{2}\) &nbsp; c. \(\frac{3}{4}\)</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> 3 of 8 wedges: \(\frac{3}{8}\). <b>b.</b> 4 of 8 wedges: \(\frac{4}{8} = \frac{1}{2}\). <b>c.</b> 6 of 8 wedges: \(\frac{6}{8} = \frac{3}{4}\).</p>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="card">
+  <div class="qnum">8 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(27)</span></div>
+  <div class="question"><p>Change each addition problem to a multiplication problem.</p><p><b>a.</b> \(9 + 9 + 9 + 9\) &nbsp;&nbsp; <b>b.</b> \(6 + 6 + 6 + 6 + 6 + 6\) &nbsp;&nbsp; <b>c.</b> \(8 + 8 + 8\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(4 \times 9\) &nbsp; b. \(6 \times 6\) &nbsp; c. \(3 \times 8\)</p>
+    <p><span class="sol-label">Solution:</span> Count how many times the number is added: <b>a.</b> four 9's \(= 4 \times 9\); <b>b.</b> six 6's \(= 6 \times 6\); <b>c.</b> three 8's \(= 3 \times 8\).</p>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="card">
+  <div class="qnum">9 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(20)</span></div>
+  <div class="question"><p>Round each number to the nearest ten. Then add the rounded numbers.</p><p><b>a.</b> 73 and 46 &nbsp;&nbsp; <b>b.</b> 58 and 94 &nbsp;&nbsp; <b>c.</b> 37 and 68</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 120 &nbsp; b. 150 &nbsp; c. 110</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(73 \to 70\), \(46 \to 50\); \(70 + 50 = 120\). <b>b.</b> \(58 \to 60\), \(94 \to 90\); \(60 + 90 = 150\). <b>c.</b> \(37 \to 40\), \(68 \to 70\); \(40 + 70 = 110\).</p>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="card">
+  <div class="qnum">10 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(10, 35)</span></div>
+  <div class="question"><p>Is each value an even number of cents or an odd number of cents?</p><p><b>a.</b> 4 nickels and 3 dimes &nbsp;&nbsp; <b>b.</b> 5 nickels and 2 dimes &nbsp;&nbsp; <b>c.</b> 2 nickels and 5 dimes</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. even (50¢) &nbsp; b. odd (45¢) &nbsp; c. even (60¢)</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(4 \times 5¢ + 3 \times 10¢ = 20 + 30 = 50¢\) — even. <b>b.</b> \(25 + 20 = 45¢\) — odd. <b>c.</b> \(10 + 50 = 60¢\) — even.</p>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="card">
+  <div class="qnum">11 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 1)</span></div>
+  <div class="question"><p>The arrow is pointing to what number on each number line?</p></div>
+  <figure class="fig">
+<svg width="480" height="110" viewBox="0 0 480 110" role="img" aria-label="Number line, arrow at 75"><line x1="20" y1="60" x2="460" y2="60" stroke="#111" stroke-width="2"/><polygon points="460,60 448,54 448,66" fill="#111"/><polygon points="20,60 32,54 32,66" fill="#111"/><line x1="22.5" y1="54" x2="22.5" y2="66" stroke="#111" stroke-width="2"/><line x1="60.0" y1="50" x2="60.0" y2="70" stroke="#111" stroke-width="2"/><line x1="97.5" y1="54" x2="97.5" y2="66" stroke="#111" stroke-width="2"/><line x1="135.0" y1="54" x2="135.0" y2="66" stroke="#111" stroke-width="2"/><line x1="172.5" y1="54" x2="172.5" y2="66" stroke="#111" stroke-width="2"/><line x1="210.0" y1="50" x2="210.0" y2="70" stroke="#111" stroke-width="2"/><line x1="247.5" y1="54" x2="247.5" y2="66" stroke="#111" stroke-width="2"/><line x1="285.0" y1="54" x2="285.0" y2="66" stroke="#111" stroke-width="2"/><line x1="322.5" y1="54" x2="322.5" y2="66" stroke="#111" stroke-width="2"/><line x1="360.0" y1="50" x2="360.0" y2="70" stroke="#111" stroke-width="2"/><line x1="397.5" y1="54" x2="397.5" y2="66" stroke="#111" stroke-width="2"/><g font-family="Georgia,serif" font-size="17" text-anchor="middle" fill="#111"><text x="60" y="95">0</text><text x="210" y="95">100</text><text x="360" y="95">200</text></g><line x1="172.5" y1="18" x2="172.5" y2="48" stroke="#0b5fff" stroke-width="3"/><polygon points="172.5,52 165.5,38 179.5,38" fill="#0b5fff"/></svg>
+</figure><figure class="fig">
+<svg width="480" height="110" viewBox="0 0 480 110" role="img" aria-label="Number line, arrow at 125"><line x1="20" y1="60" x2="460" y2="60" stroke="#111" stroke-width="2"/><polygon points="460,60 448,54 448,66" fill="#111"/><polygon points="20,60 32,54 32,66" fill="#111"/><line x1="22.5" y1="54" x2="22.5" y2="66" stroke="#111" stroke-width="2"/><line x1="60.0" y1="50" x2="60.0" y2="70" stroke="#111" stroke-width="2"/><line x1="97.5" y1="54" x2="97.5" y2="66" stroke="#111" stroke-width="2"/><line x1="135.0" y1="54" x2="135.0" y2="66" stroke="#111" stroke-width="2"/><line x1="172.5" y1="54" x2="172.5" y2="66" stroke="#111" stroke-width="2"/><line x1="210.0" y1="50" x2="210.0" y2="70" stroke="#111" stroke-width="2"/><line x1="247.5" y1="54" x2="247.5" y2="66" stroke="#111" stroke-width="2"/><line x1="285.0" y1="54" x2="285.0" y2="66" stroke="#111" stroke-width="2"/><line x1="322.5" y1="54" x2="322.5" y2="66" stroke="#111" stroke-width="2"/><line x1="360.0" y1="50" x2="360.0" y2="70" stroke="#111" stroke-width="2"/><line x1="397.5" y1="54" x2="397.5" y2="66" stroke="#111" stroke-width="2"/><g font-family="Georgia,serif" font-size="17" text-anchor="middle" fill="#111"><text x="60" y="95">0</text><text x="210" y="95">100</text><text x="360" y="95">200</text></g><line x1="247.5" y1="18" x2="247.5" y2="48" stroke="#0b5fff" stroke-width="3"/><polygon points="247.5,52 240.5,38 254.5,38" fill="#0b5fff"/></svg>
+</figure><figure class="fig">
+<svg width="480" height="110" viewBox="0 0 480 110" role="img" aria-label="Number line, arrow at 175"><line x1="20" y1="60" x2="460" y2="60" stroke="#111" stroke-width="2"/><polygon points="460,60 448,54 448,66" fill="#111"/><polygon points="20,60 32,54 32,66" fill="#111"/><line x1="22.5" y1="54" x2="22.5" y2="66" stroke="#111" stroke-width="2"/><line x1="60.0" y1="50" x2="60.0" y2="70" stroke="#111" stroke-width="2"/><line x1="97.5" y1="54" x2="97.5" y2="66" stroke="#111" stroke-width="2"/><line x1="135.0" y1="54" x2="135.0" y2="66" stroke="#111" stroke-width="2"/><line x1="172.5" y1="54" x2="172.5" y2="66" stroke="#111" stroke-width="2"/><line x1="210.0" y1="50" x2="210.0" y2="70" stroke="#111" stroke-width="2"/><line x1="247.5" y1="54" x2="247.5" y2="66" stroke="#111" stroke-width="2"/><line x1="285.0" y1="54" x2="285.0" y2="66" stroke="#111" stroke-width="2"/><line x1="322.5" y1="54" x2="322.5" y2="66" stroke="#111" stroke-width="2"/><line x1="360.0" y1="50" x2="360.0" y2="70" stroke="#111" stroke-width="2"/><line x1="397.5" y1="54" x2="397.5" y2="66" stroke="#111" stroke-width="2"/><g font-family="Georgia,serif" font-size="17" text-anchor="middle" fill="#111"><text x="60" y="95">0</text><text x="210" y="95">100</text><text x="360" y="95">200</text></g><line x1="322.5" y1="18" x2="322.5" y2="48" stroke="#0b5fff" stroke-width="3"/><polygon points="322.5,52 315.5,38 329.5,38" fill="#0b5fff"/></svg>
+</figure>
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 75 &nbsp; b. 125 &nbsp; c. 175</p>
+    <p><span class="sol-label">Solution:</span> Each small interval is 25. <b>a.</b> The third mark after 0 is 75. <b>b.</b> The fifth mark after 0 (one past 100) is 125. <b>c.</b> The seventh mark after 0 (three past 100) is 175.</p>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="card">
+  <div class="qnum">12 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 3)</span></div>
+  <div class="question"><p><b>a.</b> \(3 \times 3\), \(6 \times 6\), \(9 \times 9\)</p><p><b>b.</b> \(4 \times 4\), \(5 \times 5\), \(10 \times 10\)</p><p><b>c.</b> \(1 \times 1\), \(7 \times 7\), \(12 \times 12\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 9, 36, 81 &nbsp; b. 16, 25, 100 &nbsp; c. 1, 49, 144</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(3 \times 3 = 9\), \(6 \times 6 = 36\), \(9 \times 9 = 81\). <b>b.</b> \(4 \times 4 = 16\), \(5 \times 5 = 25\), \(10 \times 10 = 100\). <b>c.</b> \(1 \times 1 = 1\), \(7 \times 7 = 49\), \(12 \times 12 = 144\).</p>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="card">
+  <div class="qnum">13 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(31)</span></div>
+  <div class="question"><p><b>a.</b> Sixty-seven is how much less than eighty-two?</p><p><b>b.</b> Thirty-eight is how much less than fifty-one?</p><p><b>c.</b> Seventy-six is how much less than ninety-five?</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 15 less &nbsp; b. 13 less &nbsp; c. 19 less</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(82 - 67 = 15\). <b>b.</b> \(51 - 38 = 13\). <b>c.</b> \(95 - 76 = 19\).</p>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="card">
+  <div class="qnum">14 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 3)</span></div>
+  <div class="question"><p>Find each square root: <b>a.</b> \(\sqrt{36}\) &nbsp;&nbsp; <b>b.</b> \(\sqrt{64}\) &nbsp;&nbsp; <b>c.</b> \(\sqrt{81}\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 6 &nbsp; b. 8 &nbsp; c. 9</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(6 \times 6 = 36\). <b>b.</b> \(8 \times 8 = 64\). <b>c.</b> \(9 \times 9 = 81\).</p>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="card">
+  <div class="qnum">15 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(Inv. 1)</span></div>
+  <div class="question"><p>Compare. Write &lt;, &gt;, or =.</p><p><b>a.</b> \(45 + 38 \bigcirc 52 + 31\) &nbsp;&nbsp; <b>b.</b> \(56 + 27 \bigcirc 48 + 39\) &nbsp;&nbsp; <b>c.</b> \(74 + 26 \bigcirc 68 + 25\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. = &nbsp; b. &lt; &nbsp; c. &gt;</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(83 = 83\). <b>b.</b> \(83 < 87\). <b>c.</b> \(100 > 93\).</p>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="card">
+  <div class="qnum">16 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(14)</span></div>
+  <div class="question"><p>Find each missing number.</p><p><b>a.</b> \(27 + W = 85\) &nbsp;&nbsp; <b>b.</b> \(36 + W = 92\) &nbsp;&nbsp; <b>c.</b> \(45 + W = 78\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(W = 58\) &nbsp; b. \(W = 56\) &nbsp; c. \(W = 33\)</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(W = 85 - 27 = 58\). <b>b.</b> \(W = 92 - 36 = 56\). <b>c.</b> \(W = 78 - 45 = 33\).</p>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="card">
+  <div class="qnum">17 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(16)</span></div>
+  <div class="question"><p>Find each missing number.</p><p style="text-align:center"><b>a.</b> \(\begin{array}{r} 745 \\ -\;\; X \\ \hline 218 \end{array}\)&nbsp;&nbsp;&nbsp;&nbsp;<b>b.</b> \(\begin{array}{r} 823 \\ -\;\; X \\ \hline 456 \end{array}\)&nbsp;&nbsp;&nbsp;&nbsp;<b>c.</b> \(\begin{array}{r} 914 \\ -\;\; X \\ \hline 389 \end{array}\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. \(X = 527\) &nbsp; b. \(X = 367\) &nbsp; c. \(X = 525\)</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(X = 745 - 218 = 527\). <b>b.</b> \(X = 823 - 456 = 367\). <b>c.</b> \(X = 914 - 389 = 525\).</p>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="card">
+  <div class="qnum">18 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(35)</span></div>
+  <div class="question"><p>Use words to write each mixed number.</p><p><b>a.</b> \(3\frac{1}{4}\) &nbsp;&nbsp; <b>b.</b> \(5\frac{3}{5}\) &nbsp;&nbsp; <b>c.</b> \(2\frac{5}{6}\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. three and one fourth &nbsp; b. five and three fifths &nbsp; c. two and five sixths</p>
+    <p><span class="sol-label">Solution:</span> Write the whole number, then “and,” then the fraction: <b>a.</b> three and one fourth; <b>b.</b> five and three fifths; <b>c.</b> two and five sixths.</p>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="card">
+  <div class="qnum">19 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(34)</span></div>
+  <div class="question"><p>Use digits to write each number.</p><p><b>a.</b> four million &nbsp;&nbsp; <b>b.</b> nine million &nbsp;&nbsp; <b>c.</b> two million</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 4,000,000 &nbsp; b. 9,000,000 &nbsp; c. 2,000,000</p>
+    <p><span class="sol-label">Solution:</span> A million is 1,000,000 (6 zeros): <b>a.</b> 4,000,000; <b>b.</b> 9,000,000; <b>c.</b> 2,000,000.</p>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="card">
+  <div class="qnum">20 <span style="color:#9aa0a6;font-weight:normal;font-size:0.8rem;">(30)</span></div>
+  <div class="question"><p>Subtract.</p><p style="text-align:center"><b>a.</b> \(\begin{array}{r} 845 \\ -\; 376 \\ \hline \end{array}\)&nbsp;&nbsp;&nbsp;&nbsp;<b>b.</b> \(\begin{array}{r} 763 \\ -\; 458 \\ \hline \end{array}\)&nbsp;&nbsp;&nbsp;&nbsp;<b>c.</b> \(\begin{array}{r} 951 \\ -\; 684 \\ \hline \end{array}\)</p></div>
+  
+  <button class="show-btn" onclick="toggleAns(this)">Show answer &amp; solution</button>
+  <div class="answer">
+    <p><span class="ans-label">Answer:</span> a. 469 &nbsp; b. 305 &nbsp; c. 267</p>
+    <p><span class="sol-label">Solution:</span> <b>a.</b> \(845 - 376 = 469\). <b>b.</b> \(763 - 458 = 305\). <b>c.</b> \(951 - 684 = 267\).</p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+function toggleAns(btn) {
+  var ans = btn.nextElementSibling;
+  var open = ans.classList.toggle('show');
+  btn.classList.toggle('open', open);
+  btn.innerHTML = open ? 'Hide answer &amp; solution' : 'Show answer &amp; solution';
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([ans]).catch(function(){});
+  }
+}
+</script>
+</body>
+</html>
