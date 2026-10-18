@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-18 Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-18 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-18, Grade 4) ==================== */
+const SETS = {
+"Set A": { icon:"🔍", tag:"Word Detectives",
+  award:"Vocabulary Star Reader",
+  questions: [
+    { title:"Nature's Engineers",
+      passage:"Beavers are nature's engineers. Using teeth that never stop growing, they gnaw through tree trunks — a beaver can fell a six-inch-wide aspen in a single night. They drag the branches into streams and weave them into dams, plastering the gaps with mud. The pond that forms behind the dam becomes a safe home: the underwater entrance to their lodge keeps out predators. Beaver ponds help other wildlife too — frogs, fish, and ducks thrive in the still water. When beavers abandon a pond, the drained land becomes a fertile meadow. A single beaver family can transform an entire valley.",
+      prompt:"In the passage, the word “gnaw” most nearly means…",
+      options:["chew through",
+      "paint over",
+      "jump across",
+      "sleep under"],
+      correct:0,
+      explanation:"Beavers 'gnaw through tree trunks' — they chew through them." },
+    { title:"From Sand to Windows",
+      passage:"Glass starts as ordinary sand — mostly a mineral called silica. When heated to about 3,000 degrees Fahrenheit, sand melts into a glowing orange liquid. Glassmakers add soda ash and limestone to lower the melting point and make the glass clearer and stronger. The molten glass can then be floated on a bath of melted tin to make perfectly flat windowpanes, or blown into bottles and jars. As it cools, glass hardens without ever forming crystals, which is why scientists call it an 'amorphous solid' — a solid with a liquid-like structure. Every glass bottle you recycle can be melted down and reborn as a new one.",
+      prompt:"In the passage, the word “molten” most nearly means…",
+      options:["melted by heat",
+      "frozen solid",
+      "painted blue",
+      "broken apart"],
+      correct:0,
+      explanation:"The sand becomes 'a glowing orange liquid' — melted by heat." },
+    { title:"The Mail Must Go Through",
+      passage:"In 1860, before the telegraph crossed the continent, the Pony Express carried mail from Missouri to California in just ten days — a trip that took stagecoaches nearly a month. Young riders, some only fourteen, galloped at full speed between relay stations, swapping to a fresh horse every ten miles. Each rider carried twenty pounds of mail in a locked leather pouch called a mochila. The service lasted only eighteen months: the transcontinental telegraph, completed in 1861, could send a message in minutes. Though brief, the Pony Express became a legend of the American West.",
+      prompt:"In the passage, the word “legend” most nearly means…",
+      options:["a famous story from the past",
+      "a tall mountain",
+      "a type of horse",
+      "a leather pouch"],
+      correct:0,
+      explanation:"The Pony Express 'became a legend of the American West' — a famous story." },
+    { title:"Why Do We Hiccup?",
+      passage:"A hiccup starts with your diaphragm — the big muscle under your lungs that pulls air in when you breathe. Sometimes the diaphragm gets irritated (by eating too fast, drinking fizzy drinks, or sudden excitement) and jerks suddenly. That jerk sucks air into your throat, and then your vocal cords snap shut — the 'hic!' sound is air hitting closed vocal cords. Hiccups usually stop on their own, but holding your breath can help: the buildup of carbon dioxide may calm the diaphragm. Nobody knows exactly why we hiccup, though some scientists think it's a leftover reflex from our ancient ancestors.",
+      prompt:"In the passage, the word “irritated” most nearly means…",
+      options:["bothered or disturbed",
+      "painted red",
+      "made stronger",
+      "put to sleep"],
+      correct:0,
+      explanation:"The diaphragm gets 'irritated' by eating too fast — bothered or disturbed." },
+    { title:"The Last Great Race",
+      passage:"Every March, mushers and their dog teams race 1,000 miles across Alaska in the Iditarod — from Anchorage to Nome. The trail crosses frozen rivers, mountain ranges, and windswept tundra, where temperatures can plunge to 40 below zero. Each team has up to sixteen huskies, bred for endurance and thick fur. Mushers must care for their dogs first: at checkpoints, vets examine every dog, and tired dogs rest. The race honors the 1925 serum run, when dog teams relayed life-saving medicine to Nome during a diphtheria outbreak. Winners finish in about eight days.",
+      prompt:"In the passage, the word “endurance” most nearly means…",
+      options:["the ability to keep going a long time",
+      "great speed for a few seconds",
+      "a warm coat",
+      "a loud bark"],
+      correct:0,
+      explanation:"The huskies are 'bred for endurance' on a 1,000-mile race — the ability to keep going." },
+    { title:"How Milk Becomes Cheese",
+      passage:"Cheese begins as fresh milk. First, cheesemakers warm the milk and add cultures — helpful bacteria that convert milk sugar into acid. Then they add rennet, an enzyme that curdles the milk, turning it from liquid into soft, wobbly curds floating in watery whey. The curds are cut, heated, and pressed to squeeze out the whey; the longer they press, the harder the cheese. Finally, the cheese ages in cool caves or cellars, where it develops flavor — a process that can take weeks or years. It takes about ten pounds of milk to make one pound of cheese.",
+      prompt:"In the passage, the word “curdles” most nearly means…",
+      options:["thickens into clumps",
+      "boils away",
+      "freezes solid",
+      "turns blue"],
+      correct:0,
+      explanation:"Rennet 'curdles the milk, turning it from liquid into soft, wobbly curds' — thickens into clumps." },
+    { title:"The Plant That Hunts",
+      passage:"The Venus flytrap is one of the few plants that eats animals. Its leaves form jaw-like traps lined with tiny trigger hairs. When an insect touches two hairs within about twenty seconds, the trap snaps shut in a tenth of a second — one of the fastest movements in the plant kingdom. The plant then floods the trap with digestive juices, dissolving the insect over a week or more. Flytraps grow in poor, soggy soil in North Carolina, where catching bugs supplies the nutrients the soil lacks. Each trap only closes a few times before it dies and a new one grows.",
+      prompt:"In the passage, the word “dissolving” most nearly means…",
+      options:["breaking down into liquid",
+      "freezing solid",
+      "painting green",
+      "blowing away"],
+      correct:0,
+      explanation:"The juices are 'dissolving the insect over a week' — breaking it down into liquid." },
+    { title:"The Bridge That Couldn't Be Built",
+      passage:"When engineer Joseph Strauss proposed a bridge across San Francisco's Golden Gate strait in the 1920s, experts called it impossible: the water was 300 feet deep, swept by fierce currents, and battered by ocean winds. Strauss proved them wrong. His suspension bridge, completed in 1937, stretched 1.7 miles — the longest span in the world at the time. Its famous 'international orange' color was originally just the primer paint, but everyone loved it so much it stayed. The bridge has survived earthquakes and storms for nearly a century, carrying over 100,000 cars a day.",
+      prompt:"In the passage, the word “span” most nearly means…",
+      options:["the distance a bridge stretches",
+      "a type of paint",
+      "a strong wind",
+      "a deep hole"],
+      correct:0,
+      explanation:"'The longest span in the world' — the distance the bridge stretches." },
+    { title:"Rocks Falling Like Rain",
+      passage:"Every August, the Perseid meteor shower streaks across the night sky — up to 100 'shooting stars' per hour. But meteors aren't stars at all: they're tiny grains of dust left behind by a comet. When Earth plows through the comet's dusty trail, the grains slam into the atmosphere at 130,000 miles per hour and burn up, leaving glowing trails. The best viewing is after midnight, far from city lights, with no telescope needed — just your eyes and patience. Each meteor you see is a speck no bigger than a grain of sand.",
+      prompt:"In the passage, the word “streaks” most nearly means…",
+      options:["moves fast in a bright line",
+      "falls straight down",
+      "floats slowly",
+      "spins in circles"],
+      correct:0,
+      explanation:"Meteors 'streak across the night sky' — move fast in bright lines." },
+    { title:"Ships That Sink on Purpose",
+      passage:"Submarines dive by changing how heavy they are. They carry huge tanks called ballast tanks; to sink, the crew opens valves and lets seawater flood in, making the submarine heavier than the water it displaces. To rise, they blast the water out with compressed air, making the vessel lighter again. Deep below the waves, submarines navigate by sonar — bouncing sound waves off the seafloor and listening for the echo. Nuclear submarines can stay submerged for months, making their own air and fresh water, limited only by the crew's food supply.",
+      prompt:"In the passage, the word “displaces” most nearly means…",
+      options:["pushes aside",
+      "heats up",
+      "drinks in",
+      "paints over"],
+      correct:0,
+      explanation:"'Heavier than the water it displaces' — the water it pushes aside." },
+  ]},
+"Set B": { icon:"💡", tag:"Main Idea Masters",
+  award:"Main Idea Master",
+  questions: [
+    { title:"Nature's Engineers",
+      passage:"Beavers are nature's engineers. Using teeth that never stop growing, they gnaw through tree trunks — a beaver can fell a six-inch-wide aspen in a single night. They drag the branches into streams and weave them into dams, plastering the gaps with mud. The pond that forms behind the dam becomes a safe home: the underwater entrance to their lodge keeps out predators. Beaver ponds help other wildlife too — frogs, fish, and ducks thrive in the still water. When beavers abandon a pond, the drained land becomes a fertile meadow. A single beaver family can transform an entire valley.",
+      prompt:"What is the main idea of the passage?",
+      options:["Beavers build dams that create ponds, helping themselves and other wildlife.",
+      "Beavers are dangerous predators.",
+      "Beavers only live in meadows.",
+      "Trees grow taller because of beavers."],
+      correct:0,
+      explanation:"The passage describes dam-building, safe lodges, and ponds that help frogs, fish, and ducks." },
+    { title:"From Sand to Windows",
+      passage:"Glass starts as ordinary sand — mostly a mineral called silica. When heated to about 3,000 degrees Fahrenheit, sand melts into a glowing orange liquid. Glassmakers add soda ash and limestone to lower the melting point and make the glass clearer and stronger. The molten glass can then be floated on a bath of melted tin to make perfectly flat windowpanes, or blown into bottles and jars. As it cools, glass hardens without ever forming crystals, which is why scientists call it an 'amorphous solid' — a solid with a liquid-like structure. Every glass bottle you recycle can be melted down and reborn as a new one.",
+      prompt:"What is the main idea of the passage?",
+      options:["Glass is made by melting sand with other minerals, then shaping and cooling it.",
+      "Glass is dug out of the ground like coal.",
+      "Glass can only be made into bottles.",
+      "Sand cannot be melted."],
+      correct:0,
+      explanation:"The passage walks through melting, additives, shaping, and cooling." },
+    { title:"The Mail Must Go Through",
+      passage:"In 1860, before the telegraph crossed the continent, the Pony Express carried mail from Missouri to California in just ten days — a trip that took stagecoaches nearly a month. Young riders, some only fourteen, galloped at full speed between relay stations, swapping to a fresh horse every ten miles. Each rider carried twenty pounds of mail in a locked leather pouch called a mochila. The service lasted only eighteen months: the transcontinental telegraph, completed in 1861, could send a message in minutes. Though brief, the Pony Express became a legend of the American West.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Pony Express carried mail across the West in ten days but lasted only eighteen months before the telegraph replaced it.",
+      "The Pony Express still delivers mail today.",
+      "Stagecoaches were faster than the Pony Express.",
+      "The telegraph was slower than horseback mail."],
+      correct:0,
+      explanation:"The passage covers the ten-day mail run and the eighteen-month lifespan ended by the telegraph." },
+    { title:"Why Do We Hiccup?",
+      passage:"A hiccup starts with your diaphragm — the big muscle under your lungs that pulls air in when you breathe. Sometimes the diaphragm gets irritated (by eating too fast, drinking fizzy drinks, or sudden excitement) and jerks suddenly. That jerk sucks air into your throat, and then your vocal cords snap shut — the 'hic!' sound is air hitting closed vocal cords. Hiccups usually stop on their own, but holding your breath can help: the buildup of carbon dioxide may calm the diaphragm. Nobody knows exactly why we hiccup, though some scientists think it's a leftover reflex from our ancient ancestors.",
+      prompt:"What is the main idea of the passage?",
+      options:["Hiccups happen when the diaphragm jerks suddenly and the vocal cords snap shut.",
+      "Hiccups are caused by loud music.",
+      "Hiccups happen only when you are asleep.",
+      "The diaphragm is a bone in your throat."],
+      correct:0,
+      explanation:"The passage explains the diaphragm jerk and the vocal cords snapping shut." },
+    { title:"The Last Great Race",
+      passage:"Every March, mushers and their dog teams race 1,000 miles across Alaska in the Iditarod — from Anchorage to Nome. The trail crosses frozen rivers, mountain ranges, and windswept tundra, where temperatures can plunge to 40 below zero. Each team has up to sixteen huskies, bred for endurance and thick fur. Mushers must care for their dogs first: at checkpoints, vets examine every dog, and tired dogs rest. The race honors the 1925 serum run, when dog teams relayed life-saving medicine to Nome during a diphtheria outbreak. Winners finish in about eight days.",
+      prompt:"What is the main idea of the passage?",
+      options:["The Iditarod is a 1,000-mile Alaskan sled-dog race honoring the 1925 serum run.",
+      "The Iditarod is a car race in Alaska.",
+      "The serum run happened in 1995.",
+      "Dog teams race only 100 miles."],
+      correct:0,
+      explanation:"The passage describes the 1,000-mile race and its tribute to the 1925 medicine relay." },
+    { title:"How Milk Becomes Cheese",
+      passage:"Cheese begins as fresh milk. First, cheesemakers warm the milk and add cultures — helpful bacteria that convert milk sugar into acid. Then they add rennet, an enzyme that curdles the milk, turning it from liquid into soft, wobbly curds floating in watery whey. The curds are cut, heated, and pressed to squeeze out the whey; the longer they press, the harder the cheese. Finally, the cheese ages in cool caves or cellars, where it develops flavor — a process that can take weeks or years. It takes about ten pounds of milk to make one pound of cheese.",
+      prompt:"What is the main idea of the passage?",
+      options:["Cheese is made by culturing, curdling, pressing, and aging milk.",
+      "Cheese is made by freezing milk.",
+      "Cheese needs no aging to develop flavor.",
+      "Whey is the solid part used for cheese."],
+      correct:0,
+      explanation:"The passage follows the steps: cultures, rennet, pressing out whey, aging." },
+    { title:"The Plant That Hunts",
+      passage:"The Venus flytrap is one of the few plants that eats animals. Its leaves form jaw-like traps lined with tiny trigger hairs. When an insect touches two hairs within about twenty seconds, the trap snaps shut in a tenth of a second — one of the fastest movements in the plant kingdom. The plant then floods the trap with digestive juices, dissolving the insect over a week or more. Flytraps grow in poor, soggy soil in North Carolina, where catching bugs supplies the nutrients the soil lacks. Each trap only closes a few times before it dies and a new one grows.",
+      prompt:"What is the main idea of the passage?",
+      options:["Venus flytraps catch and digest insects to get nutrients missing from their poor soil.",
+      "Venus flytraps eat only raindrops.",
+      "Flytraps grow best in rich garden soil.",
+      "Flytraps are animals, not plants."],
+      correct:0,
+      explanation:"The passage explains the traps, digestion, and the poor soil that makes bugs necessary." },
+    { title:"The Bridge That Couldn't Be Built",
+      passage:"When engineer Joseph Strauss proposed a bridge across San Francisco's Golden Gate strait in the 1920s, experts called it impossible: the water was 300 feet deep, swept by fierce currents, and battered by ocean winds. Strauss proved them wrong. His suspension bridge, completed in 1937, stretched 1.7 miles — the longest span in the world at the time. Its famous 'international orange' color was originally just the primer paint, but everyone loved it so much it stayed. The bridge has survived earthquakes and storms for nearly a century, carrying over 100,000 cars a day.",
+      prompt:"What is the main idea of the passage?",
+      options:["Despite experts calling it impossible, the Golden Gate Bridge was built in 1937 and became an icon.",
+      "The bridge was never finished.",
+      "Experts correctly predicted the bridge would fail.",
+      "The bridge was painted gray."],
+      correct:0,
+      explanation:"The passage tells how Strauss proved the doubters wrong and the bridge endured." },
+    { title:"Rocks Falling Like Rain",
+      passage:"Every August, the Perseid meteor shower streaks across the night sky — up to 100 'shooting stars' per hour. But meteors aren't stars at all: they're tiny grains of dust left behind by a comet. When Earth plows through the comet's dusty trail, the grains slam into the atmosphere at 130,000 miles per hour and burn up, leaving glowing trails. The best viewing is after midnight, far from city lights, with no telescope needed — just your eyes and patience. Each meteor you see is a speck no bigger than a grain of sand.",
+      prompt:"What is the main idea of the passage?",
+      options:["Meteor showers happen when Earth passes through a comet's dust trail and the dust burns up in the atmosphere.",
+      "Meteors are distant stars exploding.",
+      "Meteor showers happen during the day.",
+      "Comets follow Earth around."],
+      correct:0,
+      explanation:"The passage explains the dust trail, the high-speed collision, and the glowing trails." },
+    { title:"Ships That Sink on Purpose",
+      passage:"Submarines dive by changing how heavy they are. They carry huge tanks called ballast tanks; to sink, the crew opens valves and lets seawater flood in, making the submarine heavier than the water it displaces. To rise, they blast the water out with compressed air, making the vessel lighter again. Deep below the waves, submarines navigate by sonar — bouncing sound waves off the seafloor and listening for the echo. Nuclear submarines can stay submerged for months, making their own air and fresh water, limited only by the crew's food supply.",
+      prompt:"What is the main idea of the passage?",
+      options:["Submarines dive and surface by flooding or emptying ballast tanks to change their weight.",
+      "Submarines dive by flapping fins.",
+      "Ballast tanks hold extra food.",
+      "Submarines cannot rise once submerged."],
+      correct:0,
+      explanation:"The passage describes flooding the tanks to sink and blasting air in to rise." },
+  ]},
+"Set C": { icon:"🧠", tag:"Thinking Readers",
+  award:"Super Sleuth Reader",
+  questions: [
+    { title:"Nature's Engineers",
+      passage:"Beavers are nature's engineers. Using teeth that never stop growing, they gnaw through tree trunks — a beaver can fell a six-inch-wide aspen in a single night. They drag the branches into streams and weave them into dams, plastering the gaps with mud. The pond that forms behind the dam becomes a safe home: the underwater entrance to their lodge keeps out predators. Beaver ponds help other wildlife too — frogs, fish, and ducks thrive in the still water. When beavers abandon a pond, the drained land becomes a fertile meadow. A single beaver family can transform an entire valley.",
+      prompt:"Why does the underwater entrance keep the beavers' lodge safe?",
+      options:["Land predators can't easily reach an entrance hidden underwater.",
+      "Fish guard the entrance.",
+      "The water is too hot for predators.",
+      "Beavers lock the entrance with a key."],
+      correct:0,
+      explanation:"An underwater entrance blocks predators that hunt on land." },
+    { title:"From Sand to Windows",
+      passage:"Glass starts as ordinary sand — mostly a mineral called silica. When heated to about 3,000 degrees Fahrenheit, sand melts into a glowing orange liquid. Glassmakers add soda ash and limestone to lower the melting point and make the glass clearer and stronger. The molten glass can then be floated on a bath of melted tin to make perfectly flat windowpanes, or blown into bottles and jars. As it cools, glass hardens without ever forming crystals, which is why scientists call it an 'amorphous solid' — a solid with a liquid-like structure. Every glass bottle you recycle can be melted down and reborn as a new one.",
+      prompt:"Why does the passage say recycled glass can be 'reborn'?",
+      options:["It can be melted down and reshaped into new glass.",
+      "It grows back like a plant.",
+      "It turns back into sand on its own.",
+      "It never breaks."],
+      correct:0,
+      explanation:"Glass melts, so old bottles can be melted and reborn as new ones." },
+    { title:"The Mail Must Go Through",
+      passage:"In 1860, before the telegraph crossed the continent, the Pony Express carried mail from Missouri to California in just ten days — a trip that took stagecoaches nearly a month. Young riders, some only fourteen, galloped at full speed between relay stations, swapping to a fresh horse every ten miles. Each rider carried twenty pounds of mail in a locked leather pouch called a mochila. The service lasted only eighteen months: the transcontinental telegraph, completed in 1861, could send a message in minutes. Though brief, the Pony Express became a legend of the American West.",
+      prompt:"Why did the Pony Express come to an end?",
+      options:["The telegraph could send a message in minutes.",
+      "Riders refused to ride anymore.",
+      "Horses went extinct.",
+      "California stopped wanting mail."],
+      correct:0,
+      explanation:"The telegraph's speed made the eighteen-month service obsolete." },
+    { title:"Why Do We Hiccup?",
+      passage:"A hiccup starts with your diaphragm — the big muscle under your lungs that pulls air in when you breathe. Sometimes the diaphragm gets irritated (by eating too fast, drinking fizzy drinks, or sudden excitement) and jerks suddenly. That jerk sucks air into your throat, and then your vocal cords snap shut — the 'hic!' sound is air hitting closed vocal cords. Hiccups usually stop on their own, but holding your breath can help: the buildup of carbon dioxide may calm the diaphragm. Nobody knows exactly why we hiccup, though some scientists think it's a leftover reflex from our ancient ancestors.",
+      prompt:"Why might holding your breath help stop hiccups?",
+      options:["The buildup of carbon dioxide may calm the diaphragm.",
+      "It makes the diaphragm jerk harder.",
+      "It fills the lungs with water.",
+      "It puts you to sleep."],
+      correct:0,
+      explanation:"The passage says carbon dioxide buildup 'may calm the diaphragm.'" },
+    { title:"The Last Great Race",
+      passage:"Every March, mushers and their dog teams race 1,000 miles across Alaska in the Iditarod — from Anchorage to Nome. The trail crosses frozen rivers, mountain ranges, and windswept tundra, where temperatures can plunge to 40 below zero. Each team has up to sixteen huskies, bred for endurance and thick fur. Mushers must care for their dogs first: at checkpoints, vets examine every dog, and tired dogs rest. The race honors the 1925 serum run, when dog teams relayed life-saving medicine to Nome during a diphtheria outbreak. Winners finish in about eight days.",
+      prompt:"Why do veterinarians examine the dogs at Iditarod checkpoints?",
+      options:["To make sure each dog is healthy enough to keep racing.",
+      "To give the dogs extra food only.",
+      "To count how many dogs there are.",
+      "To teach the dogs new tricks."],
+      correct:0,
+      explanation:"Mushers 'must care for their dogs first,' and tired dogs rest — health comes first." },
+    { title:"How Milk Becomes Cheese",
+      passage:"Cheese begins as fresh milk. First, cheesemakers warm the milk and add cultures — helpful bacteria that convert milk sugar into acid. Then they add rennet, an enzyme that curdles the milk, turning it from liquid into soft, wobbly curds floating in watery whey. The curds are cut, heated, and pressed to squeeze out the whey; the longer they press, the harder the cheese. Finally, the cheese ages in cool caves or cellars, where it develops flavor — a process that can take weeks or years. It takes about ten pounds of milk to make one pound of cheese.",
+      prompt:"Why does it take ten pounds of milk to make one pound of cheese?",
+      options:["Most of the milk's water — the whey — is pressed out.",
+      "Cheesemakers spill most of the milk.",
+      "The milk evaporates in the sun.",
+      "Cows drink half of it back."],
+      correct:0,
+      explanation:"Pressing squeezes the watery whey out of the curds, leaving far less cheese than milk." },
+    { title:"The Plant That Hunts",
+      passage:"The Venus flytrap is one of the few plants that eats animals. Its leaves form jaw-like traps lined with tiny trigger hairs. When an insect touches two hairs within about twenty seconds, the trap snaps shut in a tenth of a second — one of the fastest movements in the plant kingdom. The plant then floods the trap with digestive juices, dissolving the insect over a week or more. Flytraps grow in poor, soggy soil in North Carolina, where catching bugs supplies the nutrients the soil lacks. Each trap only closes a few times before it dies and a new one grows.",
+      prompt:"Why doesn't a raindrop spring the flytrap shut?",
+      options:["A single touch isn't enough — two hairs must be touched close together.",
+      "Rain is too cold for the plant.",
+      "The trap only opens in rain.",
+      "Raindrops are too heavy to touch hairs."],
+      correct:0,
+      explanation:"The trap needs two hairs touched within twenty seconds — one raindrop won't do it." },
+    { title:"The Bridge That Couldn't Be Built",
+      passage:"When engineer Joseph Strauss proposed a bridge across San Francisco's Golden Gate strait in the 1920s, experts called it impossible: the water was 300 feet deep, swept by fierce currents, and battered by ocean winds. Strauss proved them wrong. His suspension bridge, completed in 1937, stretched 1.7 miles — the longest span in the world at the time. Its famous 'international orange' color was originally just the primer paint, but everyone loved it so much it stayed. The bridge has survived earthquakes and storms for nearly a century, carrying over 100,000 cars a day.",
+      prompt:"Why did the Golden Gate Bridge keep its orange color?",
+      options:["People loved the primer color so much they chose to keep it.",
+      "Orange paint was the cheapest.",
+      "The law required orange bridges.",
+      "Strauss's favorite color was orange."],
+      correct:0,
+      explanation:"'Everyone loved it so much it stayed.'" },
+    { title:"Rocks Falling Like Rain",
+      passage:"Every August, the Perseid meteor shower streaks across the night sky — up to 100 'shooting stars' per hour. But meteors aren't stars at all: they're tiny grains of dust left behind by a comet. When Earth plows through the comet's dusty trail, the grains slam into the atmosphere at 130,000 miles per hour and burn up, leaving glowing trails. The best viewing is after midnight, far from city lights, with no telescope needed — just your eyes and patience. Each meteor you see is a speck no bigger than a grain of sand.",
+      prompt:"Why is it best to watch a meteor shower far from city lights?",
+      options:["City lights wash out the faint glowing trails.",
+      "Meteors avoid cities.",
+      "Telescopes don't work in cities.",
+      "The shower only happens in the country."],
+      correct:0,
+      explanation:"Faint meteors need dark skies to be seen — city glow drowns them out." },
+    { title:"Ships That Sink on Purpose",
+      passage:"Submarines dive by changing how heavy they are. They carry huge tanks called ballast tanks; to sink, the crew opens valves and lets seawater flood in, making the submarine heavier than the water it displaces. To rise, they blast the water out with compressed air, making the vessel lighter again. Deep below the waves, submarines navigate by sonar — bouncing sound waves off the seafloor and listening for the echo. Nuclear submarines can stay submerged for months, making their own air and fresh water, limited only by the crew's food supply.",
+      prompt:"Why can nuclear submarines stay submerged for months?",
+      options:["They make their own air and fresh water, so only food runs out.",
+      "They never need air at all.",
+      "The crew sleeps the whole time.",
+      "They surface every night secretly."],
+      correct:0,
+      explanation:"'Making their own air and fresh water, limited only by the crew's food supply.'" },
+  ]},
+};
+
+/* ==================== APP LOGIC ==================== */
+const AUDIT_KEY = "reading_10_18_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-18 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-18 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
