@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-19 Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-19 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-19, Grade 4) ==================== */
+const SETS = {
+"Set A": { icon:"🔍", tag:"Word Detectives",
+  award:"Vocabulary Star Reader",
+  questions: [
+    { title:"Prairie Dog Towns",
+      passage:"A prairie dog town is not a town for people — it is a huge underground neighborhood built by prairie dogs. These chubby rodents dig networks of tunnels and burrows that can stretch for miles, with separate rooms for sleeping, storing food, and raising babies. Hundreds, sometimes thousands, of prairie dogs live together in one colony. Life aboveground is dangerous, with hawks circling overhead and coyotes prowling nearby. So the colony posts lookouts. A prairie dog will stand tall on its hind legs, scanning the grass, while the others munch on seeds below. If it spots danger, it lets out a sharp warning bark — a different call for a hawk than for a coyote — and the whole town dives underground in seconds.",
+      prompt:"In the passage, the word “colony” most nearly means…",
+      options:["a large group living together", "a single small house", "a kind of warning sound", "a deep hole in the ground"],
+      correct:0,
+      explanation:"A “colony” is a large group of animals that live together — here, hundreds or thousands of prairie dogs sharing one town." },
+    { title:"The Windmills of Holland",
+      passage:"Much of the Netherlands sits below sea level, which means the ocean is always trying to flood the land. Hundreds of years ago, the Dutch found a clever answer: windmills. Their huge blades caught the North Sea winds and turned gears that powered pumps, lifting water out of low fields and dumping it into canals. Drained this way, soggy lake bottoms became dry farmland. Windmills did other jobs too — their turning sails ground grain into flour and sawed logs into lumber. Today most pumping is done by electric motors, but the old windmills still stand, their slow-turning blades a reminder of how wind once held back the sea.",
+      prompt:"In the passage, the word “drained” most nearly means…",
+      options:["had water removed from", "filled up with water", "painted a bright color", "covered with flowers"],
+      correct:0,
+      explanation:"To “drain” land means to remove water from it — the windmills pumped water out of the low fields." },
+    { title:"The Snowflake Man",
+      passage:"Wilson Bentley was a farmer in Vermont who fell in love with snowflakes. On cold winter nights, he worked in an unheated shed, catching flakes on a black tray and photographing them through a microscope before they could melt. Over his lifetime he photographed more than 5,000 snowflakes — and no two were exactly alike. Each flake begins as a speck of dust high in a cloud. Water vapor freezes onto it, and as the tiny crystal tumbles through the cloud, it grows six delicate arms. The exact path it takes — through warmer and colder air — shapes each arm differently, which is why every snowflake is unique.",
+      prompt:"In the passage, the word “delicate” most nearly means…",
+      options:["easily broken or fragile", "very large and heavy", "brightly colored", "completely round"],
+      correct:0,
+      explanation:"“Delicate” means fragile and easily damaged — the thin arms of a snowflake melt or break with the slightest touch." },
+    { title:"Faces on a Mountain",
+      passage:"High in the Black Hills of South Dakota, four giant faces stare out from a granite cliff. They are the faces of Presidents Washington, Jefferson, Roosevelt, and Lincoln, carved into Mount Rushmore. The sculptor, Gutzon Borglum, started the project in 1927 with a crew of about 400 workers. Using drills, chisels, and dynamite, they blasted away 450,000 tons of rock. Each face is about 60 feet tall — as high as a six-story building. The work was dangerous, with men hanging from cables on the cliffside, and it took 14 years to finish. Today more than two million visitors a year come to gaze up at the stone presidents.",
+      prompt:"In the passage, the word “carved” most nearly means…",
+      options:["cut into a shape", "painted with colors", "covered with cloth", "glued together"],
+      correct:0,
+      explanation:"To “carve” means to cut material into a shape — the workers cut the presidents' faces out of solid granite." },
+    { title:"Bats in the Dark",
+      passage:"Bats hunt insects in total darkness, yet they almost never bump into anything. Their secret is echolocation. A bat sends out high-pitched squeaks — too high for human ears — and listens for the echoes that bounce back. The echoes tell the bat how far away an object is, how big it is, and even which way it is moving. A bat can catch hundreds of mosquitoes in a single night using sound alone. People used to say “blind as a bat,” but bats are not blind at all. Their eyes work fine — it is simply too dark at night for eyes to be useful, so they navigate by sound instead.",
+      prompt:"In the passage, the word “echoes” most nearly means…",
+      options:["sounds that bounce back", "bright flashes of light", "bad smells in the air", "soft pieces of fur"],
+      correct:0,
+      explanation:"An “echo” is a sound that bounces off something and returns — bats read these returning squeaks to find their way." },
+    { title:"The Oregon Trail",
+      passage:"In the 1840s, thousands of families packed everything they owned into covered wagons and set out from Missouri for Oregon — a journey of 2,000 miles. Oxen pulled the heavy wagons about 15 miles a day, so the trip took nearly five months. Travelers crossed rivers, climbed mountains, and baked under the prairie sun. They steered by landmarks like Chimney Rock, a tall stone tower visible for miles. Families brought extra oxen, spare wagon parts, and barrels of flour and beans. Sickness and accidents claimed many lives along the way, but those who reached Oregon found rich farmland and a chance to start over.",
+      prompt:"In the passage, the word “pioneers” most nearly means…",
+      options:["early settlers traveling to a new land", "people who drive trains", "soldiers fighting in wars", "sailors on large ships"],
+      correct:0,
+      explanation:"“Pioneers” were the early settlers who traveled west to new lands — the families braving the Oregon Trail." },
+    { title:"Caves of Crystal",
+      passage:"Deep beneath New Mexico lies Carlsbad Caverns, a cave system so large it could hold several football stadiums. Its wonders were built one drip at a time. Rainwater soaking through the ground picks up a mineral called calcite from the limestone rock. When the water drips from the cave ceiling, it leaves a tiny bit of calcite behind. Over thousands of years, those bits stack into stone icicles called stalactites hanging from above, while stalagmites grow upward from the floor. In some rooms the two meet, forming stone columns. Every year, millions of bats pour out of the cave entrance at sunset to hunt insects.",
+      prompt:"In the passage, the word “gradually” most nearly means…",
+      options:["slowly over a long time", "all at once quickly", "with a loud noise", "in complete darkness"],
+      correct:0,
+      explanation:"“Gradually” means slowly, bit by bit — the cave formations grew one drip at a time over thousands of years." },
+    { title:"How Your Eyes Work",
+      passage:"Your eyes are like tiny cameras. Light enters through the pupil, the black circle in the middle, which gets bigger in the dark to let in more light and smaller in bright sunshine. Behind the pupil, a clear lens focuses the light, adjusting its shape to sharpen whatever you look at — near or far. The focused light lands on the retina, a layer at the back of the eye that turns light into electrical signals. Those signals race along nerves to your brain, which flips the upside-down image right-side up. All of this happens instantly, every time you blink open your eyes.",
+      prompt:"In the passage, the word “adjusting” most nearly means…",
+      options:["changing to fit what is needed", "breaking into pieces", "hiding from view", "making a loud sound"],
+      correct:0,
+      explanation:"To “adjust” means to change slightly to fit — the lens changes shape to focus on near or far objects." },
+    { title:"Twisters",
+      passage:"A tornado is a violently spinning funnel of air that stretches from a thunderstorm cloud to the ground. It forms when warm, moist air near the ground rushes upward into cold, dry air above, and winds at different heights start the whole mass rotating. Most tornadoes are a few hundred yards wide, but the largest can stretch wider than a mile, with winds over 200 miles per hour — strong enough to lift cars and rip roofs off houses. Tornadoes strike most often in the central United States, an area nicknamed Tornado Alley. The safest place during a tornado is underground, like a basement, or in a small room with no windows on the lowest floor.",
+      prompt:"In the passage, the word “violently” most nearly means…",
+      options:["with great force and destructiveness", "with gentle kindness", "with complete silence", "with bright colors"],
+      correct:0,
+      explanation:"“Violently” means with extreme force — tornado winds can lift cars and tear apart buildings." },
+    { title:"The Class Pet",
+      passage:"Ms. Parker's fourth-grade class voted on a class pet: a hamster or a fish. The vote was close — the hamster won by two votes. Before the hamster arrived, each table group researched how to care for it: what it eats, how often to clean its cage, and how much sleep it needs. Then the class made a care schedule, with two students in charge each week. When Biscuit the hamster finally came home, everyone wanted to hold him at once. “One table at a time,” Ms. Parker said, “and gentle hands.” By spring, the class had kept every promise on the schedule, and Biscuit was the roundest, happiest hamster in the school.",
+      prompt:"In the passage, the word “responsibility” most nearly means…",
+      options:["a duty to take care of something", "a fun game to play", "a type of pet food", "a long vacation"],
+      correct:0,
+      explanation:"“Responsibility” means a duty — the students took on the job of feeding, cleaning, and handling Biscuit properly." }
+  ] },
+"Set B": { icon:"💡", tag:"Main Idea Masters",
+  award:"Main Idea Master",
+  questions: [
+    { title:"Prairie Dog Towns",
+      passage:"A prairie dog town is not a town for people — it is a huge underground neighborhood built by prairie dogs. These chubby rodents dig networks of tunnels and burrows that can stretch for miles, with separate rooms for sleeping, storing food, and raising babies. Hundreds, sometimes thousands, of prairie dogs live together in one colony. Life aboveground is dangerous, with hawks circling overhead and coyotes prowling nearby. So the colony posts lookouts. A prairie dog will stand tall on its hind legs, scanning the grass, while the others munch on seeds below. If it spots danger, it lets out a sharp warning bark — a different call for a hawk than for a coyote — and the whole town dives underground in seconds.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["The prairie dogs' underground towns, lookouts, and warning calls all help the colony survive.", "The fennec fox is the smallest fox in the world.", "Warning barks are the only sounds prairie dogs make.", "Prairie dogs live alone in deep holes.", "Prairie dogs build huge underground towns where lookouts warn the colony of danger.", "Hawks are the only danger prairie dogs face.", "Prairie dogs sleep all day and never come aboveground.", "Coyotes and prairie dogs are good friends."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — prairie dog towns — while the others are too narrow, off-topic, or false." },
+    { title:"The Windmills of Holland",
+      passage:"Much of the Netherlands sits below sea level, which means the ocean is always trying to flood the land. Hundreds of years ago, the Dutch found a clever answer: windmills. Their huge blades caught the North Sea winds and turned gears that powered pumps, lifting water out of low fields and dumping it into canals. Drained this way, soggy lake bottoms became dry farmland. Windmills did other jobs too — their turning sails ground grain into flour and sawed logs into lumber. Today most pumping is done by electric motors, but the old windmills still stand, their slow-turning blades a reminder of how wind once held back the sea.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Dutch windmills pumped water from low land and also ground grain and sawed lumber.", "Windmills were invented in the Netherlands last year.", "The Netherlands is a country with many mountains.", "Electric motors were never used in Holland.", "Windmills helped the Dutch drain flooded land and power mills for grinding and sawing.", "Windmill blades are used as sails on boats.", "All Dutch windmills have been torn down.", "The ocean has never threatened the Netherlands."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — the windmills of holland — while the others are too narrow, off-topic, or false." },
+    { title:"The Snowflake Man",
+      passage:"Wilson Bentley was a farmer in Vermont who fell in love with snowflakes. On cold winter nights, he worked in an unheated shed, catching flakes on a black tray and photographing them through a microscope before they could melt. Over his lifetime he photographed more than 5,000 snowflakes — and no two were exactly alike. Each flake begins as a speck of dust high in a cloud. Water vapor freezes onto it, and as the tiny crystal tumbles through the cloud, it grows six delicate arms. The exact path it takes — through warmer and colder air — shapes each arm differently, which is why every snowflake is unique.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Wilson Bentley photographed thousands of snowflakes, proving each one is unique.", "Snowflakes are all exactly the same shape.", "Wilson Bentley was a famous mountain climber.", "Cameras did not exist in Bentley's lifetime.", "Bentley showed that every snowflake is one of a kind.", "Snowflakes form only in Vermont.", "Bentley photographed snowflakes to sell them.", "Black trays are used to melt snowflakes faster."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — the snowflake man — while the others are too narrow, off-topic, or false." },
+    { title:"Faces on a Mountain",
+      passage:"High in the Black Hills of South Dakota, four giant faces stare out from a granite cliff. They are the faces of Presidents Washington, Jefferson, Roosevelt, and Lincoln, carved into Mount Rushmore. The sculptor, Gutzon Borglum, started the project in 1927 with a crew of about 400 workers. Using drills, chisels, and dynamite, they blasted away 450,000 tons of rock. Each face is about 60 feet tall — as high as a six-story building. The work was dangerous, with men hanging from cables on the cliffside, and it took 14 years to finish. Today more than two million visitors a year come to gaze up at the stone presidents.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Workers spent 14 years carving four giant presidential faces into Mount Rushmore.", "Mount Rushmore was carved in a single weekend.", "Gutzon Borglum worked entirely alone on the mountain.", "The faces on Mount Rushmore are painted on the rock.", "Four presidents' faces were carved into a South Dakota cliff over 14 years.", "Mount Rushmore honors four famous inventors.", "Dynamite is too dangerous to ever use.", "Two million workers carved the mountain."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — faces on a mountain — while the others are too narrow, off-topic, or false." },
+    { title:"Bats in the Dark",
+      passage:"Bats hunt insects in total darkness, yet they almost never bump into anything. Their secret is echolocation. A bat sends out high-pitched squeaks — too high for human ears — and listens for the echoes that bounce back. The echoes tell the bat how far away an object is, how big it is, and even which way it is moving. A bat can catch hundreds of mosquitoes in a single night using sound alone. People used to say “blind as a bat,” but bats are not blind at all. Their eyes work fine — it is simply too dark at night for eyes to be useful, so they navigate by sound instead.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Bats use echoes from their own squeaks to navigate and hunt in the dark.", "Bats are completely blind animals.", "Bats sleep hanging upside down all winter.", "Echoes are flashes of light bats can see.", "Bats navigate by sound, using echoes to find insects at night.", "Bats only fly during the daytime.", "Human ears can hear bat squeaks easily.", "Mosquitoes hunt bats using echolocation."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — bats in the dark — while the others are too narrow, off-topic, or false." },
+    { title:"The Oregon Trail",
+      passage:"In the 1840s, thousands of families packed everything they owned into covered wagons and set out from Missouri for Oregon — a journey of 2,000 miles. Oxen pulled the heavy wagons about 15 miles a day, so the trip took nearly five months. Travelers crossed rivers, climbed mountains, and baked under the prairie sun. They steered by landmarks like Chimney Rock, a tall stone tower visible for miles. Families brought extra oxen, spare wagon parts, and barrels of flour and beans. Sickness and accidents claimed many lives along the way, but those who reached Oregon found rich farmland and a chance to start over.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Families traveled 2,000 miles by covered wagon to start new lives in Oregon.", "The Oregon Trail was a short trip of only a few days.", "Pioneers traveled west by airplane.", "Oxen were too slow to pull wagons.", "Thousands of families crossed the country by wagon to reach Oregon's farmland.", "Chimney Rock is a famous restaurant in Missouri.", "Everyone on the trail arrived safely.", "Wagons on the trail were pulled by horses only."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — the oregon trail — while the others are too narrow, off-topic, or false." },
+    { title:"Caves of Crystal",
+      passage:"Deep beneath New Mexico lies Carlsbad Caverns, a cave system so large it could hold several football stadiums. Its wonders were built one drip at a time. Rainwater soaking through the ground picks up a mineral called calcite from the limestone rock. When the water drips from the cave ceiling, it leaves a tiny bit of calcite behind. Over thousands of years, those bits stack into stone icicles called stalactites hanging from above, while stalagmites grow upward from the floor. In some rooms the two meet, forming stone columns. Every year, millions of bats pour out of the cave entrance at sunset to hunt insects.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Dripping water built amazing rock formations inside Carlsbad Caverns over thousands of years.", "Carlsbad Caverns was dug by miners with shovels.", "Stalactites and stalagmites are made of ice.", "Bats never enter Carlsbad Caverns.", "Mineral-filled drips slowly formed stalactites, stalagmites, and columns in the caves.", "The caves are too small for visitors to enter.", "Carlsbad Caverns is located under the ocean.", "Rainwater destroys limestone instead of shaping it."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — caves of crystal — while the others are too narrow, off-topic, or false." },
+    { title:"How Your Eyes Work",
+      passage:"Your eyes are like tiny cameras. Light enters through the pupil, the black circle in the middle, which gets bigger in the dark to let in more light and smaller in bright sunshine. Behind the pupil, a clear lens focuses the light, adjusting its shape to sharpen whatever you look at — near or far. The focused light lands on the retina, a layer at the back of the eye that turns light into electrical signals. Those signals race along nerves to your brain, which flips the upside-down image right-side up. All of this happens instantly, every time you blink open your eyes.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["The parts of the eye — pupil, lens, retina, and brain — work together so we can see.", "The pupil is the colored part of the eye.", "The brain has nothing to do with vision.", "Eyes work like tiny radios.", "Light passes through the eye's parts and becomes signals the brain turns into sight.", "The lens is located behind the brain.", "Pupils stay the same size all the time.", "The retina is found in the front of the eye."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — how your eyes work — while the others are too narrow, off-topic, or false." },
+    { title:"Twisters",
+      passage:"A tornado is a violently spinning funnel of air that stretches from a thunderstorm cloud to the ground. It forms when warm, moist air near the ground rushes upward into cold, dry air above, and winds at different heights start the whole mass rotating. Most tornadoes are a few hundred yards wide, but the largest can stretch wider than a mile, with winds over 200 miles per hour — strong enough to lift cars and rip roofs off houses. Tornadoes strike most often in the central United States, an area nicknamed Tornado Alley. The safest place during a tornado is underground, like a basement, or in a small room with no windows on the lowest floor.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["Tornadoes form when warm and cold air collide and spin into a destructive funnel.", "Tornadoes are gentle breezes that cool the air.", "Tornadoes only happen in winter.", "Basements are the most dangerous place in a tornado.", "Spinning air from clashing warm and cold air masses creates powerful tornado funnels.", "Tornado Alley is a street in a big city.", "Tornadoes can be stopped by closing windows.", "All thunderstorms become tornadoes."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — twisters — while the others are too narrow, off-topic, or false." },
+    { title:"The Class Pet",
+      passage:"Ms. Parker's fourth-grade class voted on a class pet: a hamster or a fish. The vote was close — the hamster won by two votes. Before the hamster arrived, each table group researched how to care for it: what it eats, how often to clean its cage, and how much sleep it needs. Then the class made a care schedule, with two students in charge each week. When Biscuit the hamster finally came home, everyone wanted to hold him at once. “One table at a time,” Ms. Parker said, “and gentle hands.” By spring, the class had kept every promise on the schedule, and Biscuit was the roundest, happiest hamster in the school.",
+      prompt:"Which sentence best states the main idea of the passage?",
+      options:["The class worked together to research, schedule, and care for their hamster Biscuit.", "The class voted to get a pet snake.", "Ms. Parker's class never fed their hamster.", "Biscuit was a fish who lived in a bowl.", "The students shared the job of caring for their new class hamster.", "The hamster won the vote by a hundred votes.", "Ms. Parker did all the hamster care herself.", "The class forgot about Biscuit after one week."],
+      correct:0,
+      explanation:"The correct choice covers the whole passage — the class pet — while the others are too narrow, off-topic, or false." }
+  ] },
+"Set C": { icon:"🧠", tag:"Thinking Readers",
+  award:"Super Sleuth Reader",
+  questions: [
+    { title:"Prairie Dog Towns",
+      passage:"A prairie dog town is not a town for people — it is a huge underground neighborhood built by prairie dogs. These chubby rodents dig networks of tunnels and burrows that can stretch for miles, with separate rooms for sleeping, storing food, and raising babies. Hundreds, sometimes thousands, of prairie dogs live together in one colony. Life aboveground is dangerous, with hawks circling overhead and coyotes prowling nearby. So the colony posts lookouts. A prairie dog will stand tall on its hind legs, scanning the grass, while the others munch on seeds below. If it spots danger, it lets out a sharp warning bark — a different call for a hawk than for a coyote — and the whole town dives underground in seconds.",
+      prompt:"Why does the colony post lookouts while others eat?",
+      options:["So the group can be warned and escape before danger strikes.", "Because lookouts are too lazy to dig tunnels.", "Because hawks enjoy watching prairie dogs eat.", "So the lookouts can eat all the food first."],
+      correct:0,
+      explanation:"The lookouts scan for danger and bark warnings so the whole town can dive underground in time." },
+    { title:"The Windmills of Holland",
+      passage:"Much of the Netherlands sits below sea level, which means the ocean is always trying to flood the land. Hundreds of years ago, the Dutch found a clever answer: windmills. Their huge blades caught the North Sea winds and turned gears that powered pumps, lifting water out of low fields and dumping it into canals. Drained this way, soggy lake bottoms became dry farmland. Windmills did other jobs too — their turning sails ground grain into flour and sawed logs into lumber. Today most pumping is done by electric motors, but the old windmills still stand, their slow-turning blades a reminder of how wind once held back the sea.",
+      prompt:"Why did the Dutch build windmills to pump water instead of just letting the fields stay wet?",
+      options:["Because crops cannot grow in flooded fields, and the land was needed for farming.", "Because the Dutch wanted the fields to be swimming pools.", "Because windmills work better underwater.", "Because the ocean asked them to."],
+      correct:0,
+      explanation:"The passage says drained lake bottoms became farmland — the pumps turned useless soggy land into fields for crops." },
+    { title:"The Snowflake Man",
+      passage:"Wilson Bentley was a farmer in Vermont who fell in love with snowflakes. On cold winter nights, he worked in an unheated shed, catching flakes on a black tray and photographing them through a microscope before they could melt. Over his lifetime he photographed more than 5,000 snowflakes — and no two were exactly alike. Each flake begins as a speck of dust high in a cloud. Water vapor freezes onto it, and as the tiny crystal tumbles through the cloud, it grows six delicate arms. The exact path it takes — through warmer and colder air — shapes each arm differently, which is why every snowflake is unique.",
+      prompt:"Why did Bentley do his work in an unheated shed on winter nights?",
+      options:["So the snowflakes would not melt before he could photograph them.", "Because he liked being cold.", "Because cameras only work in the dark.", "Because snowflakes fall only indoors."],
+      correct:0,
+      explanation:"Snowflakes melt with warmth — the freezing shed kept each delicate crystal intact for its portrait." },
+    { title:"Faces on a Mountain",
+      passage:"High in the Black Hills of South Dakota, four giant faces stare out from a granite cliff. They are the faces of Presidents Washington, Jefferson, Roosevelt, and Lincoln, carved into Mount Rushmore. The sculptor, Gutzon Borglum, started the project in 1927 with a crew of about 400 workers. Using drills, chisels, and dynamite, they blasted away 450,000 tons of rock. Each face is about 60 feet tall — as high as a six-story building. The work was dangerous, with men hanging from cables on the cliffside, and it took 14 years to finish. Today more than two million visitors a year come to gaze up at the stone presidents.",
+      prompt:"Why did carving Mount Rushmore take 14 years?",
+      options:["Because the faces are enormous and had to be cut from solid granite.", "Because the workers took long naps every day.", "Because the mountain kept moving away.", "Because they carved it with spoons."],
+      correct:0,
+      explanation:"Blasting 450,000 tons of rock into 60-foot faces on a cliffside is slow, dangerous work." },
+    { title:"Bats in the Dark",
+      passage:"Bats hunt insects in total darkness, yet they almost never bump into anything. Their secret is echolocation. A bat sends out high-pitched squeaks — too high for human ears — and listens for the echoes that bounce back. The echoes tell the bat how far away an object is, how big it is, and even which way it is moving. A bat can catch hundreds of mosquitoes in a single night using sound alone. People used to say “blind as a bat,” but bats are not blind at all. Their eyes work fine — it is simply too dark at night for eyes to be useful, so they navigate by sound instead.",
+      prompt:"Why is echolocation more useful to a bat than eyesight at night?",
+      options:["Because it is too dark for eyes to work, but sound echoes still return information.", "Because bats enjoy making noise.", "Because insects are invisible.", "Because echoes taste good."],
+      correct:0,
+      explanation:"The passage says eyes work fine but darkness makes them useless — echoes work regardless of light." },
+    { title:"The Oregon Trail",
+      passage:"In the 1840s, thousands of families packed everything they owned into covered wagons and set out from Missouri for Oregon — a journey of 2,000 miles. Oxen pulled the heavy wagons about 15 miles a day, so the trip took nearly five months. Travelers crossed rivers, climbed mountains, and baked under the prairie sun. They steered by landmarks like Chimney Rock, a tall stone tower visible for miles. Families brought extra oxen, spare wagon parts, and barrels of flour and beans. Sickness and accidents claimed many lives along the way, but those who reached Oregon found rich farmland and a chance to start over.",
+      prompt:"Why did families bring extra oxen on the Oregon Trail?",
+      options:["Because the five-month trip was so hard that animals could sicken or die along the way.", "Because they planned to race the oxen.", "Because extra oxen were good pets.", "Because wagons were pulled by ropes, not animals."],
+      correct:0,
+      explanation:"A 2,000-mile journey wore animals down — spares meant the wagon could keep moving if some failed." },
+    { title:"Caves of Crystal",
+      passage:"Deep beneath New Mexico lies Carlsbad Caverns, a cave system so large it could hold several football stadiums. Its wonders were built one drip at a time. Rainwater soaking through the ground picks up a mineral called calcite from the limestone rock. When the water drips from the cave ceiling, it leaves a tiny bit of calcite behind. Over thousands of years, those bits stack into stone icicles called stalactites hanging from above, while stalagmites grow upward from the floor. In some rooms the two meet, forming stone columns. Every year, millions of bats pour out of the cave entrance at sunset to hunt insects.",
+      prompt:"Why do the cave formations keep growing even today?",
+      options:["Because water keeps dripping and leaving tiny bits of calcite behind.", "Because miners keep carving them.", "Because bats paint them every night.", "Because the cave is getting colder."],
+      correct:0,
+      explanation:"The passage says each drip leaves calcite — an ongoing process that never stopped." },
+    { title:"How Your Eyes Work",
+      passage:"Your eyes are like tiny cameras. Light enters through the pupil, the black circle in the middle, which gets bigger in the dark to let in more light and smaller in bright sunshine. Behind the pupil, a clear lens focuses the light, adjusting its shape to sharpen whatever you look at — near or far. The focused light lands on the retina, a layer at the back of the eye that turns light into electrical signals. Those signals race along nerves to your brain, which flips the upside-down image right-side up. All of this happens instantly, every time you blink open your eyes.",
+      prompt:"Why does the pupil get bigger in the dark?",
+      options:["To let in more light so you can see better.", "To change the color of your eyes.", "To make you sleepy.", "To block out all light."],
+      correct:0,
+      explanation:"The passage states the pupil enlarges in darkness to admit more light." },
+    { title:"Twisters",
+      passage:"A tornado is a violently spinning funnel of air that stretches from a thunderstorm cloud to the ground. It forms when warm, moist air near the ground rushes upward into cold, dry air above, and winds at different heights start the whole mass rotating. Most tornadoes are a few hundred yards wide, but the largest can stretch wider than a mile, with winds over 200 miles per hour — strong enough to lift cars and rip roofs off houses. Tornadoes strike most often in the central United States, an area nicknamed Tornado Alley. The safest place during a tornado is underground, like a basement, or in a small room with no windows on the lowest floor.",
+      prompt:"Why is a basement safer than an upstairs bedroom during a tornado?",
+      options:["Because it is underground, below the winds and flying debris.", "Because basements have the best view.", "Because tornadoes cannot go downhill.", "Because basements are always empty."],
+      correct:0,
+      explanation:"Underground walls shield you from the 200-mph winds and debris that destroy upper floors." },
+    { title:"The Class Pet",
+      passage:"Ms. Parker's fourth-grade class voted on a class pet: a hamster or a fish. The vote was close — the hamster won by two votes. Before the hamster arrived, each table group researched how to care for it: what it eats, how often to clean its cage, and how much sleep it needs. Then the class made a care schedule, with two students in charge each week. When Biscuit the hamster finally came home, everyone wanted to hold him at once. “One table at a time,” Ms. Parker said, “and gentle hands.” By spring, the class had kept every promise on the schedule, and Biscuit was the roundest, happiest hamster in the school.",
+      prompt:"Why did the class make a care schedule before Biscuit arrived?",
+      options:["So the hamster would be fed, cleaned, and handled properly every single day.", "Because schedules are fun to draw.", "Because Ms. Parker loves paperwork.", "So Biscuit could read it."],
+      correct:0,
+      explanation:"Researching needs plus assigned weekly caretakers ensured nothing about Biscuit's care was forgotten." }
+  ] },
+};
+
+/* ==================== APP LOGIC ==================== */
+const AUDIT_KEY = "reading_10_19_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-19 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-19 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
