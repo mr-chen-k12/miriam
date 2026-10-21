@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-21 Miri Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-21 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-21, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Sleepy Koala",
+    "passage": "The koala is one of the sleepiest animals alive. It sleeps up to 20 hours a day, curled in the fork of a eucalyptus tree in Australia. All that sleep is not laziness — it is survival. Koalas eat almost nothing but eucalyptus leaves, which are tough, poisonous to most animals, and very low in energy. A koala's stomach has a special part that removes the poisons, but digesting the leaves still takes so much work that the koala must rest to save energy. Koalas are marsupials, which means mothers carry their babies in a pouch. A newborn koala is the size of a jellybean! It climbs into its mother's pouch and stays there for six months, drinking milk and growing. When it finally peeks out, it rides on its mother's back, drowsy in the sunshine, until it can climb on its own.",
+    "prompt": "In the passage, the word “drowsy” most nearly means…",
+    "options": [
+     "sleepy and only half-awake",
+     "very hungry",
+     "frightened of heights",
+     "quick and strong"
+    ],
+    "correct": 0,
+    "explanation": "“Drowsy” means sleepy — the young koala rides on its mother's back feeling drowsy, half-asleep in the sunshine."
+   },
+   {
+    "title": "The Keeper of the Light",
+    "passage": "Before lighthouses, rocky shores were graveyards for ships. Sailors in the dark could not see the rocks until it was too late. A lighthouse solves the problem with a tower, a powerful lamp, and a turning beam of light that sweeps across the water, warning ships: “Danger — stay away!” Each lighthouse flashes its own pattern, so sailors can tell which light they are seeing and find their place on a map. Long ago, a keeper lived in the lighthouse and had a serious job. Every night he climbed the spiral stairs, lit the lamp, and kept it burning until dawn — polishing the lens, trimming the wick, and watching through storms. Today, most lighthouses run on electricity and turn themselves on. But the old towers still stand guard, and their beams still sweep the sea.",
+    "prompt": "In the passage, the word “beam” most nearly means…",
+    "options": [
+     "a ray of light",
+     "a long wooden board",
+     "a loud horn sound",
+     "a very tall wave"
+    ],
+    "correct": 0,
+    "explanation": "A “beam” here is a ray of light — the lighthouse's turning beam sweeps across the water to warn ships."
+   },
+   {
+    "title": "Sea Turtles Find Their Way Home",
+    "passage": "A mother sea turtle swims thousands of miles through the ocean, yet when it is time to lay her eggs, she returns to the very beach where she hatched. How does she navigate across a trackless ocean to one small stretch of sand? Scientists believe sea turtles can sense Earth's magnetic field, like a built-in compass, and that each coastline has its own magnetic “address” that turtles remember. On a dark night, the mother hauls herself onto the sand, digs a nest with her flippers, and lays about a hundred eggs. Then she covers them and slips back into the sea. Months later, baby turtles the size of cookies burst out of the sand and scramble to the water.",
+    "prompt": "In the passage, the word “navigate” most nearly means…",
+    "options": [
+     "to find the way from place to place",
+     "to sleep on the sand",
+     "to dig a very deep nest",
+     "to swim faster than any fish"
+    ],
+    "correct": 0,
+    "explanation": "To “navigate” means to find your way — the turtle finds her way across the whole ocean back to one small beach."
+   },
+   {
+    "title": "The Wiggly Workers",
+    "passage": "Earthworms may look like plain, squirmy noodles, but they are some of the hardest workers in the garden. As a worm burrows through the soil, it eats its way along, swallowing dirt, dead leaves, and tiny bits of plants. What comes out the other end — worm castings — is rich food for growing plants. The worm's tunnels do another job too. They let air and rainwater reach deep into the soil, where roots need them. A garden full of worms has loose, dark, healthy soil. A garden without worms is hard and packed down, and plants struggle to grow. Farmers love earthworms so much that some call them “nature's plows.” Next time you see a worm after the rain, remember: that little creature is building the soil beneath your feet.",
+    "prompt": "In the passage, the word “burrows” most nearly means…",
+    "options": [
+     "digs tunnels through the ground",
+     "sleeps all winter long",
+     "eats only green leaves",
+     "swims in rain puddles"
+    ],
+    "correct": 0,
+    "explanation": "To “burrow” means to dig a tunnel — the worm burrows through the soil, eating its way along."
+   },
+   {
+    "title": "The Panda's Bamboo Forest",
+    "passage": "The giant panda spends almost its whole day doing one thing: eating bamboo. A panda eats for 10 to 16 hours a day and can munch through 30 pounds of bamboo! Bamboo is not very nourishing, so the panda must eat huge amounts to get enough energy. To help, the panda has a special thumb — really a wrist bone — that works like a sixth finger for gripping bamboo stalks. Pandas are solitary animals, which means they live alone. Each panda has its own stretch of mountain forest in China. They “talk” by leaving scent marks on trees, telling other pandas, “This spot is taken.” Pandas are quiet and gentle, but a mother panda fiercely protects her tiny cub, which is born no bigger than a stick of butter.",
+    "prompt": "In the passage, the word “solitary” most nearly means…",
+    "options": [
+     "living alone",
+     "very hungry",
+     "black and white",
+     "good at climbing trees"
+    ],
+    "correct": 0,
+    "explanation": "“Solitary” means living alone — each panda keeps its own stretch of forest instead of living in a group."
+   },
+   {
+    "title": "Colors in the Sky",
+    "passage": "A rainbow appears when sunlight shines through raindrops that are still falling — or still hanging in the air — after a shower. Sunlight looks white, but it is really a mixture of many colors. When a sunbeam enters a raindrop, it bends, and as it bends, the colors inside it spread apart. The light bounces inside the drop and bends again on its way out, sending a fan of colors toward your eyes. Red always lands on the top of the arc, and violet on the bottom. You can only see a rainbow when the sun is behind you and the rain is in front of you — which is why rainbows love late afternoons, when the low sun faces the passing storm.",
+    "prompt": "In the passage, the word “bends” most nearly means…",
+    "options": [
+     "changes direction",
+     "disappears completely",
+     "turns into rain",
+     "gets brighter and hotter"
+    ],
+    "correct": 0,
+    "explanation": "To “bend” here means to change direction — the sunbeam bends as it enters and leaves each raindrop."
+   },
+   {
+    "title": "The Treehouse Plan",
+    "passage": "Twins Zoe and Zack had dreamed of a treehouse all year, and this summer, Dad finally said yes — if they built it safely. “Measure twice, cut once,” he told them, handing over a tape measure and a level. The twins drew a plan first: a square floor held by the big oak's three strongest branches, walls with a real window, and a ladder with rails. Zack wanted to hurry, but Zoe insisted on checking every board with the level. Their floor came out flat and sturdy, without a single wobble. When the roof finally went on, they painted the door bright red and hung a sign: “The Twin Peaks Clubhouse — Est. This Summer.” From the window they could see the whole block. “Worth every measurement,” Zoe said.",
+    "prompt": "In the passage, the word “sturdy” most nearly means…",
+    "options": [
+     "strong and well-built",
+     "painted bright red",
+     "very tall",
+     "easy to carry"
+    ],
+    "correct": 0,
+    "explanation": "“Sturdy” means strong and solid — their floor was sturdy, without a single wobble."
+   },
+   {
+    "title": "Tide Pool Treasures",
+    "passage": "When the ocean tide goes out, it leaves behind rocky pools full of surprises. These tide pools are tiny worlds. Starfish cling to the rocks with hundreds of tiny tube feet. Hermit crabs scuttle about in borrowed shells, and green anemones wave their stinging tentacles, looking like flowers but hunting like animals. Life in a tide pool is a waiting game. For hours, the pool is cut off from the sea. The sun warms the water, and the pool grows saltier as it dries. The creatures must survive until the tide returns and covers them again. Some close up tight — mussels clamp their shells shut, and anemones pull in their tentacles and shrink into jelly blobs, holding the water inside their bodies so they don't dry out while exposed to the air.",
+    "prompt": "In the passage, the word “exposed” most nearly means…",
+    "options": [
+     "left uncovered and unprotected",
+     "hidden deep underwater",
+     "frozen completely solid",
+     "fed by visiting people"
+    ],
+    "correct": 0,
+    "explanation": "“Exposed” means left uncovered — when the tide goes out, tide pool creatures are exposed to the sun and air."
+   },
+   {
+    "title": "The First Ice Cream",
+    "passage": "Long before freezers existed, people were already enjoying frozen treats. In ancient China, cooks mixed snow with fruit juices and honey. In Rome, the emperor Nero sent runners to the mountains to fetch snow for his flavored ice. But ice cream as we know it — sweet, creamy, and smooth — took a clever trick. In the 1500s, cooks discovered that adding salt to ice makes the ice colder than freezing, cold enough to chill a mixture of cream, sugar, and fruit while it is churned in a pot. Churning keeps big ice crystals from forming, so the result is smooth instead of crunchy. For centuries, ice cream was a luxury only the rich could afford. Then, in the 1800s, a woman named Nancy Johnson invented a hand-crank freezer that any family could use, and ice cream became a treat for everyone.",
+    "prompt": "In the passage, the word “churned” most nearly means…",
+    "options": [
+     "stirred and mixed steadily",
+     "frozen into a solid block",
+     "poured into tall glasses",
+     "heated on a hot stove"
+    ],
+    "correct": 0,
+    "explanation": "“Churned” means stirred steadily — the cream mixture is churned in its pot so it freezes smooth instead of crunchy."
+   },
+   {
+    "title": "The Giant Pumpkin",
+    "passage": "In September, Room 12 planted pumpkin seeds in the school garden — one seed each, in a row of little hills. Most of the seeds sprouted within two weeks, pushing up two round leaves. But Maya's hill stayed bare. “Maybe my seed was a dud,” she sighed. Her partner, Jonah, offered her one of his sprouts, but Maya shook her head. “I'll wait one more week.” On the very last day of that week, a tiny green curl poked through Maya's soil. Her plant was behind, but it grew fast, stretching vines across the garden and opening huge yellow flowers. By October, Maya's vine held the biggest pumpkin in the garden — a 22-pounder the class named Goliath. “Good things take time,” Maya said, “and some of us are just late bloomers.”",
+    "prompt": "In the passage, the word “sprouted” most nearly means…",
+    "options": [
+     "began to grow shoots",
+     "turned bright orange",
+     "died under the ground",
+     "was eaten by bugs"
+    ],
+    "correct": 0,
+    "explanation": "To “sprout” means to start growing — the seeds sprouted when they pushed up their first little leaves."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "The Sleepy Koala",
+    "passage": "The koala is one of the sleepiest animals alive. It sleeps up to 20 hours a day, curled in the fork of a eucalyptus tree in Australia. All that sleep is not laziness — it is survival. Koalas eat almost nothing but eucalyptus leaves, which are tough, poisonous to most animals, and very low in energy. A koala's stomach has a special part that removes the poisons, but digesting the leaves still takes so much work that the koala must rest to save energy. Koalas are marsupials, which means mothers carry their babies in a pouch. A newborn koala is the size of a jellybean! It climbs into its mother's pouch and stays there for six months, drinking milk and growing. When it finally peeks out, it rides on its mother's back, drowsy in the sunshine, until it can climb on its own.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Koalas sleep most of the day because their eucalyptus-leaf diet gives them very little energy.",
+     "Koalas live in Australia.",
+     "A newborn koala is the size of a jellybean.",
+     "Koala mothers carry babies in a pouch.",
+     "A koala's tough, low-energy food forces it to rest for up to 20 hours a day.",
+     "Eucalyptus trees grow only in Australia.",
+     "Koalas are marsupials, like kangaroos.",
+     "Koalas never climb down from their trees."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the sleepy koala — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The Keeper of the Light",
+    "passage": "Before lighthouses, rocky shores were graveyards for ships. Sailors in the dark could not see the rocks until it was too late. A lighthouse solves the problem with a tower, a powerful lamp, and a turning beam of light that sweeps across the water, warning ships: “Danger — stay away!” Each lighthouse flashes its own pattern, so sailors can tell which light they are seeing and find their place on a map. Long ago, a keeper lived in the lighthouse and had a serious job. Every night he climbed the spiral stairs, lit the lamp, and kept it burning until dawn — polishing the lens, trimming the wick, and watching through storms. Today, most lighthouses run on electricity and turn themselves on. But the old towers still stand guard, and their beams still sweep the sea.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Lighthouses warn ships away from dangerous shores with turning beams of light, a job once tended all night by keepers.",
+     "Keepers climbed spiral stairs to reach the lamp.",
+     "Some lighthouses are very old towers.",
+     "Ships carry maps of the coastline.",
+     "A lighthouse's flashing beam keeps ships safe, and each light flashes its own pattern.",
+     "Rocky shores are beautiful places to visit.",
+     "Electricity was invented for lighthouses.",
+     "Sailors never sail at night anymore."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the keeper of the light — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "Sea Turtles Find Their Way Home",
+    "passage": "A mother sea turtle swims thousands of miles through the ocean, yet when it is time to lay her eggs, she returns to the very beach where she hatched. How does she navigate across a trackless ocean to one small stretch of sand? Scientists believe sea turtles can sense Earth's magnetic field, like a built-in compass, and that each coastline has its own magnetic “address” that turtles remember. On a dark night, the mother hauls herself onto the sand, digs a nest with her flippers, and lays about a hundred eggs. Then she covers them and slips back into the sea. Months later, baby turtles the size of cookies burst out of the sand and scramble to the water.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Sea turtles navigate across whole oceans to lay their eggs on the very beach where they were born.",
+     "Baby sea turtles are the size of cookies.",
+     "A mother turtle lays about a hundred eggs.",
+     "Sea turtles have flippers for digging.",
+     "Using a magnetic sense like a compass, a mother sea turtle finds her way back to her home beach to nest.",
+     "Sea turtles live only in warm oceans.",
+     "Scientists have always known how turtles navigate.",
+     "Turtles dig their nests during the daytime."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — sea turtles find their way home — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The Wiggly Workers",
+    "passage": "Earthworms may look like plain, squirmy noodles, but they are some of the hardest workers in the garden. As a worm burrows through the soil, it eats its way along, swallowing dirt, dead leaves, and tiny bits of plants. What comes out the other end — worm castings — is rich food for growing plants. The worm's tunnels do another job too. They let air and rainwater reach deep into the soil, where roots need them. A garden full of worms has loose, dark, healthy soil. A garden without worms is hard and packed down, and plants struggle to grow. Farmers love earthworms so much that some call them “nature's plows.” Next time you see a worm after the rain, remember: that little creature is building the soil beneath your feet.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Earthworms improve the soil by burrowing, eating, and leaving rich castings that help plants grow.",
+     "Worms come out after it rains.",
+     "Worm castings come out of a worm's body.",
+     "Garden soil can be dark or light colored.",
+     "Worm tunnels and castings make garden soil loose, rich, and healthy.",
+     "Earthworms look like noodles.",
+     "Farmers grow vegetables in gardens.",
+     "Plants need sunlight to grow."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the wiggly workers — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The Panda's Bamboo Forest",
+    "passage": "The giant panda spends almost its whole day doing one thing: eating bamboo. A panda eats for 10 to 16 hours a day and can munch through 30 pounds of bamboo! Bamboo is not very nourishing, so the panda must eat huge amounts to get enough energy. To help, the panda has a special thumb — really a wrist bone — that works like a sixth finger for gripping bamboo stalks. Pandas are solitary animals, which means they live alone. Each panda has its own stretch of mountain forest in China. They “talk” by leaving scent marks on trees, telling other pandas, “This spot is taken.” Pandas are quiet and gentle, but a mother panda fiercely protects her tiny cub, which is born no bigger than a stick of butter.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Giant pandas spend most of their lives eating bamboo and live alone in China's mountain forests.",
+     "A panda's thumb is really a wrist bone.",
+     "A baby panda is the size of a stick of butter.",
+     "Pandas leave scent marks on trees.",
+     "A panda's whole day is built around eating enough bamboo to get the energy it needs.",
+     "Pandas are quiet and gentle animals.",
+     "Bamboo grows in many parts of the world.",
+     "Mother pandas are larger than father pandas."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the panda's bamboo forest — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "Colors in the Sky",
+    "passage": "A rainbow appears when sunlight shines through raindrops that are still falling — or still hanging in the air — after a shower. Sunlight looks white, but it is really a mixture of many colors. When a sunbeam enters a raindrop, it bends, and as it bends, the colors inside it spread apart. The light bounces inside the drop and bends again on its way out, sending a fan of colors toward your eyes. Red always lands on the top of the arc, and violet on the bottom. You can only see a rainbow when the sun is behind you and the rain is in front of you — which is why rainbows love late afternoons, when the low sun faces the passing storm.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Rainbows form when sunlight bends inside raindrops and spreads apart into its separate colors.",
+     "Red is always on top of a rainbow.",
+     "Rainbows often appear in the late afternoon.",
+     "Sunlight looks white to our eyes.",
+     "A raindrop bends sunlight apart into a shining band of colors.",
+     "Rain falls from clouds in the sky.",
+     "Violet is a shade of purple.",
+     "Storms usually pass quickly."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — colors in the sky — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The Treehouse Plan",
+    "passage": "Twins Zoe and Zack had dreamed of a treehouse all year, and this summer, Dad finally said yes — if they built it safely. “Measure twice, cut once,” he told them, handing over a tape measure and a level. The twins drew a plan first: a square floor held by the big oak's three strongest branches, walls with a real window, and a ladder with rails. Zack wanted to hurry, but Zoe insisted on checking every board with the level. Their floor came out flat and sturdy, without a single wobble. When the roof finally went on, they painted the door bright red and hung a sign: “The Twin Peaks Clubhouse — Est. This Summer.” From the window they could see the whole block. “Worth every measurement,” Zoe said.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "By planning carefully and measuring twice, twins Zoe and Zack built a safe, sturdy treehouse.",
+     "The twins painted their door bright red.",
+     "A level is a tool for checking boards.",
+     "The treehouse has a window.",
+     "Zoe and Zack's careful measuring gave them a flat, wobble-free treehouse.",
+     "Oak trees have strong branches.",
+     "Dad gave the twins a tape measure.",
+     "The clubhouse sign says “Twin Peaks.”"
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the treehouse plan — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "Tide Pool Treasures",
+    "passage": "When the ocean tide goes out, it leaves behind rocky pools full of surprises. These tide pools are tiny worlds. Starfish cling to the rocks with hundreds of tiny tube feet. Hermit crabs scuttle about in borrowed shells, and green anemones wave their stinging tentacles, looking like flowers but hunting like animals. Life in a tide pool is a waiting game. For hours, the pool is cut off from the sea. The sun warms the water, and the pool grows saltier as it dries. The creatures must survive until the tide returns and covers them again. Some close up tight — mussels clamp their shells shut, and anemones pull in their tentacles and shrink into jelly blobs, holding the water inside their bodies so they don't dry out while exposed to the air.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Tide pool creatures have ways to survive the hours when the tide leaves their pools cut off from the sea.",
+     "Starfish have hundreds of tiny tube feet.",
+     "Hermit crabs live in borrowed shells.",
+     "Anemones look like flowers.",
+     "Starfish, crabs, and anemones endure the heat and drying of low tide until the sea returns.",
+     "Tide pools are found in every ocean.",
+     "The tide goes out twice every day.",
+     "Mussels are a kind of shellfish people eat."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — tide pool treasures — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The First Ice Cream",
+    "passage": "Long before freezers existed, people were already enjoying frozen treats. In ancient China, cooks mixed snow with fruit juices and honey. In Rome, the emperor Nero sent runners to the mountains to fetch snow for his flavored ice. But ice cream as we know it — sweet, creamy, and smooth — took a clever trick. In the 1500s, cooks discovered that adding salt to ice makes the ice colder than freezing, cold enough to chill a mixture of cream, sugar, and fruit while it is churned in a pot. Churning keeps big ice crystals from forming, so the result is smooth instead of crunchy. For centuries, ice cream was a luxury only the rich could afford. Then, in the 1800s, a woman named Nancy Johnson invented a hand-crank freezer that any family could use, and ice cream became a treat for everyone.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Ice cream began as a luxury for the rich and became a treat everyone could enjoy after the hand-crank freezer was invented.",
+     "Emperor Nero sent runners to fetch snow.",
+     "Salt makes ice colder than freezing.",
+     "Ancient China mixed snow with honey and fruit juice.",
+     "From snow treats in ancient times to Nancy Johnson's hand-crank freezer, ice cream slowly became a treat for all.",
+     "Ice cream is usually eaten in the summer.",
+     "Nancy Johnson lived in the 1900s.",
+     "Fruit juice was the first ice cream flavor."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the first ice cream — while the others are too narrow, off-topic, or false."
+   },
+   {
+    "title": "The Giant Pumpkin",
+    "passage": "In September, Room 12 planted pumpkin seeds in the school garden — one seed each, in a row of little hills. Most of the seeds sprouted within two weeks, pushing up two round leaves. But Maya's hill stayed bare. “Maybe my seed was a dud,” she sighed. Her partner, Jonah, offered her one of his sprouts, but Maya shook her head. “I'll wait one more week.” On the very last day of that week, a tiny green curl poked through Maya's soil. Her plant was behind, but it grew fast, stretching vines across the garden and opening huge yellow flowers. By October, Maya's vine held the biggest pumpkin in the garden — a 22-pounder the class named Goliath. “Good things take time,” Maya said, “and some of us are just late bloomers.”",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Maya's pumpkin seed sprouted late, but her plant grew into the biggest pumpkin in the school garden.",
+     "Pumpkin seeds are planted in little hills.",
+     "Jonah offered Maya one of his sprouts.",
+     "The class named the pumpkin Goliath.",
+     "With patience, Maya's late-sprouting plant outgrew all the others in the garden.",
+     "Room 12 has a garden at school.",
+     "Pumpkins are ready to pick in October.",
+     "Maya's pumpkin weighed 22 pounds because she watered it most."
+    ],
+    "correct": 0,
+    "explanation": "The correct choice covers the whole passage — the giant pumpkin — while the others are too narrow, off-topic, or false."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Sleepy Koala",
+    "passage": "The koala is one of the sleepiest animals alive. It sleeps up to 20 hours a day, curled in the fork of a eucalyptus tree in Australia. All that sleep is not laziness — it is survival. Koalas eat almost nothing but eucalyptus leaves, which are tough, poisonous to most animals, and very low in energy. A koala's stomach has a special part that removes the poisons, but digesting the leaves still takes so much work that the koala must rest to save energy. Koalas are marsupials, which means mothers carry their babies in a pouch. A newborn koala is the size of a jellybean! It climbs into its mother's pouch and stays there for six months, drinking milk and growing. When it finally peeks out, it rides on its mother's back, drowsy in the sunshine, until it can climb on its own.",
+    "prompt": "Why would a koala be in trouble if it stayed awake and active all day?",
+    "options": [
+     "It would use up more energy than its food provides.",
+     "It would forget how to climb trees.",
+     "Other koalas would take its tree.",
+     "Its pouch would get too small."
+    ],
+    "correct": 0,
+    "explanation": "Eucalyptus leaves are very low in energy, so a koala must save energy by sleeping — being active all day would use up more than it eats."
+   },
+   {
+    "title": "The Keeper of the Light",
+    "passage": "Before lighthouses, rocky shores were graveyards for ships. Sailors in the dark could not see the rocks until it was too late. A lighthouse solves the problem with a tower, a powerful lamp, and a turning beam of light that sweeps across the water, warning ships: “Danger — stay away!” Each lighthouse flashes its own pattern, so sailors can tell which light they are seeing and find their place on a map. Long ago, a keeper lived in the lighthouse and had a serious job. Every night he climbed the spiral stairs, lit the lamp, and kept it burning until dawn — polishing the lens, trimming the wick, and watching through storms. Today, most lighthouses run on electricity and turn themselves on. But the old towers still stand guard, and their beams still sweep the sea.",
+    "prompt": "Why does each lighthouse flash its own special pattern?",
+    "options": [
+     "So sailors can tell which lighthouse they are seeing and know where they are.",
+     "So the keeper will not get bored watching it.",
+     "So the light will use less electricity.",
+     "So ships can race toward the prettiest light."
+    ],
+    "correct": 0,
+    "explanation": "If every light flashed the same way, sailors couldn't tell them apart — a special pattern works like a name tag that matches the map."
+   },
+   {
+    "title": "Sea Turtles Find Their Way Home",
+    "passage": "A mother sea turtle swims thousands of miles through the ocean, yet when it is time to lay her eggs, she returns to the very beach where she hatched. How does she navigate across a trackless ocean to one small stretch of sand? Scientists believe sea turtles can sense Earth's magnetic field, like a built-in compass, and that each coastline has its own magnetic “address” that turtles remember. On a dark night, the mother hauls herself onto the sand, digs a nest with her flippers, and lays about a hundred eggs. Then she covers them and slips back into the sea. Months later, baby turtles the size of cookies burst out of the sand and scramble to the water.",
+    "prompt": "Why does the mother sea turtle probably come ashore at night instead of during the day?",
+    "options": [
+     "The darkness helps keep her and her eggs safer from hungry animals.",
+     "She can only dig when the sand is cold.",
+     "The beach is less crowded with people selling snacks.",
+     "She needs moonlight to see the ocean."
+    ],
+    "correct": 0,
+    "explanation": "She hauls out on a dark night — darkness hides a slow, defenseless turtle and her eggs from predators."
+   },
+   {
+    "title": "The Wiggly Workers",
+    "passage": "Earthworms may look like plain, squirmy noodles, but they are some of the hardest workers in the garden. As a worm burrows through the soil, it eats its way along, swallowing dirt, dead leaves, and tiny bits of plants. What comes out the other end — worm castings — is rich food for growing plants. The worm's tunnels do another job too. They let air and rainwater reach deep into the soil, where roots need them. A garden full of worms has loose, dark, healthy soil. A garden without worms is hard and packed down, and plants struggle to grow. Farmers love earthworms so much that some call them “nature's plows.” Next time you see a worm after the rain, remember: that little creature is building the soil beneath your feet.",
+    "prompt": "Why do some farmers call earthworms “nature's plows”?",
+    "options": [
+     "Because their burrowing loosens and mixes the soil the way a plow does.",
+     "Because worms are shaped like plows.",
+     "Because worms work only on farms.",
+     "Because farmers use worms to pull plows."
+    ],
+    "correct": 0,
+    "explanation": "A plow's job is to loosen and turn the soil — worms do the same job with their tunnels, so farmers gave them the nickname."
+   },
+   {
+    "title": "The Panda's Bamboo Forest",
+    "passage": "The giant panda spends almost its whole day doing one thing: eating bamboo. A panda eats for 10 to 16 hours a day and can munch through 30 pounds of bamboo! Bamboo is not very nourishing, so the panda must eat huge amounts to get enough energy. To help, the panda has a special thumb — really a wrist bone — that works like a sixth finger for gripping bamboo stalks. Pandas are solitary animals, which means they live alone. Each panda has its own stretch of mountain forest in China. They “talk” by leaving scent marks on trees, telling other pandas, “This spot is taken.” Pandas are quiet and gentle, but a mother panda fiercely protects her tiny cub, which is born no bigger than a stick of butter.",
+    "prompt": "What would most likely happen if a panda ate only a few pounds of bamboo each day?",
+    "options": [
+     "It would not get enough energy to stay healthy.",
+     "It would start eating meat instead.",
+     "It would grow much bigger and stronger.",
+     "It would decide to live with other pandas."
+    ],
+    "correct": 0,
+    "explanation": "Bamboo is not very nourishing, so a panda needs huge amounts of it — eating only a little would leave it without enough energy."
+   },
+   {
+    "title": "Colors in the Sky",
+    "passage": "A rainbow appears when sunlight shines through raindrops that are still falling — or still hanging in the air — after a shower. Sunlight looks white, but it is really a mixture of many colors. When a sunbeam enters a raindrop, it bends, and as it bends, the colors inside it spread apart. The light bounces inside the drop and bends again on its way out, sending a fan of colors toward your eyes. Red always lands on the top of the arc, and violet on the bottom. You can only see a rainbow when the sun is behind you and the rain is in front of you — which is why rainbows love late afternoons, when the low sun faces the passing storm.",
+    "prompt": "If the sun were in front of you and the rain behind you, could you see a rainbow?",
+    "options": [
+     "No, because a rainbow can only form when the sun is behind you and the rain is in front.",
+     "Yes, because rainbows can form anywhere in the sky.",
+     "Yes, but the colors would be upside down.",
+     "No, because rainbows only appear in the morning."
+    ],
+    "correct": 0,
+    "explanation": "The passage gives the rule — sun behind you, rain in front of you — so with the sun in front, the geometry is wrong and no rainbow appears."
+   },
+   {
+    "title": "The Treehouse Plan",
+    "passage": "Twins Zoe and Zack had dreamed of a treehouse all year, and this summer, Dad finally said yes — if they built it safely. “Measure twice, cut once,” he told them, handing over a tape measure and a level. The twins drew a plan first: a square floor held by the big oak's three strongest branches, walls with a real window, and a ladder with rails. Zack wanted to hurry, but Zoe insisted on checking every board with the level. Their floor came out flat and sturdy, without a single wobble. When the roof finally went on, they painted the door bright red and hung a sign: “The Twin Peaks Clubhouse — Est. This Summer.” From the window they could see the whole block. “Worth every measurement,” Zoe said.",
+    "prompt": "Why did Dad tell the twins, “Measure twice, cut once”?",
+    "options": [
+     "So they would double-check before cutting, since a board cut too short cannot be fixed.",
+     "So they would finish the treehouse faster.",
+     "So they would only need two boards.",
+     "So they would not have to use the level."
+    ],
+    "correct": 0,
+    "explanation": "Cutting is permanent — Dad wanted them to check each measurement carefully first so they wouldn't ruin boards with mistakes."
+   },
+   {
+    "title": "Tide Pool Treasures",
+    "passage": "When the ocean tide goes out, it leaves behind rocky pools full of surprises. These tide pools are tiny worlds. Starfish cling to the rocks with hundreds of tiny tube feet. Hermit crabs scuttle about in borrowed shells, and green anemones wave their stinging tentacles, looking like flowers but hunting like animals. Life in a tide pool is a waiting game. For hours, the pool is cut off from the sea. The sun warms the water, and the pool grows saltier as it dries. The creatures must survive until the tide returns and covers them again. Some close up tight — mussels clamp their shells shut, and anemones pull in their tentacles and shrink into jelly blobs, holding the water inside their bodies so they don't dry out while exposed to the air.",
+    "prompt": "Why do anemones pull in their tentacles and shrink when the tide is out?",
+    "options": [
+     "To hold water inside their bodies so they don't dry out.",
+     "To hide from the starfish in the pool.",
+     "To sleep until the next day.",
+     "To make room for the hermit crabs."
+    ],
+    "correct": 0,
+    "explanation": "The passage says anemones shrink into jelly blobs to keep water inside their bodies while they are exposed to the air."
+   },
+   {
+    "title": "The First Ice Cream",
+    "passage": "Long before freezers existed, people were already enjoying frozen treats. In ancient China, cooks mixed snow with fruit juices and honey. In Rome, the emperor Nero sent runners to the mountains to fetch snow for his flavored ice. But ice cream as we know it — sweet, creamy, and smooth — took a clever trick. In the 1500s, cooks discovered that adding salt to ice makes the ice colder than freezing, cold enough to chill a mixture of cream, sugar, and fruit while it is churned in a pot. Churning keeps big ice crystals from forming, so the result is smooth instead of crunchy. For centuries, ice cream was a luxury only the rich could afford. Then, in the 1800s, a woman named Nancy Johnson invented a hand-crank freezer that any family could use, and ice cream became a treat for everyone.",
+    "prompt": "Why was ice cream a treat only for the rich for so many years?",
+    "options": [
+     "Because it was hard and expensive to make before the hand-crank freezer.",
+     "Because poor people did not like sweet foods.",
+     "Because the law said only rich people could eat it.",
+     "Because cream and sugar grew only in rich countries."
+    ],
+    "correct": 0,
+    "explanation": "Making ice cream took snow hauled from mountains and lots of hand labor — the hand-crank freezer finally made it easy and cheap enough for everyone."
+   },
+   {
+    "title": "The Giant Pumpkin",
+    "passage": "In September, Room 12 planted pumpkin seeds in the school garden — one seed each, in a row of little hills. Most of the seeds sprouted within two weeks, pushing up two round leaves. But Maya's hill stayed bare. “Maybe my seed was a dud,” she sighed. Her partner, Jonah, offered her one of his sprouts, but Maya shook her head. “I'll wait one more week.” On the very last day of that week, a tiny green curl poked through Maya's soil. Her plant was behind, but it grew fast, stretching vines across the garden and opening huge yellow flowers. By October, Maya's vine held the biggest pumpkin in the garden — a 22-pounder the class named Goliath. “Good things take time,” Maya said, “and some of us are just late bloomers.”",
+    "prompt": "Why did Maya refuse Jonah's offer of one of his sprouts?",
+    "options": [
+     "She wanted to give her own seed one more chance to grow.",
+     "She did not like Jonah's sprouts.",
+     "She had decided she hated pumpkins.",
+     "She wanted the biggest pumpkin all to herself."
+    ],
+    "correct": 0,
+    "explanation": "Maya said she would wait one more week — she was being patient with her own seed instead of giving up on it."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_21_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-21 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-21 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
