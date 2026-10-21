@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saxon Math Grade 4 &mdash; Lesson 46 Written Practice</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #f1f5f9; color: #1e293b; margin: 0; padding: 20px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 1.5em; margin: 0 0 4px; }
+  .sub { text-align: center; color: #64748b; margin-bottom: 22px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qhead { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+  .qnum { font-weight: bold; font-size: 1.15em; color: #1d4ed8; }
+  .qtag { font-size: .8em; color: #64748b; }
+  .tag2 { background: #dbeafe; color: #1d4ed8; font-size: .72em; font-weight: bold; padding: 2px 8px; border-radius: 20px; letter-spacing: .04em; }
+  .qbody { font-size: 1.02em; line-height: 1.65; }
+  .fig { margin: 14px 0 4px; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .reveal { margin-top: 12px; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-size: .95em; cursor: pointer; }
+  .reveal:hover { background: #1e40af; }
+  .ans { display: none; margin-top: 14px; border-top: 2px dashed #cbd5e1; padding-top: 12px; }
+  .ans.open { display: block; }
+  .anslabel { font-weight: bold; color: #166534; margin: 8px 0 4px; font-size: .85em; text-transform: uppercase; letter-spacing: .05em; }
+  .math { font-size: 1.12em; background: #f0fdf4; border-radius: 8px; padding: 10px 14px; }
+  .sol { font-size: .98em; line-height: 1.7; color: #334155; }
+
+  /* Long Division Grid Styles */
+  .grid-wrapper { display: flex; justify-content: center; margin: 12px 0; overflow-x: auto; }
+  .long-division-grid { display: grid; font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; line-height: 24px; }
+  .cell { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+  .txt-q { color: #2980b9; }   /* Quotient Blue */
+  .txt-sub { color: #c0392b; } /* Subtraction Red */
+  .txt-std { color: #333; }    /* Standard Black */
+  .border-right { border-right: 2px solid #333; }
+  .border-top { border-top: 2px solid #333; }
+  .border-bottom { border-bottom: 1px solid #333; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .reveal, .ans { display: none !important; }
+    .card { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Saxon Math Grade 4 &mdash; Lesson 46</h1>
+  <div class="sub">Written Practice 1&ndash;35 &middot; 10-22Miri</div>
+
+  <!-- Q1 -->
+  <div class="card" id="q1">
+    <div class="qhead"><span class="qnum">1.</span><span class="qtag">(6, 43)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Conclude</span> Use the numbers 0.4, 0.8, and 1.2 to write two addition facts and two subtraction facts.</div>
+    <button class="reveal" onclick="toggle(1)">Show Answer</button>
+    <div class="ans" id="ans1">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(0.4 + 0.8 = 1.2;\quad 0.8 + 0.4 = 1.2;\quad 1.2 - 0.4 = 0.8;\quad 1.2 - 0.8 = 0.4\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Since \(0.4 + 0.8 = 1.2\), the three numbers form a fact family: two addition facts (swapping addends) and two subtraction facts (starting with 1.2).</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card" id="q2">
+    <div class="qhead"><span class="qnum">2.</span><span class="qtag">(19)</span></div>
+    <div class="qbody">A whole hour is 60 minutes. How many minutes is one fourth (\(\frac{1}{4}\)) of an hour?</div>
+    <button class="reveal" onclick="toggle(2)">Show Answer</button>
+    <div class="ans" id="ans2">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(15\text{ minutes}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">One fourth of 60 is \(60 \div 4 = 15\) minutes.</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card" id="q3">
+    <div class="qhead"><span class="qnum">3.</span><span class="qtag">(31)</span></div>
+    <div class="qbody"><span class="tag2">Explain</span> An airplane flew at an altitude of 185 miles above the Earth. A drone flew at an altitude of 25 miles above the Earth. The airplane was how much higher than the drone? Explain why your answer is reasonable.</div>
+    <button class="reveal" onclick="toggle(3)">Show Answer</button>
+    <div class="ans" id="ans3">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(160\text{ miles higher}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(185 - 25 = 160\) miles. It is reasonable because 160 miles is slightly less than 185 miles, matching the subtraction of a small distance (25 miles).</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card" id="q4">
+    <div class="qhead"><span class="qnum">4.</span><span class="qtag">(41, 43)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Justify</span> How much change should you get back if you give the clerk \$10.00 for a book that costs \$6.35? How can you check your answer?</div>
+    <button class="reveal" onclick="toggle(4)">Show Answer</button>
+    <div class="ans" id="ans4">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\$3.65\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(\$10.00 - \$6.35 = \$3.65\). Check by adding the change to the cost: \(\$6.35 + \$3.65 = \$10.00\).</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card" id="q5">
+    <div class="qhead"><span class="qnum">5.</span><span class="qtag">(Inv. 4)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Represent</span> Write 15.8 using words.</div>
+    <button class="reveal" onclick="toggle(5)">Show Answer</button>
+    <div class="ans" id="ans5">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{fifteen and eight tenths}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">The digit after the decimal point is in the tenths place: &ldquo;fifteen and eight tenths.&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="card" id="q6">
+    <div class="qhead"><span class="qnum">6.</span><span class="qtag">(Inv. 1)</span></div>
+    <div class="qbody"><span class="tag2">Represent</span> Use digits and symbols to show that negative fourteen is less than negative four.</div>
+    <button class="reveal" onclick="toggle(6)">Show Answer</button>
+    <div class="ans" id="ans6">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(-14 < -4\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Negative fourteen is farther left on the number line than negative four, so \(-14 < -4\).</div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="card" id="q7">
+    <div class="qhead"><span class="qnum">7.</span><span class="qtag">(27)</span></div>
+    <div class="qbody">The clock shows the time Maya arrived at soccer practice this afternoon. She started walking to practice 25 minutes before that time. What time did Maya start walking?
+      <div class="fig">
+        <svg viewBox="0 0 220 220" width="200" role="img" aria-label="Clock showing 4:15">
+          <circle cx="110" cy="110" r="95" fill="none" stroke="#1e3a8a" stroke-width="4"/>
+          <text x="143" y="58.8" text-anchor="middle" font-size="15" font-weight="bold">1</text>
+          <text x="167.2" y="83" text-anchor="middle" font-size="15" font-weight="bold">2</text>
+          <text x="176" y="116" text-anchor="middle" font-size="15" font-weight="bold">3</text>
+          <text x="167.2" y="149" text-anchor="middle" font-size="15" font-weight="bold">4</text>
+          <text x="143" y="173.2" text-anchor="middle" font-size="15" font-weight="bold">5</text>
+          <text x="110" y="182" text-anchor="middle" font-size="15" font-weight="bold">6</text>
+          <text x="77" y="173.2" text-anchor="middle" font-size="15" font-weight="bold">7</text>
+          <text x="52.8" y="149" text-anchor="middle" font-size="15" font-weight="bold">8</text>
+          <text x="44" y="116" text-anchor="middle" font-size="15" font-weight="bold">9</text>
+          <text x="52.8" y="83" text-anchor="middle" font-size="15" font-weight="bold">10</text>
+          <text x="77" y="58.8" text-anchor="middle" font-size="15" font-weight="bold">11</text>
+          <text x="110" y="50" text-anchor="middle" font-size="15" font-weight="bold">12</text>
+          <!-- Hands for 4:15 -->
+          <line x1="110" y1="110" x2="149.7" y2="140.4" stroke="#1e3a8a" stroke-width="6" stroke-linecap="round"/>
+          <line x1="110" y1="110" x2="180" y2="110" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="110" cy="110" r="6" fill="#1e3a8a"/>
+        </svg>
+      </div>
+    </div>
+    <button class="reveal" onclick="toggle(7)">Show Answer</button>
+    <div class="ans" id="ans7">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(3{:}50\text{ p.m.}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">The clock shows 4:15. Counting back 25 minutes gives \(4{:}15 - 0{:}25 = 3{:}50\text{ p.m.}\)</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="card" id="q8">
+    <div class="qhead"><span class="qnum">8.</span><span class="qtag">(16, 33)</span></div>
+    <div class="qbody"><span class="tag2">Represent</span> Write 5080 in expanded form. Then use words to write the number.</div>
+    <button class="reveal" onclick="toggle(8)">Show Answer</button>
+    <div class="ans" id="ans8">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(5000 + 80;\quad \text{five thousand, eighty}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">5080 = 5 thousands + 0 hundreds + 8 tens + 0 ones \(= 5000 + 80\). In words: &ldquo;five thousand, eighty.&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="card" id="q9">
+    <div class="qhead"><span class="qnum">9.</span><span class="qtag">(35)</span></div>
+    <div class="qbody">How many circles are shaded?
+      <div class="fig">
+        <svg viewBox="0 0 380 120" width="350" role="img" aria-label="Shaded circles">
+          <circle cx="50" cy="60" r="38" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/>
+          <circle cx="140" cy="60" r="38" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/>
+          <circle cx="230" cy="60" r="38" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/>
+          <path d="M 320 22 A 38 38 0 0 0 320 98 Z" fill="#93c5fd"/>
+          <circle cx="320" cy="60" r="38" fill="none" stroke="#1e3a8a" stroke-width="2.5"/>
+          <line x1="320" y1="22" x2="320" y2="98" stroke="#1e3a8a" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+    <button class="reveal" onclick="toggle(9)">Show Answer</button>
+    <div class="ans" id="ans9">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(3\dfrac{1}{2}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Three full circles are shaded, plus half of the fourth circle. Total: \(3 + \frac{1}{2} = 3\frac{1}{2}\) circles.</div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="card" id="q10">
+    <div class="qhead"><span class="qnum">10.</span><span class="qtag">(34, 36)</span></div>
+    <div class="qbody">Compare:<br><b>a.</b> 3 quarters \(\bigcirc\) 70 cents<br><b>b.</b> \(3{,}400{,}000 \bigcirc\) three million, five hundred thousand</div>
+    <button class="reveal" onclick="toggle(10)">Show Answer</button>
+    <div class="ans" id="ans10">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. }>\qquad\text{b. }<\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol"><b>a.</b> 3 quarters = 75&cent;, and \(75\text{&cent;} > 70\text{&cent;}\). <b>b.</b> Three million, five hundred thousand = 3,500,000, and \(3{,}400{,}000 < 3{,}500{,}000\).</div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="card" id="q11">
+    <div class="qhead"><span class="qnum">11.</span><span class="qtag">(41)</span></div>
+    <div class="qbody">Find the missing factor: \(7k = 56\)</div>
+    <button class="reveal" onclick="toggle(11)">Show Answer</button>
+    <div class="ans" id="ans11">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(k = 8\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Divide 56 by 7: \(k = 56 \div 7 = 8\).</div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="card" id="q12">
+    <div class="qhead"><span class="qnum">12.</span><span class="qtag">(Inv. 2)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <b>a.</b> <span class="tag2">Estimate</span> Use an inch ruler to measure this line segment to the nearest inch.<br><b>b.</b> <span class="tag2">Estimate</span> Use a centimeter ruler to measure this line segment to the nearest centimeter.
+      <div class="fig">
+        <svg viewBox="0 0 350 100" width="330" role="img" aria-label="Line segment">
+          <line x1="30" y1="30" x2="310" y2="30" stroke="#1e3a8a" stroke-width="3.5"/>
+          <line x1="30" y1="22" x2="30" y2="38" stroke="#1e3a8a" stroke-width="3"/>
+          <line x1="310" y1="22" x2="310" y2="38" stroke="#1e3a8a" stroke-width="3"/>
+          <rect x="30" y="55" width="280" height="30" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+          <text x="30" y="76" font-size="11" text-anchor="middle">0</text>
+          <text x="120" y="76" font-size="11" text-anchor="middle">1</text>
+          <text x="210" y="76" font-size="11" text-anchor="middle">2</text>
+          <text x="300" y="76" font-size="11" text-anchor="middle">3 in</text>
+        </svg>
+      </div>
+    </div>
+    <button class="reveal" onclick="toggle(12)">Show Answer</button>
+    <div class="ans" id="ans12">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. about }3\text{ inches}\qquad\text{b. about }8\text{ centimeters}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">The line segment measures about 3 inches, which equals approximately 8 centimeters.</div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="card" id="q13">
+    <div class="qhead"><span class="qnum">13.</span><span class="qtag">(45)</span></div>
+    <div class="qbody">Compare: \(15 - (8 - 4) \bigcirc (15 - 8) - 4\)</div>
+    <button class="reveal" onclick="toggle(13)">Show Answer</button>
+    <div class="ans" id="ans13">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(15 - (8 - 4) > (15 - 8) - 4\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Left side: \(15 - (8 - 4) = 15 - 4 = 11\). Right side: \((15 - 8) - 4 = 7 - 4 = 3\). Since \(11 > 3\), the left side is greater.</div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="card" id="q14">
+    <div class="qhead"><span class="qnum">14.</span><span class="qtag">(45)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Explain</span> Look at problem 13 and your answer. Does the Associative Property apply to subtraction? Why or why not?</div>
+    <button class="reveal" onclick="toggle(14)">Show Answer</button>
+    <div class="ans" id="ans14">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{No}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">No, because changing the grouping changed the final value (11 vs. 3). Therefore, the Associative Property does not apply to subtraction.</div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="card" id="q15">
+    <div class="qhead"><span class="qnum">15.</span><span class="qtag">(43)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(\begin{array}{r} 5.08 \\ -\,3.35 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(15)">Show Answer</button>
+    <div class="ans" id="ans15">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(1.73\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(5.08 - 3.35 = 1.73\).</div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="card" id="q16">
+    <div class="qhead"><span class="qnum">16.</span><span class="qtag">(41)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(\begin{array}{r} \$6.03 \\ -\,\$3.58 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(16)">Show Answer</button>
+    <div class="ans" id="ans16">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\$2.45\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(\$6.03 - \$3.58 = \$2.45\).</div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="card" id="q17">
+    <div class="qhead"><span class="qnum">17.</span><span class="qtag">(43)</span></div>
+    <div class="qbody">\(\begin{array}{r} \$6.74 \\ -\,\$3.88 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(17)">Show Answer</button>
+    <div class="ans" id="ans17">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\$2.86\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(\$6.74 - \$3.88 = \$2.86\).</div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="card" id="q18">
+    <div class="qhead"><span class="qnum">18.</span><span class="qtag">(43)</span></div>
+    <div class="qbody">\(\begin{array}{r} \$4.83 \\ +\,\$3.25 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(18)">Show Answer</button>
+    <div class="ans" id="ans18">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\$8.08\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(\$4.83 + \$3.25 = \$8.08\).</div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="card" id="q19">
+    <div class="qhead"><span class="qnum">19.</span><span class="qtag">(44)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(\begin{array}{r} 32 \\ \times\phantom{0}4 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(19)">Show Answer</button>
+    <div class="ans" id="ans19">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(128\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(32 \times 4 = 128\).</div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="card" id="q20">
+    <div class="qhead"><span class="qnum">20.</span><span class="qtag">(44)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(\begin{array}{r} 74 \\ \times\phantom{0}2 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(20)">Show Answer</button>
+    <div class="ans" id="ans20">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(148\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(74 \times 2 = 148\).</div>
+    </div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="card" id="q21">
+    <div class="qhead"><span class="qnum">21.</span><span class="qtag">(42)</span></div>
+    <div class="qbody">\(\begin{array}{r} 50 \\ \times\phantom{0}6 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(21)">Show Answer</button>
+    <div class="ans" id="ans21">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(300\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(5 \times 6 = 30\), so \(50 \times 6 = 300\).</div>
+    </div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="card" id="q22">
+    <div class="qhead"><span class="qnum">22.</span><span class="qtag">(44)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(\begin{array}{r} 51 \\ \times\phantom{0}5 \\ \hline \end{array}\)</div>
+    <button class="reveal" onclick="toggle(22)">Show Answer</button>
+    <div class="ans" id="ans22">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(255\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(51 \times 5 = 255\).</div>
+    </div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="card" id="q23">
+    <div class="qhead"><span class="qnum">23.</span><span class="qtag">(43)</span></div>
+    <div class="qbody">\(\$3.25 + 75¢ + \$4\)</div>
+    <button class="reveal" onclick="toggle(23)">Show Answer</button>
+    <div class="ans" id="ans23">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\$8.00\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(75¢ = \$0.75\). \(\$3.25 + \$0.75 + \$4.00 = \$8.00\).</div>
+    </div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="card" id="q24">
+    <div class="qhead"><span class="qnum">24.</span><span class="qtag">(43)</span></div>
+    <div class="qbody"><span class="tag2">*</span> \(4.25 + 2.50\)</div>
+    <button class="reveal" onclick="toggle(24)">Show Answer</button>
+    <div class="ans" id="ans24">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(6.75\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(4.25 + 2.50 = 6.75\).</div>
+    </div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="card" id="q25">
+    <div class="qhead"><span class="qnum">25.</span><span class="qtag">(Inv. 2, Inv. 3)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Model</span> Draw a rectangle that is 3 in. by 2 in.<br><b>a.</b> The perimeter of the rectangle is how many inches?<br><b>b.</b> The area of the rectangle is how many square inches?
+      <div class="fig">
+        <svg viewBox="0 0 300 180" width="260" role="img" aria-label="3 in by 2 in rectangle">
+          <rect x="40" y="30" width="220" height="120" fill="none" stroke="#1e3a8a" stroke-width="3"/>
+          <text x="150" y="20" font-size="15" text-anchor="middle">3 in.</text>
+          <text x="272" y="95" font-size="15">2 in.</text>
+        </svg>
+      </div>
+    </div>
+    <button class="reveal" onclick="toggle(25)">Show Answer</button>
+    <div class="ans" id="ans25">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. }10\text{ in.}\qquad\text{b. }6\text{ sq. in.}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol"><b>a.</b> \(P = 3 + 2 + 3 + 2 = 10\text{ inches}\). <b>b.</b> \(A = 3 \times 2 = 6\text{ square inches}\).</div>
+    </div>
+  </div>
+
+  <!-- Q26 -->
+  <div class="card" id="q26">
+    <div class="qhead"><span class="qnum">26.</span><span class="qtag">(21, 45)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Multiple Choice</span> Which of the following segments is a <i>diameter</i> of the circle?<br>A&ensp;\(\overline{AB}\)&emsp;B&ensp;\(\overline{OP}\)<br>C&ensp;\(\overline{OA}\)&emsp;D&ensp;\(\overline{OB}\)
+      <div class="fig">
+        <svg viewBox="0 0 260 220" width="220" role="img" aria-label="Circle with center O">
+          <circle cx="130" cy="110" r="85" fill="none" stroke="#1e3a8a" stroke-width="3"/>
+          <line x1="45" y1="110" x2="215" y2="110" stroke="#1e3a8a" stroke-width="2.5"/>
+          <line x1="130" y1="110" x2="130" y2="25" stroke="#1e3a8a" stroke-width="2.5"/>
+          <circle cx="130" cy="110" r="4.5" fill="#1e3a8a"/>
+          <text x="28" y="115" font-size="16" font-weight="bold">A</text>
+          <text x="225" y="115" font-size="16" font-weight="bold">B</text>
+          <text x="130" y="18" font-size="16" font-weight="bold" text-anchor="middle">P</text>
+          <text x="138" y="130" font-size="16" font-weight="bold">O</text>
+        </svg>
+      </div>
+    </div>
+    <button class="reveal" onclick="toggle(26)">Show Answer</button>
+    <div class="ans" id="ans26">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{A &mdash; }\overline{AB}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(\overline{AB}\) passes completely through the center \(O\) connecting two points on the circle, so it is a diameter. \(\overline{OA}\), \(\overline{OB}\), and \(\overline{OP}\) are radii.</div>
+    </div>
+  </div>
+
+  <!-- Q27 -->
+  <div class="card" id="q27">
+    <div class="qhead"><span class="qnum">27.</span><span class="qtag">(31)</span></div>
+    <div class="qbody"><span class="tag2">Formulate</span> Leo solved the first puzzle in 42 seconds. He solved the second puzzle in 29 seconds. The first puzzle took how much longer to solve than the second puzzle? Write an equation to solve the problem.</div>
+    <button class="reveal" onclick="toggle(27)">Show Answer</button>
+    <div class="ans" id="ans27">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(13\text{ seconds}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Equation: \(42 - 29 = d\). \(d = 13\), so the first puzzle took 13 seconds longer.</div>
+    </div>
+  </div>
+
+  <!-- Q28 -->
+  <div class="card" id="q28">
+    <div class="qhead"><span class="qnum">28.</span><span class="qtag">(45)</span></div>
+    <div class="qbody"><span class="tag2">*</span> Describe the order of operations in each expression. Then find the number each expression equals.<br><b>a.</b> \(16 - (5 - 2)\)<br><b>b.</b> \((16 - 5) - 2\)</div>
+    <button class="reveal" onclick="toggle(28)">Show Answer</button>
+    <div class="ans" id="ans28">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. }13\qquad\text{b. }9\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Work inside parentheses first. <b>a.</b> \((5-2) = 3\), then \(16 - 3 = 13\). <b>b.</b> \((16-5) = 11\), then \(11 - 2 = 9\).</div>
+    </div>
+  </div>
+
+  <!-- Q29 -->
+  <div class="card" id="q29">
+    <div class="qhead"><span class="qnum">29.</span><span class="qtag">(18)</span></div>
+    <div class="qbody">In Denver, Colorado, the average high temperature in July is 88&deg;F. The average low temperature is 59&deg;F. How many degrees warmer is a temperature of 88&deg;F than a temperature of 59&deg;F?</div>
+    <button class="reveal" onclick="toggle(29)">Show Answer</button>
+    <div class="ans" id="ans29">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(29\text{ degrees}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">\(88 - 59 = 29\) degrees warmer.</div>
+    </div>
+  </div>
+
+  <!-- Q30 -->
+  <div class="card" id="q30">
+    <div class="qhead"><span class="qnum">30.</span><span class="qtag">(25, 42)</span></div>
+    <div class="qbody"><span class="tag2">*</span> <span class="tag2">Estimate</span> The population density of Massachusetts is 890.2 people per square mile. The population density of Maine is 44.2 people per square mile. Round to the nearest hundred to estimate how many more people per square mile live in Massachusetts than live in Maine.</div>
+    <button class="reveal" onclick="toggle(30)">Show Answer</button>
+    <div class="ans" id="ans30">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{about }900\text{ more people per square mile}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">Round to the nearest hundred: \(890.2 \to 900\) and \(44.2 \to 0\). Estimate: \(900 - 0 = 900\) more people per square mile.</div>
+    </div>
+  </div>
+
+  <!-- ================= EXTRA PROBLEMS (31 - 35) ================= -->
+
+  <!-- Q31: Terminating Decimal Division with Grid Layout -->
+  <div class="card" id="q31">
+    <div class="qhead"><span class="qnum">31.</span><span class="qtag">(Special &middot; Terminating Decimal)</span></div>
+    <div class="qbody"><span class="tag2">Division</span> Divide \(21 \div 4\). Express your answer as a terminating decimal. Use the standard long division algorithm.</div>
+    <button class="reveal" onclick="toggle(31)">Show Answer</button>
+    <div class="ans" id="ans31">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(5.25\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">
+        Dividing 21 by 4 gives a quotient of 5 with a remainder of 1. Adding a decimal point and zeros allows us to divide completely until the remainder is 0:
+        
+        <!-- Long Division Grid Display -->
+        <div class="grid-wrapper">
+          <div class="long-division-grid" style="grid-template-columns: repeat(7, 24px);">
+            <!-- Row 0: Quotient -->
+            <div class="cell" style="grid-row:1; grid-column:3;"></div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:4;">5</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:5;">.</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:6;">2</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:7;">5</div>
+
+            <!-- Row 1: Divisor | Dividend -->
+            <div class="cell txt-std" style="grid-row:2; grid-column:2;">4</div>
+            <div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">2</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">1</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">.</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">0</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:7;">0</div>
+
+            <!-- Row 2: Subtraction 20 -->
+            <div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">2</div>
+            <div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:4;">0</div>
+
+            <!-- Row 3: Remainder 1, bring down 0 -> 10 -->
+            <div class="cell txt-std" style="grid-row:4; grid-column:4;">1</div>
+            <div class="cell txt-std" style="grid-row:4; grid-column:6;">0</div>
+
+            <!-- Row 4: Subtraction 8 -->
+            <div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:6;">8</div>
+
+            <!-- Row 5: Remainder 2, bring down 0 -> 20 -->
+            <div class="cell txt-std" style="grid-row:6; grid-column:6;">2</div>
+            <div class="cell txt-std" style="grid-row:6; grid-column:7;">0</div>
+
+            <!-- Row 6: Subtraction 20 -->
+            <div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:6;">2</div>
+            <div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:7;">0</div>
+
+            <!-- Row 7: Final Remainder 0 -->
+            <div class="cell txt-std" style="grid-row:8; grid-column:7;">0</div>
+          </div>
+        </div>
+        The division terminates cleanly at \(5.25\).
+      </div>
+    </div>
+  </div>
+
+  <!-- Q32: Repeating Decimal Division with Grid Layout -->
+  <div class="card" id="q32">
+    <div class="qhead"><span class="qnum">32.</span><span class="qtag">(Special &middot; Repeating Decimal)</span></div>
+    <div class="qbody"><span class="tag2">Division</span> Divide \(5 \div 3\). Express your answer as a repeating decimal using an overline bar above the repeating digit.</div>
+    <button class="reveal" onclick="toggle(32)">Show Answer</button>
+    <div class="ans" id="ans32">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(1.\overline{6}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">
+        Divide 5 by 3 using long division:
+        
+        <div class="grid-wrapper">
+          <div class="long-division-grid" style="grid-template-columns: repeat(6, 24px);">
+            <!-- Row 0: Quotient -->
+            <div class="cell txt-q" style="grid-row:1; grid-column:3;">1</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:4;">.</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:5;">6</div>
+            <div class="cell txt-q" style="grid-row:1; grid-column:6;">6</div>
+
+            <!-- Row 1: Divisor | Dividend -->
+            <div class="cell txt-std" style="grid-row:2; grid-column:2;">3</div>
+            <div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">5</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">.</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">0</div>
+            <div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">0</div>
+
+            <!-- Row 2: Subtraction 3 -->
+            <div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">3</div>
+
+            <!-- Row 3: Remainder 2, bring down 0 -> 20 -->
+            <div class="cell txt-std" style="grid-row:4; grid-column:3;">2</div>
+            <div class="cell txt-std" style="grid-row:4; grid-column:5;">0</div>
+
+            <!-- Row 4: Subtraction 18 -->
+            <div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:3;">1</div>
+            <div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">8</div>
+
+            <!-- Row 5: Remainder 2, bring down 0 -> 20 -->
+            <div class="cell txt-std" style="grid-row:6; grid-column:5;">2</div>
+            <div class="cell txt-std" style="grid-row:6; grid-column:6;">0</div>
+          </div>
+        </div>
+        Because the remainder 2 keeps repeating endlessly, the digit 6 repeats infinitely: \(5 \div 3 = 1.666\dots = 1.\overline{6}\).
+      </div>
+    </div>
+  </div>
+
+  <!-- Q33: Percentage Problem -->
+  <div class="card" id="q33">
+    <div class="qhead"><span class="qnum">33.</span><span class="qtag">(Special &middot; Percentages)</span></div>
+    <div class="qbody"><span class="tag2">Percent</span> A school library has 100 books on a display shelf. If 25% of the books are mystery books:
+      <br><b>a.</b> Express 25% as both a fraction in simple form and as a decimal.
+      <br><b>b.</b> How many mystery books are on the display shelf?
+    </div>
+    <button class="reveal" onclick="toggle(33)">Show Answer</button>
+    <div class="ans" id="ans33">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. Fraction: }\dfrac{1}{4},\quad \text{Decimal: }0.25\qquad\text{b. }25\text{ mystery books}\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">
+        <b>a.</b> Percent means &ldquo;out of 100.&rdquo; \(25\% = \dfrac{25}{100} = \dfrac{1}{4} = 0.25\).
+        <br><b>b.</b> \(25\%\text{ of }100 = \dfrac{25}{100} \times 100 = 25\text{ mystery books}\).
+      </div>
+    </div>
+  </div>
+
+  <!-- Q34: PMDAS with Fractions, Decimals, and Positive/Negative Numbers -->
+  <div class="card" id="q34">
+    <div class="qhead"><span class="qnum">34.</span><span class="qtag">(Special &middot; PMDAS / Order of Operations)</span></div>
+    <div class="qbody"><span class="tag2">Order of Operations</span> Evaluate the expression step by step using PMDAS (Parentheses, Multiplication/Division, Addition/Subtraction):
+      \[ \left(\frac{3}{4} + 0.25\right) \times 6 + (-2) \]
+    </div>
+    <button class="reveal" onclick="toggle(34)">Show Answer</button>
+    <div class="ans" id="ans34">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(4\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">
+        Follow PMDAS step by step:
+        <br><b>Step 1 (Parentheses):</b> Convert \(\frac{3}{4}\) to decimal \(0.75\). Then \(0.75 + 0.25 = 1.0\).
+        <br><b>Step 2 (Multiplication):</b> Multiply the result by 6: \(1.0 \times 6 = 6\).
+        <br><b>Step 3 (Addition with Negative Number):</b> Add \(-2\): \(6 + (-2) = 6 - 2 = 4\).
+      </div>
+    </div>
+  </div>
+
+  <!-- Q35: Multi-Step Money & Decimal Practice -->
+  <div class="card" id="q35">
+    <div class="qhead"><span class="qnum">35.</span><span class="qtag">(Special &middot; Multi-Step Application)</span></div>
+    <div class="qbody"><span class="tag2">Application</span> Maya bought 3 notebooks that cost \$1.25 each and 1 pack of pencils for \$2.25.
+      <br><b>a.</b> What was the total cost of her items?
+      <br><b>b.</b> If she paid with a \$10.00 bill, how much change did she receive?
+    </div>
+    <button class="reveal" onclick="toggle(35)">Show Answer</button>
+    <div class="ans" id="ans35">
+      <div class="anslabel">Answer</div>
+      <div class="math">\(\text{a. }\$6.00\qquad\text{b. }\$4.00\)</div>
+      <div class="anslabel">Solution</div>
+      <div class="sol">
+        <b>a.</b> Cost of notebooks: \(3 \times \$1.25 = \$3.75\).
+        <br>Total cost: \(\$3.75 + \$2.25 = \$6.00\).
+        <br><b>b.</b> Change received: \(\$10.00 - \$6.00 = \$4.00\).
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(n) {
+  var a = document.getElementById('ans' + n);
+  var b = document.querySelector('#q' + n + ' .reveal');
+  var open = a.classList.toggle('open');
+  b.textContent = open ? 'Hide Answer' : 'Show Answer';
+  if (window.MathJax) MathJax.typesetPromise([a]);
+}
+</script>
+</body>
+</html>
