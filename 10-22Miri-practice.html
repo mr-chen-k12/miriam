@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saxon Math 5/4 &mdash; Test 8B Parallel Practice</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #f1f5f9; color: #1e293b; margin: 0; padding: 20px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 1.5em; margin: 0 0 4px; }
+  .sub { text-align: center; color: #64748b; margin-bottom: 22px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qhead { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+  .qnum { font-weight: bold; font-size: 1.15em; color: #1d4ed8; }
+  .qtag { font-size: .8em; color: #64748b; }
+  .variant { border-top: 1px solid #e2e8f0; padding: 10px 0 4px; margin-top: 10px; }
+  .variant:first-of-type { border-top: none; margin-top: 0; padding-top: 2px; }
+  .vlabel { font-weight: bold; color: #1d4ed8; }
+  .qbody { font-size: 1.02em; line-height: 1.65; }
+  .fig { margin: 10px 0 2px; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .letters { font-size: 1.8em; font-weight: bold; letter-spacing: .6em; text-align: center; margin: 8px 0 0; }
+  .reveal { margin-top: 14px; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-size: .95em; cursor: pointer; }
+  .reveal:hover { background: #1e40af; }
+  .ans { display: none; margin-top: 14px; border-top: 2px dashed #cbd5e1; padding-top: 12px; }
+  .ans.open { display: block; }
+  .anslabel { font-weight: bold; color: #166534; margin: 8px 0 4px; font-size: .85em; text-transform: uppercase; letter-spacing: .05em; }
+  .math { font-size: 1.08em; background: #f0fdf4; border-radius: 8px; padding: 10px 14px; line-height: 1.9; }
+  .sol { font-size: .98em; line-height: 1.7; color: #334155; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .reveal, .ans { display: none !important; }
+    .card { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Saxon Math 5/4 &mdash; Test 8B Parallel Practice</h1>
+  <div class="sub">Three practice variants (a, b, c) for each Test 8B question &middot; 10-22Miri-practice</div>
+  <div class="card" id="q1">
+    <div class="qhead"><span class="qnum">1.</span><span class="qtag">(35)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Sofia had two quarters, a dime, and four pennies. Write this amount with a dollar sign and decimal point.</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Ben had a quarter, three dimes, and two pennies. Write this amount with a dollar sign and decimal point.</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Ava had three dimes, a nickel, and six pennies. Write this amount with a dollar sign and decimal point.</div>
+    <button class="reveal" onclick="toggle(1)">Show Answers</button>
+    <div class="ans" id="ans1"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\$0.64\)<br><b>b.</b> \(\$0.57\)<br><b>c.</b> \(\$0.41\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Two quarters = 50&cent;, a dime = 10&cent;, four pennies = 4&cent;: \(50 + 10 + 4 = 64\) cents.<br><b>b.</b> A quarter = 25&cent;, three dimes = 30&cent;, two pennies = 2&cent;: \(25 + 30 + 2 = 57\) cents.<br><b>c.</b> Three dimes = 30&cent;, a nickel = 5&cent;, six pennies = 6&cent;: \(30 + 5 + 6 = 41\) cents.</div></div>
+  </div>
+
+  <div class="card" id="q2">
+    <div class="qhead"><span class="qnum">2.</span><span class="qtag">(11)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Marion is 145 miles west of Cleveland. Lima is 60 miles west of Cleveland. How far is it from Lima to Marion?<div class="fig"><svg viewBox="0 0 460 70" width="420" role="img" aria-label="Map line"><line x1="30" y1="40" x2="430" y2="40" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="30" cy="40" r="5" fill="#1e3a8a"/><circle cx="300" cy="40" r="5" fill="#1e3a8a"/><circle cx="430" cy="40" r="5" fill="#1e3a8a"/><text x="30" y="22" font-size="15" text-anchor="middle">Marion</text><text x="300" y="22" font-size="15" text-anchor="middle">Lima</text><text x="430" y="22" font-size="15" text-anchor="middle">Cleveland</text></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Reno is 218 miles west of Salt Lake City. Elko is 130 miles west of Salt Lake City. How far is it from Elko to Reno?<div class="fig"><svg viewBox="0 0 460 70" width="420" role="img" aria-label="Map line"><line x1="30" y1="40" x2="430" y2="40" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="30" cy="40" r="5" fill="#1e3a8a"/><circle cx="300" cy="40" r="5" fill="#1e3a8a"/><circle cx="430" cy="40" r="5" fill="#1e3a8a"/><text x="30" y="22" font-size="15" text-anchor="middle">Reno</text><text x="300" y="22" font-size="15" text-anchor="middle">Elko</text><text x="430" y="22" font-size="15" text-anchor="middle">Salt Lake City</text></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Yuma is 184 miles west of Phoenix. Gila Bend is 69 miles west of Phoenix. How far is it from Gila Bend to Yuma?<div class="fig"><svg viewBox="0 0 460 70" width="420" role="img" aria-label="Map line"><line x1="30" y1="40" x2="430" y2="40" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="30" cy="40" r="5" fill="#1e3a8a"/><circle cx="300" cy="40" r="5" fill="#1e3a8a"/><circle cx="430" cy="40" r="5" fill="#1e3a8a"/><text x="30" y="22" font-size="15" text-anchor="middle">Yuma</text><text x="300" y="22" font-size="15" text-anchor="middle">Gila Bend</text><text x="430" y="22" font-size="15" text-anchor="middle">Phoenix</text></svg></div></div>
+    <button class="reveal" onclick="toggle(2)">Show Answers</button>
+    <div class="ans" id="ans2"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(85\text{ miles}\)<br><b>b.</b> \(88\text{ miles}\)<br><b>c.</b> \(115\text{ miles}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Both cities are west of Cleveland, Marion farther: \(145 - 60 = 85\) miles.<br><b>b.</b> Both cities are west of Salt Lake City, Reno farther: \(218 - 130 = 88\) miles.<br><b>c.</b> Both cities are west of Phoenix, Yuma farther: \(184 - 69 = 115\) miles.</div></div>
+  </div>
+
+  <div class="card" id="q3">
+    <div class="qhead"><span class="qnum">3.</span><span class="qtag">(37)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Name the fraction or mixed number marked by the arrow on this number line:<div class="fig"><svg viewBox="0 0 480 110" width="440" role="img" aria-label="Number line"><line x1="25" y1="70" x2="485" y2="70" stroke="#1e3a8a" stroke-width="2.5"/><polygon points="485,70 470,64 470,76" fill="#1e3a8a"/><line x1="60" y1="62" x2="60" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="60" y="98" font-size="16" text-anchor="middle">0</text><line x1="92" y1="65" x2="92" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="125" y1="65" x2="125" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="158" y1="65" x2="158" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="190" y1="62" x2="190" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="190" y="98" font-size="16" text-anchor="middle">1</text><line x1="222" y1="65" x2="222" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="255" y1="65" x2="255" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="288" y1="65" x2="288" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="320" y1="62" x2="320" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="320" y="98" font-size="16" text-anchor="middle">2</text><line x1="352" y1="65" x2="352" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="385" y1="65" x2="385" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="418" y1="65" x2="418" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="450" y1="62" x2="450" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="450" y="98" font-size="16" text-anchor="middle">3</text><line x1="352" y1="12" x2="352" y2="48" stroke="#b91c1c" stroke-width="3"/><polygon points="352,56 346,44 358,44" fill="#b91c1c"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Name the fraction or mixed number marked by the arrow on this number line:<div class="fig"><svg viewBox="0 0 480 110" width="440" role="img" aria-label="Number line"><line x1="25" y1="70" x2="485" y2="70" stroke="#1e3a8a" stroke-width="2.5"/><polygon points="485,70 470,64 470,76" fill="#1e3a8a"/><line x1="60" y1="62" x2="60" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="60" y="98" font-size="16" text-anchor="middle">0</text><line x1="92" y1="65" x2="92" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="125" y1="65" x2="125" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="158" y1="65" x2="158" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="190" y1="62" x2="190" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="190" y="98" font-size="16" text-anchor="middle">1</text><line x1="222" y1="65" x2="222" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="255" y1="65" x2="255" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="288" y1="65" x2="288" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="320" y1="62" x2="320" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="320" y="98" font-size="16" text-anchor="middle">2</text><line x1="352" y1="65" x2="352" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="385" y1="65" x2="385" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="418" y1="65" x2="418" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="450" y1="62" x2="450" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="450" y="98" font-size="16" text-anchor="middle">3</text><line x1="255" y1="12" x2="255" y2="48" stroke="#b91c1c" stroke-width="3"/><polygon points="255,56 249,44 261,44" fill="#b91c1c"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Name the fraction or mixed number marked by the arrow on this number line:<div class="fig"><svg viewBox="0 0 480 110" width="440" role="img" aria-label="Number line"><line x1="25" y1="70" x2="485" y2="70" stroke="#1e3a8a" stroke-width="2.5"/><polygon points="485,70 470,64 470,76" fill="#1e3a8a"/><line x1="60" y1="62" x2="60" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="60" y="98" font-size="16" text-anchor="middle">0</text><line x1="92" y1="65" x2="92" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="125" y1="65" x2="125" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="158" y1="65" x2="158" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="190" y1="62" x2="190" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="190" y="98" font-size="16" text-anchor="middle">1</text><line x1="222" y1="65" x2="222" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="255" y1="65" x2="255" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="288" y1="65" x2="288" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="320" y1="62" x2="320" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="320" y="98" font-size="16" text-anchor="middle">2</text><line x1="352" y1="65" x2="352" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="385" y1="65" x2="385" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="418" y1="65" x2="418" y2="75" stroke="#1e3a8a" stroke-width="2"/><line x1="450" y1="62" x2="450" y2="78" stroke="#1e3a8a" stroke-width="2"/><text x="450" y="98" font-size="16" text-anchor="middle">3</text><line x1="418" y1="12" x2="418" y2="48" stroke="#b91c1c" stroke-width="3"/><polygon points="418,56 412,44 424,44" fill="#b91c1c"/></svg></div></div>
+    <button class="reveal" onclick="toggle(3)">Show Answers</button>
+    <div class="ans" id="ans3"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(2\dfrac{1}{4}\)<br><b>b.</b> \(1\dfrac{1}{2}\)<br><b>c.</b> \(2\dfrac{3}{4}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Each whole is divided into 4 equal parts (ticks of \(\frac{1}{4}\)). The arrow is at the first tick past 2: \(2\frac{1}{4}\).<br><b>b.</b> The arrow is at the second tick past 1: \(1\frac{2}{4} = 1\frac{1}{2}\).<br><b>c.</b> The arrow is at the third tick past 2: \(2\frac{3}{4}\).</div></div>
+  </div>
+
+  <div class="card" id="q4">
+    <div class="qhead"><span class="qnum">4.</span><span class="qtag">(Inv. 1)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Compare: \(14 + 16 + 25 \bigcirc 6 \times 8\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Compare: \(21 + 19 + 18 \bigcirc 7 \times 9\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Compare: \(15 + 25 + 20 \bigcirc 6 \times 10\)</div>
+    <button class="reveal" onclick="toggle(4)">Show Answers</button>
+    <div class="ans" id="ans4"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(>\)<br><b>b.</b> \(<\)<br><b>c.</b> \(=\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(14 + 16 + 25 = 55\) and \(6 \times 8 = 48\); \(55 > 48\).<br><b>b.</b> \(21 + 19 + 18 = 58\) and \(7 \times 9 = 63\); \(58 < 63\).<br><b>c.</b> \(15 + 25 + 20 = 60\) and \(6 \times 10 = 60\); the two sides are equal.</div></div>
+  </div>
+
+  <div class="card" id="q5">
+    <div class="qhead"><span class="qnum">5.</span><span class="qtag">(40)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> How many cups of milk equal one pint?</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> How many pints of milk equal one quart?</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> How many fluid ounces equal one cup?</div>
+    <button class="reveal" onclick="toggle(5)">Show Answers</button>
+    <div class="ans" id="ans5"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(2\text{ cups}\)<br><b>b.</b> \(2\text{ pints}\)<br><b>c.</b> \(8\text{ fluid ounces}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> One pint equals 2 cups.<br><b>b.</b> One quart equals 2 pints.<br><b>c.</b> One cup equals 8 fluid ounces.</div></div>
+  </div>
+
+  <div class="card" id="q6">
+    <div class="qhead"><span class="qnum">6.</span><span class="qtag">(33)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Use words to write 527,304.</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Use words to write 693,050.</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Use words to write 408,716.</div>
+    <button class="reveal" onclick="toggle(6)">Show Answers</button>
+    <div class="ans" id="ans6"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\text{Five hundred twenty-seven thousand, three hundred four}\)<br><b>b.</b> \(\text{Six hundred ninety-three thousand, fifty}\)<br><b>c.</b> \(\text{Four hundred eight thousand, seven hundred sixteen}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> 527 thousands and 304 ones.<br><b>b.</b> 693 thousands and 50 ones (no hundreds digit spoken).<br><b>c.</b> 408 thousands and 716 ones.</div></div>
+  </div>
+
+  <div class="card" id="q7">
+    <div class="qhead"><span class="qnum">7.</span><span class="qtag">(26)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Draw a circle and shade one fourth of it.<div class="fig"><svg viewBox="0 0 160 160" width="150" role="img" aria-label="Circle divided into 4"><path d="M 80 80 L 80.0 18.0 A 62 62 0 0 1 142.0 80.0 Z" fill="#93c5fd"/><circle cx="80" cy="80" r="62" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="80" y1="80" x2="80.0" y2="18.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="142.0" y2="80.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="80.0" y2="142.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="18.0" y2="80.0" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Draw a circle and shade one third of it.<div class="fig"><svg viewBox="0 0 160 160" width="150" role="img" aria-label="Circle divided into 3"><path d="M 80 80 L 80.0 18.0 A 62 62 0 0 1 133.7 111.0 Z" fill="#93c5fd"/><circle cx="80" cy="80" r="62" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="80" y1="80" x2="80.0" y2="18.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="133.7" y2="111.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="26.3" y2="111.0" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Draw a circle and shade one eighth of it.<div class="fig"><svg viewBox="0 0 160 160" width="150" role="img" aria-label="Circle divided into 8"><path d="M 80 80 L 80.0 18.0 A 62 62 0 0 1 123.8 36.2 Z" fill="#93c5fd"/><circle cx="80" cy="80" r="62" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="80" y1="80" x2="80.0" y2="18.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="123.8" y2="36.2" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="142.0" y2="80.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="123.8" y2="123.8" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="80.0" y2="142.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="36.2" y2="123.8" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="18.0" y2="80.0" stroke="#1e3a8a" stroke-width="2"/><line x1="80" y1="80" x2="36.2" y2="36.2" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <button class="reveal" onclick="toggle(7)">Show Answers</button>
+    <div class="ans" id="ans7"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\dfrac{1}{4}\text{ shaded (see figure)}\)<br><b>b.</b> \(\dfrac{1}{3}\text{ shaded (see figure)}\)<br><b>c.</b> \(\dfrac{1}{8}\text{ shaded (see figure)}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Divide the circle into 4 equal parts and shade 1.<br><b>b.</b> Divide the circle into 3 equal parts and shade 1.<br><b>c.</b> Divide the circle into 8 equal parts and shade 1.</div></div>
+  </div>
+
+  <div class="card" id="q8">
+    <div class="qhead"><span class="qnum">8.</span><span class="qtag">(7, Inv. 1)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Use digits and symbols to compare three hundred twenty-six and three hundred sixty-two.</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Use digits and symbols to compare five hundred forty and four hundred fifty.</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Use digits and symbols to compare six hundred eight and six hundred eighty.</div>
+    <button class="reveal" onclick="toggle(8)">Show Answers</button>
+    <div class="ans" id="ans8"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(326 < 362\)<br><b>b.</b> \(540 > 450\)<br><b>c.</b> \(608 < 680\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> 326 has 2 tens; 362 has 6 tens, so \(326 < 362\).<br><b>b.</b> 540 has 5 hundreds; 450 has 4 hundreds, so \(540 > 450\).<br><b>c.</b> 608 has 0 tens; 680 has 8 tens, so \(608 < 680\).</div></div>
+  </div>
+
+  <div class="card" id="q9">
+    <div class="qhead"><span class="qnum">9.</span><span class="qtag">(23)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Which letter below has a right angle?<div class="letters">P&ensp;R&ensp;T&ensp;U</div></div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Which letter below has a right angle?<div class="letters">C&ensp;E&ensp;G&ensp;S</div></div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Which letter below has a right angle?<div class="letters">F&ensp;J&ensp;O&ensp;V</div></div>
+    <button class="reveal" onclick="toggle(9)">Show Answers</button>
+    <div class="ans" id="ans9"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\text{T}\)<br><b>b.</b> \(\text{E}\)<br><b>c.</b> \(\text{F}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> The top bar of the T meets its stem at a square corner — a right angle.<br><b>b.</b> The E is built from straight lines meeting at right angles; C, G, and S are curves.<br><b>c.</b> The F's strokes meet at right angles; J and O are curved, and V has only an acute angle.</div></div>
+  </div>
+
+  <div class="card" id="q10">
+    <div class="qhead"><span class="qnum">10.</span><span class="qtag">(Inv. 2)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> What is the perimeter of a rectangle that is 6 cm long and 2 cm wide?</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> What is the perimeter of a square that is 5 cm on each side?</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> What is the perimeter of a rectangle that is 7 cm long and 4 cm wide?</div>
+    <button class="reveal" onclick="toggle(10)">Show Answers</button>
+    <div class="ans" id="ans10"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(16\text{ cm}\)<br><b>b.</b> \(20\text{ cm}\)<br><b>c.</b> \(22\text{ cm}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(P = 6 + 2 + 6 + 2 = 16\) cm.<br><b>b.</b> \(P = 4 \times 5 = 20\) cm.<br><b>c.</b> \(P = 7 + 4 + 7 + 4 = 22\) cm.</div></div>
+  </div>
+
+  <div class="card" id="q11">
+    <div class="qhead"><span class="qnum">11.</span><span class="qtag">(20)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Round 64 to the nearest ten. Round 58 to the nearest ten. Add the rounded numbers.</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Round 87 to the nearest ten. Round 92 to the nearest ten. Add the rounded numbers.</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Round 45 to the nearest ten. Round 76 to the nearest ten. Add the rounded numbers.</div>
+    <button class="reveal" onclick="toggle(11)">Show Answers</button>
+    <div class="ans" id="ans11"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(120\)<br><b>b.</b> \(180\)<br><b>c.</b> \(130\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> 64 → 60; 58 → 60; \(60 + 60 = 120\).<br><b>b.</b> 87 → 90; 92 → 90; \(90 + 90 = 180\).<br><b>c.</b> 45 → 50 (round half up); 76 → 80; \(50 + 80 = 130\).</div></div>
+  </div>
+
+  <div class="card" id="q12">
+    <div class="qhead"><span class="qnum">12.</span><span class="qtag">(Inv. 2, 21)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> If the radius of a circle is 2 feet, then the diameter is how many inches?</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> If the radius of a circle is 1 foot, then the diameter is how many inches?</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> If the radius of a circle is 3 yards, then the diameter is how many feet?</div>
+    <button class="reveal" onclick="toggle(12)">Show Answers</button>
+    <div class="ans" id="ans12"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(48\text{ inches}\)<br><b>b.</b> \(24\text{ inches}\)<br><b>c.</b> \(18\text{ feet}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Diameter \(= 2 \times 2 = 4\) feet; \(4 \times 12 = 48\) inches.<br><b>b.</b> Diameter \(= 2 \times 1 = 2\) feet; \(2 \times 12 = 24\) inches.<br><b>c.</b> Diameter \(= 2 \times 3 = 6\) yards; \(6 \times 3 = 18\) feet.</div></div>
+  </div>
+
+  <div class="card" id="q13">
+    <div class="qhead"><span class="qnum">13.</span><span class="qtag">(35)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> What mixed number is shown by the shaded rectangles?<div class="fig"><svg viewBox="0 0 340 110" width="320" role="img" aria-label="Shaded rectangles"><rect x="20" y="25" width="70" height="60" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/><rect x="110.0" y="25" width="17.5" height="60" fill="#93c5fd"/><rect x="127.5" y="25" width="17.5" height="60" fill="#93c5fd"/><rect x="145.0" y="25" width="17.5" height="60" fill="#93c5fd"/><rect x="162.5" y="25" width="17.5" height="60" fill="#ffffff"/><rect x="110" y="25" width="70" height="60" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="127.5" y1="25" x2="127.5" y2="85" stroke="#1e3a8a" stroke-width="2"/><line x1="145.0" y1="25" x2="145.0" y2="85" stroke="#1e3a8a" stroke-width="2"/><line x1="162.5" y1="25" x2="162.5" y2="85" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">b.</span> What mixed number is shown by the shaded rectangles?<div class="fig"><svg viewBox="0 0 340 110" width="320" role="img" aria-label="Shaded rectangles"><rect x="20" y="25" width="70" height="60" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/><rect x="110" y="25" width="70" height="60" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/><rect x="200.0" y="25" width="35.0" height="60" fill="#93c5fd"/><rect x="235.0" y="25" width="35.0" height="60" fill="#ffffff"/><rect x="200" y="25" width="70" height="60" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="235.0" y1="25" x2="235.0" y2="85" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <div class="variant qbody"><span class="vlabel">c.</span> What mixed number is shown by the shaded rectangles?<div class="fig"><svg viewBox="0 0 340 110" width="320" role="img" aria-label="Shaded rectangles"><rect x="20" y="25" width="70" height="60" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2.5"/><rect x="110.0" y="25" width="23.3" height="60" fill="#93c5fd"/><rect x="133.3" y="25" width="23.3" height="60" fill="#ffffff"/><rect x="156.7" y="25" width="23.3" height="60" fill="#ffffff"/><rect x="110" y="25" width="70" height="60" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="133.3" y1="25" x2="133.3" y2="85" stroke="#1e3a8a" stroke-width="2"/><line x1="156.7" y1="25" x2="156.7" y2="85" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <button class="reveal" onclick="toggle(13)">Show Answers</button>
+    <div class="ans" id="ans13"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(1\dfrac{3}{4}\)<br><b>b.</b> \(2\dfrac{1}{2}\)<br><b>c.</b> \(1\dfrac{1}{3}\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> One whole rectangle plus 3 of 4 parts: \(1\frac{3}{4}\).<br><b>b.</b> Two whole rectangles plus 1 of 2 parts: \(2\frac{1}{2}\).<br><b>c.</b> One whole rectangle plus 1 of 3 parts: \(1\frac{1}{3}\).</div></div>
+  </div>
+
+  <div class="card" id="q14">
+    <div class="qhead"><span class="qnum">14.</span><span class="qtag">(30)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> \(\$5.26 - \$3.49\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> \(\$7.05 - \$2.68\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> \(\$6.40 - \$4.75\)</div>
+    <button class="reveal" onclick="toggle(14)">Show Answers</button>
+    <div class="ans" id="ans14"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\$1.77\)<br><b>b.</b> \(\$4.37\)<br><b>c.</b> \(\$1.65\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(\$5.26 - \$3.49 = \$1.77\).<br><b>b.</b> \(\$7.05 - \$2.68 = \$4.37\).<br><b>c.</b> \(\$6.40 - \$4.75 = \$1.65\).</div></div>
+  </div>
+
+  <div class="card" id="q15">
+    <div class="qhead"><span class="qnum">15.</span><span class="qtag">(Inv. 3)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> \(\sqrt{49}\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> \(\sqrt{64}\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> \(\sqrt{25}\)</div>
+    <button class="reveal" onclick="toggle(15)">Show Answers</button>
+    <div class="ans" id="ans15"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(7\)<br><b>b.</b> \(8\)<br><b>c.</b> \(5\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(7 \times 7 = 49\).<br><b>b.</b> \(8 \times 8 = 64\).<br><b>c.</b> \(5 \times 5 = 25\).</div></div>
+  </div>
+
+  <div class="card" id="q16">
+    <div class="qhead"><span class="qnum">16.</span><span class="qtag">(17)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> \(\$154 + \$387 + \$29\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> \(\$465 + \$128 + \$307\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> \(\$238 + \$95 + \$416\)</div>
+    <button class="reveal" onclick="toggle(16)">Show Answers</button>
+    <div class="ans" id="ans16"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\$570\)<br><b>b.</b> \(\$900\)<br><b>c.</b> \(\$749\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(154 + 387 = 541\); \(541 + 29 = 570\).<br><b>b.</b> \(465 + 128 = 593\); \(593 + 307 = 900\).<br><b>c.</b> \(238 + 95 = 333\); \(333 + 416 = 749\).</div></div>
+  </div>
+
+  <div class="card" id="q17">
+    <div class="qhead"><span class="qnum">17.</span><span class="qtag">(29, 38)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> <b>(i)</b> \(6 \times 5\) &emsp; <b>(ii)</b> \(8 \times 5\) &emsp; <b>(iii)</b> \(7 \times 5\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> <b>(i)</b> \(6 \times 3\) &emsp; <b>(ii)</b> \(8 \times 3\) &emsp; <b>(iii)</b> \(7 \times 3\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> <b>(i)</b> \(6 \times 6\) &emsp; <b>(ii)</b> \(8 \times 6\) &emsp; <b>(iii)</b> \(7 \times 6\)</div>
+    <button class="reveal" onclick="toggle(17)">Show Answers</button>
+    <div class="ans" id="ans17"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(\text{(i) }30,\ \text{(ii) }40,\ \text{(iii) }35\)<br><b>b.</b> \(\text{(i) }18,\ \text{(ii) }24,\ \text{(iii) }21\)<br><b>c.</b> \(\text{(i) }36,\ \text{(ii) }48,\ \text{(iii) }42\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Count by fives: 6 fives = 30, 8 fives = 40, 7 fives = 35.<br><b>b.</b> Count by threes: 6 threes = 18, 8 threes = 24, 7 threes = 21.<br><b>c.</b> Count by sixes: 6 sixes = 36, 8 sixes = 48, 7 sixes = 42.</div></div>
+  </div>
+
+  <div class="card" id="q18">
+    <div class="qhead"><span class="qnum">18.</span><span class="qtag">(24)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Find the missing number: \(\begin{array}{r} E \\ +\,245 \\ \hline 613 \end{array}\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Find the missing number: \(\begin{array}{r} M \\ +\,178 \\ \hline 402 \end{array}\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Find the missing number: \(\begin{array}{r} R \\ +\,356 \\ \hline 721 \end{array}\)</div>
+    <button class="reveal" onclick="toggle(18)">Show Answers</button>
+    <div class="ans" id="ans18"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(E = 368\)<br><b>b.</b> \(M = 224\)<br><b>c.</b> \(R = 365\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(E = 613 - 245 = 368\). Check: \(368 + 245 = 613\).<br><b>b.</b> \(M = 402 - 178 = 224\). Check: \(224 + 178 = 402\).<br><b>c.</b> \(R = 721 - 356 = 365\). Check: \(365 + 356 = 721\).</div></div>
+  </div>
+
+  <div class="card" id="q19">
+    <div class="qhead"><span class="qnum">19.</span><span class="qtag">(16)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> Find the missing number: \(\begin{array}{r} Y \\ -\,235 \\ \hline 317 \end{array}\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> Find the missing number: \(\begin{array}{r} K \\ -\,469 \\ \hline 258 \end{array}\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> Find the missing number: \(\begin{array}{r} T \\ -\,184 \\ \hline 526 \end{array}\)</div>
+    <button class="reveal" onclick="toggle(19)">Show Answers</button>
+    <div class="ans" id="ans19"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(Y = 552\)<br><b>b.</b> \(K = 727\)<br><b>c.</b> \(T = 710\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> \(Y = 317 + 235 = 552\). Check: \(552 - 235 = 317\).<br><b>b.</b> \(K = 258 + 469 = 727\). Check: \(727 - 469 = 258\).<br><b>c.</b> \(T = 526 + 184 = 710\). Check: \(710 - 184 = 526\).</div></div>
+  </div>
+
+  <div class="card" id="q20">
+    <div class="qhead"><span class="qnum">20.</span><span class="qtag">(2)</span></div>
+    <div class="variant qbody"><span class="vlabel">a.</span> \(54 + 38 + 76 + 29 + N = 240\)</div>
+    <div class="variant qbody"><span class="vlabel">b.</span> \(87 + 45 + 63 + 18 + N = 250\)</div>
+    <div class="variant qbody"><span class="vlabel">c.</span> \(39 + 64 + 52 + 71 + N = 260\)</div>
+    <button class="reveal" onclick="toggle(20)">Show Answers</button>
+    <div class="ans" id="ans20"><div class="anslabel">Answers</div><div class="math"><b>a.</b> \(N = 43\)<br><b>b.</b> \(N = 37\)<br><b>c.</b> \(N = 34\)</div>
+    <div class="anslabel">Solutions</div><div class="sol"><b>a.</b> Known sum: \(54 + 38 + 76 + 29 = 197\); \(N = 240 - 197 = 43\).<br><b>b.</b> Known sum: \(87 + 45 + 63 + 18 = 213\); \(N = 250 - 213 = 37\).<br><b>c.</b> Known sum: \(39 + 64 + 52 + 71 = 226\); \(N = 260 - 226 = 34\).</div></div>
+  </div>
+
+</div>
+<script>
+function toggle(n){
+  var a = document.getElementById('ans'+n);
+  var b = document.querySelector('#q'+n+' .reveal');
+  var open = a.classList.toggle('open');
+  b.textContent = open ? 'Hide Answers' : 'Show Answers';
+  if (window.MathJax) MathJax.typesetPromise([a]);
+}
+</script>
+</body>
+</html>
