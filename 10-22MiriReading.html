@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-22 Miriam Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-22 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-22, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Monarch's Great Journey",
+    "passage": "Every autumn, millions of monarch butterflies embark on a journey of up to 3,000 miles from North America to the warm pine forests of central Mexico. Unlike birds that learn flight paths from parents, young monarchs make this voyage for the first time without any adult guides. They rely on environmental cues, including the position of the sun and Earth’s magnetic field, to stay on course. Along the way, they rest on trees in groups called roosts to shelter from wind and cold. When spring arrives, these same butterflies begin the return journey north, laying eggs on milkweed plants before dying. It takes four generations of butterflies to complete the full round-trip cycle each year.",
+    "prompt": "In the passage, the word “embark” most nearly means…",
+    "options": [
+     "start out on a long trip",
+     "fly backwards in circles",
+     "hide from larger animals",
+     "sleep for the whole winter"
+    ],
+    "correct": 0,
+    "explanation": "“Embark” means to start a journey — the monarchs embark on their 3,000-mile flight every autumn."
+   },
+   {
+    "title": "The Mystery of Honeybees",
+    "passage": "Inside a honeybee hive, communication happens through movement rather than sound. When a worker bee discovers a rich patch of flowers, she returns to the dark hive and performs a special movement known as the 'waggle dance.' By running in a figure-eight pattern and shaking her abdomen, the bee tells her hive mates the exact distance and direction to the nectar source relative to the sun. If the food is nearby, she does a simpler round dance instead. Other bees closely watch and touch her with their antennae to decode the message. This remarkable team effort allows a single hive to gather food from thousands of flowers across several square miles.",
+    "prompt": "In the passage, the word “decode” most nearly means…",
+    "options": [
+     "figure out the meaning of a message",
+     "build a honeycomb structure",
+     "make a loud buzzing sound",
+     "collect sweet nectar from flowers"
+    ],
+    "correct": 0,
+    "explanation": "To “decode” means to understand or translate a message — the bees decode the dancer’s signals to find the flowers."
+   },
+   {
+    "title": "The Echo in the Dark",
+    "passage": "Bats hunt in complete darkness without crashing into obstacles or missing their prey. They achieve this through echolocation, a high-tech survival system built into their bodies. As a bat flies, it emits high-pitched squeaks that travel through the air as sound waves. When these waves hit an object — whether a thick tree branch or a tiny, hovering moth — they bounce back to the bat's sensitive ears as echoes. By analyzing the time it takes for the echo to return and how loud it sounds, the bat creates a mental map of its surroundings. In less than a second, a bat can determine an insect's size, speed, and precise location in total darkness.",
+    "prompt": "In the passage, the word “emits” most nearly means…",
+    "options": [
+     "sends out or releases",
+     "catches and eats",
+     "stops and listens carefully",
+     "draws a picture on a wall"
+    ],
+    "correct": 0,
+    "explanation": "To “emit” means to send out or produce — the bat emits high-pitched squeaks into the night air."
+   },
+   {
+    "title": "The Secrets of Beaver Dams",
+    "passage": "Beavers are famous as nature’s busiest engineers. Using their strong, sharp teeth, they gnaw through tree trunks until the trees fall into rivers or streams. They pile logs, branches, mud, and stones across the flowing water to build sturdy dams. These dams block the water flow and create deep, calm ponds behind them. The pond protects the beaver’s lodge from predators like wolves and bears, who cannot easily cross deep water. Additionally, these new wetlands provide habitats for ducks, frogs, fish, and turtles. Although beaver dams can sometimes flood nearby roads, they play a crucial role in creating rich ecosystems that support hundreds of wild species.",
+    "prompt": "In the passage, the word “ecosystems” most nearly means…",
+    "options": [
+     "communities of living things interacting with their environment",
+     "deep rivers that flow very fast through mountains",
+     "strong wooden lodges built out of branches and mud",
+     "groups of animals that hunt together in winter"
+    ],
+    "correct": 0,
+    "explanation": "An “ecosystem” is a community where living organisms interact with each other and their environment."
+   },
+   {
+    "title": "The Solar Eclipse",
+    "passage": "A solar eclipse is one of nature’s most breathtaking events. It happens when the moon passes directly between Earth and the sun, blocking the sun’s light from reaching parts of Earth. During a total solar eclipse, the moon completely covers the sun’s bright disk, casting a deep shadow on the ground below. Day suddenly turns into twilight, the air temperature drops noticeably, and birds often grow quiet, thinking night has fallen. Although the sun is 400 times larger than the moon, the moon can block it because it is also 400 times closer to Earth! Spectators must always wear certified solar viewing glasses to look at an eclipse safely without damaging their eyes.",
+    "prompt": "In the passage, the word “twilight” most nearly means…",
+    "options": [
+     "dim light between daylight and full darkness",
+     "bright noon sunlight on a clear day",
+     "total darkness at midnight",
+     "a sudden flash of lightning during a storm"
+    ],
+    "correct": 0,
+    "explanation": "“Twilight” is dim, soft light seen when full sunlight is blocked or during sunset."
+   },
+   {
+    "title": "The Hidden World of Fungi",
+    "passage": "Beneath the quiet floor of a forest lies a vast, interconnected network called mycelium. Made of microscopic white threads produced by fungi, this subterranean web connects the roots of trees and plants throughout the woods. Through this network, trees can share vital nutrients, water, and emergency warnings with neighboring plants. If a tree is attacked by harmful insects, it can send chemical signals through the mycelium to alert nearby trees, allowing them to produce protective chemical defenses before the pests arrive. Scientists often call this underground system the 'Wood Wide Web' because it functions like an ecological internet, keeping the whole forest healthy and connected.",
+    "prompt": "In the passage, the word “subterranean” most nearly means…",
+    "options": [
+     "existing or occurring underground",
+     "growing high in the treetops",
+     "underwater in a fast river",
+     "moving quickly through the air"
+    ],
+    "correct": 0,
+    "explanation": "“Subterranean” means existing under the earth or ground — mycelium forms a web beneath the forest floor."
+   },
+   {
+    "title": "The Desert Camels",
+    "passage": "Camels are famous for surviving in harsh, dry deserts where water and vegetation are scarce. Many people believe a camel’s hump stores water, but it actually holds a reservoir of dense fat. When food is hard to find, the camel's body breaks down this fat into energy and hydration. Storing fat in a hump rather than evenly across its body allows heat to escape easily from the rest of its skin, keeping the camel cool under the blazing sun. Camels also have wide, padded feet that prevent them from sinking into soft sand, along with long eyelashes and slit-like nostrils that seal tight to keep out blowing sandstorms.",
+    "prompt": "In the passage, the word “scarce” most nearly means…",
+    "options": [
+     "rare or in short supply",
+     "hot and uncomfortable",
+     "easy to find everywhere",
+     "clean and fresh to drink"
+    ],
+    "correct": 0,
+    "explanation": "“Scarce” means limited in quantity or hard to find — food and water are scarce in desert climates."
+   },
+   {
+    "title": "The Deep Sea Anglerfish",
+    "passage": "Deep in the ocean, thousands of feet below the surface, sunlight cannot reach. In this pitch-black, icy environment lives the anglerfish, a predator with a clever hunting strategy. Female anglerfish grow a long spine out of their back that dangles right above their large, toothy jaws. At the tip of this stalk is a glowing bulb filled with millions of bioluminescent bacteria. Unwary small fish and crustaceans in the dark ocean are attracted to the mysterious light like moths to a flame. As soon as a curious creature swims close to investigate the glow, the anglerfish snaps its wide mouth shut, trapping the prey with long, needle-sharp teeth that curve inward so nothing can escape.",
+    "prompt": "In the passage, the word “bioluminescent” most nearly means…",
+    "options": [
+     "capable of producing light naturally",
+     "swimming very fast through water",
+     "freezing cold in temperature",
+     "sharp and pointed like needles"
+    ],
+    "correct": 0,
+    "explanation": "“Bioluminescent” refers to living organisms that generate their own light inside their bodies."
+   },
+   {
+    "title": "The Lightning Bug's Glow",
+    "passage": "On warm summer evenings, meadows and backyards light up with flashing yellow-green sparks from fireflies, also known as lightning bugs. Fireflies produce this light through a chemical reaction in their lower abdomen called bioluminescence, combining oxygen, chemicals, and enzymes with almost zero heat wasted. Each species of firefly has its own unique flashing pattern, rhythm, and color code. Male fireflies flash their specific signals as they fly around, while females sit on grass blades and flash back if they recognize the pattern. This glowing dialogue helps fireflies locate compatible mates in the dark. Sadly, artificial outdoor lighting from human homes and streetlamps can disrupt their signaling, making it harder for fireflies to find each other.",
+    "prompt": "In the passage, the word “disrupt” most nearly means…",
+    "options": [
+     "interrupt or disturb the normal flow",
+     "make brighter and easier to see",
+     "teach or train carefully",
+     "turn into a chemical reaction"
+    ],
+    "correct": 0,
+    "explanation": "To “disrupt” means to disturb or interfere with an ongoing process — bright outdoor lights disrupt firefly signaling."
+   },
+   {
+    "title": "The Great Wall of China",
+    "passage": "Stretching thousands of miles across rugged mountains and vast deserts, the Great Wall of China is one of the grandest architectural achievements in human history. Construction began more than 2,000 years ago during the Qin dynasty as a series of connected earthen walls built to protect northern borders from invading nomadic armies. Over centuries, later dynasties rebuilt and fortified the wall using heavy stone blocks, brick, and mortar. Watchtowers were stationed at regular intervals along the top. Guards positioned in these towers burned wood and straw during the day to create smoke signals, and lit fires at night to quickly send warning messages down the line across vast distances when enemies approached.",
+    "prompt": "In the passage, the word “fortified” most nearly means…",
+    "options": [
+     "strengthened and made more secure",
+     "painted with bright colors",
+     "knocked down completely",
+     "measured with wooden tape"
+    ],
+    "correct": 0,
+    "explanation": "“Fortified” means made stronger against attacks — workers fortified the wall with heavy stone blocks and brick."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "The Monarch's Great Journey",
+    "passage": "Every autumn, millions of monarch butterflies embark on a journey of up to 3,000 miles from North America to the warm pine forests of central Mexico. Unlike birds that learn flight paths from parents, young monarchs make this voyage for the first time without any adult guides. They rely on environmental cues, including the position of the sun and Earth’s magnetic field, to stay on course. Along the way, they rest on trees in groups called roosts to shelter from wind and cold. When spring arrives, these same butterflies begin the return journey north, laying eggs on milkweed plants before dying. It takes four generations of butterflies to complete the full round-trip cycle each year.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Monarch butterflies complete an incredible multi-generational migration across thousands of miles using natural cues.",
+     "Monarch butterflies rest in tree groups called roosts to shelter from wind.",
+     "Pine forests in Mexico provide warm shelter during winter months.",
+     "Milkweed plants are the only place monarch butterflies rest at night."
+    ],
+    "correct": 0,
+    "explanation": "The main idea covers the monarch's entire remarkable migration process across generations and thousands of miles."
+   },
+   {
+    "title": "The Mystery of Honeybees",
+    "passage": "Inside a honeybee hive, communication happens through movement rather than sound. When a worker bee discovers a rich patch of flowers, she returns to the dark hive and performs a special movement known as the 'waggle dance.' By running in a figure-eight pattern and shaking her abdomen, the bee tells her hive mates the exact distance and direction to the nectar source relative to the sun. If the food is nearby, she does a simpler round dance instead. Other bees closely watch and touch her with their antennae to decode the message. This remarkable team effort allows a single hive to gather food from thousands of flowers across several square miles.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Honeybees communicate the location of distant or nearby food sources to their hive mates through specialized dances.",
+     "Worker bees shake their abdomen when they are tired after flying.",
+     "Honeybees prefer gathering nectar from flowers that are several miles away.",
+     "Antennae are used by bees to build honeycomb structures in hives."
+    ],
+    "correct": 0,
+    "explanation": "The passage mainly explains how honeybees use special dances to communicate food locations to other bees."
+   },
+   {
+    "title": "The Echo in the Dark",
+    "passage": "Bats hunt in complete darkness without crashing into obstacles or missing their prey. They achieve this through echolocation, a high-tech survival system built into their bodies. As a bat flies, it emits high-pitched squeaks that travel through the air as sound waves. When these waves hit an object — whether a thick tree branch or a tiny, hovering moth — they bounce back to the bat's sensitive ears as echoes. By analyzing the time it takes for the echo to return and how loud it sounds, the bat creates a mental map of its surroundings. In less than a second, a bat can determine an insect's size, speed, and precise location in total darkness.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Bats use echolocation to navigate and locate prey in total darkness by sensing sound echoes.",
+     "Moths hover near thick tree branches to avoid being caught by bats.",
+     "Bats have sensitive ears that help them hear human voices at night.",
+     "High-pitched squeaks travel faster through cold air than warm air."
+    ],
+    "correct": 0,
+    "explanation": "The passage centers on how echolocation enables bats to map their surroundings and hunt insects in darkness."
+   },
+   {
+    "title": "The Secrets of Beaver Dams",
+    "passage": "Beavers are famous as nature’s busiest engineers. Using their strong, sharp teeth, they gnaw through tree trunks until the trees fall into rivers or streams. They pile logs, branches, mud, and stones across the flowing water to build sturdy dams. These dams block the water flow and create deep, calm ponds behind them. The pond protects the beaver’s lodge from predators like wolves and bears, who cannot easily cross deep water. Additionally, these new wetlands provide habitats for ducks, frogs, fish, and turtles. Although beaver dams can sometimes flood nearby roads, they play a crucial role in creating rich ecosystems that support hundreds of wild species.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Beavers build dams to protect themselves, which creates valuable wetland habitats for many other species.",
+     "Wolves and bears are dangerous predators that hunt near rivers.",
+     "Beaver teeth are strong enough to bite through solid stone.",
+     "Beaver dams flood farm roads during heavy spring rains."
+    ],
+    "correct": 0,
+    "explanation": "The main idea combines why beavers build dams and how those dams benefit the surrounding ecosystem."
+   },
+   {
+    "title": "The Solar Eclipse",
+    "passage": "A solar eclipse is one of nature’s most breathtaking events. It happens when the moon passes directly between Earth and the sun, blocking the sun’s light from reaching parts of Earth. During a total solar eclipse, the moon completely covers the sun’s bright disk, casting a deep shadow on the ground below. Day suddenly turns into twilight, the air temperature drops noticeably, and birds often grow quiet, thinking night has fallen. Although the sun is 400 times larger than the moon, the moon can block it because it is also 400 times closer to Earth! Spectators must always wear certified solar viewing glasses to look at an eclipse safely without damaging their eyes.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "A solar eclipse happens when the moon blocks the sun's light, briefly darkening Earth and altering conditions below.",
+     "Certified solar viewing glasses should be worn whenever you go outside.",
+     "The sun is 400 times larger than any planet in the solar system.",
+     "Birds stop singing every afternoon when the sun goes behind clouds."
+    ],
+    "correct": 0,
+    "explanation": "The passage primarily describes what causes a solar eclipse and the noticeable effects it creates on Earth."
+   },
+   {
+    "title": "The Hidden World of Fungi",
+    "passage": "Beneath the quiet floor of a forest lies a vast, interconnected network called mycelium. Made of microscopic white threads produced by fungi, this subterranean web connects the roots of trees and plants throughout the woods. Through this network, trees can share vital nutrients, water, and emergency warnings with neighboring plants. If a tree is attacked by harmful insects, it can send chemical signals through the mycelium to alert nearby trees, allowing them to produce protective chemical defenses before the pests arrive. Scientists often call this underground system the 'Wood Wide Web' because it functions like an ecological internet, keeping the whole forest healthy and connected.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Underground fungal networks connect forest plants, enabling them to share nutrients and warning signals.",
+     "Insects attack trees by chewing through their subterranean roots.",
+     "Scientists use the internet to keep track of forest growth in national parks.",
+     "Microscopic white threads are found only near the tops of mountain trees."
+    ],
+    "correct": 0,
+    "explanation": "The main point is how the underground mycelium network connects trees and plants to help them share resources and warnings."
+   },
+   {
+    "title": "The Desert Camels",
+    "passage": "Camels are famous for surviving in harsh, dry deserts where water and vegetation are scarce. Many people believe a camel’s hump stores water, but it actually holds a reservoir of dense fat. When food is hard to find, the camel's body breaks down this fat into energy and hydration. Storing fat in a hump rather than evenly across its body allows heat to escape easily from the rest of its skin, keeping the camel cool under the blazing sun. Camels also have wide, padded feet that prevent them from sinking into soft sand, along with long eyelashes and slit-like nostrils that seal tight to keep out blowing sandstorms.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Camels have unique body features, such as fat-storing humps and padded feet, that help them thrive in desert conditions.",
+     "Camels carry heavy loads across sandy deserts for travelers.",
+     "Sandstorms blow thick clouds of dust across dry desert landscapes.",
+     "A camel's hump contains gallons of pure drinking water."
+    ],
+    "correct": 0,
+    "explanation": "The main idea summarizes the physical adaptations that enable camels to survive in hot, dry desert environments."
+   },
+   {
+    "title": "The Deep Sea Anglerfish",
+    "passage": "Deep in the ocean, thousands of feet below the surface, sunlight cannot reach. In this pitch-black, icy environment lives the anglerfish, a predator with a clever hunting strategy. Female anglerfish grow a long spine out of their back that dangles right above their large, toothy jaws. At the tip of this stalk is a glowing bulb filled with millions of bioluminescent bacteria. Unwary small fish and crustaceans in the dark ocean are attracted to the mysterious light like moths to a flame. As soon as a curious creature swims close to investigate the glow, the anglerfish snaps its wide mouth shut, trapping the prey with long, needle-sharp teeth that curve inward so nothing can escape.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Female anglerfish use a bioluminescent glowing lure to attract and trap prey in the pitch-black deep sea.",
+     "Sunlight cannot reach the bottom of the ocean floor past one hundred feet.",
+     "Crustaceans in the deep sea prefer eating glowing bacteria.",
+     "Female anglerfish are much smaller than male anglerfish."
+    ],
+    "correct": 0,
+    "explanation": "The text focuses on the anglerfish's specialized glowing lure and sharp teeth used for hunting in the dark ocean."
+   },
+   {
+    "title": "The Lightning Bug's Glow",
+    "passage": "On warm summer evenings, meadows and backyards light up with flashing yellow-green sparks from fireflies, also known as lightning bugs. Fireflies produce this light through a chemical reaction in their lower abdomen called bioluminescence, combining oxygen, chemicals, and enzymes with almost zero heat wasted. Each species of firefly has its own unique flashing pattern, rhythm, and color code. Male fireflies flash their specific signals as they fly around, while females sit on grass blades and flash back if they recognize the pattern. This glowing dialogue helps fireflies locate compatible mates in the dark. Sadly, artificial outdoor lighting from human homes and streetlamps can disrupt their signaling, making it harder for fireflies to find each other.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Fireflies produce glowing light patterns to communicate with potential mates in the summer night.",
+     "Streetlamps light up city neighborhoods on warm summer nights.",
+     "Male fireflies spend all summer resting quietly on blades of grass.",
+     "Bioluminescence produces intense heat that warms up summer air."
+    ],
+    "correct": 0,
+    "explanation": "The passage centers on how fireflies use bioluminescent light signals as a communication code to locate mates."
+   },
+   {
+    "title": "The Great Wall of China",
+    "passage": "Stretching thousands of miles across rugged mountains and vast deserts, the Great Wall of China is one of the grandest architectural achievements in human history. Construction began more than 2,000 years ago during the Qin dynasty as a series of connected earthen walls built to protect northern borders from invading nomadic armies. Over centuries, later dynasties rebuilt and fortified the wall using heavy stone blocks, brick, and mortar. Watchtowers were stationed at regular intervals along the top. Guards positioned in these towers burned wood and straw during the day to create smoke signals, and lit fires at night to quickly send warning messages down the line across vast distances when enemies approached.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Great Wall of China was built and expanded over centuries as a massive defensive barrier with watchtowers and signal systems.",
+     "Guards burned wood and straw to cook meals on top of watchtowers.",
+     "Smoke signals can be seen easily through thick clouds on rainy days.",
+     "The Qin dynasty was the only group to build stone walls in Asia."
+    ],
+    "correct": 0,
+    "explanation": "The text describes the construction history, structural features, and defensive signal methods of the Great Wall of China."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Monarch's Great Journey",
+    "passage": "Every autumn, millions of monarch butterflies embark on a journey of up to 3,000 miles from North America to the warm pine forests of central Mexico. Unlike birds that learn flight paths from parents, young monarchs make this voyage for the first time without any adult guides. They rely on environmental cues, including the position of the sun and Earth’s magnetic field, to stay on course. Along the way, they rest on trees in groups called roosts to shelter from wind and cold. When spring arrives, these same butterflies begin the return journey north, laying eggs on milkweed plants before dying. It takes four generations of butterflies to complete the full round-trip cycle each year.",
+    "prompt": "Why is milkweed essential for the continuation of the monarch butterfly species?",
+    "options": [
+     "Returning female monarchs need milkweed plants to lay their eggs for the next generation.",
+     "Milkweed flowers keep monarchs warm during freezing Mexican winters.",
+     "Monarchs use milkweed leaves to build roosting shelters in trees.",
+     "Milkweed plants guide butterflies back to North America like a compass."
+    ],
+    "correct": 0,
+    "explanation": "The passage explains that returning monarchs lay their eggs on milkweed plants before dying, making milkweed vital for the next generation."
+   },
+   {
+    "title": "The Mystery of Honeybees",
+    "passage": "Inside a honeybee hive, communication happens through movement rather than sound. When a worker bee discovers a rich patch of flowers, she returns to the dark hive and performs a special movement known as the 'waggle dance.' By running in a figure-eight pattern and shaking her abdomen, the bee tells her hive mates the exact distance and direction to the nectar source relative to the sun. If the food is nearby, she does a simpler round dance instead. Other bees closely watch and touch her with their antennae to decode the message. This remarkable team effort allows a single hive to gather food from thousands of flowers across several square miles.",
+    "prompt": "What would other bees in the hive infer if a returning worker performed a round dance instead of a waggle dance?",
+    "options": [
+     "The flower patch is located very close to the hive.",
+     "The flower patch is several miles away across the forest.",
+     "The food source has no nectar left to gather.",
+     "There are dangerous predators waiting near the flowers."
+    ],
+    "correct": 0,
+    "explanation": "The passage explicitly states: 'If the food is nearby, she does a simpler round dance instead.'"
+   },
+   {
+    "title": "The Echo in the Dark",
+    "passage": "Bats hunt in complete darkness without crashing into obstacles or missing their prey. They achieve this through echolocation, a high-tech survival system built into their bodies. As a bat flies, it emits high-pitched squeaks that travel through the air as sound waves. When these waves hit an object — whether a thick tree branch or a tiny, hovering moth — they bounce back to the bat's sensitive ears as echoes. By analyzing the time it takes for the echo to return and how loud it sounds, the bat creates a mental map of its surroundings. In less than a second, a bat can determine an insect's size, speed, and precise location in total darkness.",
+    "prompt": "Why does a shorter delay between a squeak and its echo indicate that an object is close?",
+    "options": [
+     "Sound waves travel a shorter distance to the object, so the echo returns faster.",
+     "The bat flies faster whenever it gets near a tree branch.",
+     "Objects that are close absorb all the sound waves completely.",
+     "The bat makes quieter squeaks when flying near insects."
+    ],
+    "correct": 0,
+    "explanation": "Sound travels at a constant speed, so if an object is close, the sound wave reaches it and bounces back in less time."
+   },
+   {
+    "title": "The Secrets of Beaver Dams",
+    "passage": "Beavers are famous as nature’s busiest engineers. Using their strong, sharp teeth, they gnaw through tree trunks until the trees fall into rivers or streams. They pile logs, branches, mud, and stones across the flowing water to build sturdy dams. These dams block the water flow and create deep, calm ponds behind them. The pond protects the beaver’s lodge from predators like wolves and bears, who cannot easily cross deep water. Additionally, these new wetlands provide habitats for ducks, frogs, fish, and turtles. Although beaver dams can sometimes flood nearby roads, they play a crucial role in creating rich ecosystems that support hundreds of wild species.",
+    "prompt": "Why do beavers build their lodges in deep, calm pond water rather than shallow, fast-moving streams?",
+    "options": [
+     "Deep pond water acts as a barrier that keeps large land predators from reaching the lodge.",
+     "Beavers need fast-moving water to keep their wooden lodges clean.",
+     "Shallow streams do not have enough mud for building dams.",
+     "Fish and frogs would eat the beaver's wooden shelter in shallow water."
+    ],
+    "correct": 0,
+    "explanation": "The passage notes that the deep pond protects the beaver's lodge because predators like wolves and bears cannot easily cross deep water."
+   },
+   {
+    "title": "The Solar Eclipse",
+    "passage": "A solar eclipse is one of nature’s most breathtaking events. It happens when the moon passes directly between Earth and the sun, blocking the sun’s light from reaching parts of Earth. During a total solar eclipse, the moon completely covers the sun’s bright disk, casting a deep shadow on the ground below. Day suddenly turns into twilight, the air temperature drops noticeably, and birds often grow quiet, thinking night has fallen. Although the sun is 400 times larger than the moon, the moon can block it because it is also 400 times closer to Earth! Spectators must always wear certified solar viewing glasses to look at an eclipse safely without damaging their eyes.",
+    "prompt": "How can the moon block out the sun even though the sun is 400 times larger than the moon?",
+    "options": [
+     "The moon is 400 times closer to Earth, making it appear the same size as the sun in the sky.",
+     "The moon expands in size as it crosses in front of the sun.",
+     "The sun turns off its bright light when the moon gets close.",
+     "Earth moves much closer to the moon during an eclipse."
+    ],
+    "correct": 0,
+    "explanation": "Because the moon is 400 times closer to Earth than the sun, its apparent size from Earth matches the sun's apparent size."
+   },
+   {
+    "title": "The Hidden World of Fungi",
+    "passage": "Beneath the quiet floor of a forest lies a vast, interconnected network called mycelium. Made of microscopic white threads produced by fungi, this subterranean web connects the roots of trees and plants throughout the woods. Through this network, trees can share vital nutrients, water, and emergency warnings with neighboring plants. If a tree is attacked by harmful insects, it can send chemical signals through the mycelium to alert nearby trees, allowing them to produce protective chemical defenses before the pests arrive. Scientists often call this underground system the 'Wood Wide Web' because it functions like an ecological internet, keeping the whole forest healthy and connected.",
+    "prompt": "What is the primary advantage for a healthy tree receiving a warning signal about pests from a neighbor?",
+    "options": [
+     "It can prepare its chemical defenses early to prevent insect damage.",
+     "It can disconnect its roots from the underground fungal network.",
+     "It can grow extra leaves to absorb more sunlight.",
+     "It can drop all its leaves to hide from incoming birds."
+    ],
+    "correct": 0,
+    "explanation": "The passage states that receiving signals allows neighboring trees to produce chemical defenses before pests arrive."
+   },
+   {
+    "title": "The Desert Camels",
+    "passage": "Camels are famous for surviving in harsh, dry deserts where water and vegetation are scarce. Many people believe a camel’s hump stores water, but it actually holds a reservoir of dense fat. When food is hard to find, the camel's body breaks down this fat into energy and hydration. Storing fat in a hump rather than evenly across its body allows heat to escape easily from the rest of its skin, keeping the camel cool under the blazing sun. Camels also have wide, padded feet that prevent them from sinking into soft sand, along with long eyelashes and slit-like nostrils that seal tight to keep out blowing sandstorms.",
+    "prompt": "Why is having fat concentrated in a single hump better for a desert animal than having fat spread evenly under its skin?",
+    "options": [
+     "Concentrating fat in one spot prevents a thick layer of body fat from trapping heat inside the rest of the body.",
+     "Fat in a hump reflects bright sunlight away from the camel's back.",
+     "Fat stored in skin would make the camel too heavy to walk on soft sand.",
+     "A hump helps the camel balance while carrying heavy loads."
+    ],
+    "correct": 0,
+    "explanation": "The text explains that concentrating fat in a hump allows heat to escape easily from the rest of the body's skin."
+   },
+   {
+    "title": "The Deep Sea Anglerfish",
+    "passage": "Deep in the ocean, thousands of feet below the surface, sunlight cannot reach. In this pitch-black, icy environment lives the anglerfish, a predator with a clever hunting strategy. Female anglerfish grow a long spine out of their back that dangles right above their large, toothy jaws. At the tip of this stalk is a glowing bulb filled with millions of bioluminescent bacteria. Unwary small fish and crustaceans in the dark ocean are attracted to the mysterious light like moths to a flame. As soon as a curious creature swims close to investigate the glow, the anglerfish snaps its wide mouth shut, trapping the prey with long, needle-sharp teeth that curve inward so nothing can escape.",
+    "prompt": "How do the anglerfish's inward-curving teeth help ensure a successful hunt?",
+    "options": [
+     "They act as a one-way trap that prevents prey from slipping out of the mouth once caught.",
+     "They help the anglerfish slice through tough wooden debris on the ocean floor.",
+     "They hold the glowing bulb in place while the anglerfish swims.",
+     "They allow the anglerfish to filter microscopic bacteria out of seawater."
+    ],
+    "correct": 0,
+    "explanation": "Inward-curving teeth make it easy for prey to enter the mouth but impossible to back out or slide free."
+   },
+   {
+    "title": "The Lightning Bug's Glow",
+    "passage": "On warm summer evenings, meadows and backyards light up with flashing yellow-green sparks from fireflies, also known as lightning bugs. Fireflies produce this light through a chemical reaction in their lower abdomen called bioluminescence, combining oxygen, chemicals, and enzymes with almost zero heat wasted. Each species of firefly has its own unique flashing pattern, rhythm, and color code. Male fireflies flash their specific signals as they fly around, while females sit on grass blades and flash back if they recognize the pattern. This glowing dialogue helps fireflies locate compatible mates in the dark. Sadly, artificial outdoor lighting from human homes and streetlamps can disrupt their signaling, making it harder for fireflies to find each other.",
+    "prompt": "Why does artificial outdoor lighting make it difficult for fireflies to reproduce?",
+    "options": [
+     "Bright artificial light overpowers dim flash signals, confusing the fireflies' visual communication.",
+     "Artificial light heats up the grass so much that female fireflies cannot rest on it.",
+     "Streetlamps trap male fireflies inside glass light fixtures.",
+     "Artificial light stops the chemical reaction inside the firefly's abdomen from taking place."
+    ],
+    "correct": 0,
+    "explanation": "Bright ambient light obscures the gentle flash signals fireflies use to recognize and locate one another."
+   },
+   {
+    "title": "The Great Wall of China",
+    "passage": "Stretching thousands of miles across rugged mountains and vast deserts, the Great Wall of China is one of the grandest architectural achievements in human history. Construction began more than 2,000 years ago during the Qin dynasty as a series of connected earthen walls built to protect northern borders from invading nomadic armies. Over centuries, later dynasties rebuilt and fortified the wall using heavy stone blocks, brick, and mortar. Watchtowers were stationed at regular intervals along the top. Guards positioned in these towers burned wood and straw during the day to create smoke signals, and lit fires at night to quickly send warning messages down the line across vast distances when enemies approached.",
+    "prompt": "Why were smoke signals used for warnings during daytime while bright fires were lit at night?",
+    "options": [
+     "Dark smoke stands out clearly against a bright sky, while bright flames are easily spotted in dark night.",
+     "Wood and straw can only produce smoke when the sun is shining.",
+     "Enemies only attacked during the night when fires were burning.",
+     "Fires were used at night because guards needed warmth while smoke was used to keep bugs away."
+    ],
+    "correct": 0,
+    "explanation": "Contrast makes signals effective: dark smoke is highly visible against daylight, while bright flames cut through darkness at night."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_22_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-22 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-22 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
