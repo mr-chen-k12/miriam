@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saxon Math Grade 4 &mdash; Lesson 46 Parallel Practice</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #f1f5f9; color: #1e293b; margin: 0; padding: 20px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 1.5em; margin: 0 0 4px; }
+  .sub { text-align: center; color: #64748b; margin-bottom: 22px; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .qhead { display: flex; gap: 10px; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; }
+  .qnum { font-weight: bold; font-size: 1.15em; color: #1d4ed8; }
+  .qtag { font-size: .8em; color: #64748b; }
+  .tag2 { background: #dbeafe; color: #1d4ed8; font-size: .72em; font-weight: bold; padding: 2px 8px; border-radius: 20px; letter-spacing: .04em; }
+  .qbody { font-size: 1.02em; line-height: 1.65; }
+  .fig { margin: 14px 0 4px; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .reveal { margin-top: 12px; background: #1d4ed8; color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-size: .95em; cursor: pointer; }
+  .reveal:hover { background: #1e40af; }
+  .ans { display: none; margin-top: 14px; border-top: 2px dashed #cbd5e1; padding-top: 12px; }
+  .ans.open { display: block; }
+  .anslabel { font-weight: bold; color: #166534; margin: 8px 0 4px; font-size: .85em; text-transform: uppercase; letter-spacing: .05em; }
+  .math { font-size: 1.12em; background: #f0fdf4; border-radius: 8px; padding: 10px 14px; }
+  .sol { font-size: .98em; line-height: 1.7; color: #334155; }
+
+  /* Long Division Grid Styles */
+  .grid-wrapper { display: flex; justify-content: center; margin: 12px 0; overflow-x: auto; }
+  .long-division-grid { display: grid; font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; line-height: 24px; }
+  .cell { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+  .txt-q { color: #2980b9; }   /* Quotient Blue */
+  .txt-sub { color: #c0392b; } /* Subtraction Red */
+  .txt-std { color: #333; }    /* Standard Black */
+  .border-right { border-right: 2px solid #333; }
+  .border-top { border-top: 2px solid #333; }
+  .border-bottom { border-bottom: 1px solid #333; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .reveal, .ans { display: none !important; }
+    .card { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Saxon Math Grade 4 &mdash; Lesson 46 Parallel Practice</h1>
+  <div class="sub">35 parallel variants + 5 challenge questions &middot; 10-25Miri</div>
+  <div class="card" id="q1">
+    <div class="qhead"><span class="qnum">1.</span></div>
+    <div class="qbody"><b>Conclude</b> Use the numbers 0.5, 0.9, and 1.4 to write two addition facts and two subtraction facts.</div>
+    <button class="reveal" onclick="toggle(1)">Show Answer</button>
+    <div class="ans" id="ans1"><div class="anslabel">Answer</div><div class="math">\(0.5 + 0.9 = 1.4; \quad 0.9 + 0.5 = 1.4; \quad 1.4 - 0.5 = 0.9; \quad 1.4 - 0.9 = 0.5\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The three numbers form a fact family: the two smaller numbers add to the largest, and subtracting either smaller number from the largest leaves the other.</div></div>
+  </div>
+
+  <div class="card" id="q2">
+    <div class="qhead"><span class="qnum">2.</span></div>
+    <div class="qbody">A whole hour is 60 minutes. How many minutes is three fourths \(\left(\frac{3}{4}\right)\) of an hour?</div>
+    <button class="reveal" onclick="toggle(2)">Show Answer</button>
+    <div class="ans" id="ans2"><div class="anslabel">Answer</div><div class="math">\(45\text{ minutes}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">One fourth of 60 minutes is \(60 \div 4 = 15\) minutes, so three fourths is \(3 \times 15 = 45\) minutes.</div></div>
+  </div>
+
+  <div class="card" id="q3">
+    <div class="qhead"><span class="qnum">3.</span></div>
+    <div class="qbody"><b>Explain</b> An airplane flew at an altitude of 212 miles above the Earth. A drone flew at an altitude of 38 miles above the Earth. The airplane was how much higher than the drone? Explain why your answer is reasonable.</div>
+    <button class="reveal" onclick="toggle(3)">Show Answer</button>
+    <div class="ans" id="ans3"><div class="anslabel">Answer</div><div class="math">\(174\text{ miles higher}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(212 - 38 = 174\) miles. The answer is reasonable because rounding gives about \(210 - 40 = 170\), which is close to 174.</div></div>
+  </div>
+
+  <div class="card" id="q4">
+    <div class="qhead"><span class="qnum">4.</span></div>
+    <div class="qbody"><b>Justify</b> How much change should you get back if you give the clerk \($10.00\) for a book that costs \($7.48\)? How can you check your answer?</div>
+    <button class="reveal" onclick="toggle(4)">Show Answer</button>
+    <div class="ans" id="ans4"><div class="anslabel">Answer</div><div class="math">\(\$2.52\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(\$10.00 - \$7.48 = \$2.52\). Check by adding: \(\$7.48 + \$2.52 = \$10.00\).</div></div>
+  </div>
+
+  <div class="card" id="q5">
+    <div class="qhead"><span class="qnum">5.</span></div>
+    <div class="qbody"><b>Represent</b> Write 23.6 using words.</div>
+    <button class="reveal" onclick="toggle(5)">Show Answer</button>
+    <div class="ans" id="ans5"><div class="anslabel">Answer</div><div class="math">\(\text{twenty-three and six tenths}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The whole-number part is 23 (twenty-three) and the decimal part is 6 tenths.</div></div>
+  </div>
+
+  <div class="card" id="q6">
+    <div class="qhead"><span class="qnum">6.</span></div>
+    <div class="qbody"><b>Represent</b> Use digits and symbols to show that negative eighteen is less than negative nine.</div>
+    <button class="reveal" onclick="toggle(6)">Show Answer</button>
+    <div class="ans" id="ans6"><div class="anslabel">Answer</div><div class="math">\(-18 < -9\)</div>
+    <div class="anslabel">Solution</div><div class="sol">On the number line, −18 is farther to the left than −9, so −18 is less than −9.</div></div>
+  </div>
+
+  <div class="card" id="q7">
+    <div class="qhead"><span class="qnum">7.</span></div>
+    <div class="qbody">The clock shows the time Maya arrived at soccer practice this afternoon. She started walking to practice 35 minutes before that time. What time did Maya start walking?<div class="fig"><svg viewBox="0 0 200 200" width="190" role="img" aria-label="Clock face"><circle cx="100" cy="100" r="85" fill="white" stroke="#1e3a8a" stroke-width="2.5"/><text x="134.5" y="45.24424713887374" font-size="15" font-weight="bold" text-anchor="middle">1</text><text x="159.75575286112627" y="70.5" font-size="15" font-weight="bold" text-anchor="middle">2</text><text x="169.0" y="105.0" font-size="15" font-weight="bold" text-anchor="middle">3</text><text x="159.75575286112627" y="139.5" font-size="15" font-weight="bold" text-anchor="middle">4</text><text x="134.5" y="164.75575286112627" font-size="15" font-weight="bold" text-anchor="middle">5</text><text x="100.0" y="174.0" font-size="15" font-weight="bold" text-anchor="middle">6</text><text x="65.50000000000001" y="164.75575286112627" font-size="15" font-weight="bold" text-anchor="middle">7</text><text x="40.24424713887373" y="139.5" font-size="15" font-weight="bold" text-anchor="middle">8</text><text x="31.0" y="105.00000000000001" font-size="15" font-weight="bold" text-anchor="middle">9</text><text x="40.24424713887374" y="70.5" font-size="15" font-weight="bold" text-anchor="middle">10</text><text x="65.49999999999997" y="45.24424713887375" font-size="15" font-weight="bold" text-anchor="middle">11</text><text x="99.99999999999999" y="36.0" font-size="15" font-weight="bold" text-anchor="middle">12</text><line x1="100" y1="100" x2="115.4" y2="142.3" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/><line x1="100" y1="100" x2="158.9" y2="134.0" stroke="#b91c1c" stroke-width="3" stroke-linecap="round"/><circle cx="100" cy="100" r="4" fill="#1e3a8a"/></svg></div></div>
+    <button class="reveal" onclick="toggle(7)">Show Answer</button>
+    <div class="ans" id="ans7"><div class="anslabel">Answer</div><div class="math">\(4{:}45\text{ p.m.}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The clock shows 5:20 p.m. Counting back 35 minutes: 20 minutes back is 5:00, and 15 more minutes back is 4:45 p.m.</div></div>
+  </div>
+
+  <div class="card" id="q8">
+    <div class="qhead"><span class="qnum">8.</span></div>
+    <div class="qbody"><b>Represent</b> Write 6070 in expanded form. Then use words to write the number.</div>
+    <button class="reveal" onclick="toggle(8)">Show Answer</button>
+    <div class="ans" id="ans8"><div class="anslabel">Answer</div><div class="math">\(6000 + 70; \quad \text{six thousand, seventy}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">6070 has 6 thousands and 7 tens (and 0 hundreds and 0 ones), so its expanded form is \(6000 + 70\).</div></div>
+  </div>
+
+  <div class="card" id="q9">
+    <div class="qhead"><span class="qnum">9.</span></div>
+    <div class="qbody">How many circles are shaded?<div class="fig"><svg viewBox="0 0 330 120" width="320" role="img" aria-label="Shaded circles"><circle cx="55" cy="60" r="48" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="55" cy="60" r="47" fill="#93c5fd"/><circle cx="55" cy="60" r="48" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="165" cy="60" r="48" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="165" cy="60" r="47" fill="#93c5fd"/><circle cx="165" cy="60" r="48" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><circle cx="275" cy="60" r="48" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><path d="M 275 60 L 275 12 A 48 48 0 0 1 323 60 Z" fill="#93c5fd"/><line x1="275" y1="60" x2="275" y2="12" stroke="#1e3a8a" stroke-width="2"/><line x1="275" y1="60" x2="323" y2="60" stroke="#1e3a8a" stroke-width="2"/></svg></div></div>
+    <button class="reveal" onclick="toggle(9)">Show Answer</button>
+    <div class="ans" id="ans9"><div class="anslabel">Answer</div><div class="math">\(2\frac{1}{4}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Two circles are completely shaded and the third circle has one of its four equal parts shaded, so \(2 + \frac{1}{4} = 2\frac{1}{4}\) circles are shaded.</div></div>
+  </div>
+
+  <div class="card" id="q10">
+    <div class="qhead"><span class="qnum">10.</span></div>
+    <div class="qbody">Compare: <b>a.</b> 4 quarters \(\bigcirc\) 95 cents &emsp; <b>b.</b> 2,750,000 \(\bigcirc\) two million, eight hundred thousand</div>
+    <button class="reveal" onclick="toggle(10)">Show Answer</button>
+    <div class="ans" id="ans10"><div class="anslabel">Answer</div><div class="math">\(\text{a. }> \qquad \text{b. }<\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> 4 quarters = 100 cents, and \(100 > 95\). <b>b.</b> Two million, eight hundred thousand = 2,800,000, and \(2{,}750{,}000 < 2{,}800{,}000\).</div></div>
+  </div>
+
+  <div class="card" id="q11">
+    <div class="qhead"><span class="qnum">11.</span></div>
+    <div class="qbody">Find the missing factor: \(8m = 72\)</div>
+    <button class="reveal" onclick="toggle(11)">Show Answer</button>
+    <div class="ans" id="ans11"><div class="anslabel">Answer</div><div class="math">\(m = 9\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(72 \div 8 = 9\), so \(m = 9\). Check: \(8 \times 9 = 72\).</div></div>
+  </div>
+
+  <div class="card" id="q12">
+    <div class="qhead"><span class="qnum">12.</span></div>
+    <div class="qbody"><b>a. Estimate</b> Use an inch ruler to measure this line segment to the nearest inch.<br><b>b. Estimate</b> Use a centimeter ruler to measure this line segment to the nearest centimeter.<div class="fig"><svg viewBox="0 0 420 150" width="400" role="img" aria-label="Segment with inch and centimeter rulers"><text x="10" y="20" font-size="13" font-weight="bold">inches</text><line x1="40" y1="30" x2="400" y2="30" stroke="#1e3a8a" stroke-width="2"/><line x1="40" y1="30" x2="40" y2="44" stroke="#1e3a8a" stroke-width="2"/><text x="40" y="58" font-size="13" text-anchor="middle">0</text><line x1="120" y1="30" x2="120" y2="44" stroke="#1e3a8a" stroke-width="2"/><text x="120" y="58" font-size="13" text-anchor="middle">1</text><line x1="200" y1="30" x2="200" y2="44" stroke="#1e3a8a" stroke-width="2"/><text x="200" y="58" font-size="13" text-anchor="middle">2</text><line x1="280" y1="30" x2="280" y2="44" stroke="#1e3a8a" stroke-width="2"/><text x="280" y="58" font-size="13" text-anchor="middle">3</text><line x1="360" y1="30" x2="360" y2="44" stroke="#1e3a8a" stroke-width="2"/><text x="360" y="58" font-size="13" text-anchor="middle">4</text><line x1="40" y1="72" x2="200" y2="72" stroke="#b91c1c" stroke-width="4"/><circle cx="40" cy="72" r="4" fill="#b91c1c"/><circle cx="200" cy="72" r="4" fill="#b91c1c"/><text x="10" y="105" font-size="13" font-weight="bold">cm</text><line x1="40" y1="115" x2="400" y2="115" stroke="#1e3a8a" stroke-width="2"/><line x1="40" y1="115" x2="40" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="40" y="141" font-size="11" text-anchor="middle">0</text><line x1="76" y1="115" x2="76" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="76" y="141" font-size="11" text-anchor="middle">1</text><line x1="112" y1="115" x2="112" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="112" y="141" font-size="11" text-anchor="middle">2</text><line x1="148" y1="115" x2="148" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="148" y="141" font-size="11" text-anchor="middle">3</text><line x1="184" y1="115" x2="184" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="184" y="141" font-size="11" text-anchor="middle">4</text><line x1="220" y1="115" x2="220" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="220" y="141" font-size="11" text-anchor="middle">5</text><line x1="256" y1="115" x2="256" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="256" y="141" font-size="11" text-anchor="middle">6</text><line x1="292" y1="115" x2="292" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="292" y="141" font-size="11" text-anchor="middle">7</text><line x1="328" y1="115" x2="328" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="328" y="141" font-size="11" text-anchor="middle">8</text><line x1="364" y1="115" x2="364" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="364" y="141" font-size="11" text-anchor="middle">9</text><line x1="400" y1="115" x2="400" y2="127" stroke="#1e3a8a" stroke-width="1.6"/><text x="400" y="141" font-size="11" text-anchor="middle">10</text><line x1="40" y1="96" x2="220" y2="96" stroke="#b91c1c" stroke-width="4"/><circle cx="40" cy="96" r="4" fill="#b91c1c"/><circle cx="220" cy="96" r="4" fill="#b91c1c"/></svg></div></div>
+    <button class="reveal" onclick="toggle(12)">Show Answer</button>
+    <div class="ans" id="ans12"><div class="anslabel">Answer</div><div class="math">\(\text{a. about }2\text{ inches} \qquad \text{b. about }5\text{ centimeters}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">On the inch ruler the segment ends at the 2-inch mark, and on the centimeter ruler it ends at the 5-centimeter mark.</div></div>
+  </div>
+
+  <div class="card" id="q13">
+    <div class="qhead"><span class="qnum">13.</span></div>
+    <div class="qbody">Compare: \(20 - (9 - 5) \bigcirc (20 - 9) - 5\)</div>
+    <button class="reveal" onclick="toggle(13)">Show Answer</button>
+    <div class="ans" id="ans13"><div class="anslabel">Answer</div><div class="math">\(20 - (9 - 5) > (20 - 9) - 5\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Left side: \(20 - (9 - 5) = 20 - 4 = 16\). Right side: \((20 - 9) - 5 = 11 - 5 = 6\). Since \(16 > 6\), the symbol is \(>\).</div></div>
+  </div>
+
+  <div class="card" id="q14">
+    <div class="qhead"><span class="qnum">14.</span></div>
+    <div class="qbody"><b>Explain</b> Look at problem 13 and your answer. Does the Associative Property apply to subtraction? Why or why not?</div>
+    <button class="reveal" onclick="toggle(14)">Show Answer</button>
+    <div class="ans" id="ans14"><div class="anslabel">Answer</div><div class="math">\(\text{No}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">No. In problem 13, changing the grouping changed the answer (16 versus 6). If the Associative Property applied to subtraction, the two groupings would give the same result.</div></div>
+  </div>
+
+  <div class="card" id="q15">
+    <div class="qhead"><span class="qnum">15.</span></div>
+    <div class="qbody">\(6.42 - 2.17\)</div>
+    <button class="reveal" onclick="toggle(15)">Show Answer</button>
+    <div class="ans" id="ans15"><div class="anslabel">Answer</div><div class="math">\(4.25\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Subtract hundredths: \(42 - 17 = 25\); subtract whole numbers: \(6 - 2 = 4\). So \(6.42 - 2.17 = 4.25\).</div></div>
+  </div>
+
+  <div class="card" id="q16">
+    <div class="qhead"><span class="qnum">16.</span></div>
+    <div class="qbody">\(\$7.26 - \$4.39\)</div>
+    <button class="reveal" onclick="toggle(16)">Show Answer</button>
+    <div class="ans" id="ans16"><div class="anslabel">Answer</div><div class="math">\(\$2.87\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(726 - 439 = 287\) cents, so \(\$7.26 - \$4.39 = \$2.87\).</div></div>
+  </div>
+
+  <div class="card" id="q17">
+    <div class="qhead"><span class="qnum">17.</span></div>
+    <div class="qbody">\(\$5.91 - \$2.74\)</div>
+    <button class="reveal" onclick="toggle(17)">Show Answer</button>
+    <div class="ans" id="ans17"><div class="anslabel">Answer</div><div class="math">\(\$3.17\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(591 - 274 = 317\) cents, so \(\$5.91 - \$2.74 = \$3.17\).</div></div>
+  </div>
+
+  <div class="card" id="q18">
+    <div class="qhead"><span class="qnum">18.</span></div>
+    <div class="qbody">\(\$3.56 + \$2.48\)</div>
+    <button class="reveal" onclick="toggle(18)">Show Answer</button>
+    <div class="ans" id="ans18"><div class="anslabel">Answer</div><div class="math">\(\$6.04\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(356 + 248 = 604\) cents, so \(\$3.56 + \$2.48 = \$6.04\).</div></div>
+  </div>
+
+  <div class="card" id="q19">
+    <div class="qhead"><span class="qnum">19.</span></div>
+    <div class="qbody">\(43 \times 4\)</div>
+    <button class="reveal" onclick="toggle(19)">Show Answer</button>
+    <div class="ans" id="ans19"><div class="anslabel">Answer</div><div class="math">\(172\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(43 \times 4 = 172\).</div></div>
+  </div>
+
+  <div class="card" id="q20">
+    <div class="qhead"><span class="qnum">20.</span></div>
+    <div class="qbody">\(68 \times 3\)</div>
+    <button class="reveal" onclick="toggle(20)">Show Answer</button>
+    <div class="ans" id="ans20"><div class="anslabel">Answer</div><div class="math">\(204\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(68 \times 3 = 204\).</div></div>
+  </div>
+
+  <div class="card" id="q21">
+    <div class="qhead"><span class="qnum">21.</span></div>
+    <div class="qbody">\(70 \times 8\)</div>
+    <button class="reveal" onclick="toggle(21)">Show Answer</button>
+    <div class="ans" id="ans21"><div class="anslabel">Answer</div><div class="math">\(560\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(70 \times 8 = 560\).</div></div>
+  </div>
+
+  <div class="card" id="q22">
+    <div class="qhead"><span class="qnum">22.</span></div>
+    <div class="qbody">\(62 \times 6\)</div>
+    <button class="reveal" onclick="toggle(22)">Show Answer</button>
+    <div class="ans" id="ans22"><div class="anslabel">Answer</div><div class="math">\(372\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(62 \times 6 = 372\).</div></div>
+  </div>
+
+  <div class="card" id="q23">
+    <div class="qhead"><span class="qnum">23.</span></div>
+    <div class="qbody">\(\$2.75 + 50\unicode{x00A2} + \$3\)</div>
+    <button class="reveal" onclick="toggle(23)">Show Answer</button>
+    <div class="ans" id="ans23"><div class="anslabel">Answer</div><div class="math">\(\$6.25\)</div>
+    <div class="anslabel">Solution</div><div class="sol">50¢ is \($0.50\), so \(\$2.75 + \$0.50 + \$3.00 = \$6.25\).</div></div>
+  </div>
+
+  <div class="card" id="q24">
+    <div class="qhead"><span class="qnum">24.</span></div>
+    <div class="qbody">\(5.75 + 3.25\)</div>
+    <button class="reveal" onclick="toggle(24)">Show Answer</button>
+    <div class="ans" id="ans24"><div class="anslabel">Answer</div><div class="math">\(9.00\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(575 + 325 = 900\) hundredths, so \(5.75 + 3.25 = 9.00\).</div></div>
+  </div>
+
+  <div class="card" id="q25">
+    <div class="qhead"><span class="qnum">25.</span></div>
+    <div class="qbody"><b>Model</b> Draw a rectangle that is 4 in. by 3 in.<br><b>a.</b> The perimeter of the rectangle is how many inches?<br><b>b.</b> The area of the rectangle is how many square inches?<div class="fig"><svg viewBox="0 0 340 240" width="320" role="img" aria-label="Rectangle"><rect x="60" y="40" width="220" height="165" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2.5"/><text x="170.0" y="30" font-size="14" font-weight="bold" text-anchor="middle">4 in.</text><text x="290" y="127.5" font-size="14" font-weight="bold">3 in.</text></svg></div></div>
+    <button class="reveal" onclick="toggle(25)">Show Answer</button>
+    <div class="ans" id="ans25"><div class="anslabel">Answer</div><div class="math">\(\text{a. }14\text{ in.} \qquad \text{b. }12\text{ sq. in.}\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> Perimeter: \(2 \times (4 + 3) = 14\) in. <b>b.</b> Area: \(4 \times 3 = 12\) square inches.</div></div>
+  </div>
+
+  <div class="card" id="q26">
+    <div class="qhead"><span class="qnum">26.</span></div>
+    <div class="qbody"><b>Multiple Choice</b> Which of the following segments is a diameter of the circle?<br><b>A.</b> \(\overline{MN}\) &emsp; <b>B.</b> \(\overline{OP}\) &emsp; <b>C.</b> \(\overline{OM}\) &emsp; <b>D.</b> \(\overline{OQ}\)<div class="fig"><svg viewBox="0 0 260 220" width="240" role="img" aria-label="Circle with center O"><circle cx="130" cy="110" r="85" fill="none" stroke="#1e3a8a" stroke-width="2.5"/><line x1="45" y1="110" x2="215" y2="110" stroke="#1e3a8a" stroke-width="2.5"/><line x1="130" y1="110" x2="130" y2="25" stroke="#1e3a8a" stroke-width="2"/><line x1="130" y1="110" x2="130" y2="195" stroke="#1e3a8a" stroke-width="2"/><circle cx="130" cy="110" r="4" fill="#b91c1c"/><text x="27" y="115" font-size="15" font-weight="bold" fill="#1e3a8a">M</text><text x="225" y="115" font-size="15" font-weight="bold" fill="#1e3a8a">N</text><text x="125" y="15" font-size="15" font-weight="bold" fill="#1e3a8a">P</text><text x="125" y="217" font-size="15" font-weight="bold" fill="#1e3a8a">Q</text><text x="138" y="102" font-size="15" font-weight="bold" fill="#1e3a8a">O</text></svg></div></div>
+    <button class="reveal" onclick="toggle(26)">Show Answer</button>
+    <div class="ans" id="ans26"><div class="anslabel">Answer</div><div class="math">\(\text{A} — \overline{MN}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">A diameter is a segment through the center with both endpoints on the circle. Only \(\overline{MN}\) passes through the center O with both endpoints on the circle; the others are radii.</div></div>
+  </div>
+
+  <div class="card" id="q27">
+    <div class="qhead"><span class="qnum">27.</span></div>
+    <div class="qbody"><b>Formulate</b> Ana solved the first puzzle in 58 seconds. She solved the second puzzle in 36 seconds. The first puzzle took how much longer to solve than the second puzzle? Write an equation to solve the problem.</div>
+    <button class="reveal" onclick="toggle(27)">Show Answer</button>
+    <div class="ans" id="ans27"><div class="anslabel">Answer</div><div class="math">\(22\text{ seconds}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Equation: \(58 - 36 = 22\). The first puzzle took 22 seconds longer.</div></div>
+  </div>
+
+  <div class="card" id="q28">
+    <div class="qhead"><span class="qnum">28.</span></div>
+    <div class="qbody"><b>Describe</b> the order of operations in each expression. Then find the number each expression equals.<br><b>a.</b> \(24 - (9 - 4)\) &emsp; <b>b.</b> \((24 - 9) - 4\)</div>
+    <button class="reveal" onclick="toggle(28)">Show Answer</button>
+    <div class="ans" id="ans28"><div class="anslabel">Answer</div><div class="math">\(\text{a. }19 \qquad \text{b. }11\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> Parentheses first: \(9 - 4 = 5\), then \(24 - 5 = 19\). <b>b.</b> Parentheses first: \(24 - 9 = 15\), then \(15 - 4 = 11\). Grouping changes the answer, so subtraction is not associative.</div></div>
+  </div>
+
+  <div class="card" id="q29">
+    <div class="qhead"><span class="qnum">29.</span></div>
+    <div class="qbody">In Phoenix, Arizona, the average high temperature in July is 104°F. The average low temperature is 83°F. How many degrees warmer is a temperature of 104°F than a temperature of 83°F?</div>
+    <button class="reveal" onclick="toggle(29)">Show Answer</button>
+    <div class="ans" id="ans29"><div class="anslabel">Answer</div><div class="math">\(21\text{ degrees}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">\(104 - 83 = 21\) degrees.</div></div>
+  </div>
+
+  <div class="card" id="q30">
+    <div class="qhead"><span class="qnum">30.</span></div>
+    <div class="qbody"><b>Estimate</b> The population density of New Jersey is 1263.4 people per square mile. The population density of Vermont is 68.9 people per square mile. Round to the nearest hundred to estimate how many more people per square mile live in New Jersey than live in Vermont.</div>
+    <button class="reveal" onclick="toggle(30)">Show Answer</button>
+    <div class="ans" id="ans30"><div class="anslabel">Answer</div><div class="math">\(\text{about }1200\text{ more people per square mile}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Round each density to the nearest hundred: 1263.4 ≈ 1300 and 68.9 ≈ 100. Then \(1300 - 100 = 1200\).</div></div>
+  </div>
+
+  <div class="card" id="q31">
+    <div class="qhead"><span class="qnum">31.</span></div>
+    <div class="qbody"><b>Division</b> Divide \(23 \div 4\). Express your answer as a terminating decimal. Use the standard long division algorithm.</div>
+    <button class="reveal" onclick="toggle(31)">Show Answer</button>
+    <div class="ans" id="ans31"><div class="anslabel">Answer</div><div class="math">\(5.75\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The long division ends with a remainder of 0, so the decimal terminates:<br><div class="grid-wrapper"><div class="long-division-grid" style="grid-template-columns: repeat(7, 24px);">
+<div class="cell txt-q" style="grid-row:1; grid-column:4;">5</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:5;">.</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:6;">7</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:7;">5</div>
+<div class="cell txt-std" style="grid-row:2; grid-column:2;">4</div>
+<div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">2</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">3</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">.</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">0</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:4;">0</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:4;">3</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:6;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:6;">8</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:6;">2</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:6;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:7;">0</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:7;">0</div>
+</div></div></div></div>
+  </div>
+
+  <div class="card" id="q32">
+    <div class="qhead"><span class="qnum">32.</span></div>
+    <div class="qbody"><b>Division</b> Divide \(7 \div 3\). Express your answer as a repeating decimal using an overline bar above the repeating digit.</div>
+    <button class="reveal" onclick="toggle(32)">Show Answer</button>
+    <div class="ans" id="ans32"><div class="anslabel">Answer</div><div class="math">\(2.\overline{3}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The remainder 1 keeps coming back, so the 3 in the quotient repeats forever:<br><div class="grid-wrapper"><div class="long-division-grid" style="grid-template-columns: repeat(7, 24px);">
+<div class="cell txt-q" style="grid-row:1; grid-column:3;">2</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:4;">.</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:5;">3</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:6;">3</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:7;">3</div>
+<div class="cell txt-std" style="grid-row:2; grid-column:2;">3</div>
+<div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">7</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">.</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">0</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">0</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">6</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:3;">1</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:5;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">9</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:5;">1</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:6;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:6;">9</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:6;">1</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:9; grid-column:7;">9</div>
+<div class="cell txt-std" style="grid-row:10; grid-column:7;">1</div>
+</div></div>So \(7 \div 3 = 2.333\ldots = 2.\overline{3}\).</div></div>
+  </div>
+
+  <div class="card" id="q33">
+    <div class="qhead"><span class="qnum">33.</span></div>
+    <div class="qbody"><b>Percent</b> A school library has 200 books on a display shelf. If 30% of the books are mystery books:<br><b>a.</b> Express 30% as both a fraction in simple form and as a decimal.<br><b>b.</b> How many mystery books are on the display shelf?</div>
+    <button class="reveal" onclick="toggle(33)">Show Answer</button>
+    <div class="ans" id="ans33"><div class="anslabel">Answer</div><div class="math">\(\text{a. Fraction: }\frac{3}{10}, \text{ Decimal: }0.30 \qquad \text{b. }60\text{ mystery books}\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> \(30\% = \frac{30}{100} = \frac{3}{10} = 0.30\). <b>b.</b> \(\frac{3}{10}\) of 200 is \(200 \div 10 \times 3 = 60\) mystery books.</div></div>
+  </div>
+
+  <div class="card" id="q34">
+    <div class="qhead"><span class="qnum">34.</span></div>
+    <div class="qbody"><b>Order of Operations</b> Evaluate the expression step by step using PEMDAS (Parentheses, Multiplication/Division, Addition/Subtraction): \(\left(\frac{2}{5} + 0.35\right) \times 10 + (-3)\)</div>
+    <button class="reveal" onclick="toggle(34)">Show Answer</button>
+    <div class="ans" id="ans34"><div class="anslabel">Answer</div><div class="math">\(4.5\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Parentheses first: \(\frac{2}{5} = 0.40\), so \(0.40 + 0.35 = 0.75\). Then multiplication: \(0.75 \times 10 = 7.5\). Finally addition: \(7.5 + (-3) = 4.5\).</div></div>
+  </div>
+
+  <div class="card" id="q35">
+    <div class="qhead"><span class="qnum">35.</span></div>
+    <div class="qbody"><b>Application</b> Ben bought 4 erasers that cost \($0.75\) each and 1 ruler for \($1.50\).<br><b>a.</b> What was the total cost of his items?<br><b>b.</b> If he paid with a \($10.00\) bill, how much change did he receive?</div>
+    <button class="reveal" onclick="toggle(35)">Show Answer</button>
+    <div class="ans" id="ans35"><div class="anslabel">Answer</div><div class="math">\(\text{a. }\$4.50 \qquad \text{b. }\$5.50\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> Erasers: \(4 \times \$0.75 = \$3.00\); plus the ruler: \(\$3.00 + \$1.50 = \$4.50\). <b>b.</b> Change: \(\$10.00 - \$4.50 = \$5.50\).</div></div>
+  </div>
+
+  <div class="card" id="q36">
+    <div class="qhead"><span class="qnum">36.</span></div>
+    <div class="qbody"><b>Division</b> Divide \(13.2 \div 6\). Express your answer as a terminating decimal. Use the standard long division algorithm.</div>
+    <button class="reveal" onclick="toggle(36)">Show Answer</button>
+    <div class="ans" id="ans36"><div class="anslabel">Answer</div><div class="math">\(2.2\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The long division ends with a remainder of 0, so the decimal terminates:<br><div class="grid-wrapper"><div class="long-division-grid" style="grid-template-columns: repeat(6, 24px);">
+<div class="cell txt-q" style="grid-row:1; grid-column:4;">2</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:5;">.</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:6;">2</div>
+<div class="cell txt-std" style="grid-row:2; grid-column:2;">6</div>
+<div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">1</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">3</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">.</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">1</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:4;">2</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:4;">1</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:6;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">1</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:6;">2</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:6;">0</div>
+</div></div></div></div>
+  </div>
+
+  <div class="card" id="q37">
+    <div class="qhead"><span class="qnum">37.</span></div>
+    <div class="qbody"><b>Division</b> Divide \(18.6 \div 4\). Express your answer as a terminating decimal. Use the standard long division algorithm.</div>
+    <button class="reveal" onclick="toggle(37)">Show Answer</button>
+    <div class="ans" id="ans37"><div class="anslabel">Answer</div><div class="math">\(4.65\)</div>
+    <div class="anslabel">Solution</div><div class="sol">The long division ends with a remainder of 0, so the decimal terminates:<br><div class="grid-wrapper"><div class="long-division-grid" style="grid-template-columns: repeat(7, 24px);">
+<div class="cell txt-q" style="grid-row:1; grid-column:4;">4</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:5;">.</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:6;">6</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:7;">5</div>
+<div class="cell txt-std" style="grid-row:2; grid-column:2;">4</div>
+<div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">1</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">8</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">.</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">6</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:3;">1</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:4;">6</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:4;">2</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:6;">6</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:6;">4</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:6;">2</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:6;">2</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:7;">0</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:7;">0</div>
+</div></div></div></div>
+  </div>
+
+  <div class="card" id="q38">
+    <div class="qhead"><span class="qnum">38.</span></div>
+    <div class="qbody"><b>Division</b> Divide \(11 \div 6\). Express your answer as a repeating decimal using an overline bar above the repeating digit.</div>
+    <button class="reveal" onclick="toggle(38)">Show Answer</button>
+    <div class="ans" id="ans38"><div class="anslabel">Answer</div><div class="math">\(1.8\overline{3}\)</div>
+    <div class="anslabel">Solution</div><div class="sol">After the 8, the remainder 2 keeps coming back, so the 3 repeats forever:<br><div class="grid-wrapper"><div class="long-division-grid" style="grid-template-columns: repeat(8, 24px);">
+<div class="cell txt-q" style="grid-row:1; grid-column:4;">1</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:5;">.</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:6;">8</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:7;">3</div>
+<div class="cell txt-q" style="grid-row:1; grid-column:8;">3</div>
+<div class="cell txt-std" style="grid-row:2; grid-column:2;">6</div>
+<div class="cell border-right" style="grid-row:2; grid-column:2;"></div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:3;">1</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:4;">1</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:5;">.</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:6;">0</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:7;">0</div>
+<div class="cell txt-std border-top" style="grid-row:2; grid-column:8;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:3; grid-column:4;">6</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:4;">5</div>
+<div class="cell txt-std" style="grid-row:4; grid-column:6;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:5;">4</div>
+<div class="cell txt-sub border-bottom" style="grid-row:5; grid-column:6;">8</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:6;">2</div>
+<div class="cell txt-std" style="grid-row:6; grid-column:7;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:6;">1</div>
+<div class="cell txt-sub border-bottom" style="grid-row:7; grid-column:7;">8</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:7;">2</div>
+<div class="cell txt-std" style="grid-row:8; grid-column:8;">0</div>
+<div class="cell txt-sub border-bottom" style="grid-row:9; grid-column:7;">1</div>
+<div class="cell txt-sub border-bottom" style="grid-row:9; grid-column:8;">8</div>
+<div class="cell txt-std" style="grid-row:10; grid-column:8;">2</div>
+</div></div>So \(11 \div 6 = 1.8333\ldots = 1.8\overline{3}\).</div></div>
+  </div>
+
+  <div class="card" id="q39">
+    <div class="qhead"><span class="qnum">39.</span></div>
+    <div class="qbody"><b>Percent of Tips</b> A dinner costs \($80.00\). You want to leave a 20% tip.<br><b>a.</b> How much should you leave as a tip?<br><b>b.</b> What is the total bill including the tip?</div>
+    <button class="reveal" onclick="toggle(39)">Show Answer</button>
+    <div class="ans" id="ans39"><div class="anslabel">Answer</div><div class="math">\(\text{a. }\$16.00 \qquad \text{b. }\$96.00\)</div>
+    <div class="anslabel">Solution</div><div class="sol"><b>a.</b> 20% of \($80.00\) is \(0.20 \times 80 = \$16.00\). <b>b.</b> Total: \(\$80.00 + \$16.00 = \$96.00\).</div></div>
+  </div>
+
+  <div class="card" id="q40">
+    <div class="qhead"><span class="qnum">40.</span></div>
+    <div class="qbody"><b>Order of Operations</b> Simplify: \(3^2 - (-2) \times 1.5 + \frac{1}{4} - 0.25\)</div>
+    <button class="reveal" onclick="toggle(40)">Show Answer</button>
+    <div class="ans" id="ans40"><div class="anslabel">Answer</div><div class="math">\(12\)</div>
+    <div class="anslabel">Solution</div><div class="sol">Exponents first: \(3^2 = 9\). Then multiplication: \((-2) \times 1.5 = -3\), so \(9 - (-3) = 12\). Finally \(12 + \frac{1}{4} - 0.25 = 12 + 0.25 - 0.25 = 12\).</div></div>
+  </div>
+
+</div>
+<script>
+function toggle(n) {
+  var a = document.getElementById('ans' + n);
+  var b = document.querySelector('#q' + n + ' .reveal');
+  var open = a.classList.toggle('open');
+  b.textContent = open ? 'Hide Answer' : 'Show Answer';
+  if (window.MathJax) MathJax.typesetPromise([a]);
+}
+</script>
+</body>
+</html>
