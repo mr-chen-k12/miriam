@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-25 Miriam Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-25 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-25, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Magic of Humpback Songs",
+    "passage": "Male humpback whales sing long, complex songs underwater that can travel for miles across the ocean. These songs consist of sequences of squeaks, groans, and roars repeated in distinct patterns. All humpbacks in the same ocean basin sing the same song, but the tune gradually evolves over time as whales learn new phrases from neighboring groups. Scientists listen to these ocean concerts with underwater microphones called hydrophones.",
+    "prompt": "In the passage, the word “evolves” most nearly means…",
+    "options": [
+     "gradually changes and develops over time",
+     "stops completely without warning",
+     "gets quieter until no sound is heard",
+     "freezes into ice during winter"
+    ],
+    "correct": 0,
+    "explanation": "“Evolves” means to change and develop gradually — the humpbacks' song evolves over time as they learn new phrases."
+   },
+   {
+    "title": "The Fire-Eating Redwood Trees",
+    "passage": "Giant redwood trees in California can live for thousands of years, surviving terrible wildfires. Their secret is thick, spongy bark that contains chemical tannins and almost no flammable pitch. Even if a fire burns away branches, redwoods have dormant buds hidden deep under their bark that sprout new green foliage shortly after a burn. Moderate fires actually help redwoods by clearing out competing brush and opening their cones to release seeds into fresh ash.",
+    "prompt": "In the passage, the word “dormant” most nearly means…",
+    "options": [
+     "inactive or resting, but able to grow later",
+     "brightly colored and poisonous",
+     "broken into small pieces",
+     "burning with high flames"
+    ],
+    "correct": 0,
+    "explanation": "“Dormant” means inactive or sleeping for a time — the hidden buds remain dormant until a fire triggers new growth."
+   },
+   {
+    "title": "Venus Flytrap's Living Trap",
+    "passage": "The Venus flytrap grows in boggy soil that lacks essential nitrogen. To survive, it catches insects using leaves shaped like tiny green clamshells. The inner surfaces of these leaves feature microscopic trigger hairs. To avoid snapping shut on raindrops or fallen twigs, a leaf only triggers if an insect touches two hairs in a row within twenty seconds. Once closed, the trap seals tight and secretes digestive juices to break down the insect into nutrient-rich liquid.",
+    "prompt": "In the passage, the word “secretes” most nearly means…",
+    "options": [
+     "produces and releases a liquid substance",
+     "hides under a heavy rock",
+     "whispers a quiet message",
+     "dries up into dust"
+    ],
+    "correct": 0,
+    "explanation": "To “secrete” means to produce and release a liquid — the plant secretes digestive juices to dissolve the insect."
+   },
+   {
+    "title": "The Mystery of Aurora Borealis",
+    "passage": "High near the North Pole, brilliant curtains of green, violet, and crimson light dance across the night sky in a display called the Northern Lights. This light show begins 93 million miles away on the sun. During solar storms, the sun shoots high-energy particles into space. When these particles reach Earth, our planet’s magnetic shield channels them toward the poles. There, solar particles collide with atmospheric gases like oxygen and nitrogen, causing gas molecules to glow like gigantic neon signs.",
+    "prompt": "In the passage, the word “collide” most nearly means…",
+    "options": [
+     "crash or hit into each other",
+     "fly away in opposite directions",
+     "turn into liquid drops of rain",
+     "melt under high heat"
+    ],
+    "correct": 0,
+    "explanation": "To “collide” means to crash or strike against each other — solar particles collide with gas molecules to make them glow."
+   },
+   {
+    "title": "How Desert Antelopes Survive",
+    "passage": "The addax is a pale desert antelope that thrives in the Sahara without ever drinking standing water. It gets all the liquid it needs directly from the desert plants, roots, and morning dew it consumes. To conserve precious moisture, the addax stays in the shade during daytime heat and grazes at night when plants absorb moisture from the air. Its light coat reflects burning sunlight, and special blood vessels in its nose cool down blood before it reaches the brain.",
+    "prompt": "In the passage, the word “conserve” most nearly means…",
+    "options": [
+     "protect from loss and save carefully",
+     "drink as fast as possible",
+     "splash water on the ground",
+     "share openly with all animals"
+    ],
+    "correct": 0,
+    "explanation": "To “conserve” means to save carefully — the addax grazes at night to conserve its internal moisture."
+   },
+   {
+    "title": "The Genius of Bird Nests",
+    "passage": "Weaver birds of Africa build some of the most intricate structures in the animal kingdom. Using their beaks like needles, male weaver birds loop, knot, and weave strips of grass and palm leaves together to craft hollow, ball-shaped nests dangling from tree branches. A weaver bird may tie hundreds of knots to build a single secure home. Female weaver birds inspect several completed nests before selecting a mate; if a nest is flimsy, the female rejects it, forcing the male to start over from scratch.",
+    "prompt": "In the passage, the word “intricate” most nearly means…",
+    "options": [
+     "very detailed and complex",
+     "heavy and made of stone",
+     "simple and easy to make",
+     "bright red and shiny"
+    ],
+    "correct": 0,
+    "explanation": "“Intricate” means complex and full of fine detail — weaver birds tie hundreds of knots to make intricate nests."
+   },
+   {
+    "title": "The Chameleons' Secret Code",
+    "passage": "Contrary to popular belief, chameleons do not change color primarily to blend in with their surroundings for camouflage. Instead, color change is an emotional language. Chameleons have specialized skin cells called iridophores containing microscopic crystals. By expanding or relaxing these skin cells, a chameleon alters how light bounces off the crystals, displaying brilliant shades of turquoise, yellow, or crimson. A chameleon turns dark when frightened, while vivid patterns show excitement or dominance.",
+    "prompt": "In the passage, the word “alters” most nearly means…",
+    "options": [
+     "changes or makes different",
+     "keeps exactly the same",
+     "covers up with dirt",
+     "heals a small injury"
+    ],
+    "correct": 0,
+    "explanation": "To “alter” means to change — by adjusting its skin cells, the chameleon alters how light reflects off its body."
+   },
+   {
+    "title": "Floating Gardens of the Aztecs",
+    "passage": "Hundreds of years ago in central Mexico, the Aztecs created an extraordinary agricultural system called chinampas, or floating gardens. Since their capital city sat on a swampy lake, farmers built long rectangular rafts out of woven reeds and anchored them to the lake bed with willow trees. They layered rich lake mud and decaying plants on top of the rafts, creating fertile soil. The surrounding lake water continuously soaked into the soil from below, providing automatic irrigation so crops thrived year-round.",
+    "prompt": "In the passage, the word “irrigation” most nearly means…",
+    "options": [
+     "supplying water to land or crops",
+     "harvesting corn with sharp tools",
+     "building boats out of heavy logs",
+     "cooking food over open fires"
+    ],
+    "correct": 0,
+    "explanation": "“Irrigation” means supplying water to plants or crops — the lake water provides natural irrigation from beneath the soil."
+   },
+   {
+    "title": "The Marvel of Coral Reefs",
+    "passage": "Coral reefs are often called the rainforests of the sea because they support a quarter of all marine life despite covering less than one percent of the ocean floor. Surprisingly, corals are not rocks or plants; they are colonies of thousands of tiny soft animals called polyps. Polyps extract calcium from seawater to build hard limestone skeletons around themselves for protection. Microscopic algae live inside the polyps, providing food through photosynthesis in exchange for a safe home.",
+    "prompt": "In the passage, the word “extract” most nearly means…",
+    "options": [
+     "pull out or take from a substance",
+     "throw away as waste material",
+     "paint with bright colors",
+     "hide deep underground"
+    ],
+    "correct": 0,
+    "explanation": "To “extract” means to take or draw out — the polyps extract calcium out of seawater to construct their skeletons."
+   },
+   {
+    "title": "The Giant Squid's Deep World",
+    "passage": "Living thousands of feet below the ocean surface in total darkness, the giant squid was long considered a mythical sea monster. Reaching up to 40 feet in length, it possesses the largest eyes in the animal kingdom — the size of dinner plates! These massive eyes capture every stray photon of light in the pitch-black abyss, allowing the squid to spot the faint bioluminescent shadows of approaching sperm whales. Two long feeding tentacles lined with sharp sucker rings snatch prey from the dark water.",
+    "prompt": "In the passage, the word “possesses” most nearly means…",
+    "options": [
+     "owns or has as a feature",
+     "searches for in the sand",
+     "loses during a battle",
+     "paints with dark ink"
+    ],
+    "correct": 0,
+    "explanation": "To “possess” means to have or own as a feature — the giant squid possesses dinner-plate-sized eyes."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "The Magic of Humpback Songs",
+    "passage": "Male humpback whales sing long, complex songs underwater that can travel for miles across the ocean. These songs consist of sequences of squeaks, groans, and roars repeated in distinct patterns. All humpbacks in the same ocean basin sing the same song, but the tune gradually evolves over time as whales learn new phrases from neighboring groups. Scientists listen to these ocean concerts with underwater microphones called hydrophones.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Male humpback whales sing complex, changing songs underwater that are shared across ocean populations.",
+     "Scientists use hydrophones to record whale squeaks.",
+     "Humpback whales swim thousands of miles across the ocean every year.",
+     "Ocean water carries sound waves faster than air."
+    ],
+    "correct": 0,
+    "explanation": "The main idea sums up the whole passage — male humpback whales sing complex, evolving songs that travel through ocean basins."
+   },
+   {
+    "title": "The Fire-Eating Redwood Trees",
+    "passage": "Giant redwood trees in California can live for thousands of years, surviving terrible wildfires. Their secret is thick, spongy bark that contains chemical tannins and almost no flammable pitch. Even if a fire burns away branches, redwoods have dormant buds hidden deep under their bark that sprout new green foliage shortly after a burn. Moderate fires actually help redwoods by clearing out competing brush and opening their cones to release seeds into fresh ash.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Redwood trees possess special adaptations like thick bark and hidden buds that help them survive and benefit from fire.",
+     "California wildfires burn thousands of acres every summer.",
+     "Redwood tree bark contains chemical tannins.",
+     "Redwood cones are smaller than pine cones."
+    ],
+    "correct": 0,
+    "explanation": "The passage mainly explains how redwoods use unique physical features to survive wildfires and even thrive after them."
+   },
+   {
+    "title": "Venus Flytrap's Living Trap",
+    "passage": "The Venus flytrap grows in boggy soil that lacks essential nitrogen. To survive, it catches insects using leaves shaped like tiny green clamshells. The inner surfaces of these leaves feature microscopic trigger hairs. To avoid snapping shut on raindrops or fallen twigs, a leaf only triggers if an insect touches two hairs in a row within twenty seconds. Once closed, the trap seals tight and secretes digestive juices to break down the insect into nutrient-rich liquid.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Venus flytraps catch insects using specialized trigger leaves to get nutrients missing from boggy soil.",
+     "Raindrops often hit Venus flytrap leaves during heavy summer storms.",
+     "Digestive juices are found in human stomachs and carnivorous plants.",
+     "Insects are attracted to green plants in North Carolina bogs."
+    ],
+    "correct": 0,
+    "explanation": "The main idea captures why and how the Venus flytrap uses its trigger leaves to catch insects for nutrient survival."
+   },
+   {
+    "title": "The Mystery of Aurora Borealis",
+    "passage": "High near the North Pole, brilliant curtains of green, violet, and crimson light dance across the night sky in a display called the Northern Lights. This light show begins 93 million miles away on the sun. During solar storms, the sun shoots high-energy particles into space. When these particles reach Earth, our planet’s magnetic shield channels them toward the poles. There, solar particles collide with atmospheric gases like oxygen and nitrogen, causing gas molecules to glow like gigantic neon signs.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Northern Lights occur when solar particles shoot from the sun, collide with Earth's atmospheric gases, and glow near the poles.",
+     "Oxygen and nitrogen are two gases found in Earth's atmosphere.",
+     "The sun is 93 million miles away from planet Earth.",
+     "Neon signs use electric currents to produce glowing colors."
+    ],
+    "correct": 0,
+    "explanation": "The overall point is explaining the cause and process behind the glowing atmospheric phenomenon known as the Northern Lights."
+   },
+   {
+    "title": "How Desert Antelopes Survive",
+    "passage": "The addax is a pale desert antelope that thrives in the Sahara without ever drinking standing water. It gets all the liquid it needs directly from the desert plants, roots, and morning dew it consumes. To conserve precious moisture, the addax stays in the shade during daytime heat and grazes at night when plants absorb moisture from the air. Its light coat reflects burning sunlight, and special blood vessels in its nose cool down blood before it reaches the brain.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The addax antelope survives harsh desert conditions without drinking water through nocturnal habits and specialized bodily adaptations.",
+     "Sahara desert temperatures reach over 100 degrees during summer days.",
+     "Morning dew forms when warm air touches cold ground at night.",
+     "Antelopes have hooves designed for running fast from predators."
+    ],
+    "correct": 0,
+    "explanation": "The main idea describes how the addax's physical traits and behavior allow it to survive in the Sahara without drinking standing water."
+   },
+   {
+    "title": "The Genius of Bird Nests",
+    "passage": "Weaver birds of Africa build some of the most intricate structures in the animal kingdom. Using their beaks like needles, male weaver birds loop, knot, and weave strips of grass and palm leaves together to craft hollow, ball-shaped nests dangling from tree branches. A weaver bird may tie hundreds of knots to build a single secure home. Female weaver birds inspect several completed nests before selecting a mate; if a nest is flimsy, the female rejects it, forcing the male to start over from scratch.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Male weaver birds construct detailed, woven grass nests to attract female mates who carefully inspect their work.",
+     "Female weaver birds lay eggs inside ball-shaped nests in Africa.",
+     "Palm leaves are strong natural materials used in building roofing.",
+     "Birds use their beaks to gather food and build shelters."
+    ],
+    "correct": 0,
+    "explanation": "The passage centers on how male weaver birds weave complex grass nests as part of attracting a mate."
+   },
+   {
+    "title": "The Chameleons' Secret Code",
+    "passage": "Contrary to popular belief, chameleons do not change color primarily to blend in with their surroundings for camouflage. Instead, color change is an emotional language. Chameleons have specialized skin cells called iridophores containing microscopic crystals. By expanding or relaxing these skin cells, a chameleon alters how light bounces off the crystals, displaying brilliant shades of turquoise, yellow, or crimson. A chameleon turns dark when frightened, while vivid patterns show excitement or dominance.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Chameleons change color through specialized skin cells to communicate emotions and social status rather than for camouflage.",
+     "Chameleons live in tropical rainforests with colorful flowers.",
+     "Microscopic crystals reflect sunlight into rainbow colors.",
+     "Camouflage helps lizards hide from dangerous birds in trees."
+    ],
+    "correct": 0,
+    "explanation": "The text refutes a common myth and explains that color changes in chameleons serve as emotional and social communication."
+   },
+   {
+    "title": "Floating Gardens of the Aztecs",
+    "passage": "Hundreds of years ago in central Mexico, the Aztecs created an extraordinary agricultural system called chinampas, or floating gardens. Since their capital city sat on a swampy lake, farmers built long rectangular rafts out of woven reeds and anchored them to the lake bed with willow trees. They layered rich lake mud and decaying plants on top of the rafts, creating fertile soil. The surrounding lake water continuously soaked into the soil from below, providing automatic irrigation so crops thrived year-round.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Aztecs created chinampas, anchored raft gardens layered with lake mud, to farm effectively in a swampy lake environment.",
+     "Corn, beans, and squash were popular foods eaten in ancient Mexico.",
+     "Willow trees grow near water sources and have flexible branches.",
+     "Reeds are tall grass-like plants that grow in marshy wetlands."
+    ],
+    "correct": 0,
+    "explanation": "The main idea explains how Aztec farmers created floating raft gardens (chinampas) to solve farming challenges in their lake setting."
+   },
+   {
+    "title": "The Marvel of Coral Reefs",
+    "passage": "Coral reefs are often called the rainforests of the sea because they support a quarter of all marine life despite covering less than one percent of the ocean floor. Surprisingly, corals are not rocks or plants; they are colonies of thousands of tiny soft animals called polyps. Polyps extract calcium from seawater to build hard limestone skeletons around themselves for protection. Microscopic algae live inside the polyps, providing food through photosynthesis in exchange for a safe home.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Coral reefs are diverse marine habitats built over long periods by colonies of tiny polyps working together with algae.",
+     "Rainforests contain thousands of plant species that produce oxygen.",
+     "Limestone is a hard rock used in building construction on land.",
+     "Ocean water contains salt and calcium minerals dissolved in it."
+    ],
+    "correct": 0,
+    "explanation": "The text focuses on what corals actually are—colonies of tiny polyps and algae—and how they construct giant reef habitats."
+   },
+   {
+    "title": "The Giant Squid's Deep World",
+    "passage": "Living thousands of feet below the ocean surface in total darkness, the giant squid was long considered a mythical sea monster. Reaching up to 40 feet in length, it possesses the largest eyes in the animal kingdom — the size of dinner plates! These massive eyes capture every stray photon of light in the pitch-black abyss, allowing the squid to spot the faint bioluminescent shadows of approaching sperm whales. Two long feeding tentacles lined with sharp sucker rings snatch prey from the dark water.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The giant squid relies on remarkable features like dinner-plate eyes and sharp tentacles to hunt and survive in the deep ocean.",
+     "Sperm whales hunt for food in deep ocean trenches.",
+     "Mythical sea monsters have been featured in stories for centuries.",
+     "Dinner plates are usually made of porcelain or ceramic."
+    ],
+    "correct": 0,
+    "explanation": "The passage outlines how the giant squid's physical adaptations (massive eyes, feeding tentacles) help it live in the deep sea."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Magic of Humpback Songs",
+    "passage": "Male humpback whales sing long, complex songs underwater that can travel for miles across the ocean. These songs consist of sequences of squeaks, groans, and roars repeated in distinct patterns. All humpbacks in the same ocean basin sing the same song, but the tune gradually evolves over time as whales learn new phrases from neighboring groups. Scientists listen to these ocean concerts with underwater microphones called hydrophones.",
+    "prompt": "Why do all humpback whales in the same ocean basin sing the exact same version of a song?",
+    "options": [
+     "They listen to each other across miles of ocean and copy new phrases as they travel together.",
+     "They are born knowing only one fixed song that can never change.",
+     "Scientists play recorded songs into the ocean to teach them.",
+     "Whales communicate with birds on the surface to learn musical patterns."
+    ],
+    "correct": 0,
+    "explanation": "The text notes that the tune evolves as whales learn new phrases from neighboring groups, showing they hear and copy each other."
+   },
+   {
+    "title": "The Fire-Eating Redwood Trees",
+    "passage": "Giant redwood trees in California can live for thousands of years, surviving terrible wildfires. Their secret is thick, spongy bark that contains chemical tannins and almost no flammable pitch. Even if a fire burns away branches, redwoods have dormant buds hidden deep under their bark that sprout new green foliage shortly after a burn. Moderate fires actually help redwoods by clearing out competing brush and opening their cones to release seeds into fresh ash.",
+    "prompt": "Why do redwood seeds have a better chance of growing after a wildfire has passed?",
+    "options": [
+     "The fire removes competing brush and leaves behind fresh, nutrient-rich ash for seeds.",
+     "Wildfires produce cold air that helps redwood seeds sprout faster.",
+     "Animals bring fresh water to the forest floor after a fire.",
+     "Redwood bark becomes soft enough for seeds to take root on the trunk."
+    ],
+    "correct": 0,
+    "explanation": "The passage states that fires clear out competing brush and release seeds into fresh ash, giving seeds open space and nutrients."
+   },
+   {
+    "title": "Venus Flytrap's Living Trap",
+    "passage": "The Venus flytrap grows in boggy soil that lacks essential nitrogen. To survive, it catches insects using leaves shaped like tiny green clamshells. The inner surfaces of these leaves feature microscopic trigger hairs. To avoid snapping shut on raindrops or fallen twigs, a leaf only triggers if an insect touches two hairs in a row within twenty seconds. Once closed, the trap seals tight and secretes digestive juices to break down the insect into nutrient-rich liquid.",
+    "prompt": "Why is the 'two hair touches in twenty seconds' rule beneficial for the Venus flytrap?",
+    "options": [
+     "It stops the plant from wasting energy closing on non-food items like raindrops or twigs.",
+     "It gives the insect enough time to escape before the trap closes.",
+     "It helps the plant attract larger animals like frogs and birds.",
+     "It allows the leaf to absorb sunlight while waiting for rain."
+    ],
+    "correct": 0,
+    "explanation": "Closing and digesting takes significant energy; requiring two rapid triggers ensures the object is an active moving insect rather than a falling leaf or raindrop."
+   },
+   {
+    "title": "The Mystery of Aurora Borealis",
+    "passage": "High near the North Pole, brilliant curtains of green, violet, and crimson light dance across the night sky in a display called the Northern Lights. This light show begins 93 million miles away on the sun. During solar storms, the sun shoots high-energy particles into space. When these particles reach Earth, our planet’s magnetic shield channels them toward the poles. There, solar particles collide with atmospheric gases like oxygen and nitrogen, causing gas molecules to glow like gigantic neon signs.",
+    "prompt": "Why are the Northern Lights seen near Earth's polar regions rather than at the equator?",
+    "options": [
+     "Earth's magnetic shield directs incoming solar particles toward the poles.",
+     "The sun shines closer to the North Pole than to the equator.",
+     "Atmospheric gases like oxygen are only found near the Arctic Circle.",
+     "Clouds near the equator are too thick for light to shine through."
+    ],
+    "correct": 0,
+    "explanation": "The text explains that Earth's magnetic shield channels the energetic solar particles toward the poles, where they hit gases and glow."
+   },
+   {
+    "title": "How Desert Antelopes Survive",
+    "passage": "The addax is a pale desert antelope that thrives in the Sahara without ever drinking standing water. It gets all the liquid it needs directly from the desert plants, roots, and morning dew it consumes. To conserve precious moisture, the addax stays in the shade during daytime heat and grazes at night when plants absorb moisture from the air. Its light coat reflects burning sunlight, and special blood vessels in its nose cool down blood before it reaches the brain.",
+    "prompt": "Why is eating plants early in the morning especially beneficial for the addax?",
+    "options": [
+     "Desert plants are coated with dew and absorbed air moisture in the morning, providing extra water.",
+     "Morning plants have less sand blowing on their leaves than afternoon plants.",
+     "Desert predators are all asleep during the morning hours.",
+     "The addax's nose blood vessels only work when the sun is rising."
+    ],
+    "correct": 0,
+    "explanation": "The text states that the addax consumes morning dew and plants that absorb night moisture, getting all its liquid intake from its food."
+   },
+   {
+    "title": "The Genius of Bird Nests",
+    "passage": "Weaver birds of Africa build some of the most intricate structures in the animal kingdom. Using their beaks like needles, male weaver birds loop, knot, and weave strips of grass and palm leaves together to craft hollow, ball-shaped nests dangling from tree branches. A weaver bird may tie hundreds of knots to build a single secure home. Female weaver birds inspect several completed nests before selecting a mate; if a nest is flimsy, the female rejects it, forcing the male to start over from scratch.",
+    "prompt": "Why would a female weaver bird reject a nest that is flimsy or poorly built?",
+    "options": [
+     "A weak nest might fall apart or fail to protect her future eggs and chicks from storms and predators.",
+     "Flimsy nests are too heavy to dangle from tree branches.",
+     "Female weaver birds prefer living in underground burrows.",
+     "A flimsy nest uses too many palm leaves and gets too hot."
+    ],
+    "correct": 0,
+    "explanation": "A sturdy nest is essential for safely holding eggs and chicks; a weak nest puts her offspring at risk."
+   },
+   {
+    "title": "The Chameleons' Secret Code",
+    "passage": "Contrary to popular belief, chameleons do not change color primarily to blend in with their surroundings for camouflage. Instead, color change is an emotional language. Chameleons have specialized skin cells called iridophores containing microscopic crystals. By expanding or relaxing these skin cells, a chameleon alters how light bounces off the crystals, displaying brilliant shades of turquoise, yellow, or crimson. A chameleon turns dark when frightened, while vivid patterns show excitement or dominance.",
+    "prompt": "If two male chameleons meet and one displays bright yellow and turquoise while the other turns dark brown, what can you infer?",
+    "options": [
+     "The colorful chameleon is asserting dominance, while the dark chameleon feels frightened or subordinate.",
+     "Both chameleons are trying to hide from a predator bird in the trees.",
+     "The dark brown chameleon is more excited than the yellow chameleon.",
+     "The yellow chameleon is cold and trying to absorb heat."
+    ],
+    "correct": 0,
+    "explanation": "The text explains that bright patterns express dominance/excitement while turning dark signals fear."
+   },
+   {
+    "title": "Floating Gardens of the Aztecs",
+    "passage": "Hundreds of years ago in central Mexico, the Aztecs created an extraordinary agricultural system called chinampas, or floating gardens. Since their capital city sat on a swampy lake, farmers built long rectangular rafts out of woven reeds and anchored them to the lake bed with willow trees. They layered rich lake mud and decaying plants on top of the rafts, creating fertile soil. The surrounding lake water continuously soaked into the soil from below, providing automatic irrigation so crops thrived year-round.",
+    "prompt": "Why did Aztec farmers plant willow trees around the edges of their chinampa garden rafts?",
+    "options": [
+     "The willow trees grew deep roots into the lake bed, anchoring the garden rafts permanently in place.",
+     "Willow leaves were used to make tea for Aztec warriors.",
+     "The trees blocked fish from jumping onto the garden rafts.",
+     "Willow tree wood was used to build high fences around the city."
+    ],
+    "correct": 0,
+    "explanation": "The passage notes that farmers anchored the reed rafts to the lake bed using willow trees."
+   },
+   {
+    "title": "The Marvel of Coral Reefs",
+    "passage": "Coral reefs are often called the rainforests of the sea because they support a quarter of all marine life despite covering less than one percent of the ocean floor. Surprisingly, corals are not rocks or plants; they are colonies of thousands of tiny soft animals called polyps. Polyps extract calcium from seawater to build hard limestone skeletons around themselves for protection. Microscopic algae live inside the polyps, providing food through photosynthesis in exchange for a safe home.",
+    "prompt": "What would most likely happen to coral polyps if murky pollution blocked sunlight from entering the water?",
+    "options": [
+     "The algae inside them could not perform photosynthesis, leaving the coral polyps without enough food.",
+     "The polyps would turn into large ocean plants.",
+     "The coral skeletons would melt into soft liquid.",
+     "Fish would start building limestone skeletons instead."
+    ],
+    "correct": 0,
+    "explanation": "Algae rely on sunlight for photosynthesis to feed the polyps; without sunlight, the mutual survival partnership fails."
+   },
+   {
+    "title": "The Giant Squid's Deep World",
+    "passage": "Living thousands of feet below the ocean surface in total darkness, the giant squid was long considered a mythical sea monster. Reaching up to 40 feet in length, it possesses the largest eyes in the animal kingdom — the size of dinner plates! These massive eyes capture every stray photon of light in the pitch-black abyss, allowing the squid to spot the faint bioluminescent shadows of approaching sperm whales. Two long feeding tentacles lined with sharp sucker rings snatch prey from the dark water.",
+    "prompt": "Why are dinner-plate-sized eyes a vital adaptation for the giant squid?",
+    "options": [
+     "Giant eyes gather maximum light in the deep ocean, helping the squid spot predators and prey in darkness.",
+     "Large eyes allow the squid to see through solid underwater rocks.",
+     "Big eyes help the squid swim faster through strong deep-sea currents.",
+     "Large eyes frighten away smaller fish before the squid even attacks."
+    ],
+    "correct": 0,
+    "explanation": "In near-total darkness, massive eyes capture every tiny bit of light, enabling the squid to detect movement and shadows."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_25_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-25 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-25 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
