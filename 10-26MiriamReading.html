@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-26 Miriam Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-26 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-26, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Mystery of Lightning and Thunder",
+    "passage": "Lightning is a giant spark of electricity in the atmosphere. Inside a storm cloud, tiny bits of ice and raindrops bump into each other, creating electric charges. Positive charges build up at the top of the cloud, while negative charges collect at the bottom. When the difference becomes huge, electricity shoots through the air to connect with positive charges on the ground. A lightning bolt heats the surrounding air in less than a second to nearly 50,000 degrees Fahrenheit! This rapid heating causes the air to expand violently, producing a loud shockwave we hear as thunder.",
+    "prompt": "In the passage, the word “expand” most nearly means…",
+    "options": [
+     "swell or spread outwards in size",
+     "cool down and shrink rapidly",
+     "turn into dark rain clouds",
+     "freeze into solid ice crystals"
+    ],
+    "correct": 0,
+    "explanation": "“Expand” means to grow larger or spread outwards — superheated air expands rapidly, creating thunder soundwaves."
+   },
+   {
+    "title": "The Great Migration of the Arctic Tern",
+    "passage": "The Arctic tern holds the record for the longest migration of any animal on Earth. Every year, this small white bird flies from its nesting grounds in the Arctic near the North Pole all the way to Antarctica near the South Pole, and then back again. By making this incredible 25,000-mile round trip annually, the tern experiences two summers every year and sees more daylight than any other creature on the planet. With light, narrow wings built for long-distance flight, the tern glides effortlessly on ocean winds, showing amazing endurance across stormy seas.",
+    "prompt": "In the passage, the word “endurance” most nearly means…",
+    "options": [
+     "ability to withstand long and difficult activity",
+     "diving speed when catching small fish",
+     "bright white color of flying feathers",
+     "loud calling sound made during storms"
+    ],
+    "correct": 0,
+    "explanation": "“Endurance” means the power to keep going through tough challenges — terns show endurance flying 25,000 miles."
+   },
+   {
+    "title": "The Secrets of Pitcher Plants",
+    "passage": "Pitcher plants are carnivorous plants that grow in nitrogen-poor soils like bogs and swamps. Their leaves are modified into deep, tube-shaped jugs filled with a pool of liquid. The rim of the pitcher is coated with sweet nectar and a slippery wax. Curious insects crawling onto the rim to sip the nectar lose their footing and slide down into the tube. Sharp, downward-pointing hairs lining the inside wall prevent insects from climbing back out. Once trapped, the prey is dissolved by digestive fluids, providing the plant with essential nutrients.",
+    "prompt": "In the passage, the word “slippery” most nearly means…",
+    "options": [
+     "slick and easy to slide on",
+     "sticky like thick honey",
+     "rough like coarse sandpaper",
+     "dry and warm to touch"
+    ],
+    "correct": 0,
+    "explanation": "“Slippery” means smooth or slick so things slide off — insects lose footing on the pitcher's slippery waxy rim."
+   },
+   {
+    "title": "How Earthquakes Shake the Earth",
+    "passage": "Earth's crust is broken into large pieces called tectonic plates that float on a layer of hot, semi-liquid rock. These massive plates move constantly, but very slowly — about as fast as human fingernails grow. As plates slide past or push against one another, their rough edges snag, causing friction that holds them in place while energy builds up. When the force finally overcomes the friction, the rocks snap apart, releasing huge amounts of stored energy. This sudden movement sends seismic waves rippling through the ground, causing the shaking we feel as an earthquake.",
+    "prompt": "In the passage, the word “friction” most nearly means…",
+    "options": [
+     "resistance caused by two surfaces rubbing against each other",
+     "cold groundwater flowing beneath mountains",
+     "bright light created by hot melting lava",
+     "deep cracks running through ocean floors"
+    ],
+    "correct": 0,
+    "explanation": "“Friction” is the force that resists motion when surfaces rub together — plate friction holds rocks until they snap."
+   },
+   {
+    "title": "The Clever Archerfish",
+    "passage": "The archerfish of Southeast Asia has a unique way of hunting insects resting on leaves above the water. Floating near the surface, the fish squints through the water to spot a bug on an overhanging branch. It then presses its tongue against a groove in the roof of its mouth, forming a gun-like barrel. By quickly squeezing its gill covers, the archerfish shoots a precise jet of water up to six feet into the air! The water droplet knocks the insect off its perch into the river, where the fish gulps it down instantly.",
+    "prompt": "In the passage, the word “precise” most nearly means…",
+    "options": [
+     "exact and highly accurate",
+     "slow and unhurried",
+     "extremely loud and noisy",
+     "sweet and sugary to taste"
+    ],
+    "correct": 0,
+    "explanation": "“Precise” means exact and accurate — the archerfish shoots a precise jet of water to hit tiny targets overhead."
+   },
+   {
+    "title": "The Wonders of Bioluminescent Bays",
+    "passage": "In a few rare tropical bays around the world, the ocean water glows bright blue when disturbed at night. This magical phenomenon is caused by microscopic single-celled organisms called dinoflagellates. Millions of these tiny organisms live in every gallon of bay water. When agitated by a splashing paddle, a swimming fish, or rolling waves, dinoflagellates trigger a fast chemical reaction inside their cells that produces a burst of cool blue light. Scientists believe this flash frightens off small predators or alerts larger fish to come eat the creatures disturbing the bay.",
+    "prompt": "In the passage, the word “agitated” most nearly means…",
+    "options": [
+     "stirred up or disturbed",
+     "frozen completely solid",
+     "dried out in hot sun",
+     "painted a dark shade of blue"
+    ],
+    "correct": 0,
+    "explanation": "“Agitated” means shaken or disturbed — dinoflagellates glow when agitated by movement in the water."
+   },
+   {
+    "title": "The Story of the Rosetta Stone",
+    "passage": "For over a thousand years, no one on Earth could read ancient Egyptian hieroglyphics. The meaning of the pictorial symbols had been forgotten. Then, in 1799, French soldiers in Egypt discovered a heavy slab of black granite known as the Rosetta Stone. Carved onto its surface was the exact same decree written in three different scripts: hieroglyphics, Demotic, and Ancient Greek. Because scholars already knew how to read Ancient Greek, they used it as a translation key to decipher the mysterious hieroglyphics, unlocking thousands of years of ancient Egyptian history.",
+    "prompt": "In the passage, the word “decipher” most nearly means…",
+    "options": [
+     "decode or figure out the meaning of",
+     "bury deep beneath desert sand",
+     "break into hundreds of tiny pieces",
+     "invent a brand new spoken language"
+    ],
+    "correct": 0,
+    "explanation": "To “decipher” means to translate or solve a code — scholars deciphered hieroglyphics using Ancient Greek."
+   },
+   {
+    "title": "How Spiders Spin Silk",
+    "passage": "Spider silk is one of the strongest materials in the natural world. Pound for pound, it is tougher than steel and can stretch up to four times its length without snapping. Spiders produce this super-material using abdominal glands that secrete liquid protein. As the spider pushes the liquid out through tiny nozzles called spinnerets, the protein molecules align tight and form a solid thread. Spiders use different types of silk for different tasks: sticky silk to snare flying insects, smooth silk for structural draglines, and soft silk to wrap their eggs.",
+    "prompt": "In the passage, the word “align” most nearly means…",
+    "options": [
+     "line up in an orderly way",
+     "break into small liquid drops",
+     "dissolve away into water",
+     "disappear completely from view"
+    ],
+    "correct": 0,
+    "explanation": "To “align” means to line up in order — protein molecules align into a strong solid thread as silk comes out."
+   },
+   {
+    "title": "The Life of a Glacier",
+    "passage": "A glacier is a massive, slow-moving river of ice formed in places where more snow falls in winter than melts during summer. Over hundreds of years, heavy layers of fresh snow pile up and compress the bottom layers into dense, blue glacial ice. Driven by its immense weight and gravity, the glacier slowly creeps downhill, carving out wide V-shaped valleys into U-shaped canyons. As it slides, it scrapes up rocks and boulders, acting like a giant natural bulldozer reshaping mountains and land.",
+    "prompt": "In the passage, the word “compress” most nearly means…",
+    "options": [
+     "press or squeeze tightly together",
+     "melt rapidly in warm weather",
+     "blow away in strong winds",
+     "float gently on lake water"
+    ],
+    "correct": 0,
+    "explanation": "To “compress” means to press together firmly — heavy snow layers compress underlying snow into solid blue ice."
+   },
+   {
+    "title": "The Amazing Honeyguide Bird",
+    "passage": "In the savannas of Africa, a small brown bird called the honeyguide engages in a remarkable partnership with human honey hunters. The bird loves to eat bee larvae and beeswax but cannot crack open tough wild beehives on its own. When a honeyguide spots a beehive, it flies toward humans while making a noisy chattering call and flashing its white tail feathers. The humans follow the bird to the tree. After the humans smoke out the bees and harvest the honey, they leave behind the wax and larvae as a reward for their feathered guide.",
+    "prompt": "In the passage, the word “partnership” most nearly means…",
+    "options": [
+     "a cooperative relationship working toward a common goal",
+     "a noisy fight between rival wild animals",
+     "a game played for entertainment in the forest",
+     "a long travel journey across high mountains"
+    ],
+    "correct": 0,
+    "explanation": "A “partnership” is a cooperative relationship — the bird and human honey hunters work together to get food."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "The Mystery of Lightning and Thunder",
+    "passage": "Lightning is a giant spark of electricity in the atmosphere. Inside a storm cloud, tiny bits of ice and raindrops bump into each other, creating electric charges. Positive charges build up at the top of the cloud, while negative charges collect at the bottom. When the difference becomes huge, electricity shoots through the air to connect with positive charges on the ground. A lightning bolt heats the surrounding air in less than a second to nearly 50,000 degrees Fahrenheit! This rapid heating causes the air to expand violently, producing a loud shockwave we hear as thunder.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Lightning is a powerful electric discharge that rapidly superheats the air, causing the shockwave known as thunder.",
+     "Raindrops and ice bits bump into each other inside storm clouds.",
+     "Positive electric charges collect near the tops of thunderstorm clouds.",
+     "Air temperatures reach 50,000 degrees in hot desert climates."
+    ],
+    "correct": 0,
+    "explanation": "The passage main idea summarizes how cloud charges create lightning and why lightning heat produces thunder."
+   },
+   {
+    "title": "The Great Migration of the Arctic Tern",
+    "passage": "The Arctic tern holds the record for the longest migration of any animal on Earth. Every year, this small white bird flies from its nesting grounds in the Arctic near the North Pole all the way to Antarctica near the South Pole, and then back again. By making this incredible 25,000-mile round trip annually, the tern experiences two summers every year and sees more daylight than any other creature on the planet. With light, narrow wings built for long-distance flight, the tern glides effortlessly on ocean winds, showing amazing endurance across stormy seas.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Arctic tern completes an extraordinary annual 25,000-mile migration between the North and South Poles.",
+     "Antarctica is located near the South Pole of planet Earth.",
+     "Ocean winds help seabirds glide without flapping their wings constantly.",
+     "Summers in the Arctic feature long hours of daylight."
+    ],
+    "correct": 0,
+    "explanation": "The main focus is the Arctic tern's record-breaking migration flight back and forth between Earth's poles."
+   },
+   {
+    "title": "The Secrets of Pitcher Plants",
+    "passage": "Pitcher plants are carnivorous plants that grow in nitrogen-poor soils like bogs and swamps. Their leaves are modified into deep, tube-shaped jugs filled with a pool of liquid. The rim of the pitcher is coated with sweet nectar and a slippery wax. Curious insects crawling onto the rim to sip the nectar lose their footing and slide down into the tube. Sharp, downward-pointing hairs lining the inside wall prevent insects from climbing back out. Once trapped, the prey is dissolved by digestive fluids, providing the plant with essential nutrients.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Pitcher plants trap and digest insects in specialized slippery leaves to obtain nutrients missing from their soil.",
+     "Swamp soils contain very low amounts of nitrogen gas.",
+     "Insects enjoy sipping sweet nectar from colorful flowers.",
+     "Plant leaves come in many different shapes and green colors."
+    ],
+    "correct": 0,
+    "explanation": "The main idea explains how pitcher plants use specialized liquid-filled leaf traps to capture insects for nutrient survival."
+   },
+   {
+    "title": "How Earthquakes Shake the Earth",
+    "passage": "Earth's crust is broken into large pieces called tectonic plates that float on a layer of hot, semi-liquid rock. These massive plates move constantly, but very slowly — about as fast as human fingernails grow. As plates slide past or push against one another, their rough edges snag, causing friction that holds them in place while energy builds up. When the force finally overcomes the friction, the rocks snap apart, releasing huge amounts of stored energy. This sudden movement sends seismic waves rippling through the ground, causing the shaking we feel as an earthquake.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Earthquakes occur when moving tectonic plates overcome friction and suddenly release stored energy.",
+     "Human fingernails grow at a rate of about one inch per year.",
+     "Semi-liquid rock flows under Earth's outer crust layers.",
+     "Rocks on mountain slopes can crack during cold winter months."
+    ],
+    "correct": 0,
+    "explanation": "The main point explains the geological cause of earthquakes: tectonic plate movement, friction buildup, and energy release."
+   },
+   {
+    "title": "The Clever Archerfish",
+    "passage": "The archerfish of Southeast Asia has a unique way of hunting insects resting on leaves above the water. Floating near the surface, the fish squints through the water to spot a bug on an overhanging branch. It then presses its tongue against a groove in the roof of its mouth, forming a gun-like barrel. By quickly squeezing its gill covers, the archerfish shoots a precise jet of water up to six feet into the air! The water droplet knocks the insect off its perch into the river, where the fish gulps it down instantly.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The archerfish hunts land insects above the surface by shooting precise water jets to knock them into the river.",
+     "Southeast Asian rivers contain many species of freshwater fish.",
+     "Overhanging branches provide shade for river creatures in tropical climates.",
+     "Fish use their gills to extract oxygen gas from surrounding water."
+    ],
+    "correct": 0,
+    "explanation": "The passage centers on the archerfish's unusual hunting technique of shooting water streams at insects on overhanging branches."
+   },
+   {
+    "title": "The Wonders of Bioluminescent Bays",
+    "passage": "In a few rare tropical bays around the world, the ocean water glows bright blue when disturbed at night. This magical phenomenon is caused by microscopic single-celled organisms called dinoflagellates. Millions of these tiny organisms live in every gallon of bay water. When agitated by a splashing paddle, a swimming fish, or rolling waves, dinoflagellates trigger a fast chemical reaction inside their cells that produces a burst of cool blue light. Scientists believe this flash frightens off small predators or alerts larger fish to come eat the creatures disturbing the bay.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Bioluminescent bays glow blue when disturbed because microscopic dinoflagellates release chemical light bursts.",
+     "Ocean water contains millions of microscopic organisms in every drop.",
+     "Splashing paddles produce foam on top of warm tropical waves.",
+     "Large fish hunt smaller sea creatures during nighttime hours."
+    ],
+    "correct": 0,
+    "explanation": "The text explains the biological mechanism and purpose behind the glowing water phenomenon in bioluminescent bays."
+   },
+   {
+    "title": "The Story of the Rosetta Stone",
+    "passage": "For over a thousand years, no one on Earth could read ancient Egyptian hieroglyphics. The meaning of the pictorial symbols had been forgotten. Then, in 1799, French soldiers in Egypt discovered a heavy slab of black granite known as the Rosetta Stone. Carved onto its surface was the exact same decree written in three different scripts: hieroglyphics, Demotic, and Ancient Greek. Because scholars already knew how to read Ancient Greek, they used it as a translation key to decipher the mysterious hieroglyphics, unlocking thousands of years of ancient Egyptian history.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Rosetta Stone allowed scholars to decipher ancient Egyptian hieroglyphics because it contained the same text in known Ancient Greek.",
+     "French soldiers discovered ancient artifacts while exploring Egypt in 1799.",
+     "Black granite is a very hard igneous rock used in ancient monuments.",
+     "Ancient Egyptian history spans several thousand years of pharaohs."
+    ],
+    "correct": 0,
+    "explanation": "The main idea captures how the Rosetta Stone provided the key to translating and understanding Egyptian hieroglyphics."
+   },
+   {
+    "title": "How Spiders Spin Silk",
+    "passage": "Spider silk is one of the strongest materials in the natural world. Pound for pound, it is tougher than steel and can stretch up to four times its length without snapping. Spiders produce this super-material using abdominal glands that secrete liquid protein. As the spider pushes the liquid out through tiny nozzles called spinnerets, the protein molecules align tight and form a solid thread. Spiders use different types of silk for different tasks: sticky silk to snare flying insects, smooth silk for structural draglines, and soft silk to wrap their eggs.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Spiders produce incredibly strong silk from liquid protein and adapt different silk types for webs, draglines, and egg care.",
+     "Steel is a man-made metal alloy used to construct tall buildings.",
+     "Flying insects get trapped when they bump into sticky threads.",
+     "Spider spinnerets are located on the underside of the abdomen."
+    ],
+    "correct": 0,
+    "explanation": "The text outlines the strength of spider silk, how spiders manufacture it, and the varied ways spiders utilize different silk types."
+   },
+   {
+    "title": "The Life of a Glacier",
+    "passage": "A glacier is a massive, slow-moving river of ice formed in places where more snow falls in winter than melts during summer. Over hundreds of years, heavy layers of fresh snow pile up and compress the bottom layers into dense, blue glacial ice. Driven by its immense weight and gravity, the glacier slowly creeps downhill, carving out wide V-shaped valleys into U-shaped canyons. As it slides, it scrapes up rocks and boulders, acting like a giant natural bulldozer reshaping mountains and land.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Glaciers are massive rivers of compressed ice that move downhill over time, reshaping mountain landscapes.",
+     "Winter snowstorms bring heavy snowfall to high mountain peaks.",
+     "Bulldozers are heavy construction machines used to clear rocks.",
+     "Glacial ice appears bright blue under direct afternoon sun."
+    ],
+    "correct": 0,
+    "explanation": "The passage main idea summarizes how glaciers form, how they move under gravity, and how they reshape mountain landscapes."
+   },
+   {
+    "title": "The Amazing Honeyguide Bird",
+    "passage": "In the savannas of Africa, a small brown bird called the honeyguide engages in a remarkable partnership with human honey hunters. The bird loves to eat bee larvae and beeswax but cannot crack open tough wild beehives on its own. When a honeyguide spots a beehive, it flies toward humans while making a noisy chattering call and flashing its white tail feathers. The humans follow the bird to the tree. After the humans smoke out the bees and harvest the honey, they leave behind the wax and larvae as a reward for their feathered guide.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The honeyguide bird leads human honey hunters to wild beehives so both can share the food rewards inside.",
+     "African savannas are home to many species of birds and mammals.",
+     "Wild bees build nests inside hollow trees to protect their honey.",
+     "Beeswax is used by humans to make candles and skin creams."
+    ],
+    "correct": 0,
+    "explanation": "The passage centers on the unique cooperative relationship where the honeyguide bird leads humans to beehives to share food."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Mystery of Lightning and Thunder",
+    "passage": "Lightning is a giant spark of electricity in the atmosphere. Inside a storm cloud, tiny bits of ice and raindrops bump into each other, creating electric charges. Positive charges build up at the top of the cloud, while negative charges collect at the bottom. When the difference becomes huge, electricity shoots through the air to connect with positive charges on the ground. A lightning bolt heats the surrounding air in less than a second to nearly 50,000 degrees Fahrenheit! This rapid heating causes the air to expand violently, producing a loud shockwave we hear as thunder.",
+    "prompt": "Why do we always hear thunder after seeing a flash of lightning during a thunderstorm?",
+    "options": [
+     "Light waves travel through air much faster than sound waves do.",
+     "Thunder is created several minutes after the lightning bolt hits.",
+     "Clouds absorb thunder sounds before letting them reach the ground.",
+     "Raindrops slow down the sound of thunder as it travels."
+    ],
+    "correct": 0,
+    "explanation": "Both happen at the same instant, but light travels nearly 186,000 miles per second while sound travels much slower (about 1,100 feet per second)."
+   },
+   {
+    "title": "The Great Migration of the Arctic Tern",
+    "passage": "The Arctic tern holds the record for the longest migration of any animal on Earth. Every year, this small white bird flies from its nesting grounds in the Arctic near the North Pole all the way to Antarctica near the South Pole, and then back again. By making this incredible 25,000-mile round trip annually, the tern experiences two summers every year and sees more daylight than any other creature on the planet. With light, narrow wings built for long-distance flight, the tern glides effortlessly on ocean winds, showing amazing endurance across stormy seas.",
+    "prompt": "Why does the Arctic tern experience two summer seasons every single year?",
+    "options": [
+     "It migrates between the North and South Poles as summer switches between the Northern and Southern Hemispheres.",
+     "It flies so fast that it travels forward in time ahead of other birds.",
+     "The Arctic and Antarctic stay warm and sunny all twelve months of the year.",
+     "It sleeps through the winter months while flying across the equator."
+    ],
+    "correct": 0,
+    "explanation": "When it is summer in the Northern Hemisphere (Arctic), it is winter in the South; by flying back and forth, the tern stays in summer constantly."
+   },
+   {
+    "title": "The Secrets of Pitcher Plants",
+    "passage": "Pitcher plants are carnivorous plants that grow in nitrogen-poor soils like bogs and swamps. Their leaves are modified into deep, tube-shaped jugs filled with a pool of liquid. The rim of the pitcher is coated with sweet nectar and a slippery wax. Curious insects crawling onto the rim to sip the nectar lose their footing and slide down into the tube. Sharp, downward-pointing hairs lining the inside wall prevent insects from climbing back out. Once trapped, the prey is dissolved by digestive fluids, providing the plant with essential nutrients.",
+    "prompt": "Why are downward-pointing hairs inside the pitcher plant effective at keeping insects trapped?",
+    "options": [
+     "They point against the direction an insect tries to climb, poking and blocking them from moving upward.",
+     "They produce a sticky glue that freezes the insect's legs in place.",
+     "They absorb all the light inside the pitcher, making it too dark to climb.",
+     "They break off and crush the insect under heavy weight."
+    ],
+    "correct": 0,
+    "explanation": "Downward-pointing hairs act like a one-way street: insects can easily slide down past them, but trying to climb up means pushing against sharp points."
+   },
+   {
+    "title": "How Earthquakes Shake the Earth",
+    "passage": "Earth's crust is broken into large pieces called tectonic plates that float on a layer of hot, semi-liquid rock. These massive plates move constantly, but very slowly — about as fast as human fingernails grow. As plates slide past or push against one another, their rough edges snag, causing friction that holds them in place while energy builds up. When the force finally overcomes the friction, the rocks snap apart, releasing huge amounts of stored energy. This sudden movement sends seismic waves rippling through the ground, causing the shaking we feel as an earthquake.",
+    "prompt": "What causes massive energy to build up along tectonic plate boundaries before an earthquake occurs?",
+    "options": [
+     "The plates keep trying to move while their rough edges remain snagged together by friction.",
+     "Heat from the sun bakes the rocks until they explode.",
+     "Rainwater fills deep underground cracks and creates steam pressure.",
+     "Ocean tides push heavy water against the edges of continents."
+    ],
+    "correct": 0,
+    "explanation": "The text states that as plates push or slide, their rough edges snag and hold them in place while movement forces continue to build up energy."
+   },
+   {
+    "title": "The Clever Archerfish",
+    "passage": "The archerfish of Southeast Asia has a unique way of hunting insects resting on leaves above the water. Floating near the surface, the fish squints through the water to spot a bug on an overhanging branch. It then presses its tongue against a groove in the roof of its mouth, forming a gun-like barrel. By quickly squeezing its gill covers, the archerfish shoots a precise jet of water up to six feet into the air! The water droplet knocks the insect off its perch into the river, where the fish gulps it down instantly.",
+    "prompt": "What would happen if the archerfish could not squeeze its gill covers closed tightly?",
+    "options": [
+     "It would not be able to create enough water pressure to shoot jets into the air.",
+     "It would swallow the insect before knocking it off the leaf.",
+     "Its tongue would fall out of the roof of its mouth.",
+     "It would start flying out of the river like a bird."
+    ],
+    "correct": 0,
+    "explanation": "Squeezing the gill covers acts like a pump piston; without that tight squeeze, the fish couldn't force water out with high pressure."
+   },
+   {
+    "title": "The Wonders of Bioluminescent Bays",
+    "passage": "In a few rare tropical bays around the world, the ocean water glows bright blue when disturbed at night. This magical phenomenon is caused by microscopic single-celled organisms called dinoflagellates. Millions of these tiny organisms live in every gallon of bay water. When agitated by a splashing paddle, a swimming fish, or rolling waves, dinoflagellates trigger a fast chemical reaction inside their cells that produces a burst of cool blue light. Scientists believe this flash frightens off small predators or alerts larger fish to come eat the creatures disturbing the bay.",
+    "prompt": "How does producing a sudden flash of light help protect tiny dinoflagellates from being eaten by small predators?",
+    "options": [
+     "The light startles the small predator and attracts larger fish that hunt those small predators.",
+     "The blue light heats up the surrounding ocean water until it boils.",
+     "The light turns the dinoflagellates invisible to all sea creatures.",
+     "The flash blinds all fish permanently so they swim away."
+    ],
+    "correct": 0,
+    "explanation": "The passage explains that the light burst startles small predators and serves as a 'burglar alarm' bringing bigger fish to eat the attacker."
+   },
+   {
+    "title": "The Story of the Rosetta Stone",
+    "passage": "For over a thousand years, no one on Earth could read ancient Egyptian hieroglyphics. The meaning of the pictorial symbols had been forgotten. Then, in 1799, French soldiers in Egypt discovered a heavy slab of black granite known as the Rosetta Stone. Carved onto its surface was the exact same decree written in three different scripts: hieroglyphics, Demotic, and Ancient Greek. Because scholars already knew how to read Ancient Greek, they used it as a translation key to decipher the mysterious hieroglyphics, unlocking thousands of years of ancient Egyptian history.",
+    "prompt": "Why would the Rosetta Stone have been far less useful if it had only contained hieroglyphics without Ancient Greek?",
+    "options": [
+     "Scholars would have had no known translation key to compare and match with the unknown symbols.",
+     "The granite stone would have broken apart into sand.",
+     "French soldiers would not have been able to carry the heavy stone back.",
+     "The decree would have lost its original official meaning."
+    ],
+    "correct": 0,
+    "explanation": "Without Ancient Greek (a language scholars could already read), there would be no side-by-side translation key to figure out what the hieroglyphics meant."
+   },
+   {
+    "title": "How Spiders Spin Silk",
+    "passage": "Spider silk is one of the strongest materials in the natural world. Pound for pound, it is tougher than steel and can stretch up to four times its length without snapping. Spiders produce this super-material using abdominal glands that secrete liquid protein. As the spider pushes the liquid out through tiny nozzles called spinnerets, the protein molecules align tight and form a solid thread. Spiders use different types of silk for different tasks: sticky silk to snare flying insects, smooth silk for structural draglines, and soft silk to wrap their eggs.",
+    "prompt": "Why would a spider use non-sticky silk for its web's structural frame and draglines?",
+    "options": [
+     "So the spider can walk across its own web without getting stuck in its own traps.",
+     "Because non-sticky silk is much heavier and sinks in the wind.",
+     "Non-sticky silk attracts more insects than sticky silk.",
+     "Because sticky silk dissolves immediately when exposed to sunlight."
+    ],
+    "correct": 0,
+    "explanation": "Spiders need non-sticky paths (draglines and framework) so they can move freely across their webs without trapping themselves."
+   },
+   {
+    "title": "The Life of a Glacier",
+    "passage": "A glacier is a massive, slow-moving river of ice formed in places where more snow falls in winter than melts during summer. Over hundreds of years, heavy layers of fresh snow pile up and compress the bottom layers into dense, blue glacial ice. Driven by its immense weight and gravity, the glacier slowly creeps downhill, carving out wide V-shaped valleys into U-shaped canyons. As it slides, it scrapes up rocks and boulders, acting like a giant natural bulldozer reshaping mountains and land.",
+    "prompt": "What would happen to a glacier if global temperatures rose and summer melting exceeded winter snowfall for many years?",
+    "options": [
+     "The glacier would shrink and gradually melt away faster than it could rebuild.",
+     "The glacier would grow twice as thick and slide faster uphill.",
+     "The glacier would turn into solid diamond instead of ice.",
+     "The mountain underneath the glacier would sink into the earth."
+    ],
+    "correct": 0,
+    "explanation": "Glaciers require more winter snow accumulation than summer melt; if melting exceeds snowfall, the glacier loses ice mass and retreats/disappears."
+   },
+   {
+    "title": "The Amazing Honeyguide Bird",
+    "passage": "In the savannas of Africa, a small brown bird called the honeyguide engages in a remarkable partnership with human honey hunters. The bird loves to eat bee larvae and beeswax but cannot crack open tough wild beehives on its own. When a honeyguide spots a beehive, it flies toward humans while making a noisy chattering call and flashing its white tail feathers. The humans follow the bird to the tree. After the humans smoke out the bees and harvest the honey, they leave behind the wax and larvae as a reward for their feathered guide.",
+    "prompt": "Why is it important for human honey hunters to leave behind beeswax and larvae for the honeyguide bird?",
+    "options": [
+     "It rewards the bird so it will continue helping humans find beehives in the future.",
+     "The beeswax helps the humans build new beehives in their village.",
+     "It stops the bees from following the humans back home.",
+     "The bird will attack the humans if they carry away any beeswax."
+    ],
+    "correct": 0,
+    "explanation": "Mutualism relies on shared benefits; leaving the reward ensures the honeyguide bird continues to lead humans to hives."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_26_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-26 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-26 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
