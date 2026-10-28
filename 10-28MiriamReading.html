@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-28 Miriam Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-28 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-28, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Secret World of Ants",
+    "passage": "Leafcutter ants are some of nature’s most dedicated farmers. Living in vast underground colonies with millions of members, these tiny insects march in long lines to snip pieces of green leaves from rainforest trees. However, the ants do not actually eat the leaves. Instead, they carry the heavy leafy burdens back to subterranean chambers where they chew the foliage into paste. They spread this leaf paste onto special underground garden beds to cultivate a nutritious fungus, which serves as the colony’s primary food source. Through this elaborate teamwork, leafcutter ants build complex farming societies beneath the forest floor.",
+    "prompt": "In the passage, the word “cultivate” most nearly means…",
+    "options": [
+     "grow and tend a crop carefully",
+     "throw away as garbage",
+     "paint with bright colors",
+     "freeze in winter ice"
+    ],
+    "correct": 0,
+    "explanation": "“Cultivate” means to grow and care for crops — leafcutter ants cultivate fungus to feed their colony."
+   },
+   {
+    "title": "The Incredible Electric Eel",
+    "passage": "Despite its name, the electric eel is not a true eel, but a giant knife-fish that inhabits murky rivers in South America. Lacking good eyesight in muddy waters, the electric eel relies on electricity to sense its surroundings and hunt for prey. Over 80 percent of the eel's long body is packed with specialized muscle cells called electrocytes, which function like thousands of stacked tiny batteries. When threatened or hunting, the eel can discharge an intense electrical shock of up to 600 volts — powerful enough to stun a horse or knock down a human! Smaller electric pulses help the eel navigate safely in pitch-black waters.",
+    "prompt": "In the passage, the word “discharge” most nearly means…",
+    "options": [
+     "release or shoot out electrical energy",
+     "soak up water like a sponge",
+     "turn off permanently",
+     "hide inside a dark cave"
+    ],
+    "correct": 0,
+    "explanation": "To “discharge” means to release or output energy — the eel can discharge a 600-volt shock."
+   },
+   {
+    "title": "How Owls Fly in Silence",
+    "passage": "Most birds make a noisy swishing sound when flapping their wings, which can alert prey. Owls, however, are masters of silent flight. Their secret lies in the unique structure of their feathers. The leading edges of an owl’s primary wing feathers feature comb-like serrations that break up air turbulence into tiny currents. Additionally, the upper surfaces of their feathers are covered in a velvet-like down that absorbs sound. These special feather adaptations muffled the sound of rushing air, allowing an owl to swoop down on unsuspecting mice in near-total silence under the cover of night.",
+    "prompt": "In the passage, the word “muffled” most nearly means…",
+    "options": [
+     "softened or quieted a sound",
+     "made louder and sharper",
+     "turned into a bright light",
+     "stopped from moving forward"
+    ],
+    "correct": 0,
+    "explanation": "To “muffle” means to deaden or quiet a sound — the owl's velvety feathers muffled the noise of air rushing over its wings."
+   },
+   {
+    "title": "The Baobab Tree of Life",
+    "passage": "Standing tall in the dry savannas of Africa, the baobab tree is often called the 'Tree of Life.' During the brief rainy season, the baobab acts like a gigantic natural sponge. Its soft, spongy trunk expands to store up to 30,000 gallons of water! When severe droughts strike, the tree relies on this internal water reserve to survive for months without rain. Furthermore, the baobab produces nutrient-dense fruit rich in vitamin C, and its thick bark provides shelter for birds, bats, and insects. Because it supports so many species in harsh environments, the resilient baobab is vital to the savanna ecosystem.",
+    "prompt": "In the passage, the word “resilient” most nearly means…",
+    "options": [
+     "able to withstand and recover quickly from difficult conditions",
+     "easily broken or knocked over",
+     "covered in sharp thorny needles",
+     "short-lived and dying in autumn"
+    ],
+    "correct": 0,
+    "explanation": "“Resilient” means strong and able to recover quickly from hardship like long droughts."
+   },
+   {
+    "title": "The Peregrine Falcon's Speed",
+    "passage": "The peregrine falcon is the fastest creature in the entire animal kingdom. When hunting other birds in mid-air, the falcon climbs high into the sky and then tucks its wings tight against its body to execute a steep, vertical dive called a stoop. Gravity accelerates the falcon to breathtaking speeds of over 240 miles per hour! Special cone-shaped structures inside the falcon's nostrils slow down the rushing air so its lungs do not burst at high velocity. Clear extra eyelids shield its eyes from wind damage as it strikes its prey with sharp talons.",
+    "prompt": "In the passage, the word “accelerates” most nearly means…",
+    "options": [
+     "speeds up or moves faster and faster",
+     "slows down to a complete stop",
+     "turns around in small circles",
+     "floats gently without moving"
+    ],
+    "correct": 0,
+    "explanation": "“Accelerate” means to increase speed — gravity accelerates the diving falcon up to 240 mph."
+   },
+   {
+    "title": "The International Space Station",
+    "passage": "Circling 250 miles above Earth at 17,500 miles per hour, the International Space Station (ISS) is a remarkable floating laboratory. Astronauts from nations around the world live and work together aboard the station for months at a time. Because the ISS orbits Earth every 90 minutes, crew members witness 16 sunrises and sunsets every single day! Inside the station, microgravity creates a weightless environment where objects float freely. Scientists conduct ground-breaking experiments in microgravity to study human health, plant growth, and physics, helping humanity prepare for future space travel to Mars.",
+    "prompt": "In the passage, the word “weightless” most nearly means…",
+    "options": [
+     "having no apparent weight or feeling free from gravity",
+     "extremely heavy and hard to lift",
+     "made out of dark metal",
+     "spinning around very fast"
+    ],
+    "correct": 0,
+    "explanation": "“Weightless” means experiencing zero gravity so things float without weight."
+   },
+   {
+    "title": "The Clever Sea Otter",
+    "passage": "Sea otters living along the icy Pacific coast are famous for their playful nature and intelligence. Lacking a thick layer of blubber like whales, sea otters stay warm using the densest fur in the animal kingdom, containing up to one million hairs per square inch! Sea otters are also among the few mammals that use tools. While floating on their backs, an otter places a flat rock on its chest and hammers hard clam or mussel shells against the stone until they crack open. To keep from drifting away while sleeping, otters wrap themselves in strands of giant kelp like a natural safety anchor.",
+    "prompt": "In the passage, the word “anchor” most nearly means…",
+    "options": [
+     "something that holds a floating object firmly in place",
+     "a heavy stone used to crush shells",
+     "a thick layer of warm body fat",
+     "a sharp tooth used for biting"
+    ],
+    "correct": 0,
+    "explanation": "An “anchor” holds things in place — kelp acts like a safety anchor stopping otters from drifting while sleeping."
+   },
+   {
+    "title": "The Power of Tsunamis",
+    "passage": "Unlike regular ocean waves caused by surface wind, a tsunami is a series of massive water waves triggered by sudden underwater disturbances, such as deep earthquakes or volcanic eruptions. In the open ocean, a tsunami travels at jet-plane speeds of over 500 miles per hour, but its waves may only be a few feet tall. However, as the tsunami approaches shallow coastal water, friction slows the wave down, causing the displaced water to pile up into a towering wall of water over 50 feet high that crashes onto land with immense destructive force.",
+    "prompt": "In the passage, the word “immense” most nearly means…",
+    "options": [
+     "extremely large or great in size and power",
+     "very small and barely noticeable",
+     "gentle like a summer breeze",
+     "warm and pleasant to feel"
+    ],
+    "correct": 0,
+    "explanation": "“Immense” means huge and powerful — tsunamis hit coastline land with immense destructive force."
+   },
+   {
+    "title": "The Arctic Fox's Seasonal Coat",
+    "passage": "The Arctic fox lives in freezing tundra regions where winter temperatures drop far below zero. To survive, the fox undergoes a dramatic seasonal camouflage transformation. During short summer months, its fur is brownish-gray, matching the tundra’s bare rocks, dirt, and moss. As autumn approaches and snow begins to cover the land, the fox sheds its summer coat and grows a thick, snow-white fur mantle. This seasonal transition allows the fox to blend seamlessly into snowy landscapes, making it invisible to prey like lemmings and predators like polar bears.",
+    "prompt": "In the passage, the word “transition” most nearly means…",
+    "options": [
+     "process of changing from one state or appearance to another",
+     "deep sleep during cold winter nights",
+     "running fast across icy rivers",
+     "building a den under the ground"
+    ],
+    "correct": 0,
+    "explanation": "A “transition” is a change from one condition to another — shedding summer fur for white winter fur is a seasonal transition."
+   },
+   {
+    "title": "The Invention of Paper",
+    "passage": "Before paper was invented, people recorded written history on heavy clay tablets, expensive animal skins, or fragile papyrus reeds. Around the year 105 AD, a Chinese court official named Cai Lun invented a revolutionary new method for making paper. He mashed mulberry bark, hemp fibers, old rags, and water into a soft pulp. After pressing out the liquid, he spread the pulp onto flat mesh screens to dry in the sun, creating lightweight, smooth sheets. This affordable writing material spread along trade routes across the globe, making books accessible and transforming education forever.",
+    "prompt": "In the passage, the word “revolutionary” most nearly means…",
+    "options": [
+     "causing a massive, important change",
+     "very slow and hard to understand",
+     "cheap and easily broken",
+     "old-fashioned and outdated"
+    ],
+    "correct": 0,
+    "explanation": "“Revolutionary” means causing a complete, major change — Cai Lun's papermaking process was a revolutionary invention."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "The Secret World of Ants",
+    "passage": "Leafcutter ants are some of nature’s most dedicated farmers. Living in vast underground colonies with millions of members, these tiny insects march in long lines to snip pieces of green leaves from rainforest trees. However, the ants do not actually eat the leaves. Instead, they carry the heavy leafy burdens back to subterranean chambers where they chew the foliage into paste. They spread this leaf paste onto special underground garden beds to cultivate a nutritious fungus, which serves as the colony’s primary food source. Through this elaborate teamwork, leafcutter ants build complex farming societies beneath the forest floor.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Leafcutter ants work together in underground colonies to cultivate fungus using chewed leaves as garden fertilizer.",
+     "Rainforest trees grow large green leaves during the rainy season.",
+     "Subterranean chambers are cold places where ants sleep in winter.",
+     "Insects prefer eating sweet fruit over green plant leaves."
+    ],
+    "correct": 0,
+    "explanation": "The main idea explains how leafcutter ants harvest leaves to farm fungus in their underground colonies."
+   },
+   {
+    "title": "The Incredible Electric Eel",
+    "passage": "Despite its name, the electric eel is not a true eel, but a giant knife-fish that inhabits murky rivers in South America. Lacking good eyesight in muddy waters, the electric eel relies on electricity to sense its surroundings and hunt for prey. Over 80 percent of the eel's long body is packed with specialized muscle cells called electrocytes, which function like thousands of stacked tiny batteries. When threatened or hunting, the eel can discharge an intense electrical shock of up to 600 volts — powerful enough to stun a horse or knock down a human! Smaller electric pulses help the eel navigate safely in pitch-black waters.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The electric eel uses specialized body cells to produce electric shocks for navigation, hunting, and defense.",
+     "South American rivers are filled with muddy water and tall water plants.",
+     "Knife-fish have small eyes that cannot see well in bright daylight.",
+     "Stacked batteries power flashlights and small electronic devices."
+    ],
+    "correct": 0,
+    "explanation": "The passage describes how the electric eel generates electricity for navigation, hunting, and self-defense."
+   },
+   {
+    "title": "How Owls Fly in Silence",
+    "passage": "Most birds make a noisy swishing sound when flapping their wings, which can alert prey. Owls, however, are masters of silent flight. Their secret lies in the unique structure of their feathers. The leading edges of an owl’s primary wing feathers feature comb-like serrations that break up air turbulence into tiny currents. Additionally, the upper surfaces of their feathers are covered in a velvet-like down that absorbs sound. These special feather adaptations muffled the sound of rushing air, allowing an owl to swoop down on unsuspecting mice in near-total silence under the cover of night.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Owls fly in complete silence thanks to specialized feather structures that break up air turbulence and absorb noise.",
+     "Mice come out at night to look for seeds in meadows.",
+     "Most birds flap their wings loudly when taking off from tree branches.",
+     "Velvet is a soft fabric used to make warm winter clothing."
+    ],
+    "correct": 0,
+    "explanation": "The text details how unique feather adaptations allow owls to fly silently while hunting prey."
+   },
+   {
+    "title": "The Baobab Tree of Life",
+    "passage": "Standing tall in the dry savannas of Africa, the baobab tree is often called the 'Tree of Life.' During the brief rainy season, the baobab acts like a gigantic natural sponge. Its soft, spongy trunk expands to store up to 30,000 gallons of water! When severe droughts strike, the tree relies on this internal water reserve to survive for months without rain. Furthermore, the baobab produces nutrient-dense fruit rich in vitamin C, and its thick bark provides shelter for birds, bats, and insects. Because it supports so many species in harsh environments, the resilient baobab is vital to the savanna ecosystem.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The baobab tree survives harsh droughts by storing massive amounts of water in its trunk and supporting surrounding wildlife.",
+     "Savanna droughts last for several months during winter.",
+     "Vitamin C is an important nutrient found in fresh fruits.",
+     "Birds and bats build nests high up in tree branches."
+    ],
+    "correct": 0,
+    "explanation": "The main idea sums up how the baobab stores water to survive droughts and supports many animals in the savanna."
+   },
+   {
+    "title": "The Peregrine Falcon's Speed",
+    "passage": "The peregrine falcon is the fastest creature in the entire animal kingdom. When hunting other birds in mid-air, the falcon climbs high into the sky and then tucks its wings tight against its body to execute a steep, vertical dive called a stoop. Gravity accelerates the falcon to breathtaking speeds of over 240 miles per hour! Special cone-shaped structures inside the falcon's nostrils slow down the rushing air so its lungs do not burst at high velocity. Clear extra eyelids shield its eyes from wind damage as it strikes its prey with sharp talons.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The peregrine falcon uses incredible speed and specialized body adaptations during high-speed hunting dives.",
+     "Many species of falcons build nests on tall city skyscrapers.",
+     "Gravity pulls falling objects down toward the ground.",
+     "Bird talons are sharp claws used to catch fish in lakes."
+    ],
+    "correct": 0,
+    "explanation": "The text explains how the falcon reaches over 240 mph in a dive and uses nasal cones and eyelids to survive the speed."
+   },
+   {
+    "title": "The International Space Station",
+    "passage": "Circling 250 miles above Earth at 17,500 miles per hour, the International Space Station (ISS) is a remarkable floating laboratory. Astronauts from nations around the world live and work together aboard the station for months at a time. Because the ISS orbits Earth every 90 minutes, crew members witness 16 sunrises and sunsets every single day! Inside the station, microgravity creates a weightless environment where objects float freely. Scientists conduct ground-breaking experiments in microgravity to study human health, plant growth, and physics, helping humanity prepare for future space travel to Mars.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The International Space Station is an orbiting laboratory where international astronauts live and conduct science experiments in microgravity.",
+     "The planet Mars is the fourth planet from the sun.",
+     "Spacecraft orbit Earth at high speeds above the atmosphere.",
+     "Sunrises happen in the morning when the sun appears."
+    ],
+    "correct": 0,
+    "explanation": "The main idea describes the ISS as an orbiting international lab used for microgravity research."
+   },
+   {
+    "title": "The Clever Sea Otter",
+    "passage": "Sea otters living along the icy Pacific coast are famous for their playful nature and intelligence. Lacking a thick layer of blubber like whales, sea otters stay warm using the densest fur in the animal kingdom, containing up to one million hairs per square inch! Sea otters are also among the few mammals that use tools. While floating on their backs, an otter places a flat rock on its chest and hammers hard clam or mussel shells against the stone until they crack open. To keep from drifting away while sleeping, otters wrap themselves in strands of giant kelp like a natural safety anchor.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Sea otters use dense fur for warmth, stones as tools to crack shells, and kelp to anchor themselves in ocean waters.",
+     "Whales rely on thick blubber layers to survive cold ocean water.",
+     "Pacific ocean kelp forests grow rapidly toward sunlight.",
+     "Mussels and clams live attached to underwater rocks."
+    ],
+    "correct": 0,
+    "explanation": "The main idea covers sea otter adaptations and behaviors: dense fur, tool use, and kelp wrapping."
+   },
+   {
+    "title": "The Power of Tsunamis",
+    "passage": "Unlike regular ocean waves caused by surface wind, a tsunami is a series of massive water waves triggered by sudden underwater disturbances, such as deep earthquakes or volcanic eruptions. In the open ocean, a tsunami travels at jet-plane speeds of over 500 miles per hour, but its waves may only be a few feet tall. However, as the tsunami approaches shallow coastal water, friction slows the wave down, causing the displaced water to pile up into a towering wall of water over 50 feet high that crashes onto land with immense destructive force.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Tsunamis are powerful ocean waves caused by underwater disturbances that grow into towering walls of water near coasts.",
+     "Wind creates small waves on the surface of lakes and oceans.",
+     "Undersea volcanoes erupt hot lava into ocean water.",
+     "Jet planes fly hundreds of miles per hour through the sky."
+    ],
+    "correct": 0,
+    "explanation": "The passage explains how tsunamis form, travel at high speeds in deep water, and build into huge destructive waves near shores."
+   },
+   {
+    "title": "The Arctic Fox's Seasonal Coat",
+    "passage": "The Arctic fox lives in freezing tundra regions where winter temperatures drop far below zero. To survive, the fox undergoes a dramatic seasonal camouflage transformation. During short summer months, its fur is brownish-gray, matching the tundra’s bare rocks, dirt, and moss. As autumn approaches and snow begins to cover the land, the fox sheds its summer coat and grows a thick, snow-white fur mantle. This seasonal transition allows the fox to blend seamlessly into snowy landscapes, making it invisible to prey like lemmings and predators like polar bears.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The Arctic fox changes its coat color seasonally to stay camouflaged against changing tundra landscapes year-round.",
+     "Lemmings live in underground burrows beneath tundra snow.",
+     "Polar bears hunt along the edges of sea ice during winter.",
+     "Tundra winters are dark and cold for several months."
+    ],
+    "correct": 0,
+    "explanation": "The passage focuses on how the Arctic fox shifts coat colors between summer and winter to maintain camouflage."
+   },
+   {
+    "title": "The Invention of Paper",
+    "passage": "Before paper was invented, people recorded written history on heavy clay tablets, expensive animal skins, or fragile papyrus reeds. Around the year 105 AD, a Chinese court official named Cai Lun invented a revolutionary new method for making paper. He mashed mulberry bark, hemp fibers, old rags, and water into a soft pulp. After pressing out the liquid, he spread the pulp onto flat mesh screens to dry in the sun, creating lightweight, smooth sheets. This affordable writing material spread along trade routes across the globe, making books accessible and transforming education forever.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Cai Lun's invention of paper provided an affordable, lightweight writing material that revolutionized communication worldwide.",
+     "Clay tablets were heavy and broke easily when dropped.",
+     "Trade routes connected Asia and Europe in ancient times.",
+     "Animal skins were used to make clothing and shelters."
+    ],
+    "correct": 0,
+    "explanation": "The main idea explains the invention of paper from plant pulp and its global impact on education and book production."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Secret World of Ants",
+    "passage": "Leafcutter ants are some of nature’s most dedicated farmers. Living in vast underground colonies with millions of members, these tiny insects march in long lines to snip pieces of green leaves from rainforest trees. However, the ants do not actually eat the leaves. Instead, they carry the heavy leafy burdens back to subterranean chambers where they chew the foliage into paste. They spread this leaf paste onto special underground garden beds to cultivate a nutritious fungus, which serves as the colony’s primary food source. Through this elaborate teamwork, leafcutter ants build complex farming societies beneath the forest floor.",
+    "prompt": "Why do leafcutter ants carry pieces of leaves back to their underground nests if they cannot digest green leaves?",
+    "options": [
+     "They use the leaves to make a leaf paste that feeds the fungus they farm for food.",
+     "They use the leaves to block sunlight from entering their nest entrance.",
+     "They play games with the leaves in their underground chambers.",
+     "They trade the leaves with other insects for honey."
+    ],
+    "correct": 0,
+    "explanation": "The text explains that ants chew leaves into paste to grow fungus, which is their actual source of food."
+   },
+   {
+    "title": "The Incredible Electric Eel",
+    "passage": "Despite its name, the electric eel is not a true eel, but a giant knife-fish that inhabits murky rivers in South America. Lacking good eyesight in muddy waters, the electric eel relies on electricity to sense its surroundings and hunt for prey. Over 80 percent of the eel's long body is packed with specialized muscle cells called electrocytes, which function like thousands of stacked tiny batteries. When threatened or hunting, the eel can discharge an intense electrical shock of up to 600 volts — powerful enough to stun a horse or knock down a human! Smaller electric pulses help the eel navigate safely in pitch-black waters.",
+    "prompt": "Why is the electric eel's ability to send out small electric pulses useful even when it is not hunting or defending itself?",
+    "options": [
+     "Small electric pulses help the eel sense its surroundings and navigate through murky, dark water.",
+     "Small electric pulses heat up the river water to keep the eel warm.",
+     "Small pulses attract bright birds to land on the water surface.",
+     "Small pulses make the eel's scales glow in rainbow colors."
+    ],
+    "correct": 0,
+    "explanation": "The text notes that because its vision is poor in muddy water, smaller electric pulses help the eel navigate safely."
+   },
+   {
+    "title": "How Owls Fly in Silence",
+    "passage": "Most birds make a noisy swishing sound when flapping their wings, which can alert prey. Owls, however, are masters of silent flight. Their secret lies in the unique structure of their feathers. The leading edges of an owl’s primary wing feathers feature comb-like serrations that break up air turbulence into tiny currents. Additionally, the upper surfaces of their feathers are covered in a velvet-like down that absorbs sound. These special feather adaptations muffled the sound of rushing air, allowing an owl to swoop down on unsuspecting mice in near-total silence under the cover of night.",
+    "prompt": "How does flying silently give owls an advantage when hunting mice at night?",
+    "options": [
+     "It prevents prey from hearing the owl coming, giving mice no warning to hide.",
+     "It helps the owl see better in dark farm barns.",
+     "It allows the owl to fly faster than an airplane.",
+     "It keeps the owl warm against cold night winds."
+    ],
+    "correct": 0,
+    "explanation": "Silent flight means unsuspecting prey cannot hear the approaching owl, making the hunt successful."
+   },
+   {
+    "title": "The Baobab Tree of Life",
+    "passage": "Standing tall in the dry savannas of Africa, the baobab tree is often called the 'Tree of Life.' During the brief rainy season, the baobab acts like a gigantic natural sponge. Its soft, spongy trunk expands to store up to 30,000 gallons of water! When severe droughts strike, the tree relies on this internal water reserve to survive for months without rain. Furthermore, the baobab produces nutrient-dense fruit rich in vitamin C, and its thick bark provides shelter for birds, bats, and insects. Because it supports so many species in harsh environments, the resilient baobab is vital to the savanna ecosystem.",
+    "prompt": "Why is the baobab tree called the 'Tree of Life' by people and scientists living near the African savanna?",
+    "options": [
+     "It provides water, food, and shelter that keep many animal species alive during harsh dry seasons.",
+     "It grows leaves made of pure silver and gold.",
+     "It is the only tree species that grows anywhere in Africa.",
+     "It produces water that flows into ocean rivers."
+    ],
+    "correct": 0,
+    "explanation": "The passage notes that the tree stores water, yields nutritious fruit, and provides shelter for numerous species in dry climates."
+   },
+   {
+    "title": "The Peregrine Falcon's Speed",
+    "passage": "The peregrine falcon is the fastest creature in the entire animal kingdom. When hunting other birds in mid-air, the falcon climbs high into the sky and then tucks its wings tight against its body to execute a steep, vertical dive called a stoop. Gravity accelerates the falcon to breathtaking speeds of over 240 miles per hour! Special cone-shaped structures inside the falcon's nostrils slow down the rushing air so its lungs do not burst at high velocity. Clear extra eyelids shield its eyes from wind damage as it strikes its prey with sharp talons.",
+    "prompt": "Why are the special cone-shaped structures inside a peregrine falcon's nostrils necessary when diving at 240 mph?",
+    "options": [
+     "They regulate and slow down high-speed airflow so the falcon can breathe without damaging its lungs.",
+     "They help the falcon smell prey from miles away.",
+     "They make a loud whistling noise that scares other birds.",
+     "They store extra oxygen for long ocean flights."
+    ],
+    "correct": 0,
+    "explanation": "The text states that nasal cones slow down rushing air so high air pressure doesn't damage the falcon's lungs."
+   },
+   {
+    "title": "The International Space Station",
+    "passage": "Circling 250 miles above Earth at 17,500 miles per hour, the International Space Station (ISS) is a remarkable floating laboratory. Astronauts from nations around the world live and work together aboard the station for months at a time. Because the ISS orbits Earth every 90 minutes, crew members witness 16 sunrises and sunsets every single day! Inside the station, microgravity creates a weightless environment where objects float freely. Scientists conduct ground-breaking experiments in microgravity to study human health, plant growth, and physics, helping humanity prepare for future space travel to Mars.",
+    "prompt": "Why do astronauts on the International Space Station experience 16 sunrises and sunsets every 24 hours?",
+    "options": [
+     "The space station orbits around the Earth once every 90 minutes.",
+     "The sun flashes on and off sixteen times a day in space.",
+     "Earth spins sixteen times faster than it used to.",
+     "Astronauts turn station lights on and off every hour."
+    ],
+    "correct": 0,
+    "explanation": "Because the station circles the Earth every 90 minutes, it passes into and out of Earth's shadow 16 times in 24 hours."
+   },
+   {
+    "title": "The Clever Sea Otter",
+    "passage": "Sea otters living along the icy Pacific coast are famous for their playful nature and intelligence. Lacking a thick layer of blubber like whales, sea otters stay warm using the densest fur in the animal kingdom, containing up to one million hairs per square inch! Sea otters are also among the few mammals that use tools. While floating on their backs, an otter places a flat rock on its chest and hammers hard clam or mussel shells against the stone until they crack open. To keep from drifting away while sleeping, otters wrap themselves in strands of giant kelp like a natural safety anchor.",
+    "prompt": "Why do sea otters need extremely dense fur compared to other marine mammals like seals or whales?",
+    "options": [
+     "They do not have a layer of fat or blubber, so dense fur traps air to keep cold water off their skin.",
+     "Dense fur helps them sink to the bottom of the sea quickly.",
+     "Dense fur changes color to scare away shark predators.",
+     "Dense fur makes them swim faster than motorboats."
+    ],
+    "correct": 0,
+    "explanation": "The text notes that because otters lack blubber, their dense fur is their primary insulation against cold Pacific water."
+   },
+   {
+    "title": "The Power of Tsunamis",
+    "passage": "Unlike regular ocean waves caused by surface wind, a tsunami is a series of massive water waves triggered by sudden underwater disturbances, such as deep earthquakes or volcanic eruptions. In the open ocean, a tsunami travels at jet-plane speeds of over 500 miles per hour, but its waves may only be a few feet tall. However, as the tsunami approaches shallow coastal water, friction slows the wave down, causing the displaced water to pile up into a towering wall of water over 50 feet high that crashes onto land with immense destructive force.",
+    "prompt": "Why does a tsunami wave grow much taller as it moves from deep ocean water toward shallow beaches?",
+    "options": [
+     "Friction in shallow water slows the bottom of the wave down, forcing the huge mass of water to pile upward.",
+     "The sun heats up shallow water, making it expand into steam.",
+     "Undersea earthquakes push the beach sand into the sky.",
+     "Wind blows harder near the coast than in open ocean."
+    ],
+    "correct": 0,
+    "explanation": "The text states that as a tsunami enters shallow water, friction slows it down, causing the displaced water to pile up into a tall wall."
+   },
+   {
+    "title": "The Arctic Fox's Seasonal Coat",
+    "passage": "The Arctic fox lives in freezing tundra regions where winter temperatures drop far below zero. To survive, the fox undergoes a dramatic seasonal camouflage transformation. During short summer months, its fur is brownish-gray, matching the tundra’s bare rocks, dirt, and moss. As autumn approaches and snow begins to cover the land, the fox sheds its summer coat and grows a thick, snow-white fur mantle. This seasonal transition allows the fox to blend seamlessly into snowy landscapes, making it invisible to prey like lemmings and predators like polar bears.",
+    "prompt": "How does changing from brown fur in summer to white fur in winter benefit the Arctic fox?",
+    "options": [
+     "It keeps the fox hidden from both its prey and dangerous predators in every season.",
+     "White fur absorbs more heat from the winter sun than brown fur.",
+     "It allows the fox to swim faster across melted tundra lakes.",
+     "Brown fur scares away polar bears during summer months."
+    ],
+    "correct": 0,
+    "explanation": "Matching its background in both seasons keeps the fox invisible to prey (lemmings) and predators (polar bears)."
+   },
+   {
+    "title": "The Invention of Paper",
+    "passage": "Before paper was invented, people recorded written history on heavy clay tablets, expensive animal skins, or fragile papyrus reeds. Around the year 105 AD, a Chinese court official named Cai Lun invented a revolutionary new method for making paper. He mashed mulberry bark, hemp fibers, old rags, and water into a soft pulp. After pressing out the liquid, he spread the pulp onto flat mesh screens to dry in the sun, creating lightweight, smooth sheets. This affordable writing material spread along trade routes across the globe, making books accessible and transforming education forever.",
+    "prompt": "Why was Cai Lun's paper a major improvement over clay tablets and animal skins?",
+    "options": [
+     "It was much lighter, smoother, and far less expensive to produce, making writing accessible to many more people.",
+     "It was completely waterproof and could not burn in fire.",
+     "It allowed people to write without using ink or brushes.",
+     "Clay tablets could only be made in small desert villages."
+    ],
+    "correct": 0,
+    "explanation": "The text contrasts heavy clay and expensive skins with paper, which was lightweight, smooth, affordable, and easy to share."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_28_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-28 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-28 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
