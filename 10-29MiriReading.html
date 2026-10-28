@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-28 Miri Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>10-28 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label">Question 1 of 10</div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)">⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (10-28, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "\ud83d\udd0d",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Sea Otter's Toolbox",
+    "passage": "Sea otters are the acrobats of the ocean. They float on their backs in cold Pacific water, often holding hands with other otters so they do not drift apart while they nap. When it is time to eat, an otter dives for clams and mussels, then pops back up and balances its meal on its belly. Because an otter has no sharp claws for cracking shells, it carries a favorite rock in a pocket of loose skin under its arm. With nimble paws, it taps and twists the shell against the rock until it cracks open. Sea otters must eat a quarter of their body weight every day, so they spend most of their waking hours hunting, cracking, and munching.",
+    "prompt": "In the passage, the word \u201cnimble\u201d most nearly means\u2026",
+    "options": [
+     "quick and skillful in movement",
+     "very strong and heavy",
+     "afraid of deep water",
+     "sleepy and slow"
+    ],
+    "correct": 0,
+    "explanation": "\u201cNimble\u201d means quick and skillful \u2014 the otter's paws tap and twist shells with fast, clever movements."
+   },
+   {
+    "title": "Sweet Sap Season",
+    "passage": "Every spring in Vermont, maple trees wake up from winter. As days grow warm and nights stay cold, a sweet liquid begins to flow inside the trunk. Farmers drill a small hole in each tree and hang a bucket to catch the drip, drip, drip. This liquid is called sap, and it tastes only a little bit sweet, like water with a spoonful of sugar. Back at the sugarhouse, farmers boil the sap for hours in wide, steaming pans. As the water boils away, the sap grows thicker and sweeter until, at last, it becomes golden maple syrup. It takes about forty buckets of sap to make a single gallon of syrup!",
+    "prompt": "In the passage, the word \u201csap\u201d most nearly means\u2026",
+    "options": [
+     "a tool for drilling into bark",
+     "the coldest week of winter",
+     "a kind of maple candy",
+     "the sweet liquid that flows inside a tree"
+    ],
+    "correct": 3,
+    "explanation": "Sap is the sweet liquid that flows inside the maple tree \u2014 farmers catch it in buckets and boil it into syrup."
+   },
+   {
+    "title": "Busy Bees",
+    "passage": "On a warm morning, a honeybee leaves her hive and zigzags across a meadow. She lands on a purple clover flower and unrolls her long tongue to sip the nectar hidden deep inside the blossom. Nectar is the sweet juice that flowers make to attract pollinators. As the bee drinks, golden pollen sticks to her fuzzy legs. When she visits the next flower, some of that pollen rubs off, and the flower can then make seeds. Back at the hive, the bee passes her nectar to other bees, who fan it with their wings until the water dries out and it thickens into honey. One bee must visit thousands of flowers to make a single spoonful of honey.",
+    "prompt": "In the passage, the word \u201cnectar\u201d most nearly means\u2026",
+    "options": [
+     "a bee's winter home",
+     "the sweet juice flowers make",
+     "a type of honeycomb wax",
+     "the buzzing sound of wings"
+    ],
+    "correct": 1,
+    "explanation": "Nectar is the sweet juice flowers make \u2014 bees sip it from blossoms and turn it into honey."
+   },
+   {
+    "title": "The Volcano Wakes",
+    "passage": "For a hundred years, the mountain on the island slept quietly. Goats grazed on its green slopes, and fishermen sailed past without a second glance. Then one morning, the ground began to rumble. A crack opened near the top, and a fountain of molten rock shot into the sky. Molten means melted by great heat, so hot that solid stone flows like thick soup. Rivers of glowing lava crept down the mountainside, and gray ash drifted over the village like snowfall. The islanders had practiced for this day: they packed their bags, followed the marked road to the harbor, and watched from boats as their mountain roared, glowed, and slowly settled back to sleep.",
+    "prompt": "In the passage, the word \u201cmolten\u201d most nearly means\u2026",
+    "options": [
+     "frozen solid",
+     "covered in gray ash",
+     "melted by great heat",
+     "deep underground"
+    ],
+    "correct": 2,
+    "explanation": "\u201cMolten\u201d means melted by great heat \u2014 the rock was so hot that solid stone flowed like soup."
+   },
+   {
+    "title": "The Peculiar Bicycle",
+    "passage": "In the 1870s, the fanciest bicycle in the world looked ridiculous. It was called the penny-farthing, and it had one enormous front wheel as tall as a grown man and one tiny back wheel no bigger than a dinner plate. Riders had to climb a little step just to reach the seat, which sat high above the big wheel. One small bump could send a rider tumbling over the handlebars! The bicycle was peculiar, which means strange or unusual, and crowds gathered just to stare at it rolling down the street. When the safety bicycle arrived with two equal wheels and a chain, the peculiar penny-farthing rolled off into history, though a few brave riders still race them in parades today.",
+    "prompt": "In the passage, the word \u201cpeculiar\u201d most nearly means\u2026",
+    "options": [
+     "very fast",
+     "brand new",
+     "hard to ride",
+     "strange or unusual"
+    ],
+    "correct": 3,
+    "explanation": "\u201cPeculiar\u201d means strange or unusual \u2014 the penny-farthing looked ridiculous with its giant front wheel and tiny back wheel."
+   },
+   {
+    "title": "Rainbow Reef",
+    "passage": "Beneath the warm, clear water off the coast of Australia lies a city built by tiny animals. Coral polyps, each smaller than a grain of rice, join together to build hard, branching skeletons. Over thousands of years, their skeletons grow into a reef as long as a country. The reef bursts with vibrant color: orange clownfish dart between purple sea fans, blue tangs flash past yellow sponges, and green sea turtles glide overhead. Vibrant means bright and full of life and color, and no place on Earth shows it better than a coral reef. But the reef is fragile. If the water grows too warm or dirty, the coral loses its color and the whole busy city begins to fade.",
+    "prompt": "In the passage, the word \u201cvibrant\u201d most nearly means\u2026",
+    "options": [
+     "bright and full of color",
+     "dark and quiet",
+     "very deep",
+     "full of sharks"
+    ],
+    "correct": 0,
+    "explanation": "\u201cVibrant\u201d means bright and full of color \u2014 the reef bursts with orange, purple, blue, and yellow life."
+   },
+   {
+    "title": "The Towering Sunflower",
+    "passage": "In May, Ana pressed a single striped seed into the soil of her garden and watered it every day. By June, a green stalk as thick as her thumb pushed upward. By July, it was taller than Ana. By August, it towered over the whole garden, its giant yellow face turning slowly to follow the sun across the sky. Towering means very tall, rising high above everything nearby, and this sunflower certainly did: it stood twelve feet tall, taller than the fence, taller than Ana's father, and nearly as tall as the garage. In September, Ana harvested the seeds, roasted them with salt, and saved the biggest ones to plant again next spring.",
+    "prompt": "In the passage, the word \u201ctowering\u201d most nearly means\u2026",
+    "options": [
+     "turning toward the sun",
+     "covered in seeds",
+     "very tall, rising high above everything nearby",
+     "growing slowly"
+    ],
+    "correct": 2,
+    "explanation": "\u201cTowering\u201d means very tall, rising high above everything nearby \u2014 the sunflower stood twelve feet tall, above the fence and the whole garden."
+   },
+   {
+    "title": "The Walrus's Blanket",
+    "passage": "On a drifting ice floe in the Arctic, a walrus heaves its one-ton body out of the freezing sea. Its skin is pink and wrinkled, and beneath it lies a secret weapon against the cold: blubber. Blubber is a thick layer of fat that keeps an animal warm, like a built-in blanket that never comes off. A walrus can carry four inches of it, which is why it can nap on ice in weather that would freeze a person in minutes. When the walrus slides back into the water, it uses its long tusks to grip the ice edge and pull itself out again. Then it flops down, snorts, and settles in for another chilly nap, cozy inside its own warm blanket.",
+    "prompt": "In the passage, the word \u201cblubber\u201d most nearly means\u2026",
+    "options": [
+     "a walrus's long tusks",
+     "the ice where walruses rest",
+     "a thick layer of fat that keeps an animal warm",
+     "a walrus's loud bark"
+    ],
+    "correct": 2,
+    "explanation": "Blubber is a thick layer of fat that keeps an animal warm \u2014 it works like a built-in blanket for the walrus."
+   },
+   {
+    "title": "The Night of Fireworks",
+    "passage": "On the Fourth of July, crowds tilt their heads back as the first rocket screams into the dark sky and bursts into a shower of red stars. Fireworks are dazzling, which means extremely bright and impressive, and their colors come from science, not magic. Inside each firework shell are tiny pellets of metal salts. When the shell explodes, the heat makes those metals glow: strontium burns red, barium burns green, and sodium burns a brilliant gold. Firework makers pack the pellets in careful patterns \u2014 a ring makes a circle of stars, and a sphere makes a giant ball of light. The boom you hear is the shell bursting open, and the glittering trails are burning metal falling slowly back to Earth, one dazzling color at a time.",
+    "prompt": "In the passage, the word \u201cdazzling\u201d most nearly means\u2026",
+    "options": [
+     "very loud",
+     "extremely bright and impressive",
+     "dangerous to watch",
+     "made of paper"
+    ],
+    "correct": 1,
+    "explanation": "\u201cDazzling\u201d means extremely bright and impressive \u2014 the fireworks light up the dark sky in brilliant colors."
+   },
+   {
+    "title": "The Glacier's Slow March",
+    "passage": "High in cold mountains, snow piles up year after year until its own weight squeezes it into solid ice. That ice does not stay put. It begins to creep downhill, a few inches a day, like a frozen river. Scientists call it a glacier. As a glacier moves, it can carve the land beneath it. Carve means to cut or shape by cutting away material, and a glacier does exactly that: rocks frozen in its belly scrape the ground like sandpaper, digging out deep valleys and polishing cliffs smooth. When the ice finally melts, it leaves behind lakes, piles of boulders, and valleys shaped like a giant U. A glacier moves slowly, but over thousands of years, it can reshape a whole mountain range.",
+    "prompt": "In the passage, the word \u201ccarve\u201d most nearly means\u2026",
+    "options": [
+     "cut or shape by cutting away material",
+     "melt quickly in the summer sun",
+     "freeze water into solid ice",
+     "climb to the top of a mountain"
+    ],
+    "correct": 0,
+    "explanation": "\u201cCarve\u201d means to cut or shape by cutting away material \u2014 the glacier's rocks scrape and dig out valleys as it moves."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "\ud83d\udca1",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "Why Do We Have Seasons?",
+    "passage": "Many people think summer is warmer because Earth is closer to the sun. That is not true! Earth is actually slightly farther from the sun during summer in North America. The real reason for the seasons is Earth's tilt. Our planet spins like a top that leans to one side. As Earth travels around the sun, that lean points the northern half of the planet toward the sun for part of the year and away from it for the rest. When your half leans toward the sun, sunlight strikes more directly and days grow long \u2014 that is summer. When it leans away, sunlight slants in weakly and days grow short \u2014 that is winter. Spring and fall are the in-between times, when the tilt points neither toward nor away.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Earth's tilt causes the seasons by pointing each half toward or away from the sun during the year.",
+     "Summer is warmer than winter.",
+     "Earth travels around the sun once a year.",
+     "The seasons are caused by the moon."
+    ],
+    "correct": 0,
+    "explanation": "The whole passage explains that Earth's tilt, not its distance from the sun, causes the seasons."
+   },
+   {
+    "title": "Hello, Mr. Watson",
+    "passage": "On March 10, 1876, in a small workshop in Boston, Alexander Graham Bell spilled battery acid on his clothes and shouted for his assistant in the next room. His assistant, Thomas Watson, heard him \u2014 not through the doorway, but through a wire. Bell had just made the first telephone call. His invention turned sound into electric signals that could travel along a wire and turn back into sound at the other end. Before the telephone, people who lived far apart could only write letters and wait days or weeks for a reply. After it, a voice could cross a city in a second. Within a few years, telephone wires were strung over streets all across America, and the world has never stopped talking since.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Alexander Graham Bell was born in Scotland.",
+     "The first phone was made of wood.",
+     "The telephone changed how people communicate by carrying voices over wires instead of waiting for letters.",
+     "Everyone bought a telephone at once."
+    ],
+    "correct": 2,
+    "explanation": "The passage shows how the telephone replaced slow letters with voices traveling over wires."
+   },
+   {
+    "title": "Why Do We Get Goosebumps?",
+    "passage": "Step out into cold air, watch a scary movie, or hear a beautiful song \u2014 and suddenly the hair on your arms stands up in little bumps. Those are goosebumps, and they are a leftover gift from our furry ancestors. Long ago, when animals with thick fur got cold or frightened, tiny muscles under their skin pulled each hair upright. Fluffed-up fur trapped warm air to keep the animal warm, and it also made the animal look bigger and scarier to enemies. Humans lost most of their body hair as they evolved, but the tiny muscles stayed. So when you get cold or feel a strong emotion, those muscles still tug your hairs upward \u2014 even though there is hardly any fur left to fluff. Goosebumps do not help us much anymore, but they are a reminder of the animals we once were.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Goosebumps only happen in winter.",
+     "Goosebumps are a leftover reflex from furry ancestors that once fluffed fur for warmth and to look bigger.",
+     "Birds get goosebumps too.",
+     "Goosebumps mean you are sick."
+    ],
+    "correct": 1,
+    "explanation": "The passage explains goosebumps as a leftover reflex: tiny muscles once fluffed ancestors' fur for warmth and size."
+   },
+   {
+    "title": "Books on Wheels",
+    "passage": "In some towns, the library comes to you. A bookmobile is a bus or truck filled with shelves of books, and it drives a regular route to farms, small villages, and neighborhoods far from any library building. Inside, it looks like a tiny library on wheels: picture books up front, novels and homework help in the middle, and a friendly librarian at the desk who knows what each reader likes. Children run out to meet it, trade in last week's books, and climb aboard to choose new ones. For people who cannot easily travel to town, the bookmobile is the only library they have. It proves that a library is not really a building at all \u2014 it is any place where books meet readers.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The bookmobile is painted blue.",
+     "Libraries have many books.",
+     "Bookmobiles bring library books to people who live far from a library.",
+     "The driver reads every book on the bus."
+    ],
+    "correct": 2,
+    "explanation": "The passage shows how bookmobiles carry library service to people who live far from a library building."
+   },
+   {
+    "title": "Why Do Dogs Wag Their Tails?",
+    "passage": "When a dog wags its tail, most people think it is happy. Sometimes that is true \u2014 but a wagging tail can mean many different feelings. A dog meeting its favorite person may wag its whole back end in excitement. A nervous dog meeting a stranger may wag slowly, low and stiff, while it decides whether the stranger is friendly. A dog guarding its food bowl may wag fast and high, which can actually be a warning. Scientists have even found that the direction of the wag matters: wags that lean to the right often mean happy feelings, while wags that lean to the left can mean worry. So a wagging tail is not a simple smile. It is a dog's way of talking, and the speed, height, and direction all help say what the dog really feels.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Dogs wag their tails only when they are happy.",
+     "Puppies are born wagging their tails.",
+     "A wagging tail can mean many feelings, and its speed, height, and direction help show what a dog feels.",
+     "Dogs bark more than cats do."
+    ],
+    "correct": 2,
+    "explanation": "The passage shows tail wagging is a kind of dog language with many meanings \u2014 not just happiness."
+   },
+   {
+    "title": "The Ditch That Changed America",
+    "passage": "In 1825, New York State finished one of the boldest building projects in American history: a canal 363 miles long, dug mostly by hand through forests, swamps, and solid rock. It was called the Erie Canal, and it connected the Great Lakes to the Hudson River, which flows to the Atlantic Ocean. Before the canal, shipping goods from the Midwest to the East Coast meant slow, expensive wagon trips over rough roads. After it, barges pulled by mules could float tons of grain, lumber, and goods cheaply all the way to New York City. Trade boomed, towns along the canal grew into cities, and New York became the busiest port in America. People called it a ditch, but that ditch changed the whole country's economy.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "The canal was dug by hand.",
+     "Canals are longer than rivers.",
+     "The Erie Canal connected the Great Lakes to the Atlantic, making shipping cheap and turning New York into a great port.",
+     "Boats float on water."
+    ],
+    "correct": 2,
+    "explanation": "The passage shows how the canal linked the Great Lakes to the Atlantic, making shipping cheap and growing New York."
+   },
+   {
+    "title": "Why Do We Dream?",
+    "passage": "Every night, while your body sleeps, your brain puts on a show. Dreams can be silly, scary, or so strange that you laugh when you wake up. But why do we dream at all? Scientists are still not sure, but they have good guesses. One idea is that dreams help the brain sort through the day, filing away important memories and tossing out the rest, like cleaning a messy desk. Another idea is that dreams let us practice feelings safely \u2014 you can face a scary test or a big game in a dream before it happens in real life. Some researchers think dreams are just the brain's way of keeping itself busy while the body rests. Whatever the reason, almost everyone dreams, even people who say they never do.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Everyone dreams every night.",
+     "Dreams predict the future.",
+     "Scientists think dreams may help the brain sort memories and feelings, though no one knows for sure.",
+     "Babies dream about milk."
+    ],
+    "correct": 2,
+    "explanation": "The passage presents scientists' best guesses \u2014 sorting memories, practicing feelings \u2014 while admitting no one knows for sure."
+   },
+   {
+    "title": "The First Stamp",
+    "passage": "Before 1840, sending a letter was a headache. The person who received the letter had to pay for it, and the price depended on how far it traveled and how many pages it had. Many people refused their mail because they could not afford it. Then Britain introduced a tiny square of paper with glue on the back and a picture of young Queen Victoria on the front. It cost one penny, and you stuck it on your letter before mailing it. Suddenly, anyone could send a letter anywhere in the country for the same small price. The Penny Black, as it was called, was the world's first adhesive postage stamp, and within a few years, countries all over the world were copying the idea. A one-penny sticker had changed mail forever.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Queen Victoria was on the first stamp.",
+     "Letters used to be free.",
+     "The first adhesive postage stamp made mailing a letter simple and affordable for ordinary people.",
+     "Stamps come in many colors."
+    ],
+    "correct": 2,
+    "explanation": "The passage shows how the Penny Black replaced a confusing, expensive system with one simple, affordable price."
+   },
+   {
+    "title": "The Ship of the Desert",
+    "passage": "For thousands of years, traders crossing the great deserts of Africa and Asia did not travel by truck or train. They traveled by camel, and camels earned the nickname \u201cships of the desert.\u201d A camel can go for days without drinking, even under a burning sun. Its secret is the hump on its back, which stores fat \u2014 not water, as many people think. When food and water are scarce, the camel's body slowly uses that fat for energy. Its wide, flat feet work like snowshoes, spreading its weight so it does not sink into soft sand. Its long eyelashes and closable nostrils keep blowing sand out of its eyes and nose. With all these built-in tools, a camel can carry a rider and heavy bundles across hundreds of miles of sand, one steady step at a time.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Camels are the fastest animals in the desert.",
+     "Deserts have no water at all.",
+     "Camels survive long desert journeys thanks to fat stored in their humps, wide feet, and the ability to go days without drinking.",
+     "Camels sleep during the day."
+    ],
+    "correct": 2,
+    "explanation": "The passage explains the camel's desert survival tools: the fat-storing hump, wide feet, and going days without water."
+   },
+   {
+    "title": "Why Do Leaves Change Color?",
+    "passage": "In summer, a maple leaf is a busy green factory. A chemical called chlorophyll captures sunlight and turns it into food for the tree, and chlorophyll is so green that it hides every other color in the leaf. But as autumn days grow shorter and cooler, the tree stops making chlorophyll and seals off each leaf, getting ready for winter. Without fresh green chlorophyll, the hidden colors finally show: the yellows and oranges that were there all along, and the reds the tree makes from trapped sugars in fall. That is why whole hillsides burst into color each October. The tree is not painting its leaves. It is simply letting you see the colors that were hiding underneath the green.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Leaves fall off trees in autumn.",
+     "Cold weather paints the leaves red.",
+     "In fall, trees stop making green chlorophyll, so the yellow, orange, and red colors already in the leaves finally show.",
+     "Maple leaves turn red."
+    ],
+    "correct": 2,
+    "explanation": "The passage explains that fall colors were hiding under the green chlorophyll all along and appear when the tree stops making it."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "\ud83e\udde0",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "Jamal and the Lost Kite",
+    "passage": "Jamal had spent all morning building his kite: thin sticks, bright red newspaper, and a tail of knotted rags. On the first gust of wind, it soared above the park \u2014 and then dove straight into the tallest oak tree, where it tangled hopelessly in the branches. His friends said to give up and play soccer instead. Jamal shook his head. He went home, gathered more sticks and paper, and built a second kite, this one with a shorter tail and stronger string. An hour later, the new kite was dancing in the sky, higher than the first one ever flew. Jamal grinned up at it, prouder of the second kite than he had been of the first.",
+    "prompt": "What do Jamal's actions show about him?",
+    "options": [
+     "He gives up easily.",
+     "He is resourceful and does not give up.",
+     "He is afraid of heights.",
+     "He likes flying kites more than anything else."
+    ],
+    "correct": 1,
+    "explanation": "Instead of quitting, Jamal gathered new materials and built a better kite \u2014 that shows he is resourceful and persistent."
+   },
+   {
+    "title": "The Empty Bird Feeder",
+    "passage": "On Monday, Maya filled the bird feeder outside her window with sunflower seeds. By Tuesday, chickadees, finches, and one bossy blue jay were visiting all day long. Maya loved watching them while she ate breakfast. But as the week went on, the seed level sank lower and lower, and Maya forgot to refill it. By Friday, the feeder was completely empty \u2014 and not a single bird came to the window. On Saturday morning, Maya poured in a fresh scoop of seeds. By Sunday breakfast, the chickadees were back, chattering and fluttering around the feeder as if they had never left.",
+    "prompt": "Why did the birds stop coming to Maya's window?",
+    "options": [
+     "The birds flew south for the winter.",
+     "Maya scared them away.",
+     "Birds do not like Saturdays.",
+     "The feeder was empty, so there was no food for them."
+    ],
+    "correct": 3,
+    "explanation": "The birds vanished when the feeder ran empty and returned as soon as Maya refilled it \u2014 food was the reason."
+   },
+   {
+    "title": "Tracks in the Snow",
+    "passage": "After the snowfall, Noah found a trail of tiny prints crossing his backyard. The prints came in pairs, close together, then a gap, then another pair \u2014 a hopping pattern, like something small had bounced across the yard. The trail led to the garden fence, where the bark on a low bush had been nibbled away in small, neat bites. Noah followed the trail around the fence and found a round hole in the snow beneath a pine tree, just big enough for a small animal to slip through. He smiled. He did not need to see the animal to know who had passed through his yard while he slept.",
+    "prompt": "What animal most likely made the tracks?",
+    "options": [
+     "A deer",
+     "A rabbit",
+     "A bear",
+     "A duck"
+    ],
+    "correct": 1,
+    "explanation": "The hopping pairs of prints, nibbled bark, and small burrow hole all point to a rabbit."
+   },
+   {
+    "title": "The New Student",
+    "passage": "On Monday, Priya stood alone at the edge of the playground, holding her lunchbox with both hands. She did not know anyone at her new school, and the other children were already playing in groups she did not know how to join. At recess, a girl named Rosa walked over and asked, \u201cDo you want to jump rope with us?\u201d Priya nodded, and soon she was laughing as the rope slapped the pavement. By Friday, Priya was the one waving Rosa over at lunch, and the two of them sat together, trading snacks and stories about their old schools. When the bell rang, Priya was already planning what game they would play on Monday.",
+    "prompt": "How did Priya probably feel by Friday?",
+    "options": [
+     "Lonely and sad",
+     "Angry at the class",
+     "Tired from reading",
+     "Welcome and happy"
+    ],
+    "correct": 3,
+    "explanation": "By Friday Priya was waving Rosa over, trading snacks, and planning Monday's game \u2014 she felt welcome and happy."
+   },
+   {
+    "title": "The Old Clock Tower",
+    "passage": "For fifty years, the clock tower in the middle of town chimed every hour, day and night. People set their watches by it and told time by its deep bong-bong. Then one Tuesday morning, the town woke to silence. The clock's hands still moved, but no chime rang at eight, or nine, or ten. The mayor called a repairman, who climbed the narrow stairs to the bell chamber with a flashlight. There, tucked around the bell's hammer, was a soft, round nest made of twigs and string \u2014 and inside it, three tiny sparrows blinked up at him. The repairman laughed, gently moved the nest to a nearby ledge, and at eleven o'clock, the whole town heard the chime again.",
+    "prompt": "Why did the clock tower stop chiming?",
+    "options": [
+     "The town ran out of bells.",
+     "A sparrow built a nest that blocked the bell's hammer.",
+     "The clock was too old to work.",
+     "Nobody wound the clock."
+    ],
+    "correct": 1,
+    "explanation": "The nest wrapped around the bell's hammer stopped it from striking \u2014 moving the nest fixed the chime."
+   },
+   {
+    "title": "Ben's Lemonade Stand",
+    "passage": "Ben set up a lemonade stand on the hottest Saturday of July. He wrote his price on a big sign: 50 cents a cup. All morning, only two people stopped \u2014 and one of them just asked for directions. Ben stared at his full pitcher and thought hard. After lunch, he crossed out 50 cents and wrote 25 cents instead. Within an hour, a line of thirsty neighbors stretched down the sidewalk. Kids on bikes, dog walkers, and even the mail carrier stopped for a cup. By sunset, Ben's pitcher was empty, his tip jar was full of coins, and he had made more money than he would have at 50 cents a cup. He wiped the table and smiled: tomorrow, the sign would say 25 cents from the very start.",
+    "prompt": "What did Ben learn from his lemonade stand?",
+    "options": [
+     "People do not like lemonade.",
+     "A lower price can bring many more customers.",
+     "Lemonade tastes better at 25 cents.",
+     "He should close the stand."
+    ],
+    "correct": 1,
+    "explanation": "At 50 cents Ben sold 2 cups; at 25 cents he sold out and made more money \u2014 the lower price brought far more customers."
+   },
+   {
+    "title": "Grandma's Recipe Box",
+    "passage": "Grandma kept her recipes in a dented tin box on top of the refrigerator. Inside were dozens of cards, most of them yellowed but clean, written in her neat, loopy handwriting. One card, though, looked very different. Its edges were soft and worn from being handled, its handwriting was faded from years of reading, and it was splattered with tomato sauce and little brown spots. When Maya asked about it, Grandma laughed and said, \u201cOh, that's the spaghetti sauce. I've made that one more times than I can count.\u201d That night, the whole family ate spaghetti, and Maya understood why the card looked the way it did.",
+    "prompt": "What can you infer about the stained recipe card?",
+    "options": [
+     "It is the newest card in the box.",
+     "It is Grandma's most-used, favorite recipe.",
+     "Grandma spilled sauce on it once.",
+     "Nobody likes that recipe."
+    ],
+    "correct": 1,
+    "explanation": "The worn edges, faded writing, and sauce spots show years of repeated use of this recipe \u2014 and Grandma confirms she made it more times than she can count."
+   },
+   {
+    "title": "The Library's Secret",
+    "passage": "Ms. Alvarez, the librarian, was sorting the morning returns when she found a book she did not recognize. Its cover was faded blue, its pages smelled like an attic, and stamped inside was a due date: June 1974 \u2014 more than fifty years ago! Tucked between the pages was a folded note in shaky handwriting: \u201cDear Library, I am sorry. My family moved away suddenly in 1974, and I packed this book by mistake. I just moved back to town, and I wanted to make it right. \u2014 Daniel.\u201d Ms. Alvarez smiled, stamped the book RETURNED, and placed it on a special shelf near the front desk, where a little sign read: \u201cOur oldest book \u2014 home at last.\u201d",
+    "prompt": "What can you infer from the note and the due date?",
+    "options": [
+     "The book was lost for over fifty years and the borrower finally returned it.",
+     "The librarian bought a new book.",
+     "The book was never checked out.",
+     "The note was written by the librarian."
+    ],
+    "correct": 0,
+    "explanation": "The 1974 due date and Daniel's note show the book was packed by mistake when his family moved, and returned fifty years later."
+   },
+   {
+    "title": "The Apple Orchard",
+    "passage": "Tom walked down the long rows of trees with an empty basket over his arm and a wooden ladder balanced on his shoulder. The branches above him bent low under the weight of round red fruit, so ripe that a few had already dropped onto the grass. Tom leaned the ladder against a sturdy trunk, climbed up three rungs, and began twisting fruit gently from the branches, laying each one carefully in the basket so it would not bruise. By noon, the basket was full, and Tom carried it to the farm stand, where a sign read FRESH APPLES \u2014 PICKED THIS MORNING. He set the basket down and went back for another.",
+    "prompt": "What is Tom most likely doing?",
+    "options": [
+     "Planting a tree",
+     "Raking leaves",
+     "Building a ladder",
+     "Picking apples"
+    ],
+    "correct": 3,
+    "explanation": "The ladder, the basket, the ripe fruit on the branches, and the farm stand sign all show Tom is picking apples."
+   },
+   {
+    "title": "The Snow Day",
+    "passage": "Emma woke to a strange quiet. No buses rumbled past, no car doors slammed, and the whole street looked soft and white. She peeked out the window: snow was piled up to the mailbox, and more was still falling in thick, lazy flakes. Downstairs, her mom was listening to the radio and nodding. Her dad was already making hot chocolate with extra marshmallows \u2014 the special kind he only made on days when nobody had to rush anywhere. Emma's little brother ran in wearing his pajamas and shouted, \u201cNo school today!\u201d Emma grinned. She did not even need to ask why. She pulled on her boots and ran outside to build the biggest snowman on the block.",
+    "prompt": "What can you infer happened that morning?",
+    "options": [
+     "It is a regular school day.",
+     "School was canceled because of the snowstorm.",
+     "The family is moving away.",
+     "The school bus broke down."
+    ],
+    "correct": 1,
+    "explanation": "The radio announcement, the snow piled to the mailbox, the unhurried hot chocolate, and no buses all point to a snow-day school closing."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_10_28_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[sh.order[a.sel]!==undefined ? a.sel : 0]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 10-28 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 10-28 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
