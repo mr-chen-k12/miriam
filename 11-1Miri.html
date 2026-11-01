@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Saxon Math Grade 4 — Lesson 49 Written Practice · Alternate Version</title><style>
+:root{--blue:#1d4ed8;--ink:#1e293b;--muted:#64748b;--line:#cbd5e1}
+*{box-sizing:border-box}
+body{font-family:Georgia,'Times New Roman',serif;background:#f1f5f9;color:var(--ink);margin:0;padding:22px 18px}
+.wrap{max-width:780px;margin:0 auto}
+h1{text-align:center;font-size:1.55rem;line-height:1.3;margin:0 0 4px}
+.sub{text-align:center;color:#64748b;margin:0 0 16px;font-size:.95rem}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 15px;font-family:Arial,sans-serif}
+.toolbar button{font-size:.85rem;border:1px solid #bfd0f1;border-radius:7px;padding:9px 13px;background:white;color:#1e40af;font-weight:600;cursor:pointer}
+.toolbar button:hover{background:#dbeafe}
+.toolbar button.primary{background:var(--blue);color:white;border-color:var(--blue)}
+.toolbar button.primary:hover{background:#1e40af}
+.meta{display:flex;justify-content:space-between;gap:18px;margin:8px 0 20px;font-size:.96em}
+.meta span{border-bottom:1px solid #94a3b8;flex:1;padding-bottom:5px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);break-inside:avoid-page}
+.qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 7px}
+.qnum{font-weight:bold;font-size:1.16em;color:var(--blue)}
+.qtag{font-size:.82em;color:var(--muted)}
+.tag2{background:#dbeafe;color:#1d4ed8;font-size:.71em;font-family:Arial,sans-serif;font-weight:bold;letter-spacing:.045em;padding:4px 8px;border-radius:20px;white-space:nowrap}
+.qbody{font-size:1.055rem;line-height:1.72}
+.qbody b{font-weight:650}
+.fig{margin:14px 0 8px;text-align:center;overflow:visible}
+.fig svg{max-width:100%;height:auto}
+.clock-row{display:flex;justify-content:space-evenly;gap:18px;flex-wrap:wrap;max-width:520px;margin:8px auto 0}
+.reveal{margin-top:12px;background:var(--blue);color:white;border:0;border-radius:8px;padding:9px 21px;font: .94rem Arial,sans-serif;cursor:pointer}
+.reveal:hover{background:#1e40af}
+.ans{display:none;margin-top:14px;border-top:2px dashed var(--line);padding-top:12px}
+.ans.open{display:block}
+.anslabel{font-family:Arial,sans-serif;font-weight:bold;color:#166534;margin:10px 0 4px;font-size:.78em;text-transform:uppercase;letter-spacing:.06em}
+.math{background:#f0fdf4;border-radius:8px;padding:11px 14px;font-size:1.10em;line-height:1.7;overflow-wrap:anywhere}
+.sol{font-size:1rem;color:#334155;line-height:1.75}
+.eq{font-size:1.25em;font-weight:600;margin:0 .2em;white-space:nowrap}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 15px;margin:11px 4px 3px;max-width:410px}
+.choices.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;line-height:1.04;text-align:center;font-size:.87em;margin:0 .09em;font-weight:500;min-width:1em}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px 3px}
+.frac>span:nth-child(2){padding:3px 3px 0}
+.mixed{white-space:nowrap}
+.feature-eq{font-family:Georgia,serif;display:table;font-size:1.45rem;font-weight:bold;margin:14px auto 10px;text-align:center;max-width:100%}
+.workbox{border:1.5px dashed #cbd5e1;min-height:110px;border-radius:7px;margin-top:10px;position:relative;background:repeating-linear-gradient(to bottom,#fff 0px,#fff 27px,#edf2f7 28px)}
+.workbox>span{position:absolute;top:6px;left:10px;font-size:.7em;font-style:italic;color:#94a3b8;background:white;padding:0 6px}
+.ext-divider{text-align:center;font:bold .89rem Arial,sans-serif;color:#1e40af;letter-spacing:.03em;margin:28px 0 15px;padding-top:13px;border-top:2px solid #93c5fd}
+.overline{text-decoration:overline;text-decoration-thickness:1.8px}
+.division-explanation{margin:15px 0 12px;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;overflow-x:auto;max-width:100%}
+.long-grid{display:grid;width:max-content;margin:0 auto;font:700 20px/26px 'Courier New',monospace;--cell:25px}
+.long-cell{height:var(--cell);width:var(--cell);display:flex;align-items:center;justify-content:center;color:#111827}
+.long-cell.q{color:#2563eb}
+.long-cell.sub{color:#b91c1c}
+.long-cell.top{border-top:2px solid #334155}
+.long-cell.divbar{border-right:2px solid #334155}
+.long-cell.under{border-bottom:1.5px solid #334155}
+.long-cell.repeat{text-decoration:overline;text-decoration-thickness:2px}
+.multiples{display:inline-block;margin-top:7px;font: .76rem Arial,sans-serif;color:#475569}
+.multiples summary{cursor:pointer;color:#1d4ed8;font-weight:bold;margin:4px 0}
+.mult-grid{display:grid;grid-template-columns:repeat(3,max-content);gap:2px 15px;margin:6px 0 0;padding:9px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px}
+.print-note{text-align:center;font:.76rem Arial,sans-serif;color:#64748b;margin:16px auto 28px}
+@media (max-width:480px){body{padding:10px}h1{font-size:1.24rem}.card{padding:15px}.feature-eq{font-size:1.2rem}.long-grid{--cell:22px;font-size:17px}.meta{font-size:.82rem}.choices{font-size:.95em}}
+@page{size:letter;margin:.54in}
+@media print{
+ body{background:white;padding:0;color:black;font-size:10pt}
+ .wrap{max-width:none}
+ .toolbar,.reveal,.print-note{display:none!important}
+ h1{font-size:15pt}
+ .sub{margin-bottom:9px}
+ .card{box-shadow:none;border:1px solid #cbd5e1;border-radius:4px;padding:10px 12px;margin-bottom:10px;break-inside:avoid-page}
+ .qbody{font-size:10.5pt;line-height:1.5}
+ .fig{margin:7px auto 0}
+ .fig svg{max-height:115px}
+ .clock-row svg{height:135px;width:auto}
+ .workbox{min-height:95px}
+ .ans{display:none!important}
+ body.print-answers .ans{display:block!important}
+ body.print-answers .qbody>.workbox{display:none}
+ body.print-answers .division-explanation{border:0;padding:4px}
+ .ext-divider{margin:12px 0 10px}
+ .tag2{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+}
+</style></head><body>
+<main class="wrap"><h1>Saxon Math Grade 4 — Lesson 49 Written Practice</h1>
+<div class="sub">Alternate Version · 30 reworked questions + 4 challenge problems · Questions 1–34</div>
+<div class="toolbar"><button class="primary" onclick="printPage(false)">Print Worksheet</button><button onclick="printPage(true)">Print Answer Key</button><button onclick="allAnswers(true)">Show All Answers</button><button onclick="allAnswers(false)">Hide All Answers</button></div>
+<div class="meta"><span>Name: __________________________________</span><span>Date: ____________________</span></div>
+<article class="card" id="q1">
+  <div class="qhead"><span class="qnum">1.</span><span class="qtag">(49)</span></div>
+  <div class="qbody"><span class="tag2">FORMULATE</span> Write and solve equations for problems 1 and 2. There are <b>6 crayons</b> in each box and <b>7 boxes</b>. How many crayons are there altogether?</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(1)" aria-controls="ans1" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans1"><div class="anslabel">Answer</div><div class="math">42 crayons</div><div class="anslabel">Solution</div><div class="sol">Let <i>c</i> represent the total number of crayons. <b>6 × 7 = c</b>, so <b>c = 42</b>.</div></div>
+</article><article class="card" id="q2">
+  <div class="qhead"><span class="qnum">2.</span><span class="qtag">(49)</span></div>
+  <div class="qbody"><span class="tag2">FORMULATE</span> There are <b>4 students</b> at each table and <b>9 tables</b>. How many students are seated at the tables?</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(2)" aria-controls="ans2" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans2"><div class="anslabel">Answer</div><div class="math">36 students</div><div class="anslabel">Solution</div><div class="sol">Let <i>s</i> represent the number of students. <b>4 × 9 = s</b>, so <b>s = 36</b>.</div></div>
+</article><article class="card" id="q3">
+  <div class="qhead"><span class="qnum">3.</span><span class="qtag">(31)</span></div>
+  <div class="qbody">An elk weighs about <b>525 pounds</b>. A deer weighs about <b>185 pounds</b>. About how many pounds more does the elk weigh?</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(3)" aria-controls="ans3" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans3"><div class="anslabel">Answer</div><div class="math">340 pounds</div><div class="anslabel">Solution</div><div class="sol">Subtract the weights: <b>525 − 185 = 340</b> pounds.</div></div>
+</article><article class="card" id="q4">
+  <div class="qhead"><span class="qnum">4.</span><span class="qtag">(47)</span></div>
+  <div class="qbody"><span class="tag2">CONNECT</span> Write the four multiplication/division facts that use <b>7, 8, and 56</b>.</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(4)" aria-controls="ans4" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans4"><div class="anslabel">Answer</div><div class="math">7 × 8 = 56; 8 × 7 = 56; 56 ÷ 7 = 8; 56 ÷ 8 = 7</div><div class="anslabel">Solution</div><div class="sol">Use the two factors and the product to make two multiplication and two division sentences.</div></div>
+</article><article class="card" id="q5">
+  <div class="qhead"><span class="qnum">5.</span><span class="qtag">(35)</span></div>
+  <div class="qbody"><span class="tag2">REPRESENT</span> Draw and shade circles to show the mixed number <b><span class="mixed">1 <span class="frac" aria-label="2 over 3"><span>2</span><span>3</span></span></span></b>. Use the blank circles below.<div class="fig" role="img" aria-label="Two unshaded circles divided into thirds"><svg viewBox="0 0 260 120" width="260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 57 L65.00 12.00 A45 45 0 0 1 103.97 79.50 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/><path d="M65 57 L103.97 79.50 A45 45 0 0 1 26.03 79.50 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/><path d="M65 57 L26.03 79.50 A45 45 0 0 1 65.00 12.00 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L185.00 12.00 A45 45 0 0 1 223.97 79.50 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L223.97 79.50 A45 45 0 0 1 146.03 79.50 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L146.03 79.50 A45 45 0 0 1 185.00 12.00 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(5)" aria-controls="ans5" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans5"><div class="anslabel">Answer</div><div class="math">One whole circle and <span class="frac" aria-label="2 over 3"><span>2</span><span>3</span></span> of the second circle shaded</div><div class="anslabel">Solution</div><div class="sol">Each circle has 3 equal sectors. Shade all 3 sectors of the first circle and 2 of the second.<div class="fig" role="img" aria-label="One whole circle and two thirds shaded"><svg viewBox="0 0 260 120" width="260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M65 57 L65.00 12.00 A45 45 0 0 1 103.97 79.50 Z" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.65"/><path d="M65 57 L103.97 79.50 A45 45 0 0 1 26.03 79.50 Z" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.65"/><path d="M65 57 L26.03 79.50 A45 45 0 0 1 65.00 12.00 Z" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L185.00 12.00 A45 45 0 0 1 223.97 79.50 Z" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L223.97 79.50 A45 45 0 0 1 146.03 79.50 Z" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.65"/><path d="M185 57 L146.03 79.50 A45 45 0 0 1 185.00 12.00 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="1.65"/></svg></div></div></div>
+</article><article class="card" id="q6">
+  <div class="qhead"><span class="qnum">6.</span><span class="qtag">(37)</span></div>
+  <div class="qbody">To what <b>mixed number</b> and <b>decimal number</b> is the arrow pointing?<div class="fig" role="img" aria-label="Number line 0 to 2 in tenths, with arrow at 1.7"><svg width="610" viewBox="0 0 610 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="22" y1="74" x2="588" y2="74" stroke="#1e3a8a" stroke-width="2.4"/><path d="M14 74l11 -7v14Z M596 74l-11 -7v14Z" fill="#1e3a8a"/><line x1="50.00" x2="50.00" y1="58" y2="90" stroke="#334155" stroke-width="2"/><text x="50.00" y="109" font-size="17" text-anchor="middle">0</text><line x1="75.40" x2="75.40" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="100.80" x2="100.80" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="126.20" x2="126.20" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="151.60" x2="151.60" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="177.00" x2="177.00" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="202.40" x2="202.40" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="227.80" x2="227.80" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="253.20" x2="253.20" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="278.60" x2="278.60" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="304.00" x2="304.00" y1="58" y2="90" stroke="#334155" stroke-width="2"/><text x="304.00" y="109" font-size="17" text-anchor="middle">1</text><line x1="329.40" x2="329.40" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="354.80" x2="354.80" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="380.20" x2="380.20" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="405.60" x2="405.60" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="431.00" x2="431.00" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="456.40" x2="456.40" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="481.80" x2="481.80" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="507.20" x2="507.20" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="532.60" x2="532.60" y1="67" y2="81" stroke="#334155" stroke-width="1.25"/><line x1="558.00" x2="558.00" y1="58" y2="90" stroke="#334155" stroke-width="2"/><text x="558.00" y="109" font-size="17" text-anchor="middle">2</text><line x1="481.80" y1="10" x2="481.80" y2="53" stroke="#dc2626" stroke-width="3"/><path d="M473.80 46 L489.80 46 L481.80 60Z" fill="#dc2626"/></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(6)" aria-controls="ans6" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans6"><div class="anslabel">Answer</div><div class="math"><span class="mixed">1 <span class="frac" aria-label="7 over 10"><span>7</span><span>10</span></span></span> and 1.7</div><div class="anslabel">Solution</div><div class="sol">Every small tick is one tenth. The arrow points to the seventh tick after 1: <b>1.7</b>, or one and seven tenths.</div></div>
+</article><article class="card" id="q7">
+  <div class="qhead"><span class="qnum">7.</span><span class="qtag">(27)</span></div>
+  <div class="qbody">Maya began reading at the time on the first clock. She read for <b>2 hours 45 minutes</b>. What time did she stop? Draw hands on the empty clock and write the time.<div class="clock-row"><svg width="170" height="185" viewBox="0 0 170 185" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="80" cy="80" r="70" fill="white" stroke="#1e3a8a" stroke-width="3"/><text x="108.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">1</text><text x="128.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">2</text><text x="136.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">3</text><text x="128.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">4</text><text x="108.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">5</text><text x="80.0" y="141.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">6</text><text x="52.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">7</text><text x="31.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">8</text><text x="24.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">9</text><text x="31.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">10</text><text x="52.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">11</text><text x="80.0" y="29.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">12</text><line x1="80" y1="80" x2="73.40" y2="117.42" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/><line x1="80" y1="80" x2="125.03" y2="106.00" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="80" r="4" fill="#0f172a"/><text x="80" y="176" font-size="13" font-family="Arial" text-anchor="middle" fill="#475569">Started · p.m.</text></svg><svg width="170" height="185" viewBox="0 0 170 185" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="80" cy="80" r="70" fill="white" stroke="#1e3a8a" stroke-width="3"/><text x="108.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">1</text><text x="128.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">2</text><text x="136.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">3</text><text x="128.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">4</text><text x="108.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">5</text><text x="80.0" y="141.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">6</text><text x="52.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">7</text><text x="31.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">8</text><text x="24.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">9</text><text x="31.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">10</text><text x="52.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">11</text><text x="80.0" y="29.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">12</text><circle cx="80" cy="80" r="3" fill="#0f172a"/><text x="80" y="176" font-size="13" font-family="Arial" text-anchor="middle" fill="#475569">Finished · p.m.</text></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(7)" aria-controls="ans7" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans7"><div class="anslabel">Answer</div><div class="math">9:05 p.m.</div><div class="anslabel">Solution</div><div class="sol">The first clock reads 6:20 p.m. Add 2 hours to reach 8:20 p.m., then add 45 minutes to reach <b>9:05 p.m.</b><div class="clock-row"><svg width="170" height="185" viewBox="0 0 170 185" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="80" cy="80" r="70" fill="white" stroke="#1e3a8a" stroke-width="3"/><text x="108.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">1</text><text x="128.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">2</text><text x="136.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">3</text><text x="128.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">4</text><text x="108.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">5</text><text x="80.0" y="141.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">6</text><text x="52.0" y="133.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">7</text><text x="31.5" y="113.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">8</text><text x="24.0" y="85.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">9</text><text x="31.5" y="57.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">10</text><text x="52.0" y="36.5" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">11</text><text x="80.0" y="29.0" text-anchor="middle" font-family="Arial" font-size="14" font-weight="600">12</text><line x1="80" y1="80" x2="42.04" y2="78.34" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/><line x1="80" y1="80" x2="106.00" y2="34.97" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="80" r="4" fill="#0f172a"/><text x="80" y="176" font-size="13" font-family="Arial" text-anchor="middle" fill="#475569">Finished · 9:05 p.m.</text></svg></div></div></div>
+</article><article class="card" id="q8">
+  <div class="qhead"><span class="qnum">8.</span><span class="qtag">(21, 26)</span></div>
+  <div class="qbody"><span class="tag2">REPRESENT</span> A rectangle is <b>3 cm by 2 cm</b>. Divide it into equal parts and shade <b><span class="frac" aria-label="5 over 6"><span>5</span><span>6</span></span></b> of its area.<div class="fig" role="img" aria-label="Blank rectangle 3 cm by 2 cm divided into six squares"><svg width="128" viewBox="0 0 128 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="10" y="10" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><rect x="46" y="10" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><rect x="82" y="10" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><rect x="10" y="46" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><rect x="46" y="46" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><rect x="82" y="46" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><text x="64.0" y="104" text-anchor="middle" font-size="13" fill="#475569">3 cm</text></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(8)" aria-controls="ans8" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans8"><div class="anslabel">Answer</div><div class="math">5 out of 6 equal squares shaded</div><div class="anslabel">Solution</div><div class="sol">The rectangle is divided into 6 one-square-centimeter squares. Shade 5 of them.<div class="fig" role="img" aria-label="Five out of six squares shaded"><svg width="128" viewBox="0 0 128 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="10" y="10" width="36" height="36" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.7"/><rect x="46" y="10" width="36" height="36" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.7"/><rect x="82" y="10" width="36" height="36" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.7"/><rect x="10" y="46" width="36" height="36" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.7"/><rect x="46" y="46" width="36" height="36" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="1.7"/><rect x="82" y="46" width="36" height="36" fill="white" stroke="#1e3a8a" stroke-width="1.7"/><text x="64.0" y="104" text-anchor="middle" font-size="13" fill="#475569">3 cm</text></svg></div></div></div>
+</article><article class="card" id="q9">
+  <div class="qhead"><span class="qnum">9.</span><span class="qtag">(33, 34)</span></div>
+  <div class="qbody"><span class="tag2">REPRESENT</span> Write <b>four million, two hundred sixty thousand</b> using digits. Which digit is in the <b>hundred-thousands place</b>?</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(9)" aria-controls="ans9" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans9"><div class="anslabel">Answer</div><div class="math">4,260,000; digit 2</div><div class="anslabel">Solution</div><div class="sol">Write 4 in the millions place, 2 in the hundred-thousands place, and 6 in the ten-thousands place. The number is <b>4,260,000</b>.</div></div>
+</article><article class="card" id="q10">
+  <div class="qhead"><span class="qnum">10.</span><span class="qtag">(6)</span></div>
+  <div class="qbody"><span class="tag2">CONNECT</span> Use the decimals <b>2.6, 1.9, and 4.5</b> to write <b>two addition facts</b> and <b>two subtraction facts</b>.</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(10)" aria-controls="ans10" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans10"><div class="anslabel">Answer</div><div class="math">2.6 + 1.9 = 4.5; 1.9 + 2.6 = 4.5; 4.5 − 2.6 = 1.9; 4.5 − 1.9 = 2.6</div><div class="anslabel">Solution</div><div class="sol">This is one fact family: the two smaller values add to the largest value.</div></div>
+</article><article class="card" id="q11">
+  <div class="qhead"><span class="qnum">11.</span><span class="qtag">(47)</span></div>
+  <div class="qbody">Simplify: <span class="eq">72 ÷ 9</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(11)" aria-controls="ans11" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans11"><div class="anslabel">Answer</div><div class="math">8</div><div class="anslabel">Solution</div><div class="sol"><b>72 ÷ 9 = 8</b>, since 8 × 9 = 72.</div></div>
+</article><article class="card" id="q12">
+  <div class="qhead"><span class="qnum">12.</span><span class="qtag">(47)</span></div>
+  <div class="qbody">Simplify: <span class="eq">54 ÷ 6</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(12)" aria-controls="ans12" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans12"><div class="anslabel">Answer</div><div class="math">9</div><div class="anslabel">Solution</div><div class="sol"><b>54 ÷ 6 = 9</b>, since 9 × 6 = 54.</div></div>
+</article><article class="card" id="q13">
+  <div class="qhead"><span class="qnum">13.</span><span class="qtag">(47)</span></div>
+  <div class="qbody">Simplify: <span class="eq"><span class="frac" aria-label="48 over 8"><span>48</span><span>8</span></span></span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(13)" aria-controls="ans13" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans13"><div class="anslabel">Answer</div><div class="math">6</div><div class="anslabel">Solution</div><div class="sol">A fraction bar also means division: <b>48 ÷ 8 = 6</b>.</div></div>
+</article><article class="card" id="q14">
+  <div class="qhead"><span class="qnum">14.</span><span class="qtag">(6)</span></div>
+  <div class="qbody">The length of segment <i>RT</i> is <b>14 cm</b>. The length of segment <i>ST</i> is <b>9 cm</b>. What is the length of segment <i>RS</i>?<div class="fig" role="img" aria-label="Line segment R-S-T, ST measures 9 cm, RS unknown"><svg viewBox="0 0 510 85" width="510" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="65" y1="38" x2="448" y2="38" stroke="#1e3a8a" stroke-width="3"/><circle cx="65" cy="38" r="4" fill="#2563eb"/><circle cx="202" cy="38" r="4" fill="#2563eb"/><circle cx="448" cy="38" r="4" fill="#2563eb"/><text x="65" y="24" text-anchor="middle" font-size="17" font-weight="bold">R</text><text x="202" y="24" text-anchor="middle" font-size="17" font-weight="bold">S</text><text x="448" y="24" text-anchor="middle" font-size="17" font-weight="bold">T</text><text x="130" y="65" text-anchor="middle" fill="#64748b">?</text><text x="322" y="65" text-anchor="middle" fill="#64748b">9 cm</text></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(14)" aria-controls="ans14" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans14"><div class="anslabel">Answer</div><div class="math">5 cm</div><div class="anslabel">Solution</div><div class="sol">Since S is between R and T, <b>RS + ST = RT</b>. Therefore RS = 14 − 9 = <b>5 cm</b>.</div></div>
+</article><article class="card" id="q15">
+  <div class="qhead"><span class="qnum">15.</span><span class="qtag">(41)</span></div>
+  <div class="qbody">Simplify: <span class="eq">$5.36 − $2.78</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(15)" aria-controls="ans15" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans15"><div class="anslabel">Answer</div><div class="math">$2.58</div><div class="anslabel">Solution</div><div class="sol"><b>5.36 − 2.78 = 2.58</b>. Remember to line up the decimal points.</div></div>
+</article><article class="card" id="q16">
+  <div class="qhead"><span class="qnum">16.</span><span class="qtag">(43)</span></div>
+  <div class="qbody">Simplify: <span class="eq">9.52 − 4.67</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(16)" aria-controls="ans16" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans16"><div class="anslabel">Answer</div><div class="math">4.85</div><div class="anslabel">Solution</div><div class="sol">Subtract by place value with decimals aligned: <b>9.52 − 4.67 = 4.85</b>.</div></div>
+</article><article class="card" id="q17">
+  <div class="qhead"><span class="qnum">17.</span><span class="qtag">(Inv. 3, 45)</span></div>
+  <div class="qbody">Simplify: <span class="eq">(5 + 4) × √81</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(17)" aria-controls="ans17" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans17"><div class="anslabel">Answer</div><div class="math">81</div><div class="anslabel">Solution</div><div class="sol">First evaluate the parentheses: 5 + 4 = 9. Then √81 = 9. Finally <b>9 × 9 = 81</b>.</div></div>
+</article><article class="card" id="q18">
+  <div class="qhead"><span class="qnum">18.</span><span class="qtag">(24, 43)</span></div>
+  <div class="qbody">Solve: <span class="eq">8.42 − n = 5.76</span> (find <i>n</i>).</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(18)" aria-controls="ans18" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans18"><div class="anslabel">Answer</div><div class="math">n = 2.66</div><div class="anslabel">Solution</div><div class="sol">Subtract 5.76 from 8.42: <b>n = 8.42 − 5.76 = 2.66</b>. Check: 8.42 − 2.66 = 5.76.</div></div>
+</article><article class="card" id="q19">
+  <div class="qhead"><span class="qnum">19.</span><span class="qtag">(16, 43)</span></div>
+  <div class="qbody">Solve for <i>c</i>: <span class="eq">c − 3.7 = 5.6</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(19)" aria-controls="ans19" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans19"><div class="anslabel">Answer</div><div class="math">c = 9.3</div><div class="anslabel">Solution</div><div class="sol">Undo subtraction by adding 3.7 to both sides: <b>c = 5.6 + 3.7 = 9.3</b>.</div></div>
+</article><article class="card" id="q20">
+  <div class="qhead"><span class="qnum">20.</span><span class="qtag">(45)</span></div>
+  <div class="qbody">Simplify: <span class="eq">507 − (6 × 84)</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(20)" aria-controls="ans20" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans20"><div class="anslabel">Answer</div><div class="math">3</div><div class="anslabel">Solution</div><div class="sol">Multiply inside the parentheses first: 6 × 84 = 504. Then <b>507 − 504 = 3</b>.</div></div>
+</article><article class="card" id="q21">
+  <div class="qhead"><span class="qnum">21.</span><span class="qtag">(41)</span></div>
+  <div class="qbody">Solve: <span class="eq">7n = 42</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(21)" aria-controls="ans21" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans21"><div class="anslabel">Answer</div><div class="math">n = 6</div><div class="anslabel">Solution</div><div class="sol">7n means 7 × n. Divide each side by 7: <b>n = 42 ÷ 7 = 6</b>.</div></div>
+</article><article class="card" id="q22">
+  <div class="qhead"><span class="qnum">22.</span><span class="qtag">(45)</span></div>
+  <div class="qbody">Simplify: <span class="eq">(692 − 347) + 268</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(22)" aria-controls="ans22" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans22"><div class="anslabel">Answer</div><div class="math">613</div><div class="anslabel">Solution</div><div class="sol">First 692 − 347 = 345. Then <b>345 + 268 = 613</b>.</div></div>
+</article><article class="card" id="q23">
+  <div class="qhead"><span class="qnum">23.</span><span class="qtag">(48)</span></div>
+  <div class="qbody">Simplify: <span class="eq">38 × 7</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(23)" aria-controls="ans23" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans23"><div class="anslabel">Answer</div><div class="math">266</div><div class="anslabel">Solution</div><div class="sol">Break 38 into 30 + 8: 30 × 7 = 210 and 8 × 7 = 56. <b>210 + 56 = 266</b>.</div></div>
+</article><article class="card" id="q24">
+  <div class="qhead"><span class="qnum">24.</span><span class="qtag">(48)</span></div>
+  <div class="qbody">Simplify: <span class="eq">46 × 8</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(24)" aria-controls="ans24" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans24"><div class="anslabel">Answer</div><div class="math">368</div><div class="anslabel">Solution</div><div class="sol">40 × 8 = 320; 6 × 8 = 48. Add: <b>320 + 48 = 368</b>.</div></div>
+</article><article class="card" id="q25">
+  <div class="qhead"><span class="qnum">25.</span><span class="qtag">(48)</span></div>
+  <div class="qbody">Simplify: <span class="eq">$27 × 9</span></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(25)" aria-controls="ans25" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans25"><div class="anslabel">Answer</div><div class="math">$243</div><div class="anslabel">Solution</div><div class="sol">20 × 9 = 180 and 7 × 9 = 63. The total is <b>$243</b>.</div></div>
+</article><article class="card" id="q26">
+  <div class="qhead"><span class="qnum">26.</span><span class="qtag">(Inv. 2, 21)</span></div>
+  <div class="qbody"><span class="tag2">MULTIPLE CHOICE</span> A circle has a radius of <b>4 yards</b>. Which of the following is <b>not</b> equal to the diameter? <div class="choices"><span>A. 8 yd</span><span>B. 24 ft</span><span>C. 288 in.</span><span>D. 12 ft</span></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(26)" aria-controls="ans26" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans26"><div class="anslabel">Answer</div><div class="math">D. 12 ft</div><div class="anslabel">Solution</div><div class="sol">Diameter = 2 × 4 = <b>8 yd</b>. This is 24 ft or 288 in. Twelve feet is only 4 yd, so <b>D</b> is not the diameter.</div></div>
+</article><article class="card" id="q27">
+  <div class="qhead"><span class="qnum">27.</span><span class="qtag">(23)</span></div>
+  <div class="qbody"><span class="tag2">MULTIPLE CHOICE</span> Which angle below is <b>acute</b>?<div class="fig" role="img" aria-label="Four labeled angles A obtuse, B right, C acute, D straight"><svg viewBox="0 0 560 140" width="560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M109 99 L62 99 L28.77 65.77" fill="none" stroke="#1e3a8a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><text x="62" y="132" font-weight="bold" font-size="17" text-anchor="middle">A</text><path d="M249 99 L202 99 L202.00 52.00" fill="none" stroke="#1e3a8a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M215 99 v-13 h-13" stroke="#1e3a8a" stroke-width="1.5" fill="none"/><text x="202" y="132" font-weight="bold" font-size="17" text-anchor="middle">B</text><path d="M389 99 L342 99 L378.00 68.79" fill="none" stroke="#1e3a8a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><text x="342" y="132" font-weight="bold" font-size="17" text-anchor="middle">C</text><path d="M529 99 L482 99 L435.00 99.00" fill="none" stroke="#1e3a8a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><text x="482" y="132" font-weight="bold" font-size="17" text-anchor="middle">D</text></svg></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(27)" aria-controls="ans27" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans27"><div class="anslabel">Answer</div><div class="math">C</div><div class="anslabel">Solution</div><div class="sol">An acute angle is less than 90°. <b>C</b> is 40°; A is obtuse, B is right, and D is straight.</div></div>
+</article><article class="card" id="q28">
+  <div class="qhead"><span class="qnum">28.</span><span class="qtag">(47)</span></div>
+  <div class="qbody">Solve each: <div class="choices three"><span><b>a.</b> <span class="frac" aria-label="8 over 8"><span>8</span><span>8</span></span></span><span><b>b.</b> 7 ÷ 1</span><span><b>c.</b> 0 ÷ 9</span></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(28)" aria-controls="ans28" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans28"><div class="anslabel">Answer</div><div class="math">a. 1 &nbsp;&nbsp; b. 7 &nbsp;&nbsp; c. 0</div><div class="anslabel">Solution</div><div class="sol">a. A nonzero number divided by itself is 1. b. Dividing by 1 leaves the number unchanged. c. Zero divided by any nonzero number is 0.</div></div>
+</article><article class="card" id="q29">
+  <div class="qhead"><span class="qnum">29.</span><span class="qtag">(49)</span></div>
+  <div class="qbody"><span class="tag2">ESTIMATE</span> A teacher orders <b>two packs of 28 pens</b> and <b>two packs of 31 pencils</b>. About how many writing tools did the teacher order? Explain why your estimate is reasonable.</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(29)" aria-controls="ans29" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans29"><div class="anslabel">Answer</div><div class="math">About 120 writing tools</div><div class="anslabel">Solution</div><div class="sol">Round 28 to 30 and 31 to 30. Estimate: 2 × 30 + 2 × 30 = <b>120</b>. The exact total is 2 × 28 + 2 × 31 = <b>118</b>, so 120 is close.</div></div>
+</article><article class="card" id="q30">
+  <div class="qhead"><span class="qnum">30.</span><span class="qtag">(11, 17)</span></div>
+  <div class="qbody"><span class="tag2">ESTIMATE</span> A nature reserve covers <b>267 acres</b>, and a nearby orchard covers <b>142 acres</b>. Estimate their combined land area to the <b>nearest hundred acres</b>. Explain why your estimate is reasonable.</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(30)" aria-controls="ans30" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans30"><div class="anslabel">Answer</div><div class="math">About 400 acres</div><div class="anslabel">Solution</div><div class="sol">Round 267 to 300 and 142 to 100, so 300 + 100 = <b>400 acres</b>. Exact total = 409 acres, which is only 9 acres from the estimate.</div></div>
+</article><div class="ext-divider">Additional Practice · Four Challenge Problems</div><article class="card" id="q31">
+  <div class="qhead"><span class="qnum">31.</span><span class="qtag">(EXTENSION)</span></div>
+  <div class="qbody"><span class="tag2">DECIMAL DIVISION</span> Divide using <b>long division</b>. Show how you move the decimal point in both numbers. Does the answer <b>terminate</b>?<div class="feature-eq">9.45 ÷ 0.6 = ______</div><div class="workbox"><span>Set up the long-division bracket and show your steps here.</span></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(31)" aria-controls="ans31" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans31"><div class="anslabel">Answer</div><div class="math">15.75 — terminating decimal</div><div class="anslabel">Solution</div><div class="sol">Multiply the dividend and the divisor by 10 to make a whole-number divisor: <b>9.45 ÷ 0.6 = 94.5 ÷ 6</b>. Write 94.50 so the division can continue into hundredths.<div class="division-explanation"><div class="long-grid" id="long-31" aria-label="Long division steps for 94.50 divided by 6"></div></div>The remainder reaches <b>0</b>. The result <b>15.75</b> terminates. <div class="multiples" id="mult-31"></div></div></div>
+</article><article class="card" id="q32">
+  <div class="qhead"><span class="qnum">32.</span><span class="qtag">(EXTENSION)</span></div>
+  <div class="qbody"><span class="tag2">REPEATING DECIMAL</span> Divide using <b>long division</b>. Show several decimal places and indicate the <b>repeating digit</b>.<div class="feature-eq">5.2 ÷ 0.3 = ______</div><div class="workbox"><span>Set up the long-division bracket and show your steps here.</span></div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(32)" aria-controls="ans32" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans32"><div class="anslabel">Answer</div><div class="math">17.<span class="overline">3</span> = 17.3333…</div><div class="anslabel">Solution</div><div class="sol">Multiply both numbers by 10: <b>5.2 ÷ 0.3 = 52 ÷ 3</b>. Continue the division by bringing down zeros after the decimal point.<div class="division-explanation"><div class="long-grid" id="long-32" aria-label="Long division steps for 52.00000 divided by 3"></div></div>The remainder is always <b>1</b> after each decimal 3, so the digit <b>3 repeats forever</b>. The answer is <b>17.<span class="overline">3</span></b>, not a rounded or terminating decimal. <div class="multiples" id="mult-32"></div></div></div>
+</article><article class="card" id="q33">
+  <div class="qhead"><span class="qnum">33.</span><span class="qtag">(EXTENSION)</span></div>
+  <div class="qbody"><span class="tag2">PERCENTAGES & TIPS</span> A restaurant bill is <b>$42.50</b> before tip. You decide to leave an <b>18% tip</b>. Find <b>(a)</b> the tip and <b>(b)</b> the total amount you pay, including the tip.</div>
+  <button type="button" class="reveal" onclick="toggleAnswer(33)" aria-controls="ans33" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans33"><div class="anslabel">Answer</div><div class="math">$7.65 tip; $50.15 total</div><div class="anslabel">Solution</div><div class="sol">Convert 18% to 0.18. Tip = <b>42.50 × 0.18 = $7.65</b>. Total = <b>$42.50 + $7.65 = $50.15</b>.</div></div>
+</article><article class="card" id="q34">
+  <div class="qhead"><span class="qnum">34.</span><span class="qtag">(EXTENSION)</span></div>
+  <div class="qbody"><span class="tag2">PEMDAS CHALLENGE</span> Evaluate using the order of operations. Show every step. Include correct handling of negative numbers.<div class="feature-eq">(−2)<sup>3</sup> + 4.5 ÷ (<span class="frac" aria-label="3 over 2"><span>3</span><span>2</span></span>) − (−1.25 × 6)</div></div>
+  <button type="button" class="reveal" onclick="toggleAnswer(34)" aria-controls="ans34" aria-expanded="false">Show Answer</button>
+  <div class="ans" id="ans34"><div class="anslabel">Answer</div><div class="math">2.5</div><div class="anslabel">Solution</div><div class="sol">First exponent: (−2)<sup>3</sup> = −8. In parentheses, <span class="frac" aria-label="3 over 2"><span>3</span><span>2</span></span> = 1.5. Then divide: 4.5 ÷ 1.5 = 3. Multiply: −1.25 × 6 = −7.5. Substitute: <b>−8 + 3 − (−7.5) = −8 + 3 + 7.5 = 2.5</b>.</div></div>
+</article><p class="print-note">Answers and step-by-step solutions are hidden when printing the student worksheet. Print Answer Key includes solutions and color-coded long division.</p></main><script>
+(function(){
+  'use strict';
+  window.toggleAnswer=function(n){
+    const panel=document.getElementById('ans'+n),btn=document.querySelector('#q'+n+' .reveal');
+    const visible=panel.classList.toggle('open');
+    btn.textContent=visible?'Hide Answer':'Show Answer';
+    btn.setAttribute('aria-expanded',visible?'true':'false');
+  };
+  window.allAnswers=function(show){document.querySelectorAll('.ans').forEach(a=>{
+    a.classList.toggle('open',show);
+    const btn=document.querySelector('#'+a.id.replace('ans','q')+' .reveal');
+    if(btn){btn.textContent=show?'Hide Answer':'Show Answer';btn.setAttribute('aria-expanded',show?'true':'false');}
+  });};
+  window.printPage=function(showAnswers){
+    document.body.classList.toggle('print-answers',!!showAnswers);
+    window.print();
+  };
+  // Adapted from the provided Decimal Divisor Studio: grid-aligned digits,
+  // quotient in blue, subtraction in red, and remainder / bring-down steps.
+  // Unlike the original this supports nonzero decimal quotient digits,
+  // continuing decimals, and cycles in repeating quotients.
+  function longDivide(targetId, divisor, dividendString, repeatFromIndex){
+    const grid=document.getElementById(targetId);if(!grid)return;
+    const sDiv=String(divisor), n=dividendString.length;
+    const firstCol=sDiv.length+1, cols=firstCol+n;
+    const numericPositions=[];
+    for(let i=0;i<n;i++)if(dividendString[i]!=='.')numericPositions.push(firstCol+i);
+    const dotPos=dividendString.indexOf('.');
+    const v=new Map();let lastRow=1;
+    function put(r,c,t,type='',border=''){
+      v.set(r+','+c,{t:String(t),type,border});lastRow=Math.max(lastRow,r);
+    }
+    for(let j=0;j<sDiv.length;j++)put(1,j,sDiv[j]);
+    put(1,sDiv.length,'','','divbar');
+    for(let j=0;j<n;j++)put(1,firstCol+j,dividendString[j],'','top');
+    if(dotPos>=0)put(0,firstCol+dotPos,'.','q');
+    const digits=dividendString.replace('.','');
+    let work=0,row=2,started=false;
+    for(let i=0;i<digits.length;i++){
+      work=work*10+Number(digits[i]);
+      if(!started && work<divisor)continue;
+      started=true;
+      const digit=Math.floor(work/divisor), prod=digit*divisor, rem=work-prod;
+      const qPosition=numericPositions[i];
+      put(0,qPosition,digit,(repeatFromIndex!==undefined && i>=repeatFromIndex)?'q repeat':'q');
+      const prodString=String(prod);
+      for(let k=0;k<prodString.length;k++){
+        const pos=numericPositions[i-k];if(pos!==undefined)put(row,pos,prodString[prodString.length-1-k],'sub','under');
+      }
+      const rString=String(rem);
+      for(let k=0;k<rString.length;k++){
+        const pos=numericPositions[i-k];if(pos!==undefined)put(row+1,pos,rString[rString.length-1-k]);
+      }
+      // The next digit appears on the same remainder row ("bring down").
+      if(i+1<digits.length)put(row+1,numericPositions[i+1],digits[i+1]);
+      work=rem;row+=2;
+    }
+    grid.style.gridTemplateColumns=`repeat(${cols}, var(--cell))`;
+    grid.replaceChildren();
+    for(let r=0;r<=lastRow;r++)for(let c=0;c<cols;c++){
+      const d=v.get(r+','+c),elt=document.createElement('span');
+      elt.className='long-cell'+(d&&d.type?' '+d.type:'')+(d&&d.border?' '+d.border:'');
+      elt.style.gridRow=String(r+1);elt.style.gridColumn=String(c+1);
+      if(d)elt.textContent=d.t;
+      grid.appendChild(elt);
+    }
+  }
+  function multiples(id,n){const area=document.getElementById(id);if(!area)return;
+    area.innerHTML='<details><summary>Multiples of '+n+' helper</summary><div class="mult-grid">'+
+      Array.from({length:9},(_,i)=>'<span>'+n+' × '+(i+1)+'</span><span>=</span><b>'+n*(i+1)+'</b>').join('')+
+      '</div></details>';
+  }
+  // Quotient 15.75; after moving 9.45 ÷ 0.6 to 94.50 ÷ 6
+  longDivide('long-31',6,'94.50');
+  // Quotient 17.33333…; after moving 5.2 ÷ 0.3 to 52.00000 ÷ 3
+  longDivide('long-32',3,'52.00000',2);
+  multiples('mult-31',6);multiples('mult-32',3);
+})();
+</script></body></html>
