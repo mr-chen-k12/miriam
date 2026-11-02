@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11-2 Miri Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>11-2 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (11-2, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "icon": "🔍",
+  "tag": "Word Detectives",
+  "award": "Vocabulary Star Reader",
+  "questions": [
+   {
+    "title": "The Octopus Escape Artist",
+    "passage": "An octopus has no bones at all, and that makes it a master of escape. The only hard part of its body is its beak, so if its beak can fit through a hole, the rest of its soft body can squeeze through too. Octopuses in aquariums have squeezed through openings as small as a coin. One famous octopus even slipped out of its tank at night, crawled across the floor, and squeezed down a drainpipe to reach the sea!",
+    "prompt": "In the passage, the word “squeeze” most nearly means…",
+    "options": [
+     "to hug tightly",
+     "to make a loud noise",
+     "to press through a small space",
+     "to swim quickly"
+    ],
+    "correct": 2,
+    "explanation": "The passage says the octopus's soft body can squeeze through tiny holes and drainpipes, so “squeeze” means to press through a small space."
+   },
+   {
+    "title": "The Hummingbird Helicopter",
+    "passage": "A hummingbird is the only bird that can truly hover in one spot and even fly backward. Its wings do not flap up and down like other birds' wings. Instead, they spin in a tiny circle, beating up to 80 times every second. This lets the hummingbird hover perfectly still in front of a flower while it sips nectar with its long bill. Hovering takes so much energy that hummingbirds must eat almost all day long.",
+    "prompt": "In the passage, the word “hover” most nearly means…",
+    "options": [
+     "to stay in one place in the air",
+     "to sing loudly",
+     "to hide under leaves",
+     "to build a nest"
+    ],
+    "correct": 0,
+    "explanation": "The passage explains that hovering lets the hummingbird stay perfectly still in front of a flower, so “hover” means to stay in one place in the air."
+   },
+   {
+    "title": "Dandelion Parachutes",
+    "passage": "When a dandelion flower turns into a puffball, each tiny seed grows its own fluffy parachute. On a breezy day, the parachutes catch the wind, and the seeds drift far away from the parent plant. Some seeds drift for miles before they float down to the ground. Drifting to new places helps dandelions spread, because the young plants will not have to crowd together and fight for sunlight and water.",
+    "prompt": "In the passage, the word “drift” most nearly means…",
+    "options": [
+     "to dig into the soil",
+     "to grow quickly",
+     "to be carried slowly through the air",
+     "to fall straight down"
+    ],
+    "correct": 2,
+    "explanation": "The seeds catch the wind and are carried for miles, so “drift” means to be carried slowly through the air."
+   },
+   {
+    "title": "Meerkat Guards",
+    "passage": "Meerkats live in groups in the deserts of Africa, and they take turns standing guard. While the others search the sand for food, one meerkat climbs onto a rock or a small hill and stands tall on its back legs. From there, the guard can spot eagles, snakes, and other dangers from far away. If the guard sees trouble coming, it barks a warning, and the whole group dashes into their burrows to hide.",
+    "prompt": "In the passage, the word “guard” most nearly means…",
+    "options": [
+     "a fence around a garden",
+     "an animal that watches for danger",
+     "a deep hole in the ground",
+     "a kind of desert rock"
+    ],
+    "correct": 1,
+    "explanation": "The passage describes the guard meerkat watching for eagles and snakes and warning the group, so “guard” means an animal that watches for danger."
+   },
+   {
+    "title": "How Crayons Are Made",
+    "passage": "A crayon starts as wax, not as a pencil or a paint. Workers heat the wax until it begins to melt into a thick, honey-like liquid. Then they stir in powdered color — red, blue, green, or any color you can imagine. The warm, colored liquid is poured into crayon-shaped molds. When the wax cools, it hardens, and out pop smooth new crayons, ready to be wrapped in paper labels.",
+    "prompt": "In the passage, the word “melt” most nearly means…",
+    "options": [
+     "to freeze solid",
+     "to turn from solid to liquid with heat",
+     "to stir a mixture",
+     "to break into pieces"
+    ],
+    "correct": 1,
+    "explanation": "Heating the wax makes it turn into a thick liquid, so “melt” means to turn from solid to liquid with heat."
+   },
+   {
+    "title": "The Porcupine's Quills",
+    "passage": "A porcupine looks slow and sleepy, but it carries one of the best defenses in the animal world. About 30,000 stiff quills cover its back. Each quill is hollow and sharp, and it sits loosely in the porcupine's skin. If a hungry fox or bobcat grabs the porcupine, the quills pop out and stick into the attacker's skin instead. The porcupine cannot shoot its quills like arrows, the way cartoons show — but anything that touches it walks away sorry.",
+    "prompt": "In the passage, the word “quills” most nearly means…",
+    "options": [
+     "sharp spines that protect the porcupine",
+     "soft, warm fur",
+     "long claws for digging",
+     "the porcupine's favorite food"
+    ],
+    "correct": 0,
+    "explanation": "The passage says about 30,000 stiff quills cover the porcupine's back and stick into attackers, so “quills” means sharp spines that protect the porcupine."
+   },
+   {
+    "title": "The Peacock's Show",
+    "passage": "A male peacock owns the most famous tail in the bird world, with about 150 long feathers shining in blue and green. When he wants to impress a peahen, he lifts his tail into a giant fan and shakes his feathers until they rustle. Scientists think the peacock displays his beautiful tail to show that he is healthy and strong. The bigger and brighter the display, the more likely a peahen is to choose him.",
+    "prompt": "In the passage, the word “display” most nearly means…",
+    "options": [
+     "to hide something away",
+     "a loud call",
+     "to show off proudly",
+     "a place to sleep"
+    ],
+    "correct": 2,
+    "explanation": "The peacock lifts his tail into a fan to show how healthy and strong he is, so “display” means to show off proudly."
+   },
+   {
+    "title": "The Snail's Slippery Trail",
+    "passage": "A snail moves very slowly, but it never gets stuck. As it crawls, its wide foot makes a layer of slippery slime. The slime helps the snail slide smoothly over rough rocks and sharp edges without hurting its soft body. If you look closely at a sidewalk after a snail has passed, you can see its shiny trail glistening in the sun. A snail follows its trail of slime the way you might follow a path through the woods.",
+    "prompt": "In the passage, the word “trail” most nearly means…",
+    "options": [
+     "a small shell",
+     "the mark or track left behind by something that passed",
+     "a type of food",
+     "a rainy day"
+    ],
+    "correct": 1,
+    "explanation": "The snail leaves a shiny mark on the sidewalk where it has crawled, so “trail” means the mark or track left behind by something that passed."
+   },
+   {
+    "title": "The Lizard That Regrows Its Tail",
+    "passage": "If a hungry bird grabs a lizard by the tail, the lizard has a surprising trick: its tail breaks off! The tail keeps wiggling on the ground, which confuses the bird while the lizard runs away to safety. Over the next few weeks, the lizard slowly begins to regrow a new tail. The new tail is never quite as long or as perfect as the first one, but it works just fine.",
+    "prompt": "In the passage, the word “regrow” most nearly means…",
+    "options": [
+     "to wiggle quickly",
+     "to grow again",
+     "to change color",
+     "to break off"
+    ],
+    "correct": 1,
+    "explanation": "The lizard slowly grows a new tail after losing the old one, so “regrow” means to grow again."
+   },
+   {
+    "title": "Mountains of Sand",
+    "passage": "A sand dune is a hill built entirely by the wind. Wind pushes grains of sand up the gentle side of the dune, and then the grains tumble down the steep side. Inch by inch, the whole dune begins to shift across the desert, like a slow ocean wave made of sand. Some dunes shift only a few feet in a year, but that is enough to bury roads, fences, and even whole houses that stand in their way.",
+    "prompt": "In the passage, the word “shift” most nearly means…",
+    "options": [
+     "to bury something",
+     "to shine brightly",
+     "to move slowly from one place to another",
+     "to make a loud sound"
+    ],
+    "correct": 2,
+    "explanation": "The passage says the whole dune begins to shift across the desert inch by inch, so “shift” means to move slowly from one place to another."
+   }
+  ]
+ },
+ "Set B": {
+  "icon": "💡",
+  "tag": "Main Idea Masters",
+  "award": "Main Idea Master",
+  "questions": [
+   {
+    "title": "Why Is the Ocean Salty?",
+    "passage": "Every river on Earth carries a tiny bit of salt. Rain falls on rocks and soil, and as the water trickles and flows, it picks up small amounts of salt and other minerals. Rivers carry this salt to the ocean, drop by drop, year after year. The ocean has been collecting salt for billions of years, and unlike a river, it has no way to wash the salt away. That is why ocean water tastes salty while river water tastes fresh.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Rain falls on rocks and soil all over the Earth.",
+     "The ocean is salty because rivers have carried salt into it for billions of years, and the salt stays there.",
+     "Ocean water and river water taste different.",
+     "Rivers flow downhill toward the ocean."
+    ],
+    "correct": 1,
+    "explanation": "The main idea is that the ocean is salty because rivers have carried salt into it for billions of years and the salt stays there. The other choices are details."
+   },
+   {
+    "title": "The Growing Mountain",
+    "passage": "Mount Everest is the tallest mountain on Earth, but it does not stay the same height. Deep under the ground, giant slabs of rock are slowly pushing against each other. This pushing forces the land upward, so Everest grows about as much in a year as your fingernails grow in a few weeks. Wind, ice, and snow wear the top down a little, but the pushing wins. Scientists measure Everest again and again, because the mountain is still growing taller.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Mount Everest is the tallest mountain on Earth.",
+     "Wind and snow can wear down a mountain's top.",
+     "Mount Everest is still growing taller because giant slabs of rock underground keep pushing the land upward.",
+     "Scientists like to measure mountains."
+    ],
+    "correct": 2,
+    "explanation": "The main idea is that Everest keeps growing taller because slabs of rock underground are pushing the land upward. Its height and the scientists are details."
+   },
+   {
+    "title": "Twelve Seconds of Flight",
+    "passage": "On a cold December morning in 1903, two brothers named Orville and Wilbur Wright stood on a windy beach in North Carolina with a machine they had built in their bicycle shop. Their flying machine, the Flyer, had a small engine and wings covered in cloth. Orville lay down on the wing, the engine roared, and the Flyer lifted into the air. It flew for only twelve seconds — but it was the first time a powered airplane had ever flown, and it changed travel forever.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "In 1903, the Wright brothers made the first powered airplane flight, which lasted only twelve seconds but changed travel forever.",
+     "The Wright brothers owned a bicycle shop.",
+     "The Flyer's wings were covered in cloth.",
+     "Orville Wright lay down on the wing of the plane."
+    ],
+    "correct": 0,
+    "explanation": "The main idea is that in 1903 the Wright brothers made the first powered airplane flight, a twelve-second flight that changed travel forever. The bicycle shop and the cloth wings are details."
+   },
+   {
+    "title": "The Woodpecker's Amazing Head",
+    "passage": "A woodpecker slams its beak into a tree thousands of times a day. If you hit your head that hard, you would be badly hurt — so why isn't the woodpecker? Its skull is partly spongy, like a sponge or a bicycle helmet, and it soaks up the shock of each hit. A special bone wraps around its brain like a seat belt and holds it steady. Its eyelids even close a split second before each peck to protect its eyes. All of these parts work together to keep the woodpecker's brain safe.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Woodpeckers peck trees thousands of times a day.",
+     "A woodpecker's spongy skull, special bone, and quick eyelids work together to protect its brain while it pecks.",
+     "A woodpecker's beak is very strong.",
+     "Eyelids protect a woodpecker's eyes when it pecks."
+    ],
+    "correct": 1,
+    "explanation": "The main idea is that the woodpecker's spongy skull, special bone, and quick eyelids work together to protect its brain. Each choice besides this one names only a single detail."
+   },
+   {
+    "title": "Tiny Taste Detectives",
+    "passage": "Your tongue is covered with thousands of tiny bumps, and inside those bumps hide about 10,000 taste buds. Each taste bud is like a tiny detective that tests your food and sends messages to your brain. Some taste buds are best at noticing sweet tastes, like sugar and honey. Others report salty, sour, or bitter flavors. Working together, your taste buds help you enjoy your favorite foods — and warn you when something tastes spoiled or unsafe to eat.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "There are about 10,000 taste buds on your tongue.",
+     "Some taste buds notice sweet tastes best.",
+     "Thousands of taste buds on your tongue work together to identify flavors and help keep you safe from spoiled food.",
+     "Your tongue is covered with tiny bumps."
+    ],
+    "correct": 2,
+    "explanation": "The main idea is that thousands of taste buds work together to identify flavors and warn about spoiled food. The number of taste buds and the bumps are details."
+   },
+   {
+    "title": "Ships That Climb Stairs",
+    "passage": "The Panama Canal is a waterway that lets ships cross Panama instead of sailing all the way around South America. But the land in the middle of Panama is higher than the ocean, so ships cannot simply float across. Instead, they climb giant water stairs called locks. A ship sails into a lock, the gates close, and water pours in until the ship floats up to the next level. Step by step, the locks lift the ship over the land and lower it down the other side.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Panama is a country in Central America.",
+     "Ships use the Panama Canal to avoid sailing around South America.",
+     "The gates of a lock open and close.",
+     "Ships cross Panama by climbing water stairs called locks, which lift them over the high land in the middle."
+    ],
+    "correct": 3,
+    "explanation": "The main idea is that ships cross Panama by climbing water stairs called locks that lift them over the high land. The other choices are details or background facts."
+   },
+   {
+    "title": "Why Zebras Wear Stripes",
+    "passage": "For many years, scientists wondered why zebras have black-and-white stripes. Now they have found an answer that might surprise you: the stripes bother biting flies. In tests, flies landed far less often on striped patterns than on plain black or plain white ones. The stripes seem to confuse the flies' eyes as they try to land. Biting flies can carry sicknesses, so stripes that keep flies away help zebras stay healthy on the grassy plains of Africa.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Zebras live on the grassy plains of Africa.",
+     "A zebra's stripes help protect it by confusing biting flies so they cannot land on it.",
+     "Scientists wondered about zebra stripes for many years.",
+     "Flies landed less often on striped patterns in tests."
+    ],
+    "correct": 1,
+    "explanation": "The main idea is that a zebra's stripes protect it by confusing biting flies so they cannot land. The tests are the evidence the passage gives for that idea."
+   },
+   {
+    "title": "The Deepest Place on Earth",
+    "passage": "Far under the Pacific Ocean lies a giant underwater canyon called the Mariana Trench. It is the deepest place on Earth — so deep that Mount Everest could sink into it and still be covered by more than a mile of water. Down there, no sunlight ever reaches. The water stays just above freezing, and the weight of all that ocean pressing down would flatten an ordinary submarine. Even so, explorers in special deep-diving vehicles have visited the bottom, and they found strange fish and shrimp living in the darkness.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Mount Everest is a very tall mountain.",
+     "Explorers have visited the bottom of the ocean in special vehicles.",
+     "The Mariana Trench is the deepest place on Earth, a dark, crushing underwater canyon where strange creatures still manage to live.",
+     "The water deep in the ocean is almost freezing."
+    ],
+    "correct": 2,
+    "explanation": "The main idea is that the Mariana Trench is Earth's deepest place, a dark and crushing canyon where strange creatures still live. The other choices are details."
+   },
+   {
+    "title": "How Hailstones Grow",
+    "passage": "A hailstone begins as a tiny drop of water inside a tall storm cloud. Strong winds inside the cloud blow the drop up into freezing air, where it turns to ice. Then it falls a little, collects more water, and gets blown upward to freeze again. Each trip up and down adds a new layer of ice, like the layers of an onion. When the hailstone finally grows too heavy for the wind to lift, it crashes to the ground. Most hailstones are pea-sized, but a few grow as big as baseballs!",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "Hailstones grow layer by layer as winds toss water drops up and down inside a storm cloud until the ice grows too heavy and falls.",
+     "Most hailstones are the size of peas.",
+     "Storm clouds are very tall.",
+     "A hailstone can grow as big as a baseball."
+    ],
+    "correct": 0,
+    "explanation": "The main idea is that hailstones grow layer by layer as winds toss drops up and down in a storm cloud until they grow too heavy and fall. The sizes are details."
+   },
+   {
+    "title": "Thunder and Lightning",
+    "passage": "Lightning is a giant spark of electricity that jumps between a storm cloud and the ground. As the spark rips through the air, it heats the air around it hotter than the surface of the sun — for just a moment. The super-heated air expands so fast that it explodes with a bang. That bang is thunder. Because light travels much faster than sound, you always see the lightning flash before you hear the thunder that it made.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "options": [
+     "You see lightning before you hear thunder.",
+     "Thunder is the bang made when lightning heats the air so fast that the air explodes outward.",
+     "Light travels faster than sound.",
+     "Storm clouds float high above the ground."
+    ],
+    "correct": 1,
+    "explanation": "The main idea is that thunder is the bang made when lightning super-heats the air and it explodes outward. Seeing lightning first is a detail that follows from that idea."
+   }
+  ]
+ },
+ "Set C": {
+  "icon": "🧠",
+  "tag": "Thinking Readers",
+  "award": "Super Sleuth Reader",
+  "questions": [
+   {
+    "title": "The Forgotten Lunch",
+    "passage": "When Maya opened her lunchbox, her heart sank. She had left her sandwich on the kitchen counter at home. “You can share mine,” said Zoe, splitting her sandwich in half. Across the table, Ben slid an apple toward Maya, and Priya poured some of her pretzels into a little pile. By the end of lunch, Maya's tray was full. Walking back to class, she kept smiling. “Tomorrow,” she told Zoe, “I'm packing an extra cookie — for whoever needs it.”",
+    "prompt": "What can you infer about Maya's classmates?",
+    "options": [
+     "They did not like their own lunches.",
+     "They are kind and willing to share what they have.",
+     "They wanted Maya's cookie the next day.",
+     "They often forget their lunches too."
+    ],
+    "correct": 1,
+    "explanation": "Zoe split her sandwich, Ben gave an apple, and Priya shared her pretzels — so you can infer Maya's classmates are kind and willing to share."
+   },
+   {
+    "title": "The Closed Curtains",
+    "passage": "Every morning, Mr. Park waved to the school bus from his front window. The children always waved back. But one gray morning, his curtains were closed, and there was no wave. The bus driver, Ms. Lee, frowned. “That's not like him,” she said quietly. After her route, Ms. Lee drove back to Mr. Park's street and knocked gently on his door to make sure he was all right.",
+    "prompt": "Why did Ms. Lee go back to Mr. Park's house?",
+    "options": [
+     "She had forgotten to pick up a student.",
+     "She wanted to deliver his mail.",
+     "She was worried because his usual morning wave was missing.",
+     "She needed directions to the school."
+    ],
+    "correct": 2,
+    "explanation": "Ms. Lee said the missing wave was “not like him” and went back to check on him — she was worried because his usual morning wave was missing."
+   },
+   {
+    "title": "The Kitten in the Rain",
+    "passage": "On the walk home, Sara heard a tiny meow coming from under a bush. A shivering kitten, no bigger than her two hands, was hiding from the rain. Sara wrapped it in her scarf and carried it home. That evening, she drew a poster with a picture of the kitten and the words FOUND KITTEN. Two days later, an older woman rang the doorbell, tears in her eyes. “That's my Milo,” she whispered. “He slipped out during the storm.”",
+    "prompt": "What can you infer about why the woman had tears in her eyes?",
+    "options": [
+     "She was angry that Sara had taken her kitten.",
+     "She was sad because it was raining.",
+     "She was happy and relieved to have her lost kitten back.",
+     "She did not recognize the kitten."
+    ],
+    "correct": 2,
+    "explanation": "The woman whispered “That's my Milo” — she had lost her kitten in the storm, so her tears show she was happy and relieved to have him back."
+   },
+   {
+    "title": "The Droopy Plant",
+    "passage": "On Monday morning, the class plant sat drooping in its pot, its leaves hanging down like tired arms. “We watered it on Friday!” said Tom. Mrs. Garcia touched the soil. It was dry as dust. “Friday, plus Saturday, plus Sunday,” she said, “is a long time for a thirsty plant.” After a good drink of water, the plant perked up by lunchtime. The class made a new rule that day: someone would check the plant's soil every single morning.",
+    "prompt": "Why did the plant droop over the weekend?",
+    "options": [
+     "The pot was too small for the plant.",
+     "Nobody watered it for three days, so its soil dried out.",
+     "The classroom was too dark on weekends.",
+     "Tom had touched its leaves."
+    ],
+    "correct": 1,
+    "explanation": "The soil was “dry as dust” after Friday, Saturday, and Sunday with no water — the plant drooped because nobody watered it for three days."
+   },
+   {
+    "title": "Lights in the Gym",
+    "passage": "The basketball team had gone home, but the gym lights were still on. Coach Diaz peeked through the door. There was Ethan, all alone, shooting free throws. Swish. Miss. Swish. Miss. After each shot, Ethan wrote a tiny mark in a notebook by the bench. “Forty-one out of fifty,” he told the coach. “Last week I only made thirty-five. I'm getting closer.” Coach Diaz smiled and pulled up a chair.",
+    "prompt": "What can you infer about Ethan?",
+    "options": [
+     "He is the best player on the team.",
+     "He forgot that practice was over.",
+     "He is determined to improve and keeps track of his progress.",
+     "He wants to impress the other players."
+    ],
+    "correct": 2,
+    "explanation": "Ethan practices alone after the team leaves and records every shot to beat his own score — he is determined to improve and keeps track of his progress."
+   },
+   {
+    "title": "The Note in the Desk",
+    "passage": "While cleaning out her new desk on the first day of school, Nina found a folded note taped underneath. It said: “To whoever sits here next — fourth grade is not as scary as it looks. The library has the best beanbag chairs. Good luck! — a friend from last year.” Nina read it twice. Then she grabbed a pencil and a fresh piece of paper. By the end of the day, there was a brand-new note taped under the desk.",
+    "prompt": "Why did Nina write a new note?",
+    "options": [
+     "Her teacher told everyone to write one.",
+     "She wanted to pass the same kindness on to next year's student.",
+     "She could not find her homework.",
+     "She wanted to practice her handwriting."
+    ],
+    "correct": 1,
+    "explanation": "The kind note from last year's student cheered Nina up, and she immediately wrote one herself — she wanted to pass the same kindness on to next year's student."
+   },
+   {
+    "title": "Field Day Indoors",
+    "passage": "Rain drummed on the windows on the morning of field day. “No sack races in this weather,” groaned Marcus, staring at the puddles outside. But Ms. Ortiz had a plan. She pushed the cafeteria tables aside and set up relay races with spoons and cotton balls, a paper-airplane contest, and a hula-hoop championship. At the awards, Marcus held up his blue ribbon for the cotton-ball relay. “Okay,” he laughed, “this might be even better than sack races.”",
+    "prompt": "How did Marcus's feelings change during the story?",
+    "options": [
+     "He was excited at first, then disappointed.",
+     "He was disappointed at first, then ended up having a great time.",
+     "He was angry at the rain the whole day.",
+     "He did not care about field day at all."
+    ],
+    "correct": 1,
+    "explanation": "Marcus groaned about the rain at first, but he ended the day laughing with a blue ribbon, saying indoors might be even better — he was disappointed first, then had a great time."
+   },
+   {
+    "title": "The Patient Fisher",
+    "passage": "Grandpa handed Rosa a fishing rod at the edge of the quiet lake. “Now we wait,” he said. Rosa waited. And waited. A dragonfly landed on her bobber. A frog plopped into the water. “Nothing is biting,” she sighed. “Fishing is mostly waiting,” said Grandpa, “and the waiting is part of the catch.” Just then, Rosa's bobber dove under the water. “I got one!” she shouted, grinning from ear to ear.",
+    "prompt": "What lesson does Rosa learn?",
+    "options": [
+     "Fish are hard to see in a lake.",
+     "Dragonflies like to sit on bobbers.",
+     "Good things are worth waiting patiently for.",
+     "Grandpa is the best fisherman at the lake."
+    ],
+    "correct": 2,
+    "explanation": "Rosa waits and waits with no bites, and Grandpa says the waiting is part of the catch — then she catches a fish. The lesson is that good things are worth waiting patiently for."
+   },
+   {
+    "title": "Extra Gloves",
+    "passage": "Snow was falling fast at the bus stop. Amir wore his warm coat, his hat, and two pairs of gloves — one pair from home, and the spare pair his grandmother always made him carry. Next to him, little Leo from first grade kept blowing on his bare, red hands. Amir looked at his spare gloves. Then he pulled them out of his pocket and held them out. “Here,” he said. “My grandma says spare gloves are for sharing.”",
+    "prompt": "What can you infer about Amir?",
+    "options": [
+     "He does not feel the cold.",
+     "He is generous and notices when others need help.",
+     "He wants a new pair of gloves.",
+     "He is Leo's older brother."
+    ],
+    "correct": 1,
+    "explanation": "Amir notices Leo's cold, bare hands and gives away his own spare gloves — he is generous and notices when others need help."
+   },
+   {
+    "title": "Spark the Firehouse Dog",
+    "passage": "The firefighters at Station 9 first noticed the skinny brown dog sleeping under their truck on a rainy night. The next morning, someone left a bowl of water by the door. By the end of the week, there was a food bowl too, and a blanket in the corner. The dog, whom they named Spark, began greeting the firefighters every morning with a wagging tail. Now Spark has a collar with the station's number on it, just in case he ever wanders too far from home.",
+    "prompt": "What can you infer about the firefighters?",
+    "options": [
+     "They wanted a dog to help fight fires.",
+     "They slowly adopted Spark and made him part of their station family.",
+     "They were annoyed by the dog under the truck.",
+     "They planned to send Spark to a shelter."
+    ],
+    "correct": 1,
+    "explanation": "The water bowl, the food bowl, the blanket, the name, and the collar show the firefighters slowly adopted Spark and made him part of their station family."
+   }
+  ]
+ }
+};
+
+const AUDIT_KEY = "reading_11_2_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 11-2 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 11-2 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
