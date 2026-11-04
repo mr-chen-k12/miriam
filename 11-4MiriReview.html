@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saxon Math 5/4 - Test 9B Practice Generator</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- MathJax Configuration & Script for LaTeX Math Rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base typography & utility styling */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .math-font {
+      font-family: 'Outfit', serif;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+      }
+      
+      .no-print {
+        display: none !important;
+      }
+      
+      .print-only-header {
+        display: block !important;
+      }
+
+      .question-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+        margin-bottom: 1.25rem !important;
+        padding: 1rem !important;
+      }
+
+      /* Hide solution boxes by default in print mode */
+      .solution-box {
+        display: none !important;
+      }
+
+      /* Explicitly show solution box when printing answer key mode */
+      body.print-with-answers .solution-box {
+        display: block !important;
+        background-color: #f8fafc !important;
+        border-top: 1.5px dashed #64748b !important;
+        margin-top: 0.75rem !important;
+        padding-top: 0.75rem !important;
+      }
+
+      .interactive-controls {
+        display: none !important;
+      }
+
+      .print-answer-line {
+        display: block !important;
+      }
+
+      svg {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+    }
+
+    .print-only-header {
+      display: none;
+    }
+
+    .print-answer-line {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200">
+
+  <!-- PRINT HEADER (Only visible on paper printouts) -->
+  <div class="print-only-header p-4 mb-4 border-b-2 border-slate-900">
+    <div class="flex justify-between items-center mb-2">
+      <h1 class="text-xl font-bold uppercase tracking-wider">Saxon Math 5/4 - Test 9B Practice Worksheet</h1>
+      <span class="font-semibold text-sm" id="print-set-title">Variation A</span>
+    </div>
+    <div class="grid grid-cols-3 gap-4 text-sm mt-3 pt-2 border-t border-slate-300">
+      <div><strong>Name:</strong> <span id="print-student-name">______________________</span></div>
+      <div><strong>Date:</strong> <span id="print-date">______________________</span></div>
+      <div><strong>Score:</strong> ______ / <span id="print-total-count">20</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="app-container" class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- HEADER & TOOLBAR (Screen Only) -->
+    <header class="no-print bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 mb-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="bg-brand-100 text-brand-800 dark:bg-brand-900 dark:text-brand-100 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide">
+              Saxon Math 5/4
+            </span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold">Test 9B Practice Suite</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Test 9B Practice Generator
+          </h1>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            3 distinct parallel variations per problem (60 total problems). Solve online with step-by-step solutions or print clean worksheets.
+          </p>
+        </div>
+
+        <!-- Theme Toggle -->
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle-btn" onclick="toggleDarkMode()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition text-slate-700 dark:text-slate-200" title="Toggle Light/Dark Mode">
+            <svg id="sun-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+            <svg id="moon-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STUDENT INFO & LIVE SCORE TRACKER BAR -->
+      <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+        <div class="flex items-center gap-2">
+          <label for="student-name" class="font-semibold text-slate-700 dark:text-slate-300">Student:</label>
+          <input type="text" id="student-name" placeholder="Student Name" value="Miriam" oninput="updateStudentName()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-slate-200">
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="test-date" class="font-semibold text-slate-700 dark:text-slate-300">Date:</label>
+          <input type="date" id="test-date" onchange="updateDate()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-slate-200">
+        </div>
+        <div class="flex items-center justify-between sm:justify-end gap-3 bg-brand-50 dark:bg-slate-900/60 p-2 rounded-xl border border-brand-100 dark:border-slate-700">
+          <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Current View Score:</span>
+          <span id="score-display" class="font-bold text-brand-700 dark:text-brand-400 text-base">0 / 20 (0%)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- VARIATION TAB FILTER SELECTOR (Screen Only) -->
+    <div class="no-print mb-6">
+      <div class="flex flex-wrap gap-2 p-1.5 bg-slate-200/70 dark:bg-slate-800/80 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700">
+        <button onclick="switchTab('variationA')" id="tab-variationA" class="tab-btn active flex-1 min-w-[130px] py-2 px-3 rounded-lg text-sm font-semibold transition text-center shadow-sm bg-white dark:bg-slate-700 text-brand-700 dark:text-white">
+          Variation A (20 Qs)
+        </button>
+        <button onclick="switchTab('variationB')" id="tab-variationB" class="tab-btn flex-1 min-w-[130px] py-2 px-3 rounded-lg text-sm font-semibold transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+          Variation B (20 Qs)
+        </button>
+        <button onclick="switchTab('variationC')" id="tab-variationC" class="tab-btn flex-1 min-w-[130px] py-2 px-3 rounded-lg text-sm font-semibold transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+          Variation C (20 Qs)
+        </button>
+        <button onclick="switchTab('all')" id="tab-all" class="tab-btn flex-1 min-w-[140px] py-2 px-3 rounded-lg text-sm font-semibold transition text-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+          All 60 Questions
+        </button>
+      </div>
+    </div>
+
+    <!-- MASTER CONTROLS TOOLBAR (Screen Only) -->
+    <div class="no-print bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mb-6 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="toggleAllSolutions(true)" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          Show All Solutions
+        </button>
+        <button onclick="toggleAllSolutions(false)" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 0110.123 3.937m-2.126 5.011a3.5 3.5 0 11-4.95-4.95"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/></svg>
+          Hide All Solutions
+        </button>
+        <button onclick="resetInputs()" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-slate-700 dark:text-slate-200 hover:text-rose-700 dark:hover:text-rose-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Reset Answers
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="printWorksheet(false)" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print Blank Sheet
+        </button>
+        <button onclick="printWorksheet(true)" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Print Answer Key
+        </button>
+      </div>
+    </div>
+
+    <!-- QUESTIONS LIST CONTAINER -->
+    <main id="questions-list" class="space-y-6">
+      <!-- Questions cards are generated dynamically via JavaScript -->
+    </main>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIC & COMPLETE QUESTION DATABASE -->
+  <script>
+    // Set default date input
+    document.getElementById('test-date').valueAsDate = new Date();
+
+    // App State
+    let currentTab = 'variationA'; // 'variationA', 'variationB', 'variationC', 'all'
+    let studentAnswers = {};
+    let solutionVisibility = {};
+
+    // SVG VECTOR GRAPHIC GENERATORS
+    function getFractionCircleSVG(whole, num, den) {
+      const totalCircles = whole + (num > 0 ? 1 : 0);
+      let svgContent = '';
+      const r = 26;
+      const spacing = 65;
+      const width = totalCircles * spacing + 10;
+      
+      for (let c = 0; c < totalCircles; c++) {
+        const cx = 35 + c * spacing;
+        const cy = 35;
+        const isLastPartial = (c === whole && num > 0);
+        
+        if (!isLastPartial) {
+          // Fully shaded circle
+          svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0284c7" stroke="#0f172a" stroke-width="2"/>`;
+        } else {
+          // Circle divided into sectors
+          svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>`;
+          
+          for (let s = 0; s < den; s++) {
+            const angleStart = (s * 360 / den) - 90;
+            const angleEnd = ((s + 1) * 360 / den) - 90;
+            const radStart = (angleStart * Math.PI) / 180;
+            const radEnd = (angleEnd * Math.PI) / 180;
+            
+            const x1 = cx + r * Math.cos(radStart);
+            const y1 = cy + r * Math.sin(radStart);
+            const x2 = cx + r * Math.cos(radEnd);
+            const y2 = cy + r * Math.sin(radEnd);
+            
+            const isShaded = s < num;
+            const fill = isShaded ? '#0284c7' : 'none';
+            const largeArc = (angleEnd - angleStart) > 180 ? 1 : 0;
+
+            if (den === 2) {
+              const d = `M ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r} Z`;
+              if (s === 0) {
+                svgContent += `<path d="${d}" fill="${fill}" stroke="#0f172a" stroke-width="1.5"/>`;
+              } else {
+                const d2 = `M ${cx} ${cy + r} A ${r} ${r} 0 0 1 ${cx} ${cy - r} Z`;
+                svgContent += `<path d="${d2}" fill="${fill}" stroke="#0f172a" stroke-width="1.5"/>`;
+              }
+            } else {
+              const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+              svgContent += `<path d="${d}" fill="${fill}" stroke="#0f172a" stroke-width="1.5"/>`;
+            }
+          }
+        }
+      }
+
+      return `<svg width="${width}" height="70" viewBox="0 0 ${width} 70" class="mx-auto my-2 overflow-visible">${svgContent}</svg>`;
+    }
+
+    function getClockSVG(hour, minute) {
+      const cx = 75, cy = 75, r = 60;
+      const minAngle = minute * 6;
+      const hrAngle = (hour % 12) * 30 + (minute * 0.5);
+
+      const minRad = (minAngle - 90) * Math.PI / 180;
+      const hrRad = (hrAngle - 90) * Math.PI / 180;
+
+      const minX = cx + 45 * Math.cos(minRad);
+      const minY = cy + 45 * Math.sin(minRad);
+      const hrX = cx + 30 * Math.cos(hrRad);
+      const hrY = cy + 30 * Math.sin(hrRad);
+
+      let ticks = '';
+      for (let i = 1; i <= 12; i++) {
+        const ang = (i * 30 - 90) * Math.PI / 180;
+        const tx = cx + 48 * Math.cos(ang);
+        const ty = cy + 48 * Math.sin(ang);
+        ticks += `<text x="${tx}" y="${ty + 4}" font-size="11" font-weight="bold" text-anchor="middle" fill="#0f172a">${i}</text>`;
+      }
+
+      return `
+        <svg width="150" height="150" viewBox="0 0 150 150" class="mx-auto my-2">
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+          <circle cx="${cx}" cy="${cy}" r="${r - 4}" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,3"/>
+          ${ticks}
+          <!-- Hour Hand -->
+          <line x1="${cx}" y1="${cy}" x2="${hrX}" y2="${hrY}" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+          <!-- Minute Hand -->
+          <line x1="${cx}" y1="${cy}" x2="${minX}" y2="${minY}" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Center Pin -->
+          <circle cx="${cx}" cy="${cy}" r="4" fill="#0f172a"/>
+        </svg>
+      `;
+    }
+
+    function getRulerSVG(targetMeasureQuarterInches) {
+      const inches = 3;
+      const ppi = 90; // pixels per inch
+      const startX = 30;
+      const startY = 50;
+      const rulerWidth = inches * ppi;
+      
+      let marks = '';
+      const totalQuarters = inches * 4;
+      for (let q = 0; q <= totalQuarters; q++) {
+        const x = startX + (q * (ppi / 4));
+        let h = 10;
+        if (q % 4 === 0) h = 25; // Whole inch
+        else if (q % 2 === 0) h = 18; // Half inch
+        
+        marks += `<line x1="${x}" y1="${startY}" x2="${x}" y2="${startY - h}" stroke="#334155" stroke-width="${q % 4 === 0 ? '2' : '1.2'}"/>`;
+        if (q % 4 === 0 && q > 0) {
+          marks += `<text x="${x}" y="${startY - 28}" font-size="12" font-weight="bold" text-anchor="middle" fill="#0f172a">${q / 4}</text>`;
+        }
+      }
+
+      const segmentEndX = startX + (targetMeasureQuarterInches * (ppi / 4));
+      const segmentLineY = startY - 42;
+
+      return `
+        <svg width="${rulerWidth + 70}" height="75" viewBox="0 0 ${rulerWidth + 70} 75" class="mx-auto my-2 overflow-visible">
+          <!-- Ruler Body -->
+          <rect x="${startX - 10}" y="${startY - 40}" width="${rulerWidth + 20}" height="45" fill="#fef08a" stroke="#cbd5e1" stroke-width="1.5" rx="3"/>
+          <text x="${startX + 10}" y="${startY - 26}" font-size="11" font-style="italic" fill="#64748b">inch</text>
+          ${marks}
+          <!-- Segment AB -->
+          <line x1="${startX}" y1="${segmentLineY}" x2="${segmentEndX}" y2="${segmentLineY}" stroke="#dc2626" stroke-width="3"/>
+          <!-- Point A -->
+          <circle cx="${startX}" cy="${segmentLineY}" r="4" fill="#dc2626"/>
+          <text x="${startX}" y="${segmentLineY - 7}" font-size="11" font-weight="bold" text-anchor="middle" fill="#dc2626">A</text>
+          <!-- Point B -->
+          <circle cx="${segmentEndX}" cy="${segmentLineY}" r="4" fill="#dc2626"/>
+          <text x="${segmentEndX}" y="${segmentLineY - 7}" font-size="11" font-weight="bold" text-anchor="middle" fill="#dc2626">B</text>
+        </svg>
+      `;
+    }
+
+    function getNumberLineSVG(startInt, endInt, targetTick, totalDivisions) {
+      const width = 320;
+      const startX = 40;
+      const endX = startX + width;
+      const y = 45;
+      
+      let ticks = '';
+      for (let i = 0; i <= totalDivisions; i++) {
+        const x = startX + (i * (width / totalDivisions));
+        const isMajor = (i === 0 || i === totalDivisions);
+        const h = isMajor ? 16 : 10;
+        ticks += `<line x1="${x}" y1="${y - h/2}" x2="${x}" y2="${y + h/2}" stroke="#0f172a" stroke-width="${isMajor ? '2.5' : '1.5'}"/>`;
+      }
+
+      const targetX = startX + (targetTick * (width / totalDivisions));
+
+      return `
+        <svg width="400" height="75" viewBox="0 0 400 75" class="mx-auto my-2">
+          <!-- Main Line -->
+          <line x1="20" y1="${y}" x2="380" y2="${y}" stroke="#0f172a" stroke-width="2"/>
+          <!-- Arrows -->
+          <polygon points="20,${y} 28,${y-4} 28,${y+4}" fill="#0f172a"/>
+          <polygon points="380,${y} 372,${y-4} 372,${y+4}" fill="#0f172a"/>
+          ${ticks}
+          <!-- End Integer Labels -->
+          <text x="${startX}" y="${y + 24}" font-size="14" font-weight="bold" text-anchor="middle" fill="#0f172a">${startInt}</text>
+          <text x="${endX}" y="${y + 24}" font-size="14" font-weight="bold" text-anchor="middle" fill="#0f172a">${endInt}</text>
+          <!-- Pointer Arrow -->
+          <polygon points="${targetX},${y - 10} ${targetX - 6},${y - 24} ${targetX + 6},${y - 24}" fill="#dc2626"/>
+          <line x1="${targetX}" y1="${y - 24}" x2="${targetX}" y2="${y - 32}" stroke="#dc2626" stroke-width="2"/>
+        </svg>
+      `;
+    }
+
+    // COMPLETE QUESTION DATABASE (20 Question Types x 3 Variations = 60 Problems)
+    const questionsDatabase = [
+      // Q1
+      {
+        id: 1,
+        type: "Part / Total Word Problem",
+        sets: {
+          variationA: {
+            text: "Four hundred twenty passengers arrived on the first train. Altogether eight hundred fifty passengers arrived on the first two trains. How many passengers arrived on the second train?",
+            solution: "Subtract the passengers on the first train from the total passengers on both trains: <br>$$850 - 420 = 430$$",
+            answer: "430",
+            displayAnswer: "430 passengers"
+          },
+          variationB: {
+            text: "Two hundred forty-five tourists arrived on the first boat. Altogether six hundred tourists arrived on the first two boats. How many tourists arrived on the second boat?",
+            solution: "Subtract the first boat passengers from the total: <br>$$600 - 245 = 355$$",
+            answer: "355",
+            displayAnswer: "355 tourists"
+          },
+          variationC: {
+            text: "One hundred eighty-seven tourists arrived on the first boat. Altogether five hundred tourists arrived on the first two boats. How many tourists arrived on the second boat?",
+            solution: "Subtract the first boat passengers from the total: <br>$$500 - 187 = 313$$",
+            answer: "313",
+            displayAnswer: "313 tourists"
+          }
+        }
+      },
+      // Q2
+      {
+        id: 2,
+        type: "Comparison Word Problem",
+        sets: {
+          variationA: {
+            text: "There were three hundred forty-five cars on the highway. There were eight hundred twenty-two cars on the parkway. How many more cars were on the parkway?",
+            solution: "Subtract the smaller number of cars from the larger number: <br>$$822 - 345 = 477$$",
+            answer: "477",
+            displayAnswer: "477 more cars"
+          },
+          variationB: {
+            text: "There were three hundred fifteen cars on the highway. There were eight hundred four cars on the parkway. How many more cars were on the parkway?",
+            solution: "Subtract: <br>$$804 - 315 = 489$$",
+            answer: "489",
+            displayAnswer: "489 more cars"
+          },
+          variationC: {
+            text: "There were four hundred fifty-six cars on the highway. There were nine hundred thirty-one cars on the parkway. How many more cars were on the parkway?",
+            solution: "Subtract: <br>$$931 - 456 = 475$$",
+            answer: "475",
+            displayAnswer: "475 more cars"
+          }
+        }
+      },
+      // Q3
+      {
+        id: 3,
+        type: "Making Change from Currency",
+        sets: {
+          variationA: {
+            text: "Pierre paid $\$10.00$ for an item that cost $\$6.38$. How much money should Pierre get back?",
+            solution: "Subtract the item cost from the payment: <br>$$\\$10.00 - \\$6.38 = \\$3.62$$",
+            answer: "3.62",
+            displayAnswer: "$3.62"
+          },
+          variationB: {
+            text: "Sarah paid $\$5.00$ for a book that cost $\$2.84$. How much money should Sarah get back?",
+            solution: "Subtract: <br>$$\\$5.00 - \\$2.84 = \\$2.16$$",
+            answer: "2.16",
+            displayAnswer: "$2.16"
+          },
+          variationC: {
+            text: "Elena paid $\$20.00$ for a game that cost $\$13.47$. How much money should Elena get back?",
+            solution: "Subtract: <br>$$\\$20.00 - \\$13.47 = \\$6.53$$",
+            answer: "6.53",
+            displayAnswer: "$6.53"
+          }
+        }
+      },
+      // Q4
+      {
+        id: 4,
+        type: "Rounding to Nearest Hundred",
+        sets: {
+          variationA: {
+            text: "Round $762$ to the nearest hundred.",
+            solution: "Examine the tens digit ($6$). Since $6 \\ge 5$, round up to $800$.",
+            answer: "800",
+            displayAnswer: "800"
+          },
+          variationB: {
+            text: "Round $439$ to the nearest hundred.",
+            solution: "Examine the tens digit ($3$). Since $3 < 5$, round down to $400$.",
+            answer: "400",
+            displayAnswer: "400"
+          },
+          variationC: {
+            text: "Round $951$ to the nearest hundred.",
+            solution: "Examine the tens digit ($5$). Since $5 \\ge 5$, round up to $1000$.",
+            answer: "1000",
+            displayAnswer: "1000"
+          }
+        }
+      },
+      // Q5
+      {
+        id: 5,
+        type: "Fraction Circles for Mixed Numbers",
+        sets: {
+          variationA: {
+            text: "Draw and shade circles to show the mixed number $2\\frac{3}{4}$.",
+            svg: getFractionCircleSVG(2, 3, 4),
+            solution: "Draw 3 circles divided into quarters. Fully shade 2 whole circles and shade 3 quarters of the third circle.",
+            answer: "2 3/4",
+            displayAnswer: "2 3/4 shaded circles (2 full + 3/4)"
+          },
+          variationB: {
+            text: "Draw and shade circles to show the mixed number $4\\frac{1}{2}$.",
+            svg: getFractionCircleSVG(4, 1, 2),
+            solution: "Draw 5 circles divided into halves. Fully shade 4 whole circles and 1 half of the fifth circle.",
+            answer: "4 1/2",
+            displayAnswer: "4 1/2 shaded circles (4 full + 1/2)"
+          },
+          variationC: {
+            text: "Draw and shade circles to show the mixed number $1\\frac{5}{8}$.",
+            svg: getFractionCircleSVG(1, 5, 8),
+            solution: "Draw 2 circles divided into eighths. Fully shade 1 whole circle and 5 eighths of the second circle.",
+            answer: "1 5/8",
+            displayAnswer: "1 5/8 shaded circles (1 full + 5/8)"
+          }
+        }
+      },
+      // Q6
+      {
+        id: 6,
+        type: "Writing Decimals in Words",
+        sets: {
+          variationA: {
+            text: "Use words to write $15.4$.",
+            solution: "The whole number part is 'fifteen'. The decimal point is 'and'. The $4$ is in the tenths place. Answer: <strong>fifteen and four tenths</strong>.",
+            answer: "fifteen and four tenths",
+            displayAnswer: "fifteen and four tenths"
+          },
+          variationB: {
+            text: "Use words to write $8.9$.",
+            solution: "Answer: <strong>eight and nine tenths</strong>.",
+            answer: "eight and nine tenths",
+            displayAnswer: "eight and nine tenths"
+          },
+          variationC: {
+            text: "Use words to write $23.6$.",
+            solution: "Answer: <strong>twenty-three and six tenths</strong>.",
+            answer: "twenty-three and six tenths",
+            displayAnswer: "twenty-three and six tenths"
+          }
+        }
+      },
+      // Q7
+      {
+        id: 7,
+        type: "Analog Clock & Elapsed Time",
+        sets: {
+          variationA: {
+            text: "It is morning. What time was it $35$ minutes ago according to this clock?",
+            svg: getClockSVG(9, 0),
+            solution: "The clock shows 9:00 a.m. Counting back 35 minutes: 9:00 minus 35 minutes = <strong>8:25 a.m.</strong>",
+            answer: "8:25",
+            displayAnswer: "8:25 a.m."
+          },
+          variationB: {
+            text: "It is afternoon. What time was it $45$ minutes ago according to this clock?",
+            svg: getClockSVG(4, 15),
+            solution: "The clock shows 4:15 p.m. Counting back 45 minutes: 4:15 minus 45 minutes = <strong>3:30 p.m.</strong>",
+            answer: "3:30",
+            displayAnswer: "3:30 p.m."
+          },
+          variationC: {
+            text: "It is morning. What time was it $50$ minutes ago according to this clock?",
+            svg: getClockSVG(10, 30),
+            solution: "The clock shows 10:30 a.m. Counting back 50 minutes: 10:30 minus 50 minutes = <strong>9:40 a.m.</strong>",
+            answer: "9:40",
+            displayAnswer: "9:40 a.m."
+          }
+        }
+      },
+      // Q8
+      {
+        id: 8,
+        type: "Ruler Measurement (Quarter Inches)",
+        sets: {
+          variationA: {
+            text: "To the nearest quarter inch, how long is segment AB?",
+            svg: getRulerSVG(9), // 2 1/4 inches
+            solution: "Segment AB starts at 0 and ends 1 quarter mark past the 2-inch line. Length: <strong>$2\\frac{1}{4}$ inches</strong>.",
+            answer: "2 1/4",
+            displayAnswer: "2 1/4 inches"
+          },
+          variationB: {
+            text: "To the nearest quarter inch, how long is segment AB?",
+            svg: getRulerSVG(7), // 1 3/4 inches
+            solution: "Segment AB extends from 0 to 3 quarter marks past 1 inch. Length: <strong>$1\\frac{3}{4}$ inches</strong>.",
+            answer: "1 3/4",
+            displayAnswer: "1 3/4 inches"
+          },
+          variationC: {
+            text: "To the nearest quarter inch, how long is segment AB?",
+            svg: getRulerSVG(11), // 2 3/4 inches
+            solution: "Segment AB extends from 0 to 3 quarter marks past 2 inches. Length: <strong>$2\\frac{3}{4}$ inches</strong>.",
+            answer: "2 3/4",
+            displayAnswer: "2 3/4 inches"
+          }
+        }
+      },
+      // Q9
+      {
+        id: 9,
+        type: "Number Line Mixed Numbers",
+        sets: {
+          variationA: {
+            text: "To what mixed number is the arrow pointing?",
+            svg: getNumberLineSVG(6, 7, 3, 8),
+            solution: "The interval between 6 and 7 is divided into 8 equal parts. The arrow points to the 3rd tick mark past 6, which represents <strong>$6\\frac{3}{8}$</strong>.",
+            answer: "6 3/8",
+            displayAnswer: "6 3/8"
+          },
+          variationB: {
+            text: "To what mixed number is the arrow pointing?",
+            svg: getNumberLineSVG(10, 11, 3, 4),
+            solution: "The interval between 10 and 11 is divided into 4 equal quarters. Arrow points to the 3rd quarter mark past 10: <strong>$10\\frac{3}{4}$</strong>.",
+            answer: "10 3/4",
+            displayAnswer: "10 3/4"
+          },
+          variationC: {
+            text: "To what mixed number is the arrow pointing?",
+            svg: getNumberLineSVG(4, 5, 7, 8),
+            solution: "The interval is divided into 8 parts. The arrow points to the 7th tick mark past 4: <strong>$4\\frac{7}{8}$</strong>.",
+            answer: "4 7/8",
+            displayAnswer: "4 7/8"
+          }
+        }
+      },
+      // Q10
+      {
+        id: 10,
+        type: "Missing Addend Equation",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} N \\\\ + 428 \\\\ \\hline 765 \\end{array}$$",
+            solution: "Subtract the known addend from the sum: <br>$$N = 765 - 428 = 337$$",
+            answer: "337",
+            displayAnswer: "N = 337"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} N \\\\ + 284 \\\\ \\hline 612 \\end{array}$$",
+            solution: "$$N = 612 - 284 = 328$$",
+            answer: "328",
+            displayAnswer: "N = 328"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} N \\\\ + 539 \\\\ \\hline 812 \\end{array}$$",
+            solution: "$$N = 812 - 539 = 273$$",
+            answer: "273",
+            displayAnswer: "N = 273"
+          }
+        }
+      },
+      // Q11
+      {
+        id: 11,
+        type: "Missing Subtrahend Equation",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 742 \\\\ - S \\\\ \\hline 218 \\end{array}$$",
+            solution: "Subtract the difference from the minuend to find $S$: <br>$$S = 742 - 218 = 524$$",
+            answer: "524",
+            displayAnswer: "S = 524"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 928 \\\\ - S \\\\ \\hline 465 \\end{array}$$",
+            solution: "$$S = 928 - 465 = 463$$",
+            answer: "463",
+            displayAnswer: "S = 463"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 650 \\\\ - S \\\\ \\hline 185 \\end{array}$$",
+            solution: "$$S = 650 - 185 = 465$$",
+            answer: "465",
+            displayAnswer: "S = 465"
+          }
+        }
+      },
+      // Q12
+      {
+        id: 12,
+        type: "Multiplication / Division Equation",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$8R = 56$$",
+            solution: "Divide product by known factor: <br>$$R = 56 \\div 8 = 7$$",
+            answer: "7",
+            displayAnswer: "R = 7"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$7M = 42$$",
+            solution: "$$M = 42 \\div 7 = 6$$",
+            answer: "6",
+            displayAnswer: "M = 6"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$9K = 72$$",
+            solution: "$$K = 72 \\div 9 = 8$$",
+            answer: "8",
+            displayAnswer: "K = 8"
+          }
+        }
+      },
+      // Q13
+      {
+        id: 13,
+        type: "Money Subtraction across Zeros",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} \\$8.04 \\\\ - \\$4.68 \\\\ \\hline \\end{array}$$",
+            solution: "Subtract money amounts with regrouping across zeros: <br>$$\\$8.04 - \\$4.68 = \\$3.36$$",
+            answer: "3.36",
+            displayAnswer: "$3.36"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} \\$6.02 \\\\ - \\$2.79 \\\\ \\hline \\end{array}$$",
+            solution: "$$\\$6.02 - \\$2.79 = \\$3.23$$",
+            answer: "3.23",
+            displayAnswer: "$3.23"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} \\$9.05 \\\\ - \\$5.87 \\\\ \\hline \\end{array}$$",
+            solution: "$$\\$9.05 - \\$5.87 = \\$3.18$$",
+            answer: "3.18",
+            displayAnswer: "$3.18"
+          }
+        }
+      },
+      // Q14
+      {
+        id: 14,
+        type: "2-Digit by 1-Digit Multiplication",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 74 \\\\ \\times \\; 4 \\\\ \\hline \\end{array}$$",
+            solution: "Multiply ones: $4 \\times 4 = 16$. Multiply tens: $70 \\times 4 = 280$. Total: <br>$$280 + 16 = 296$$",
+            answer: "296",
+            displayAnswer: "296"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 83 \\\\ \\times \\; 5 \\\\ \\hline \\end{array}$$",
+            solution: "$$83 \\times 5 = 415$$",
+            answer: "415",
+            displayAnswer: "415"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 56 \\\\ \\times \\; 6 \\\\ \\hline \\end{array}$$",
+            solution: "$$56 \\times 6 = 336$$",
+            answer: "336",
+            displayAnswer: "336"
+          }
+        }
+      },
+      // Q15
+      {
+        id: 15,
+        type: "Multiplication by Multiples of 10",
+        sets: {
+          variationA: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 70 \\\\ \\times \\; 6 \\\\ \\hline \\end{array}$$",
+            solution: "Multiply $7 \\times 6 = 42$, then attach zero: <br>$$70 \\times 6 = 420$$",
+            answer: "420",
+            displayAnswer: "420"
+          },
+          variationB: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 90 \\\\ \\times \\; 4 \\\\ \\hline \\end{array}$$",
+            solution: "$$90 \\times 4 = 360$$",
+            answer: "360",
+            displayAnswer: "360"
+          },
+          variationC: {
+            text: "Find the missing number: <br>$$\\begin{array}{r} 80 \\\\ \\times \\; 7 \\\\ \\hline \\end{array}$$",
+            solution: "$$80 \\times 7 = 560$$",
+            answer: "560",
+            displayAnswer: "560"
+          }
+        }
+      },
+      // Q16
+      {
+        id: 16,
+        type: "Order of Operations (Addition + Multiplication)",
+        sets: {
+          variationA: {
+            text: "Simplify: <br>$$54 + (7 \\times 6)$$",
+            solution: "First perform multiplication inside parentheses: $7 \\times 6 = 42$. Then add: <br>$$54 + 42 = 96$$",
+            answer: "96",
+            displayAnswer: "96"
+          },
+          variationB: {
+            text: "Simplify: <br>$$45 + (8 \\times 4)$$",
+            solution: "$$8 \\times 4 = 32 \\implies 45 + 32 = 77$$",
+            answer: "77",
+            displayAnswer: "77"
+          },
+          variationC: {
+            text: "Simplify: <br>$$73 + (9 \\times 5)$$",
+            solution: "$$9 \\times 5 = 45 \\implies 73 + 45 = 118$$",
+            answer: "118",
+            displayAnswer: "118"
+          }
+        }
+      },
+      // Q17
+      {
+        id: 17,
+        type: "Order of Operations (Multiplication * Parentheses)",
+        sets: {
+          variationA: {
+            text: "Simplify: <br>$$6 \\times (3 + 5)$$",
+            solution: "First perform addition inside parentheses: $3 + 5 = 8$. Then multiply: <br>$$6 \\times 8 = 48$$",
+            answer: "48",
+            displayAnswer: "48"
+          },
+          variationB: {
+            text: "Simplify: <br>$$5 \\times (4 + 7)$$",
+            solution: "$$4 + 7 = 11 \\implies 5 \\times 11 = 55$$",
+            answer: "55",
+            displayAnswer: "55"
+          },
+          variationC: {
+            text: "Simplify: <br>$$8 \\times (2 + 6)$$",
+            solution: "$$2 + 6 = 8 \\implies 8 \\times 8 = 64$$",
+            answer: "64",
+            displayAnswer: "64"
+          }
+        }
+      },
+      // Q18
+      {
+        id: 18,
+        type: "Adding Mixed Currency Quantities",
+        sets: {
+          variationA: {
+            text: "Simplify: <br>$$\\$6.45 + 85\\text{¢} + \\$3$$",
+            solution: "Convert all quantities to dollar format: $85\\text{¢} = \\$0.85$ and $\\$3 = \\$3.00$. Add together: <br>$$\\$6.45 + \\$0.85 + \\$3.00 = \\$10.30$$",
+            answer: "10.30",
+            displayAnswer: "$10.30"
+          },
+          variationB: {
+            text: "Simplify: <br>$$\\$4.28 + 92\\text{¢} + \\$5$$",
+            solution: "$$\\$4.28 + \\$0.92 + \\$5.00 = \\$10.20$$",
+            answer: "10.20",
+            displayAnswer: "$10.20"
+          },
+          variationC: {
+            text: "Simplify: <br>$$\\$7.36 + 64\\text{¢} + \\$4$$",
+            solution: "$$\\$7.36 + \\$0.64 + \\$4.00 = \\$12.00$$",
+            answer: "12.00",
+            displayAnswer: "$12.00"
+          }
+        }
+      },
+      // Q19
+      {
+        id: 19,
+        type: "Addition of Square Roots",
+        sets: {
+          variationA: {
+            text: "Simplify: <br>$$\\sqrt{36} + \\sqrt{49}$$",
+            solution: "Evaluate square roots: $\\sqrt{36} = 6$ and $\\sqrt{49} = 7$. Add: <br>$$6 + 7 = 13$$",
+            answer: "13",
+            displayAnswer: "13"
+          },
+          variationB: {
+            text: "Simplify: <br>$$\\sqrt{64} + \\sqrt{25}$$",
+            solution: "$$8 + 5 = 13$$",
+            answer: "13",
+            displayAnswer: "13"
+          },
+          variationC: {
+            text: "Simplify: <br>$$\\sqrt{81} + \\sqrt{16}$$",
+            solution: "$$9 + 4 = 13$$",
+            answer: "13",
+            displayAnswer: "13"
+          }
+        }
+      },
+      // Q20
+      {
+        id: 20,
+        type: "Decimal Subtraction",
+        sets: {
+          variationA: {
+            text: "Simplify: <br>$$0.92 - 0.37$$",
+            solution: "Line up decimals and subtract with borrowing: <br>$$0.92 - 0.37 = 0.55$$",
+            answer: "0.55",
+            displayAnswer: "0.55"
+          },
+          variationB: {
+            text: "Simplify: <br>$$0.76 - 0.29$$",
+            solution: "$$0.76 - 0.29 = 0.47$$",
+            answer: "0.47",
+            displayAnswer: "0.47"
+          },
+          variationC: {
+            text: "Simplify: <br>$$0.62 - 0.18$$",
+            solution: "$$0.62 - 0.18 = 0.44$$",
+            answer: "0.44",
+            displayAnswer: "0.44"
+          }
+        }
+      }
+    ];
+
+    // TAB SWITCHING FUNCTIONALITY
+    function switchTab(tabKey) {
+      currentTab = tabKey;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-brand-700', 'dark:text-white', 'shadow-sm');
+        btn.classList.add('text-slate-600', 'dark:text-slate-300');
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabKey}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-brand-700', 'dark:text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300');
+      }
+
+      const printTitleMap = {
+        'variationA': 'Variation A Practice Set',
+        'variationB': 'Variation B Practice Set',
+        'variationC': 'Variation C Practice Set',
+        'all': 'All 60 Practice Questions'
+      };
+      document.getElementById('print-set-title').innerText = printTitleMap[tabKey] || 'Saxon Math 5/4 Test 9B';
+
+      renderQuestions();
+    }
+
+    // RENDER QUESTION CARDS
+    function renderQuestions() {
+      const container = document.getElementById('questions-list');
+      container.innerHTML = '';
+
+      let itemsToRender = [];
+
+      if (currentTab === 'all') {
+        questionsDatabase.forEach(q => {
+          ['variationA', 'variationB', 'variationC'].forEach(setKey => {
+            itemsToRender.push({ questionId: q.id, setKey: setKey, item: q.sets[setKey], type: q.type });
+          });
+        });
+      } else {
+        questionsDatabase.forEach(q => {
+          itemsToRender.push({ questionId: q.id, setKey: currentTab, item: q.sets[currentTab], type: q.type });
+        });
+      }
+
+      document.getElementById('print-total-count').innerText = itemsToRender.length;
+
+      itemsToRender.forEach((entry, idx) => {
+        const key = `${entry.questionId}-${entry.setKey}`;
+        const isSolutionVisible = !!solutionVisibility[key];
+        const studentAns = studentAnswers[key] || { value: '', checked: false, correct: false };
+
+        const setLabelMap = {
+          'variationA': 'Variation A',
+          'variationB': 'Variation B',
+          'variationC': 'Variation C'
+        };
+
+        const cardHtml = `
+          <div class="question-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm transition hover:shadow-md" id="card-${key}">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100 dark:border-slate-700">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 flex items-center justify-center bg-brand-600 text-white rounded-lg font-bold text-sm">
+                  ${currentTab === 'all' ? idx + 1 : entry.questionId}
+                </span>
+                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  ${setLabelMap[entry.setKey]} • Question ${entry.questionId}
+                </span>
+              </div>
+              <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
+                ${entry.type}
+              </span>
+            </div>
+
+            <!-- Problem Text -->
+            <div class="text-base font-medium text-slate-800 dark:text-slate-100 mb-3 leading-relaxed">
+              ${entry.item.text}
+            </div>
+
+            <!-- SVG Illustration (if applicable) -->
+            ${entry.item.svg ? `<div class="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700 my-3 text-center">${entry.item.svg}</div>` : ''}
+
+            <!-- Printable Answer Line -->
+            <div class="print-answer-line mt-6 pt-2 border-t border-slate-300">
+              <span class="font-bold">Answer:</span> ____________________________________
+            </div>
+
+            <!-- Interactive Answer & Solution Controls (Screen Only) -->
+            <div class="interactive-controls no-print mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 flex-1 min-w-[240px] max-w-md">
+                <input type="text" 
+                       id="input-${key}" 
+                       placeholder="Type answer..." 
+                       value="${studentAns.value}"
+                       onkeypress="if(event.key==='Enter') checkAnswer(${entry.questionId}, '${entry.setKey}')"
+                       class="w-full text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-brand-500 outline-none text-slate-800 dark:text-slate-100">
+                <button onclick="checkAnswer(${entry.questionId}, '${entry.setKey}')" class="px-3.5 py-2 bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-bold transition">
+                  Check
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <!-- Validation Badge -->
+                <span id="feedback-${key}">
+                  ${studentAns.checked ? (studentAns.correct ? 
+                    '<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">Correct! 🎉</span>' : 
+                    '<span class="text-xs font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2.5 py-1 rounded-lg border border-rose-200 dark:border-rose-800">Try Again ❌</span>') : ''}
+                </span>
+
+                <!-- Individual Show/Hide Solution Button -->
+                <button onclick="toggleSolution('${key}')" class="px-3.5 py-2 border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                  ${isSolutionVisible ? 'Hide Solution' : 'Show Solution'}
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP-BY-STEP SOLUTION BOX -->
+            <div id="sol-${key}" class="solution-box ${isSolutionVisible ? 'block' : 'hidden'} mt-4 p-4 bg-brand-50/70 dark:bg-slate-900/80 border border-brand-100 dark:border-slate-700 rounded-xl text-sm">
+              <div class="font-bold text-brand-900 dark:text-brand-300 mb-1 flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Step-by-Step Solution & Answer:
+              </div>
+              <div class="text-slate-700 dark:text-slate-300 leading-relaxed space-y-2 mt-2">
+                <div>${entry.item.solution}</div>
+                <div class="pt-2 font-bold text-slate-900 dark:text-white border-t border-brand-200/50 dark:border-slate-700">
+                  Final Answer: <span class="text-brand-700 dark:text-brand-400">${entry.item.displayAnswer}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+
+      // Typeset newly injected MathJax expressions
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
+
+      updateScoreDisplay();
+    }
+
+    // CHECK STUDENT ANSWER
+    function checkAnswer(questionId, setKey) {
+      const key = `${questionId}-${setKey}`;
+      const input = document.getElementById(`input-${key}`);
+      if (!input) return;
+
+      const userVal = input.value.trim().toLowerCase();
+      const questionObj = questionsDatabase.find(q => q.id === questionId);
+      if (!questionObj) return;
+
+      const targetItem = questionObj.sets[setKey];
+      const targetAns = targetItem.answer.toLowerCase();
+
+      // Flexible string matching
+      const cleanUser = userVal.replace(/[\$\,]/g, '').replace(/\s+/g, ' ').replace(/p\.m\.|am|pm|a\.m\./gi, '').trim();
+      const cleanTarget = targetAns.replace(/[\$\,]/g, '').replace(/\s+/g, ' ').trim();
+
+      const isCorrect = (cleanUser === cleanTarget) || 
+                        (cleanUser === targetAns) ||
+                        (userVal === targetItem.displayAnswer.toLowerCase());
+
+      studentAnswers[key] = {
+        value: input.value,
+        checked: true,
+        correct: isCorrect
+      };
+
+      const feedbackSpan = document.getElementById(`feedback-${key}`);
+      if (feedbackSpan) {
+        feedbackSpan.innerHTML = isCorrect ? 
+          '<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">Correct! 🎉</span>' : 
+          '<span class="text-xs font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2.5 py-1 rounded-lg border border-rose-200 dark:border-rose-800">Try Again ❌</span>';
+      }
+
+      updateScoreDisplay();
+    }
+
+    // TOGGLE INDIVIDUAL SOLUTION
+    function toggleSolution(key) {
+      solutionVisibility[key] = !solutionVisibility[key];
+      renderQuestions();
+    }
+
+    // MASTER SHOW / HIDE SOLUTIONS
+    function toggleAllSolutions(show) {
+      let itemsToToggle = [];
+      if (currentTab === 'all') {
+        questionsDatabase.forEach(q => {
+          ['variationA', 'variationB', 'variationC'].forEach(s => itemsToToggle.push(`${q.id}-${s}`));
+        });
+      } else {
+        questionsDatabase.forEach(q => itemsToToggle.push(`${q.id}-${currentTab}`));
+      }
+
+      itemsToToggle.forEach(k => {
+        solutionVisibility[k] = show;
+      });
+      renderQuestions();
+    }
+
+    // RESET INPUTS
+    function resetInputs() {
+      studentAnswers = {};
+      solutionVisibility = {};
+      renderQuestions();
+    }
+
+    // SCORE DISPLAY TRACKER
+    function updateScoreDisplay() {
+      let activeKeys = [];
+      if (currentTab === 'all') {
+        questionsDatabase.forEach(q => {
+          ['variationA', 'variationB', 'variationC'].forEach(s => activeKeys.push(`${q.id}-${s}`));
+        });
+      } else {
+        questionsDatabase.forEach(q => activeKeys.push(`${q.id}-${currentTab}`));
+      }
+
+      let total = activeKeys.length;
+      let correctCount = 0;
+
+      activeKeys.forEach(k => {
+        if (studentAnswers[k] && studentAnswers[k].correct) {
+          correctCount++;
+        }
+      });
+
+      const pct = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+      document.getElementById('score-display').innerText = `${correctCount} / ${total} (${pct}%)`;
+    }
+
+    // PRINT WORKSHEET
+    function printWorksheet(withAnswers) {
+      if (withAnswers) {
+        document.body.classList.add('print-with-answers');
+      } else {
+        document.body.classList.remove('print-with-answers');
+      }
+      window.print();
+    }
+
+    // STUDENT INFO SYNC
+    function updateStudentName() {
+      const val = document.getElementById('student-name').value;
+      document.getElementById('print-student-name').innerText = val || '______________________';
+    }
+
+    function updateDate() {
+      const val = document.getElementById('test-date').value;
+      document.getElementById('print-date').innerText = val || '______________________';
+    }
+
+    // DARK MODE TOGGLE
+    function toggleDarkMode() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
+      document.getElementById('moon-icon').classList.toggle('hidden', isDark);
+    }
+
+    // INITIAL LOAD
+    window.onload = function() {
+      switchTab('variationA');
+      updateStudentName();
+      updateDate();
+    };
+  </script>
+</body>
+</html>
