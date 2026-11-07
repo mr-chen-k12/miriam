@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11-7 Miri Reading Practice - Multi-Set Collection</title>
+<style>
+  :root{
+    --bg1:#e0f2fe; --bg2:#fef9c3;
+    --ink:#1e293b; --muted:#64748b;
+    --card:#ffffff; --accent:#0284c7; --accent2:#f59e0b;
+    --good:#16a34a; --goodbg:#f0fdf4; --bad:#dc2626; --badbg:#fef2f2;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;
+    margin:0; color:var(--ink); line-height:1.65; font-size:1.08rem;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  header.hero{text-align:center;margin-bottom:16px}
+  header.hero h1{font-size:1.9rem;margin:.2em 0;color:#0c4a6e}
+  header.hero p{color:var(--muted);margin:.2em 0}
+  .set-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .set-tab{
+    border:3px solid transparent;background:var(--card);border-radius:999px;
+    padding:10px 20px;font-size:1.02rem;font-weight:bold;cursor:pointer;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.08);font-family:inherit;
+  }
+  .set-tab small{display:block;font-weight:normal;color:var(--muted);font-size:.8rem}
+  .set-tab.active{border-color:var(--accent);background:#f0f9ff}
+  .progress-card{background:var(--card);border-radius:var(--radius);padding:12px 18px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px;text-align:center}
+  .progress-label{font-weight:bold;color:#0c4a6e;margin-bottom:8px}
+  .dots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .dot{width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;
+    justify-content:center;font-size:.8rem;font-weight:bold;color:var(--muted)}
+  .dot.done{background:#bbf7d0;color:#166534}
+  .dot.now{background:var(--accent);color:#fff;transform:scale(1.15)}
+  .dot.bad{background:#fecaca;color:#991b1b}
+  .qcard{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:14px}
+  .passage{
+    background:#f8fafc;border-left:6px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:14px 18px;margin-bottom:18px;font-size:1.05rem;
+  }
+  .passage .p-title{font-weight:bold;color:#0c4a6e;margin-bottom:6px;font-size:1.12rem}
+  .prompt{font-weight:bold;font-size:1.15rem;margin:14px 0;color:#0c4a6e}
+  .opt{
+    display:block;width:100%;text-align:left;background:#f1f5f9;border:3px solid #e2e8f0;
+    border-radius:14px;padding:13px 16px;margin:10px 0;font-size:1.05rem;cursor:pointer;
+    font-family:inherit;color:var(--ink);line-height:1.5;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#f0f9ff}
+  .opt .letter{display:inline-block;width:32px;height:32px;border-radius:50%;background:#cbd5e1;
+    color:#334155;font-weight:bold;text-align:center;line-height:32px;margin-right:10px}
+  .opt.selected{border-color:var(--accent);background:#e0f2fe}
+  .opt.selected .letter{background:var(--accent);color:#fff}
+  .opt.correct{border-color:var(--good);background:var(--goodbg)}
+  .opt.correct .letter{background:var(--good);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt.wrong .letter{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default;opacity:1}
+  .feedback{border-radius:14px;padding:14px 18px;margin-top:14px;font-size:1.05rem;display:none}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);border:2px solid var(--good)}
+  .feedback.bad{background:var(--badbg);border:2px solid var(--bad)}
+  .feedback .exp{margin-top:8px;color:#334155}
+  .nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .nav button{
+    border:none;border-radius:999px;padding:12px 26px;font-size:1.05rem;font-weight:bold;
+    cursor:pointer;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  #prev-btn{background:#e2e8f0;color:#334155}
+  #prev-btn:disabled{opacity:.4;cursor:default}
+  #check-btn{background:var(--accent2);color:#fff}
+  #check-btn:disabled{opacity:.4;cursor:default}
+  #next-btn{background:var(--accent);color:#fff}
+  #next-btn:disabled{opacity:.4;cursor:default}
+  #results{background:var(--card);border-radius:var(--radius);padding:26px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);text-align:center}
+  .score-ring{width:150px;height:150px;border-radius:50%;margin:10px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:conic-gradient(var(--accent) 0 0);color:#0c4a6e;font-weight:bold}
+  .score-ring .pct{font-size:2rem}
+  .stars{font-size:2.4rem;letter-spacing:6px;margin:6px 0}
+  .award{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:18px;margin:16px 0}
+  .award .big{font-size:3rem}
+  .retry-note{background:#fff7ed;border:2px dashed var(--accent2);border-radius:14px;
+    padding:12px;margin:14px 0;color:#9a3412}
+  .review{text-align:left;margin-top:18px}
+  .review-item{border:2px solid #e2e8f0;border-radius:14px;padding:14px 16px;margin:12px 0}
+  .review-item.ok{border-color:var(--good);background:#f8fef9}
+  .review-item.no{border-color:var(--bad);background:#fffafa}
+  .review-item details{margin-top:8px}
+  .review-item summary{cursor:pointer;color:var(--accent);font-weight:bold}
+  .review-item .rp{background:#f8fafc;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.98rem}
+  .retake{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:13px 30px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:inherit}
+  #parent-panel{background:#fff;border:3px solid #7c3aed;border-radius:var(--radius);
+    padding:18px;margin-bottom:16px}
+  #parent-panel h3{margin-top:0;color:#5b21b6}
+  #parent-panel table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px}
+  #parent-panel th,#parent-panel td{border:1px solid #ddd6fe;padding:6px 8px;text-align:left}
+  #parent-panel th{background:#ede9fe}
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;z-index:9999;pointer-events:none;
+    animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  .wotd{background:linear-gradient(135deg,#fef3c7,#fde68a);border:3px solid var(--accent2);
+    border-radius:var(--radius);padding:22px;margin-top:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1)}
+  .wotd h2{margin:.1em 0;color:#92400e}
+  .wotd .word{font-size:1.7rem;font-weight:bold;color:#0c4a6e}
+  .wotd .pron{color:var(--muted);font-size:.95rem}
+  .wotd .tryit{background:#fffbeb;border:2px dashed var(--accent2);border-radius:12px;
+    padding:12px 16px;margin-top:12px;color:#92400e}
+  @media print{
+    .set-tabs,.nav,#parent-panel,.retake,.feedback .trybtn{display:none !important}
+    body{background:#fff}
+    .qcard,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>📚 Reading Practice</h1>
+    <p><b>11-7 · Grade 4</b> — Read each passage, then answer the question. Take your time! 🌟</p>
+  </header>
+
+  <div id="parent-panel" hidden>
+    <h3>👩‍🏫 Parent &amp; Teacher Progress Panel</h3>
+    <p style="color:var(--muted);font-size:.92rem">Activity recorded on this device: attempts, scores, and events.</p>
+    <div id="parent-stats"></div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:bold;color:#5b21b6">📋 View full activity log</summary>
+      <table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead>
+      <tbody id="parent-log"></tbody></table>
+    </details>
+    <button class="retake" style="background:#7c3aed" onclick="clearLog()">🗑️ Clear activity data</button>
+  </div>
+
+  <div class="set-tabs" id="set-tabs"></div>
+
+  <div id="quiz-area">
+    <div class="progress-card">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="nav">
+      <button id="prev-btn" onclick="navigate(-1)" disabled>⬅ Previous</button>
+      <button id="check-btn" onclick="checkAnswer()">✅ Check Answer</button>
+      <button id="next-btn" onclick="navigate(1)">Next ➡</button>
+    </div>
+  </div>
+
+  <div id="results" hidden></div>
+
+  <div class="wotd">
+    <h2>🌟 Word of the Day</h2>
+    <div class="word">shimmer</div>
+    <div class="pron">SHIM-er · verb</div>
+    <p><b>What it means:</b> to shine with a soft, wavering light — like sunlight dancing on water.</p>
+    <p><b>Example:</b> “The lake <i>shimmered</i> in the morning sun.”</p>
+    <div class="tryit">✏️ <b>Try it today:</b> Use <i>shimmer</i> in a sentence of your own. What shimmers where you live — the sun on water, a shiny rock, a sequin on a jacket?</div>
+  </div>
+
+</div>
+
+<script>
+/* ==================== READING SETS DATA (11-7, Grade 4) ==================== */
+const SETS = {
+ "Set A": {
+  "award": "Vocabulary Star Reader",
+  "icon": "🔍",
+  "questions": [
+   {
+    "correct": 2,
+    "explanation": "Capybaras live in groups of ten or twenty and love company, so “sociable” means liking to be with others.",
+    "options": [
+     "shy and lonely",
+     "quick and jumpy",
+     "liking to be with others",
+     "hungry all the time"
+    ],
+    "passage": "The capybara is the biggest rodent in the world — about the size of a large dog — but it is one of the calmest animals you will ever meet. Capybaras live in South America, near rivers and lakes, and they love company. They live in sociable groups of ten or twenty, and they spend their days grazing on grass, swimming, and resting side by side in the sun. Other animals, from birds to monkeys, often sit right on a capybara's back, and the capybara hardly seems to mind at all.",
+    "prompt": "In the passage, the word “sociable” most nearly means…",
+    "title": "The Capybara's Calm"
+   },
+   {
+    "correct": 0,
+    "explanation": "The pufferfish gulps water and grows to twice its size like a balloon, so “inflate” means to fill with air or water and swell up.",
+    "options": [
+     "to fill with air or water and swell up",
+     "to shrink and hide",
+     "to swim away fast",
+     "to change color"
+    ],
+    "passage": "A pufferfish looks like an ordinary small fish until danger swims close. Then it does something amazing: it gulps down huge mouthfuls of water and begins to inflate like a balloon. In a few seconds, its round body grows to twice its normal size, and sharp spines that lay flat against its skin stick straight out. Most hungry fish take one look at the big, spiky ball and swim away to find an easier meal.",
+    "prompt": "In the passage, the word “inflate” most nearly means…",
+    "title": "The Pufferfish's Big Puff"
+   },
+   {
+    "correct": 3,
+    "explanation": "The passage says a marsupial mother carries her baby in a pouch, like a kangaroo, so “marsupial” means an animal that carries its babies in a pouch.",
+    "options": [
+     "an animal that lives only in trees",
+     "an animal that sleeps all winter",
+     "an animal that can fly",
+     "an animal that carries its babies in a pouch"
+    ],
+    "passage": "The quokka is a small animal from Australia that looks like it is always smiling. It is a marsupial, which means the mother carries her tiny baby in a pouch on her belly, just like a kangaroo does. Quokkas live on a small island called Rottnest Island, where they hop through bushes and nibble leaves, grasses, and seeds. Because no foxes or large predators live on the island, quokkas are not afraid of people, and visitors love to take photos with the smiling little animals.",
+    "prompt": "In the passage, the word “marsupial” most nearly means…",
+    "title": "The Quokka's Smile"
+   },
+   {
+    "correct": 1,
+    "explanation": "The passage says the narwhal's tusk is a tooth that grows through its lip, so “tusk” means a long, pointed tooth that sticks out.",
+    "options": [
+     "a kind of fin",
+     "a long, pointed tooth that sticks out",
+     "a baby whale",
+     "a thick layer of fat"
+    ],
+    "passage": "The narwhal is a whale that lives in the icy waters of the Arctic, and it looks like a creature from a storybook. A male narwhal has a long, straight tusk that spirals out of its mouth like a unicorn's horn — it can grow as long as ten feet! The tusk is not really a horn at all. It is a tooth that keeps growing through the whale's lip. Scientists think the tusk helps the narwhal sense changes in the cold water around it.",
+    "prompt": "In the passage, the word “tusk” most nearly means…",
+    "title": "The Narwhal's Tusk"
+   },
+   {
+    "correct": 2,
+    "explanation": "The ball rolls over sticks and stones as the beetle pushes it, so “tumble” means to roll over and over.",
+    "options": [
+     "to dig a deep hole",
+     "to fly in a straight line",
+     "to roll over and over",
+     "to sleep for a long time"
+    ],
+    "passage": "A dung beetle spends its day rolling a ball of dung — animal droppings — across the ground. The ball can be much bigger and heavier than the beetle itself, but the beetle pushes it backward with its strong back legs, steering it home to a burrow. As the ball rolls, it may tumble over sticks and stones, but the beetle climbs back on and keeps pushing. The beetle will bury the ball and lay its eggs inside it, so the baby beetles have food when they hatch.",
+    "prompt": "In the passage, the word “tumble” most nearly means…",
+    "title": "The Dung Beetle's Ball"
+   },
+   {
+    "correct": 0,
+    "explanation": "The passage says tiny green plants called algae grow in the sloth's fur, so “algae” means tiny green plants that grow in damp places.",
+    "options": [
+     "tiny green plants that grow in damp places",
+     "sharp claws for climbing",
+     "the sloth's favorite food",
+     "a kind of rainstorm"
+    ],
+    "passage": "A sloth spends almost its whole life hanging upside down from the branches of rainforest trees. It moves so slowly that tiny green plants called algae begin to grow in its fur. The algae turn the sloth's fur a greenish color, which helps it hide among the leaves from eagles and other hunters. A sloth may take a whole minute to cross a single branch, but it is a strong swimmer, and it only comes down to the ground about once a week.",
+    "prompt": "In the passage, the word “algae” most nearly means…",
+    "title": "The Sloth's Slow Life"
+   },
+   {
+    "correct": 1,
+    "explanation": "The gecko's toes grip surfaces so it can walk on ceilings, so “cling” means to hold on tightly.",
+    "options": [
+     "to fall off quickly",
+     "to hold on tightly",
+     "to slide down slowly",
+     "to hide in the dark"
+    ],
+    "passage": "A gecko can run straight up a wall and even walk upside down across a ceiling. Its toes are covered with millions of tiny hairs, far too small for you to see. Each hair grips the surface with a tiny pull, and all those tiny pulls together are strong enough to hold the gecko's whole body. The gecko can cling to smooth glass, painted walls, and even the underside of a leaf. When it wants to move, it simply peels its toes away, one step at a time.",
+    "prompt": "In the passage, the word “cling” most nearly means…",
+    "title": "The Gecko's Sticky Feet"
+   },
+   {
+    "correct": 3,
+    "explanation": "The platypus's bill notices tiny electric signals from its prey, so “detect” means to notice or discover something.",
+    "options": [
+     "to cook and eat",
+     "to build a home",
+     "to swim underwater",
+     "to notice or discover something"
+    ],
+    "passage": "The platypus looks like several animals mixed together: it has a duck's bill, a beaver's tail, and soft fur like an otter. It lives in rivers in Australia and hunts underwater with its eyes, ears, and nose closed. So how does it find food? Its bill can detect tiny electric signals made by the muscles of shrimp and other small animals. When the platypus senses those signals, it snaps up its meal in the dark, muddy water.",
+    "prompt": "In the passage, the word “detect” most nearly means…",
+    "title": "The Platypus Puzzle"
+   },
+   {
+    "correct": 0,
+    "explanation": "The ostrich runs at more than 40 miles per hour, so “sprint” means to run very fast for a short time.",
+    "options": [
+     "to run very fast for a short time",
+     "to fly high in the sky",
+     "to hide under the sand",
+     "to sing a loud song"
+    ],
+    "passage": "The ostrich is the biggest bird in the world, and it cannot fly at all. But it does not need wings to escape danger — it has legs. An ostrich can sprint across the African plains at more than 40 miles per hour, faster than a horse at full gallop. Each giant step can stretch seven feet long. With its strong legs, the ostrich can also give a powerful kick to scare away a lion that comes too close.",
+    "prompt": "In the passage, the word “sprint” most nearly means…",
+    "title": "The Ostrich's Speed"
+   },
+   {
+    "correct": 2,
+    "explanation": "The cactus's flowers open at night, so “bloom” means to open into flowers.",
+    "options": [
+     "to close up tight",
+     "to grow dry and brown",
+     "to open into flowers",
+     "to fall off a branch"
+    ],
+    "passage": "In the hot, dry desert, a cactus stores water inside its thick, fleshy stem, like a living water bottle. Its sharp spines keep thirsty animals from taking a bite, and they also shade the plant from the burning sun. But once a year, something magical happens: the cactus begins to bloom. Big, sweet-smelling flowers open in the cool of the night, and bats and moths visit them to drink the nectar. By morning, the flowers close again, and the desert is quiet once more.",
+    "prompt": "In the passage, the word “bloom” most nearly means…",
+    "title": "The Cactus That Blooms at Night"
+   }
+  ],
+  "tag": "Word Detectives"
+ },
+ "Set B": {
+  "award": "Main Idea Master",
+  "icon": "💡",
+  "questions": [
+   {
+    "correct": 1,
+    "explanation": "The main idea is that a refrigerator keeps food cold by moving heat out of the box, over and over again. The warm back and the pump are details.",
+    "options": [
+     "A refrigerator makes cold air with ice.",
+     "A refrigerator keeps food cold by moving heat out of the box, over and over again.",
+     "The back of a refrigerator feels warm.",
+     "A pump pushes liquid through pipes."
+    ],
+    "passage": "A refrigerator does not make cold the way a heater makes heat. Instead, it moves heat out of the box. A special liquid called coolant flows through pipes inside the fridge, soaking up heat from the food and the air. Then a pump pushes the warm liquid to pipes on the back of the fridge, where the heat escapes into your kitchen. The liquid cools down, flows back inside, and starts all over again. That is why the back of a fridge feels warm while the inside stays cold.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "How a Refrigerator Keeps Food Cold"
+   },
+   {
+    "correct": 3,
+    "explanation": "The main idea is that de Mestral invented Velcro by copying the tiny hooks on burrs. The shoes and jackets are not in the passage, and the kitchen is a made-up detail.",
+    "options": [
+     "George de Mestral invented Velcro in his kitchen.",
+     "Dogs do not like burrs.",
+     "Velcro is used on shoes and jackets.",
+     "George de Mestral invented Velcro by copying the tiny hooks on burrs that stuck to his clothes."
+    ],
+    "passage": "In 1941, a Swiss inventor named George de Mestral took his dog for a walk in the mountains. When they came home, his clothes and the dog's fur were covered in tiny burrs — the prickly seed pods of a plant. Under a microscope, de Mestral saw that each burr was covered in tiny hooks that caught on loops of thread in his clothes. He spent years copying that idea, and he invented Velcro: one strip covered in tiny hooks, and one strip covered in tiny loops. Press them together, and they hold tight. Pull them apart, and they come free.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "The Invention of Velcro"
+   },
+   {
+    "correct": 0,
+    "explanation": "The main idea is that wheels grip the track from three sides while gravity pulls the cars along. The hill, the chain, and the loops are details.",
+    "options": [
+     "Roller coaster cars stay on the track because wheels grip it from the top, sides, and underneath while gravity pulls the cars along.",
+     "Roller coasters have a tall first hill.",
+     "A chain pulls the cars up the first hill.",
+     "Roller coasters can flip upside down."
+    ],
+    "passage": "A roller coaster looks wild as it dives and loops, but it never leaves its track. A chain pulls the cars slowly up the first tall hill, and then gravity takes over, pulling the cars down and around every turn. The secret is in the wheels: each car has wheels that roll on top of the track, wheels that press against the sides, and wheels that grip from underneath. With wheels holding the track from three sides at once, the cars cannot fly off, even when they flip upside down.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "How Roller Coasters Stay on the Track"
+   },
+   {
+    "correct": 2,
+    "explanation": "The main idea is that some animals survive winter by hibernating, sleeping deeply while their bodies live on stored fat. Bears are not the only hibernators, and the other choices are details.",
+    "options": [
+     "Bears are the only animals that hibernate.",
+     "Ground squirrels eat a great deal before winter.",
+     "Some animals survive winter by hibernating — sleeping deeply while their bodies live on stored fat until spring.",
+     "Winter is cold and food is hard to find."
+    ],
+    "passage": "When winter comes, food grows scarce and the cold bites hard. Some animals, like ground squirrels and bears, deal with winter by hibernating — sleeping deeply for weeks or months. Before winter, they eat a great deal and store the extra food as fat on their bodies. During hibernation, their hearts beat very slowly, their breathing slows, and their bodies stay alive on the stored fat. When spring warms the land, they wake up hungry, thinner — and ready to find food again.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "Why Some Animals Hibernate"
+   },
+   {
+    "correct": 1,
+    "explanation": "The main idea is that sunscreen protects your skin by blocking ultraviolet rays so you can play safely. The plants and the swimming are details.",
+    "options": [
+     "Sunlight helps plants grow.",
+     "Sunscreen protects your skin by blocking the sun's invisible ultraviolet rays so you can play outside safely.",
+     "Sunscreen is a lotion you rub on your skin.",
+     "Swimming washes sunscreen off."
+    ],
+    "passage": "Sunlight feels warm and helps plants grow, but part of sunlight is made of rays you cannot see, called ultraviolet rays. These rays can burn your skin and make it red and sore. Sunscreen is a lotion that blocks those rays before they reach your skin. You rub it on before you go outside, and you put on more after swimming or sweating. Wearing sunscreen does not mean you cannot play in the sun — it means you can play safely.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "Why We Wear Sunscreen"
+   },
+   {
+    "correct": 3,
+    "explanation": "The main idea is that X-rays pass through skin and muscle but are blocked by bones, making a picture of the bones inside you. The other choices are details.",
+    "options": [
+     "Doctors take X-rays when a bone might be broken.",
+     "Bones show up white on an X-ray picture.",
+     "X-rays are a kind of light.",
+     "X-rays pass through skin and muscle but are blocked by bones, making a picture that shows the bones inside you."
+    ],
+    "passage": "When a doctor wants to see if a bone is broken, she may take an X-ray picture. X-rays are a kind of light your eyes cannot see. They pass right through your skin and muscles, almost like light passing through a window. But bones are thick and solid, so they block the X-rays. A special film catches the rays that pass through, and the bones show up as bright white shapes on a dark picture. That is how the doctor can see your bones without ever opening your skin.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "How X-Rays See Inside You"
+   },
+   {
+    "correct": 0,
+    "explanation": "The main idea is that Earth is divided into 24 time zones because it spins, so each zone keeps its clocks one hour apart. The spinning top and the nighttime are details.",
+    "options": [
+     "Earth is divided into 24 time zones because it spins, so different places face the sun at different times and each zone keeps its clocks one hour apart.",
+     "Earth spins like a giant top.",
+     "It can be night on the other side of the world.",
+     "Noon is the middle of the day."
+    ],
+    "passage": "Earth is always spinning, like a giant top. As it turns, different parts of the planet face the sun at different times. When it is morning where you live, it may already be nighttime on the other side of the world. To keep clocks useful, people divided Earth into 24 time zones, one for each hour of the day. Each zone sets its clocks one hour apart from the next, so noon is always close to the middle of the day, no matter where you live.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "Why We Have Time Zones"
+   },
+   {
+    "correct": 2,
+    "explanation": "The main idea is that muscles work in pairs that pull in turn, and they grow stronger when you use them. The heart and the number 600 are details, and pulling is only part of the idea.",
+    "options": [
+     "Your heart never gets tired.",
+     "You have more than 600 muscles.",
+     "Muscles work in pairs that pull in turn, and they grow stronger when you use them.",
+     "Muscles can only pull, never push."
+    ],
+    "passage": "Your body has more than 600 muscles, and they work in pairs. When you bend your arm, the muscle on the front pulls tight and short, while the muscle on the back relaxes and stretches. When you straighten your arm, they swap jobs. Muscles can only pull — they can never push — so every move you make needs two muscles working together. Your heart is a muscle too, and it never gets tired of beating. Like any muscle, yours grow stronger when you use them and play.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "How Your Muscles Work"
+   },
+   {
+    "correct": 1,
+    "explanation": "The main idea is that apples float because about a quarter of an apple is air, and that air lifts it up. The rock and the orchard are details.",
+    "options": [
+     "Rocks sink in water.",
+     "Apples float because about a quarter of an apple is air, and that air lifts it up in the water.",
+     "Apples are picked at orchards.",
+     "Water can carry apples down a channel."
+    ],
+    "passage": "Drop an apple into a bucket of water, and it will not sink — it bobs right up to the top. That is because an apple is full of tiny air pockets. About one quarter of an apple is air! Air is lighter than water, so the air inside the apple lifts it up. A rock sinks because it is solid all the way through, with no air inside to help it float. That is also why apples are picked by floating them down long water channels at the orchard.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "Why Apples Float"
+   },
+   {
+    "correct": 0,
+    "explanation": "The main idea is that the printing press used movable letters to print many copies quickly, making books cheaper and helping more people learn to read. The hand-copying and the date are details.",
+    "options": [
+     "Gutenberg's printing press used movable metal letters to print many copies quickly, making books cheaper and helping more people learn to read.",
+     "Books used to be copied by hand.",
+     "Gutenberg was a German inventor.",
+     "The printing press was built around 1440."
+    ],
+    "passage": "Long ago, every book had to be copied by hand, letter by letter, so books were rare and cost a fortune. Around 1440, a German inventor named Johannes Gutenberg built a printing press with movable type — small metal letters that could be arranged, inked, and pressed onto paper, then rearranged to print a new page. With the press, hundreds of copies of a book could be made in the time it once took to copy one. Books became cheaper, more people learned to read, and ideas began to travel faster than ever before.",
+    "prompt": "Which sentence best states the main idea of the passage?",
+    "title": "The Invention of the Printing Press"
+   }
+  ],
+  "tag": "Main Idea Masters"
+ },
+ "Set C": {
+  "award": "Super Sleuth Reader",
+  "icon": "🧠",
+  "questions": [
+   {
+    "correct": 3,
+    "explanation": "Lily waits by the fence, counts to one hundred twice, and never complains — she is patient and willing to wait her turn.",
+    "options": [
+     "She does not like swings.",
+     "She was angry at the fifth grader.",
+     "She wanted to play kickball instead.",
+     "She is patient and willing to wait her turn."
+    ],
+    "passage": "At recess, Lily ran to her favorite swing, but a big fifth grader was already on it, swinging high. Lily waited by the fence. She counted to one hundred. She watched the kickball game. She counted to one hundred again. At last the fifth grader hopped off and smiled at her. “Your turn,” she said. “I waited long enough — I think I set a record.” Lily laughed as she climbed on. “You did,” she said. “And I counted every second.”",
+    "prompt": "What can you infer about Lily?",
+    "title": "The Empty Swing"
+   },
+   {
+    "correct": 1,
+    "explanation": "They planned the surprise for a whole week, made a banner, and hid the cake — they care about Sam and planned ahead.",
+    "options": [
+     "They forgot his birthday last year.",
+     "They care about Sam and planned his surprise for a whole week.",
+     "They wanted to eat the cake themselves.",
+     "They do not like surprises."
+    ],
+    "passage": "When Sam walked into the classroom, everyone shouted, “Surprise!” Balloons hung from the ceiling, and a cake with blue frosting sat on his desk. Sam's eyes went wide. “You remembered?” he asked. “Of course,” said Mia, grinning. “We have been planning this for a week. Noah made the banner, and I hid the cake in the art room.” Sam looked around at all the smiling faces. “This is the best birthday ever,” he said, “and I did not even have to remind anyone.”",
+    "prompt": "What can you infer about Sam's friends?",
+    "title": "The Birthday Surprise"
+   },
+   {
+    "correct": 0,
+    "explanation": "Jack put the tooth in his pocket for the Tooth Fairy tonight, and he pats it all afternoon to make sure it is still there.",
+    "options": [
+     "He wants to make sure he does not lose his tooth before tonight.",
+     "His pocket has a hole in it.",
+     "He is looking for his lunch money.",
+     "He wants to show the tooth to his teacher."
+    ],
+    "passage": "During lunch, Jack felt something wiggle in his mouth. His loose tooth had finally come out! He held it up on his palm, grinning, while his friends leaned in to look. “Now the Tooth Fairy will come tonight,” said Emma. Jack slipped the tooth into a tiny bag and put it in his pocket. All afternoon, he kept patting his pocket to make sure it was still there. “I am not losing this tooth twice,” he whispered.",
+    "prompt": "Why does Jack keep patting his pocket?",
+    "title": "The Lost Tooth"
+   },
+   {
+    "correct": 2,
+    "explanation": "Mrs. Chen says art is about trying and making something that is yours, and Maya is proud of her painting even without a prize — trying your best matters more than winning.",
+    "options": [
+     "Only the best paintings should be shown.",
+     "Her teacher does not like her painting.",
+     "Trying your best and being proud of your work matters more than winning.",
+     "She should never enter a contest again."
+    ],
+    "passage": "Maya stared at her painting of the sunset. The colors were not right, and the sun looked more like a lopsided egg. “I will never win,” she sighed, and she started to crumple the paper. Her art teacher, Mrs. Chen, stopped her gently. “Art is not about winning,” she said. “It is about trying, and learning, and making something that is yours.” Maya smoothed out the paper, picked up her brush, and painted until the sun looked just right. At the contest, her painting did not win a prize — but it hung in the hallway, and Maya was proud every time she walked past it.",
+    "prompt": "What lesson does Maya learn?",
+    "title": "The Art Contest"
+   },
+   {
+    "correct": 3,
+    "explanation": "Each student had a job, everything sold out, and the money went to library books — they worked together as a team to help their library.",
+    "options": [
+     "They wanted to keep all the money.",
+     "They did not sell very much.",
+     "They only cared about the lemonade.",
+     "They worked together as a team to help their library."
+    ],
+    "passage": "The fourth grade needed new books for the library, so the class held a bake sale. On Saturday morning, the gym smelled like brownies and fresh bread. Leo arranged the cookies in neat rows. Priya counted the money in the cash box. Omar held up a sign that said FRESH LEMONADE, and customers lined up at the door. By noon, every last cookie was gone. “We did it together,” said their teacher, holding up the full cash box. “The library gets its books.”",
+    "prompt": "What can you infer about the class?",
+    "title": "The Bake Sale"
+   },
+   {
+    "correct": 1,
+    "explanation": "Grandma sees that Ana looks just like she did as a girl, and says “now it is yours too” — she wants Ana to have something special from her own childhood.",
+    "options": [
+     "She does not want the photo anymore.",
+     "She wants Ana to have something special from her own childhood to remember her by.",
+     "She needs room in the attic.",
+     "Ana asked to buy the bicycle."
+    ],
+    "passage": "While helping her grandmother clean the attic, Ana found an old photograph in a dusty box. It showed a little girl in a yellow dress, standing beside a bicycle with a big basket. “That's me,” said Grandma, laughing. “I was eight years old, and that bicycle was my whole world.” Ana looked at the photo again. “You looked just like me,” she said. Grandma smiled and tucked the photo into Ana's hand. “Then you should keep it,” she said. “Now it is yours too.”",
+    "prompt": "Why does Grandma give Ana the photo?",
+    "title": "The Photo in the Attic"
+   },
+   {
+    "correct": 2,
+    "explanation": "No one saw Ben break the vase, but he told his mother anyway — he is honest, even when telling the truth is hard.",
+    "options": [
+     "He broke the vase on purpose.",
+     "He does not care about the vase.",
+     "He is honest, even when telling the truth is hard.",
+     "He wants a new ball."
+    ],
+    "passage": "Ben was tossing a soft ball in the living room when it bounced off the wall and knocked his mother's favorite vase off the shelf. It shattered on the floor. Ben's heart pounded. He could sweep up the pieces and say nothing — no one had seen him. Instead, he ran to the kitchen. “Mom, I broke the vase,” he said, his voice shaking. “It was an accident, and I am really sorry.” His mother hugged him. “Accidents happen,” she said. “Thank you for telling the truth.”",
+    "prompt": "What can you infer about Ben?",
+    "title": "The Broken Vase"
+   },
+   {
+    "correct": 0,
+    "explanation": "Theo gives Max a pretty blue marble so Max's collection can start — Theo is generous and happy to share with someone who has less.",
+    "options": [
+     "Theo is generous and happy to share with someone who has less.",
+     "Theo does not like his marbles.",
+     "Theo wants Max to leave him alone.",
+     "Theo is the best marble player in school."
+    ],
+    "passage": "Theo had the best marble collection in fourth grade: swirls of blue, green, and gold that glittered in the sun. At recess, a first grader named Max watched the game, his eyes wide. “I wish I had a marble,” Max said quietly. Theo looked at his pouch, then at Max. He picked out a bright blue marble — not his favorite, but a pretty one — and held it out. “Here,” he said. “Every collection has to start somewhere.” Max's face lit up like the sun.",
+    "prompt": "What can you infer about Theo?",
+    "title": "The Marble Collection"
+   },
+   {
+    "correct": 1,
+    "explanation": "Sofia studies the broken bridge, rebuilds it stronger, and it holds twenty-five coins — she keeps trying and learns from her mistakes.",
+    "options": [
+     "She got lucky at the science fair.",
+     "She keeps trying and learns from her mistakes.",
+     "She does not like science.",
+     "Her first bridge was the strongest."
+    ],
+    "passage": "For the science fair, Sofia built a bridge out of toothpicks and glue. She tested it with coins, one by one, to see how much weight it could hold. On the first test, the bridge snapped at ten coins. Sofia did not throw it away. She studied the broken pieces, added more toothpicks where it had bent, and tested it again. This time, it held twenty-five coins. At the fair, her bridge held more than any other bridge in her class. “I failed first,” she told the judges, smiling. “That is how I learned to make it stronger.”",
+    "prompt": "What can you infer about Sofia?",
+    "title": "The Science Fair"
+   },
+   {
+    "correct": 3,
+    "explanation": "Nora asks question after question and fills her notebook — she is curious and learns by asking lots of questions.",
+    "options": [
+     "She was bored on the field trip.",
+     "She was afraid of the farm animals.",
+     "She wanted to go home early.",
+     "She is curious and learns by asking lots of questions."
+    ],
+    "passage": "On the class trip to the farm, the farmer showed the students how to milk a cow, gather eggs, and plant seeds in a row. Most of the students just watched. But Nora asked question after question. “Why do cows eat grass?” “How do you know when an egg is ready?” “What happens to the seeds in winter?” By the end of the day, Nora's notebook was full, and the farmer was smiling. “You ask the best questions,” he said. “You will make a fine farmer — or a fine scientist.”",
+    "prompt": "What can you infer about Nora?",
+    "title": "The Field Trip to the Farm"
+   }
+  ],
+  "tag": "Thinking Readers"
+ }
+};
+
+const AUDIT_KEY = "reading_11_7_miri_audit_v1";
+const SET_NAMES = Object.keys(SETS);
+
+let state = { set:"Set A", qi:0, shuffled:[], answers:[], sel:null };
+
+function getAudit(){
+  try{
+    const d = JSON.parse(localStorage.getItem(AUDIT_KEY));
+    if(d && d.attempts) return d;
+  }catch(e){}
+  return { attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] };
+}
+function saveAudit(d){ try{ localStorage.setItem(AUDIT_KEY, JSON.stringify(d)); }catch(e){} }
+function logEvent(type, details){
+  const d = getAudit();
+  d.events.unshift({ t:new Date().toLocaleString(), type:type, details:details });
+  if(d.events.length > 300) d.events.length = 300;
+  saveAudit(d);
+  if(!document.getElementById("parent-panel").hidden) renderParentPanel();
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function el(id){ return document.getElementById(id); }
+
+function renderTabs(){
+  const tabs = el("set-tabs");
+  tabs.innerHTML = "";
+  SET_NAMES.forEach(name=>{
+    const s = SETS[name];
+    const b = document.createElement("button");
+    b.className = "set-tab" + (name===state.set ? " active" : "");
+    b.innerHTML = s.icon+" "+name+"<small>"+s.tag+"</small>";
+    b.onclick = ()=>switchSet(name);
+    tabs.appendChild(b);
+  });
+}
+
+function loadSet(name){
+  state.set = name;
+  state.qi = 0;
+  state.sel = null;
+  const qs = SETS[name].questions;
+  state.shuffled = qs.map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return { order:order, correctPos: order.indexOf(q.correct) };
+  });
+  state.answers = new Array(qs.length).fill(null);
+  el("quiz-area").hidden = false;
+  el("results").hidden = true;
+  renderTabs(); renderQ();
+  logEvent("Set started", name);
+}
+
+function switchSet(name){
+  if(name===state.set) return;
+  loadSet(name);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderDots(){
+  const dots = el("dots"); dots.innerHTML = "";
+  const n = SETS[state.set].questions.length;
+  el("progress-label").textContent = "Question "+(state.qi+1)+" of "+n+" · "+SETS[state.set].icon+" "+SETS[state.set].tag;
+  for(let i=0;i<n;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.textContent = i+1;
+    const a = state.answers[i];
+    if(a) d.classList.add(a.ok ? "done" : "bad");
+    if(i===state.qi) d.classList.add("now");
+    d.onclick = ()=>{ state.qi=i; state.sel=null; renderQ(); };
+    d.style.cursor = "pointer";
+    dots.appendChild(d);
+  }
+}
+
+function renderQ(){
+  const qs = SETS[state.set].questions;
+  const q = qs[state.qi];
+  const sh = state.shuffled[state.qi];
+  const ans = state.answers[state.qi];
+  renderDots();
+  const card = el("qcard");
+  let html = '<div class="passage"><div class="p-title">📖 '+q.title+'</div>'+q.passage+'</div>';
+  html += '<div class="prompt">❓ '+q.prompt+'</div><div id="opts">';
+  const letters = ["A","B","C","D"];
+  for(let pos=0; pos<4; pos++){
+    const optIdx = sh.order[pos];
+    let cls = "opt";
+    let dis = "";
+    if(ans){
+      dis = " disabled";
+      if(pos===sh.correctPos) cls += " correct";
+      else if(pos===ans.sel) cls += " wrong";
+    } else if(state.sel===pos){
+      cls += " selected";
+    }
+    html += '<button class="'+cls+'"'+dis+' onclick="selectOpt('+pos+')"><span class="letter">'+letters[pos]+'</span>'+q.options[optIdx]+'</button>';
+  }
+  html += '</div><div class="feedback" id="feedback"></div>';
+  card.innerHTML = html;
+  if(ans) showFeedback(ans.ok, q, sh, ans.sel);
+  updateNav();
+}
+
+function selectOpt(pos){
+  if(state.answers[state.qi]) return;
+  state.sel = pos;
+  renderQ();
+}
+
+function checkAnswer(){
+  const ans = state.answers[state.qi];
+  if(ans) return;
+  if(state.sel===null){
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "👆 <b>Pick an answer first!</b> Tap one of the choices above, then check.";
+    return;
+  }
+  const sh = state.shuffled[state.qi];
+  const q = SETS[state.set].questions[state.qi];
+  const ok = (state.sel===sh.correctPos);
+  state.answers[state.qi] = { sel: state.sel, ok: ok };
+  logEvent("Answer checked", state.set+" Q"+(state.qi+1)+": "+(ok?"correct":"incorrect"));
+  renderQ();
+  if(ok) celebrate(false);
+}
+
+function showFeedback(ok, q, sh, selPos){
+  const fb = el("feedback");
+  fb.className = "feedback show " + (ok ? "good" : "bad");
+  const letters = ["A","B","C","D"];
+  let html = ok
+    ? "🎉 <b>Correct! Great reading!</b>"
+    : "💪 <b>Not quite.</b> The correct answer was <b>"+letters[sh.correctPos]+"</b>.";
+  html += '<div class="exp">💡 <b>Why:</b> '+q.explanation+'</div>';
+  fb.innerHTML = html;
+}
+
+function updateNav(){
+  const n = SETS[state.set].questions.length;
+  el("prev-btn").disabled = (state.qi===0);
+  el("check-btn").disabled = !!state.answers[state.qi];
+  el("next-btn").textContent = (state.qi===n-1) ? "See My Score ⭐" : "Next ➡";
+}
+
+function navigate(d){
+  const n = SETS[state.set].questions.length;
+  const nq = state.qi + d;
+  if(nq >= n){ submitQuiz(); return; }
+  if(nq < 0) return;
+  state.qi = nq; state.sel = null;
+  renderQ();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function submitQuiz(){
+  const qs = SETS[state.set].questions;
+  const firstOpen = state.answers.findIndex(a=>!a);
+  if(firstOpen !== -1){
+    state.qi = firstOpen; state.sel = null;
+    renderQ();
+    const fb = el("feedback");
+    fb.className = "feedback show bad";
+    fb.innerHTML = "📝 <b>Almost done!</b> Please answer and check this question first.";
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+  const correctCount = state.answers.filter(a=>a.ok).length;
+  const total = qs.length;
+  const pct = Math.round(correctCount/total*100);
+  const d = getAudit();
+  d.attempts[state.set].push({ t:new Date().toLocaleString(), score:correctCount, total:total });
+  saveAudit(d);
+  logEvent("Set submitted", state.set+": "+correctCount+"/"+total+" ("+pct+"%)");
+  renderResults(correctCount, total, pct);
+}
+
+function renderResults(correctCount, total, pct){
+  el("quiz-area").hidden = true;
+  const box = el("results");
+  box.hidden = false;
+  const stars = pct===100 ? "★★★" : pct>=80 ? "★★☆" : pct>=60 ? "★☆☆" : "☆☆☆";
+  let msg = pct===100 ? "🌟 PERFECT SCORE! You are a superstar reader! 🌟"
+    : pct>=80 ? "🎉 Wonderful reading! So close to perfect!"
+    : pct>=60 ? "👍 Good work! Keep practicing and you'll get even better!"
+    : "💪 Nice try! Every reader gets better with practice. Try again!";
+  let html = "<h2>🏁 Set Complete!</h2>";
+  html += '<div class="stars">'+stars+'</div>';
+  html += '<div class="score-ring" style="background:conic-gradient(var(--accent) '+pct+'%, #e2e8f0 '+pct+'% 100%)"><span class="pct">'+pct+'%</span><span>'+correctCount+' of '+total+'</span></div>';
+  html += "<p style='font-size:1.15rem;font-weight:bold'>"+msg+"</p>";
+  if(pct===100){
+    const s = SETS[state.set];
+    html += '<div class="award"><div class="big">🏆</div><div style="font-size:1.3rem;font-weight:bold;color:#92400e">READING CHAMPION</div><div style="color:#92400e">'+s.icon+' '+s.award+' — '+state.set+'</div></div>';
+    celebrate(true);
+  } else {
+    html += '<div class="retry-note">🎯 Score 100% to earn the <b>'+SETS[state.set].award+'</b> trophy for '+state.set+'!</div>';
+  }
+  html += '<div class="review"><h3 style="color:#0c4a6e">📝 Review your answers</h3>';
+  const letters = ["A","B","C","D"];
+  const qs = SETS[state.set].questions;
+  for(let i=0;i<qs.length;i++){
+    const q = qs[i], sh = state.shuffled[i], a = state.answers[i];
+    const cls = a.ok ? "ok" : "no";
+    const mark = a.ok ? "✅" : "❌";
+    html += '<div class="review-item '+cls+'"><b>'+mark+' Question '+(i+1)+':</b> '+q.prompt
+      + '<br>Your answer: <b>'+letters[a.sel]+'</b> — '+q.options[sh.order[a.sel]]
+      + (a.ok ? "" : '<br>Correct answer: <b>'+letters[sh.correctPos]+'</b> — '+q.options[sh.order[sh.correctPos]])
+      + '<div class="exp" style="margin-top:6px">💡 '+q.explanation+'</div>'
+      + '<details><summary>📖 Re-read the passage</summary><div class="rp"><b>'+q.title+'</b><br>'+q.passage+'</div></details></div>';
+  }
+  html += '</div><button class="retake" onclick="loadSet(state.set)">🔄 Try This Set Again</button>';
+  box.innerHTML = html;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function celebrate(big){
+  if(!big) return;
+  const colors = ["#f59e0b","#0284c7","#16a34a","#dc2626","#7c3aed","#ec4899"];
+  for(let i=0;i<70;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[i%colors.length];
+    c.style.animationDuration = (2+Math.random()*2)+"s";
+    c.style.animationDelay = (Math.random()*0.8)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+/* ---------- Parent / teacher panel (?check=true) ---------- */
+function renderParentPanel(){
+  const d = getAudit();
+  let html = "";
+  SET_NAMES.forEach(name=>{
+    const atts = d.attempts[name]||[];
+    const best = atts.length ? Math.max.apply(null, atts.map(a=>Math.round(a.score/a.total*100))) : "—";
+    html += "<p style='margin:4px 0'>"+SETS[name].icon+" <b>"+name+" ("+SETS[name].tag+")</b>: "
+      + atts.length + " attempt(s), best score "+best+"%</p>";
+  });
+  el("parent-stats").innerHTML = html;
+  const tb = el("parent-log"); tb.innerHTML = "";
+  d.events.slice(0,100).forEach(e=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+e.t+"</td><td>"+e.type+"</td><td>"+e.details+"</td>";
+    tb.appendChild(tr);
+  });
+}
+function clearLog(){
+  if(confirm("Clear all recorded activity for Reading 11-7 on this device?")){
+    saveAudit({ attempts:{"Set A":[],"Set B":[],"Set C":[]}, events:[] });
+    renderParentPanel();
+  }
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("check")==="true"){
+    el("parent-panel").hidden = false;
+    renderParentPanel();
+  }
+  logEvent("Page loaded", "Reading 11-7 opened");
+  loadSet("Set A");
+})();
+</script>
+</body>
+</html>
