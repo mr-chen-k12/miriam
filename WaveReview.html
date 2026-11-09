@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigating Waves — Interactive Review</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:#eef4fb; color:#16324a; margin:0; padding:18px 12px 40px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header.hero { background: linear-gradient(135deg,#0b5fa5,#12a3b4); color:#fff; border-radius:14px; padding:20px 22px; box-shadow:0 4px 14px rgba(11,95,165,.25); }
+  header.hero h1 { margin:0 0 4px; font-size:1.65em; }
+  header.hero p { margin:2px 0 0; opacity:.92; }
+  .progressline { margin-top:10px; font-weight:600; font-size:.95em; }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+  .tab { border:2px solid #0b5fa5; background:#fff; color:#0b5fa5; font-weight:700; border-radius:999px; padding:9px 15px; cursor:pointer; font-size:.95em; }
+  .tab.active { background:#0b5fa5; color:#fff; }
+  .tab .done { color:#1d9e6c; }
+  .tab.active .done { color:#a7f3d0; }
+  section.panel { display:none; background:#fff; border-radius:14px; padding:20px 22px; box-shadow:0 2px 10px rgba(22,50,74,.08); }
+  section.panel.active { display:block; }
+  h2 { margin:4px 0 10px; color:#0b5fa5; }
+  h3 { color:#0b5fa5; margin:18px 0 6px; }
+  .hint { color:#5b7186; font-size:.92em; }
+  button.btn { background:#0b5fa5; color:#fff; border:none; border-radius:9px; padding:10px 16px; font-weight:700; cursor:pointer; font-size:.95em; }
+  button.btn.secondary { background:#fff; color:#0b5fa5; border:2px solid #0b5fa5; }
+  button.btn.green { background:#1d9e6c; }
+  button.btn:disabled { opacity:.45; cursor:not-allowed; }
+  .btnrow { display:flex; flex-wrap:wrap; gap:9px; margin:12px 0; align-items:center; }
+  .score { font-weight:700; }
+  .good { color:#1d9e6c; } .bad { color:#c0392b; }
+  /* study guide */
+  table.vocab { width:100%; border-collapse:collapse; font-size:.96em; }
+  table.vocab td { border-bottom:1px solid #e3edf5; padding:7px 8px; vertical-align:top; }
+  table.vocab td.term { font-weight:700; color:#0b5fa5; white-space:nowrap; width:130px; }
+  .cols { display:flex; flex-wrap:wrap; gap:18px; } .cols > div { flex:1 1 240px; }
+  ul.tight { margin:6px 0; padding-left:20px; line-height:1.55; }
+  /* flashcards */
+  .fcstage { perspective:1100px; margin:14px auto; max-width:520px; }
+  .fcard { position:relative; width:100%; height:230px; cursor:pointer; transform-style:preserve-3d; transition:transform .45s; }
+  .fcard.flipped { transform:rotateY(180deg); }
+  .fcface { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; box-shadow:0 4px 14px rgba(22,50,74,.16); }
+  .fcfront { background:#0b5fa5; color:#fff; }
+  .fcfront .word { font-size:2em; font-weight:800; }
+  .fcback { background:#fdf6d8; color:#4a3f13; transform:rotateY(180deg); font-size:1.06em; line-height:1.5; }
+  .fctag { font-size:.78em; letter-spacing:.08em; text-transform:uppercase; opacity:.75; margin-bottom:8px; }
+  .fcnav { display:flex; justify-content:center; gap:10px; align-items:center; flex-wrap:wrap; }
+  .fcstatus { text-align:center; font-weight:600; margin-top:8px; }
+  /* quiz */
+  .qprogress { height:10px; background:#e3edf5; border-radius:99px; overflow:hidden; margin:10px 0 16px; }
+  .qprogress > div { height:100%; background:#12a3b4; width:0%; transition:width .3s; }
+  .qq { font-size:1.12em; line-height:1.5; margin-bottom:14px; }
+  .opts { display:grid; gap:9px; }
+  .opt { text-align:left; background:#f2f7fc; border:2px solid #cfdfef; border-radius:10px; padding:12px 14px; font-size:1em; cursor:pointer; font-weight:600; color:#16324a; }
+  .opt:hover { border-color:#0b5fa5; }
+  .opt.correct { background:#e2f6ec; border-color:#1d9e6c; }
+  .opt.wrong { background:#fdeceb; border-color:#c0392b; }
+  .opt:disabled { cursor:default; opacity:.92; }
+  .feedback { min-height:1.4em; font-weight:700; margin-top:12px; }
+  /* chips and slots */
+  .bank { display:flex; flex-wrap:wrap; gap:8px; background:#f2f7fc; border:1.5px dashed #b9cee4; border-radius:10px; padding:12px; min-height:56px; margin:10px 0; }
+  .chip { background:#fff; border:2px solid #0b5fa5; color:#0b5fa5; border-radius:999px; padding:8px 14px; font-weight:700; cursor:pointer; user-select:none; font-size:.95em; }
+  .chip.selected { background:#0b5fa5; color:#fff; }
+  .chip.used { opacity:.32; pointer-events:none; }
+  .chip.placed { background:#eaf3fd; }
+  .blank { display:inline-block; min-width:110px; border-bottom:3px solid #0b5fa5; background:#eef4fb; border-radius:6px 6px 0 0; padding:2px 8px; margin:0 3px; font-weight:700; color:#0b5fa5; cursor:pointer; text-align:center; }
+  .blank.right { border-color:#1d9e6c; color:#1d9e6c; background:#e2f6ec; }
+  .blank.wrong { border-color:#c0392b; color:#c0392b; background:#fdeceb; }
+  .sentence { font-size:1.05em; line-height:2.1; margin:9px 0; }
+  .slot { border:2px dashed #9db9d6; border-radius:10px; min-height:48px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#0b5fa5; background:#f7fbff; cursor:pointer; padding:6px; text-align:center; }
+  .slot.filled { border-style:solid; background:#eaf3fd; }
+  .slot.right { border-color:#1d9e6c; color:#1d9e6c; background:#e2f6ec; }
+  .slot.wrong { border-color:#c0392b; color:#c0392b; background:#fdeceb; }
+  .ordergrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:9px; margin:10px 0; }
+  .bin { border:2.5px dashed #9db9d6; border-radius:12px; padding:12px; min-height:120px; background:#f7fbff; }
+  .bin h4 { margin:0 0 8px; text-align:center; color:#0b5fa5; }
+  .bin .chip { display:block; width:100%; margin:6px 0; border-radius:10px; text-align:left; font-weight:600; }
+  .bin.right { border-color:#1d9e6c; } .bin.wrong { border-color:#c0392b; }
+  .svgbox { width:100%; overflow-x:auto; }
+  .zone rect { fill:rgba(255,255,255,.82); stroke:#0b5fa5; stroke-width:2; stroke-dasharray:6 4; cursor:pointer; }
+  .zone.filled rect { stroke-dasharray:none; fill:#eaf3fd; }
+  .zone.right rect { stroke:#1d9e6c; fill:#e2f6ec; }
+  .zone.wrong rect { stroke:#c0392b; fill:#fdeceb; }
+  .zone text { font-weight:700; fill:#0b5fa5; font-size:15.5px; text-anchor:middle; pointer-events:none; }
+  .zone.right text { fill:#1d9e6c; } .zone.wrong text { fill:#c0392b; }
+  .missedlist { background:#fdf6d8; border-radius:10px; padding:12px 16px; }
+  .pbar { height:14px; background:#e3edf5; border-radius:99px; overflow:hidden; margin:12px 0 4px; }
+  .pfill { height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#12a3b4,#1d9e6c); transition:width .35s; }
+  .ptext { font-size:.9em; font-weight:600; color:#43617c; }
+  .encourage { min-height:1.35em; font-weight:800; color:#1d9e6c; margin-top:2px; }
+  .fcard { touch-action: pan-y; }
+  #auditPanel { display:none; background:#1c2b3a; color:#d7e6f5; border-radius:12px; padding:16px 20px; margin-top:18px; font-size:.9em; white-space:pre-wrap; }
+  @media (max-width:560px){ .fcfront .word{font-size:1.5em;} section.panel{padding:16px 14px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>🌊 Investigating Waves — Interactive Review</h1>
+    <p>Flashcards, quizzes, drag-and-drop labeling, and ordering practice for the Waves study guide.</p>
+    <div class="progressline" id="progressLine">Sections completed: 0 / 5</div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="guide">📖 Study Guide</button>
+    <button class="tab" data-tab="cards">🃏 Flashcards <span class="done" data-done="cards"></span></button>
+    <button class="tab" data-tab="quiz">❓ Multiple Choice <span class="done" data-done="quiz"></span></button>
+    <button class="tab" data-tab="blank">✏️ Missing Word <span class="done" data-done="blank"></span></button>
+    <button class="tab" data-tab="diagram">🏷️ Label the Diagram <span class="done" data-done="diagram"></span></button>
+    <button class="tab" data-tab="order">🔢 Order &amp; Sort <span class="done" data-done="order"></span></button>
+  </nav>
+
+  <!-- ============ STUDY GUIDE ============ -->
+  <section class="panel active" id="panel-guide">
+    <h2>Key Vocabulary</h2>
+    <table class="vocab" id="vocabTable"></table>
+
+    <h3>Wave Properties</h3>
+    <div class="svgbox">
+      <svg viewBox="0 0 780 370" width="740" role="img" aria-label="Labeled wave diagram">
+        <line x1="120" y1="190" x2="762" y2="190" stroke="#8aa5bd" stroke-width="2" stroke-dasharray="8 6"/>
+        <path d="M150,190.0 L160,162.8 L170,137.5 L180,115.8 L190,99.1 L200,88.6 L210,85.0 L220,88.6 L230,99.1 L240,115.8 L250,137.5 L260,162.8 L270,190.0 L280,217.2 L290,242.5 L300,264.2 L310,280.9 L320,291.4 L330,295.0 L340,291.4 L350,280.9 L360,264.2 L370,242.5 L380,217.2 L390,190.0 L400,162.8 L410,137.5 L420,115.8 L430,99.1 L440,88.6 L450,85.0 L460,88.6 L470,99.1 L480,115.8 L490,137.5 L500,162.8 L510,190.0 L520,217.2 L530,242.5 L540,264.2 L550,280.9 L560,291.4 L570,295.0 L580,291.4 L590,280.9 L600,264.2 L610,242.5 L620,217.2 L630,190.0 L640,162.8 L650,137.5 L660,115.8 L670,99.1 L680,88.6 L690,85.0 L700,88.6 L710,99.1 L720,115.8 L730,137.5 L740,162.8 L750,190.0" fill="none" stroke="#0b5fa5" stroke-width="3.5"/>
+        <line x1="210" y1="30" x2="210" y2="80" stroke="#c0392b" stroke-width="2"/>
+        <line x1="210" y1="22" x2="450" y2="22" stroke="#c0392b" stroke-width="2"/>
+        <line x1="450" y1="30" x2="450" y2="80" stroke="#c0392b" stroke-width="2"/>
+        <text x="330" y="14" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">Wavelength</text>
+        <circle cx="210" cy="85" r="5" fill="#c0392b"/>
+        <text x="198" y="70" text-anchor="end" font-size="16" font-weight="bold" fill="#16324a">Crest</text>
+        <circle cx="330" cy="295" r="5" fill="#c0392b"/>
+        <text x="330" y="330" text-anchor="middle" font-size="16" font-weight="bold" fill="#16324a">Trough</text>
+        <line x1="128" y1="85" x2="128" y2="190" stroke="#1d9e6c" stroke-width="2.5"/>
+        <line x1="128" y1="85" x2="205" y2="85" stroke="#1d9e6c" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="86" y="145" text-anchor="middle" font-size="16" font-weight="bold" fill="#1d9e6c" transform="rotate(-90 86 145)">Amplitude</text>
+      </svg>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h3>Types of Light Sources</h3>
+        <ul class="tight"><li>Sunlight</li><li>Moonlight</li><li>Flashlight</li><li>Light Bulb</li><li>Fire / Burning Candle</li></ul>
+        <h3>Types of Invisible Light / Energy</h3>
+        <ul class="tight"><li>Infrared Light</li><li>Ultraviolet Light</li><li>Radio Waves</li><li>Microwaves</li><li>X-rays</li><li>Gamma Rays</li></ul>
+      </div>
+      <div>
+        <h3>Order of Rays — smallest to longest wavelength</h3>
+        <ul class="tight"><li>1. Gamma rays</li><li>2. X-rays</li><li>3. Ultraviolet Light</li><li>4. Infrared Light</li><li>5. Microwaves</li><li>6. Radio waves</li></ul>
+        <h3>Morse Code</h3>
+        <ul class="tight"><li>Invented by Samuel Morse in the 1830s</li><li>Uses dots and dashes to represent the letters of the alphabet</li><li>The device that delivers the codes is called a telegraph</li><li>A telegraph uses sound waves</li></ul>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h3>✅ Helpful Radiation</h3>
+        <ul class="tight"><li>Cell phones / Wi-Fi use Bluetooth</li><li>Two-way radios help with communication on ships, planes, and space shuttles</li><li>Microwaves are used in GPS systems</li></ul>
+      </div>
+      <div>
+        <h3>⚠️ Harmful Radiation</h3>
+        <ul class="tight"><li>Sunburns due to Ultraviolet light exposure</li><li>Too much exposure to X-rays can cause cancers</li><li>Gamma rays can cause tissue damage</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLASHCARDS ============ -->
+  <section class="panel" id="panel-cards">
+    <h2>🃏 Flashcards — all 30 terms</h2>
+    <p class="hint"><b>Swipe left / right</b> on the card to move through the deck, <b>swipe up / down or tap</b> to flip it. Then grade yourself honestly: <b>✔ I knew it</b> or <b>✖ Still learning</b>. Cards you miss are saved — press <b>🧠 Smart Review</b> to practice only the ones you got wrong (plus any terms missed on the quiz).</p>
+    <div class="pbar"><div class="pfill" id="fcBar"></div></div>
+    <div class="ptext" id="fcBarText"></div>
+    <div class="encourage" id="fcEnc"></div>
+    <div class="fcstage">
+      <div class="fcard" id="fcard">
+        <div class="fcface fcfront"><div><div class="fctag">Term</div><div class="word" id="fcTerm">Wave</div><div class="fctag" style="margin-top:10px">tap to flip</div></div></div>
+        <div class="fcface fcback"><div><div class="fctag">Definition</div><div id="fcDef"></div></div></div>
+      </div>
+    </div>
+    <div class="fcnav">
+      <button class="btn secondary" id="fcPrev">◀ Prev</button>
+      <span id="fcCount">1 / 30</span>
+      <button class="btn secondary" id="fcNext">Next ▶</button>
+    </div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn green" id="fcKnown">✔ I knew it</button>
+      <button class="btn" id="fcMissed" style="background:#c0392b">✖ Still learning</button>
+      <button class="btn secondary" id="fcShuffle">🔀 Shuffle</button>
+      <button class="btn" id="fcSmart" style="background:#7c3aed">🧠 Smart Review</button>
+      <button class="btn secondary" id="fcAll">📚 All cards</button>
+    </div>
+    <div class="fcstatus" id="fcStatus"></div>
+  </section>
+
+  <!-- ============ MULTIPLE CHOICE ============ -->
+  <section class="panel" id="panel-quiz">
+    <h2>❓ Multiple Choice Quiz</h2>
+    <p class="hint">40 questions: every vocabulary term, plus the facts from the study guide. Pick an answer to check it right away.</p>
+    <div id="quizMain">
+      <div class="qprogress"><div id="qBar"></div></div>
+      <div class="ptext" id="qBarText"></div>
+      <div class="encourage" id="qEnc"></div>
+      <div class="qq" id="qText"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="feedback" id="qFeed"></div>
+      <div class="btnrow">
+        <button class="btn" id="qNext" disabled>Next ▶</button>
+        <span class="score" id="qScore"></span>
+      </div>
+    </div>
+    <div id="quizEnd" style="display:none">
+      <h3 id="qFinal"></h3>
+      <div class="missedlist" id="qMissed"></div>
+      <div class="btnrow">
+        <button class="btn" id="qRetake">↻ Retake quiz</button>
+        <button class="btn" id="qToCards" style="background:#7c3aed">🧠 Practice missed terms as flashcards</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MISSING WORD ============ -->
+  <section class="panel" id="panel-blank">
+    <h2>✏️ Missing Word</h2>
+    <p class="hint">Tap a word in the bank, then tap a blank to place it (you can also drag words with a mouse). Tap a filled blank to send its word back.</p>
+    <div class="bank" id="blankBank"></div>
+    <div id="blankList"></div>
+    <div class="pbar"><div class="pfill" id="blankBar"></div></div>
+    <div class="ptext" id="blankBarText"></div>
+    <div class="encourage" id="blankEnc"></div>
+    <div class="btnrow">
+      <button class="btn" id="blankCheck">✔ Check answers</button>
+      <button class="btn secondary" id="blankReset">↻ Start over</button>
+      <span class="score" id="blankScore"></span>
+    </div>
+  </section>
+
+  <!-- ============ LABEL THE DIAGRAM ============ -->
+  <section class="panel" id="panel-diagram">
+    <h2>🏷️ Label the Wave Diagram</h2>
+    <p class="hint">Tap a label, then tap the dashed box on the diagram where it belongs (or drag it with a mouse). Tap a filled box to clear it.</p>
+    <div class="bank" id="diaBank"></div>
+    <div class="svgbox">
+      <svg viewBox="0 0 780 370" width="740" id="diaSvg" role="img" aria-label="Wave diagram to label">
+        <line x1="120" y1="190" x2="762" y2="190" stroke="#8aa5bd" stroke-width="2" stroke-dasharray="8 6"/>
+        <path d="M150,190.0 L160,162.8 L170,137.5 L180,115.8 L190,99.1 L200,88.6 L210,85.0 L220,88.6 L230,99.1 L240,115.8 L250,137.5 L260,162.8 L270,190.0 L280,217.2 L290,242.5 L300,264.2 L310,280.9 L320,291.4 L330,295.0 L340,291.4 L350,280.9 L360,264.2 L370,242.5 L380,217.2 L390,190.0 L400,162.8 L410,137.5 L420,115.8 L430,99.1 L440,88.6 L450,85.0 L460,88.6 L470,99.1 L480,115.8 L490,137.5 L500,162.8 L510,190.0 L520,217.2 L530,242.5 L540,264.2 L550,280.9 L560,291.4 L570,295.0 L580,291.4 L590,280.9 L600,264.2 L610,242.5 L620,217.2 L630,190.0 L640,162.8 L650,137.5 L660,115.8 L670,99.1 L680,88.6 L690,85.0 L700,88.6 L710,99.1 L720,115.8 L730,137.5 L740,162.8 L750,190.0" fill="none" stroke="#0b5fa5" stroke-width="3.5"/>
+        <line x1="210" y1="22" x2="450" y2="22" stroke="#5b7186" stroke-width="2"/>
+        <line x1="210" y1="14" x2="210" y2="30" stroke="#5b7186" stroke-width="2"/>
+        <line x1="450" y1="14" x2="450" y2="30" stroke="#5b7186" stroke-width="2"/>
+        <line x1="128" y1="85" x2="128" y2="190" stroke="#5b7186" stroke-width="2"/>
+        <line x1="128" y1="85" x2="205" y2="85" stroke="#5b7186" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <line x1="210" y1="68" x2="210" y2="82" stroke="#5b7186" stroke-width="2"/>
+        <line x1="330" y1="298" x2="330" y2="316" stroke="#5b7186" stroke-width="2"/>
+        <g class="zone" data-zone="crest"><rect x="162" y="28" width="96" height="38" rx="8" fill="rgba(255,255,255,0.85)" stroke="#0b5fa5" stroke-width="2" stroke-dasharray="6 4"/><text x="210" y="52"></text></g>
+        <g class="zone" data-zone="wavelength"><rect x="324" y="42" width="132" height="38" rx="8" fill="rgba(255,255,255,0.85)" stroke="#0b5fa5" stroke-width="2" stroke-dasharray="6 4"/><text x="390" y="66"></text></g>
+        <g class="zone" data-zone="amplitude"><rect x="2" y="118" width="106" height="38" rx="8" fill="rgba(255,255,255,0.85)" stroke="#0b5fa5" stroke-width="2" stroke-dasharray="6 4"/><text x="55" y="142"></text></g>
+        <g class="zone" data-zone="trough"><rect x="282" y="320" width="96" height="38" rx="8" fill="rgba(255,255,255,0.85)" stroke="#0b5fa5" stroke-width="2" stroke-dasharray="6 4"/><text x="330" y="344"></text></g>
+      </svg>
+    </div>
+    <div class="pbar"><div class="pfill" id="diaBar"></div></div>
+    <div class="ptext" id="diaBarText"></div>
+    <div class="encourage" id="diaEnc"></div>
+    <div class="btnrow">
+      <button class="btn" id="diaCheck">✔ Check labels</button>
+      <button class="btn secondary" id="diaReset">↻ Start over</button>
+      <span class="score" id="diaScore"></span>
+    </div>
+  </section>
+
+  <!-- ============ ORDER & SORT ============ -->
+  <section class="panel" id="panel-order">
+    <h2>🔢 Put in Order — Rays by Wavelength</h2>
+    <p class="hint">Tap a ray, then tap the numbered slot where it belongs, to build the order from <b>smallest wavelength → longest wavelength</b>.</p>
+    <div class="bank" id="ordBank"></div>
+    <div class="ordergrid" id="ordSlots"></div>
+    <div class="pbar"><div class="pfill" id="ordBar"></div></div>
+    <div class="ptext" id="ordBarText"></div>
+    <div class="encourage" id="ordEnc"></div>
+    <div class="btnrow">
+      <button class="btn" id="ordCheck">✔ Check order</button>
+      <button class="btn secondary" id="ordReset">↻ Start over</button>
+      <span class="score" id="ordScore"></span>
+    </div>
+
+    <h2 style="margin-top:28px">🗂️ Sort It — Helpful or Harmful Radiation?</h2>
+    <p class="hint">Tap a card, then tap the bin it belongs in. Tap a card inside a bin to send it back.</p>
+    <div class="bank" id="sortBank"></div>
+    <div class="cols">
+      <div class="bin" id="binHelpful"><h4>✅ Helpful Radiation</h4></div>
+      <div class="bin" id="binHarmful"><h4>⚠️ Harmful Radiation</h4></div>
+    </div>
+    <div class="pbar"><div class="pfill" id="sortBar"></div></div>
+    <div class="ptext" id="sortBarText"></div>
+    <div class="encourage" id="sortEnc"></div>
+    <div class="btnrow">
+      <button class="btn" id="sortCheck">✔ Check sorting</button>
+      <button class="btn secondary" id="sortReset">↻ Start over</button>
+      <span class="score" id="sortScore"></span>
+    </div>
+  </section>
+
+  <div id="auditPanel"></div>
+</div>
+
+<script>
+"use strict";
+/* ================= DATA (from the Investigating Waves study guide) ================= */
+const TERMS = [
+ {t:"Wave", d:"a disturbance that transfers energy through matter or through space", x:["Disturbance","Signal","Vibration"]},
+ {t:"Disturbance", d:"an interruption of stillness", x:["Wave","Pattern","Transfer"]},
+ {t:"Crest", d:"the highest part of a wave", x:["Trough","Wavelength","Amplitude"]},
+ {t:"Trough", d:"the lowest part of a wave", x:["Crest","Wavelength","Wave Height"]},
+ {t:"Wavelength", d:"the distance from one crest to the next crest of a wave", x:["Wave Height","Amplitude","Frequency"]},
+ {t:"Wave Height", d:"the vertical distance from the top of the crest to the bottom of the trough of a wave", x:["Wavelength","Amplitude","Crest"]},
+ {t:"Amplitude", d:"the distance from the crest to the water line", x:["Wavelength","Wave Height","Frequency"]},
+ {t:"Frequency", d:"the number of times a wave peaks over a period of time", x:["Amplitude","Pitch","Intensity"]},
+ {t:"Vibrate", d:"to move back and forth quickly", x:["Vibration","Reflect","Transfer"]},
+ {t:"Vibration", d:"the motion of an object or material that is vibrating", x:["Vibrate","Disturbance","Sound Wave"]},
+ {t:"Sound Wave", d:"a transfer of energy through a material as it is disturbed by vibrations", x:["Light Wave","Wave","Vibration"]},
+ {t:"Volume", d:"the way humans perceive loudness from the intensity of a sound wave", x:["Intensity","Pitch","Amplitude"]},
+ {t:"Intensity", d:"the measurable strength or power of a vibration", x:["Volume","Pitch","Frequency"]},
+ {t:"Pitch", d:"the quality of sound that is described as high or low and is related to a wave's frequency", x:["Volume","Intensity","Frequency"]},
+ {t:"Light", d:"a form of energy that can transfer through empty space and can make things visible", x:["Light Wave","Light source","Color"]},
+ {t:"Light source", d:"an object that gives off its own light", x:["Light","Light Wave","Symbol"]},
+ {t:"Light Wave", d:"an energy disturbance that transfers, or radiates, light", x:["Sound Wave","Light","Wave"]},
+ {t:"Reflect", d:"to bounce off of", x:["Absorb","Transfer","Vibrate"]},
+ {t:"Transparency", d:"a property of matter that allows light to pass through it", x:["Color","Absorb","Reflect"]},
+ {t:"Color", d:"an aspect of light that enables otherwise identical objects to be distinguished from each other through the sense of sight (vision)", x:["Transparency","Light","Pitch"]},
+ {t:"Absorb", d:"to take something in and contain it. When light is absorbed, it is not reflected.", x:["Reflect","Transfer","Transparency"]},
+ {t:"Gesture", d:"a movement of a part of the body to communicate an idea or emotion. Most gestures are made with your hands or your head.", x:["Symbol","Signal","Code"]},
+ {t:"Symbol", d:"a visual object or mark that stands for something else", x:["Gesture","Code","Signal"]},
+ {t:"Code", d:"a pattern of symbols that can be used to communicate a message", x:["Symbol","Pattern","Signal"]},
+ {t:"Pattern", d:"a regular or repeated way in which something occurs", x:["Code","Disturbance","Symbol"]},
+ {t:"Signal", d:"a symbol sent over a distance", x:["Symbol","Code","Information"]},
+ {t:"Transfer", d:"to move from one place to another", x:["Reflect","Disturbance","Signal"]},
+ {t:"Information", d:"types of data such as pictures, sounds, and messages", x:["Signal","Code","Pattern"]},
+ {t:"Analog", d:"describing signals sent as continuous waves", x:["Digital","Signal","Wave"]},
+ {t:"Digital", d:"describing signals sent as separate bits and not continuous", x:["Analog","Code","Information"]}
+];
+const FACTQ = [
+ {q:"Which list shows the rays in order from SMALLEST wavelength to LONGEST wavelength?",
+  o:["Gamma rays → X-rays → Ultraviolet Light → Infrared Light → Microwaves → Radio waves",
+     "Radio waves → Microwaves → Infrared Light → Ultraviolet Light → X-rays → Gamma rays",
+     "X-rays → Gamma rays → Ultraviolet Light → Infrared Light → Radio waves → Microwaves",
+     "Gamma rays → Ultraviolet Light → X-rays → Infrared Light → Microwaves → Radio waves"], a:0},
+ {q:"Who invented Morse code?", o:["Samuel Morse","Thomas Edison","Alexander Graham Bell","Albert Einstein"], a:0},
+ {q:"In which decade was Morse code invented?", o:["1830s","1750s","1900s","2000s"], a:0},
+ {q:"The device that delivers Morse code is called a…", o:["telegraph","telephone","television","microscope"], a:0},
+ {q:"Morse code represents the letters of the alphabet using…", o:["dots and dashes","colors and shapes","numbers only","hand gestures"], a:0},
+ {q:"A telegraph uses which kind of waves to deliver Morse code?", o:["sound waves","light waves","water waves","radio waves"], a:0},
+ {q:"Which of these is a type of light source?", o:["Fire / Burning Candle","X-rays","Microwaves","Radio Waves"], a:0},
+ {q:"Which type of invisible light causes sunburns?", o:["Ultraviolet Light","Infrared Light","Radio Waves","Microwaves"], a:0},
+ {q:"Too much exposure to which type of ray can cause cancers?", o:["X-rays","Microwaves","Radio Waves","Infrared Light"], a:0},
+ {q:"Which is an example of HELPFUL radiation?", o:["Microwaves are used in GPS systems","Gamma rays can cause tissue damage","Sunburns from Ultraviolet light","Too much exposure to X-rays"], a:0}
+];
+const BLANKS = [
+ {s:"A ___ is a disturbance that transfers energy through matter or through space.", a:"Wave"},
+ {s:"The highest part of a wave is the ___.", a:"crest"},
+ {s:"___ is the distance from one crest to the next crest of a wave.", a:"Wavelength"},
+ {s:"___ invented Morse code in the 1830s.", a:"Samuel Morse"},
+ {s:"The device that delivers Morse code is called a ___.", a:"telegraph"},
+ {s:"Sunburns are caused by too much ___ light.", a:"Ultraviolet"},
+ {s:"Too much exposure to ___ can cause cancers.", a:"X-rays"},
+ {s:"Microwaves are used in ___ systems.", a:"GPS"},
+ {s:"Two-way radios help with communication on ships, planes, and ___.", a:"space shuttles"},
+ {s:"A ___ is a symbol sent over a distance.", a:"signal"},
+ {s:"Signals sent as continuous waves are called ___ signals.", a:"analog"},
+ {s:"Signals sent as separate bits, not continuous, are called ___ signals.", a:"digital"}
+];
+const BLANK_DECOYS = ["frequency","reflect","volume","pattern"];
+const ORDER = ["Gamma rays","X-rays","Ultraviolet Light","Infrared Light","Microwaves","Radio waves"];
+const SORT = [
+ {s:"Cell phones / Wi-Fi use Bluetooth", bin:"helpful"},
+ {s:"Two-way radios help with communication on ships, planes, and space shuttles", bin:"helpful"},
+ {s:"Microwaves are used in GPS systems", bin:"helpful"},
+ {s:"Sunburns due to Ultraviolet light exposure", bin:"harmful"},
+ {s:"Too much exposure to X-rays can cause cancers", bin:"harmful"},
+ {s:"Gamma rays can cause tissue damage", bin:"harmful"}
+];
+const ZONES = {crest:"Crest", trough:"Trough", wavelength:"Wavelength", amplitude:"Amplitude"};
+
+/* ================= helpers ================= */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+function shuffle(a){ const r=a.slice(); for(let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; } return r; }
+function load(key, fb){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fb; }catch(e){ return fb; } }
+function save(key, v){ try{ localStorage.setItem(key, JSON.stringify(v)); }catch(e){} }
+
+/* ================= audit (?check=true) ================= */
+const AUDIT_KEY = "waves_review_audit_v1";
+const audit = load(AUDIT_KEY, {loads:0, events:[]});
+audit.loads++;
+function logEvent(type, detail){ audit.events.push({t:new Date().toLocaleString(), type, detail:detail||""}); if(audit.events.length>300) audit.events=audit.events.slice(-300); save(AUDIT_KEY, audit); renderAudit(); }
+function renderAudit(){
+  if(!/[?&]check=true/.test(location.search)) return;
+  const p = $("#auditPanel"); p.style.display="block";
+  p.textContent = "TEACHER AUDIT — Investigating Waves Review\nPage loads: " + audit.loads + "\n\n" +
+    audit.events.map(e=>e.t+"  ["+e.type+"]  "+e.detail).join("\n");
+}
+save(AUDIT_KEY, audit);
+
+/* ================= progress / done ================= */
+const done = load("waves_review_done_v1", {});
+function setDone(k){ if(!done[k]){ done[k]=true; save("waves_review_done_v1", done); } paintProgress(); }
+function paintProgress(){
+  const keys=["cards","quiz","blank","diagram","order"];
+  const n = keys.filter(k=>done[k]).length;
+  $("#progressLine").textContent = "Sections completed: " + n + " / 5";
+  keys.forEach(k=>{ const s=document.querySelector('[data-done="'+k+'"]'); if(s) s.textContent = done[k] ? "✔" : ""; });
+}
+
+/* ================= tabs ================= */
+function goTab(name){
+  $$(".tab").forEach(t=>t.classList.toggle("active", t.dataset.tab===name));
+  $$("section.panel").forEach(p=>p.classList.toggle("active", p.id==="panel-"+name));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+$$(".tab").forEach(t=>t.addEventListener("click", ()=>goTab(t.dataset.tab)));
+
+/* ================= study guide table ================= */
+$("#vocabTable").innerHTML = TERMS.map(x=>"<tr><td class='term'>"+x.t+"</td><td>"+x.d+"</td></tr>").join("");
+
+/* ================= progress bars ================= */
+function setBar(barId, textId, encId, doneN, total, label){
+  const pct = total ? Math.round(doneN/total*100) : 0;
+  document.getElementById(barId).style.width = pct + "%";
+  document.getElementById(textId).textContent = label + ": " + doneN + " / " + total;
+  const enc = document.getElementById(encId);
+  enc.textContent = pct>=100 ? "🎉 Good job — all finished!" : pct>=50 ? "👍 Good job — you're past halfway!" : pct>0 ? "Nice start — keep going!" : "";
+}
+
+/* ================= flashcards ================= */
+const cardGrades = load("waves_review_cards_v1", {});
+let deck = TERMS.map((_,i)=>i), deckPos = 0, deckMode = "all", flipped = false;
+function smartPool(){
+  const quizMissed = load("waves_review_missed_v1", []);
+  const pool = new Set();
+  TERMS.forEach((x,i)=>{ if(cardGrades[x.t]==="learning") pool.add(i); });
+  quizMissed.forEach(term=>{ const i=TERMS.findIndex(x=>x.t===term); if(i>=0) pool.add(i); });
+  return Array.from(pool);
+}
+function showCard(){
+  const x = TERMS[deck[deckPos]];
+  flipped = false; $("#fcard").classList.remove("flipped");
+  $("#fcTerm").textContent = x.t; $("#fcDef").textContent = x.d;
+  $("#fcCount").textContent = (deckPos+1) + " / " + deck.length + (deckMode==="smart" ? "  (Smart Review)" : "");
+  paintCardStatus();
+}
+function paintCardStatus(){
+  const known = TERMS.filter(x=>cardGrades[x.t]==="known").length;
+  setBar("fcBar","fcBarText","fcEnc", known, 30, "Terms mastered");
+  const learning = TERMS.filter(x=>cardGrades[x.t]==="learning").length;
+  $("#fcStatus").textContent = "✔ Known: " + known + " / 30 · ✖ Still learning: " + learning + " · 🧠 Smart Review pool: " + smartPool().length + " cards";
+  if(known===30) setDone("cards");
+}
+let fcSX = 0, fcSY = 0;
+const fcEl = $("#fcard");
+fcEl.addEventListener("pointerdown", e=>{ fcSX=e.clientX; fcSY=e.clientY; });
+fcEl.addEventListener("pointerup", e=>{
+  const dx = e.clientX-fcSX, dy = e.clientY-fcSY;
+  if(Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)){ deckPos = dx<0 ? (deckPos+1)%deck.length : (deckPos-1+deck.length)%deck.length; showCard(); }
+  else { flipped=!flipped; fcEl.classList.toggle("flipped", flipped); }
+});
+$("#fcNext").addEventListener("click", ()=>{ deckPos=(deckPos+1)%deck.length; showCard(); });
+$("#fcPrev").addEventListener("click", ()=>{ deckPos=(deckPos-1+deck.length)%deck.length; showCard(); });
+function grade(g){
+  const x = TERMS[deck[deckPos]];
+  cardGrades[x.t] = g; save("waves_review_cards_v1", cardGrades);
+  paintCardStatus();
+  if(deckPos < deck.length-1){ deckPos++; } showCard();
+}
+$("#fcKnown").addEventListener("click", ()=>grade("known"));
+$("#fcMissed").addEventListener("click", ()=>grade("learning"));
+$("#fcShuffle").addEventListener("click", ()=>{ deck=shuffle(deck); deckPos=0; showCard(); });
+$("#fcAll").addEventListener("click", ()=>{ deckMode="all"; deck=TERMS.map((_,i)=>i); deckPos=0; showCard(); });
+$("#fcSmart").addEventListener("click", startSmart);
+function startSmart(){
+  const pool = smartPool();
+  if(!pool.length){ $("#fcStatus").textContent = "🎉 Smart Review pool is empty — nothing missed yet. Grade cards with ✖ Still learning (or miss a quiz question) and they will appear here."; return; }
+  deckMode="smart"; deck=shuffle(pool); deckPos=0; showCard();
+  logEvent("smart_review", pool.length + " cards");
+}
+showCard();
+
+/* ================= multiple choice quiz ================= */
+let quiz = [], qPos = 0, qRight = 0, qAnswered = false, qMissedTerms = [];
+function buildQuiz(){
+  const vq = shuffle(TERMS.map(x=>({ kind:"vocab", term:x.t, text:"Which term means: “"+x.d+"”",
+    opts: shuffle([x.t].concat(x.x)), correct: x.t })));
+  const fq = shuffle(FACTQ.map(f=>({ kind:"fact", text:f.q, opts: shuffle(f.o), correct: f.o[f.a] })));
+  quiz = vq.concat(fq); qPos=0; qRight=0; qMissedTerms=[];
+}
+function showQuestion(){
+  qAnswered = false;
+  const q = quiz[qPos];
+  $("#qBar").style.width = (qPos/quiz.length*100) + "%";
+  setBar("qBar","qBarText","qEnc", qPos, quiz.length, "Quiz progress");
+  $("#qText").textContent = "Question " + (qPos+1) + " of " + quiz.length + " — " + q.text;
+  $("#qFeed").textContent = ""; $("#qScore").textContent = "Score: " + qRight + " / " + qPos;
+  $("#qNext").disabled = true;
+  $("#qNext").textContent = qPos===quiz.length-1 ? "Finish ✔" : "Next ▶";
+  const box = $("#qOpts"); box.innerHTML = "";
+  q.opts.forEach(opt=>{
+    const b = document.createElement("button"); b.className="opt"; b.textContent = opt;
+    b.addEventListener("click", ()=>{
+      if(qAnswered) return; qAnswered = true;
+      Array.from(box.children).forEach(c=>{ c.disabled=true; if(c.textContent===q.correct) c.classList.add("correct"); });
+      if(opt===q.correct){ qRight++; $("#qFeed").innerHTML = "<span class='good'>✔ Correct!</span>"; }
+      else { b.classList.add("wrong"); $("#qFeed").innerHTML = "<span class='bad'>✖ Not quite — the correct answer is “"+q.correct+"”.</span>";
+        if(q.kind==="vocab") qMissedTerms.push(q.term); }
+      $("#qScore").textContent = "Score: " + qRight + " / " + (qPos+1);
+      setBar("qBar","qBarText","qEnc", qPos+1, quiz.length, "Quiz progress");
+      $("#qNext").disabled = false;
+    });
+    box.appendChild(b);
+  });
+}
+$("#qNext").addEventListener("click", ()=>{
+  if(qPos < quiz.length-1){ qPos++; showQuestion(); }
+  else {
+    $("#quizMain").style.display="none"; $("#quizEnd").style.display="block";
+    $("#qFinal").textContent = "You scored " + qRight + " / " + quiz.length + (qRight===quiz.length ? " — perfect! 🏆" : "");
+    const missed = load("waves_review_missed_v1", []);
+    qMissedTerms.forEach(t=>{ if(!missed.includes(t)) missed.push(t); });
+    save("waves_review_missed_v1", missed);
+    $("#qMissed").innerHTML = qMissedTerms.length
+      ? "<b>Terms to review:</b><ul class='tight'>" + qMissedTerms.map(t=>{ const x=TERMS.find(y=>y.t===t); return "<li><b>"+t+"</b> — "+x.d+"</li>"; }).join("") + "</ul>"
+      : "<b>No vocabulary terms missed.</b> Any fact questions missed are worth a second look in the Study Guide tab.";
+    logEvent("quiz_complete", qRight + "/" + quiz.length + ", missed terms: " + (qMissedTerms.join(", ")||"none"));
+    setDone("quiz"); paintCardStatus();
+  }
+});
+$("#qRetake").addEventListener("click", ()=>{ $("#quizEnd").style.display="none"; $("#quizMain").style.display="block"; buildQuiz(); showQuestion(); logEvent("quiz_retake",""); });
+$("#qToCards").addEventListener("click", ()=>{ goTab("cards"); startSmart(); });
+buildQuiz(); showQuestion();
+
+/* ================= chip placement engine ================= */
+function chipBank(bankEl, values, onSelect){
+  bankEl.innerHTML = "";
+  shuffle(values).forEach(v=>{
+    const c = document.createElement("button"); c.className="chip"; c.textContent=v; c.dataset.value=v; c.draggable=true;
+    c.addEventListener("click", ()=>{ if(c.classList.contains("used")) return;
+      Array.from(bankEl.children).forEach(x=>x.classList.remove("selected"));
+      c.classList.add("selected"); onSelect(v, c); });
+    c.addEventListener("dragstart", e=>{ e.dataTransfer.setData("text/plain", v); onSelect(v, c); });
+    bankEl.appendChild(c);
+  });
+}
+function markUsed(bankEl, v, used){
+  Array.from(bankEl.children).forEach(c=>{ if(c.dataset.value===v){ c.classList.toggle("used", used); c.classList.remove("selected"); } });
+}
+
+/* ---- Missing Word ---- */
+let blankSel = null;
+function updBlankBar(){ setBar("blankBar","blankBarText","blankEnc", blankState.filter(v=>v).length, BLANKS.length, "Words placed"); }
+const blankState = BLANKS.map(()=>null);
+function buildBlanks(){
+  const bank = $("#blankBank");
+  chipBank(bank, BLANKS.map(b=>b.a).concat(BLANK_DECOYS), v=>{ blankSel=v; });
+  bank.addEventListener("click", ()=>{ const s=bank.querySelector(".chip.selected"); blankSel = s ? s.dataset.value : blankSel; });
+  const list = $("#blankList"); list.innerHTML = "";
+  BLANKS.forEach((b,i)=>{
+    const p = document.createElement("p"); p.className="sentence";
+    const parts = b.s.split("___");
+    p.innerHTML = parts[0] + "<span class='blank' data-i='"+i+"'>&nbsp;</span>" + (parts[1]||"");
+    list.appendChild(p);
+  });
+  $$("#blankList .blank").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const i = +el.dataset.i;
+      if(blankState[i]){ markUsed(bank, blankState[i], false); blankState[i]=null; el.textContent=" "; el.classList.remove("right","wrong"); updBlankBar(); return; }
+      if(!blankSel) return;
+      blankState[i]=blankSel; el.textContent=blankSel; markUsed(bank, blankSel, true); blankSel=null; updBlankBar();
+    });
+    el.addEventListener("dragover", e=>e.preventDefault());
+    el.addEventListener("drop", e=>{ e.preventDefault(); const v=e.dataTransfer.getData("text/plain"); const i=+el.dataset.i;
+      if(blankState[i]) markUsed(bank, blankState[i], false);
+      blankState[i]=v; el.textContent=v; markUsed(bank, v, true); updBlankBar(); });
+  });
+  $("#blankScore").textContent = "";
+  updBlankBar();
+}
+$("#blankCheck").addEventListener("click", ()=>{
+  let right = 0;
+  $$("#blankList .blank").forEach(el=>{
+    const i = +el.dataset.i;
+    const ok = blankState[i] && blankState[i].toLowerCase() === BLANKS[i].a.toLowerCase();
+    el.classList.toggle("right", !!ok); el.classList.toggle("wrong", !ok);
+    if(ok) right++;
+  });
+  $("#blankScore").innerHTML = "Score: " + right + " / " + BLANKS.length + (right===BLANKS.length ? " — perfect! 🏆" : "");
+  logEvent("blank_check", right + "/" + BLANKS.length);
+  if(right===BLANKS.length) setDone("blank");
+});
+$("#blankReset").addEventListener("click", ()=>{ blankState.fill(null); buildBlanks(); logEvent("blank_reset",""); });
+buildBlanks();
+
+/* ---- Label the Diagram ---- */
+let diaSel = null;
+function updDiaBar(){ setBar("diaBar","diaBarText","diaEnc", Object.values(diaState).filter(v=>v).length, 4, "Labels placed"); }
+const diaState = {crest:null, trough:null, wavelength:null, amplitude:null};
+function buildDiagram(){
+  const bank = $("#diaBank");
+  chipBank(bank, Object.values(ZONES), v=>{ diaSel=v; });
+  bank.addEventListener("click", ()=>{ const s=bank.querySelector(".chip.selected"); diaSel = s ? s.dataset.value : diaSel; });
+  $$("#diaSvg .zone").forEach(z=>{
+    const key = z.dataset.zone, txt = z.querySelector("text");
+    function place(v){
+      if(diaState[key]) markUsed(bank, diaState[key], false);
+      diaState[key]=v; txt.textContent=v; z.classList.add("filled"); z.classList.remove("right","wrong"); markUsed(bank, v, true); updDiaBar();
+    }
+    z.addEventListener("click", ()=>{
+      if(diaState[key]){ markUsed(bank, diaState[key], false); diaState[key]=null; txt.textContent=""; z.classList.remove("filled","right","wrong"); updDiaBar(); return; }
+      if(diaSel){ place(diaSel); diaSel=null; }
+    });
+    z.addEventListener("dragover", e=>e.preventDefault());
+    z.addEventListener("drop", e=>{ e.preventDefault(); place(e.dataTransfer.getData("text/plain")); });
+    z._place = place;
+  });
+  $("#diaScore").textContent = "";
+  updDiaBar();
+}
+$("#diaCheck").addEventListener("click", ()=>{
+  let right = 0;
+  $$("#diaSvg .zone").forEach(z=>{
+    const ok = diaState[z.dataset.zone] === ZONES[z.dataset.zone];
+    z.classList.toggle("right", ok); z.classList.toggle("wrong", !ok);
+    if(ok) right++;
+  });
+  $("#diaScore").innerHTML = "Score: " + right + " / 4" + (right===4 ? " — perfect! 🏆" : "");
+  logEvent("diagram_check", right + "/4");
+  if(right===4) setDone("diagram");
+});
+$("#diaReset").addEventListener("click", ()=>{
+  Object.keys(diaState).forEach(k=>diaState[k]=null);
+  $$("#diaSvg .zone").forEach(z=>{ z.querySelector("text").textContent=""; z.classList.remove("filled","right","wrong"); });
+  buildDiagram(); logEvent("diagram_reset","");
+});
+buildDiagram();
+
+/* ---- Order ---- */
+let ordSel = null;
+function updOrdBar(){ setBar("ordBar","ordBarText","ordEnc", ordState.filter(v=>v).length, ORDER.length, "Slots filled"); }
+const ordState = ORDER.map(()=>null);
+function buildOrder(){
+  const bank = $("#ordBank");
+  chipBank(bank, ORDER, v=>{ ordSel=v; });
+  bank.addEventListener("click", ()=>{ const s=bank.querySelector(".chip.selected"); ordSel = s ? s.dataset.value : ordSel; });
+  const grid = $("#ordSlots"); grid.innerHTML = "";
+  ORDER.forEach((_,i)=>{
+    const s = document.createElement("div"); s.className="slot"; s.dataset.i=i; s.textContent = (i+1) + ". —";
+    s.addEventListener("click", ()=>{
+      if(ordState[i]){ markUsed(bank, ordState[i], false); ordState[i]=null; s.textContent=(i+1)+". —"; s.classList.remove("filled","right","wrong"); updOrdBar(); return; }
+      if(!ordSel) return;
+      ordState[i]=ordSel; s.textContent=(i+1)+". "+ordSel; s.classList.add("filled"); markUsed(bank, ordSel, true); ordSel=null; updOrdBar();
+    });
+    s.addEventListener("dragover", e=>e.preventDefault());
+    s.addEventListener("drop", e=>{ e.preventDefault(); const v=e.dataTransfer.getData("text/plain");
+      if(ordState[i]) markUsed(bank, ordState[i], false);
+      ordState[i]=v; s.textContent=(i+1)+". "+v; s.classList.add("filled"); markUsed(bank, v, true); updOrdBar(); });
+    grid.appendChild(s);
+  });
+  $("#ordScore").textContent = "";
+  updOrdBar();
+}
+$("#ordCheck").addEventListener("click", ()=>{
+  let right = 0;
+  $$("#ordSlots .slot").forEach(s=>{
+    const ok = ordState[+s.dataset.i] === ORDER[+s.dataset.i];
+    s.classList.toggle("right", ok); s.classList.toggle("wrong", !ok);
+    if(ok) right++;
+  });
+  $("#ordScore").innerHTML = "Score: " + right + " / " + ORDER.length + (right===ORDER.length ? " — perfect! 🏆" : "");
+  logEvent("order_check", right + "/" + ORDER.length);
+  if(right===ORDER.length && sortPerfect) setDone("order");
+  window._ordRight = right;
+});
+$("#ordReset").addEventListener("click", ()=>{ ordState.fill(null); buildOrder(); });
+
+function findChip(v){ return Array.from(document.querySelectorAll('.chip')).find(c=>c.dataset.value===v) || null; }
+/* ---- Sort ---- */
+let sortSel = null, sortPerfect = false;
+function updSortBar(){ setBar("sortBar","sortBarText","sortEnc", Object.values(sortState).filter(v=>v).length, SORT.length, "Cards sorted"); }
+const sortState = {}; SORT.forEach(x=>sortState[x.s]=null);
+function buildSort(){
+  const bank = $("#sortBank");
+  bank.innerHTML = "";
+  shuffle(SORT.map(x=>x.s)).forEach(v=>{
+    const c = document.createElement("button"); c.className="chip"; c.textContent=v; c.dataset.value=v; c.draggable=true;
+    c.addEventListener("click", ()=>{
+      if(c.parentElement!==bank){ bank.appendChild(c); sortState[v]=null; sortSel=null; updSortBar(); return; }
+      Array.from(document.querySelectorAll("#sortBank .chip, .bin .chip")).forEach(x=>x.classList.remove("selected"));
+      c.classList.add("selected"); sortSel=v;
+    });
+    c.addEventListener("dragstart", e=>{ e.dataTransfer.setData("text/plain", v); sortSel=v; });
+    bank.appendChild(c);
+  });
+  [["#binHelpful","helpful"],["#binHarmful","harmful"]].forEach(([sel,bin])=>{
+    const el = $(sel);
+    el.addEventListener("click", e=>{
+      if(e.target!==el && e.target.tagName!=="H4") return;
+      if(!sortSel) return;
+      const chip = findChip(sortSel);
+      if(chip){ el.appendChild(chip); chip.classList.remove("selected"); sortState[sortSel]=bin; sortSel=null; updSortBar(); }
+    });
+    el.addEventListener("dragover", e=>e.preventDefault());
+    el.addEventListener("drop", e=>{ e.preventDefault(); const v=e.dataTransfer.getData("text/plain");
+      const chip = findChip(v);
+      if(chip){ el.appendChild(chip); sortState[v]=bin; sortSel=null; updSortBar(); } });
+  });
+}
+$("#sortCheck").addEventListener("click", ()=>{
+  let right = 0;
+  SORT.forEach(x=>{ if(sortState[x.s]===x.bin) right++; });
+  sortPerfect = right===SORT.length;
+  $("#binHelpful").classList.toggle("right", SORT.filter(x=>x.bin==="helpful").every(x=>sortState[x.s]==="helpful"));
+  $("#binHarmful").classList.toggle("right", SORT.filter(x=>x.bin==="harmful").every(x=>sortState[x.s]==="harmful"));
+  $("#sortScore").innerHTML = "Score: " + right + " / " + SORT.length + (sortPerfect ? " — perfect! 🏆" : "");
+  logEvent("sort_check", right + "/" + SORT.length);
+  if(sortPerfect && window._ordRight===ORDER.length) setDone("order");
+});
+$("#sortReset").addEventListener("click", ()=>{
+  SORT.forEach(x=>sortState[x.s]=null); sortPerfect=false;
+  $("#binHelpful").classList.remove("right"); $("#binHarmful").classList.remove("right");
+  $$(".bin .chip").forEach(c=>c.remove()); buildSort(); $("#sortScore").textContent=""; updSortBar();
+});
+buildSort();
+buildOrder();
+
+paintProgress();
+renderAudit();
+logEvent("page_load", "loads=" + audit.loads);
+</script>
+</body>
+</html>
