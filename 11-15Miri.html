@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saxon Math Grade 4 — Parallel Practice &amp; Extension (Miri v2)</title>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg: #f3f6fa;
+      --surface: #ffffff;
+      --primary: #1e3a5f;
+      --primary-light: #2b548a;
+      --accent: #0f766e;
+      --accent-hover: #0d5e58;
+      --accent-soft: #ecfdf5;
+      --accent-border: #99f6e4;
+      --answer-bg: #fffbeb;
+      --answer-border: #fcd34d;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #dbe3ee;
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #162e4d 0%, #1e3a5f 55%, #0f766e 100%);
+      color: #ffffff;
+      padding: 28px 20px 26px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.14);
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    header.hero h1 {
+      margin: 10px 0 6px;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    header.hero p {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 0.98rem;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(243, 246, 250, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+
+    .toolbar-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .filter-group, .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .bulk-btn {
+      background: var(--surface);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .bulk-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .counter-pill {
+      background: #e2e8f0;
+      color: #1e293b;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    main {
+      padding: 24px 0 60px;
+    }
+
+    .section-banner {
+      margin: 26px 0 16px;
+      padding: 12px 18px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .section-banner span {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s ease;
+    }
+
+    .card.revealed {
+      border-color: #94a3b8;
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .q-num {
+      flex-shrink: 0;
+      min-width: 38px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 8px;
+      background: #e0ecff;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.98rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .q-num.bonus {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .q-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .q-body {
+      flex: 1;
+      font-size: 1.03rem;
+    }
+
+    .q-body p {
+      margin: 0 0 10px;
+    }
+
+    .q-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .figure-box {
+      margin: 12px 0 6px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    .figure-caption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    .div-tableau-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin: 8px 0;
+      display: inline-block;
+    }
+
+    .card-actions {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.16s ease, transform 0.1s ease;
+    }
+
+    .toggle-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .toggle-btn:active {
+      transform: scale(0.98);
+    }
+
+    .toggle-btn.open {
+      background: #475569;
+    }
+
+    .toggle-btn.open:hover {
+      background: #334155;
+    }
+
+    /* Hidden by default */
+    .solution-panel {
+      display: none;
+      margin-top: 14px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-soft);
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .solution-panel.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .answer-strip {
+      background: var(--answer-bg);
+      border-bottom: 1px solid var(--answer-border);
+      padding: 11px 16px;
+      font-size: 1.03rem;
+      color: #78350f;
+    }
+
+    .answer-strip strong {
+      color: #92400e;
+      text-transform: uppercase;
+      font-size: 0.84rem;
+      letter-spacing: 0.04em;
+      margin-right: 8px;
+    }
+
+    .solution-steps {
+      padding: 14px 16px;
+      color: #134e4a;
+      font-size: 0.98rem;
+    }
+
+    .solution-steps h4 {
+      margin: 0 0 8px;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #0f766e;
+    }
+
+    .solution-steps p {
+      margin: 6px 0;
+    }
+
+    .solution-steps ol, .solution-steps ul {
+      margin: 6px 0 6px 20px;
+      padding: 0;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    svg text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-top">
+        <span class="badge">Saxon Math Grade 4 &bull; Lesson 55 Parallel Set</span>
+        <span class="badge">Multiples &bull; Factors &bull; Decimals &bull; PEMDAS</span>
+      </div>
+      <h1>Parallel Practice &amp; Interactive Solutions (Miri v2)</h1>
+      <p>Click <strong>Show Answer &amp; Solution</strong> under any problem to reveal the step-by-step LaTeX work and final answer.</p>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="container toolbar-inner">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all" onclick="filterCards('all', this)">All Questions (46)</button>
+        <button class="filter-btn" data-filter="lesson" onclick="filterCards('lesson', this)">Lesson Practice (a&ndash;l)</button>
+        <button class="filter-btn" data-filter="written" onclick="filterCards('written', this)">Written Practice (1&ndash;34)</button>
+      </div>
+      <div class="action-group">
+        <span class="counter-pill" id="revealCounter">Revealed: 0 / 46</span>
+        <button class="bulk-btn" onclick="toggleAll(true)">Show All</button>
+        <button class="bulk-btn" onclick="toggleAll(false)">Hide All</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- ==================== LESSON PRACTICE ==================== -->
+    <div class="section-banner" data-section="lesson">
+      <h2>Lesson Practice (Parallel Set)</h2>
+      <span>Multiples &amp; Factors &bull; Problems a&ndash;l</span>
+    </div>
+
+    <!-- LP a -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">a.</span>
+        <div class="q-body">
+          <p>List the first five multiples of $7$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $7,\; 14,\; 21,\; 28,\; 35$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Multiply $7$ by the first five counting numbers ($1, 2, 3, 4,$ and $5$):</p>
+          <p>$$7 \times 1 = 7, \quad 7 \times 2 = 14, \quad 7 \times 3 = 21, \quad 7 \times 4 = 28, \quad 7 \times 5 = 35$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP b -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">b.</span>
+        <div class="q-body">
+          <p>List the third, fourth, and fifth multiples of $8$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $24,\; 32,\; 40$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Multiply $8$ by $3$, $4$, and $5$:</p>
+          <p>$$8 \times 3 = 24, \quad 8 \times 4 = 32, \quad 8 \times 5 = 40$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP c -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">c.</span>
+        <div class="q-body">
+          <p>What is the sixth multiple of $9$?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $54$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Multiply $9$ by $6$:</p>
+          <p>$$9 \times 6 = 54$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP d -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">d.</span>
+        <div class="q-body">
+          <p>What is the last digit of any multiple of $100$?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $0$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>The multiples of $100$ are $100, 200, 300, 400, \dots$ Every multiple of $100$ ends with $0$ in both the tens and ones places, so its last digit is always $0$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP e -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">e.</span>
+        <div class="q-body">
+          <p>Every whole-number multiple of $5$ ends with one of which two digits?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $0$ and $5$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Skip-counting by $5$ gives $5, 10, 15, 20, 25, 30, \dots$ The last digit always alternates between $5$ and $0$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP f -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">f.</span>
+        <div class="q-body">
+          <p>Which five digits can appear in the ones place of an even whole number (a multiple of $2$)?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $0,\; 2,\; 4,\; 6,$ and $8$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Multiples of $2$ are even numbers: $2, 4, 6, 8, 10, 12, 14, 16, 18, 20, \dots$ Their ones digits are always $0, 2, 4, 6,$ or $8$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP g -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">g.</span>
+        <div class="q-body">
+          <p>Twelve is a multiple of which whole numbers?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $1,\; 2,\; 3,\; 4,\; 6,$ and $12$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Find all whole-number factor pairs whose product is $12$:</p>
+          <p>$$1 \times 12 = 12, \quad 2 \times 6 = 12, \quad 3 \times 4 = 12$$</p>
+          <p>Therefore, $12$ is a multiple of $1, 2, 3, 4, 6,$ and $12$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP h -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">h.</span>
+        <div class="q-body">
+          <p>On grid paper, draw two ways to make a rectangle with an area of $6$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> A $1 \times 6$ rectangle and a $2 \times 3$ rectangle</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Find the factor pairs of $6$: $1 \times 6 = 6$ and $2 \times 3 = 6$. These form two grid rectangles with area $6\text{ square units}$:</p>
+          <div class="figure-box">
+            <svg width="320" height="110" viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two rectangles with area 6: 1 by 6 and 2 by 3">
+              <polygon points="15,25 165,25 165,50 15,50" fill="#bae6fd" stroke="#0369a1" stroke-width="2"/>
+              <polyline points="40,25 40,50 65,50 65,25 90,25 90,50 115,50 115,25 140,25 140,50" fill="none" stroke="#0369a1" stroke-width="1.3"/>
+              <text x="90" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">1 &times; 6 (Area = 6)</text>
+
+              <polygon points="205,25 280,25 280,75 205,75" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>
+              <polyline points="230,25 230,75 255,75 255,25" fill="none" stroke="#15803d" stroke-width="1.3"/>
+              <polyline points="205,50 280,50" fill="none" stroke="#15803d" stroke-width="1.3"/>
+              <text x="242.5" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">2 &times; 3 (Area = 6)</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP i -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">i.</span>
+        <div class="q-body">
+          <p>The rectangle below shows one possible way to make a rectangle with an area of $14$.</p>
+          <div class="figure-box">
+            <svg width="204" height="72" viewBox="0 0 204 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="2 by 7 rectangle with area 14">
+              <polygon points="10,10 192,10 192,62 10,62" fill="#e2e8f0" stroke="#1e293b" stroke-width="2"/>
+              <polyline points="36,10 36,62 62,62 62,10 88,10 88,62 114,62 114,10 140,10 140,62 166,62 166,10" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+              <polyline points="10,36 192,36" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+            </svg>
+            <div class="figure-caption">$2 \times 7$ rectangle ($\text{Area} = 14$)</div>
+          </div>
+          <p>Draw all the other possible arrangements.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> A $1 \times 14$ rectangle (and rotated orientations $7 \times 2$ and $14 \times 1$)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>The factor pairs of $14$ are $2 \times 7 = 14$ and $1 \times 14 = 14$. Besides the given $2 \times 7$ rectangle, the other arrangement is a $1 \times 14$ strip (plus vertical rotations $7 \times 2$ and $14 \times 1$):</p>
+          <div class="figure-box">
+            <svg width="440" height="285" viewBox="0 0 440 285" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Other rectangle arrangements with area 14">
+              <text x="148" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">1 &times; 14 Arrangement</text>
+              <polygon points="15,26 281,26 281,45 15,45" fill="#fef08a" stroke="#a16207" stroke-width="1.8"/>
+              <polyline points="34,26 34,45 53,45 53,26 72,26 72,45 91,45 91,26 110,26 110,45 129,45 129,26 148,26 148,45 167,45 167,26 186,26 186,45 205,45 205,26 224,26 224,45 243,45 243,26 262,26 262,45" fill="none" stroke="#a16207" stroke-width="1.2"/>
+
+              <text x="140" y="78" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">7 &times; 2 (Rotated)</text>
+              <polygon points="120,88 160,88 160,228 120,228" fill="#ddd6fe" stroke="#5b21b6" stroke-width="1.8"/>
+              <polyline points="140,88 140,228" fill="none" stroke="#5b21b6" stroke-width="1.2"/>
+              <polyline points="120,108 160,108 160,128 120,128 120,148 160,148 160,168 120,168 120,188 160,188 160,208 120,208" fill="none" stroke="#5b21b6" stroke-width="1.2"/>
+
+              <text x="355" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">14 &times; 1 (Rotated)</text>
+              <polygon points="346,26 364,26 364,278 346,278" fill="#fed7aa" stroke="#c2410c" stroke-width="1.8"/>
+              <polyline points="346,44 364,44 364,62 346,62 346,80 364,80 364,98 346,98 346,116 364,116 364,134 346,134 346,152 364,152 364,170 346,170 346,188 364,188 364,206 346,206 346,224 364,224 364,242 346,242 346,260 364,260" fill="none" stroke="#c2410c" stroke-width="1.2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP j -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">j.</span>
+        <div class="q-body">
+          <p>List the factors of $7$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $1$ and $7$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>The only whole numbers that multiply to give $7$ are $1 \times 7 = 7$. Thus, $7$ has only two factors: $1$ and $7$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP k -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">k.</span>
+        <div class="q-body">
+          <p>Write all the prime numbers between $10$ and $20$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $11,\; 13,\; 17,\; 19$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Test each counting number between $10$ and $20$ to see which have exactly two factors ($1$ and itself):</p>
+          <ul>
+            <li>$11$: factors $1, 11$ &rarr; <strong>Prime</strong></li>
+            <li>$12$: divisible by $2, 3, 4, 6$ &rarr; Composite</li>
+            <li>$13$: factors $1, 13$ &rarr; <strong>Prime</strong></li>
+            <li>$14$: divisible by $2, 7$ &rarr; Composite</li>
+            <li>$15$: divisible by $3, 5$ &rarr; Composite</li>
+            <li>$16$: divisible by $2, 4, 8$ &rarr; Composite</li>
+            <li>$17$: factors $1, 17$ &rarr; <strong>Prime</strong></li>
+            <li>$18$: divisible by $2, 3, 6, 9$ &rarr; Composite</li>
+            <li>$19$: factors $1, 19$ &rarr; <strong>Prime</strong></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- LP l -->
+    <article class="card" data-category="lesson">
+      <div class="q-header">
+        <span class="q-num">l.</span>
+        <div class="q-body">
+          <p>True or False: The number $1$ is neither a prime number nor a composite number.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> True</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>A prime number must have <em>exactly two</em> different factors, and a composite number must have <em>more than two</em> factors. Because $1$ has only <strong>one</strong> factor ($1$ itself), it is neither prime nor composite.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ==================== WRITTEN PRACTICE ==================== -->
+    <div class="section-banner" data-section="written">
+      <h2>Written Practice (Parallel + Extension)</h2>
+      <span>Problems 1&ndash;30 Parallel &bull; Problems 31&ndash;34 Extension</span>
+    </div>
+
+    <!-- WP 1 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">1.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Formulate</span> Write and solve an equation: Elena bought a notebook for $\$2.45$ and sold it for $85\text{¢}$ more. For what price did she sell the notebook?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $\$3.30$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Convert $85\text{¢}$ to $\$0.85$ and let $p$ be the selling price:</p>
+          <p>$$p = \$2.45 + \$0.85 = \$3.30$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 2 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*2.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Formulate</span> Write and solve an equation: Three thousand runners entered a charity race. Only nine will win medals. How many runners will not win medals?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $2,991\text{ runners}$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Let $n$ be the number of runners who do not win medals. Subtract the $9$ medal winners from the $3,000$ runners:</p>
+          <p>$$n = 3,000 - 9 = 2,991$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 3 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*3.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Formulate</span> Write and solve an equation: A town survey showed that $12,004$ people live in Oak Ridge and $7,658$ people live in Pine Valley. How many more people live in Oak Ridge than in Pine Valley?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $4,346\text{ people}$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Let $d$ be the difference in population between the two towns:</p>
+          <p>$$d = 12,004 - 7,658 = 4,346$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 4 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*4.</span>
+        <div class="q-body">
+          <p>Forty-five percent of the books on the shelf were fiction. Were there more fiction books or more nonfiction books on the shelf?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> More nonfiction books</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>All the books together represent $100\%$. Subtract the fiction percentage to find the nonfiction percentage:</p>
+          <p>$$100\% - 45\% = 55\% \text{ nonfiction}$$</p>
+          <p>Since $55\% > 45\%$, there were <strong>more nonfiction books</strong> on the shelf.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 5 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">5.</span>
+        <div class="q-body">
+          <p>Draw a rectangle that is $5\text{ cm}$ long and $2\text{ cm}$ wide.</p>
+          <p><strong>a.</strong> What is the perimeter of the rectangle?</p>
+          <p><strong>b.</strong> What is the area of the rectangle?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> <strong>a.</strong> $14\text{ cm}$ &nbsp;&bull;&nbsp; <strong>b.</strong> $10\text{ cm}^2$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <div class="figure-box">
+            <svg width="265" height="130" viewBox="0 0 265 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5 cm by 2 cm rectangle">
+              <polygon points="35,35 185,35 185,95 35,95" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2.4"/>
+              <polyline points="65,35 65,95 95,95 95,35 125,35 125,95 155,95 155,35" fill="none" stroke="#93c5fd" stroke-width="1.2" stroke-dasharray="3,2"/>
+              <polyline points="35,65 185,65" fill="none" stroke="#93c5fd" stroke-width="1.2" stroke-dasharray="3,2"/>
+              <text x="110" y="25" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a5f">5 cm</text>
+              <text x="197" y="69" text-anchor="start" font-size="13" font-weight="700" fill="#1e3a5f">2 cm</text>
+            </svg>
+          </div>
+          <p><strong>a. Perimeter:</strong> Add all four sides:</p>
+          <p>$$P = 5\text{ cm} + 2\text{ cm} + 5\text{ cm} + 2\text{ cm} = 2 \times (5\text{ cm} + 2\text{ cm}) = 14\text{ cm}$$</p>
+          <p><strong>b. Area:</strong> Multiply length by width:</p>
+          <p>$$A = 5\text{ cm} \times 2\text{ cm} = 10\text{ cm}^2$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 6 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*6.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Analyze</span> Marcus found the fourth multiple of $6$. Then he subtracted five from this number. What was his answer?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $19$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li>Find the fourth multiple of $6$: $6 \times 4 = 24$.</li>
+            <li>Subtract $5$ from $24$: $24 - 5 = 19$.</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 7 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*7.</span>
+        <div class="q-body">
+          <p>Two factors of $21$ are $1$ and $21$ because $1 \times 21 = 21$. Find two more factors of $21$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $3$ and $7$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Find another pair of whole numbers that multiply to $21$:</p>
+          <p>$$3 \times 7 = 21$$</p>
+          <p>So $3$ and $7$ are two more factors of $21$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 8 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">8.</span>
+        <div class="q-body">
+          <p>David finished soccer practice $25$ minutes before the time shown on the clock. What time did David finish soccer practice?</p>
+          <div class="figure-box">
+            <svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Analog clock showing 4:42">
+              <circle cx="80" cy="80" r="72" fill="#ffffff" stroke="#334155" stroke-width="4"/>
+              <circle cx="80" cy="80" r="67" fill="none" stroke="#94a3b8" stroke-width="1"/>
+              <g stroke="#334155">
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(6 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(12 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(18 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(24 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(30 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(36 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(42 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(48 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(54 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(60 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(66 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(72 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(78 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(84 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(90 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(96 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(102 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(108 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(114 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(120 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(126 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(132 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(138 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(144 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(150 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(156 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(162 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(168 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(174 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(180 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(186 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(192 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(198 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(204 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(210 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(216 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(222 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(228 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(234 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(240 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(246 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(252 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(258 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(264 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(270 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(276 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(282 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(288 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(294 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(300 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(306 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(312 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(318 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(324 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="21" stroke-width="2.2" transform="rotate(330 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(336 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(342 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(348 80 80)"/>
+                <line x1="80" y1="14" x2="80" y2="18" stroke-width="1.1" transform="rotate(354 80 80)"/>
+              </g>
+              <g font-size="13" font-weight="700" fill="#1e293b" text-anchor="middle" dominant-baseline="central">
+                <text x="80" y="31">12</text>
+                <text x="104.5" y="37.6">1</text>
+                <text x="122.4" y="55.5">2</text>
+                <text x="129" y="80">3</text>
+                <text x="122.4" y="104.5">4</text>
+                <text x="104.5" y="122.4">5</text>
+                <text x="80" y="129">6</text>
+                <text x="55.5" y="122.4">7</text>
+                <text x="37.6" y="104.5">8</text>
+                <text x="31" y="80">9</text>
+                <text x="37.6" y="55.5">10</text>
+                <text x="55.5" y="37.6">11</text>
+              </g>
+              <!-- Hour hand: 4:42 -> 141 deg -->
+              <polyline points="80,80 102.0,107.2" stroke="#1e293b" stroke-width="3.6" stroke-linecap="round"/>
+              <polygon points="105.2,111.1 96.5,103.8 100.8,100.3" fill="#1e293b"/>
+              <!-- Minute hand: 42 min -> 252 deg -->
+              <polyline points="80,80 30.5,96.1" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+              <polygon points="24.8,97.9 35.6,97.3 33.9,92.0" fill="#1e293b"/>
+              <circle cx="80" cy="80" r="4" fill="#1e293b"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $4:17$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li><strong>Read the clock:</strong> The shorter hour hand is between $4$ and $5$ (so the hour is $4$), and the longer minute hand points two ticks past $8$ ($42\text{ minutes}$). The clock shows <strong>$4:42$</strong>.</li>
+            <li><strong>Subtract $25\text{ minutes}$:</strong>
+              $$4:42 - 25\text{ minutes} = 4:17$$
+            </li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 9 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*9.</span>
+        <div class="q-body">
+          <p>The U.S. Constitution was signed in $1787$. The Declaration of Independence was written in $1776$. How many years after the Declaration of Independence was the Constitution signed?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $11\text{ years}$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Subtract the earlier year ($1776$) from the later year ($1787$):</p>
+          <p>$$1787 - 1776 = 11\text{ years}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 10 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">10.</span>
+        <div class="q-body">
+          <p>What is the length of $\overline{AB}$?</p>
+          <div class="figure-box">
+            <svg width="450" height="92" viewBox="0 0 450 92" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centimeter ruler showing points P at 0, A at 2, and B at 8">
+              <polyline points="20,24 100,24 340,24" fill="none" stroke="#1e293b" stroke-width="2.4"/>
+              <circle cx="20" cy="24" r="4" fill="#1e293b"/>
+              <circle cx="100" cy="24" r="4" fill="#1e293b"/>
+              <circle cx="340" cy="24" r="4" fill="#1e293b"/>
+              <text x="20" y="14" text-anchor="middle" font-size="13" font-style="italic" font-weight="700" fill="#1e293b">P</text>
+              <text x="100" y="14" text-anchor="middle" font-size="13" font-style="italic" font-weight="700" fill="#1e293b">A</text>
+              <text x="340" y="14" text-anchor="middle" font-size="13" font-style="italic" font-weight="700" fill="#1e293b">B</text>
+
+              <polyline points="432,36 20,36 20,82 432,82" fill="#f8fafc" stroke="#334155" stroke-width="1.8"/>
+              <path d="M 432,36 Q 437,48 432,59 T 432,82" fill="none" stroke="#334155" stroke-width="1.8"/>
+
+              <polyline points="60,36 60,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="100,36 100,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="140,36 140,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="180,36 180,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="220,36 220,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="260,36 260,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="300,36 300,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="340,36 340,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="380,36 380,55" stroke="#334155" stroke-width="1.6"/>
+              <polyline points="420,36 420,55" stroke="#334155" stroke-width="1.6"/>
+
+              <g font-size="13" fill="#1e293b" text-anchor="middle">
+                <text x="38" y="74">cm</text>
+                <text x="60" y="74">1</text>
+                <text x="100" y="74">2</text>
+                <text x="140" y="74">3</text>
+                <text x="180" y="74">4</text>
+                <text x="220" y="74">5</text>
+                <text x="260" y="74">6</text>
+                <text x="300" y="74">7</text>
+                <text x="340" y="74">8</text>
+                <text x="380" y="74">9</text>
+                <text x="420" y="74">10</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $6\text{ cm}$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Point $A$ aligns with $2\text{ cm}$ and point $B$ aligns with $8\text{ cm}$. Subtract the starting mark from the ending mark:</p>
+          <p>$$\text{Length of }\overline{AB} = 8\text{ cm} - 2\text{ cm} = 6\text{ cm}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 11 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">11.</span>
+        <div class="q-body">
+          <p>$$6.00 - 3.47$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $2.53$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Align the decimal points and subtract (regrouping $6.00$ as $5\text{ ones}, 9\text{ tenths}, 10\text{ hundredths}$):</p>
+          <p>$$\begin{array}{r} 6.00 \\ -\; 3.47 \\ \hline 2.53 \end{array}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 12 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">12.</span>
+        <div class="q-body">
+          <p>$$80.7 - 36.4$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $44.3$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Align the decimal points and subtract tenths, ones, and tens:</p>
+          <p>$$\begin{array}{r} 80.7 \\ -\; 36.4 \\ \hline 44.3 \end{array}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 13 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">13.</span>
+        <div class="q-body">
+          <p>$$\$38.79 + \$27.45$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $\$66.24$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Align the decimal points and add column by column:</p>
+          <p>$$\begin{array}{r} \$38.79 \\ +\; \$27.45 \\ \hline \$66.24 \end{array}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 14 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*14.</span>
+        <div class="q-body">
+          <p>$$\$34.61 - \$8.35$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $\$26.26$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Align the decimal points and subtract:</p>
+          <p>$$\begin{array}{r} \$34.61 \\ -\; \$8.35 \\ \hline \$26.26 \end{array}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 15 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*15.</span>
+        <div class="q-body">
+          <p>$$76 \times 5$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $380$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>$$76 \times 5 = (70 \times 5) + (6 \times 5) = 350 + 30 = 380$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 16 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">16.</span>
+        <div class="q-body">
+          <p>$$80 \times 7$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $560$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Multiply $8\text{ tens} \times 7 = 56\text{ tens}$:</p>
+          <p>$$80 \times 7 = 560$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 17 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">17.</span>
+        <div class="q-body">
+          <p>$$78 \times 4$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $312$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>$$78 \times 4 = (70 \times 4) + (8 \times 4) = 280 + 32 = 312$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 18 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">18.</span>
+        <div class="q-body">
+          <p>$$54 \times 8$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $432$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>$$54 \times 8 = (50 \times 8) + (4 \times 8) = 400 + 32 = 432$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 19 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">19.</span>
+        <div class="q-body">
+          <p>$$\frac{56}{7}$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $8$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Divide $56$ by $7$ (since $7 \times 8 = 56$):</p>
+          <div class="div-tableau-box">
+            $$\begin{array}{r|rr}
+              & & 8 \\ \hline
+              7 & 5 & 6 \\
+              & -5 & 6 \\ \hline
+              & & 0
+            \end{array}$$
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 20 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*20.</span>
+        <div class="q-body">
+          <p>$$7\overline{)19}$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $2\text{ R }5$ (or $2\frac{5}{7}$)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>$7$ goes into $19$ two times ($2 \times 7 = 14$), leaving a remainder of $19 - 14 = 5$:</p>
+          <div class="div-tableau-box">
+            $$\begin{array}{r|rr}
+              & & 2\;\text{R}\,5 \\ \hline
+              7 & 1 & 9 \\
+              & -1 & 4 \\ \hline
+              & & 5
+            \end{array}$$
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 21 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">21.</span>
+        <div class="q-body">
+          <p>$$5.49 + 14.3 + 2.86$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $22.65$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Line up the decimal points (writing $14.3$ as $14.30$) and add:</p>
+          <p>$$\begin{array}{r} 5.49 \\ 14.30 \\ +\; 2.86 \\ \hline 22.65 \end{array}$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 22 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*22.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Model</span> Draw dots and make groups to illustrate $17 \div 5$.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $3\text{ R }2$ ($3$ groups of $5$ dots with $2$ dots left over)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Draw $17$ dots and circle groups of $5$ dots each:</p>
+          <div class="figure-box">
+            <svg width="450" height="105" viewBox="0 0 450 105" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="17 dots divided into 3 groups of 5 with 2 remaining">
+              <polyline points="10,18 118,18 118,74 10,74 10,18" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+              <circle cx="28" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="64" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="100" cy="34" r="4.8" fill="#1e3a5f"/>
+              <circle cx="46" cy="58" r="4.8" fill="#1e3a5f"/><circle cx="82" cy="58" r="4.8" fill="#1e3a5f"/>
+              <text x="64" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a5f">Group 1 (5)</text>
+
+              <polyline points="130,18 238,18 238,74 130,74 130,18" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+              <circle cx="148" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="184" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="220" cy="34" r="4.8" fill="#1e3a5f"/>
+              <circle cx="166" cy="58" r="4.8" fill="#1e3a5f"/><circle cx="202" cy="58" r="4.8" fill="#1e3a5f"/>
+              <text x="184" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a5f">Group 2 (5)</text>
+
+              <polyline points="250,18 358,18 358,74 250,74 250,18" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+              <circle cx="268" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="304" cy="34" r="4.8" fill="#1e3a5f"/><circle cx="340" cy="34" r="4.8" fill="#1e3a5f"/>
+              <circle cx="286" cy="58" r="4.8" fill="#1e3a5f"/><circle cx="322" cy="58" r="4.8" fill="#1e3a5f"/>
+              <text x="304" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a5f">Group 3 (5)</text>
+
+              <circle cx="388" cy="46" r="4.8" fill="#b45309"/>
+              <circle cx="416" cy="46" r="4.8" fill="#b45309"/>
+              <text x="402" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#b45309">Rem. (2)</text>
+            </svg>
+          </div>
+          <p>$$17 \div 5 = 3\text{ R }2$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 23 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">23.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Explain</span> Describe the order of operations in this expression and find the number it equals:</p>
+          <p>$$\sqrt{49} + (5 + 6)$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $18$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li>First, add inside the parentheses: $5 + 6 = 11$.</li>
+            <li>Simplify the square root: $\sqrt{49} = 7$ (because $7 \times 7 = 49$).</li>
+            <li>Finally, add the two results together:
+              $$\sqrt{49} + (5 + 6) = 7 + 11 = 18$$
+            </li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 24 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*24.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Connect</span> Write this addition problem as a multiplication problem:</p>
+          <p>$$\$0.65 + \$0.65 + \$0.65 + \$0.65 + \$0.65$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $5 \times \$0.65$ (which equals $\$3.25$)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Since $\$0.65$ is added $5$ times, repeated addition can be written as multiplication by $5$:</p>
+          <p>$$\$0.65 + \$0.65 + \$0.65 + \$0.65 + \$0.65 = 5 \times \$0.65 = \$3.25$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 25 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*25.</span>
+        <div class="q-body">
+          <p><strong>a.</strong> <span class="q-tag">Multiple Choice</span> Which of these numbers can be divided by $10$ without leaving a remainder?</p>
+          <div class="choices">
+            <span><strong>A</strong> $45$</span>
+            <span><strong>B</strong> $52$</span>
+            <span><strong>C</strong> $60$</span>
+            <span><strong>D</strong> $65$</span>
+          </div>
+          <p style="margin-top: 10px;"><strong>b.</strong> <span class="q-tag">Explain</span> How can you find the answer for part <strong>a</strong> just by looking?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> <strong>a.</strong> $\text{C } 60$ &nbsp;&bull;&nbsp; <strong>b.</strong> Look at the ones place: multiples of $10$ always end in $0$.</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p><strong>a.</strong> Dividing $60$ by $10$ gives $60 \div 10 = 6$ with no remainder, so choice <strong>C ($60$)</strong> is correct.</p>
+          <p><strong>b.</strong> Every whole number divisible by $10$ has $0$ as its last digit. Among $45, 52, 60,$ and $65$, only $60$ ends in $0$.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 26 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*26.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Justify</span> A shipping crate weighs $248$ ounces. Maya estimates that three identical crates weigh about $750$ ounces. Is Maya&rsquo;s estimate reasonable? Explain why or why not.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> Yes, Maya&rsquo;s estimate is reasonable.</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>$248$ ounces is very close to the compatible number $250$. Multiplying $250$ by $3$ gives:</p>
+          <p>$$3 \times 250 = 750\text{ ounces}$$</p>
+          <p>Comparing with the exact weight, $3 \times 248 = 744\text{ ounces}$, Maya&rsquo;s estimate of $750\text{ ounces}$ is very close and therefore <strong>reasonable</strong>.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 27 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">27.</span>
+        <div class="q-body">
+          <p><strong>a.</strong> Is $\$4.38$ closer to $\$4$ or to $\$5$?</p>
+          <p><strong>b.</strong> Is $4.38$ closer to $4.3$ or to $4.4$?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> <strong>a.</strong> $\$4$ &nbsp;&bull;&nbsp; <strong>b.</strong> $4.4$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p><strong>a.</strong> Halfway between $\$4.00$ and $\$5.00$ is $\$4.50$. Because $\$4.38 < \$4.50$, $\$4.38$ is closer to <strong>$\$4$</strong>.</p>
+          <p><strong>b.</strong> Halfway between $4.30$ and $4.40$ is $4.35$. Because $4.38 > 4.35$, $4.38$ is closer to <strong>$4.4$</strong>.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 28 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">28.</span>
+        <div class="q-body">
+          <p><strong>a.</strong> What fraction of the large square is shaded?</p>
+          <p><strong>b.</strong> The shaded part of the large square represents what decimal number?</p>
+          <p><strong>c.</strong> What percent of the large square is shaded?</p>
+          <div class="figure-box">
+            <svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="10 by 10 grid with 37 out of 100 squares shaded">
+              <rect x="15" y="15" width="180" height="180" fill="#ffffff"/>
+              <polygon points="141,15 195,15 195,195 141,195" fill="#94a3b8"/>
+              <polygon points="123,15 141,15 141,141 123,141" fill="#94a3b8"/>
+              <polyline points="15,15 195,15 195,195 15,195 15,15" fill="none" stroke="#1e293b" stroke-width="2"/>
+              <polyline points="33,15 33,195 51,195 51,15 69,15 69,195 87,195 87,15 105,15 105,195 123,195 123,15 141,15 141,195 159,195 159,15 177,15 177,195" fill="none" stroke="#1e293b" stroke-width="1.2"/>
+              <polyline points="15,33 195,33 195,51 15,51 15,69 195,69 195,87 15,87 15,105 195,105 195,123 15,123 15,141 195,141 195,159 15,159 15,177 195,177" fill="none" stroke="#1e293b" stroke-width="1.2"/>
+            </svg>
+            <div class="figure-caption">$10 \times 10$ Grid ($100$ equal squares)</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> <strong>a.</strong> $\dfrac{37}{100}$ &nbsp;&bull;&nbsp; <strong>b.</strong> $0.37$ &nbsp;&bull;&nbsp; <strong>c.</strong> $37\%$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>The large square contains $10 \times 10 = 100$ smaller squares, and $37$ squares are shaded ($3$ full columns of $10$ plus $7$ squares):</p>
+          <ul>
+            <li><strong>a. Fraction:</strong> $\dfrac{37}{100}$</li>
+            <li><strong>b. Decimal:</strong> Thirty-seven hundredths is written as $0.37$.</li>
+            <li><strong>c. Percent:</strong> $37$ out of $100$ equals $37\%$.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 29 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">*29.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Multiple Choice</span> Which of these numbers is a composite number and <em>not</em> a prime number?</p>
+          <div class="choices">
+            <span><strong>A</strong> $7$</span>
+            <span><strong>B</strong> $9$</span>
+            <span><strong>C</strong> $11$</span>
+            <span><strong>D</strong> $13$</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $\text{B } 9$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Check the factors of each choice:</p>
+          <ul>
+            <li>$7 = 1 \times 7$ (only $2$ factors &rarr; prime)</li>
+            <li>$9 = 1 \times 9$ and $3 \times 3$ ($3$ factors: $1, 3, 9$ &rarr; <strong>composite</strong>)</li>
+            <li>$11 = 1 \times 11$ (only $2$ factors &rarr; prime)</li>
+            <li>$13 = 1 \times 13$ (only $2$ factors &rarr; prime)</li>
+          </ul>
+          <p>Therefore, choice <strong>B ($9$)</strong> is a composite number.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 30 -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num">30.</span>
+        <div class="q-body">
+          <p>How many different three-digit numbers can you write using the digits $7$, $2$, and $5$? Each digit may be used only once in every number you write. Arrange the numbers in order from least to greatest.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $6$ different numbers: $257,\; 275,\; 527,\; 572,\; 725,\; 752$</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Pair each starting hundreds digit ($2$, $5$, or $7$) with the two arrangements of the remaining digits ($3 \times 2 \times 1 = 6$ numbers):</p>
+          <div class="figure-box">
+            <svg width="390" height="125" viewBox="0 0 390 125" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Branching diagram of all 6 permutations of 2, 5, and 7">
+              <polyline points="65,24 25,60 65,96" fill="none" stroke="#0f766e" stroke-width="2"/>
+              <circle cx="25" cy="60" r="15" fill="#0f766e"/><text x="25" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2</text>
+              <rect x="65" y="10" width="54" height="26" rx="6" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+              <text x="92" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#134e4a">257</text>
+              <rect x="65" y="82" width="54" height="26" rx="6" fill="#ecfdf5" stroke="#0f766e" stroke-width="1.5"/>
+              <text x="92" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#134e4a">275</text>
+
+              <polyline points="195,24 155,60 195,96" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+              <circle cx="155" cy="60" r="15" fill="#1e3a5f"/><text x="155" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">5</text>
+              <rect x="195" y="10" width="54" height="26" rx="6" fill="#eff6ff" stroke="#1e3a5f" stroke-width="1.5"/>
+              <text x="222" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a5f">527</text>
+              <rect x="195" y="82" width="54" height="26" rx="6" fill="#eff6ff" stroke="#1e3a5f" stroke-width="1.5"/>
+              <text x="222" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a5f">572</text>
+
+              <polyline points="325,24 285,60 325,96" fill="none" stroke="#b45309" stroke-width="2"/>
+              <circle cx="285" cy="60" r="15" fill="#b45309"/><text x="285" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">7</text>
+              <rect x="325" y="10" width="54" height="26" rx="6" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+              <text x="352" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">725</text>
+              <rect x="325" y="82" width="54" height="26" rx="6" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+              <text x="352" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">752</text>
+            </svg>
+          </div>
+          <p>Ordered from least to greatest:</p>
+          <p>$$257 < 275 < 527 < 572 < 725 < 752$$</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ==================== 4 NEW EXTENSION QUESTIONS (31-34) ==================== -->
+
+    <!-- WP 31: Terminating Decimal Division -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num bonus">31.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Decimal Division &bull; Terminating</span> Divide:</p>
+          <p>$$18.72 \div 2.4$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $7.8$ (terminating decimal)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li><strong>Shift the decimal point:</strong> Multiply both the divisor ($2.4$) and dividend ($18.72$) by $10$ (move each decimal point $1$ place to the right) so the divisor is a whole number:
+              $$18.72 \div 2.4 = 187.2 \div 24$$
+            </li>
+            <li><strong>Align place values and divide:</strong> Place the decimal point in the quotient directly above the decimal point in $187.2$:
+              <div class="div-tableau-box">
+                $$\begin{array}{r|rrrr}
+                  & & & 7. & 8 \\ \hline
+                  24 & 1 & 8 & 7. & 2 \\
+                  & -1 & 6 & 8 & \\ \hline
+                  & & 1 & 9 & 2 \\
+                  & & -1 & 9 & 2 \\ \hline
+                  & & & & 0
+                \end{array}$$
+              </div>
+            </li>
+            <li>Because the remainder is $0$, the quotient terminates at <strong>$7.8$</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 32: Repeating Decimal Division -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num bonus">32.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Decimal Division &bull; Repeating</span> Divide and write the quotient using a repeating bar:</p>
+          <p>$$8.5 \div 0.3$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $28.\overline{3}$ (repeating decimal)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li><strong>Shift the decimal point:</strong> Multiply both $0.3$ and $8.5$ by $10$ (move each decimal point $1$ place right):
+              $$8.5 \div 0.3 = 85 \div 3$$
+            </li>
+            <li><strong>Align place values and annex zeros:</strong> Continue dividing after the decimal point to observe the repeating remainder:
+              <div class="div-tableau-box">
+                $$\begin{array}{r|rrrrr}
+                  & & 2 & 8. & 3 & 3\dots \\ \hline
+                  3 & 8 & 5. & 0 & 0 \\
+                  & -6 & & & \\ \hline
+                  & 2 & 5 & & \\
+                  & -2 & 4 & & \\ \hline
+                  & & 1 & 0 & \\
+                  & & & -9 & \\ \hline
+                  & & & 1 & 0 \\
+                  & & & & -9 \\ \hline
+                  & & & & 1
+                \end{array}$$
+              </div>
+            </li>
+            <li>Because the remainder $1$ repeats endlessly, the digit $3$ repeats forever: <strong>$28.\overline{3}$</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 33: 2% Problem -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num bonus">33.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Percent Application &bull; 2%</span> A local bookstore charges a $2\%$ processing fee on online orders. If Miri places an online order for $\$150$, how much is the $2\%$ processing fee, and what is her total cost?</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $\$3.00$ fee &nbsp;&bull;&nbsp; $\$153.00$ total cost</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <ol>
+            <li><strong>Convert $2\%$ to a fraction and decimal:</strong>
+              $$2\% = \frac{2}{100} = 0.02$$
+            </li>
+            <li><strong>Find $2\%$ of $\$150$:</strong>
+              $$\text{Fee} = 0.02 \times \$150 = \$3.00$$
+              <em>(Mental math check: $1\%$ of $\$150$ is $\$1.50$, so $2\%$ is $2 \times \$1.50 = \$3.00$.)</em>
+            </li>
+            <li><strong>Add the fee to the order amount:</strong>
+              $$\text{Total Cost} = \$150.00 + \$3.00 = \$153.00$$
+            </li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <!-- WP 34: PEMDAS with Fractions, Decimals, Positive & Negative Exponents -->
+    <article class="card" data-category="written">
+      <div class="q-header">
+        <span class="q-num bonus">34.</span>
+        <div class="q-body">
+          <p><span class="q-tag">Order of Operations &bull; PEMDAS</span> Evaluate the expression:</p>
+          <p>$$2^3 + \left(\frac{3}{4} + 0.25\right) \times 4^{-1} - 1.5$$</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="toggle-btn" onclick="toggleSolution(this)" aria-expanded="false">Show Answer &amp; Solution</button>
+      </div>
+      <div class="solution-panel">
+        <div class="answer-strip"><strong>Answer:</strong> $6.75$ (or $6\frac{3}{4}$)</div>
+        <div class="solution-steps">
+          <h4>Step-by-Step Solution</h4>
+          <p>Follow <strong>PEMDAS</strong> (Parentheses, Exponents, Multiplication/Division, Addition/Subtraction):</p>
+          <ol>
+            <li><strong>Parentheses (P):</strong> Rewrite $\frac{3}{4}$ as the decimal $0.75$ (or $0.25$ as $\frac{1}{4}$) and add:
+              $$\frac{3}{4} + 0.25 = 0.75 + 0.25 = 1$$
+            </li>
+            <li><strong>Exponents (E):</strong> Evaluate the positive exponent $2^3$ and the negative exponent $4^{-1} = \frac{1}{4^1}$:
+              $$2^3 = 2 \times 2 \times 2 = 8, \qquad 4^{-1} = \frac{1}{4} = 0.25$$
+            </li>
+            <li><strong>Multiply (MD):</strong> Substitute back into the expression and multiply:
+              $$8 + 1 \times 0.25 - 1.5 = 8 + 0.25 - 1.5$$
+            </li>
+            <li><strong>Add &amp; Subtract from left to right (AS):</strong>
+              $$8 + 0.25 - 1.5 = 8.25 - 1.50 = 6.75 \quad \left(\text{or } 6\frac{3}{4}\right)$$
+            </li>
+          </ol>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    Saxon Math Grade 4 &bull; Lesson 55 Parallel &amp; Extension Worksheet &bull; File: 11-14Miri-v2.html
+  </footer>
+
+  <script>
+    function updateCounter() {
+      const total = document.querySelectorAll('.solution-panel').length;
+      const open = document.querySelectorAll('.solution-panel.visible').length;
+      document.getElementById('revealCounter').textContent = `Revealed: ${open} / ${total}`;
+    }
+
+    function toggleSolution(btn) {
+      const card = btn.closest('.card');
+      const panel = card.querySelector('.solution-panel');
+      const isVisible = panel.classList.toggle('visible');
+
+      card.classList.toggle('revealed', isVisible);
+      btn.classList.toggle('open', isVisible);
+      btn.setAttribute('aria-expanded', String(isVisible));
+      btn.textContent = isVisible ? 'Hide Answer & Solution' : 'Show Answer & Solution';
+
+      if (isVisible && window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([panel]);
+      }
+      updateCounter();
+    }
+
+    function toggleAll(show) {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const panel = card.querySelector('.solution-panel');
+        const btn = card.querySelector('.toggle-btn');
+        panel.classList.toggle('visible', show);
+        card.classList.toggle('revealed', show);
+        btn.classList.toggle('open', show);
+        btn.setAttribute('aria-expanded', String(show));
+        btn.textContent = show ? 'Hide Answer & Solution' : 'Show Answer & Solution';
+      });
+      if (show && window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
+      updateCounter();
+    }
+
+    function filterCards(category, activeBtn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      activeBtn.classList.add('active');
+
+      document.querySelectorAll('.card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      document.querySelectorAll('.section-banner').forEach(banner => {
+        if (category === 'all' || banner.dataset.section === category) {
+          banner.style.display = 'flex';
+        } else {
+          banner.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
