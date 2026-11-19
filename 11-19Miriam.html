@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saxon Math Grade 4 — Lesson 57 Written Practice</title>
+
+  <!-- MathJax 3 Configuration for Proper LaTeX Rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #eff6ff;
+      --border: #cbd5e1;
+      --text: #1e293b;
+      --muted: #64748b;
+      --sol-bg: #f8fafc;
+      --sol-border: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 24px 16px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px 36px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .print-btn {
+      background-color: #0f172a;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .print-btn:hover {
+      background-color: #334155;
+    }
+
+    .student-info {
+      display: none;
+    }
+
+    .problem-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      background: #ffffff;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .problem-text {
+      flex: 1;
+      font-size: 1.02rem;
+    }
+
+    .prob-num {
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 6px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .sub-list {
+      margin: 8px 0 0 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sub-list li {
+      margin-bottom: 4px;
+    }
+
+    .toggle-btn {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .toggle-btn[aria-expanded="true"] {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .solution-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      background-color: var(--sol-bg);
+      border-left: 4px solid var(--sol-border);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.98rem;
+    }
+
+    .solution-box.visible {
+      display: block;
+    }
+
+    .answer-line {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    table.math-table {
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+
+    table.math-table th,
+    table.math-table td {
+      border: 1px solid #94a3b8;
+      padding: 5px 12px;
+      text-align: center;
+    }
+
+    table.math-table th {
+      background-color: #e2e8f0;
+    }
+
+    .diagram-wrap {
+      margin: 10px 0 4px;
+    }
+
+    .work-space {
+      display: none;
+    }
+
+    .rwc-card {
+      border: 2px solid #64748b;
+      background-color: #f8fafc;
+    }
+
+    /* Printer-Friendly Styles: Hide ALL buttons and ALL answers/solutions */
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        font-size: 11pt;
+        color: #000000;
+      }
+
+      .container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      header {
+        border-bottom: 1.5pt solid #000000;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+      }
+
+      header h1 {
+        color: #000000;
+        font-size: 15pt;
+      }
+
+      header p {
+        color: #333333;
+      }
+
+      .student-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        font-size: 10.5pt;
+      }
+
+      .no-print,
+      .print-btn,
+      .toggle-btn,
+      .solution-box,
+      .solution-box.visible {
+        display: none !important;
+      }
+
+      .problem-card {
+        border: 1px solid #999999;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .prob-num {
+        color: #000000;
+      }
+
+      .skill-tag {
+        border: 1px solid #666666;
+        background: transparent;
+        color: #000000;
+      }
+
+      .work-space {
+        display: block;
+        height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Saxon Math Grade 4 — Lesson 57</h1>
+        <p>Written Practice (Problems 1–30) &amp; Real-World Connection (pp. 402–404)</p>
+      </div>
+      <button type="button" class="print-btn no-print" onclick="window.print()">Print Worksheet</button>
+    </header>
+
+    <div class="student-info">
+      <span>Name: ____________________________</span>
+      <span>Date: ___________________</span>
+    </div>
+
+    <!-- Problem 1 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*1.</span><span class="skill-tag">Formulate</span>
+          Marybeth could jump $42$ times each minute. At that rate, how many times could she jump in $8$ minutes? Write an equation to solve the problem.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $336\text{ times}$</div>
+        <div>
+          Multiply the rate ($42$ jumps per minute) by the time ($8$ minutes):
+          $$42 \times 8 = 336$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*2.</span><span class="skill-tag">Analyze</span>
+          Rodolfo could run $7$ miles in $1$ hour. At that rate, how many miles could Rodolfo run in $3$ hours? Make a table to solve.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $21\text{ miles}$</div>
+        <div>
+          Add $7$ miles for each hour:
+          <table class="math-table">
+            <thead>
+              <tr><th>Hours</th><td>$1$</td><td>$2$</td><td>$3$</td></tr>
+            </thead>
+            <tbody>
+              <tr><th>Miles</th><td>$7$</td><td>$14$</td><td>$21$</td></tr>
+            </tbody>
+          </table>
+          $$7 \times 3 = 21\text{ miles}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*3.</span><span class="skill-tag">Connect</span>
+          Write four multiplication/division facts using $8$, $9$, and $72$.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer:</div>
+        <div>
+          $$8 \times 9 = 72 \qquad 9 \times 8 = 72 \qquad 72 \div 8 = 9 \qquad 72 \div 9 = 8$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 4 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">4.</span>
+          What is the sum of $\sqrt{36}$ and $\sqrt{64}$?
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $14$</div>
+        <div>
+          Since $6 \times 6 = 36$, $\sqrt{36} = 6$. Since $8 \times 8 = 64$, $\sqrt{64} = 8$.
+          $$\sqrt{36} + \sqrt{64} = 6 + 8 = 14$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 5 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*5.</span>
+          Compare: $\dfrac{1}{3} \;\bigcirc\; 50\%$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $\dfrac{1}{3} \lt 50\%$</div>
+        <div>
+          $50\%$ is equal to $\dfrac{1}{2}$. Because $\dfrac{1}{3}$ is less than $\dfrac{1}{2}$, we have:
+          $$\frac{1}{3} \lt 50\%$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 6 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*6.</span>
+          <ul class="sub-list">
+            <li><strong>a.</strong> <span class="skill-tag">Estimate</span> Round $5280$ to the nearest thousand.</li>
+            <li><strong>b.</strong> Round $5280$ to the nearest hundred.</li>
+          </ul>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: a. $5000$ &nbsp;|&nbsp; b. $5300$</div>
+        <div>
+          <strong>a.</strong> $5280$ is between $5000$ and $6000$. Since the hundreds digit is $2$ ($\lt 5$), round down to $5000$.<br />
+          <strong>b.</strong> $5280$ is between $5200$ and $5300$. Since the tens digit is $8$ ($\ge 5$), round up to $5300$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 7 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*7.</span>
+          This array of $12$ stars shows that $4$ and $3$ are factors of $12$. Draw a different array of $12$ stars that shows two other factors of $12$.
+          <div class="diagram-wrap">
+            <svg width="110" height="68" viewBox="0 0 110 68" aria-label="3 by 4 array of stars">
+              <text x="4" y="18" font-size="16" fill="#1e293b">☆ ☆ ☆ ☆</text>
+              <text x="4" y="38" font-size="16" fill="#1e293b">☆ ☆ ☆ ☆</text>
+              <text x="4" y="58" font-size="16" fill="#1e293b">☆ ☆ ☆ ☆</text>
+            </svg>
+          </div>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: A $2 \times 6$ array (factors $2$ and $6$) or a $1 \times 12$ array (factors $1$ and $12$)</div>
+        <div>
+          Example ($2$ rows of $6$ stars, showing $2 \times 6 = 12$):
+          <div class="diagram-wrap">
+            <svg width="165" height="48" viewBox="0 0 165 48" aria-label="2 by 6 array of stars">
+              <text x="4" y="18" font-size="16" fill="#1e293b">☆ ☆ ☆ ☆ ☆ ☆</text>
+              <text x="4" y="38" font-size="16" fill="#1e293b">☆ ☆ ☆ ☆ ☆ ☆</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 8 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*8.</span><span class="skill-tag">Analyze</span>
+          Find the fourth multiple of $6$. Then find the third multiple of $8$. Compare these two multiples.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: Both equal $24$; they are equal ($24 = 24$).</div>
+        <div>
+          Fourth multiple of $6$: $6 \times 4 = 24$ (multiples: $6, 12, 18, 24$).<br />
+          Third multiple of $8$: $8 \times 3 = 24$ (multiples: $8, 16, 24$).<br />
+          Comparison: $24 = 24$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 9 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*9.</span>
+          Juan Ponce de León explored the coast of Florida in $1513$. In $1800$, the federal government of the United States moved to Washington, DC. Write a $\text{later} - \text{earlier} = \text{difference}$ equation and solve it to find the number of years that elapsed from $1513$ to $1800$.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $1800 - 1513 = 287$; $287\text{ years}$</div>
+        <div>
+          $$\begin{aligned}
+            \text{later} - \text{earlier} &= \text{difference} \\
+            1800 - 1513 &= 287\text{ years}
+          \end{aligned}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 10 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">10.</span>
+          A square has one side that is $7$ inches long.
+          <ul class="sub-list">
+            <li><strong>a.</strong> What is the perimeter of the square?</li>
+            <li><strong>b.</strong> What is the area of the square?</li>
+          </ul>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: a. $28\text{ inches}$ &nbsp;|&nbsp; b. $49\text{ square inches}$</div>
+        <div>
+          <strong>a.</strong> A square has $4$ equal sides: $P = 4 \times 7\text{ in.} = 28\text{ inches}$.<br />
+          <strong>b.</strong> Multiply length by width: $A = 7\text{ in.} \times 7\text{ in.} = 49\text{ square inches}$ ($\text{sq. in.}$).
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 11 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*11.</span>
+          $$\begin{array}{r} 70,003 \\ - 36,418 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $33,585$</div>
+        <div>
+          $$\begin{array}{r} 70,003 \\ - 36,418 \\ \hline 33,585 \end{array}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 12 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">12.</span>
+          $$\begin{array}{r} n \\ - 4.32 \\ \hline 2.57 \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $n = 6.89$</div>
+        <div>
+          Add $2.57$ and $4.32$ to find $n$:
+          $$n = 2.57 + 4.32 = 6.89$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 13 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">13.</span>
+          $$\begin{array}{r} \$861.34 \\ + \$764.87 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $\$1,626.21$</div>
+        <div>
+          $$\begin{array}{r} \$861.34 \\ + \$764.87 \\ \hline \$1,626.21 \end{array}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 14 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">14.</span>
+          $$\begin{array}{r} 93 \\ \times \phantom{0}5 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $465$</div>
+        <div>
+          $5 \times 3 = 15$ (write $5$, carry $1$); $5 \times 9 + 1 = 46 \implies 465$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 15 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">15.</span>
+          $$\begin{array}{r} 84 \\ \times \phantom{0}6 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $504$</div>
+        <div>
+          $6 \times 4 = 24$ (write $4$, carry $2$); $6 \times 8 + 2 = 50 \implies 504$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 16 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">16.</span>
+          $$\begin{array}{r} 77 \\ \times \phantom{0}7 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $539$</div>
+        <div>
+          $7 \times 7 = 49$ (write $9$, carry $4$); $7 \times 7 + 4 = 53 \implies 539$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 17 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">17.</span>
+          $$\begin{array}{r} 80 \\ \times \phantom{0}8 \\ \hline \end{array}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $640$</div>
+        <div>
+          $8 \times 8\text{ tens} = 64\text{ tens} = 640$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 18 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">18.</span>
+          $$\frac{56}{8}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $7$</div>
+        <div>
+          Since $8 \times 7 = 56$, $\dfrac{56}{8} = 56 \div 8 = 7$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 19 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">19.</span>
+          $$7\overline{)65}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $9\text{ R }2$</div>
+        <div>
+          $7 \times 9 = 63$, and $65 - 63 = 2$, so $65 \div 7 = 9\text{ R }2$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 20 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*20.</span>
+          $$45 \div 6$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $7\text{ R }3$</div>
+        <div>
+          $6 \times 7 = 42$, and $45 - 42 = 3$, so $45 \div 6 = 7\text{ R }3$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 21 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">21.</span>
+          $$7n = 42$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $n = 6$</div>
+        <div>
+          Divide both sides by $7$:
+          $$n = 42 \div 7 = 6$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 22 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">22.</span>
+          $$1.75 + 17.5$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $19.25$</div>
+        <div>
+          Line up the decimal points:
+          $$\begin{array}{r} 1.75 \\ + 17.50 \\ \hline 19.25 \end{array}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 23 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">23.</span>
+          <ul class="sub-list">
+            <li><strong>a.</strong> Which segment in this figure is a diameter?</li>
+            <li><strong>b.</strong> <span class="skill-tag">Classify</span> Segments $MW$ and $MX$ form an angle. What type of angle is it? Explain.</li>
+          </ul>
+          <div class="diagram-wrap">
+            <svg width="130" height="120" viewBox="0 0 130 120" aria-label="Circle M with diameter WY and radius MX">
+              <circle cx="62" cy="60" r="42" fill="none" stroke="#1e293b" stroke-width="1.6" />
+              <circle cx="62" cy="60" r="2.5" fill="#1e293b" />
+              <!-- Diameter WY -->
+              <line x1="32.3" y1="89.7" x2="91.7" y2="30.3" stroke="#1e293b" stroke-width="1.6" />
+              <!-- Radius MX -->
+              <line x1="62" y1="60" x2="104" y2="60" stroke="#1e293b" stroke-width="1.6" />
+              <text x="46" y="63" font-size="12" font-weight="bold" fill="#1e293b">M</text>
+              <text x="94" y="27" font-size="12" font-weight="bold" fill="#1e293b">W</text>
+              <text x="108" y="64" font-size="12" font-weight="bold" fill="#1e293b">X</text>
+              <text x="20" y="100" font-size="12" font-weight="bold" fill="#1e293b">Y</text>
+            </svg>
+          </div>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: a. Segment $WY$ ($\overline{WY}$) &nbsp;|&nbsp; b. Acute angle</div>
+        <div>
+          <strong>a.</strong> Segment $WY$ passes through the center $M$ with both endpoints on the circle, so $\overline{WY}$ is a diameter.<br />
+          <strong>b.</strong> $\angle WMX$ is an <strong>acute angle</strong> because it is smaller than a right angle ($90^\circ$).
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 24 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*24.</span><span class="skill-tag">Represent</span>
+          Compare these fractions. Draw and shade two congruent rectangles to show the comparison.
+          $$\frac{2}{3} \;\bigcirc\; \frac{3}{4}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $\dfrac{2}{3} \lt \dfrac{3}{4}$</div>
+        <div>
+          $\dfrac{2}{3} = \dfrac{8}{12}$ and $\dfrac{3}{4} = \dfrac{9}{12}$, so $\dfrac{2}{3}$ covers less area than $\dfrac{3}{4}$:
+          <div class="diagram-wrap">
+            <svg width="260" height="72" viewBox="0 0 260 72" aria-label="Fraction comparison rectangles">
+              <!-- 2/3 rectangle -->
+              <rect x="4" y="6" width="120" height="22" fill="none" stroke="#1e293b" stroke-width="1.4" />
+              <rect x="4" y="6" width="80" height="22" fill="#93c5fd" stroke="#1e293b" stroke-width="1.2" />
+              <line x1="44" y1="6" x2="44" y2="28" stroke="#1e293b" stroke-width="1.2" />
+              <line x1="84" y1="6" x2="84" y2="28" stroke="#1e293b" stroke-width="1.2" />
+              <text x="134" y="22" font-size="13" fill="#1e293b">2/3</text>
+
+              <!-- 3/4 rectangle -->
+              <rect x="4" y="38" width="120" height="22" fill="none" stroke="#1e293b" stroke-width="1.4" />
+              <rect x="4" y="38" width="90" height="22" fill="#60a5fa" stroke="#1e293b" stroke-width="1.2" />
+              <line x1="34" y1="38" x2="34" y2="60" stroke="#1e293b" stroke-width="1.2" />
+              <line x1="64" y1="38" x2="64" y2="60" stroke="#1e293b" stroke-width="1.2" />
+              <line x1="94" y1="38" x2="94" y2="60" stroke="#1e293b" stroke-width="1.2" />
+              <text x="134" y="54" font-size="13" fill="#1e293b">3/4</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 25 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*25.</span><span class="skill-tag">Represent</span>
+          Point $X$ represents what mixed number and what decimal number on this number line?
+          <div class="diagram-wrap">
+            <svg width="360" height="62" viewBox="0 0 360 62" aria-label="Number line from 4 to 7 with point X at 6.3">
+              <line x1="12" y1="32" x2="348" y2="32" stroke="#1e293b" stroke-width="1.5" />
+              <!-- Ticks from 3.8 to 7.2 (10px per tenth, 4 is at x=30, 5 at 130, 6 at 230, 7 at 330) -->
+              <g stroke="#1e293b" stroke-width="1.2">
+                <!-- Major ticks -->
+                <line x1="30" y1="24" x2="30" y2="40" />
+                <line x1="130" y1="24" x2="130" y2="40" />
+                <line x1="230" y1="24" x2="230" y2="40" />
+                <line x1="330" y1="24" x2="330" y2="40" />
+                <!-- Minor ticks between 4 and 5 -->
+                <line x1="40" y1="28" x2="40" y2="36" /><line x1="50" y1="28" x2="50" y2="36" />
+                <line x1="60" y1="28" x2="60" y2="36" /><line x1="70" y1="28" x2="70" y2="36" />
+                <line x1="80" y1="28" x2="80" y2="36" /><line x1="90" y1="28" x2="90" y2="36" />
+                <line x1="100" y1="28" x2="100" y2="36" /><line x1="110" y1="28" x2="110" y2="36" />
+                <line x1="120" y1="28" x2="120" y2="36" />
+                <!-- Minor ticks between 5 and 6 -->
+                <line x1="140" y1="28" x2="140" y2="36" /><line x1="150" y1="28" x2="150" y2="36" />
+                <line x1="160" y1="28" x2="160" y2="36" /><line x1="170" y1="28" x2="170" y2="36" />
+                <line x1="180" y1="28" x2="180" y2="36" /><line x1="190" y1="28" x2="190" y2="36" />
+                <line x1="200" y1="28" x2="200" y2="36" /><line x1="210" y1="28" x2="210" y2="36" />
+                <line x1="220" y1="28" x2="220" y2="36" />
+                <!-- Minor ticks between 6 and 7 -->
+                <line x1="240" y1="28" x2="240" y2="36" /><line x1="250" y1="28" x2="250" y2="36" />
+                <line x1="260" y1="28" x2="260" y2="36" /><line x1="270" y1="28" x2="270" y2="36" />
+                <line x1="280" y1="28" x2="280" y2="36" /><line x1="290" y1="28" x2="290" y2="36" />
+                <line x1="300" y1="28" x2="300" y2="36" /><line x1="310" y1="28" x2="310" y2="36" />
+                <line x1="320" y1="28" x2="320" y2="36" />
+              </g>
+              <circle cx="260" cy="32" r="4" fill="#1e293b" />
+              <text x="256" y="18" font-size="13" font-weight="bold" fill="#1e293b">X</text>
+              <text x="26" y="55" font-size="13" fill="#1e293b">4</text>
+              <text x="126" y="55" font-size="13" fill="#1e293b">5</text>
+              <text x="226" y="55" font-size="13" fill="#1e293b">6</text>
+              <text x="326" y="55" font-size="13" fill="#1e293b">7</text>
+            </svg>
+          </div>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: Mixed number: $6\dfrac{3}{10}$ &nbsp;|&nbsp; Decimal: $6.3$</div>
+        <div>
+          Each unit interval is divided into $10$ equal parts (tenths). Point $X$ is $3$ tenths past $6$, which is $6\dfrac{3}{10}$ or $6.3$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 26 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*26.</span>
+          One inch is $2.54$ centimeters, so two inches is $2.54 + 2.54$ centimeters. A segment that is $3$ inches long is how many centimeters long?
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $7.62\text{ centimeters}$</div>
+        <div>
+          $$2.54 + 2.54 + 2.54 = 7.62\text{ centimeters}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 27 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*27.</span>
+          Write this addition problem as a multiplication problem:
+          $$2.54 + 2.54 + 2.54$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $3 \times 2.54$ (or $2.54 \times 3$)</div>
+        <div>
+          Adding $2.54$ three times is written as $3 \times 2.54$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 28 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*28.</span>
+          <ul class="sub-list">
+            <li><strong>a.</strong> Three pennies are what fraction of a dollar?</li>
+            <li><strong>b.</strong> Write the value of three pennies as a decimal part of a dollar.</li>
+            <li><strong>c.</strong> Three pennies are what percent of a dollar?</li>
+          </ul>
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: a. $\dfrac{3}{100}$ &nbsp;|&nbsp; b. $\$0.03$ (or $0.03$) &nbsp;|&nbsp; c. $3\%$</div>
+        <div>
+          There are $100$ pennies in $1$ dollar, so $3$ pennies equal $\dfrac{3}{100}$ of a dollar, $\$0.03$, or $3\%$.
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 29 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*29.</span><span class="skill-tag">Multiple Choice</span>
+          Which of these numbers is a prime number?<br />
+          <strong>A</strong> $6$ &qquad; <strong>B</strong> $7$ &qquad; <strong>C</strong> $8$ &qquad; <strong>D</strong> $9$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: B ($7$)</div>
+        <div>
+          $7$ has only two factors ($1$ and $7$), so it is prime. ($6 = 2 \times 3$, $8 = 2 \times 4$, and $9 = 3 \times 3$ are composite.)
+        </div>
+      </div>
+    </div>
+
+    <!-- Problem 30 -->
+    <div class="problem-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="prob-num">*30.</span>
+          What is the sum of these lengths? Write three answers using different units.
+          $$1\text{ yard} + 2\text{ feet} + 12\text{ inches}$$
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $2\text{ yards}$, $6\text{ feet}$, $72\text{ inches}$</div>
+        <div>
+          Since $12\text{ inches} = 1\text{ foot}$ and $3\text{ feet} = 1\text{ yard}$:
+          <ul>
+            <li><strong>In feet:</strong> $3\text{ feet} + 2\text{ feet} + 1\text{ foot} = 6\text{ feet}$</li>
+            <li><strong>In yards:</strong> $6\text{ feet} \div 3 = 2\text{ yards}$</li>
+            <li><strong>In inches:</strong> $6\text{ feet} \times 12 = 72\text{ inches}$</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-World Connection -->
+    <div class="problem-card rwc-card">
+      <div class="problem-header">
+        <div class="problem-text">
+          <span class="skill-tag">Real-World Connection</span>
+          Each day Jamaal delivers $30$ newspapers in $1\text{ hr } 30\text{ min}$. At this rate, how many newspapers would he deliver each hour? Explain your answer.
+        </div>
+        <button type="button" class="toggle-btn" aria-expanded="false" onclick="toggleSolution(this)">Show Solution</button>
+      </div>
+      <div class="work-space"></div>
+      <div class="solution-box">
+        <div class="answer-line">Answer: $20\text{ newspapers per hour}$</div>
+        <div>
+          $1\text{ hr } 30\text{ min}$ equals $90\text{ minutes}$, which is three $30$-minute half-hours. Dividing $30$ newspapers into $3$ equal half-hours gives $30 \div 3 = 10$ newspapers every $30$ minutes. In $1\text{ hour}$ ($60\text{ minutes}$, or two half-hours), Jamaal delivers $10 \times 2 = 20$ newspapers.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(button) {
+      const card = button.closest('.problem-card');
+      const solutionBox = card.querySelector('.solution-box');
+      const isVisible = solutionBox.classList.toggle('visible');
+      button.setAttribute('aria-expanded', isVisible ? 'true' : 'false');
+      button.textContent = isVisible ? 'Hide Solution' : 'Show Solution';
+    }
+  </script>
+</body>
+</html>
